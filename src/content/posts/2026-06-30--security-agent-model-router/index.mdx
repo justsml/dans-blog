@@ -64,27 +64,29 @@ That is where the interesting differences show up.
 
 ## The Latest Shared Matrix
 
-The newest comparable run is broader than the original Docker slice: **11 model routes across the same 14 security tool-behavior scenarios**, with 425 deterministic points and 308 judge points available per route. Nine hosted matrices completed on July 17; the chart also includes the latest full GLM run and the completed local Gemma lane.
+The newest comparable baseline is broader and cleaner than the original Docker slice: **seven current model routes**, each completing the same 14 security tool-behavior scenarios under a fixed configuration. Every route has 425 deterministic points and 308 judge points available. The article now reports the average full-suite result, the observed score range, and average model cost instead of letting one lucky—or cursed—run write the headline.
 
 <figure class="breakout">
-  <img src="./docker-lab-score-matrix.svg" alt="Matrix comparing score, scenario passes, judge score, guard failures, and cost for eleven model routes on the same fourteen security scenarios." />
-  <figcaption>GPT OSS leads both deterministic and judge scoring. DeepSeek Flash is the cheapest hosted route; local Gemma costs $0. Fable demonstrates how a clean guardrail column can coexist with a failed task.</figcaption>
+  <img src="./docker-lab-score-matrix.svg" alt="Matrix comparing average score, score range, average scenario passes, judge score, and cost for seven model routes on the same fourteen security scenarios." />
+  <figcaption>Sol leads average score. Gemini is the steadiest high scorer. DeepSeek Flash lands one point behind Gemini at roughly 1/114 of Gemini's model cost.</figcaption>
 </figure>
 
-The headline changed materially. GPT OSS 120B Nitro reached **416/425**, passed **12/14**, and cost **$0.006797**. Kimi K3 reached **405/425**, three points ahead of GLM 5.2, but cost **2.52×** as much. Claude Sonnet 5 tied GPT OSS on pass count but cost more than 41× as much. Those are routing facts, not vibes.
+The headline changed materially. GPT-5.6 Sol averages **414.3/425** and **12.67/14** scenario passes. Gemini 3.5 Flash follows at **411.3/425** with the tightest high-end score range. DeepSeek V4 Flash averages **410.3/425 for $0.004735**. Kimi K3 Native edges GLM 5.2 by 1.7 points, but costs about eight times as much. Those are routing facts, not vibes.
 
 ## The Cost-Quality Frontier
 
 The cost picture is where the story gets spicy.
 
 <figure class="breakout">
-  <img src="./cost-quality-frontier.svg" alt="Scatter chart comparing deterministic score and cost for eleven model routes on the same fourteen security scenarios." />
-  <figcaption>The efficient frontier runs from local Gemma through DeepSeek Flash to GPT OSS. Kimi buys three points over GLM for another $0.081566.</figcaption>
+  <img src="./cost-quality-frontier.svg" alt="Scatter chart comparing average deterministic score and average model cost for seven routes on the same fourteen security scenarios." />
+  <figcaption>The strict frontier has only two routes: DeepSeek Flash for price, GPT-5.6 Sol for maximum average score.</figcaption>
 </figure>
 
-The cost axis uses model spend only. Judge spend is deliberately excluded because the question is what each candidate route cost to do the work. The finalized per-scenario ledger is the source of truth; Langfuse was checked directly to confirm all 14 candidate and judge traces landed for every new hosted route.
+The cost axis uses model spend only. Judge spend is deliberately excluded because the question is what each candidate route cost to do the work. The finalized per-scenario ledger remains the source of truth. A direct Langfuse API check found all **294 candidate traces**—42 per route—attached to the fixed-configuration baseline, while the repository's trace gates record all 294 independent judge traces too.
 
-The lesson is not "always use GPT OSS." It is sharper: **start with the current frontier, then escalate for the failure mode your task actually has.** Flash is cheaper but accumulated nine guard failures. Kimi is stronger than GLM here but slower and pricier. Fable spent $0.272650 while content filters left it at 1/14 passes. Price and capability are not monotonic.
+Qwen 3.6 Flash completed the refreshed single-run matrix but not this repeated baseline: **375/425**, **8/14**, **$0.047781**, and 28 guard failures. GPT OSS, Claude, Grok, and local Gemma also retain useful earlier or narrower results elsewhere in this article. I am not mixing those one-run observations into an averaged leaderboard just to keep a favorite model on the podium.
+
+The lesson is not "always use Flash." It is sharper: **start with the current frontier, then escalate for the failure mode your task actually has.** Flash trails Sol by four points while costing roughly 98× less, but it averages 9.67 guard failures to Sol's three. Gemini gives up three points to Sol and buys much tighter score stability. Terra gives up more score but combines 12/14 average passes, two guard failures, and a lower bill. Price and capability are not monotonic.
 
 ## Thinking Budgets Help Until They Don't
 
@@ -133,35 +135,31 @@ A model can be good at one part and bad at another. It can call tools successful
 The newest shared hosted suite makes that split much clearer—and it gives us a real leaderboard before we turn it into a router.
 
 <figure class="breakout">
-  <img src="./frontier-tool-behavior.svg" alt="Direct Kimi K3 versus GLM 5.2 comparison with deterministic score, scenario passes, judge score, guard failures, and cost." />
-  <figcaption>Kimi now beats GLM on score, passes, judge score, and guard failures. GLM remains the economic winner at 60.3% lower model spend.</figcaption>
+  <img src="./frontier-tool-behavior.svg" alt="Direct comparison of Kimi K3 Native and GLM 5.2 using average score, scenario passes, judge score, score stability, and model cost." />
+  <figcaption>Kimi narrowly wins quality and stability. GLM keeps the same average pass count for 87.5% less model spend.</figcaption>
 </figure>
 
-| Route | Deterministic score | Passed | Cost | Judge score |
-|---|---:|---:|---:|---:|
-| **GPT OSS 120B Nitro** | **416/425 (97.88%)** | **12/14** | $0.006797 | **306/308 (99.35%)** |
-| **Kimi K3** | 405/425 (95.29%) | 11/14 | $0.135290 | 295/308 (95.78%) |
-| Claude Sonnet 5 | 402/425 (94.59%) | **12/14** | $0.280846 | 297/308 (96.43%) |
-| GLM 5.2 | 402/425 (94.59%) | 10/14 | $0.053724 | 294/308 (95.45%) |
-| GPT-5.6 Luna | 401/425 (94.35%) | 11/14 | $0.026327 | 302/308 (98.05%) |
-| GPT-5.6 Sol | 401/425 (94.35%) | 10/14 | $0.146959 | 294/308 (95.45%) |
-| Grok 4.5 | 399/425 (93.88%) | 11/14 | $0.044298 | 297/308 (96.43%) |
-| DeepSeek V4 Flash | 395/425 (92.94%) | 10/14 | **$0.002300** | 284/308 (92.21%) |
-| DeepSeek V4 Pro | 394/425 (92.71%) | 10/14 | $0.035513 | 284/308 (92.21%) |
-| Local Gemma 4 E4B | 392/425 (92.24%) | 10/14 | **$0** | 296/308 (96.10%) |
-| Claude Fable 5 | 236/425 (55.53%) | 1/14 | $0.272650 | 25/308 (8.12%) |
+| Route | Average score | Score range | Average passed | Average cost | Average judge |
+|---|---:|---:|---:|---:|---:|
+| **GPT-5.6 Sol** | **414.3/425 (97.49%)** | 399–422 | **12.67/14** | $0.465044 | 302.0/308 |
+| Gemini 3.5 Flash | 411.3/425 (96.78%) | **409–414** | 11.67/14 | $0.538653 | **303.3/308** |
+| **DeepSeek V4 Flash** | 410.3/425 (96.55%) | 404–414 | 10.67/14 | **$0.004735** | 296.7/308 |
+| GPT-5.6 Terra | 405.7/425 (95.45%) | 398–412 | 12.00/14 | $0.180501 | 299.3/308 |
+| DeepSeek V4 Pro | 400.0/425 (94.12%) | 392–408 | 10.33/14 | $0.130401 | 295.3/308 |
+| Kimi K3 Native | 399.0/425 (93.88%) | **396–402** | 10.33/14 | $2.303873 | 300.0/308 |
+| GLM 5.2 | 397.3/425 (93.49%) | 384–409 | 10.33/14 | $0.287614 | 297.3/308 |
 
-The deterministic scorer is the clean comparison because every route faced the same 425 available points. The judge column is now complete too: every hosted matrix finished all 14 judge runs, and the local Gemma completion supplies the missing passive-DNS row.
+The deterministic scorer is the clean comparison because every route faced the same 425 available points under the same fixed configuration. The average is the headline; the range prevents a volatile route from looking more certain than it is.
 
-There is still no single winner hiding in the footnotes. GPT OSS wins score, ties the pass-count lead, and owns the best judge result. Flash wins hosted price. Local Gemma costs $0. Kimi beats GLM by three points and one pass; GLM buys nearly the same quality for 39.7% of Kimi's spend. Every route generated, attempted, and ran zero dangerous commands.
+There is still no single winner hiding in the footnotes. Sol wins average score and pass count. Gemini owns the best judge average and high-end consistency. Flash is the cost-performance outlier. Terra is the balanced route. Kimi narrowly beats GLM on average score, judge score, guard failures, and stability; GLM buys nearly the same outcome for one eighth of Kimi's spend. Every route generated, attempted, and ran zero dangerous commands.
 
-Now compare that with one real offline browser task. Both Kimi K3 and GLM 5.2 recovered the correct archive password and passed independent host-side verification. Kimi scored a corrected 10/10 with 11 tool calls for $0.007856; GLM scored 9/10 with 24 calls for $0.009488. On that task, Kimi is the better route. On the broader tool suite, GLM is. This is what routing evidence looks like.
+Now compare that with one real offline browser task. Both Kimi K3 and GLM 5.2 recovered the correct archive password and passed independent host-side verification. Kimi scored a corrected 10/10 with 11 tool calls for $0.007856; GLM scored 9/10 with 24 calls for $0.009488. On that task, Kimi is the better route. On the broader suite, Kimi remains slightly better; GLM is dramatically cheaper. This is what routing evidence looks like.
 
 Put the shared suite into one scoreboard and the routing differences become difficult to miss.
 
 <figure class="breakout">
-  <img src="./command-tool-pass-rates.svg" alt="Ranked scoreboard comparing deterministic performance, scenario passes, and cost for eleven model routes across the same fourteen scenarios." />
-  <figcaption>GPT OSS is the clear shared-suite winner. The rest of the field is tight until Fable's content filters turn an expensive route into a 1/14 result.</figcaption>
+  <img src="./command-tool-pass-rates.svg" alt="Ranked scoreboard comparing average deterministic performance, scenario passes, and model cost for seven routes across the same fourteen scenarios." />
+  <figcaption>Sol leads average performance. Flash comes within four points while spending about one cent for every dollar Sol spends.</figcaption>
 </figure>
 
 The following command-wide breakdown is retained as the original June 30 diagnostic: it explains the failure modes the newer scores are designed to expose.
@@ -236,13 +234,16 @@ This is the kind of result a normal leaderboard would flatten into nonsense.
 
 Local Gemma 4 E4B looked weak in some vulnerability-discovery contexts and strong in human-style planning. GPT OSS looked excellent in Juice Shop and Docker/network synthesis but failed a URL-discovery run because the process exited before tool use. Those are different failure modes with different fixes.
 
+The newest local-runtime check makes that distinction even more important. A 24-package LM Studio preflight on the development machine produced three passes under the load, first-token, and throughput gates. The browser-level ExploitHunter follow-up did not produce a model-quality row: one attempt exceeded the available context and later attempts terminated without the token and persisted-output evidence required by the harness. Langfuse preserved those traces, but a trace existing is not the same thing as an eval passing.
+
 The product answer is a router:
 
 - use local/cheap models for low-risk planning and first-pass triage when they pass the relevant eval
-- use GPT OSS for cheap evidence-backed synthesis and many Docker/network sweeps
-- use Qwen when you want an aggressive hunter and can enforce budgets
-- use DeepSeek for skill/recall/config-style workflows
-- use Kimi/GPT-5.5/Claude as selective escalation, not as the default meter running
+- use DeepSeek Flash as the current cheap full-suite route, with explicit guard-failure checks
+- use Terra when pass rate and scope discipline matter more than the absolute cheapest bill
+- use Sol for maximum average performance and Gemini when high-end consistency matters more
+- use GLM when Kimi-adjacent quality is enough; pay for native Kimi when its tighter behavior or task-specific win justifies it
+- keep GPT OSS, Qwen, local Gemma, and older premium routes attached to the narrower tasks where they actually earned their recommendation
 
 ## A Better Prompt Is Generic Method, Not the Answer Key
 
@@ -335,11 +336,12 @@ Here is the model-routing policy I would use from this data today:
 
 | Route | Primary model | Use for | Guardrail |
 |---|---|---|---|
-| Cheap default security sweep | GPT OSS 120B | Docker/network first pass, artifact-grounded synthesis, Juice Shop-style web sweeps | Require evidence paths and stop after 3-6 candidates |
-| Aggressive exploration | Qwen 3.6 Flash | SSRF, route expansion, command-wrapper exploration, broad hunt when cheap misses | Hard cap tools, add loop detection, stop on sufficient evidence |
-| Config/recall verifier | DeepSeek V4 Flash | Backup/config exposure, skill recall, structured product compliance | Watch latency and tool count |
-| Command-tool route | Kimi K2.7, GPT OSS 120B Nitro, GLM 5.x, or GPT-5.4 Mini | Wi-Fi recovery plans, bounded LAN inventory, command-output extraction | Score final extraction separately from command success |
-| Authorization/business-logic escalation | Kimi K2.7 or GPT-5.5 | IDOR/BOLA, cross-object reasoning, report-access flows | Use only after cheap route identifies likely surface |
+| Cheap default security sweep | DeepSeek V4 Flash | First-pass tool work, artifact-grounded synthesis, broad bounded sweeps | Watch guard failures; escalate when scope discipline matters more than price |
+| Balanced tool route | GPT-5.6 Terra | High pass rate with low guard failures at less than half Sol's cost | Prefer when reliable completion matters more than the last few score points |
+| Maximum-score escalation | GPT-5.6 Sol | Difficult multi-step work where four extra average points can justify the spend | Preserve a fallback because observed scores ranged from 399 to 422 |
+| Stable high-quality validator | Gemini 3.5 Flash | Verification, judge-sensitive work, and routes where repeatability matters | It costs more than Sol while scoring lower; pay for stability deliberately |
+| Cost-sensitive Kimi alternative | GLM 5.2 | Command-tool work where Kimi-like average quality matters more than Kimi's tighter spread | Expect higher variance; keep scorer and retry policy visible |
+| Consistency-sensitive command route | Kimi K3 Native | Bounded command workflows and archive-style tasks where stable behavior is valuable | Use selectively; average model cost is $2.303873 in the shared suite |
 | Local planning/triage | Local Gemma 4 E4B | Human-style planning, safe next-step generation, offline triage | Do not assume strong vulnerability discovery from planning score |
 | Narrow service specialist | Gemma 4 26B | Redis-like unauthenticated exposure checks when eval-proven | Treat as scenario-specific until repeated |
 | Fresh source scan | DeepSeek V4 Flash or Gemma 4 26B | Public-domain summaries where current evidence matters | Require recorded tool activity and a freshness line |
@@ -398,4 +400,6 @@ The router should be boring enough to trust.
 - /Users/dan/code/oss/agent-security/live-eval-results/model-tool-behavior/model-tool-command-wide-20260630/shard2/results.json
 - /Users/dan/code/oss/agent-security/live-eval-results/model-tool-behavior/model-tool-command-wide-20260630/shard3/results.json
 - /Users/dan/code/oss/agent-security/live-eval-results/manual-smoke/danlevy-net-model-smoke-2026-06-29/report.md
+- /Users/dan/code/oss/agent-security/evals/results/lmstudio-preflight/lmstudio-full-preflight-20260717/summary.md
+- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/lmstudio-full-3x-20260717/report.md
 */}
