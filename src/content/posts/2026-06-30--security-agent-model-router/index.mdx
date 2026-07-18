@@ -234,7 +234,7 @@ This is the kind of result a normal leaderboard would flatten into nonsense.
 
 Local Gemma 4 E4B looked weak in some vulnerability-discovery contexts and strong in human-style planning. GPT OSS looked excellent in Juice Shop and Docker/network synthesis but failed a URL-discovery run because the process exited before tool use. Those are different failure modes with different fixes.
 
-The newest local-runtime check makes that distinction even more important. A 24-package LM Studio preflight on the development machine produced three passes under the load, first-token, and throughput gates. The browser-level ExploitHunter follow-up did not produce a model-quality row: one attempt exceeded the available context and later attempts terminated without the token and persisted-output evidence required by the harness. Langfuse preserved those traces, but a trace existing is not the same thing as an eval passing.
+The newest local-runtime check makes that distinction even more important. A 24-package LM Studio preflight on the development machine produced three passes under the load, first-token, and throughput gates. Four browser-path ExploitHunter attempts still produced no model-quality row: one exceeded the available context, and the others terminated without the token, output, and persistence evidence required by the harness. The latest production-path attempt reached completion review but earned a zero from the quality judge because the session blocked before doing substantive work. Langfuse preserved those traces, but a trace existing is not the same thing as an eval passing.
 
 The product answer is a router:
 
