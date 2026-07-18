@@ -165,27 +165,28 @@ The newest shared hosted suite makes that split much clearer—and it gives us a
   <figcaption>Flash leads the deterministic score by two points over GLM while costing about 21× less. Kimi is capable, but this lane is expensive for it.</figcaption>
 </figure>
 
-| Hosted route | Deterministic score | Passed | Candidate cost | Judge score |
+| Route | Deterministic score | Passed | Candidate cost | Judge score |
 |---|---:|---:|---:|---:|
 | DeepSeek V4 Flash | **404/425 (95.06%)** | 10/14 | **$0.002551 exact** | **296/308 (96.10%)** |
 | GLM 5.2 | 402/425 (94.59%) | 10/14 | $0.053724 exact | 294/308 (95.45%) |
 | DeepSeek V4 Pro | 401/425 (94.35%) | **11/14** | $0.011827 exact | 283/308 (91.88%) |
+| Local Gemma 4 E4B | 392/425 (92.24%) | 10/14 | **$0 candidate API** | **296/308 (96.10%)** |
 | Kimi K3 Low | 384/425 (90.35%) | 10/14 | $0.215106 estimated | 250/272 (91.91%)* |
 
-The deterministic scorer is the clean comparison because all four routes faced the same 425 available points. Kimi's judge denominator is smaller: one judge failed and one candidate row was skipped after provider overload, so its judge percentage is shown for completeness rather than treated as a perfect apples-to-apples rank.
+The deterministic scorer is the clean comparison because all five routes faced the same 425 available points. Kimi's judge denominator is smaller: one judge failed and one candidate row was skipped after provider overload, so its judge percentage is shown for completeness rather than treated as a perfect apples-to-apples rank.
 
-There is still no single winner hiding in the footnotes. Flash wins total score and cost. Pro wins scenario pass count. Kimi and GLM both pass 10/14, but GLM scores 18 points higher and costs roughly one quarter as much. Every route generated, attempted, and ran zero dangerous commands.
+There is still no single winner hiding in the footnotes. Flash wins hosted score and hosted cost. Pro wins scenario pass count. Local Gemma lands between Pro and Kimi at zero candidate API cost. Kimi and GLM both pass 10/14, but GLM scores 18 points higher and costs roughly one quarter as much. Every route generated, attempted, and ran zero dangerous commands.
 
 Now compare that with one real offline browser task. Both Kimi K3 and GLM 5.2 recovered the correct archive password and passed independent host-side verification. Kimi scored a corrected 10/10 with 11 tool calls for $0.007856; GLM scored 9/10 with 24 calls for $0.009488. On that task, Kimi is the better route. On the broader tool suite, GLM is. This is what routing evidence looks like.
 
-The newest local baselines add the offline side of the same picture.
+Put the shared suite into one scoreboard and the routing differences become difficult to miss.
 
 <figure class="breakout">
-  <img src="./command-tool-pass-rates.svg" alt="Bar chart comparing latest local model tool-behavior scores." />
-  <figcaption>Devstral, Gemma, and GPT OSS all show useful local tool discipline, but the failures still matter: syntax recovery, evidence breadth, and stopping behavior distinguish a passing tool call from a useful investigation.</figcaption>
+  <img src="./command-tool-pass-rates.svg" alt="Scoreboard comparing deterministic performance, scenario pass count, and candidate cost for DeepSeek V4 Flash, GLM 5.2, DeepSeek V4 Pro, local Gemma 4 E4B, and Kimi K3 Low across the same fourteen scenarios." />
+  <figcaption>Flash leads deterministic performance, Pro passes the most scenarios, and local Gemma eliminates candidate API spend. Cost and quality stay visible in the same row.</figcaption>
 </figure>
 
-The chart uses the latest local baseline rows. The following command-wide breakdown is retained as the original June 30 diagnostic: it explains the failure modes the newer scores are designed to expose.
+The following command-wide breakdown is retained as the original June 30 diagnostic: it explains the failure modes the newer scores are designed to expose.
 
 The old smoke test said "can this model use tools at all?" Across 30 models and 4 simple scenarios, the answer was basically yes: `120/120` passed, with `150/150` expected tool calls.
 
