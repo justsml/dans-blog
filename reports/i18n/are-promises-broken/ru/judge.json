@@ -1,0 +1,41 @@
+{
+  "selectedCommit": "410f051b9d9eb8664f060d80581de2df456bd7b5",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 100
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly handles the MDX structure, including the relative paths for images and frontmatter. It preserves the tone of the original text well. Other candidates had minor issues: one used 'Сорванные обещания' which is a bit literal for 'Broken Promises' in a technical context, and another had slightly less natural phrasing in the technical explanations. Candidate 410f051b uses 'Нарушенные обещания' which is a standard way to translate this pun in Russian tech circles, and the prose flows very well.",
+  "confidence": "high",
+  "confidenceScore": 0.883,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "are-promises-broken",
+  "locale": "ru",
+  "candidateCommits": [
+    "410f051b9d9eb8664f060d80581de2df456bd7b5",
+    "6d5fad94c59bcdd5ae44825a9d6b54ed3a984c9f",
+    "bd2c5956a6f2ef8a576153bdc3205a7023e4283c"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug are-promises-broken --locale ru --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug are-promises-broken --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug are-promises-broken --locale ru --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-06--are-promises-broken/ru/index.mdx failed structural parity with score 0.984 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2018-10-06--are-promises-broken/ru/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
