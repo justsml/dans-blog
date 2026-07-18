@@ -1,0 +1,102 @@
+{
+  "selectedCommit": "de4776e7e47914026b1e6cbcd248ebef5d139ec7",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "img src=\"./docker-lab-score-matrix.svg\"",
+      "replacement": "img src=\"../docker-lab-score-matrix.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
+    },
+    {
+      "priority": "high",
+      "match": "img src=\"./cost-quality-frontier.svg\"",
+      "replacement": "img src=\"../cost-quality-frontier.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
+    },
+    {
+      "priority": "high",
+      "match": "img src=\"./frontier-tool-behavior.svg\"",
+      "replacement": "img src=\"../frontier-tool-behavior.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
+    },
+    {
+      "priority": "high",
+      "match": "img src=\"./command-tool-pass-rates.svg\"",
+      "replacement": "img src=\"../command-tool-pass-rates.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
+    }
+  ],
+  "rationale": "The DeepSeek candidate provides a more natural and technically accurate Hebrew translation. It correctly handles technical terms like 'artifacts' and 'benchmarks' within a Hebrew context. It preserves the MDX structure perfectly, including tables and code blocks. The only high-priority issue is the image paths, which need the '../' prefix to account for the deeper folder structure of the Hebrew locale, a common requirement in this project's architecture.",
+  "confidence": "low",
+  "confidenceScore": 0.327,
+  "confidenceSignals": [
+    "4 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 4,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "security-agent-model-router",
+  "locale": "he",
+  "candidateCommits": [
+    "de4776e7e47914026b1e6cbcd248ebef5d139ec7",
+    "904903a4cc6fce5d6cd0afbc4c87549be4cf2cd4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "img src=\"./docker-lab-score-matrix.svg\"",
+      "replacement": "img src=\"../docker-lab-score-matrix.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "img src=\"./cost-quality-frontier.svg\"",
+      "replacement": "img src=\"../cost-quality-frontier.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "img src=\"./frontier-tool-behavior.svg\"",
+      "replacement": "img src=\"../frontier-tool-behavior.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "img src=\"./command-tool-pass-rates.svg\"",
+      "replacement": "img src=\"../command-tool-pass-rates.svg\"",
+      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug security-agent-model-router --locale he --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale he --skip-global\n210 |     ]\n211 |     : [];\n212 | \n213 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n214 | \n215 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/he/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:215:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
