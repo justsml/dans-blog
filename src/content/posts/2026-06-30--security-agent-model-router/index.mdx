@@ -62,57 +62,29 @@ Did the model call tools? Did it stay in scope? Did it cite artifacts? Did it pr
 
 That is where the interesting differences show up.
 
-## The Docker Lab Matrix
+## The Latest Shared Matrix
 
-The original June 30 matrix covered six exploratory Docker labs. The latest comparable data is a tighter three-scenario Docker-network composite:
-
-- `ssrf-url-preview`
-- `idor-report-access`
-- `archive-extraction-preview`
-
-The scenarios are deliberately small. That is the point. A tiny lab makes it possible to see whether a model can map the target, use read-only tools, preserve evidence, and stop with a useful finding instead of narrating around the target.
+The newest comparable run is broader than the original Docker slice: **11 model routes across the same 14 security tool-behavior scenarios**, with 425 deterministic points and 308 judge points available per route. Nine hosted matrices completed on July 17; the chart also includes the latest full GLM run and the completed local Gemma lane.
 
 <figure class="breakout">
-  <img src="./docker-lab-score-matrix.svg" alt="Heatmap of the latest comparable Docker network-lab scores across five model routes and three scenarios." />
-  <figcaption>The latest composite retains the useful shape: premium routes score highest, while GPT OSS 120B stays competitive at a radically lower cost.</figcaption>
+  <img src="./docker-lab-score-matrix.svg" alt="Matrix comparing score, scenario passes, judge score, guard failures, and cost for eleven model routes on the same fourteen security scenarios." />
+  <figcaption>GPT OSS leads both deterministic and judge scoring. DeepSeek Flash is the cheapest hosted route; local Gemma costs $0. Fable demonstrates how a clean guardrail column can coexist with a failed task.</figcaption>
 </figure>
 
-The task winners tell the story better than an average:
-
-| Scenario | Strongest observed route | Score | Cost | Tool calls | What it means |
-|---|---:|---:|---:|---:|---|
-| IDOR/report access | GPT-5.5 Low / GPT-5.5 XHigh / Claude Sonnet 5 | `21/21` | `$3.51-$2.51` | `27-41/96` | Authorization flow justified premium reasoning in these runs. |
-| SSRF URL preview | GPT-5.5 Low / GPT-5.5 XHigh | `21/21` | `$3.94-$4.06` | `51-56/96` | A hard, exploratory lane that rewarded longer investigations. |
-| Archive extraction preview | Claude Sonnet 5 | `19/21` | `$2.13` | `29/96` | The winner changes by scenario; no route gets to keep the crown. |
-
-Two caveats matter.
-
-The model-level composite is useful precisely because it keeps evidence counts beside score. A high score with thin evidence is a different operational result from a high score with receipts.
+The headline changed materially. GPT OSS 120B Nitro reached **416/425**, passed **12/14**, and cost **$0.006797**. Kimi K3 reached **405/425**, three points ahead of GLM 5.2, but cost **2.52×** as much. Claude Sonnet 5 tied GPT OSS on pass count but cost more than 41× as much. Those are routing facts, not vibes.
 
 ## The Cost-Quality Frontier
 
 The cost picture is where the story gets spicy.
 
 <figure class="breakout">
-  <img src="./cost-quality-frontier.svg" alt="Scatter chart comparing latest Docker network composite score and cost by model route." />
-  <figcaption>GPT OSS sits in the interesting part of the latest chart: lower absolute score than premium escalation routes, but a dramatically lower bill and seven evidence-backed findings.</figcaption>
+  <img src="./cost-quality-frontier.svg" alt="Scatter chart comparing deterministic score and cost for eleven model routes on the same fourteen security scenarios." />
+  <figcaption>The efficient frontier runs from local Gemma through DeepSeek Flash to GPT OSS. Kimi buys three points over GLM for another $0.081566.</figcaption>
 </figure>
 
-On the Docker labs, using each model's best row per scenario:
+The cost axis uses model spend only. Judge spend is deliberately excluded because the question is what each candidate route cost to do the work. The finalized per-scenario ledger is the source of truth; Langfuse was checked directly to confirm all 14 candidate and judge traces landed for every new hosted route.
 
-| Model | Scenarios | Avg score | High-score rows `>= .90` | Avg cost | Avg calls |
-|---|---:|---:|---:|---:|---:|
-| GPT-5.5 Low | 3 | `0.921` | 3 | `$10.979` | `40.0` |
-| Claude Opus 4.8 Low | 3 | `0.825` | 1 | `$8.938` | `25.7` |
-| GPT OSS 120B | 3 | `0.730` | 2 | `$0.049` | `25.0` |
-| Claude Sonnet 5 Low | 3 | `0.698` | 1 | `$5.055` | `28.7` |
-| GPT-5.5 XHigh | 3 | `0.667` | 2 | `$7.999` | `33.3` |
-
-The lesson is not "always use GPT OSS." It is sharper than that:
-
-**Use GPT OSS as the cheap default first pass when the task rewards artifact-grounded synthesis and bounded exploration. Escalate selectively when the task needs deeper authorization reasoning, stubborn exploration, or final report polish.**
-
-That one routing rule would have saved most of the spend while preserving most of the useful findings in these runs.
+The lesson is not "always use GPT OSS." It is sharper: **start with the current frontier, then escalate for the failure mode your task actually has.** Flash is cheaper but accumulated nine guard failures. Kimi is stronger than GLM here but slower and pricier. Fable spent $0.272650 while content filters left it at 1/14 passes. Price and capability are not monotonic.
 
 ## Thinking Budgets Help Until They Don't
 
@@ -161,29 +133,35 @@ A model can be good at one part and bad at another. It can call tools successful
 The newest shared hosted suite makes that split much clearer—and it gives us a real leaderboard before we turn it into a router.
 
 <figure class="breakout">
-  <img src="./frontier-tool-behavior.svg" alt="Two-panel chart comparing deterministic tool-behavior scores and candidate costs for DeepSeek V4 Flash, GLM 5.2, DeepSeek V4 Pro, and Kimi K3 Low across the same 14 security scenarios." />
-  <figcaption>Flash leads the deterministic score by two points over GLM while costing about 21× less. Kimi is capable, but this lane is expensive for it.</figcaption>
+  <img src="./frontier-tool-behavior.svg" alt="Direct Kimi K3 versus GLM 5.2 comparison with deterministic score, scenario passes, judge score, guard failures, and cost." />
+  <figcaption>Kimi now beats GLM on score, passes, judge score, and guard failures. GLM remains the economic winner at 60.3% lower model spend.</figcaption>
 </figure>
 
-| Route | Deterministic score | Passed | Candidate cost | Judge score |
+| Route | Deterministic score | Passed | Cost | Judge score |
 |---|---:|---:|---:|---:|
-| DeepSeek V4 Flash | **404/425 (95.06%)** | 10/14 | **$0.002551 exact** | **296/308 (96.10%)** |
-| GLM 5.2 | 402/425 (94.59%) | 10/14 | $0.053724 exact | 294/308 (95.45%) |
-| DeepSeek V4 Pro | 401/425 (94.35%) | **11/14** | $0.011827 exact | 283/308 (91.88%) |
-| Local Gemma 4 E4B | 392/425 (92.24%) | 10/14 | **$0 candidate API** | **296/308 (96.10%)** |
-| Kimi K3 Low | 384/425 (90.35%) | 10/14 | $0.215106 estimated | 250/272 (91.91%)* |
+| **GPT OSS 120B Nitro** | **416/425 (97.88%)** | **12/14** | $0.006797 | **306/308 (99.35%)** |
+| **Kimi K3** | 405/425 (95.29%) | 11/14 | $0.135290 | 295/308 (95.78%) |
+| Claude Sonnet 5 | 402/425 (94.59%) | **12/14** | $0.280846 | 297/308 (96.43%) |
+| GLM 5.2 | 402/425 (94.59%) | 10/14 | $0.053724 | 294/308 (95.45%) |
+| GPT-5.6 Luna | 401/425 (94.35%) | 11/14 | $0.026327 | 302/308 (98.05%) |
+| GPT-5.6 Sol | 401/425 (94.35%) | 10/14 | $0.146959 | 294/308 (95.45%) |
+| Grok 4.5 | 399/425 (93.88%) | 11/14 | $0.044298 | 297/308 (96.43%) |
+| DeepSeek V4 Flash | 395/425 (92.94%) | 10/14 | **$0.002300** | 284/308 (92.21%) |
+| DeepSeek V4 Pro | 394/425 (92.71%) | 10/14 | $0.035513 | 284/308 (92.21%) |
+| Local Gemma 4 E4B | 392/425 (92.24%) | 10/14 | **$0** | 296/308 (96.10%) |
+| Claude Fable 5 | 236/425 (55.53%) | 1/14 | $0.272650 | 25/308 (8.12%) |
 
-The deterministic scorer is the clean comparison because all five routes faced the same 425 available points. Kimi's judge denominator is smaller: one judge failed and one candidate row was skipped after provider overload, so its judge percentage is shown for completeness rather than treated as a perfect apples-to-apples rank.
+The deterministic scorer is the clean comparison because every route faced the same 425 available points. The judge column is now complete too: every hosted matrix finished all 14 judge runs, and the local Gemma completion supplies the missing passive-DNS row.
 
-There is still no single winner hiding in the footnotes. Flash wins hosted score and hosted cost. Pro wins scenario pass count. Local Gemma lands between Pro and Kimi at zero candidate API cost. Kimi and GLM both pass 10/14, but GLM scores 18 points higher and costs roughly one quarter as much. Every route generated, attempted, and ran zero dangerous commands.
+There is still no single winner hiding in the footnotes. GPT OSS wins score, ties the pass-count lead, and owns the best judge result. Flash wins hosted price. Local Gemma costs $0. Kimi beats GLM by three points and one pass; GLM buys nearly the same quality for 39.7% of Kimi's spend. Every route generated, attempted, and ran zero dangerous commands.
 
 Now compare that with one real offline browser task. Both Kimi K3 and GLM 5.2 recovered the correct archive password and passed independent host-side verification. Kimi scored a corrected 10/10 with 11 tool calls for $0.007856; GLM scored 9/10 with 24 calls for $0.009488. On that task, Kimi is the better route. On the broader tool suite, GLM is. This is what routing evidence looks like.
 
 Put the shared suite into one scoreboard and the routing differences become difficult to miss.
 
 <figure class="breakout">
-  <img src="./command-tool-pass-rates.svg" alt="Scoreboard comparing deterministic performance, scenario pass count, and candidate cost for DeepSeek V4 Flash, GLM 5.2, DeepSeek V4 Pro, local Gemma 4 E4B, and Kimi K3 Low across the same fourteen scenarios." />
-  <figcaption>Flash leads deterministic performance, Pro passes the most scenarios, and local Gemma eliminates candidate API spend. Cost and quality stay visible in the same row.</figcaption>
+  <img src="./command-tool-pass-rates.svg" alt="Ranked scoreboard comparing deterministic performance, scenario passes, and cost for eleven model routes across the same fourteen scenarios." />
+  <figcaption>GPT OSS is the clear shared-suite winner. The rest of the field is tight until Fable's content filters turn an expensive route into a 1/14 result.</figcaption>
 </figure>
 
 The following command-wide breakdown is retained as the original June 30 diagnostic: it explains the failure modes the newer scores are designed to expose.
