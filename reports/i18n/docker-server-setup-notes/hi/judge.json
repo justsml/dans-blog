@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "7f5ac649bce5c56f58cd9165b707302190620e54",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0,
+    "culturalAdaptation": 0,
+    "languagePurity": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected 7f5ac649bce5c56f58cd9165b707302190620e54.",
+  "confidence": "low",
+  "confidenceScore": 0,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "docker-server-setup-notes",
+  "locale": "hi",
+  "candidateCommits": [
+    "3edbc2e3500d29eaf8e5f7ae75bc81d9b606eab5",
+    "b36809d57df17a86f4cdecd3b684e27f51d578c9",
+    "c81e87cb759bb6221a53ec1c0e2eb326cf213ac7",
+    "7f5ac649bce5c56f58cd9165b707302190620e54"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-server-setup-notes --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug docker-server-setup-notes --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-server-setup-notes --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-04-06--docker-server-setup-notes/hi/index.mdx failed structural parity with score 0.874 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2015-04-06--docker-server-setup-notes/hi/index.mdx: Headings changed or moved. Blockquote count changed. Code fence count or language order changed. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h1\":3,\"h4\":-2,\"blockquotes\":-1,\"codeFences\":1,\"headingSequence\":3,\"codeFenceLanguages\":3,\"linkTargets\":4}. Differences: {\"h1\":3,\"h4\":-2,\"blockquotes\":-1,\"codeFences\":1,\"headingSequence\":3,\"codeFenceLanguages\":3,\"linkTargets\":4}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
