@@ -1,0 +1,52 @@
+{
+  "selectedCommit": "cf22ea82313f5d74752179a852065c089505d939",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 100,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The current translation already includes the subTitle and correctly translates the comments and strings within the code blocks, which is highly beneficial for a technical script tutorial. It maintains the MDX structure and asset paths correctly. The previous judge report mentioned a missing subTitle, but the provided 'current' MDX content actually has it populated correctly.",
+  "confidence": "high",
+  "confidenceScore": 0.888,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "linux-system-benchmark-scripts",
+  "locale": "ru",
+  "candidateCommits": [
+    "940732bf6b0865ef084431620179e5f6edbbe7fd",
+    "cf22ea82313f5d74752179a852065c089505d939",
+    "a2a777268b9b74f465bc3af670bd48dcb482ef34",
+    "b15025426b9f7c00df014590d7254c63a3e1f97c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: 'Быстрый замер производительности CPU и HDD'",
+      "reason": "The subTitle was left empty in this candidate but contains useful reader-facing information in the source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug linux-system-benchmark-scripts --locale ru --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug linux-system-benchmark-scripts --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug linux-system-benchmark-scripts --locale ru --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2017-05-01--linux-system-benchmark-scripts/ru/index.mdx failed translation integrity checks:\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2017-05-01--linux-system-benchmark-scripts/ru/index.mdx:152 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2017-05-01--linux-system-benchmark-scripts/ru/index.mdx:155 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:34:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
