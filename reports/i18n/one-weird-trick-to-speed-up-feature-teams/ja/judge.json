@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "967145d557ee99511fbcf358ed57fd225f337c77",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 85,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 80,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fixes suggested in the previous judge report (the subtitle is present and the breakout section sentence order is natural). It correctly localizes the Table of Contents anchor links to match the translated heading IDs, which is critical for MDX functionality. The tone is appropriate for Dan's style.",
+  "confidence": "high",
+  "confidenceScore": 0.861,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "one-weird-trick-to-speed-up-feature-teams",
+  "locale": "ja",
+  "candidateCommits": [
+    "306ee59ac29c7d6c642b470e94fcb37a881f3859",
+    "967145d557ee99511fbcf358ed57fd225f337c77"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: スタッフエンジニアはこれを嫌っています！",
+      "reason": "The subtitle was left empty in the frontmatter, but it is reader-facing content that should be translated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "_最もシンプルな_データ永続化を試してみてください。新しいシステムや機能を設計する際には。",
+      "replacement": "新しいシステムや機能を設計する際には、_最もシンプルな_データ永続化を試してみてください。",
+      "reason": "The Japanese sentence structure is inverted in a way that feels slightly unnatural for a technical tip; reordering improves flow.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug one-weird-trick-to-speed-up-feature-teams --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug one-weird-trick-to-speed-up-feature-teams --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug one-weird-trick-to-speed-up-feature-teams --locale ja --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/ja/index.mdx failed structural parity with score 0.989 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/ja/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":5}. Differences: {\"linkTargets\":5}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
