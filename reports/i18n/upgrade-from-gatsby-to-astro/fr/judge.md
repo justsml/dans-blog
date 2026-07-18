@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 3a1730a570af74047206e2d163dcc752d34ec8de
-- Selected model: openrouter/qwen/qwen3-32b:nitro
+- Selected candidate: 6a4baa26eb85c37b7d86d5fdfdfcf8cb626c67d6
+- Selected model: openrouter/openai/gpt-oss-120b:nitro
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.882)
+- Confidence: high (0.885)
 
-The candidate 3a1730a570af74047206e2d163dcc752d34ec8de was selected for its correct localization of internal heading anchors in the Table of Contents, which is critical for functional navigation. The previously identified 'high' priority suggestion regarding the title hash was already addressed in the provided MDX content (the title is currently 'Leçons tirées de la mise à niveau de mon blog' without a hash), so no further suggestions are required.
+This candidate provides the most natural and professional French translation while strictly adhering to all MDX structural requirements. It correctly handles the relative paths for images (../), preserves the table structure, and translates the heading IDs consistently with the table of contents. The tone is direct and technical, matching the source. It avoids the awkward phrasing found in the 'current' version (e.g., 'à l'heure de la construction' vs 'au moment de la construction') and has better flow than the Deepseek candidate.

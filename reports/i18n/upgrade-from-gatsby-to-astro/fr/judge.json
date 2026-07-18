@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "3a1730a570af74047206e2d163dcc752d34ec8de",
-  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "selectedCommit": "6a4baa26eb85c37b7d86d5fdfdfcf8cb626c67d6",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
   "scores": {
     "readability": 95,
     "technicalAccuracy": 98,
     "coherence": 95,
     "relevance": 100,
     "translationQuality": 95,
-    "mdxPreservation": 95,
-    "culturalAdaptation": 90,
-    "languagePurity": 100
+    "mdxPreservation": 100,
+    "culturalAdaptation": 92,
+    "languagePurity": 98
   },
   "suggestions": [],
-  "rationale": "The candidate 3a1730a570af74047206e2d163dcc752d34ec8de was selected for its correct localization of internal heading anchors in the Table of Contents, which is critical for functional navigation. The previously identified 'high' priority suggestion regarding the title hash was already addressed in the provided MDX content (the title is currently 'Leçons tirées de la mise à niveau de mon blog' without a hash), so no further suggestions are required.",
+  "rationale": "This candidate provides the most natural and professional French translation while strictly adhering to all MDX structural requirements. It correctly handles the relative paths for images (../), preserves the table structure, and translates the heading IDs consistently with the table of contents. The tone is direct and technical, matching the source. It avoids the awkward phrasing found in the 'current' version (e.g., 'à l'heure de la construction' vs 'au moment de la construction') and has better flow than the Deepseek candidate.",
   "confidence": "high",
-  "confidenceScore": 0.882,
+  "confidenceScore": 0.885,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,26 +27,14 @@
   "slug": "upgrade-from-gatsby-to-astro",
   "locale": "fr",
   "candidateCommits": [
-    "3a1730a570af74047206e2d163dcc752d34ec8de",
-    "4ffe6d57597c39064f9c4f333254927ffc79af00",
-    "635b2c6ef9549316638bc58416d326adb71905ed",
-    "741649d117d008b83a97eeb7ffb840184b0cfd66"
+    "6a4baa26eb85c37b7d86d5fdfdfcf8cb626c67d6",
+    "c6c072aec2521359703e3e2cd3ad69bbcf12d04e"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "title: '# Leçons tirées de la mise à niveau de mon blog'",
-      "replacement": "title: \"Leçons tirées de la mise à niveau de mon blog\"",
-      "reason": "The frontmatter title should not contain a Markdown H1 hash symbol and should use standard quotes to match the source style.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale fr --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug upgrade-from-gatsby-to-astro --locale fr --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/fr/index.mdx failed structural parity with score 0.966 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/fr/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h2\":-1,\"headingSequence\":3,\"linkTargets\":7}. Differences: {\"h2\":-1,\"headingSequence\":3,\"linkTargets\":7}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug upgrade-from-gatsby-to-astro --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug upgrade-from-gatsby-to-astro --locale fr --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/fr/index.mdx failed structural parity with score 0.967 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/fr/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"links\":-1,\"linkTargets\":19}. Differences: {\"links\":-1,\"linkTargets\":19}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
