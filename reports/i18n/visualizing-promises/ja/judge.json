@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "4d6673b1c0910e86008cb753abbd824ffb461742",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 90,
+    "languagePurity": 100
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)",
+      "replacement": "![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)",
+      "reason": "The candidate correctly updated image paths to ../ but the other candidate missed some, making this one more consistent."
+    }
+  ],
+  "rationale": "Candidate 4d6673b1c0910e86008cb753abbd824ffb461742 is superior because it consistently applies the '../' prefix to all image assets in the MDX body, whereas the other candidate missed it for several images (Example #1, #2, #3). It also maintains a more natural technical tone in Japanese while strictly following the MDX structure requirements.",
+  "confidence": "low",
+  "confidenceScore": 0.327,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "visualizing-promises",
+  "locale": "ja",
+  "candidateCommits": [
+    "4d6673b1c0910e86008cb753abbd824ffb461742",
+    "ee9aa02c8a80cdffcdf391ede5176138fd08390b",
+    "087d65e9060f77a555d03a556ecc061fee4c62b9",
+    "58a80c15a849895b7169ed4dc906f9355ea1d105"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)",
+      "replacement": "![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)",
+      "reason": "The candidate correctly updated image paths to ../ but the other candidate missed some, making this one more consistent.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug visualizing-promises --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug visualizing-promises --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug visualizing-promises --locale ja --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2018-09-30--visualizing-promises/ja/index.mdx failed translation integrity checks:\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2018-09-30--visualizing-promises/ja/index.mdx:50 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2018-09-30--visualizing-promises/ja/index.mdx:94 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:34:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
