@@ -16,6 +16,29 @@ const networkProfile = {
   uploadThroughput: (5 * 1024 * 1024) / 8,
 };
 
+const deviceProfiles = [
+  {
+    name: "mobile",
+    context: {
+      viewport: { width: 390, height: 844 },
+      deviceScaleFactor: 2,
+      isMobile: true,
+      hasTouch: true,
+    },
+    cpuSlowdown: 4,
+  },
+  {
+    name: "desktop",
+    context: {
+      viewport: { width: 1440, height: 960 },
+      deviceScaleFactor: 1,
+      isMobile: false,
+      hasTouch: false,
+    },
+    cpuSlowdown: 1,
+  },
+];
+
 function percentile(values, p) {
   const sorted = [...values].sort((a, b) => a - b);
   const index = Math.min(sorted.length - 1, Math.floor(sorted.length * p));
@@ -56,13 +79,8 @@ function summarize(samples) {
   );
 }
 
-async function measureOne(browser, pageInfo, mode) {
-  const context = await browser.newContext({
-    viewport: { width: 390, height: 844 },
-    deviceScaleFactor: 2,
-    isMobile: true,
-    hasTouch: true,
-  });
+async function measureOne(browser, pageInfo, mode, device) {
+  const context = await browser.newContext(device.context);
   const page = await context.newPage();
   const client = await context.newCDPSession(page);
   let transferBytes = 0;
@@ -73,7 +91,7 @@ async function measureOne(browser, pageInfo, mode) {
     cacheDisabled: mode === "cold",
   });
   await client.send("Network.emulateNetworkConditions", networkProfile);
-  await client.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+  await client.send("Emulation.setCPUThrottlingRate", { rate: device.cpuSlowdown });
 
   client.on("Network.responseReceived", () => {
     requestCount += 1;
@@ -138,22 +156,25 @@ async function main() {
   const results = [];
 
   for (const pageInfo of pages) {
-    for (const mode of ["cold", "warm"]) {
-      const samples = [];
-      for (let index = 0; index < REPEATS; index += 1) {
-        samples.push(await measureOne(browser, pageInfo, mode));
-      }
-      results.push({
-        page: pageInfo.type,
-        path: pageInfo.path,
-        mode,
-        summary: summarize(samples),
-        samples: samples.map((sample) =>
-          Object.fromEntries(
-            Object.entries(sample).map(([key, value]) => [key, round(value)]),
+    for (const device of deviceProfiles) {
+      for (const mode of ["cold", "warm"]) {
+        const samples = [];
+        for (let index = 0; index < REPEATS; index += 1) {
+          samples.push(await measureOne(browser, pageInfo, mode, device));
+        }
+        results.push({
+          page: pageInfo.type,
+          path: pageInfo.path,
+          device: device.name,
+          mode,
+          summary: summarize(samples),
+          samples: samples.map((sample) =>
+            Object.fromEntries(
+              Object.entries(sample).map(([key, value]) => [key, round(value)]),
+            ),
           ),
-        ),
-      });
+        });
+      }
     }
   }
 

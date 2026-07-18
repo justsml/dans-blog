@@ -76,6 +76,11 @@
     transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   width: 100%;
 
+  /* Most archive cards start below the fold. Keep their space in the grid but
+     avoid style, layout, and paint work until a card is approaching the view. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 24rem;
+
   &::before {
     background:
       linear-gradient(90deg, color-mix(in srgb, var(--article-card-accent) 72%, transparent), rgba(255, 255, 255, 0.18), transparent);

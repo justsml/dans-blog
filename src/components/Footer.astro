@@ -280,6 +280,11 @@ function getArticleHref(article: ArticlePost) {
     overflow: hidden;
     padding-block: clamp(2.25rem, 5vw, 4.5rem) clamp(1.75rem, 5vw, 4rem);
     position: relative;
+
+    /* The footer is substantial but never contributes to initial content.
+       Its remembered intrinsic size prevents a jump when it approaches view. */
+    content-visibility: auto;
+    contain-intrinsic-size: auto 72rem;
   }
 
   .site-footer::before {

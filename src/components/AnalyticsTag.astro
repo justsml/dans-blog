@@ -41,12 +41,11 @@
     };
 
     addInteractionListeners();
-    fallbackTimer = globalThis.setTimeout(runOnce, 8000);
-
-    if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(runOnce, { timeout: 5000 });
-      return;
-    }
+    // Analytics is not needed to render or operate the page. Starting it from
+    // an idle callback still competes with Lighthouse's initial-load window,
+    // especially on a throttled mobile CPU. Load on a real interaction, with
+    // a later fallback for readers who stay on the page without interacting.
+    fallbackTimer = globalThis.setTimeout(runOnce, 12_000);
   }
 
   // from `local-hostname`

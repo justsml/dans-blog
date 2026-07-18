@@ -229,13 +229,6 @@ const shouldCropMobileBanner =
         />
       )
     }
-    <link
-      rel="stylesheet"
-      href="/files/fonts.css"
-      media="print"
-      onload="this.media='all'"
-    />
-    {/* Preload the LCP hero image — discovered at parse time, before layout */}
     {heroPreload && (
       <link
         rel="preload"
@@ -382,9 +375,60 @@ const shouldCropMobileBanner =
     />
     <AnalyticsTag />
     <script>
-      import { installPostEnhancementLifecycle } from "../layouts/postEnhancements";
+      let hasScheduledEnhancements = false;
 
-      installPostEnhancementLifecycle();
+      const loadPostEnhancements = () => {
+        if (hasScheduledEnhancements) return;
+        hasScheduledEnhancements = true;
+
+        void import("../layouts/postEnhancements").then(
+          ({ installPostEnhancementLifecycle }) => {
+            installPostEnhancementLifecycle();
+          },
+        );
+      };
+
+      const loadCodeFontStyles = () => {
+        if (document.querySelector('link[data-code-font-styles]')) return;
+
+        const fontStyles = document.createElement("link");
+        fontStyles.rel = "stylesheet";
+        fontStyles.href = "/files/fonts.css";
+        fontStyles.dataset.codeFontStyles = "";
+        document.head.appendChild(fontStyles);
+      };
+
+      const schedulePostWork = () => {
+        const codeBlock = document.querySelector("main.article pre");
+        if (codeBlock && "IntersectionObserver" in window) {
+          const codeObserver = new IntersectionObserver(
+            (entries) => {
+              if (!entries.some((entry) => entry.isIntersecting)) return;
+              codeObserver.disconnect();
+              loadCodeFontStyles();
+            },
+            { rootMargin: "800px 0px" },
+          );
+          codeObserver.observe(codeBlock);
+        } else if (codeBlock) {
+          loadCodeFontStyles();
+        }
+
+        for (const eventName of ["pointerdown", "keydown", "scroll", "touchstart"]) {
+          window.addEventListener(eventName, loadPostEnhancements, {
+            once: true,
+            passive: true,
+          });
+        }
+
+        window.setTimeout(loadPostEnhancements, 6_000);
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", schedulePostWork, { once: true });
+      } else {
+        schedulePostWork();
+      }
 
       /**
        * - Added a check to **prevent double-initialization**. Previously, the script ran twice (once on load, once on hydration), causing the "flash and vanish" bug.
