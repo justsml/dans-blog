@@ -1,0 +1,52 @@
+{
+  "selectedCommit": "93d1338ad7af5554398d3a1a021c9247e590a774",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically accurate and preserves the complex MDX structure, including SVGs and asset paths. The previous judge's suggestion to change a code comment from imperative to infinitive is a stylistic preference rather than a high-priority error in this context, as both are acceptable in technical documentation. The translation maintains Dan's direct style and correctly localizes all reader-facing content while keeping code blocks intact.",
+  "confidence": "high",
+  "confidenceScore": 0.883,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "docker-server-setup-notes",
+  "locale": "fr",
+  "candidateCommits": [
+    "2de64449af579a2ab269c1b14fdbe8685e0fd7fc",
+    "93d1338ad7af5554398d3a1a021c9247e590a774",
+    "437e8e005a2be12a6cf32167dbd466d84091b0ea",
+    "084af1ff856c3ecff79a19e9676eb457cd3a6e2b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "# Stockez les fichiers de la base de données sur un chemin local, en dehors du conteneur",
+      "replacement": "# Stocker les fichiers de la base de données sur un chemin local, en dehors du conteneur",
+      "reason": "Code comments should generally use the infinitive form in French for instructions.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug docker-server-setup-notes --locale fr --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug docker-server-setup-notes --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-server-setup-notes --locale fr --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2015-04-06--docker-server-setup-notes/fr/index.mdx failed structural parity with score 0.948 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2015-04-06--docker-server-setup-notes/fr/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":4}. Differences: {\"linkTargets\":4}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
