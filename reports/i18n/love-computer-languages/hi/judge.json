@@ -1,0 +1,52 @@
+{
+  "selectedCommit": "e5b1c9ed196d25c083e8b9ec7a7af54d8577cd26",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 92,
+    "technicalAccuracy": 95,
+    "coherence": 94,
+    "relevance": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 85,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the previously suggested fix for 'Kate Moss trim' (using 'छरहरा (trim)'). The MDX structure is perfectly preserved, including relative asset paths and component imports. Technical terms are handled well, and the tone remains consistent with the original. No further high-priority issues were identified.",
+  "confidence": "high",
+  "confidenceScore": 0.872,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "love-computer-languages",
+  "locale": "hi",
+  "candidateCommits": [
+    "0d79f40e9aeb41d95fcc9a98049458f8f9d1b484",
+    "e5b1c9ed196d25c083e8b9ec7a7af54d8577cd26",
+    "c75a3da8a8780cb705a258e023c3d9612dafdc72",
+    "d644f6a9f223bcab12ecbfa02a701d5d108eccf6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "केट मॉस ट्रिम जैसा है!",
+      "replacement": "केट मॉस की तरह छरहरा (trim) है!",
+      "reason": "The literal translation of 'Kate Moss trim' is a bit awkward in Hindi; using 'छरहरा' (slender/trim) captures the metaphor better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug love-computer-languages --locale hi --skip-global",
+    "output": ""
+  }
+}
