@@ -1,6 +1,6 @@
 # I18n Coverage
 
-Generated at `2026-07-18T06:40:20.630Z`.
+Generated at `2026-07-18T06:42:19.882Z`.
 
 ## Summary
 
@@ -8,7 +8,7 @@ Generated at `2026-07-18T06:40:20.630Z`.
 - Translation slots: 780/780 filled (100.0%)
 - Missing slots: 0
 - Fully translated posts: 78/78
-- Structure-valid translations: 586/780 (75.1%)
+- Structure-valid translations: 587/780 (75.3%)
 - Heading anchor link failures: 0 failing link(s) across 0/150 translation(s) with same-page heading links
 - Average structure score: 0.985
 - Minimum structure score: 0.675
@@ -23,7 +23,7 @@ Generated at `2026-07-18T06:40:20.630Z`.
 | ja | 78 | 0 | 100.0% | 55/78 | 0/15 | 0 | 0.977 | 0.675 |
 | ru | 78 | 0 | 100.0% | 59/78 | 0/15 | 0 | 0.985 | 0.809 |
 | de | 78 | 0 | 100.0% | 57/78 | 0/15 | 0 | 0.982 | 0.779 |
-| fr | 78 | 0 | 100.0% | 58/78 | 0/15 | 0 | 0.985 | 0.739 |
+| fr | 78 | 0 | 100.0% | 59/78 | 0/15 | 0 | 0.985 | 0.739 |
 | it | 78 | 0 | 100.0% | 60/78 | 0/15 | 0 | 0.987 | 0.747 |
 | ar | 78 | 0 | 100.0% | 62/78 | 0/15 | 0 | 0.987 | 0.809 |
 | he | 78 | 0 | 100.0% | 57/78 | 0/15 | 0 | 0.983 | 0.684 |
@@ -32,7 +32,7 @@ Generated at `2026-07-18T06:40:20.630Z`.
 ## Structural Health
 
 - Translated slots analyzed: 780
-- Structurally invalid translated slots: 194
+- Structurally invalid translated slots: 193
 - Average structure score: 0.985
 - Minimum structure score: 0.675
 
@@ -183,7 +183,6 @@ Generated at `2026-07-18T06:40:20.630Z`.
 | securely-using-environment-variables-in-nodejs | de | 0.983 | 1 | blockquotes:-1 | Blockquote count changed. |
 | stop-trying-to-make-async-await-happen | he | 0.984 | 2 | links:-1, linkTargets:+4 | Link count or href sequence changed across Markdown/HTML link formats. |
 | are-promises-broken | es | 0.985 | 2 | links:-1, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| pitfalls-in-promise-docs | fr | 0.985 | 2 | blockquotes:-1, linkTargets:+1 | Blockquote count changed. Link count or href sequence changed across Markdown/HTML link formats. |
 | javascript-promises-quiz | ja | 0.986 | 3 | blockquotes:-1, components:-1, componentSequence:+1 | Blockquote count changed. MDX component order changed. |
 | you-may-not-need-axios | es | 0.986 | 2 | links:-1, linkTargets:+8 | Link count or href sequence changed across Markdown/HTML link formats. |
 | you-may-not-need-axios | ru | 0.986 | 2 | links:-1, linkTargets:+8 | Link count or href sequence changed across Markdown/HTML link formats. |
@@ -253,7 +252,7 @@ No zero-coverage posts.
 
 - Missing locale slots with candidate reports waiting: 0
 - Existing translations without judge summaries: 118
-- Existing translations with structural parity failures: 194
+- Existing translations with structural parity failures: 193
 - Existing translations with heading anchor link failures: 0
 
 ### Candidate Reports Without Translation Files
