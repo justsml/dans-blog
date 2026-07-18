@@ -22,7 +22,7 @@ export function installPostEnhancementLifecycle() {
 export function bootPostEnhancements() {
   ensureArticleExternalLinksOpenInNewWindow();
   checkForEmptyShareCounts();
-  deferUntilAfterStartup(bootBannerEffects);
+  void bootBannerEffects();
   bootQuizEnhancements();
 }
 

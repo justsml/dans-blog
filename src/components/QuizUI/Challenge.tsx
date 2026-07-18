@@ -15,7 +15,10 @@ import { usePostHog } from "../PostHogEntry.tsx";
 
 import { createQuizProgress, type QuizProgress } from "./QuizProgress.ts";
 
-const SCREENSHOT_SCALE = 1.75;
+// Keep SSR's reserved answer-panel height close to the hydrated option list.
+// The former 1.75x screenshot scale reserved hundreds of extra pixels, then
+// collapsed once a visible challenge hydrated, creating avoidable CLS.
+const SCREENSHOT_SCALE = 1;
 
 function getPathname() {
   return typeof window === "undefined" ? "" : window.location.pathname;

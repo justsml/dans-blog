@@ -10,7 +10,9 @@
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
-  font-display: swap;
+  /* The article header is above the fold. Avoid swapping a late font into
+     that stack, which otherwise reflows the title and everything below it. */
+  font-display: optional;
 }
 
 /* From @fontsource-variable/playwrite-au-nsw */

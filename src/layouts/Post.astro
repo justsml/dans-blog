@@ -414,14 +414,36 @@ const shouldCropMobileBanner =
           loadCodeFontStyles();
         }
 
-        for (const eventName of ["pointerdown", "keydown", "scroll", "touchstart"]) {
-          window.addEventListener(eventName, loadPostEnhancements, {
-            once: true,
-            passive: true,
-          });
-        }
+        const initialScrollY = window.scrollY;
+        const scrollAwayThreshold = initialScrollY + 160;
+        const returnThreshold = initialScrollY + 48;
+        let hasScrolledAwayFromHero = false;
+        let heroFallbackTimer: number | undefined;
 
-        window.setTimeout(loadPostEnhancements, 6_000);
+        const activateHeroEffect = () => {
+          if (heroFallbackTimer) window.clearTimeout(heroFallbackTimer);
+          window.removeEventListener("scroll", watchForHeroReturn);
+          loadPostEnhancements();
+        };
+
+        const watchForHeroReturn = () => {
+          const currentScrollY = window.scrollY;
+
+          if (!hasScrolledAwayFromHero && currentScrollY >= scrollAwayThreshold) {
+            hasScrolledAwayFromHero = true;
+            return;
+          }
+
+          if (hasScrolledAwayFromHero && currentScrollY <= returnThreshold) {
+            activateHeroEffect();
+          }
+        };
+
+        // The decorative hero stays out of the initial render. It starts after
+        // ten seconds, or sooner only when a reader has left the hero and then
+        // returned to it.
+        window.addEventListener("scroll", watchForHeroReturn, { passive: true });
+        heroFallbackTimer = window.setTimeout(activateHeroEffect, 10_000);
       };
 
       if (document.readyState === "loading") {
