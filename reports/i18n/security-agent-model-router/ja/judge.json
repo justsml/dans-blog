@@ -1,0 +1,50 @@
+{
+  "selectedCommit": "4182ce5b00c6f8d48c59ce2f852979f204d168d0",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 92,
+    "technicalAccuracy": 95,
+    "coherence": 94,
+    "relevance": 95,
+    "translationQuality": 90,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 88,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high-priority fix for the empty title identified in the previous judge report. The translation is technically sound, preserves MDX structure, and maintains the direct, authoritative tone of the original English text. All tables, code blocks, and frontmatter fields are correctly handled.",
+  "confidence": "high",
+  "confidenceScore": 0.87,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "security-agent-model-router",
+  "locale": "ja",
+  "candidateCommits": [
+    "4182ce5b00c6f8d48c59ce2f852979f204d168d0",
+    "c617006706f6bba78b9c71948f777fa01a051829"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'セキュリティエージェントに必要なのはモデルランキングではなく、モデルルーターだ'",
+      "reason": "The frontmatter title was left empty in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug security-agent-model-router --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale ja --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ja/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ja/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":1,\"tableShapes\":1}. Differences: {\"tableColumns\":1,\"tableShapes\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
