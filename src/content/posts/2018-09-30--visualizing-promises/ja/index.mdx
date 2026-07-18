@@ -47,12 +47,12 @@ delay(1000).then(() => console.log("done"));
 
 ![Timeline showing delay 1000 then console log running after one second](../N_1000ms_log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(fn)
                     | console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Example #2/4
 
@@ -72,12 +72,12 @@ delay(1000).then(console.log("done"));
 
 ![Timeline showing console log running immediately before the delay finishes](../N_1000ms_!log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(null)
 console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Example #3/4
 
@@ -91,14 +91,14 @@ delay(3000).then(console.log);
 
 ![Timeline showing three delay promises resolving after one two and three seconds](../N_3000ms.webp)
 
-<!-- ```
+{/* ```
 delay(1000) ------|.then(console.log)
 delay(2000) ------|--------------------|.then(console.log)
 delay(3000) ------|--------------------|--------------------|.then(console.log)
 |-----------------|--------------------|--------------------|-------------------
 |                 |                    |                    |
 0msec           1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Example #4/4
 
@@ -110,7 +110,7 @@ Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 
 ![Timeline showing Promise all waiting for all three delay promises](../N_3000ms_PromiseAll.webp)
 
-<!--
+{/*
 
 ```
 delay(1000) ---| [resolved]------------------v
@@ -122,14 +122,14 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 0msec        1sec           2sec           3sec
 ```
 
--->
+*/}
 
 > クレジット:
 > 
 > - アニメーション非同期図: [Patrick Biffle](https://github.com/Piglacquer)
 > - 本記事のインスピレーション元: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
-<!-- <div class="challenge" title="Question #1: Meaning of life:">
+{/* <div class="challenge" title="Question #1: Meaning of life:">
 
   <ul class="options">
     <li>1</li>
@@ -139,4 +139,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
   </ul>
   <div class="description">What is the meaning of life?</div>
 
-</div> -->
+</div> */}

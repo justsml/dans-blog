@@ -47,12 +47,12 @@ delay(1000).then(() => console.log("done"));
 
 ![1000ms विलंब के बाद एक सेकंड में console.log चलने की टाइमलाइन](../N_1000ms_log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(fn)
                     | console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## उदाहरण #2/4
 
@@ -72,12 +72,12 @@ delay(1000).then(console.log("done"));
 
 ![विलंब समाप्त होने से ठीक पहले console.log चलने की टाइमलाइन](../N_1000ms_!log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(null)
 console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## उदाहरण #3/4
 
@@ -91,14 +91,14 @@ delay(3000).then(console.log);
 
 ![तीन विलंब Promises के क्रमशः एक, दो और तीन सेकंड बाद रिज़ॉल्व होने की टाइमलाइन](../N_3000ms.webp)
 
-<!-- ```
+{/* ```
 delay(1000) ------|.then(console.log)
 delay(2000) ------|--------------------|.then(console.log)
 delay(3000) ------|--------------------|--------------------|.then(console.log)
 |-----------------|--------------------|--------------------|-------------------
 |                 |                    |                    |
 0msec           1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## उदाहरण #4/4
 
@@ -110,7 +110,7 @@ Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 
 ![समयरेखा जो Promise.all को तीनों delay Promise के समाप्त होने का इंतज़ार करते हुए दिखाती है](../N_3000ms_PromiseAll.webp)
 
-<!--
+{/*
 
 ```
 delay(1000) ---| [resolved]------------------v
@@ -122,14 +122,14 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 0msec        1sec           2sec           3sec
 ```
 
--->
+*/}
 
 > क्रेडिट:
 >
 > - एनिमेटेड async आरेख: [Patrick Biffle](https://github.com/Piglacquer)
 > - इस लेख के लिए प्रेरणा: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
-<!-- <div class="challenge" title="प्रश्न #1: जीवन का अर्थ:">
+{/* <div class="challenge" title="प्रश्न #1: जीवन का अर्थ:">
 
   <ul class="options">
     <li>1</li>
@@ -139,4 +139,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
   </ul>
   <div class="description">जीवन का अर्थ क्या है?</div>
 
-</div> -->
+</div> */}

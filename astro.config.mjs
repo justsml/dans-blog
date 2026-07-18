@@ -4,7 +4,7 @@ import { globSync } from "tinyglobby";
 
 // import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
-import { unified } from "@astrojs/markdown-remark";
+import { unified } from "unified";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -43,6 +43,10 @@ export default defineConfig({
   },
   build: {
     format: "directory",
+    // The translation corpus produces thousands of static routes. Astro 7 defaults
+    // to rendering one route at a time, which makes local and Netlify deploys take
+    // prohibitively long.
+    concurrency: 8,
   },
   prefetch: {
     prefetchAll: false,
@@ -63,15 +67,6 @@ export default defineConfig({
     }),
   },
   vite: {
-    optimizeDeps: {
-      rolldownOptions: {
-        transform: {
-          define: {
-            "process.env.NODE_ENV": '"development"',
-          },
-        },
-      },
-    },
     build: {
       assetsInlineLimit: 2048, // 2kb - default is 4096
     },
