@@ -21,8 +21,8 @@ import {CodeTabs} from '../../../../components/CodeTabs';
 
 - 🧗‍♀️ [Für die Mutigen](#️-für-die-mutigen)
 - 🔄 [Der `:latest`‑Tanz](#-der-latest-tanz)
-- 🔐 [Secrets‑Management: Der richtige Weg](#-secrets-management-der-richtige-weg)
-- 🌐 [Netzwerk‑Gefahr](#-netzwerk-gefahr)
+- 🔐 [Secrets‑Management: Der richtige Weg](#-secrets-management)
+- 🌐 [Netzwerk‑Gefahr](#-netzwerkgefahr)
 - 🛡️ [Zugriffskontrollen](#️-zugriffskontrollen)
 - 🔍 [Monitoring & Verifikation](#-monitoring--verifikation)
 - ⏰ [Oft übersehene Tipps](#-oft-übersehene-tipps)
@@ -80,8 +80,8 @@ _Lassen Sie mich wissen, welche Werkzeuge Sie zum Aktualisieren von Docker‑Ima
 
 ## 🔐 Secrets Management
 
-- [Starke Secrets erzeugen](#generate-strong-secrets)
-- [Canary Tokens](#canary-tokens)
+- [Starke Secrets erzeugen](#starke-secrets-erzeugen)
+- [Canary Tokens](#canarytokens)
 - [Upgrade von `.env` zum macOS‑Schlüsselbund](#upgrade-from-env-to-macos-keychain)
 {/* - [Platzhalter‑Validierung](#placeholder-validation) */}
 
@@ -347,8 +347,8 @@ As with all security measures, it's critical that you **test and verify** your n
 
 Zugriffskontrollen sind ein zentraler Baustein zur Absicherung Ihrer Docker‑Dienste. Dazu gehören das Einschränken von Container‑Fähigkeiten & Berechtigungen, das Beschränken des Zugriffs auf den Docker‑Socket und weitere Maßnahmen.
 
-- [Begrenzung von Container‑Fähigkeiten](#begrenzung-von-container-fähigkeiten)  
-- [Docker‑Socket‑Zugriff](#docker-socket-zugriff)  
+- [Begrenzung von Container‑Fähigkeiten](#begrenzung-von-containerfähigkeiten)  
+- [Docker‑Socket‑Zugriff](#dockersocketzugriff)  
 - [Ländersperre!](#laendersperre)  
 - [Hardening CloudFlare Proxy Host](#hardening-cloudflare-proxy-host)
 
@@ -463,7 +463,7 @@ Um geo‑basierte Änderungen zu testen, kann ein VPN mit Standorten im gewünsc
 
 ### Sicherheit auf Anwendungsebene
 
-Sobald Ihre [network and host are security hardened,](#-network-hazard) Sie feststellen, dass noch mehr zu tun ist.
+Sobald Ihre [network and host are security hardened,](#-netzwerkgefahr) Sie feststellen, dass noch mehr zu tun ist.
 
 Jetzt müssen wir die „Anwendungs“-Ebene unserer Dienste betrachten.
 

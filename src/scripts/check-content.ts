@@ -58,6 +58,8 @@ type Finding = {
 
 const findings: Finding[] = [];
 const strict = process.argv.includes("--strict");
+// These MDX components intentionally render Markdown children (quiz slots and code tabs).
+const markdownChildComponents = new Set(["Challenge", "CodeTabs"]);
 const posts = readPosts();
 const routeBySlug = new Map(posts.map((post) => [post.slug, `/${post.slug}/`]));
 const knownPostRoutes = new Set(routeBySlug.values());
@@ -257,7 +259,7 @@ function checkDate(post: PostFile) {
 }
 
 function checkBodyHeadings(post: PostFile) {
-  const body = stripFencedMarkdown(post.body);
+  const body = stripMdxComments(stripFencedMarkdown(post.body));
   const lines = body.split(/\r?\n/);
   const markdownH1 = lines.findIndex((line) => /^#\s+\S/.test(line.trim()));
   if (markdownH1 >= 0) {
@@ -310,8 +312,8 @@ function checkAbsoluteInternalLinks(post: PostFile) {
 }
 
 function checkMarkdownInsideJsx(post: PostFile) {
-  const lines = post.body.split(/\r?\n/);
-  let jsxDepth = 0;
+  const lines = post.body.replace(/\{\/\*[\s\S]*?\*\/}/g, "").split(/\r?\n/);
+  const jsxStack: string[] = [];
   let componentStartLine = 0;
   let firstComponentStartLine = 0;
   const matches: number[] = [];
@@ -319,23 +321,29 @@ function checkMarkdownInsideJsx(post: PostFile) {
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
     const trimmed = line.trim();
+    const openingComponent = trimmed.match(/^<([A-Z][\w.:]*)(\s|>|$)/);
 
-    if (/^<[A-Z][\w.:]*(\s|>|$)/.test(trimmed) && !trimmed.includes("</")) {
-      jsxDepth += 1;
+    if (
+      openingComponent != null &&
+      !trimmed.includes("</") &&
+      !/\/\>\s*$/.test(trimmed)
+    ) {
+      jsxStack.push(openingComponent[1]);
       componentStartLine = index + 1;
       firstComponentStartLine ||= componentStartLine;
     }
 
     if (
-      jsxDepth > 0 &&
+      jsxStack.length > 0 &&
+      !jsxStack.some((component) => markdownChildComponents.has(component)) &&
       !trimmed.startsWith("{") &&
-      /(^|\s)(#{1,6}\s|\*\*[^*]+\*\*|_[^_]+_|\[[^\]]+\]\([^)]+\)|`[^`]+`)/.test(trimmed)
+      /^(#{1,6}\s|\*\*[^*]+\*\*|_[^_]+_|\[[^\]]+\]\([^)]+\)|`[^`]+`)/.test(trimmed)
     ) {
       matches.push(index + 1);
     }
 
-    if (jsxDepth > 0 && /^<\/[A-Z][\w.:]*>/.test(trimmed)) {
-      jsxDepth -= 1;
+    if (jsxStack.length > 0 && /^<\/[A-Z][\w.:]*>/.test(trimmed)) {
+      jsxStack.pop();
     }
   }
 
@@ -359,6 +367,10 @@ function isAllowedAbsoluteRoute(route: string) {
 
 function stripFencedMarkdown(body: string) {
   return body.replace(/(```|~~~)[\s\S]*?\1/g, "");
+}
+
+function stripMdxComments(body: string) {
+  return body.replace(/\{\/\*[\s\S]*?\*\/}/g, "");
 }
 
 function isValidIsoDate(value: string) {
