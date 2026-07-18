@@ -1,6 +1,6 @@
 # I18n Coverage
 
-Generated at `2026-07-18T05:57:08.413Z`.
+Generated at `2026-07-18T05:58:04.444Z`.
 
 ## Summary
 
@@ -8,8 +8,8 @@ Generated at `2026-07-18T05:57:08.413Z`.
 - Translation slots: 780/780 filled (100.0%)
 - Missing slots: 0
 - Fully translated posts: 78/78
-- Structure-valid translations: 572/780 (73.3%)
-- Heading anchor link failures: 161 failing link(s) across 24/150 translation(s) with same-page heading links
+- Structure-valid translations: 573/780 (73.5%)
+- Heading anchor link failures: 156 failing link(s) across 23/150 translation(s) with same-page heading links
 - Average structure score: 0.984
 - Minimum structure score: 0.667
 - Locales: es, hi, ja, ru, de, fr, it, ar, he, zh
@@ -20,7 +20,7 @@ Generated at `2026-07-18T05:57:08.413Z`.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | es | 78 | 0 | 100.0% | 57/78 | 1/15 | 7 | 0.985 | 0.768 |
 | hi | 78 | 0 | 100.0% | 60/78 | 5/15 | 31 | 0.984 | 0.768 |
-| ja | 78 | 0 | 100.0% | 53/78 | 6/15 | 44 | 0.976 | 0.667 |
+| ja | 78 | 0 | 100.0% | 54/78 | 5/15 | 39 | 0.976 | 0.667 |
 | ru | 78 | 0 | 100.0% | 57/78 | 2/15 | 7 | 0.985 | 0.809 |
 | de | 78 | 0 | 100.0% | 56/78 | 2/15 | 13 | 0.982 | 0.779 |
 | fr | 78 | 0 | 100.0% | 55/78 | 4/15 | 35 | 0.983 | 0.739 |
@@ -32,7 +32,7 @@ Generated at `2026-07-18T05:57:08.413Z`.
 ## Structural Health
 
 - Translated slots analyzed: 780
-- Structurally invalid translated slots: 208
+- Structurally invalid translated slots: 207
 - Average structure score: 0.984
 - Minimum structure score: 0.667
 
@@ -205,7 +205,6 @@ Generated at `2026-07-18T05:57:08.413Z`.
 | quiz-is-your-memory-rusty | zh | 0.987 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | you-may-not-need-axios | zh | 0.987 | 2 | links:-1, linkTargets:+7 | Link count or href sequence changed across Markdown/HTML link formats. |
 | announcing-exploithunter-app | ru | 0.988 | 1 | linkTargets:+4 | Link count or href sequence changed across Markdown/HTML link formats. |
-| one-weird-trick-to-speed-up-feature-teams | ja | 0.989 | 1 | linkTargets:+5 | Link count or href sequence changed across Markdown/HTML link formats. |
 | are-promises-broken | fr | 0.990 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-postgres-sql-mastery-pt2 | es | 0.990 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-postgres-sql-mastery-pt2 | ru | 0.990 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
@@ -252,8 +251,8 @@ Generated at `2026-07-18T05:57:08.413Z`.
 ## Heading Anchor Link Health
 
 - Translations with same-page heading links: 150
-- Translations with heading link failures: 24
-- Failing heading links: 161
+- Translations with heading link failures: 23
+- Failing heading links: 156
 
 ### Heading Anchor Link Failures
 
@@ -275,7 +274,6 @@ Generated at `2026-07-18T05:57:08.413Z`.
 | announcing-exploithunter-app | it | 8 | 5 | 0 | 5 | 0 | line 6: #gli-strumenti-degni-di-credito-non-fanno-tutti-lo-stesso-lavoro -> #gli-strumenti-degni-di-merito-non-stanno-tutti-facendo-lo-stesso-lavoro; line 7: #i-numeri-sono-pubblici-perché-anche-le-avvertenze-dovrebbero-esserlo -> #i-numeri-sono-pubblici-perché-anche-le-precisazioni-dovrebbero-esserlo; line 8: #il-benchmark-ha-catturato-il-benchmark -> #il-benchmark-ha-colto-il-benchmark |
 | announcing-exploithunter-app | he | 8 | 5 | 0 | 5 | 0 | line 6: #הכלים-הראויים-לאשראי-לא-כולם-עושים-אותה-עבודה -> #הכלים-ששווה-לזקוף-לזכותם-לא-כולם-עושים-את-אותה-העבודה; line 7: #המספרים-ציבוריים-כי-גם-הסייגים-צריכים-להיות -> #המספרים-ציבוריים-כי-גם-האזהרות-צריכות-להיות; line 8: #המדד-תפס-את-המדד -> #ה-benchmark-תפס-את-ה-benchmark |
 | docker-security-tips-for-self-hosting | ja | 10 | 5 | 5 | 0 | 0 | line 6: #️-for-the-brave -> #️-勇者へ; line 8: #-secrets-management -> #-シークレット管理; line 9: #-network-hazard -> #-ネットワークリスク |
-| one-weird-trick-to-speed-up-feature-teams | ja | 10 | 5 | 0 | 5 | 0 | line 10: #kvパターンを使うべき時 -> #kvパターンを使用すべき場合; line 11: #kvパターンを避けるべき時 -> #kvパターンを避けるべき場合; line 12: #kv以上が必要な時 -> #kv以上のものが必要な場合 |
 | announcing-exploithunter-app | ru | 8 | 4 | 0 | 4 | 0 | line 6: #инструменты-заслуживающие-доверия-не-все-делают-одно-и-то-же -> #инструменты-которые-стоит-упомянуть-не-все-делают-одно-и-то-же; line 7: #числа-публичны-потому-что-оговорки-тоже-должны-быть-публичны -> #цифры-публичны-потому-что-оговорки-тоже-должны-быть; line 8: #бенчмарк-поймал-бенчмарк -> #бенчмарк-поймал-сам-себя |
 | docker-security-tips-for-self-hosting | hi | 10 | 4 | 4 | 0 | 0 | line 8: #-secrets-management -> #-सीक्रेट्स-मैनेजमेंट; line 9: #-network-hazard -> #-नेटवर्क-खतरा; line 46: #generate-strong-secrets -> #मजबूत-सीक्रेट-जनरेट-करें |
 | docker-server-setup-notes | hi | 4 | 4 | 4 | 0 | 0 | line 21: #postgres-server -> #postgres-सर्वर; line 23: #mongodb-server -> #mongodb-सर्वर; line 25: #mysql-server -> #mysql-सर्वर |
@@ -292,8 +290,8 @@ No zero-coverage posts.
 
 - Missing locale slots with candidate reports waiting: 0
 - Existing translations without judge summaries: 118
-- Existing translations with structural parity failures: 208
-- Existing translations with heading anchor link failures: 24
+- Existing translations with structural parity failures: 207
+- Existing translations with heading anchor link failures: 23
 
 ### Candidate Reports Without Translation Files
 
