@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "5c5692cbd6fb05d6dca5530d12f823713e821c9f",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 92,
+    "languagePurity": 98
+  },
+  "suggestions": [],
+  "rationale": "The candidate 5c5692cbd6fb05d6dca5530d12f823713e821c9f is the best choice. It correctly handles the image path adjustments (../ instead of ./) which is a requirement for localized files in this project structure. It maintains all MDX structures, including tables and code blocks, and provides a natural, technically accurate Spanish translation that preserves Dan's direct tone. The other candidate failed to adjust image paths correctly.",
+  "confidence": "high",
+  "confidenceScore": 0.885,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "security-agent-model-router",
+  "locale": "es",
+  "candidateCommits": [
+    "5c5692cbd6fb05d6dca5530d12f823713e821c9f",
+    "0684b78b9b9937317d3292a6488e8a3d6d4356ba"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug security-agent-model-router --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale es --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/es/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/es/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":2,\"tableShapes\":2}. Differences: {\"tableColumns\":2,\"tableShapes\":2}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
