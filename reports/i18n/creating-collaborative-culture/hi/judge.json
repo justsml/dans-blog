@@ -1,0 +1,42 @@
+{
+  "selectedCommit": "f49134af2bcf6d524d0c608d65b4768c80fa2c71",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The candidate f49134af2bcf6d524d0c608d65b4768c80fa2c71 is the best choice because it provides a high-quality Hindi translation that feels natural while maintaining Dan's direct tone. It correctly handles the MDX asset paths (adding ../) and preserves the structure perfectly. Unlike the other candidate, it translates the metaphorical terms like 'Happy Honey Bees' and 'Swarm of murder hornets' into Hindi equivalents ('खुशहाल मधुमक्खियों' and 'हत्यारी भौंरों के झुंड'), which makes the content more accessible to a Hindi-speaking audience while keeping the meaning intact. It also correctly translates the frontmatter and headings.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "creating-collaborative-culture",
+  "locale": "hi",
+  "candidateCommits": [
+    "b8449ca7eee9a7e6185eef40efbea07d8b54d4fd",
+    "206a7f8835c08c4e62dc77ee012a8ba409983686",
+    "f49134af2bcf6d524d0c608d65b4768c80fa2c71",
+    "3f6de99db90bbe557c751d06defbb10d9c938432"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug creating-collaborative-culture --locale hi --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug creating-collaborative-culture --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug creating-collaborative-culture --locale hi --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--creating-collaborative-culture/hi/index.mdx failed translation integrity checks:\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--creating-collaborative-culture/hi/index.mdx:28 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:34:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
