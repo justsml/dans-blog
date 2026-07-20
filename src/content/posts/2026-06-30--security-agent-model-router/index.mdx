@@ -2,7 +2,7 @@
 title: "Security Agents Need Model Routers, Not Model Rankings"
 subTitle: "Measured model performance shows where each route earns its place in evidence-backed security work."
 date: 2026-06-30
-modified: 2026-07-19
+modified: 2026-07-20
 tags: [ai, llm, agents, security, evals, model-routing, computer-use, prompt-engineering, evidence]
 category: AI
 subCategory: Security
@@ -64,7 +64,7 @@ That is where the interesting differences show up.
 
 ## The Hard-Target Model Comparison
 
-The useful comparison is the same hard Juice Shop task through ExploitHunter's browser-origin application path. Every included row passed the strict evidence gate: provider-matched usage, positive tokens, persisted assistant text, a non-empty stream, Mastra messages, and model-inference spans. Where multiple qualifying results exist, the table reports their mean. Cost is model spend only.
+The useful comparison is the same hard Juice Shop task through ExploitHunter's browser-origin application path. Every included row passed the strict evidence gate: provider-matched usage, positive tokens, persisted assistant text, a non-empty stream, Mastra messages, and model-inference spans. Where multiple qualifying results exist, the table reports their mean.
 
 <figure class="breakout">
   <img src="./docker-lab-score-matrix.svg" alt="Matrix comparing judge score, model cost, runtime, and tool calls for eight model routes on the same hard Juice Shop task." />
@@ -75,14 +75,14 @@ The useful comparison is the same hard Juice Shop task through ExploitHunter's b
 |---|---:|---:|---:|---:|
 | **Kimi K3** | **10.0/10** | **$0.220184** | 223.4s | 8.0 |
 | Claude Opus 4.8 | **10.0/10** | $1.633301 | **115.9s** | 8.0 |
-| DeepSeek V4 Flash | 9.0/10 | $0.068251 | 543.5s | 55.0 |
+| DeepSeek V4 Flash | 9.33/10 | $0.058695 | 395.5s | 32.0 |
 | **GPT-5.6 Luna** | **8.67/10** | **$0.016304** | **52.2s** | **3.3** |
-| GPT OSS 120B | 8.67/10 | $0.046249 | 60.6s | 5.0 |
 | GPT-5.6 Terra | 8.0/10 | $0.124046 | 107.5s | 6.0 |
 | GPT-5.6 Sol | 8.0/10 | $0.368514 | 229.6s | 10.0 |
 | Qwen 3.6 Flash | 5.5/10 | $0.085678 | 96.9s | 16.5 |
+| GPT OSS 120B | 5.0/10 | $0.062529 | 36.6s | 4.3 |
 
-Kimi is the best top-score value. Opus buys speed rather than a higher score. Luna and GPT OSS tie at **8.67/10**; Luna is cheaper, faster, and uses fewer tools. DeepSeek reaches **9/10**, but its long trajectory makes it the slowest route in the table. Terra and Sol both score **8/10**; Terra costs about one third as much and finishes in less than half the time.
+Kimi is the best top-score value. Opus buys speed rather than a higher score. DeepSeek reaches **9.33/10**, the strongest score below the perfect routes. Luna supplies the best cost-speed balance. GPT OSS is the fastest route in the table, but a **5/10** average with a wide quality swing is not default-route evidence. Terra and Sol both score **8/10**; Terra costs about one third as much and finishes in less than half the time.
 
 ## The Cost-Quality Frontier
 
@@ -93,7 +93,7 @@ The cost picture is where the story gets spicy.
   <figcaption>The strict cost-quality frontier contains Luna, DeepSeek, and Kimi. Every other route costs more without improving the score.</figcaption>
 </figure>
 
-The cost axis uses model spend only; judge spend is excluded. Luna is the efficient starting point. DeepSeek buys a small quality lift for roughly **4.2×** Luna's cost and **10.4×** its runtime. Kimi buys the final point and still costs far less than Opus. The frontier is a routing policy hiding in a scatterplot.
+Luna is the efficient starting point. DeepSeek buys a two-thirds-point quality lift for roughly **3.6×** Luna's cost and **7.6×** its runtime. Kimi buys the final two-thirds of a point and still costs far less than Opus. The frontier is a routing policy hiding in a scatterplot.
 
 ## Thinking Budgets Help Until They Don't
 
@@ -230,7 +230,7 @@ Local Gemma 4 E4B looked weak in some vulnerability-discovery contexts and stron
 The product answer is a router:
 
 - start hard browser research with Luna when cost and turnaround matter
-- use GPT OSS as the low-cost alternative when Luna is unavailable or a second model is useful
+- keep GPT OSS supervised until its quality variance is under control
 - move to DeepSeek when the quality lift is worth a much longer tool trajectory
 - use Kimi for maximum quality without paying the Opus premium
 - use Opus when maximum quality and faster completion matter more than cost
@@ -329,8 +329,8 @@ Here is the model-routing policy I would use from this data today:
 | Route | Primary model | Use for | Guardrail |
 |---|---|---|---|
 | Efficient browser default | GPT-5.6 Luna | Hard browser research where quality, cost, and turnaround all matter | Scores 8.67/10; escalate when the missing quality matters |
-| Low-cost alternate | GPT OSS 120B | A second inexpensive research route with strong quality | Same 8.67/10 score as Luna, but modestly slower and more expensive |
-| Higher-quality investigation | DeepSeek V4 Flash | Cases where 9/10 quality justifies a long, tool-heavy trajectory | Expect roughly 55 calls and nine minutes on this task |
+| Supervised cheap alternate | GPT OSS 120B | Fast exploratory work where a weak result will be independently checked | The 5/10 average and wide quality swing do not support default routing |
+| Higher-quality investigation | DeepSeek V4 Flash | Cases where 9.33/10 quality justifies a longer, tool-heavy trajectory | Expect roughly 32 calls and six and a half minutes on this task |
 | Maximum-quality value | Kimi K3 | Hard investigations where the full 10/10 result matters | Slower than Opus, but 7.4× cheaper in this comparison |
 | Maximum-quality speed | Claude Opus 4.8 | Urgent hard investigations where time costs more than tokens | Same 10/10 as Kimi; pay $1.41 more to save about 108 seconds |
 | Family-constrained route | GPT-5.6 Terra | When a GPT-5.6 route is required | Prefer over Sol here: same 8/10, lower cost, lower runtime, fewer calls |
@@ -401,4 +401,8 @@ The router should be boring enough to trust.
 - /Users/dan/code/oss/agent-security/evals/results/browser-e2e/guard-gpt-oss-action-approval-triplicate-20260719/report.md
 - /Users/dan/code/oss/agent-security/evals/results/browser-e2e/qwen-3-6-flash-none-finalized-canonical-repeat-20260719/report.md
 - /Users/dan/code/oss/agent-security/evals/results/browser-e2e/tuning-hard-canonical-frontier-retry-20260719/report.md
+- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-tuning-20260719/REPORT.md
+- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-controls-20260719/report.md
+- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-deepseek-serial-retry-20260719/report.md
+- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md
 */}
