@@ -1,0 +1,81 @@
+---
+title: "Less effort, please!"
+subTitle: "GPT-5.6 Luna thought harder, finished faster, and ruined a perfectly good cost-saving theory."
+date: 2026-07-28
+modified: 2026-07-28
+tags: [ai, llm, agents, security, evals, reasoning, performance, model-routing]
+category: AI
+subCategory: Security
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+related:
+  - security-agent-model-router
+  - announcing-exploithunter-app
+  - llm-evals-are-broken
+---
+
+AI products have trained us to turn every knob clockwise.
+
+More context. More tools. More tokens. More thinking.
+
+Apparently intelligence is a guitar amp.
+
+While testing [ExploitHunter.app](https://github.com/justsml/ExploitHunter.app), I expected `low` reasoning effort to be the sensible default. Same model, fewer expensive thoughts, faster result.
+
+This theory had everything except the decency to survive contact with the eval.
+
+## Same model. Same target. Different effort.
+
+I sent GPT-5.6 Luna through the same hard Juice Shop task three times at `low` effort and three times at `xhigh`. The route, prompt blocks, target, tool surface, and 96-step reporting budget stayed the same.
+
+The lower-effort agent used fewer tools. Everything else went the wrong way:
+
+| GPT-5.6 Luna | Judge | Runtime | Cost | Tool calls |
+|---|---:|---:|---:|---:|
+| `low` | 6.0/10 | 67.3s | $0.01656 | 1.7 |
+| `xhigh` | **8.67/10** | **52.2s** | **$0.01630** | 3.3 |
+
+`xhigh` scored **2.67 points better**, finished about **15 seconds sooner**, and cost slightly less.
+
+I asked for more thinking and received a smaller bill. Very inconsiderate of the narrative.
+
+<p class="inset">
+Reasoning tokens are not the work. The completed investigation is the work.
+</p>
+
+## Thinking can be cheaper than hesitating
+
+For a chatbot, extra thought mostly costs time and tokens.
+
+For an agent, it changes behavior.
+
+At `low`, Luna often verified authorization, performed a baseline probe—or merely asked for approval—and stopped. Safe. Cheap-looking. Not especially useful to the person who requested an investigation.
+
+At `xhigh`, it used roughly twice as many tool calls. That sounds less efficient until those calls produce better evidence and let the run finish sooner. Avoiding a tool call is not optimization when the missing call was the job.
+
+ExploitHunter grades more than the final paragraph. It records whether the agent used the right tools, stayed inside the authorized target, preserved evidence, respected budgets, and stopped. That last verb is doing real work.
+
+A security agent can overthink, repeat probes, and develop a rich emotional relationship with `curl`. It can also underthink itself into procedural paralysis. Both failure modes are polite ways to avoid finishing.
+
+## Effort is a routing decision
+
+The practical policy is still boring:
+
+1. Use low effort for bounded work with an obvious next action.
+2. Use higher effort when the agent must choose among tools, interpret incomplete evidence, and decide when it has enough.
+3. Measure the whole run: quality, cost, latency, tool use, and proof.
+
+Do not choose `xhigh` because the task says "security." Do not choose `low` because a pricing page taught you one-dimensional arithmetic. Choose the setting your task-shaped evals can defend.
+
+More reasoning is a capability. It is not a warranty.
+
+But less reasoning is not automatically efficiency. Sometimes it is just a faster way to become uncertain, ask permission again, and leave the actual work for the next run.
+
+Less effort, please.
+
+---
+
+*Results verified July 28, 2026. Figures average three model-quality-eligible browser-path runs per setting against the same hard Juice Shop task. Prompt hashes, target, model route, and budgets matched. The runs span nearby ExploitHunter source revisions, so treat the magnitude as directional rather than as a laboratory-isolated model claim.*
