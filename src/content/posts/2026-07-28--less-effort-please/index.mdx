@@ -1,8 +1,8 @@
 ---
 title: "Less effort, please!"
-subTitle: "GPT-5.6 Luna thought harder, finished faster, and ruined a perfectly good cost-saving theory."
+subTitle: "AI Zen Master Move: Zero your thinking"
 date: 2026-07-28
-modified: 2026-07-28
+modified: 2026-07-29
 tags: [ai, llm, agents, security, evals, reasoning, performance, model-routing]
 category: AI
 subCategory: Security
@@ -21,57 +21,65 @@ AI products have trained us to turn every knob clockwise.
 
 More context. More tools. More tokens. More thinking.
 
-Apparently intelligence is a guitar amp.
+<blockquote class="inset">
+  Apparently intelligence is a guitar amp. Let's turn it up to 11!
+</blockquote>
 
-While testing [ExploitHunter.app](https://github.com/justsml/ExploitHunter.app), I expected `low` reasoning effort to be the sensible default. Same model, fewer expensive thoughts, faster result.
+While testing [ExploitHunter.app](https://github.com/justsml/ExploitHunter.app), I ran GPT-5.6 Sol through the same browser-based XSS hunt at every supported thinking level: `none`, `low`, `medium`, `high`, and `xhigh`.
 
-This theory had everything except the decency to survive contact with the eval.
+I expected a tidy staircase. More thinking would buy more quality, more latency, etc.
 
-## Same model. Same target. Different effort.
+The staircase was apparently built by M.C. Escher.
 
-I sent GPT-5.6 Luna through the same hard Juice Shop task three times at `low` effort and three times at `xhigh`. Same prompts. Same tools. Same budget. Six runs across a few nearby app commits—not lab coats, but plenty good enough to ruin my theory.
+## Same model. Same hunt. Five personalities.
 
-The lower-effort agent used fewer tools. Everything else went the wrong way:
+These are route-level results: a refusal counts as a failed run, because in production it does not become successful merely because a spreadsheet politely excludes it.
 
-| GPT-5.6 Luna | Judge | Runtime | Cost | Tool calls |
-|---|---:|---:|---:|---:|
-| `low` | 6.0/10 | 67.3s | $0.01656 | 1.7 |
-| `xhigh` | **8.67/10** | **52.2s** | **$0.01630** | 3.3 |
+| Thinking | Answers returned | Judge | Runtime | Cost | Tool calls |
+|---|---:|---:|---:|---:|---:|
+| `none` | 3/3 | **100%** | 278s | $0.316 | 11.0 |
+| `low` | 2/3 | 64.2% | 103s | **$0.144** | **3.3** |
+| `medium` | 2/3 | 65.3% | **91s** | $0.177 | 4.3 |
+| `high` | 2/2 | 97.9% | 99s | $0.169 | 4.0 |
+| `xhigh` | 3/3 | 95.5% | 92s | $0.172 | 4.3 |
 
-`xhigh` scored **2.67 points better**, finished about **15 seconds sooner**, and cost slightly less.
+Yes, `none` received full marks.
 
-I asked for more thinking and received a smaller bill. Very inconsiderate of the narrative.
+It also took three times as long as `xhigh`, used two and a half times as many tool calls, and burned nearly three times as many tokens.
+
+We did not remove thinking. We moved it into the tool loop and paid retail.
 
 <p class="inset">
-Reasoning tokens are not the work. The completed investigation is the work.
+Turn thinking off and the model may start thinking out loud with your infrastructure.
 </p>
 
-## Thinking can be cheaper than hesitating
+## “None” is not nothing
 
-For a chatbot, extra thought mostly costs time and tokens.
+Without internal reasoning, Sol still found its way to strong answers. It just wandered there through repeated browser actions, observations, and course corrections.
 
-For an agent, it changes behavior.
+That route was accurate. It was also operationally absurd.
 
-At `low`, Luna often verified authorization, performed a baseline probe—or merely asked for approval—and stopped. Safe. Cheap-looking. Not especially useful to the person who requested an investigation.
+This is the part token accounting tends to miss. Reasoning tokens have a visible price, so they look expensive. Hesitation gets dispersed across tool calls, screenshots, context, retries, and wall-clock time. Apparently waste becomes sophisticated once it has several billing columns.
 
-At `xhigh`, it used roughly twice as many tool calls. That sounds less efficient until those calls produce better evidence and let the run finish sooner. Avoiding a tool call is not optimization when the missing call was the job.
+`low` and `medium` found another optimization: refusing one of three runs. Their successful answers were good. Their actual routes succeeded two-thirds of the time. An omitted result remains wonderfully cheap right up until someone wanted the result.
 
-ExploitHunter grades more than the final paragraph. Did the agent use the right tools? Save the evidence? Stay on target? Know when to stop? That last one does real work.
+Meanwhile, `high` and `xhigh` occupied the useful middle: roughly the same runtime, cost, and tool count, with strong answers. `high` edged `xhigh` on quality, though it has only two unique replacement runs. Promising, not canonization material.
 
-A security agent can overthink, repeat probes, and develop a rich emotional relationship with `curl`. It can also underthink itself into procedural paralysis. Both failure modes are polite ways to avoid finishing.
+There is no monotonic ladder here. There is a behavioral switchboard.
 
-## Effort is a routing decision
+## Optimize indecision
 
-The practical policy is still boring:
+Thinking effort is not a quality slider. It changes where the model searches, how often it acts, whether it refuses, and when it decides the job is finished.
 
-1. Use low effort for bounded work with an obvious next action.
-2. Use higher effort when the agent must choose among tools, interpret incomplete evidence, and decide when it has enough.
-3. Measure the whole run: quality, cost, latency, tool use, and proof.
+So measure the whole route:
 
-Do not choose `xhigh` because the task says "security." Do not choose `low` because a pricing page taught you one-dimensional arithmetic. Choose the setting your task-shaped evals can defend.
+- Did it answer?
+- Was the answer good?
+- How long did the investigation take?
+- What did it spend while visibly “not thinking”?
 
-More reasoning is a capability. It is not a warranty.
+The cheapest reasoning setting was not the cheapest reliable agent. The highest setting was not the highest-scoring one. And `none` was less a lack of thought than an expensive public performance of it.
 
-But less reasoning is not automatically efficiency. Sometimes it is just a faster way to become uncertain, ask permission again, and leave the actual work for the next run.
+Do not minimize reasoning tokens. Minimize total indecision.
 
 Less effort, please.
