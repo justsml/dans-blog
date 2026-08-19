@@ -2,7 +2,7 @@
 title: "Don't Fear the Model Router"
 subTitle: "Route to the best model with confidence."
 date: 2026-07-02
-modified: 2026-07-03
+modified: 2026-08-19
 tags: [ai, llm, agents, mastra, evals, model-routing, testing, observability, production]
 category: AI
 subCategory: AI Infrastructure
@@ -36,7 +36,7 @@ Mastra gives us useful surfaces for turning that hypothesis into something testa
 
 They make agent behavior visible enough to argue with.
 
-## What Are We Testing?
+## What are we testing?
 
 The model router from the earlier post has three obvious specialist routes:
 
@@ -72,7 +72,7 @@ For a router, I usually start with four axes:
 
 That last column matters. "Other" is where the production scar tissue lives.
 
-## Make the Router Decision Scorable
+## Make the router decision scorable
 
 If the router only produces a final answer, it is hard to know why it behaved the way it did. You can still score the output, but you are guessing about the decision.
 
@@ -86,7 +86,7 @@ type RouterDecision = {
 };
 ```
 
-The production system does not need to show this JSON to users. It can be an internal step, a workflow handoff, or a trace span. The scorer just needs a surface.
+The production system does not need to show this JSON to users. It can be an internal step, a workflow handoff, or a trace span. The scorer only needs access to it.
 
 Here is a deliberately small Mastra agent that chooses a route:
 
@@ -118,9 +118,9 @@ Do not answer the user request. Only choose the route.`,
 
 Yes, this is a little artificial. Good. Evals reward boring seams.
 
-When the router decision is explicit, you can test the route before you test the downstream specialist. That is how you find out whether the problem is the router, the selected model, the prompt, the tool surface, or the final answer scorer.
+When the router decision is explicit, you can test the route before the downstream specialist. That separates router failures from failures in the selected model, prompt, tools, or final-answer scorer.
 
-## Write a Scorer That Catches the Boring Failure
+## Write a scorer that catches the boring failure
 
 Mastra's [`createScorer`](https://mastra.ai/reference/evals/create-scorer) can use JavaScript functions, LLM judge prompts, or both. Start with functions whenever the failure is deterministic. They are cheaper, faster, and less mysterious.
 
@@ -198,7 +198,7 @@ That scorer is not glamorous. That is the point.
 
 If the router cannot consistently produce valid JSON and pick the obvious specialist on a tiny test set, there is no reason to trust it with production traffic. You do not need a philosopher-model grading ontology. You need the equivalent of a smoke alarm with a battery in it.
 
-## Run the Small Eval Loop First
+## Run the small eval loop first
 
 Mastra's [`runEvals`](https://mastra.ai/reference/evals/run-evals) is the fast loop. Give it a target, test cases, scorers, and a concurrency limit. It runs the target against the data and returns aggregate scores.
 
@@ -263,13 +263,13 @@ It is not enough for a mature system, but it is enough to prevent the most embar
 Cost, speed, quality, and other all show up here:
 
 - Cost: the router model can stay cheap if accuracy holds.
-- Speed: the eval can enforce timeouts or record latency in the harness.
+- Speed: the eval can enforce timeouts or record latency in the runner.
 - Quality: route accuracy and final answer quality are separate scores.
 - Other: JSON validity, allowed tools, safety, and traceability get their own checks.
 
 Do not roll all of that into one "quality" score. Averages are where useful failures go to retire.
 
-## Add an LLM Judge Only Where It Earns Its Keep
+## Add an LLM judge only where it earns its keep
 
 Some router behavior is subjective. A request can be legitimately ambiguous:
 
@@ -277,7 +277,7 @@ Some router behavior is subjective. A request can be legitimately ambiguous:
 Read these logs and tell me why the deploy failed.
 ```
 
-Is that `code` because debugging? `long-context` because logs? `general` because summary? The right route depends on the tool surface and your product promise.
+Is that `code` because it is debugging? Is it `long-context` because of the logs? Or is it `general` because the user asked for a summary? The right route depends on the available tools and what your product promises.
 
 This is where an LLM judge can help, but only with a tight rubric. Mastra scorers can mix function steps and prompt-object steps. Use functions for structure, then use a judge for the part that actually needs judgment.
 
@@ -325,7 +325,7 @@ This scorer costs money because it calls a judge model. That is fine when the ju
 
 Do not use it to check if JSON parses.
 
-## Promote Good Cases Into a Dataset
+## Promote good cases into a dataset
 
 Hard-coded eval arrays are fine at the beginning. Eventually, your examples become product assets. The failed customer ticket, the weird support conversation, the prompt injection attempt, the request that used to route correctly before last Thursday.
 
@@ -399,7 +399,7 @@ The moment you have a dataset, you can stop treating eval cases as throwaway scr
 
 That is when evals start feeling less like "test files for prompts" and more like product memory.
 
-## Run Experiments Against the Router
+## Run experiments against the router
 
 Once the dataset exists, use [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) to run it against a registered agent, workflow, or scorer.
 
@@ -448,7 +448,7 @@ Instead of "the new router seems better," you can say:
 
 That is an engineering conversation. There are tradeoffs. You can decide whether the trade is worth it.
 
-## Score Live Behavior, But Do Not Confuse It With Ground Truth
+## Score live behavior, but do not confuse it with ground truth
 
 Mastra can also attach scorers directly to agents and workflow steps. Live scorers run asynchronously and store score results in your configured database, with sampling controls so you do not score every production response unless you mean to.
 
@@ -477,7 +477,7 @@ It usually cannot tell you route accuracy, because production traffic does not a
 
 That distinction matters. Live scoring is monitoring. Dataset experiments are controlled tests. You want both, but they answer different questions.
 
-## What to Measure After Route Accuracy
+## What to measure after route accuracy
 
 Route accuracy is the first rung. It tells you whether the request went to the expected specialist. It does not tell you whether the specialist did good work.
 
@@ -516,7 +516,7 @@ Score the decision. Score the path. Score the answer.
 
 If you only score the answer, the model can pass by accident.
 
-## The Router Should Get More Boring Over Time
+## The router should get more boring over time
 
 The first routing prompt is usually a paragraph of judgment calls. That is fine for a prototype.
 
@@ -534,7 +534,7 @@ Sometimes that means a better model. Sometimes it means a tighter prompt. Someti
 
 That is the whole point of measuring behavior. You stop arguing from taste and start arguing from evidence.
 
-## A Practical Starting Checklist
+## A practical starting checklist
 
 If you are building a Mastra router today, I would start here:
 
@@ -550,9 +550,7 @@ The average matters less than the failure cluster.
 
 If every regression is in long-context policy synthesis, you do not have "a worse router." You have a route boundary problem. If every failed case uses a specific tool, you have a tool contract problem. If every cheap model fails the same two ambiguous cases, you may need escalation logic instead of a more expensive default.
 
-This is where evals become useful. Not as a ceremony. Not as a dashboard that makes everyone feel temporarily adult.
-
-As a way to find the shape of the system.
+This is where evals become useful. They are not a ceremony or a dashboard that makes everyone feel temporarily adult. They show you which part of the system is failing.
 
 ## Resources
 

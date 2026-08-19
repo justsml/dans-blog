@@ -1,8 +1,8 @@
 ---
-title: "Less effort, please!"
-subTitle: "AI Zen Master Move: Zero your thinking"
+title: "Less effort, please"
+subTitle: "Turning reasoning off did not remove the work. It moved the work into the tool loop."
 date: 2026-07-28
-modified: 2026-07-29
+modified: 2026-08-19
 tags: [ai, llm, agents, security, evals, reasoning, performance, model-routing]
 category: AI
 subCategory: Security
@@ -27,11 +27,11 @@ More context. More tools. More tokens. More thinking.
 
 While testing [ExploitHunter.app](https://github.com/justsml/ExploitHunter.app), I ran GPT-5.6 Sol through the same browser-based XSS hunt at every supported thinking level: `none`, `low`, `medium`, `high`, and `xhigh`.
 
-I expected a tidy staircase. More thinking would buy more quality, more latency, etc.
+I expected a tidy staircase. More thinking would buy more quality and cost more time.
 
 The staircase was apparently built by M.C. Escher.
 
-## Same model. Same hunt. Five personalities.
+## Same model, same hunt, five personalities
 
 These are route-level results: a refusal counts as a failed run, because in production it does not become successful merely because a spreadsheet politely excludes it.
 
@@ -53,13 +53,13 @@ We did not remove thinking. We moved it into the tool loop and paid retail.
 Turn thinking off and the model may start thinking out loud with your infrastructure.
 </p>
 
-## “None” is not nothing
+## "None" is not nothing
 
 Without internal reasoning, Sol still found its way to strong answers. It just wandered there through repeated browser actions, observations, and course corrections.
 
 That route was accurate. It was also operationally absurd.
 
-This is the part token accounting tends to miss. Reasoning tokens have a visible price, so they look expensive. Hesitation gets dispersed across tool calls, screenshots, context, retries, and wall-clock time. Apparently waste becomes sophisticated once it has several billing columns.
+Token accounting tends to miss this. Reasoning tokens have a visible price, so they look expensive. Hesitation hides in tool calls, screenshots, retries, larger context, and wall-clock time. Apparently waste becomes sophisticated once it has several billing columns.
 
 `low` and `medium` found another optimization: refusing one of three runs. Their successful answers were good. Their actual routes succeeded two-thirds of the time. An omitted result remains wonderfully cheap right up until someone wanted the result.
 
@@ -76,7 +76,7 @@ So measure the whole route:
 - Did it answer?
 - Was the answer good?
 - How long did the investigation take?
-- What did it spend while visibly “not thinking”?
+- What did it spend while visibly "not thinking"?
 
 The cheapest reasoning setting was not the cheapest reliable agent. The highest setting was not the highest-scoring one. And `none` was less a lack of thought than an expensive public performance of it.
 

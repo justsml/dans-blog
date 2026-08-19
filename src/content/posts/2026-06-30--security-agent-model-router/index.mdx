@@ -2,7 +2,7 @@
 title: "Security Agents Need Model Routers, Not Model Rankings"
 subTitle: "Measured model performance shows where each route earns its place in evidence-backed security work."
 date: 2026-06-30
-modified: 2026-07-20
+modified: 2026-08-19
 tags: [ai, llm, agents, security, evals, model-routing, computer-use, prompt-engineering, evidence]
 category: AI
 subCategory: Security
@@ -28,20 +28,20 @@ That is not a leaderboard problem.
 It is a routing problem.
 
 <p class="inset">
-The question is not "which model is best?" The question is "which model should own this kind of work, under this budget, with this tool surface, and what scorer would catch it lying?"
+The question is not "which model is best?" The question is "which model should own this work under this budget, with these tools, and what scorer would catch it lying?"
 </p>
 
 The eval suite exercises an agentic security workflow: Juice Shop vulnerability sweeps, Docker lab scenarios, network service misconfiguration checks, human-style planning prompts, skill-recall tests, and model-tool behavior probes.
 
 The results are more interesting than a winner.
 
-Cheap models can be genuinely useful. Premium models are not automatically better. Some local models can plan well when the tool surface is tight. Some very capable models become tiny HTTP-probe treadmills. Some failures that look like "model bad" are actually harness, provider, JSON, artifact, or evidence-persistence failures.
+Cheap models can be useful. Premium models are not automatically better. Some local models plan well when they get a small, explicit set of tools. Some capable models become tiny HTTP-probe treadmills. And some failures blamed on the model actually come from the runner, provider, JSON parser, or evidence store.
 
 That is the part worth studying.
 
 ---
 
-## What Was Measured
+## What was measured
 
 This is not a public universal benchmark. It is a product-shaped eval suite for a security agent. The target is not to prove that one model is globally superior. The target is to answer a narrower engineering question:
 
@@ -62,7 +62,7 @@ Did the model call tools? Did it stay in scope? Did it cite artifacts? Did it pr
 
 That is where the interesting differences show up.
 
-## The Hard-Target Model Comparison
+## The hard-target model comparison
 
 The useful comparison is the same hard Juice Shop task through ExploitHunter's browser-origin application path. Every included row passed the strict evidence gate: provider-matched usage, positive tokens, persisted assistant text, a non-empty stream, Mastra messages, and model-inference spans. Where multiple qualifying results exist, the table reports their mean.
 
@@ -84,7 +84,7 @@ The useful comparison is the same hard Juice Shop task through ExploitHunter's b
 
 Kimi is the best top-score value. Opus buys speed rather than a higher score. DeepSeek reaches **9.33/10**, the strongest score below the perfect routes. Luna supplies the best cost-speed balance. GPT OSS is the fastest route in the table, but a **5/10** average with a wide quality swing is not default-route evidence. Terra and Sol both score **8/10**; Terra costs about one third as much and finishes in less than half the time.
 
-## The Cost-Quality Frontier
+## The cost-quality frontier
 
 The cost picture is where the story gets spicy.
 
@@ -95,7 +95,7 @@ The cost picture is where the story gets spicy.
 
 Luna is the efficient starting point. DeepSeek buys a two-thirds-point quality lift for roughly **3.6×** Luna's cost and **7.6×** its runtime. Kimi buys the final two-thirds of a point and still costs far less than Opus. The frontier is a routing policy hiding in a scatterplot.
 
-## Thinking Budgets Help Until They Don't
+## Thinking budgets help until they don't
 
 The Juice Shop effort sweeps are useful because they hold the target steady and vary effort/max-token settings.
 
@@ -123,11 +123,11 @@ For Kimi K2.7, enough budget mattered a lot. For GPT OSS, medium/32k was the swe
 
 In a security agent, behavior is part of quality.
 
-## Computer Use Is a Contract, Not a Vibe
+## Computer use is a contract, not a vibe
 
 The phrase "computer use" makes this sound like one capability. It is not.
 
-In this harness, "using the computer" meant a small set of product tools:
+In these tests, "using the computer" meant a small set of product tools:
 
 - HTTP probing
 - artifact access
@@ -207,7 +207,7 @@ That is why tool discipline belongs in the score. If a model gets the answer wit
 
 The domain smoke test made the same point from the opposite direction. Six models answered "Tell me about danlevy.net." Only DeepSeek V4 Flash and Gemma 4 26B recorded fresh `webSearchTool` calls. Kimi, GLM, Qwen, and GPT OSS produced readable summaries, but no recorded scan evidence. That should be scored as a freshness failure, not a writing failure.
 
-## Planning Has Different Winners
+## Planning has different winners
 
 Planning is a different workload from target discovery.
 
@@ -237,7 +237,7 @@ The product answer is a router:
 - prefer Terra over Sol for this task family until Sol demonstrates a quality advantage
 - keep Qwen and local models attached to narrower tasks where they have earned the route
 
-## A Better Prompt Is Generic Method, Not the Answer Key
+## A better prompt gives the method, not the answer key
 
 Security evals are unusually easy to contaminate. If the prompt names the vulnerable path, the model did not discover anything. It followed a sign.
 
@@ -282,9 +282,9 @@ Also try the report owned by the other organization.
 
 That is not a prompt. That is the answer key wearing a fake mustache.
 
-## The Tool Chain That Made the Results Useful
+## The tool chain that made the results useful
 
-The useful part of the harness is not the model call. It is the surrounding discipline.
+The model call is the easy part. The run records, evidence, budgets, and checks make the result useful.
 
 The network target is launched locally:
 
@@ -322,7 +322,7 @@ The exact schema can change. The principle should not.
 
 If a security agent cannot emit a stable run record, artifact references, cost, latency, tool counts, scope state, and scorer-visible findings, then the eval will quietly collapse back into reading tea leaves from a transcript.
 
-## The Router I Would Ship
+## The router I would ship
 
 Here is the model-routing policy I would use from this data today:
 
@@ -350,7 +350,7 @@ The failure policy is just as important:
 | Command output contains answer but final text omits it | "tool succeeded" | extraction/reporting failure |
 | Prompt names the vulnerable path | "model discovery" | contaminated eval |
 
-## What This Means
+## What this means
 
 The old way to compare models is to ask: Which one scored highest?
 
@@ -368,13 +368,13 @@ The better questions are:
 
 That framing turns a pile of model runs into a system design.
 
-Security agents do not need a champion model. They need a control plane: scoped prompts, cheap first-pass routes, selective escalation, evidence artifacts, stop conditions, and honest evals that keep the answer key outside the room.
+Security agents do not need a champion model. They need scoped prompts, cheap first-pass routes, selective escalation, saved evidence, stop conditions, and evals that keep the answer key outside the room.
 
 The agent can be clever.
 
 The router should be boring enough to trust.
 
-## Image Plan
+## Image plan
 
 1. **Model Routing Board**: a clean command-center matrix showing tasks flowing to cheap default, aggressive hunter, config verifier, premium escalation, and local planning lanes.
 2. **Evidence Frontier**: a cost-quality chart where points are connected only when the model preserved evidence, not just when it produced text.

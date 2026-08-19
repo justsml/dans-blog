@@ -2,7 +2,7 @@
 title: "Auto-Tune Your LLM Judge"
 subTitle: "Measure the evaluator's variance, then rebuild its prompt from zero."
 date: 2026-08-11
-modified: 2026-08-11
+modified: 2026-08-19
 tags: [ai, llm, agents, evals, prompt-engineering, testing, observability, model-routing, production]
 category: AI
 subCategory: AI Infrastructure
@@ -17,17 +17,17 @@ related:
   - less-effort-please
 ---
 
-Your LLM judge or Guardrail just hit a high of 94%!
+Your LLM judge or guardrail just hit 94%.
 
 Great! I think!
 
 Run it again. 82%? Wait, what? Again, 91%. Again, 97%. Again, 89%. Fuck!
 
-Oof, that is a lot of variance. 15%, or roughly one in six scores is a coin flip! Over a 7-day week that is over a full day's worth of random noise (lies) pretending to be meaningful signal. (Stats friends, yes, I know the binomial distribution is not uniform. This is a blog post for humans, allow me some rhetorical artistic license.)
+That 15-point spread is not a rounding error. It is noise pretending to be a result. You cannot tell whether the evaluator improved, regressed, or merely woke up in a different mood.
 
-Imagine if your medical or car insurance denied claims 15% of the time. Oh wait, bad example. Imagine if your dinner order was wrong 15% of the time. We don't have to imagine that. We have all been there. And generally we don't go back to that restaurant. We don't trust it. We don't recommend it.
+Imagine if a restaurant got your order wrong often enough that you checked the bag in the parking lot every time. You would stop trusting the restaurant. Yet teams will put the same evaluator in CI and treat each verdict as measurement.
 
-But for LLM evaluators, randomness is a bug, not a feature. It is a bug that can be fixed. And it is fixable without changing the model or the task. You just need to measure the variance and experiment with prompt changes to drive the number as close to 0 as possible.
+For LLM evaluators, randomness is a bug. You can often reduce it without changing the model or the task. Measure repeated runs, change one part of the evaluator, and keep only changes that reduce decision flips without hurting accuracy.
 
 Most teams tune the model producing the answer. Fewer teams tune the model grading it.
 
@@ -37,7 +37,7 @@ If the judge is noisy, every experiment downstream is noisy too. You cannot tell
 
 So I started treating the evaluator as its own optimization problem.
 
-Not “write a better prompt.” An actual measured loop:
+Not "write a better prompt." A measured loop:
 
 1. Run the same cases repeatedly and establish baseline variance.
 2. Give the results to an agent such as Codex or Claude Code.
@@ -105,7 +105,7 @@ That is the whole idea. The details matter, but the loop is not complicated.
 <figcaption>Measure first. Change one thing. Run it again. Anything more complicated should have to justify itself.</figcaption>
 </figure>
 
-## Start With Variance
+## Start with variance
 
 Accuracy tells you how often the evaluator agrees with a known answer. Variance tells you whether it gives the same answer twice.
 
@@ -137,7 +137,7 @@ Variance is only harmless when it cannot change the decision.
 
 For pairwise evaluators, run both `A/B` and `B/A`. Research has repeatedly found [position bias in LLM judges](https://arxiv.org/abs/2406.07791). Hide the model and provider names too. There is also evidence of [self-preference bias](https://arxiv.org/abs/2410.21819), which is a polite academic way of saying models sometimes like answers that sound like them.
 
-## Build an Eval for the Evaluator
+## Build an eval for the evaluator
 
 The tuning loop needs known answers. Otherwise, it can reduce variance by becoming consistently wrong.
 
@@ -175,7 +175,7 @@ type EvaluatorCase = {
 
 Tags are useful here. A change can improve the overall score while making one important failure class worse. If unsupported claims are the expensive failure, track them separately.
 
-## Give the Loop to an Agent
+## Give the loop to an agent
 
 This is exactly the kind of work Codex and Claude Code are good at.
 
@@ -227,7 +227,7 @@ The important part is that every iteration leaves behind an experiment record:
 
 Save the failed experiments too. Otherwise, the next tuning run will waste time rediscovering them.
 
-## Now Delete the Prompt
+## Now delete the prompt
 
 Optimizing the current prompt is useful, but it carries a bias: every instruction already in the prompt looks important because somebody added it for a reason.
 
@@ -249,7 +249,7 @@ Run that as-is.
 
 The failures tell you what this specific model needs to be told. Add one instruction or example for the largest failure class, then run it again. Keep the addition only if the numbers improve.
 
-This is much more useful than copying a “best LLM judge prompt” from another project. A small model may need explicit steps and examples. A stronger reasoning model may perform better with a short rubric. One model may stabilize when it explains the evidence before choosing a verdict. Another may become more consistent when it returns only structured fields.
+This is more useful than copying a "best LLM judge prompt" from another project. A small model may need explicit steps and examples. A stronger reasoning model may perform better with a short rubric. One model may stabilize when it explains the evidence before choosing a verdict. Another may become more consistent when it returns only structured fields.
 
 The optimal prompt belongs to the model and configuration being tested.
 
@@ -266,9 +266,9 @@ That includes:
 
 Treat that whole set as the evaluator configuration. Changing the prompt while ignoring the model settings is not controlled testing.
 
-## Fix the Failure You Measured
+## Fix the failure you measured
 
-The agent should not add generic “be accurate” instructions. It should respond to specific failures.
+The agent should not add generic "be accurate" instructions. It should respond to specific failures.
 
 | Measured failure | Experiment to try |
 |---|---|
@@ -284,11 +284,11 @@ Some checks should not use an LLM at all.
 
 JSON validity, citation existence, allowed tool names, answer-key positions, numeric bounds, and exact identifiers should be checked in code. A model adds cost and variance to questions your program can answer exactly.
 
-Use the LLM where semantic judgment is actually required: factual support, completeness, relevance, or whether an explanation matches the intended audience.
+Use the LLM where the check requires judgment, such as factual support, completeness, relevance, or whether an explanation matches the intended audience.
 
 Even then, several small binary questions are often more stable than one overall score from 1–10.
 
-## Optimize Accuracy, Stability, and Cost Together
+## Optimize accuracy, stability, and cost together
 
 Driving variance toward zero is the goal, but not by itself.
 
@@ -327,7 +327,7 @@ return result;
 
 Measure the whole route. A cheap first call followed by an expensive retry on 80% of cases is not a cheap evaluator.
 
-## Know When to Stop
+## Know when to stop
 
 The loop can run forever. Do not let it.
 
@@ -339,11 +339,11 @@ Stop when one of these happens:
 - accuracy and stability stop improving together
 - further improvements cost more than they are worth
 
-Then run the winner against the untouched holdout set. Review every verdict that changed from the incumbent. If the holdout result holds, promote the complete configuration—not just the prompt—and keep the old version available for regression testing.
+Then run the winner against the untouched holdout set. Review every verdict that changed from the incumbent. If the result holds, promote the complete configuration, not only the prompt. Keep the old version for regression testing.
 
 Rerun the evaluator eval whenever the model, prompt, reasoning settings, schema, or provider behavior changes. Model upgrades can change evaluator behavior even when your prompt does not.
 
-## The Practical Version
+## The practical version
 
 If you already have an LLM evaluator, this is enough to start:
 
@@ -358,6 +358,4 @@ If you already have an LLM evaluator, this is enough to start:
 
 [GEPA-style optimization](https://developers.openai.com/cookbook/examples/partners/self_evolving_agents/autonomous_agent_retraining#b-prompt-optimization-with-genetic-pareto-gepa) can automate a more advanced search over prompts. That may be useful later. I would still start with the simpler loop because it makes every change easy to inspect and revert.
 
-The evaluator is part of the product. Test it like one.
-
-Get the variance down. Keep the accuracy up. Then make it cheaper.
+The evaluator is part of the product. Test it like one. A stable liar is still a liar, so accuracy comes first. Then reduce the decision flips and the bill.
