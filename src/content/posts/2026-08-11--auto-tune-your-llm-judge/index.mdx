@@ -21,7 +21,7 @@ Your LLM judge or Guardrail just hit a high of 94%!
 
 Great! I think!
 
-Run it again. 82% accurate? Wait, what? Again, 91%. Again, 97%. Again, 89%. Fuck!
+Run it again. 82%? Wait, what? Again, 91%. Again, 97%. Again, 89%. Fuck!
 
 Oof, that is a lot of variance. 15%, or roughly one in six scores is a coin flip! Over a 7-day week that is over a full day's worth of random noise (lies) pretending to be meaningful signal. (Stats friends, yes, I know the binomial distribution is not uniform. This is a blog post for humans, allow me some rhetorical artistic license.)
 
@@ -29,147 +29,141 @@ Imagine if your medical or car insurance denied claims 15% of the time. Oh wait,
 
 But for LLM evaluators, randomness is a bug, not a feature. It is a bug that can be fixed. And it is fixable without changing the model or the task. You just need to measure the variance and experiment with prompt changes to drive the number as close to 0 as possible.
 
-Watch 94% become 91%, then 96%, then strangely enthusiastic about Candidate A.
+Most teams tune the model producing the answer. Fewer teams tune the model grading it.
 
-You did not build a ruler. You hired another model.
+That is backwards.
 
-Most teams tune the system and freeze the evaluator. They polish the task prompt, swap generators, add tools, and route traffic across models—all while one inherited judge prompt decides whether any of it worked.
+If the judge is noisy, every experiment downstream is noisy too. You cannot tell whether a prompt improved, whether a model regressed, or whether run four was just random.
 
-That judge is stochastic, prompt-sensitive, model-specific, occasionally biased, and sending invoices.
+So I started treating the evaluator as its own optimization problem.
 
-It needs an eval of its own.
+Not “write a better prompt.” An actual measured loop:
 
-<blockquote class="breakout">
-  <p>Do not optimize what the judge scores until you know what makes the judge change its mind.</p>
-</blockquote>
+1. Run the same cases repeatedly and establish baseline variance.
+2. Give the results to an agent such as Codex or Claude Code.
+3. Let it research likely causes and propose a prompt or configuration change.
+4. Run the evaluator again.
+5. Keep the change only when variance drops without accuracy, cost, or latency getting worse.
+6. Repeat.
 
-The useful move is not asking an agent to “improve this rubric.” Give Codex or Claude Code the harness, human labels, run history, and a budget. Have it measure the judge, research one failure cluster, propose one experiment, and keep only changes that survive held-out data.
-
-Better accuracy is the obvious prize. The less obvious wins are fewer flips, shorter prompts, cheaper models, faster CI, and an evaluator whose behavior you can explain without waving your hands near a dashboard.
-
-I verified the linked tooling guidance in August 2026. The method should age better than the model names.
-
----
-
-## The Eval Has an Eval Now
-
-The generator transforms an input into an answer. The judge transforms that answer into a decision. Both are model calls. Only one usually gets treated like software.
-
-Fix that first.
+That is the whole idea. The details matter, but the loop is not complicated.
 
 <figure class="breakout">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 620" role="img" aria-labelledby="judge-loop-title judge-loop-desc">
-  <title id="judge-loop-title">The judge auto-tuning loop</title>
-  <desc id="judge-loop-desc">Human-labeled cases establish truth. The current judge is repeatedly measured, failures are clustered, an agent proposes a minimal change, validation rejects weak candidates, and a sealed holdout controls promotion.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 430" role="img" aria-labelledby="judge-loop-title judge-loop-desc">
+  <title id="judge-loop-title">The evaluator tuning loop</title>
+  <desc id="judge-loop-desc">Run a baseline repeatedly, analyze variance, change one prompt or configuration variable, validate the result, and repeat only when measurements improve.</desc>
   <defs>
-    <filter id="judge-shadow" x="-20%" y="-20%" width="140%" height="160%">
-      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#020617" flood-opacity="0.55"/>
-    </filter>
-    <linearGradient id="judge-bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#071018"/>
-      <stop offset="1" stop-color="#111827"/>
-    </linearGradient>
     <marker id="judge-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L0,6 L9,3 z" fill="#67e8f9"/>
     </marker>
     <style>{`
-      .jl-bg { fill: url(#judge-bg); }
-      .jl-card { fill: #111c2b; stroke: #334155; stroke-width: 2; filter: url(#judge-shadow); }
-      .jl-card-hot { fill: #20152a; stroke: #f472b6; stroke-width: 2; filter: url(#judge-shadow); }
-      .jl-kicker { font: 800 14px ui-sans-serif, system-ui, sans-serif; letter-spacing: .12em; fill: #67e8f9; }
-      .jl-title { font: 800 24px ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; }
+      .jl-bg { fill: #081018; }
+      .jl-card { fill: #111c2b; stroke: #334155; stroke-width: 2; }
+      .jl-card-active { fill: #211528; stroke: #f472b6; stroke-width: 2; }
+      .jl-step { font: 800 14px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #f472b6; }
+      .jl-title { font: 800 23px ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; }
       .jl-body { font: 500 16px ui-sans-serif, system-ui, sans-serif; fill: #cbd5e1; }
-      .jl-number { font: 900 24px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #f472b6; }
       .jl-line { fill: none; stroke: #67e8f9; stroke-width: 4; marker-end: url(#judge-arrow); }
-      .jl-loop { fill: none; stroke: #f472b6; stroke-width: 3; stroke-dasharray: 9 9; marker-end: url(#judge-arrow); }
-      .jl-gate { fill: #0f2b27; stroke: #34d399; stroke-width: 2; }
-      .jl-stop { fill: #30171e; stroke: #fb7185; stroke-width: 2; }
+      .jl-return { fill: none; stroke: #f472b6; stroke-width: 3; stroke-dasharray: 8 8; marker-end: url(#judge-arrow); }
     `}</style>
   </defs>
+  <rect class="jl-bg" width="1200" height="430" rx="18"/>
 
-  <rect class="jl-bg" width="1200" height="620" rx="24"/>
-  <text class="jl-kicker" x="58" y="62">MEASURE THE MEASURER</text>
-  <text class="jl-title" x="58" y="98">A judge configuration earns promotion. It does not inherit it.</text>
+  <rect class="jl-card" x="48" y="82" width="236" height="140" rx="14"/>
+  <text class="jl-step" x="72" y="114">01</text>
+  <text class="jl-title" x="72" y="150">Baseline</text>
+  <text class="jl-body" x="72" y="180">Same inputs. Same config.</text>
+  <text class="jl-body" x="72" y="204">Many repeated runs.</text>
 
-  <rect class="jl-card" x="58" y="154" width="236" height="142" rx="18"/>
-  <text class="jl-number" x="82" y="190">01</text>
-  <text class="jl-title" x="82" y="224">Human truth</text>
-  <text class="jl-body" x="82" y="254">Real cases, expert labels,</text>
-  <text class="jl-body" x="82" y="278">known disagreements.</text>
+  <path class="jl-line" d="M296 152 H350"/>
 
-  <path class="jl-line" d="M306 225 H362"/>
+  <rect class="jl-card" x="364" y="82" width="236" height="140" rx="14"/>
+  <text class="jl-step" x="388" y="114">02</text>
+  <text class="jl-title" x="388" y="150">Analyze</text>
+  <text class="jl-body" x="388" y="180">Variance, wrong answers,</text>
+  <text class="jl-body" x="388" y="204">cost, and latency.</text>
 
-  <rect class="jl-card" x="376" y="154" width="236" height="142" rx="18"/>
-  <text class="jl-number" x="400" y="190">02</text>
-  <text class="jl-title" x="400" y="224">Baseline × 5</text>
-  <text class="jl-body" x="400" y="254">Repeat, reverse order,</text>
-  <text class="jl-body" x="400" y="278">record cost and latency.</text>
+  <path class="jl-line" d="M612 152 H666"/>
 
-  <path class="jl-line" d="M624 225 H680"/>
+  <rect class="jl-card-active" x="680" y="82" width="236" height="140" rx="14"/>
+  <text class="jl-step" x="704" y="114">03</text>
+  <text class="jl-title" x="704" y="150">Experiment</text>
+  <text class="jl-body" x="704" y="180">Research the failures.</text>
+  <text class="jl-body" x="704" y="204">Change one variable.</text>
 
-  <rect class="jl-card-hot" x="694" y="154" width="236" height="142" rx="18"/>
-  <text class="jl-number" x="718" y="190">03</text>
-  <text class="jl-title" x="718" y="224">Agent experiment</text>
-  <text class="jl-body" x="718" y="254">Cluster failures. Research.</text>
-  <text class="jl-body" x="718" y="278">Change one thing.</text>
+  <path class="jl-line" d="M928 152 H982"/>
 
-  <path class="jl-line" d="M942 225 H998"/>
+  <rect class="jl-card" x="996" y="82" width="156" height="140" rx="14"/>
+  <text class="jl-step" x="1020" y="114">04</text>
+  <text class="jl-title" x="1020" y="150">Validate</text>
+  <text class="jl-body" x="1020" y="180">Keep or</text>
+  <text class="jl-body" x="1020" y="204">revert.</text>
 
-  <rect class="jl-card" x="1012" y="154" width="130" height="142" rx="18"/>
-  <text class="jl-number" x="1036" y="190">04</text>
-  <text class="jl-title" x="1036" y="224">Validate</text>
-  <text class="jl-body" x="1036" y="254">Fresh cases.</text>
-  <text class="jl-body" x="1036" y="278">Hard gates.</text>
-
-  <path class="jl-loop" d="M1077 310 V372 C1077 408 1048 426 1012 426 H500 C464 426 446 408 446 372 V320"/>
-  <text class="jl-body" x="602" y="416">Failed candidates return to the experiment log</text>
-
-  <rect class="jl-gate" x="694" y="470" width="236" height="94" rx="18"/>
-  <text class="jl-title" x="718" y="510">Sealed holdout</text>
-  <text class="jl-body" x="718" y="540">Promotion authority</text>
-
-  <rect class="jl-stop" x="376" y="470" width="236" height="94" rx="18"/>
-  <text class="jl-title" x="400" y="510">Experiment log</text>
-  <text class="jl-body" x="400" y="540">Keep the failures too</text>
+  <path class="jl-return" d="M1074 240 V308 H482 V238"/>
+  <text class="jl-body" x="594" y="344">Repeat until the improvement stops being worth the cost.</text>
 </svg>
-<figcaption>The agent may inspect development failures and propose changes. It does not get to rewrite human truth or peek at the final exam.</figcaption>
+<figcaption>Measure first. Change one thing. Run it again. Anything more complicated should have to justify itself.</figcaption>
 </figure>
 
-That outer loop is a **meta-eval**: an evaluation of the evaluator.
+## Start With Variance
 
-It measures four things before any prompt earns another paragraph:
+Accuracy tells you how often the evaluator agrees with a known answer. Variance tells you whether it gives the same answer twice.
 
-| Axis | Measure | The trap |
-|---|---|---|
-| Quality | human agreement, false accepts, false rejects | one good mean hides the dangerous misses |
-| Stability | repeat agreement, score spread, A/B order flips | Tuesday passes what Wednesday rejects |
-| Cost | tokens, retries, dollars per 1,000 grades | grading costs more than generation |
-| Speed | p50/p95 latency, timeouts, parse failures | CI becomes a geological process |
+You need both.
 
-Then comes **other**, the drawer where production keeps its knives: auditability, privacy, portability, debuggability, and whether a human can understand why a score moved.
+For a basic pass/fail evaluator, I would collect at least 50 representative cases and run each case five times. Ten is better when the evaluator is cheap. Include known-good outputs, known-bad outputs, borderline cases, malformed outputs, and a few examples that have caused real problems.
 
-A judge with 95% human agreement and a 12% flip rate is not automatically better than one with 93% agreement and a 1% flip rate. If the judge blocks deploys, false rejects hurt. If it approves refunds or medical claims, false accepts hurt more.
+Record each result separately. Do not average away the thing you are trying to find.
 
-The loss function belongs to the product. The model does not get a vote.
+| Metric | What it tells you |
+|---|---|
+| Human agreement | whether the evaluator is generally correct |
+| Repeat agreement | whether it gives the same verdict across runs |
+| Score spread | how far numeric scores move on identical inputs |
+| False accepts | how often bad output passes |
+| False rejects | how often good output fails |
+| Invalid output rate | how often the evaluator itself breaks |
+| Cost and latency | whether the proposed fix is practical |
 
-## Do Not Tune Fog
+If your evaluator returns a numeric score, track the mean and standard deviation per case. Also track how often the score crosses your pass/fail threshold.
 
-Before the agent touches a prompt, give it a real target.
+That last number matters more than the average.
 
-Start with 50–100 production-shaped cases: clean successes, obvious failures, borderline calls, malformed outputs, long inputs, domain traps, and the incidents everyone remembers by first name.
+Scores of `78, 79, 81, 82, 80` look stable in a chart. If the pass threshold is 80, that evaluator changed its decision three times while looking reasonably well-behaved.
 
-Each case needs the input, candidate output, trusted verdict, reasons, and useful tags. Expert task? Expert labels.
+<p class="inset">
+Variance is only harmless when it cannot change the decision.
+</p>
+
+For pairwise evaluators, run both `A/B` and `B/A`. Research has repeatedly found [position bias in LLM judges](https://arxiv.org/abs/2406.07791). Hide the model and provider names too. There is also evidence of [self-preference bias](https://arxiv.org/abs/2410.21819), which is a polite academic way of saying models sometimes like answers that sound like them.
+
+## Build an Eval for the Evaluator
+
+The tuning loop needs known answers. Otherwise, it can reduce variance by becoming consistently wrong.
+
+Use human-reviewed cases and split them before the agent starts changing anything:
+
+| Split | Purpose |
+|---|---|
+| Development | lets the agent inspect failures and propose changes |
+| Validation | decides whether a proposed change is actually better |
+| Holdout | catches overfitting before you replace the production judge |
+
+The holdout set should not be available to the tuning agent. If the agent can read every answer, eventually it will optimize for those exact answers. This is not an LLM-specific problem. We have been overfitting test sets for decades.
+
+Use expert reviewers when the task requires expert judgment. Keep examples where reviewers disagree. If qualified humans cannot agree on the verdict, the evaluator may not be broken. The rubric may be unclear.
+
+[OpenAI's grader guidance](https://developers.openai.com/api/docs/guides/graders) recommends comparing model graders against trusted ground-truth grades and adding edge cases as they are discovered. [Anthropic recommends the same basic calibration](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents): compare LLM judges with human experts and inspect the transcripts rather than trusting the aggregate score.
 
 <details>
-<summary>A compact case format</summary>
+<summary>A small evaluator test case</summary>
 
 ```typescript
-type JudgeCase = {
+type EvaluatorCase = {
   id: string;
   input: unknown;
-  candidate: string;
-  reference?: string;
-  human: {
+  outputToEvaluate: string;
+  expected: {
     verdict: "pass" | "fail";
     reasons: string[];
   };
@@ -179,274 +173,191 @@ type JudgeCase = {
 
 </details>
 
-Keep human disagreements. They are data.
+Tags are useful here. A change can improve the overall score while making one important failure class worse. If unsupported claims are the expensive failure, track them separately.
 
-If qualified reviewers cannot agree after seeing the same evidence and instructions, you may not have a judge-prompt problem. You may have an underspecified task wearing an eval framework as a hat.
+## Give the Loop to an Agent
 
-[OpenAI's grader guidance](https://developers.openai.com/api/docs/guides/graders) recommends testing model graders against trusted grades and adding discovered edge cases over time. [Anthropic makes the same operational point](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents): calibrate LLM judges against human experts, then keep reading the transcripts.
+This is exactly the kind of work Codex and Claude Code are good at.
 
-Split the cases before tuning:
+The loop involves reading code, running commands, comparing JSONL results, researching known evaluator failure modes, editing a prompt, and doing it again. It is tedious enough that people stop after two attempts. Agents do not care.
 
-| Split | Who can see it? | Job |
-|---|---|---|
-| Development | tuning agent | find and understand failures |
-| Validation | experiment runner | select promising configurations |
-| Holdout | promotion gate only | catch overfitting and authorize release |
+Give the agent:
 
-If 90% of the set is an easy pass, your judge can reach 90% accuracy by developing the work ethic of a rubber stamp. Balance the cases or weight the failures that matter.
+- the evaluator implementation
+- the development and validation cases
+- the command that runs the eval
+- the current results, including raw outputs
+- the allowed configuration variables
+- the maximum experiment budget
+- explicit instructions not to edit labels or inspect the holdout set
 
-## Measure Before You Meddle
+Then ask for one hypothesis per experiment.
 
-Run the incumbent judge five times per case. That is enough to expose obvious wobble without setting your token budget on fire. Use more repeats when contenders are close or the decision carries real risk.
-
-For pairwise grading, run both orders. Blind provider and model identity unless it is part of the rubric.
-
-Position checks are not ceremonial. Research has found [position bias across LLM judges and tasks](https://arxiv.org/abs/2406.07791), and other work has measured [self-preference bias](https://arxiv.org/abs/2410.21819). A judge that prefers the left answer—or its own accent—is measuring more than quality.
-
-Record the whole executable unit:
-
-- model and exact version, when available
-- prompt version and hash
-- reasoning effort and sampling configuration
-- examples and their order
-- output schema and token limit
-- verdict, raw response, tokens, latency, and errors
-
-<p class="inset">
-A prompt hash without the model and runtime configuration is half a provenance trail.
-</p>
-
-Now calculate agreement, precision, recall, the confusion matrix, repeatability, score variance, order-flip rate, invalid output rate, and cost/latency distributions. Slice them by failure tag.
-
-Do not publish a naked mean. Anthropic's work on [statistical treatment of model evals](https://www.anthropic.com/research/statistical-approach-to-model-evals) recommends reporting standard errors so tiny apparent wins do not get promoted into engineering facts.
-
-If the error bars overlap and the challenger costs twice as much, you did not discover a better judge.
-
-You discovered a more expensive anecdote.
-
-## Put an Agent in the Lab Coat
-
-This loop fits coding agents unusually well. The work is patient, tool-heavy, and slightly rude to human attention spans.
-
-The agent gets five responsibilities:
-
-1. Reproduce the baseline.
-2. Cluster disagreements and unstable cases by failure mechanism.
-3. Research that mechanism using primary sources.
-4. Propose one minimal, testable change.
-5. Run it, record it, and explain whether it earned another round.
-
-Both Codex and Claude Code have non-interactive modes for this. [`codex exec`](https://learn.chatgpt.com/docs/non-interactive-mode) can produce JSONL and validate its final response against a JSON Schema. Claude Code supports [`claude -p` with JSON output](https://docs.anthropic.com/en/docs/claude-code/cli-usage).
-
-Use the agent already capable of reading your repository and running the harness. The brand is not the method.
-
-<details>
-<summary>Give Codex a proposal schema, not permission to freestyle</summary>
-
-```bash
-codex exec --ephemeral \
-  --output-schema ./schemas/judge-experiment.schema.json \
-  -o ./experiments/proposal.json \
-  "Inspect the latest judge run. Identify the largest validated failure cluster.
-  Research that failure using primary sources. Propose one minimal experiment.
-  Do not edit labels, inspect the holdout, or promote a candidate."
-```
-
-</details>
-
-The agent is the lab technician. It can write harness code, inspect transcripts, research failure modes, and propose configurations.
-
-It cannot quietly relabel inconvenient cases, inspect the sealed holdout, or grade its own homework.
-
-That boundary matters more than the metaprompt.
-
-## Start Over on Purpose
-
-Your current judge prompt contains history.
-
-Some of it is wisdom. Some is scar tissue from one weird output six months ago. Some is the same instruction repeated because a previous model ignored it the first time.
-
-Nobody knows which is which because the prompt only ever grew.
-
-Create two challengers:
-
-| Branch | Starting point | Question it answers |
-|---|---|---|
-| Incumbent | current prompt, simplified | which existing instructions still earn their place? |
-| Blank slate | task, evidence, verdicts, schema | what does this judge actually need? |
-
-“Empty” does not mean asking the model to read your mind. It means removing inherited policy and rebuilding only from measured failures.
-
-Start painfully small:
+Bad:
 
 ```text
-Given the task, evidence, and candidate output, decide whether the candidate
-satisfies the task.
-
-Return JSON matching the supplied schema. Use only the supplied evidence.
-If the evidence is insufficient, return "uncertain".
+Improve this evaluator prompt.
 ```
 
-Run that prompt unchanged.
+Better:
 
-It reveals what the judge already understands, what it assumes, and where it needs help. That baseline is model-specific. A long rubric may rescue a cheap model and distract a stronger one. Boundary examples may stabilize one judge and anchor another to irrelevant style. More reasoning may improve semantic comparison while adding pure ceremony to a schema check.
+```text
+Run the evaluator baseline and identify the largest source of repeated-run
+disagreement. Research likely causes using primary sources. Propose one prompt
+or configuration change, run the validation suite, and record the accuracy,
+variance, token, cost, and latency deltas. Revert the change if it does not
+improve the promotion criteria. Do not edit test labels or read the holdout set.
+```
 
-<blockquote class="breakout">
-  <p>The prompt, model, reasoning effort, examples, schema, and sampling settings are one program. Tune the program.</p>
-</blockquote>
+Both tools can run non-interactively. [`codex exec`](https://learn.chatgpt.com/docs/non-interactive-mode) supports JSONL output and JSON Schema-constrained final output. Claude Code supports [`claude -p` with JSON output](https://docs.anthropic.com/en/docs/claude-code/cli-usage). Either is enough. This does not require a specialized prompt-optimization platform.
 
-This is why a universal “best judge prompt” is mostly fan fiction.
+The important part is that every iteration leaves behind an experiment record:
 
-## Make Every Instruction Pay Rent
+```json
+{
+  "hypothesis": "The broad 1-10 rubric creates threshold instability",
+  "change": "Replace the score with pass, fail, or uncertain",
+  "accuracyDelta": 0.012,
+  "decisionFlipDelta": -0.084,
+  "costDelta": -0.18,
+  "latencyDelta": -0.11,
+  "decision": "keep"
+}
+```
 
-Group blank-slate failures by mechanism, then add the smallest thing that should catch them:
+Save the failed experiments too. Otherwise, the next tuning run will waste time rediscovering them.
 
-| Observed failure | First experiment |
-|---|---|
-| misses one hard requirement | replace the holistic score with atomic checks |
-| rewards unsupported confidence | require evidence spans before the verdict |
-| flips near the threshold | use categorical verdicts and boundary examples |
-| favors Candidate A | blind names and grade both orders |
-| punishes harmless style | separate correctness from presentation |
-| emits broken JSON | enforce a schema and shorten the response contract |
-| spends without improving | remove rationale, examples, or reasoning effort |
+## Now Delete the Prompt
 
-If the addition does not improve validation results, delete it.
+Optimizing the current prompt is useful, but it carries a bias: every instruction already in the prompt looks important because somebody added it for a reason.
 
-Deterministic failures stay in code. JSON parsing, citation presence, answer-key preservation, tool allowlists, and numeric bounds do not become more sophisticated when routed through an LLM. They become slower.
+Maybe it was a good reason. Maybe one output failed once and the fix became permanent. After enough of these fixes, the evaluator prompt becomes long, repetitive, expensive, and strangely specific.
 
-Use the model for semantic judgment: faithfulness, completeness, whether evidence supports a claim, whether an explanation fits the audience. Even there, several narrow decisions are easier to inspect than “rate quality from 1–10.”
+So run a second track from an empty prompt.
 
-A stable `pass | fail | uncertain` is often more honest than `82.7` wearing a lab coat.
+Not literally empty. Give it only the irreducible contract:
 
-## Search the Configuration, Not Just the Prose
+```text
+Evaluate whether the output satisfies the task using only the supplied input,
+reference material, and output.
 
-Let the tuning agent explore a bounded space:
+Return one verdict: pass, fail, or uncertain.
+Return JSON matching the supplied schema.
+```
+
+Run that as-is.
+
+The failures tell you what this specific model needs to be told. Add one instruction or example for the largest failure class, then run it again. Keep the addition only if the numbers improve.
+
+This is much more useful than copying a “best LLM judge prompt” from another project. A small model may need explicit steps and examples. A stronger reasoning model may perform better with a short rubric. One model may stabilize when it explains the evidence before choosing a verdict. Another may become more consistent when it returns only structured fields.
+
+The optimal prompt belongs to the model and configuration being tested.
+
+That includes:
 
 - model and provider
-- pointwise, pairwise, or reference-based grading
-- reasoning effort and supported sampling settings
-- instruction order and boundary examples
-- categorical versus continuous scores
-- rationale before verdict versus verdict only
-- token limit and schema strictness
-- one judge versus conditional escalation
+- reasoning effort
+- temperature and sampling controls, where supported
+- pointwise versus pairwise grading
+- output schema
+- examples and their order
+- maximum output tokens
+- whether rationale is required
 
-Do not grid-search every knob unless you recently acquired a small power station. Run broad, cheap experiments. Promote promising families. Spend repeats only when contenders are close.
+Treat that whole set as the evaluator configuration. Changing the prompt while ignoring the model settings is not controlled testing.
 
-Use hard gates before a weighted score:
+## Fix the Failure You Measured
+
+The agent should not add generic “be accurate” instructions. It should respond to specific failures.
+
+| Measured failure | Experiment to try |
+|---|---|
+| misses one required condition | split the rubric into atomic checks |
+| accepts unsupported claims | require cited evidence before a pass |
+| flips near a numeric threshold | use `pass`, `fail`, and `uncertain` |
+| favors the first answer | reverse order and require agreement |
+| overweights writing style | score correctness separately from presentation |
+| returns malformed JSON | use a strict schema and shorter output |
+| costs too much | remove rationale, examples, or reasoning effort one at a time |
+
+Some checks should not use an LLM at all.
+
+JSON validity, citation existence, allowed tool names, answer-key positions, numeric bounds, and exact identifiers should be checked in code. A model adds cost and variance to questions your program can answer exactly.
+
+Use the LLM where semantic judgment is actually required: factual support, completeness, relevance, or whether an explanation matches the intended audience.
+
+Even then, several small binary questions are often more stable than one overall score from 1–10.
+
+## Optimize Accuracy, Stability, and Cost Together
+
+Driving variance toward zero is the goal, but not by itself.
+
+An evaluator that always returns `pass` has excellent stability. It is also useless.
+
+Every candidate needs to clear accuracy requirements first. Then compare stability, cost, and latency.
 
 ```text
-maximize:  human agreement, hard-failure recall, repeatability
-minimize:  false accepts, flip rate, cost, p95 latency
-
-must pass:
-  invalid output rate <= 0.5%
+required:
+  human agreement >= current baseline
   hard-failure recall >= 98%
-  repeatability >= 97%
-  no protected slice regresses beyond tolerance
+  invalid output rate <= 0.5%
+
+optimize:
+  decision flip rate -> 0
+  score variance -> 0
+  cost per 1,000 evaluations -> down
+  p95 latency -> down
 ```
 
-A weighted score may rank the survivors. It must not average away a catastrophe.
+I prefer hard requirements over one combined score. Otherwise, a large cost improvement can hide a meaningful accuracy regression, or a tiny accuracy gain can justify doubling the price.
 
-For open-and-shut cases, a cheap judge is often enough. Escalate only when the first judge is uncertain, close to the boundary, or handling a high-risk case.
+If two configurations are statistically indistinguishable, take the cheaper and simpler one. Anthropic's work on [statistical evaluation](https://www.anthropic.com/research/statistical-approach-to-model-evals) is a good reminder to report uncertainty instead of treating every decimal point as real.
 
-<details>
-<summary>A boring escalation route saves very exciting invoices</summary>
+For expensive or ambiguous cases, use escalation:
 
 ```typescript
-const first = await cheapJudge.grade(sample);
+const result = await cheapEvaluator.run(testCase);
 
-if (
-  first.verdict === "uncertain" ||
-  first.confidence < 0.8 ||
-  isHighRisk(sample)
-) {
-  return expensiveJudge.grade(sample);
+if (result.verdict === "uncertain" || isHighRisk(testCase)) {
+  return expensiveEvaluator.run(testCase);
 }
 
-return first;
+return result;
 ```
 
-</details>
+Measure the whole route. A cheap first call followed by an expensive retry on 80% of cases is not a cheap evaluator.
 
-Tune the threshold too. Measure the cost and latency of the whole route, not the attractively cheap first call.
+## Know When to Stop
 
-## Keep the Loop Boring
+The loop can run forever. Do not let it.
 
-The optimizer does not need mystical self-improvement machinery. It needs isolation and receipts.
+Stop when one of these happens:
 
-<details>
-<summary>The complete control loop</summary>
+- the variance target is reached
+- validation improvements fall below a useful threshold
+- the experiment budget is exhausted
+- accuracy and stability stop improving together
+- further improvements cost more than they are worth
 
-```typescript
-for (let round = 0; round < budget.maxRounds; round++) {
-  const proposal = await tuningAgent.propose({
-    incumbent,
-    developmentFailures,
-    priorExperiments,
-    constraints,
-  });
+Then run the winner against the untouched holdout set. Review every verdict that changed from the incumbent. If the holdout result holds, promote the complete configuration—not just the prompt—and keep the old version available for regression testing.
 
-  const candidate = applyProposal(incumbent, proposal);
-  const dev = await repeatedEval(candidate, developmentSet, 5);
+Rerun the evaluator eval whenever the model, prompt, reasoning settings, schema, or provider behavior changes. Model upgrades can change evaluator behavior even when your prompt does not.
 
-  if (!passesHardGates(dev)) continue;
+## The Practical Version
 
-  const validation = await repeatedEval(candidate, validationSet, 5);
-  record({ proposal, candidate, dev, validation });
+If you already have an LLM evaluator, this is enough to start:
 
-  if (dominates(validation, incumbent.validation)) {
-    incumbent = candidate;
-  }
-}
+1. Pull 50–100 labeled examples from real usage.
+2. Run each example five times with the current evaluator.
+3. Calculate accuracy, decision-flip rate, cost, and latency.
+4. Split the cases into development, validation, and holdout sets.
+5. Give an agent the harness and ask it to run one measured experiment at a time.
+6. Tune the current prompt and build a second prompt from zero.
+7. Promote only changes that hold accuracy while reducing variance.
+8. Stop when the improvement is no longer worth the spend.
 
-const holdout = await repeatedEval(incumbent, sealedHoldout, 7);
-```
+[GEPA-style optimization](https://developers.openai.com/cookbook/examples/partners/self_evolving_agents/autonomous_agent_retraining#b-prompt-optimization-with-genetic-pareto-gepa) can automate a more advanced search over prompts. That may be useful later. I would still start with the simpler loop because it makes every change easy to inspect and revert.
 
-</details>
+The evaluator is part of the product. Test it like one.
 
-`dominates` should consider uncertainty and slice-level regressions. It should also require an improvement large enough to matter. A 0.2-point gain that adds 300 milliseconds and doubles cost is not a promotion. It is a cry for more decimal places.
-
-Keep failed experiments. Record the hypothesis, change, score deltas, cost, latency, decision, and reason.
-
-That journal stops the next agent from rediscovering the same bad idea with a more confident adjective.
-
-## The Judge Will Try to Cheat
-
-Not maliciously. Efficiently.
-
-| Shortcut | What it looks like | Countermeasure |
-|---|---|---|
-| shared blind spot | judge and optimizer agree; humans do not | expert labels, deterministic checks, second model family |
-| development-set overfit | prompt accumulates case-specific trivia | sealed holdout, fresh production cases, ablations |
-| generator recognition | judge rewards a familiar model voice | blind provider/model identity and irrelevant metadata |
-| reward hacking | automated scores rise while human scores fall | recurring expert review of changed verdicts |
-| refusal economics | cheap judge “wins” by skipping hard cases | count abstentions and parse failures against success |
-| model drift | pinned threshold, changed behavior | rerun the meta-eval on every model revision |
-
-Agreement between two machines is not truth. Disagreement is still useful: it tells you where to spend human attention.
-
-## The Weekend Version
-
-You do not need a platform rewrite. You need one honest weekend.
-
-1. Pull 50–100 labeled cases, including the ugly ones.
-2. Create development, validation, and sealed holdout splits.
-3. Run the incumbent five times per case and reverse pair order.
-4. Record human agreement, false accepts, flip rate, cost, latency, and broken outputs.
-5. Ask Codex or Claude Code for two challengers: one minimal repair and one blank-slate rebuild.
-6. Run bounded experiments until the budget or improvement floor says stop.
-7. Promote only after repeated holdout runs and human review of every changed verdict.
-
-Then schedule it. Weekly for a fast-changing system; otherwise whenever the model, prompt, tools, retrieval, or schema changes.
-
-[GEPA-style optimization](https://developers.openai.com/cookbook/examples/partners/self_evolving_agents/autonomous_agent_retraining#b-prompt-optimization-with-genetic-pareto-gepa) can run a more sophisticated reflective search. Fine. The humble loop gets you to the important parts first: saved runs, explicit hypotheses, held-out validation, and a prompt that must earn every instruction.
-
-The goal is not the smartest possible judge.
-
-It is the cheapest judge you can trust for this decision, on this data, with measured variance and somewhere sensible to escalate doubt.
-
-Start with the score.
-
-Then measure the scorer.
+Get the variance down. Keep the accuracy up. Then make it cheaper.
