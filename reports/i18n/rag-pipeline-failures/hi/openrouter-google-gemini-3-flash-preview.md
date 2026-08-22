@@ -1,6 +1,0 @@
-# Translation Candidate
-- Slug: rag-pipeline-failures
-- Locale: hi
-- Model: openrouter/google/gemini-3-flash-preview
-- Target: src/content/posts/2026-05-05--rag-pipeline-failures/hi/index.mdx
-- Validation: passed
