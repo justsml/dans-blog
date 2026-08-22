@@ -365,6 +365,63 @@ const fitSignals = [
     </div>
   </section>
 
+  <section id="signup" class="consulting-section signup-section full-section">
+    <div class="consulting-shell signup-shell">
+      <div class="signup-copy">
+        <p class="eyebrow">Not ready to book?</p>
+        <h2>Get notified when a diagnostic slot opens.</h2>
+        <p class="section-copy">
+          I take on a small number of engagements at a time. Leave your email
+          and I'll reach out when there's room — plus the occasional note on
+          what's actually working in production AI systems.
+        </p>
+      </div>
+
+      <form
+        name="consulting-signup"
+        method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        class="signup-form"
+        id="consulting-signup-form"
+      >
+        <input type="hidden" name="form-name" value="consulting-signup" />
+        <p class="signup-honeypot" aria-hidden="true">
+          <label>
+            Don't fill this out if you're human:
+            <input name="bot-field" tabindex={-1} autocomplete="off" />
+          </label>
+        </p>
+        <div class="signup-fields">
+          <label class="signup-field">
+            <span>Email address*</span>
+            <input
+              type="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="you@company.com"
+            />
+          </label>
+          <label class="signup-field">
+            <span>First name</span>
+            <input
+              type="text"
+              name="first-name"
+              autocomplete="given-name"
+              placeholder="Jane"
+            />
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary signup-submit">
+          <span>Notify me</span>
+          <span class="btn-icon" aria-hidden="true">→</span>
+        </button>
+      </form>
+      <p class="signup-status" id="consulting-signup-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
   <section id="about" class="consulting-section about-section full-section">
     <div class="consulting-shell about-grid">
       <div class="about-card">
@@ -429,6 +486,41 @@ const fitSignals = [
     </div>
   </section>
 </Layout>
+
+<script>
+  (function () {
+    const form = document.getElementById("consulting-signup-form");
+    if (!(form instanceof HTMLFormElement)) return;
+    const status = document.getElementById("consulting-signup-status");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const body = new URLSearchParams();
+      data.forEach((value, key) => body.append(key, String(value)));
+
+      try {
+        const response = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: body.toString(),
+        });
+        if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
+
+        form.hidden = true;
+        if (status) {
+          status.textContent =
+            "Thanks — you're on the list. I'll be in touch when there's room.";
+        }
+      } catch (err) {
+        if (status) {
+          status.textContent =
+            "Something went wrong. Please try again or book a call directly.";
+        }
+      }
+    });
+  })();
+</script>
 
 <style>
   :root {
@@ -1290,6 +1382,88 @@ const fitSignals = [
     margin-bottom: 0;
   }
 
+  .signup-section {
+    background:
+      radial-gradient(circle at 82% 12%, rgba(255, 115, 201, 0.08), transparent 26rem),
+      var(--consulting-bg);
+  }
+
+  .signup-shell {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4.5rem);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .signup-copy p {
+    max-width: 480px;
+  }
+
+  .signup-form {
+    background:
+      linear-gradient(135deg, rgba(244, 240, 232, 0.075), rgba(244, 240, 232, 0.03)),
+      var(--consulting-bg);
+    border: 1px solid var(--consulting-line);
+    border-radius: var(--consulting-radius);
+    box-shadow: var(--consulting-shadow);
+    display: grid;
+    gap: 1.35rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .signup-honeypot {
+    left: -9999px;
+    position: absolute;
+  }
+
+  .signup-fields {
+    display: grid;
+    gap: 1.1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .signup-field {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .signup-field span {
+    color: var(--consulting-muted);
+    font-size: 0.82rem;
+    font-weight: 620;
+  }
+
+  .signup-field input {
+    background: rgba(244, 240, 232, 0.045);
+    border: 1px solid var(--consulting-line);
+    border-radius: 10px;
+    color: var(--consulting-ink);
+    font-family: var(--consulting-font);
+    font-size: 0.96rem;
+    padding: 0.85rem 1rem;
+    transition: border-color var(--consulting-motion), background var(--consulting-motion);
+  }
+
+  .signup-field input::placeholder {
+    color: rgba(244, 240, 232, 0.34);
+  }
+
+  .signup-field input:focus-visible {
+    border-color: var(--consulting-cyan);
+    outline: none;
+  }
+
+  .signup-submit {
+    justify-self: start;
+  }
+
+  .signup-status {
+    color: var(--consulting-muted);
+    font-size: 0.9rem;
+    grid-column: 1 / -1;
+    margin: 0;
+    min-height: 1.2em;
+  }
+
   .about-grid {
     grid-template-columns: minmax(0, 1fr) auto;
   }
@@ -1392,6 +1566,10 @@ const fitSignals = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .signup-shell {
+      grid-template-columns: 1fr;
+    }
+
     .capability-strip {
       justify-content: start;
       max-width: none;
@@ -1462,6 +1640,10 @@ const fitSignals = [
     .trust-metrics,
     .fit-panel,
     .fit-list {
+      grid-template-columns: 1fr;
+    }
+
+    .signup-fields {
       grid-template-columns: 1fr;
     }
 
