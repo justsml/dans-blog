@@ -1,0 +1,213 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 37.74
+- Input tokens: 4533
+- Output tokens: 4174
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001663
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: L'IA en production est terrifiante (et comment y remédier)
+subTitle: 'Si votre agent n''a pas de garde-fous, vous n''êtes pas prêt pour la production.'
+modified: '2026-09-04'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+Personne ne se lance dans la construction d’un système d’IA non sécurisé. Vous écrivez des instructions, vous testez des cas limites, vous ajoutez quelques règles de validation. Puis quelqu’un découvre qu’il peut piéger votre bot pour qu’il joue au pirate et expose les données utilisateur. Ou un numéro de carte bancaire se retrouve dans vos logs. Ou le modèle recommande avec confiance le produit d’un concurrent.
+
+L’écart entre « ça marche dans la démo » et « c’est sûr en production » est plus large que la plupart des équipes ne l’imaginent.
+
+Une partie du problème vient du fait que les LLM bruts n’ont pas d’opinion sur ce qu’ils devraient ou ne devraient pas faire. Ce sont des machines à prédiction qui essayent de continuer le motif que vous avez lancé. Donnez-leur une invite qui ressemble à « mode de remplacement système », et ils joueront le jeu avec plaisir. Ce n’est pas un bug dans le modèle ; c’est simplement ainsi que fonctionnent les modèles de langage.
+
+La plupart des frameworks vous tendent le modèle et vous souhaitent bonne chance. Mastra adopte une approche différente : il part du principe que vous aurez besoin de garde-fous tôt ou tard, alors il les intègre dans l’architecture de l’agent dès le départ.
+
+---
+
+## Les processeurs en tant que couches de sécurité
+
+Le mécanisme central est simple. Avant que votre invitation n’atteigne le modèle, elle passe par une chaîne de processeurs d’entrée. Après la réponse du modèle, les processeurs de sortie prennent le relais. Chaque processeur peut inspecter, modifier ou bloquer le contenu à ce stade.
+
+Considérez-les comme un middleware pour les interactions d’IA. Vous empilez ceux dont vous avez besoin, configurez leur comportement, et ils s’exécutent automatiquement sur chaque requête.
+
+### 1. Arrêter les pirates (injection d’invite)
+
+Les attaques par injection d’invite sont devenues créatives. Les gens utilisent des caractères Unicode invisibles, écrivent des instructions en base64, ou convainquent le modèle qu’ils sont en « mode débogage » où les règles normales ne s’appliquent pas. Les techniques ne cessent d’évoluer.
+
+Mastra inclut des processeurs qui détectent les schémas courants :
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+
+const GUARDRAIL_MODEL = 'openrouter/openai/gpt-oss-safeguard-20b';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    // 1. Scrub invisible characters
+    new UnicodeNormalizer({
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. Detect the attempt
+    new PromptInjectionDetector({
+      model: GUARDRAIL_MODEL,
+      threshold: 0.8,
+      strategy: 'block', // Hard stop
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+      lastMessageOnly: true,
+    }),
+  ],
+});
+```
+
+Le [`UnicodeNormalizer`](https://mastra.ai/reference/processors/unicode-normalizer) supprime les caractères de contrôle et réduit les espaces. Le [`PromptInjectionDetector`](https://mastra.ai/reference/processors/prompt-injection-detector) analyse l’entrée nettoyée pour détecter des schémas suggérant que quelqu’un essaie de remplacer vos instructions.
+
+Vous configurez l’agressivité de la détection (le paramètre `threshold`) et ce qui doit se produire lorsqu’elle se déclenche (`block`, `warn`, `filter` ou `rewrite`).
+
+### 2. Gestion des données personnelles
+
+Des numéros de carte bancaire dans les logs, des numéros de sécurité sociale dans les bases vectorielles, des adresses e-mail stockées plus longtemps que nécessaire. Ce sont le genre de problèmes qui se transforment en problèmes réglementaires. Le défi est que les utilisateurs ne se rendent pas toujours compte qu’ils collent des données sensibles dans une fenêtre de chat.
+
+Le [`PIIDetector`](https://mastra.ai/reference/processors/pii-detector) scanne les schémas courants avant qu’ils n’atteignent votre modèle ou ne soient écrits dans un stockage :
+
+```typescript
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+      instructions: 'Detect and mask personally identifiable information',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+    }),
+  ],
+});
+```
+
+Vous pouvez choisir de caviarder, hacher, supprimer, remplacer par des espaces réservés typés, ou bloquer complètement. `PIIDetector` est un processeur hybride : placez-le dans `inputProcessors`, `outputProcessors`, ou les deux selon l’endroit où se situe le risque. Pour une sortie en streaming, regroupez les morceaux avant d’exécuter des classifieurs plus lourds afin de ne pas payer une vérification LLM séparée pour chaque minuscule goutte de token.
+
+### 3. Modération du contenu
+
+### 3. Modération du contenu
+
+Les modèles entraînés sur des données internet ont vu pas mal de choses. Sans filtrage, ils peuvent occasionnellement produire des réponses qui rendraient votre équipe RP nerveuse. Le [`ModerationProcessor`](https://mastra.ai/reference/processors/moderation-processor) intercepte les contenus qui violent vos règles :
+
+```typescript
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,
+      strategy: 'block',
+      instructions: 'Detect harmful content that violates community guidelines',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      strategy: 'filter',
+      chunkWindow: 1,
+    }),
+  ],
+});
+```
+
+Ce qui est intéressant, c’est que vous définissez les catégories qui comptent pour votre cas d’usage. Un outil d’écriture créative autorisera probablement un contenu plus expressif qu’un bot de service client. Le seuil et la stratégie vous donnent le contrôle sur la sévérité du filtrage.
+
+---
+
+## Quand les choses se déclenchent
+
+Quand un processeur utilise la stratégie `block`, Mastra interrompt la génération et expose l’événement comme métadonnée de tripwire. Avec `generate()`, vérifiez l’objet résultat :
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked by ${result.tripwire.processorId}`);
+  console.log(`Reason: ${result.tripwire.reason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return 'Request blocked by policy.';
+}
+```
+
+Pour les appels en streaming, écoutez les morceaux `tripwire` sur `fullStream`. Ce motif vous permet de gérer les événements de sécurité comme bon vous semble pour votre application. Vous pouvez les logger pour analyse, renvoyer un message d’erreur générique, ou basculer un cas à faible risque de `block` à `warn` le temps d’ajuster les seuils. Le `processorId` et `reason` vous indiquent quel processeur a signalé le contenu, ce qui facilite le débogage des faux positifs.
+
+---
+
+## Ce que ça ne résout pas
+
+Les processeurs attrapent beaucoup de choses, mais ils ne font pas de magie. Un attaquant déterminé avec assez de temps trouvera probablement une injection qui passe. Les modèles hallucinent parfois de manière imprévisible pour les processeurs. Et il y a toujours un compromis entre sécurité et flexibilité : plus vos règles sont strictes, plus vous risquez de bloquer des cas d’usage légitimes.
+
+La valeur n’est pas une protection parfaite. C’est d’avoir un moyen systématique de gérer les problèmes courants qui surviendront forcément en production. Vous pouvez ajuster la sensibilité en apprenant ce que vos utilisateurs font réellement. Vous pouvez ajouter des processeurs personnalisés pour des risques propres à votre domaine. Et vous pouvez câbler des callbacks de violation, des logs, des traces et des enregistrements d’audit applicatifs autour du même point de contrôle.
+
+La plupart des problèmes de sécurité en IA de production ne sont pas des attaques sophistiquées. Ce sont des gens qui copient-collent des données qu’ils ne devraient pas, ou qui découvrent par essais-erreurs que le bot fera des choses que vous n’aviez pas prévues. Les processeurs n’arrêteront pas tous les problèmes possibles, mais ils rendent les plus évidents beaucoup plus difficiles.
+
+### Ressources
+
+- [Documentation des garde-fous Mastra](https://mastra.ai/docs/agents/guardrails)
+- [Documentation des processeurs Mastra](https://mastra.ai/docs/agents/processors)
+- [Approbation d’agent Mastra](https://mastra.ai/docs/agents/agent-approval)
+- [Dépôt GitHub Mastra](https://github.com/mastra-ai/mastra)
+
+## Lire la série
+
+1. [Routage LLM](../llm-routing-mastra-ai)
+2. **Sécurité et garde-fous** (Cet article)
+3. [Intégrations MCP et outils](../mastra-mcp-tool-integrations)
+4. [Workflows et mémoire](../mastra-workflows-memory)
+````
