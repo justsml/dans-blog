@@ -2,7 +2,7 @@
 title: "Less effort, please"
 subTitle: "Turning reasoning off did not remove the work. It moved the work into the tool loop."
 date: 2026-07-28
-modified: 2026-08-19
+modified: 2026-09-04
 tags: [ai, llm, agents, security, evals, reasoning, performance, model-routing]
 category: AI
 subCategory: Security
@@ -25,15 +25,17 @@ More context. More tools. More tokens. More thinking.
   Apparently intelligence is a guitar amp. Let's turn it up to 11!
 </blockquote>
 
-While testing [ExploitHunter.app](https://github.com/justsml/ExploitHunter.app), I ran GPT-5.6 Sol through the same browser-based XSS hunt at every supported thinking level: `none`, `low`, `medium`, `high`, and `xhigh`.
+So I tested the knob.
 
-I expected a tidy staircase. More thinking would buy more quality and cost more time.
+While tuning [ExploitHunter.app](https://github.com/justsml/ExploitHunter.app), I ran GPT-5.6 Sol through the same browser-based XSS hunt at every reasoning level it supports: `none`, `low`, `medium`, `high`, and `xhigh`. Same target. Same tools. Same judge. Three runs per level.
 
-The staircase was apparently built by M.C. Escher.
+I expected a staircase. Each step up would buy a little quality and cost a little time.
+
+The staircase was built by M.C. Escher.
 
 ## Same model, same hunt, five personalities
 
-These are route-level results: a refusal counts as a failed run, because in production it does not become successful merely because a spreadsheet politely excludes it.
+Read these as route-level results. A refusal counts as a failed run, because in production a refusal does not become a success just because a spreadsheet politely excluded it.
 
 | Thinking | Answers returned | Judge | Runtime | Cost | Tool calls |
 |---|---:|---:|---:|---:|---:|
@@ -43,42 +45,44 @@ These are route-level results: a refusal counts as a failed run, because in prod
 | `high` | 2/2 | 97.9% | 99s | $0.169 | 4.0 |
 | `xhigh` | 3/3 | 95.5% | 92s | $0.172 | 4.3 |
 
-Yes, `none` received full marks.
+The judge column is the mean across every run at that level, with refusals scored as failures. Runtime, cost, and tool calls are per-run averages. The `high` row only has two clean runs, so treat it as promising rather than canonical.
 
-It also took three times as long as `xhigh`, used two and a half times as many tool calls, and burned nearly three times as many tokens.
+Yes, `none` got full marks.
 
-We did not remove thinking. We moved it into the tool loop and paid retail.
+It also took three times as long as `xhigh`, made two and a half times as many tool calls, and burned nearly three times the tokens.
+
+We did not remove the thinking. We moved it into the tool loop and paid retail for it.
 
 <p class="inset">
-Turn thinking off and the model may start thinking out loud with your infrastructure.
+Turn thinking off and the model starts thinking out loud with your infrastructure.
 </p>
 
 ## "None" is not nothing
 
-Without internal reasoning, Sol still found its way to strong answers. It just wandered there through repeated browser actions, observations, and course corrections.
+With no internal reasoning, Sol still found its way to strong answers. It just wandered there: browser action, observation, correction, repeat. Eleven tool calls to do what `xhigh` did in four.
 
-That route was accurate. It was also operationally absurd.
+The route was accurate. It was also operationally absurd.
 
-Token accounting tends to miss this. Reasoning tokens have a visible price, so they look expensive. Hesitation hides in tool calls, screenshots, retries, larger context, and wall-clock time. Apparently waste becomes sophisticated once it has several billing columns.
+Token accounting misses this. Reasoning tokens have a visible price, so they look like the expensive part. Hesitation hides in tool calls, screenshots, retries, a growing context window, and wall-clock time. Waste becomes sophisticated once it has several billing columns.
 
-`low` and `medium` found another optimization: refusing one of three runs. Their successful answers were good. Their actual routes succeeded two-thirds of the time. An omitted result remains wonderfully cheap right up until someone wanted the result.
+`low` and `medium` found a different optimization: refuse one run in three. The answers they did return were fine. The route succeeded two-thirds of the time. An omitted result is wonderfully cheap right up until somebody wanted it.
 
-Meanwhile, `high` and `xhigh` occupied the useful middle: roughly the same runtime, cost, and tool count, with strong answers. `high` edged `xhigh` on quality, though it has only two unique replacement runs. Promising, not canonization material.
+`high` and `xhigh` occupied the useful middle. Roughly the same runtime, cost, and tool count, with strong answers on every run that completed. `high` edged `xhigh` on quality, but with two runs that is a hint, not a canonization.
 
 There is no monotonic ladder here. There is a behavioral switchboard.
 
 ## Optimize indecision
 
-Thinking effort is not a quality slider. It changes where the model searches, how often it acts, whether it refuses, and when it decides the job is finished.
+Thinking effort is not a quality slider. It changes where the model searches, how often it acts, whether it refuses, and when it decides the job is done.
 
-So measure the whole route:
+So stop scoring the answer and start scoring the route:
 
-- Did it answer?
+- Did it answer at all?
 - Was the answer good?
 - How long did the investigation take?
 - What did it spend while visibly "not thinking"?
 
-The cheapest reasoning setting was not the cheapest reliable agent. The highest setting was not the highest-scoring one. And `none` was less a lack of thought than an expensive public performance of it.
+By those measures, the cheapest reasoning setting was not the cheapest reliable agent. The highest setting was not the highest-scoring one. And `none` was less an absence of thought than an expensive public performance of it.
 
 Do not minimize reasoning tokens. Minimize total indecision.
 
