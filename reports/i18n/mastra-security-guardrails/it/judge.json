@@ -1,45 +1,35 @@
 {
-  "selectedCommit": "1548ce08fed5966521be2a8ddba30504579d3dd1",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "c951f3323c6c4ee93eead67977812c3e0a125c7a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 10,
-    "coherence": 10,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 100,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "The selected candidate (1548ce08fed5966521be2a8ddba30504579d3dd1) is already the 'current' version in the provided text. It correctly translates the frontmatter (which was missing in the original 'current' state before this pass), maintains all MDX structures, and uses professional Italian technical terminology. The suggestions from the previous judge report regarding code comments have already been incorporated into the text provided as the Italian version.",
+  "rationale": "The translation is excellent, capturing Dan's direct and technical tone perfectly. It correctly handles the MDX structure, including the required '../' prefix for local assets in the frontmatter. The technical terms are appropriately translated or kept in English where standard (e.g., 'prompt injection', 'middleware', 'chunk'). The internal links are correctly localized to match the translated headings/slugs.",
+  "confidence": "high",
+  "confidenceScore": 0.892,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-security-guardrails",
   "locale": "it",
   "candidateCommits": [
-    "1548ce08fed5966521be2a8ddba30504579d3dd1",
-    "ce8b703aebc7537833eb78907466ddc4f3ec4d13",
-    "5a2fce48aee54c644af14d83b5f857d51ce58415",
-    "15051b1465c33b67f080e22ce2a7e32c2ed1ed0e",
-    "1044a8ad10f78a41221da9b9a1d17e4c08aab8b5"
+    "c951f3323c6c4ee93eead67977812c3e0a125c7a"
   ],
-  "suggestionLog": [
-    {
-      "priority": "medium",
-      "match": "// 1. Scrub invisible characters",
-      "replacement": "// 1. Pulisce i caratteri invisibili",
-      "reason": "The comment inside the code block was left in English.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "// 2. Detect the attempt",
-      "replacement": "// 2. Rileva il tentativo",
-      "reason": "The comment inside the code block was left in English.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": true,
     "scope": "local",
