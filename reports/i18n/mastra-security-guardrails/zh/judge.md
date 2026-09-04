@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: current
-- Selected model: current
+- Selected candidate: c4f0ee90540f92095f855c9a217a8261696dfb0d
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.893)
 
-The current translation is the most stable and accurate. Candidate 64674dd1e65d4ff71bc7535b95ca019430f61134 (DeepSeek) has a duplicated H3 heading '### 3. 内容审核'. Candidate 3bd1d433635cbb6232004f9171c84c125274e817 (Qwen) also has a duplicated H3 heading and fails to translate some internal links correctly (using absolute paths instead of relative ../ paths). Candidate 9adcc7f4393c7a572d2bb4dd160f1be2c1a9706b (GPT) is good but 'current' is already high quality and follows all constraints including relative pathing for internal links.
+The translation is exceptionally high quality, capturing the technical nuances and the author's direct tone perfectly. The previous judge report mentioned a duplicated heading, but upon manual inspection of the provided candidate text, the duplication is not present. The candidate correctly localized the relative asset paths and internal links while preserving the MDX structure and code blocks exactly. The translation of 'tripwire' as '触发元数据' and the idiomatic use of '头皮发麻' for 'make your PR team nervous' are excellent examples of high-quality localization.
