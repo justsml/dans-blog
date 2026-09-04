@@ -8,44 +8,53 @@
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
-- Validation: passed
+- Validation: failed
 - Validation scope: local
+- Confidence: high (0.893)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
+- Validation error: Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale fr --skip-global
+$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale fr --skip-global
+224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+225 |   const comparison = compareMdxStructure(input);
+226 |   if (comparison.valid) return;
+227 | 
+228 |   const targetLabel = input.targetPath ?? "translation";
+229 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/fr/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/fr/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {"linkTargets":3}. Differences: {"linkTargets":3}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
+      at loadAndEvaluateModule (2:1)
 
-## Batch Judge Telemetry
-### Round 1, Batch 1
-- Runtime seconds: 2.12
-- Input tokens: 13421
-- Output tokens: 178
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007245
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
 
-### Round 1, Batch 2
-- Runtime seconds: 2.66
-- Input tokens: 10911
-- Output tokens: 327
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006437
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.03
-- Input tokens: 10876
-- Output tokens: 194
+- Runtime seconds: 2.73
+- Input tokens: 7320
+- Output tokens: 237
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006020
+- OpenRouter cost credits: 0.004371
+- Estimated cost: $0.004371
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 2.63
+- Input tokens: 9965
+- Output tokens: 245
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.005718
+- Estimated cost: $0.005718
+
+## Judge Suggestions
+1. Pass 1: applied high priority suggestion. Match: "subTitle: ''" Replacement: "subTitle: \"Pourquoi MCP est l'USB-C de l'intelligence artificielle.\"" Reason: The subtitle was left empty in the candidate but is reader-facing content that should be translated. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-01-04--mastra-mcp-tool-integrations/fr/index.mdx
-- 4891fba6f9a8025334a66ff334d202f26dc05d89 i18n candidate(fr): mastra-mcp-tool-integrations via openrouter/qwen/qwen3.6-plus
-- fc09e3583f84876aa9d992697247673e0ccc8a40 i18n candidate(fr): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash
-- 431b2d9174aac200d5f6a44b3ff4419641a088a5 i18n candidate(fr): mastra-mcp-tool-integrations via openrouter/minimax/minimax-m2.7
-- e55723abc7998cbef5b323aae584d607fc89ef62 i18n candidate(fr): mastra-mcp-tool-integrations via openrouter/openai/gpt-oss-120b:nitro
-- 279c5e0fce5a96adc26ca723462b50320c332fee i18n candidate(fr): mastra-mcp-tool-integrations via openrouter/qwen/qwen3-32b:nitro
+- 2a28285c98feb07a4ffbc913661258125598cbc2 i18n candidate(fr): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash

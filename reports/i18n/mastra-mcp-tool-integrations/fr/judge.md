@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 4891fba6f9a8025334a66ff334d202f26dc05d89
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: 2a28285c98feb07a4ffbc913661258125598cbc2
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.893)
 
-This candidate provides the most natural and technically accurate translation. It correctly translates technical terms like 'rate limits' to 'limites de taux' (or 'débit') and 'guardrails' to 'garde-fous'. It maintains all MDX structures and heading levels perfectly. Unlike the 'current' version, it doesn't have duplicate headings or broken formatting at the end. It also correctly handles the relative paths in the frontmatter and the series links.
+The translation is excellent and follows all technical and stylistic requirements. The previous judge report mentioned a missing subtitle, but upon inspection of the provided French MDX, the subtitle is correctly present and translated: `subTitle: "Pourquoi MCP est l'USB-C de l'intelligence artificielle."` Therefore, no high-priority suggestions are needed.
