@@ -1,30 +1,49 @@
 {
-  "selectedCommit": "3ffeef6eb01494879737d1b2536e5410e660755c",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "8c5a8548c4e9a1b5eab0287195dba1d15075936c",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 100,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "Candidate 3ffeef6eb01494879737d1b2536e5410e660755c provides the most natural and professional translation. It correctly translates 'guardrails' as 'защитные ограничения' (protective constraints), which is more descriptive in Russian than the literal 'ограждения' or the transliterated 'гардрейлы'. It maintains all MDX structures, heading levels, and code blocks perfectly. The tone is consistent with the original English text—direct and technical yet accessible. It also correctly handles the relative paths in the 'Read the Series' section.",
+  "rationale": "The translation is high quality and follows the source material closely while maintaining a natural technical tone in Russian. The judge report mentioned a missing subTitle, but looking at the provided Russian MDX content, the subTitle is actually present and correctly translated ('Если у вашего агента нет защитных барьеров, вы не готовы к продакшну.'). Therefore, no suggestions are needed.",
+  "confidence": "high",
+  "confidenceScore": 0.892,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-security-guardrails",
   "locale": "ru",
   "candidateCommits": [
-    "3ffeef6eb01494879737d1b2536e5410e660755c",
-    "c36598ef54b7264c1bb06a5ac0f52f4dea496d6e",
-    "5ad79ab165f2d613f8dd8157b6d961defddcbffb",
-    "66e0a439b1e61222e1223ca9d26c27938f1f7470",
-    "404f2a095fdba6dff630bb2c99a792c3219269da"
+    "8c5a8548c4e9a1b5eab0287195dba1d15075936c"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: 'Если у вашего агента нет защитных барьеров, вы не готовы к продакшну.'",
+      "reason": "The subTitle was left empty in the translation but contains important reader-facing text in the source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-security-guardrails --locale ru --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale ru --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/ru/index.mdx failed structural parity with score 0.936 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/ru/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"links\":-3,\"linkTargets\":11}. Differences: {\"links\":-3,\"linkTargets\":11}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
