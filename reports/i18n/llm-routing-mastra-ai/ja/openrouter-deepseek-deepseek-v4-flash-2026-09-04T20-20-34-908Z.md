@@ -1,0 +1,137 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: ja
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 52.14
+- Input tokens: 4367
+- Output tokens: 6817
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002380
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: LLMルーティング、今アツい
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+多くのエンジニアリングチームは、1つの言語モデルを選んでそれに固執する。プロバイダもモデルも1つ、すべてのタスクをそれ1つでこなす。それは、最初の面接でたまたま良さそうだったからといって、コーディング、コピーライティング、税務申告をすべて一人に任せるようなものだ。
+
+どの時点でも、あるモデルはコードが得意で、別のモデルは長く込み入ったコンテキストが得意で、また別のモデルは分類タスクに最も安価で堅実な働き手となる。モデル名は変わる。問題の本質は変わらない。一つのモデルがあらゆることに優れているかのように扱うと、単純なタスクに過剰に支払うか、専門的なタスクで不十分な結果を得ることになる。
+
+あるチームが、100万トークンあたり30ドルのモデルで感情分析を実行して何千ドルも費やしているのを目にした。0.50ドルのモデルで十分にできたはずなのに。単純なJSONフォーマットや基本的な分類タスクをすべてプレミアムプロバイダに通していた。熱くなっていたのは彼らのAWSの請求書だけだった。
+
+もっと良い方法がある。そしてそれは特に複雑ではない。
+
+## 盲信より委任
+
+もしも、リクエストを特定のタスクに最適なモデルにルーティングできたらどうだろう？難しい処理には高価な強力モデルを使い、単純なパースやフォーマットはもっと安いモデルに任せる。コードベースで手動で切り替えることなく、複数のプロバイダの恩恵を受けられる。
+
+Mastraを使えば、まさにこのようなシステムを構築できる。異なる種類の作業に特化したエージェントを設定し、どのスペシャリストが各リクエストを処理すべきかを判断するスーパーバイザーエージェントを作成する。以下のモデルIDは、Mastraの現在の `provider/model` 文字列形式を使用している。これらは例であり、リーダーボードではない。あなたの評価で勝ち、予算に合った現在のモデルに置き換えてほしい。
+
+次のように考えてみよう。チームに3人のスペシャリストがいるとする。
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core/mastra';
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
+  instructions: 'You are a creative writer. Be weird.',
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
+});
+```
+
+それぞれに役割があり、`description`フィールドはルーティングのインターフェースの一部となる。コードエージェントには、リポジトリ固有のコーディング評価に合格したモデルを割り当てるべきだ。長文コンテキストエージェントには、実際のドキュメントを処理しても中間がぐちゃぐちゃにならないモデルを選ぶ。汎用エージェントは、安価で信頼性が高く、最高の意味で退屈であるべきだ。
+
+ここからが面白いところだ。インテリジェントなプロキシとして機能する軽量なスーパーバイザーを追加する。
+
+```typescript
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
+  name: 'The Boss',
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
+});
+
+export const mastra = new Mastra({
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+スーパーバイザー自体は軽量なモデルで動作できる。なぜなら、主にトラフィックをどこに送るかを決定するだけだからだ。どのプレミアムモデルを使うかを決めるためにプレミアム料金を支払う必要はない。これも測定すべきだ。ルーティング層が悪いと、静かにコスト削減を誤ルーティングに変えてしまう。
+
+誰かがバブルソートの実装を依頼したら、ルーターはそれをコード作業と認識し、コードスペシャリストに渡す。クリエイティブライティングのプロンプト？それは、声と幅のために選んだモデルに送られる。歴史的な出来事に関する事実質問？汎用エージェントにルーティングする。鮮度や引用が重要な場合は、理想的には検索機能を組み合わせる。
+
+## 実際の利点
+
+**コスト効率は思っている以上に重要だ。** 委任の判断を行う小さなルーティングモデルのコストは、すべてのリクエストを最も高価なプロバイダに通す場合のほんの一部で済む。時間が経ち、特にスケールが大きくなると、これは実際のお金になる。本当に必要なときだけ、重量級の知能に料金を支払うことになる。
+
+**モデルをタスクに合わせると品質が向上する。** 勝者は月、タスク、プロンプトの形状によって変わる。だからこそ、ルーティング層はあなたの評価に依存すべきであり、統合を書いた週にTwitterで勝っていたモデルに依存すべきではない。
+
+**レジリエンスは可能になるが、自動ではない。** 上記のスーパーバイザーは、失敗したプロバイダを別のエージェントで再試行せず、ルーティングの決定自体をOpenAIに依存している。プロバイダのフェイルオーバーが重要な場合は、アプリケーションコードに明示的なリトライ/フォールバックポリシーを追加し、フォールバックルーターを別のプロバイダに置き、障害パスをテストせよ。エージェントの詰め合わせは、モデルのロゴが異なるだけではサーキットブレーカーにはならない。
+
+これは単に賢く振る舞うための話ではない。経済的にも技術的にも理にかなったシステムを構築することだ。建設作業ですべてに同じハンマーを使わないのと同様に、AIタスクすべてに同じ言語モデルを使うべきでもない。
+
+このアプローチの美しさは、アプリケーションコードに分岐の迷路が必要ないことだ。それでも1つのエージェントを呼び出す。どのモデルをどのタスクに使うかという複雑さは一箇所に集約され、一度設定すれば、コードベース中に散らばった条件分岐ロジックは不要になる。
+
+### リソース
+
+- [Mastra.ai Documentation](https://mastra.ai/docs)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+
+## シリーズを読む
+
+1. **LLMルーティング**（本記事）
+2. [セキュリティとガードレール](/mastra-security-guardrails)
+3. [MCPとツール連携](/mastra-mcp-tool-integrations)
+4. [ワークフローとメモリ](/mastra-workflows-memory)
+````
