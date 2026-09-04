@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 32171c10323b584c54841960383c0a34cf399055
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: 489ad802553132cd701032908f8a1ccd26aa8ed2
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.325)
 
-This candidate provides the most natural and technically accurate translation. It correctly translates 'guardrails' as 'garde-fous' (a standard term in French AI safety) and maintains the direct, professional tone of the original. It preserves all MDX structures and heading counts perfectly. The 'current' version had duplicated resource links at the end, which this candidate fixes.
+The translation is technically sound and maintains Dan's direct style. However, there is a duplicated heading in the 'Content Moderation' section that needs to be removed. Additionally, the series links are inconsistent, using a mix of relative and absolute paths; standardizing them to absolute localized paths (/fr/...) is safer for MDX routing.

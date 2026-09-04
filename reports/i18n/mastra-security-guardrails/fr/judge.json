@@ -1,30 +1,89 @@
 {
-  "selectedCommit": "32171c10323b584c54841960383c0a34cf399055",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "489ad802553132cd701032908f8a1ccd26aa8ed2",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 80,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly translates 'guardrails' as 'garde-fous' (a standard term in French AI safety) and maintains the direct, professional tone of the original. It preserves all MDX structures and heading counts perfectly. The 'current' version had duplicated resource links at the end, which this candidate fixes.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "### 3. Modération du contenu\n\n### 3. Modération du contenu",
+      "replacement": "### 3. Modération du contenu",
+      "reason": "The heading '3. Modération du contenu' is duplicated in the candidate text, which breaks the document structure."
+    },
+    {
+      "priority": "medium",
+      "match": "1. [Routage LLM](../llm-routing-mastra-ai)",
+      "replacement": "1. [Routage LLM](/fr/llm-routing-mastra-ai)",
+      "reason": "Internal series links should use absolute localized paths for consistency and to ensure they resolve correctly across different deployment environments."
+    }
+  ],
+  "rationale": "The translation is technically sound and maintains Dan's direct style. However, there is a duplicated heading in the 'Content Moderation' section that needs to be removed. Additionally, the series links are inconsistent, using a mix of relative and absolute paths; standardizing them to absolute localized paths (/fr/...) is safer for MDX routing.",
+  "confidence": "low",
+  "confidenceScore": 0.325,
+  "confidenceSignals": [
+    "1 high and 1 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 1,
+    "low": 0
+  },
   "slug": "mastra-security-guardrails",
   "locale": "fr",
   "candidateCommits": [
-    "32171c10323b584c54841960383c0a34cf399055",
-    "efe12e846373fe09f5bab8ac8a8fdd3f15652c56",
-    "0079830d4a9b3d8b446377ace2e3a2e65395360b",
-    "57dce2c6433ae3be8be70fe52d5d882c00197da2",
-    "78774fdb54819f3e1a495d8110b55068250be457"
+    "489ad802553132cd701032908f8a1ccd26aa8ed2"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "### 3. Modération du contenu\n\n### 3. Modération du contenu",
+      "replacement": "### 3. Modération du contenu",
+      "reason": "The heading is duplicated in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Routage LLM](../llm-routing-mastra-ai)",
+      "replacement": "[Routage LLM](/fr/llm-routing-mastra-ai)",
+      "reason": "The link should point to the localized version or follow the site's routing convention; however, the prompt specifically warned about relative paths for assets. For internal post links, consistency with the series list is key.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Intégrations MCP et outils](../mastra-mcp-tool-integrations)",
+      "replacement": "[Intégrations MCP et outils](/fr/mastra-mcp-tool-integrations)",
+      "reason": "Internal series links should use absolute localized paths for consistency with the first link in the list, rather than relative paths which might break depending on the deployment environment.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Workflows et mémoire](../mastra-workflows-memory)",
+      "replacement": "[Workflows et mémoire](/fr/mastra-workflows-memory)",
+      "reason": "Internal series links should use absolute localized paths for consistency with the first link in the list.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-security-guardrails --locale fr --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale fr --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale fr --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/fr/index.mdx failed structural parity with score 0.953 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/fr/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h3\":1,\"headingSequence\":4,\"linkTargets\":3}. Differences: {\"h3\":1,\"headingSequence\":4,\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
