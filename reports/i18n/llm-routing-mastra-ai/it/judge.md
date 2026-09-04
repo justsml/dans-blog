@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 8cb83b6b6689a2f24b4a049ee1c0f56091893366
+- Selected candidate: 9acd39318d3a04d6b3f423d188d7c0eb69461c65
 - Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.329)
 
-The candidate 8cb83b6b6689a2f24b4a049ee1c0f56091893366 (DeepSeek) is the best choice. It maintains the technical terminology (engineering, eval, provider) common in Italian dev circles while keeping Dan's punchy, direct style. The 'current' version in the prompt actually already seems to have incorporated the 'molto in voga' suggestion from the previous judge report, making it high quality. The MDX structure and code blocks are perfectly preserved.
+The candidate 9acd39318d3a04d6b3f423d188d7c0eb69461c65 provided a complete translation including frontmatter, which was missing in other iterations. The tone is excellent ('minestra', 'cavallo di battaglia'). Note: The judge report suggested fixing links from ../ to /, but the actual MDX provided by the candidate already uses / paths, so no high-priority changes are actually required to the text provided in the prompt.
