@@ -1,0 +1,303 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: hi
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 68.91
+- Input tokens: 6840
+- Output tokens: 8252
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002987
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: अनिर्धारित मॉडलों के लिए निर्धारित पैटर्न
+modified: '2026-09-04'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - supervisor-agents
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLMs में एक अजीब गुण है: वे बारीकियों को समझने में शानदार हैं, लेकिन रेसिपी फॉलो करने में बुरे। किसी एक मज़बूत मॉडल को एक अस्पष्ट प्रॉब्लम दें, तो वह संभावनाओं पर तर्क करेगा। उसे चरणों का एक सटीक क्रम दें, तो वह शायद स्टेप 3 छोड़ दे, क्योंकि स्टेप 5 "ज़्यादा प्रासंगिक लगा।"
+
+यह मॉडल में कोई बग नहीं है। यह प्रायिकता (probabilistic) सिस्टम का एक मूलभूत गुण है, जो नियतात्मक (deterministic) प्रॉब्लम को हल करने की कोशिश कर रहा है।
+
+मैंने टीमों को इस बेमेल से जूझते देखा है। वे एक एजेंट बनाते हैं जो कस्टमर रिफ़ंड संभाले, उसे एक दर्जन टूल देते हैं, और उम्मीद करते हैं कि वह एक बिज़नेस प्रोसेस को विश्वसनीय रूप से निष्पादित करेगा। कभी-कभी यह बिल्कुल सही काम करता है। कभी-कभी यह उन स्वीकृतियों को भ्रम (hallucinate) कर लेता है जो कभी हुई ही नहीं। कभी-कभी वह उसी जानकारी के लिए तीन बार पूछता रह जाता है।
+
+समाधान बेहतर प्रॉम्प्ट नहीं है। यह जानना है कि कब LLM को "सोचने" के लिए कहना बंद करें और कब उसे "आज्ञा पालन" करने के लिए कहना शुरू करें।
+
+---
+
+## जब नियतात्मक (Deterministic) रचनात्मक (Creative) से बेहतर होता है
+
+सोचिए कि जब आपको एक सपोर्ट टिकट प्रोसेस करनी है तो क्या होता है। वास्तविक दुनिया का बिज़नेस लॉजिक कुछ ऐसा दिखता है:
+
+1. डेटाबेस से टिकट का विवरण लाएँ
+2. जाँचें कि उपयोगकर्ता रिफ़ंड के लिए पात्र है या नहीं (पॉलिसी नियम)
+3. सत्यापित करें कि लेन-देन मौजूद है और पहले से रिफ़ंड नहीं किया गया है
+4. रिफ़ंड राशि की गणना करें
+5. भुगतान रिवर्सल प्रोसेस करें
+6. टिकट स्टेटस अपडेट करें
+7. पुष्टिकरण ईमेल भेजें
+
+आप इसे एक टूल-कॉलिंग अभ्यास के रूप में LLM को सौंप सकते हैं। मेरे अनुभव में, यह मुसीबत माँगना है। मॉडल यह तय कर सकता है कि स्टेप 2 और 3 "मूलतः एक ही चीज़ हैं" और एक को छोड़ दे। या वह पात्रता जाँचने से पहले रिफ़ंड प्रोसेस कर सकता है क्योंकि उपयोगकर्ता परेशान लग रहा था।
+
+वर्कफ़्लोज़ इसी परिदृश्य के लिए मौजूद हैं। वे उत्साहजनक नहीं हैं, लेकिन यही उनकी खासियत है।
+
+### मौसम-आधारित गतिविधि योजनाकार बनाना
+
+यहाँ एक व्यावहारिक उदाहरण है जो पैटर्न दिखाता है। हमें कठोर, तथ्यात्मक मौसम डेटा के साथ-साथ रचनात्मक गतिविधि सुझावों की आवश्यकता है। मौसम फ़ेच कभी रचनात्मक नहीं होना चाहिए, लेकिन सुझाव रचनात्मक हो सकते हैं।
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: 'openai/gpt-5.5',
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities)
+  .commit();
+```
+
+`geocodeCity()` सामान्य एप्लिकेशन कोड या Maps API कॉल है; यह कोई मॉडल निर्णय नहीं है। LLM मौसम API को कभी छूता नहीं है। उसे इनपुट के रूप में ग्राउंड-ट्रुथ डेटा मिलता है, फिर वह वही करता है जिसमें वह वास्तव में अच्छा है: प्रासंगिक सुझाव देना। यदि आप इसे उल्टा करें और एजेंट को मौसम डेटा लाने दें, तो आपको अंततः बारिश के समय धूप का पूर्वानुमान मिलेगा।
+
+**वर्कफ़्लो पर कब विचार करें:**
+- आपके पास ज्ञात चरणों का एक क्रम है जो क्रम में होना चाहिए
+- आपको प्रत्येक चरण पर अवलोकनीयता चाहिए (लॉग, मीट्रिक, समय)
+- आपको अस्थिर बाहरी APIs के लिए पुनः प्रयास लॉजिक चाहिए
+- बिज़नेस नियमों की "व्याख्या" नहीं की जा सकती - उनका ठीक से पालन किया जाना चाहिए
+
+---
+
+## वह कॉन्टेक्स्ट विंडो समस्या जिसके बारे में कोई बात नहीं करता
+
+एक पैटर्न है जो मैं बार-बार देखता हूँ। कोई एक चैटबॉट बनाता है। यह परीक्षण के दौरान बढ़िया काम करता है। फिर प्रोडक्शन में, उपयोगकर्ताओं की लंबी बातचीत होती है और अचानक बॉट खो जाता है।
+
+डेवलपर लॉग्स देखता है और महसूस करता है कि वे हर अनुरोध के साथ पूरा बातचीत इतिहास भेज रहे हैं। सभी 47 संदेश। वे टोकन और कॉन्टेक्स्ट स्पेस को उस जानकारी के लिए जला रहे हैं जो अधिकतर अप्रासंगिक है।
+
+इससे भी बुरी बात यह है कि शोधकर्ता "बीच में खो जाना" नामक एक घटना को देखते हैं जहाँ लंबे संदर्भ में प्रासंगिक जानकारी दब जाने पर मॉडल का प्रदर्शन खराब हो जाता है। मॉडल सचमुच पेड़ों के कारण जंगल नहीं देख पाता।
+
+पूरा बातचीत इतिहास भेजना सुरक्षित लगता है। आप मॉडल को "सारी जानकारी" दे रहे हैं। लेकिन वास्तव में आप मॉडल के लिए महत्वपूर्ण चीज़ों पर ध्यान केंद्रित करना कठिन बना रहे हैं।
+
+### हाल के संदेश, कार्यशील स्मृति, और अर्थपूर्ण पुनर्स्मरण
+
+Mastra की मेमोरी प्रणाली उन कुछ कार्यों को अलग करती है जिन्हें टीमें अक्सर एक साथ मिला देती हैं। `lastMessages` के साथ हाल के संदेश इतिहास पिछले कुछ आदान-प्रदानों को उपलब्ध रखता है। कार्यशील स्मृति उपयोगकर्ता की पसंद, लक्ष्य और परियोजना की स्थिति जैसे स्थायी संरचित तथ्यों को संग्रहीत करती है। अर्थपूर्ण पुनर्स्मरण पुराने संदेशों को उनके अर्थ के आधार पर खोजता है जब वर्तमान क्वेरी संबंधित प्रतीत होती है। अवलोकनात्मक स्मृति लंबी चलने वाली बातचीत के लिए एक कदम आगे जाती है और पुराने रॉ इतिहास को घने अवलोकनों में संपीड़ित करती है।
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: 'openai/gpt-5.5',
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:./mastra.db',
+    }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    options: {
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
+      },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
+    },
+  }),
+});
+```
+
+एक परिचालनात्मक टिप्पणी: `observationalMemory: true` वर्तमान में अपने डिफ़ॉल्ट ऑब्ज़र्वर मॉडल के रूप में `google/gemini-2.5-flash` का उपयोग करता है। इसका मतलब है कि इस अन्यथा OpenAI-समर्थित एजेंट को Google मॉडल एक्सेस की भी आवश्यकता है, इसके लिए अलग मॉडल उपयोग होता है, और यह बातचीत के इतिहास को दूसरे प्रदाता के माध्यम से भेज सकता है। प्रोडक्शन में, अवलोकनात्मक-स्मृति मॉडल को स्पष्ट रूप से कॉन्फ़िगर करें और इस विकल्प को उसी क्रेडेंशियल, लागत, निवास और डेटा-प्रतिधारण समीक्षा के माध्यम से चलाएं जैसा मुख्य एजेंट मॉडल के लिए किया जाता है।
+
+यहाँ बताया गया है कि यह व्यवहार में कैसे काम करता है। एक उपयोगकर्ता पूछता है: "वह इतालवी रेस्तरां कौन सा था जो आपने पिछले महीने सुझाया था?"
+
+अर्थपूर्ण पुनर्स्मरण या अवलोकनों के बिना, एजेंट पिछले 20 संदेशों को देखता है। रेस्तरां की सिफारिश 506 में से संदेश 487 थी। वह चली गई। एजेंट कहता है "मेरे पास वह जानकारी नहीं है।"
+
+अर्थपूर्ण पुनर्स्मरण के साथ:
+1. क्वेरी एम्बेड हो जाती है: `[0.234, -0.567, 0.891, ...]`
+2. एम्बेडिंग की तुलना ऐतिहासिक संदेशों से की जाती है
+3. संदेश 487 ("मैं Trattoria Bella की सिफारिश करूंगा - उनका कार्बोनारा अविश्वसनीय है") 0.89 समानता स्कोर करता है
+4. वह संदेश वर्तमान संदर्भ में इंजेक्ट हो जाता है
+5. एजेंट जवाब देता है: "मैंने Trattoria Bella की सिफारिश की थी। उनके कार्बोनारा ने मेरा ध्यान खींचा था।"
+
+एजेंट पूर्ण स्मृति रखता हुआ प्रतीत होता है जबकि वह संदर्भ विंडो के केवल एक अंश का उपयोग कर रहा है। यह केवल चतुर इंजीनियरिंग नहीं है - यह कार्यात्मक रूप से आवश्यक है एक बार जब बातचीत कुछ दर्जन संदेशों से आगे बढ़ जाती है।
+
+---
+
+## पर्यवेक्षक एजेंटों के माध्यम से समन्वय
+
+कभी-कभी आपको संरचना और लचीलापन दोनों की आवश्यकता होती है। शुद्ध वर्कफ़्लो बहुत कठोर होते हैं। शुद्ध एजेंट बहुत अप्रत्याशित होते हैं।
+
+पर्यवेक्षक एजेंट आपको एक समन्वयक प्रदान करते हैं जो तय करता है कि किसी विशेषज्ञ एजेंट, वर्कफ़्लो या उपकरण को अगला कदम उठाना चाहिए। इसे AI क्षमताओं के लिए एक स्मार्ट लोड बैलेंसर के रूप में सोचें।
+
+```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: 'openai/gpt-5.5',
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Supervisor state and delegation traces need somewhere durable to land.
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
+  }),
+});
+```
+
+जब आप इस पर्यवेक्षक से क्वेरी करते हैं, तो यह अनुरोध का विश्लेषण करता है और तदनुसार रूट करता है:
+- "मुझे X के बारे में तथ्य चाहिए" → शोध एजेंट को ट्रिगर करता है
+- "सिएटल में एक सप्ताहांत की योजना बनाएं" → गतिविधि योजनाकार वर्कफ़्लो चलाता है
+- "Y पर एक रिपोर्ट लिखें" → लेखन एजेंट को शामिल करता है
+
+यह पैटर्न सब कुछ एक ही मेगा-एजेंट में ठूंसने की कोशिश करने से बेहतर स्केल करता है। विशेषज्ञ एजेंट केंद्रित विशेषज्ञता विकसित करते हैं। समन्वयक रूटिंग संभालता है। प्रत्येक भाग वही करता है जिसमें वह अच्छा है।
+
+---
+
+## सब कुछ एक साथ रखना
+
+वास्तविक प्रोडक्शन AI सिस्टम को सिर्फ प्रॉम्प्ट नहीं, बल्कि आर्किटेक्चर की आवश्यकता होती है। आप वितरित सिस्टम बना रहे हैं जहाँ कुछ नोड संयोगवश LLM होते हैं।
+
+वर्कफ़्लो आपको गारंटी देते हैं जब चीज़ों को बिल्कुल सही होना आवश्यक हो। मेमोरी आपके टोकन बजट को ख़त्म किए बिना संदर्भ प्रदान करती है। सुपरवाइज़र एजेंट आपको सरल भागों से जटिलता रचने की अनुमति देते हैं।
+
+इसमें से कुछ भी ग्लैमरस नहीं है। लेकिन प्रोडक्शन में पर्याप्त "पूरी तरह से स्वायत्त एजेंटों" को विफल होते देखने के बाद, मैं रोमांचक अप्रत्याशितता की तुलना में उबाऊ विश्वसनीयता की सराहना करने लगा हूँ।
+
+आपका अनुभव अलग हो सकता है, लेकिन मेरे अनुभव में, जो सिस्टम वास्तव में शिप होते हैं और चलते रहते हैं, वे वे हैं जो LLM को एक बड़ी आर्किटेक्चर में घटक के रूप में मानते हैं, न कि जादुई बक्से के रूप में जो सब कुछ हल करते हैं।
+
+### संसाधन
+
+- [Mastra वर्कफ़्लो दस्तावेज़ीकरण](https://mastra.ai/docs/workflows/overview)
+- [Mastra मेमोरी दस्तावेज़ीकरण](https://mastra.ai/docs/memory/overview)
+- [Mastra सुपरवाइज़र एजेंट](https://mastra.ai/docs/agents/supervisor-agents)
+- [Mastra सिमैंटिक रिकॉल](https://mastra.ai/docs/memory/semantic-recall)
+
+## शृंखला पढ़ें
+
+1. [LLM रूटिंग](../llm-routing-mastra-ai)
+2. [सुरक्षा और गार्डरेल्स](../mastra-security-guardrails)
+3. [MCP और टूल एकीकरण](../mastra-mcp-tool-integrations)
+4. **कार्यप्रवाह और मेमोरी** (यह पोस्ट)
+````
