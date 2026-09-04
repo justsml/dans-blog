@@ -1,0 +1,303 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ja
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 59.99
+- Input tokens: 7298
+- Output tokens: 7113
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.002592
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: 非決定論的モデルの決定論的パターン
+modified: '2026-09-04'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - supervisor-agents
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLMには奇妙な特性がある。ニュアンスの理解には優れているが、手順書の実行は壊滅的に苦手だ。強力なモデルに漠然とした問題を与えると、可能性を推論する。正確な手順の列を与えると、ステップ3を飛ばしてステップ5の方が「より関連性が高い」と判断するかもしれない。
+
+これはモデルのバグではない。確率的システムが決定的問題を解決しようとする際の根本的な特性である。
+
+このミスマッチに悩むチームを何度も見てきた。顧客の返金処理を担当させるエージェントを作り、十数ものツールを与え、ビジネスプロセスを確実に実行してくれると期待する。うまくいくこともある。しかし、ありもしない承認を幻覚することもある。同じ情報を三度も尋ねるループに陥ることもある。
+
+解決策は、より優れたプロンプトではない。LLMに「考えろ」と頼むのをやめ、「従え」と指示するタイミングを見極めることだ。
+
+---
+
+## 決定論が創造性に勝る時
+
+サポートチケットを処理する場面を考えてみよう。実際のビジネスロジックは次のようになる。
+
+1. データベースからチケット詳細を取得する
+2. ユーザーが返金対象かどうかを確認する（ポリシールール）
+3. トランザクションが存在し、既に返金されていないことを確認する
+4. 返金額を計算する
+5. 支払いの取消しを処理する
+6. チケットのステータスを更新する
+7. 確認メールを送信する
+
+これをLLMにツール呼び出しとして任せることもできる。私の経験では、それはトラブルを招く行為だ。モデルがステップ2と3を「実質的に同じ」と判断して一方をスキップするかもしれない。あるいは、ユーザーが怒っているように見えたからといって、資格確認前に返金を処理するかもしれない。
+
+ワークフローはまさにこのシナリオのために存在する。派手ではないが、それが肝心だ。
+
+### 天気アクティビティプランナーの構築
+
+このパターンを示す実践的な例を示す。確固たる気象データと、創造的なアクティビティ提案を組み合わせる必要がある。気象データの取得は決して創造的であってはならないが、提案は創造的であるべきだ。
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: 'openai/gpt-5.5',
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities)
+  .commit();
+```
+
+`geocodeCity()`は通常のアプリケーションコードかMaps APIの呼び出しであり、モデルによる判断ではない。LLMは気象APIに一切触れない。入力として現実のデータを受け取り、その後、本来得意とする文脈に応じた提案を行う。これを逆にしてエージェントに気象データを取得させると、いつかは雨が降っているのに晴天の予報が返ってくることになる。
+
+**ワークフローを検討すべき場面:**
+- 順序通りに実行する必要がある既知の手順の列がある場合
+- 各段階で可観測性（ログ、メトリクス、タイミング）が必要な場合
+- 不安定な外部APIに対するリトライロジックが必要な場合
+- ビジネスルールを「解釈」するのではなく、正確に遵守する必要がある場合
+
+---
+
+## 誰も口にしないコンテキストウィンドウの問題
+
+よく見かけるパターンがある。誰かがチャットボットを構築する。テスト中は完璧に動作する。しかし本番環境では、ユーザーがより長い会話をすると、突然ボットが迷子になる。
+
+開発者がログを確認すると、すべてのリクエストで会話履歴全体を送信していることに気づく。メッセージが47件すべて。ほとんどが無関係な情報のためにトークンとコンテキスト空間を浪費しているのだ。
+
+さらに悪いことに、研究者が「lost in the middle（中間に埋もれる問題）」と呼ぶ現象がある。関連情報が長いコンテキストの途中に埋もれると、モデルの性能が低下するのだ。文字通り、木を見て森を見ず状態になる。
+
+会話履歴を全部送るのは安全に思える。モデルに「すべての情報」を与えているのだから。しかし実際には、モデルが重要なことに集中するのを難しくしている。
+
+### 最近のメッセージ、作業記憶、そして想起
+
+Mastraのメモリシステムは、チームがよく一緒くたにしてしまういくつかの役割を分離している。最近のメッセージ履歴は`lastMessages`で直近のターンを保持する。作業記憶（ワーキングメモリ）は、ユーザーの好み、目標、プロジェクトの状態といった永続的な構造化情報を保存する。意味的想起（セマンティックリコール）は、現在のクエリに関連しそうな場合に、過去のメッセージを意味に基づいて検索する。観察記憶（オブザベーショナルメモリ）は、長時間の会話のために、古い生の履歴を凝縮した観察結果に圧縮する、さらに一歩進んだ機能だ。
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: 'openai/gpt-5.5',
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:./mastra.db',
+    }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    options: {
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
+      },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
+    },
+  }),
+});
+```
+
+運用上の注意点がひとつある。`observationalMemory: true` は現在、デフォルトの観察モデルとして `google/gemini-2.5-flash` を使用する。つまり、この一見OpenAIベースのエージェントが、Googleモデルへのアクセスも必要とし、別途モデル使用量が発生し、会話履歴が第二のプロバイダ経由で送信される可能性がある。本番環境では、観察記憶モデルを明示的に設定し、メインのエージェントモデルと同じ認証情報、コスト、データ所在地、データ保持ポリシーのレビューを経て選択すること。
+
+実際の動作はこうだ。ユーザーが尋ねる。「先月おすすめしてくれたイタリアンレストランは何ですか？」
+
+意味的想起も観察記憶もない場合、エージェントは直近20件のメッセージしか見られない。そのレストランのおすすめは506件中487件目のメッセージだった。もうない。エージェントは「その情報はありません」と答える。
+
+意味的想起がある場合：
+1. クエリが埋め込みに変換される：`[0.234, -0.567, 0.891, ...]`
+2. その埋め込みが過去のメッセージと比較される
+3. 487件目のメッセージ（「Trattoria Bellaをおすすめします。カルボナーラが絶品です」）が類似度0.89でヒットする
+4. そのメッセージが現在のコンテキストに注入される
+5. エージェントが応答する：「Trattoria Bellaをおすすめしました。カルボナーラが特に印象的でしたね」
+
+エージェントは完全な記憶を持っているように見える一方で、コンテキストウィンドウのごく一部しか使用していない。これは単なる巧妙なエンジニアリングではない。会話が数十メッセージを超えた時点で、機能上必要不可欠なのだ。
+
+---
+
+## スーパーバイザーエージェントによる調整
+
+構造と柔軟性の両方が必要な場合がある。純粋なワークフローは硬直しすぎる。純粋なエージェントは予測不能になりすぎる。
+
+スーパーバイザーエージェントは、次にどの専門エージェント、ワークフロー、ツールに処理を任せるかを決定するコーディネーターを提供する。AI機能のためのスマートなロードバランサーと考えてよい。
+
+```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: 'openai/gpt-5.5',
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Supervisor state and delegation traces need somewhere durable to land.
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
+  }),
+});
+```
+
+このスーパーバイザーにクエリを送信すると、リクエストを分析して適切にルーティングする：
+- 「Xについての事実が必要」はリサーチエージェントを起動
+- 「シアトルでの週末を計画して」はアクティビティプランナーワークフローを実行
+- 「Yについてのレポートを書いて」はライティングエージェントを起動
+
+このパターンは、すべてを単一のメガエージェントに詰め込もうとするよりも、はるかにスケーラブルだ。専門化されたエージェントは集中した専門性を発揮する。コーディネーターがルーティングを担当する。各ピースが得意なことをやる。
+
+---
+
+## 全体像
+
+本番AIシステムには、プロンプトだけでなくアーキテクチャが必要だ。あなたが構築しているのは、たまたま一部のノードがLLMである分散システムなのだ。
+
+ワークフローは、物事を正確に行う必要がある場面で保証を提供する。メモリは、トークン予算を消費せずにコンテキストを維持する。スーパーバイザーエージェントにより、複雑さをシンプルな部品から組み立てられる。
+
+どれも華やかではない。しかし、「完全自律型エージェント」が本番で次々と失敗するのを見てきた私は、刺激的な予測不可能性よりも、退屈な信頼性の方が価値があると痛感している。
+
+結果は人それぞれかもしれないが、私の経験上、実際に出荷されて稼働し続けるシステムは、LLMをあらゆる問題を解決する魔法の箱としてではなく、より大きなアーキテクチャのコンポーネントとして扱うものだ。
+
+### リソース
+
+- [Mastra Workflows ドキュメント](https://mastra.ai/docs/workflows/overview)
+- [Mastra Memory ドキュメント](https://mastra.ai/docs/memory/overview)
+- [Mastra Supervisor エージェント](https://mastra.ai/docs/agents/supervisor-agents)
+- [Mastra Semantic Recall](https://mastra.ai/docs/memory/semantic-recall)
+
+## シリーズを読む
+
+1. [LLM ルーティング](../llm-routing-mastra-ai)
+2. [セキュリティとガードレール](../mastra-security-guardrails)
+3. [MCP とツール統合](../mastra-mcp-tool-integrations)
+4. **ワークフローとメモリ**（本記事）
+````
