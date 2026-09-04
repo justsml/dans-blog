@@ -1,30 +1,87 @@
 {
-  "selectedCommit": "ebb5087cc5476a9ca3b866cd067dbdae08558d88",
+  "selectedCommit": "41dd513f9a22762385f75f17678afaab08a34b77",
   "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and direct German translation while maintaining the technical context and Dan's characteristic style. It correctly handles the MDX structure and internal links. The use of 'du' (informal) is appropriate for this type of blog post and matches the tone of the original English text better than the more formal 'Sie' used in other candidates. It also avoids the empty title/subtitle issue found in the 'current' version.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "Ich habe ein Team zugesehen",
+      "replacement": "Ich habe einem Team dabei zugesehen",
+      "reason": "Grammar: 'zusehen' requires the dative case ('einem Team') and 'dabei' improves the flow when followed by a subordinate clause."
+    },
+    {
+      "priority": "medium",
+      "match": "[MCP & Tool-Integrationen](../mastra-mcp-tool-integrations)",
+      "replacement": "[MCP & Tool-Integrationen](/mastra-mcp-tool-integrations)",
+      "reason": "The English source uses absolute paths for internal links. Relative paths (../) may break the routing if the site structure expects root-relative URLs."
+    },
+    {
+      "priority": "medium",
+      "match": "[Workflows & Speicher](../mastra-workflows-memory)",
+      "replacement": "[Workflows & Speicher](/mastra-workflows-memory)",
+      "reason": "The English source uses absolute paths for internal links. Relative paths (../) may break the routing if the site structure expects root-relative URLs."
+    }
+  ],
+  "rationale": "The translation is technically sound and maintains Dan's direct style. However, it introduced a grammatical error in the first section ('ein Team' instead of 'einem Team') and changed absolute internal links to relative ones, which deviates from the source MDX structure and could cause routing issues.",
+  "confidence": "low",
+  "confidenceScore": 0.231,
+  "confidenceSignals": [
+    "1 high and 2 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 2,
+    "low": 0
+  },
   "slug": "llm-routing-mastra-ai",
   "locale": "de",
   "candidateCommits": [
-    "ebb5087cc5476a9ca3b866cd067dbdae08558d88",
-    "8f9fba9c8abce0f55d8df946b9b55040485cedf3",
-    "a01efdb137c45fcde97c332d5bc765ce2959e2bd",
-    "292d3f30f413c6cdce281f4afa891b8747bb5762",
-    "1f137e73d9ba430d717b1fd56e51c2223795b51e"
+    "41dd513f9a22762385f75f17678afaab08a34b77",
+    "0f6e6fa111dbea7697038cb3adabeee7faa4f460"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Ich habe ein Team zugesehen",
+      "replacement": "Ich habe einem Team zugesehen",
+      "reason": "Grammar: 'zusehen' requires the dative case ('einem Team').",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Ich habe einem Team zugesehen",
+      "replacement": "Ich habe einem Team dabei zugesehen",
+      "reason": "The original German text in the MDX actually already uses 'einem Team' (dative), but the sentence structure 'Ich habe einem Team zugesehen, das... gejagt hat' is slightly improved in flow by adding 'dabei' or ensuring the dative is correct. Actually, looking at the provided MDX, it already says 'einem Team'. The judge report suggested a fix for 'ein Team' but the MDX content provided shows 'einem Team'. I will provide a fix for the series links which are missing the leading slash or have inconsistent pathing compared to the English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Sicherheit & Schutzmaßnahmen](../mastra-security-guardrails)",
+      "replacement": "[Sicherheit & Schutzmaßnahmen](/mastra-security-guardrails)",
+      "reason": "The English source uses absolute paths for internal links (/mastra-security-guardrails). The translation changed them to relative paths (../), which may break depending on the routing setup. Reverting to match source.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale de --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale de --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx failed structural parity with score 0.969 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

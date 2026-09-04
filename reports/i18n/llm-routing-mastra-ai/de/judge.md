@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: ebb5087cc5476a9ca3b866cd067dbdae08558d88
+- Selected candidate: 41dd513f9a22762385f75f17678afaab08a34b77
 - Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.231)
 
-This candidate provides the most natural and direct German translation while maintaining the technical context and Dan's characteristic style. It correctly handles the MDX structure and internal links. The use of 'du' (informal) is appropriate for this type of blog post and matches the tone of the original English text better than the more formal 'Sie' used in other candidates. It also avoids the empty title/subtitle issue found in the 'current' version.
+The translation is technically sound and maintains Dan's direct style. However, it introduced a grammatical error in the first section ('ein Team' instead of 'einem Team') and changed absolute internal links to relative ones, which deviates from the source MDX structure and could cause routing issues.
