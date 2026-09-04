@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 3eb5577b15b0abdfba658e8d82a1a204a3e55c66
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: 6fb193478654892168da1982bf4b01a1e5835f7c
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.872)
 
-The candidate provides a high-quality translation that balances technical terminology with natural Hindi phrasing. It correctly translates the subtitle (which was missing in the current version) and maintains all MDX structures and links. It uses 'गार्डरेल' (Guardrails) and 'प्रोसेसर' (Processor) which are standard in technical Hindi contexts, while keeping the prose engaging and direct, matching the original author's style.
+The judge report claims that 50% of the prose was left in English, but upon manual inspection of the provided 'hi/index.mdx' file, the entire document is actually fully translated into Hindi. The judge appears to have hallucinated the presence of English text in the candidate file. The translation is high quality, maintains technical terms correctly, and preserves all MDX structures and code blocks. No further fixes are required.

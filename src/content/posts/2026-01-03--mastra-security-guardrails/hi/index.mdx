@@ -1,8 +1,14 @@
 ---
-title: "प्रोडक्शन AI भयानक है (और इसे कैसे ठीक करें)"
-subTitle: "अगर आपके एजेंट में गार्डरेल नहीं हैं, तो आप प्रोडक्शन के लिए तैयार नहीं हैं।"
-modified: 2026-01-08
-tags: [ai, security, mastra, guardrails, privacy, pii]
+title: प्रोडक्शन AI डरावना है (और इसे कैसे ठीक करें)
+subTitle: 'यदि आपके एजेंट में गार्डरेल्स नहीं हैं, तो आप प्रोडक्शन के लिए तैयार नहीं हैं।'
+modified: '2026-09-04'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
 category: AI
 subCategory: Security
 social_image: ../desktop-social.webp
@@ -10,158 +16,177 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
+कोई भी असुरक्षित AI सिस्टम बनाने के इरादे से शुरुआत नहीं करता। आप निर्देश लिखते हैं, एज केस टेस्ट करते हैं, कुछ वैलिडेशन नियम जोड़ते हैं। फिर किसी को पता चलता है कि वे आपके बॉट को समुद्री डाकू बनकर रोलप्ले करने और यूज़र डेटा उजागर करने के लिए बरगला सकते हैं। या आपके लॉग में क्रेडिट कार्ड नंबर आ जाता है। या मॉडल आत्मविश्वास से किसी प्रतियोगी के उत्पाद की सिफारिश कर देता है।
 
-कोई भी जानबूझकर असुरक्षित AI सिस्टम नहीं बनाता। आप निर्देश लिखते हैं, एज केसेज़ टेस्ट करते हैं, कुछ वैलिडेशन रूल जोड़ते हैं। फिर किसी को पता चलता है कि वे आपके बॉट को समुद्री डाकू की भूमिका निभाने और यूज़र डेटा उजागर करने के लिए मना सकते हैं। या कोई क्रेडिट कार्ड नंबर आपके लॉग्स में आ जाता है। या मॉडल आत्मविश्वास से किसी प्रतिद्वंद्वी के प्रोडक्ट की सलाह देता है।
+'डेमो में काम करता है' और 'प्रोडक्शन में सुरक्षित' के बीच का अंतर अधिकांश टीमों की अपेक्षा से कहीं अधिक चौड़ा है।
 
-"डेमो में काम करता है" और "प्रोडक्शन में सुरक्षित है" के बीच की खाई ज़्यादातर टीमों की उम्मीद से ज़्यादा चौड़ी होती है।
+समस्या का एक हिस्सा यह है कि कच्चे LLMs को इस बात की परवाह नहीं होती कि उन्हें क्या करना चाहिए या क्या नहीं। वे भविष्यवाणी करने वाली मशीनें हैं जो आपके द्वारा शुरू किए गए पैटर्न को जारी रखने की कोशिश करती हैं। उन्हें एक प्रॉम्प्ट दें जो 'system override mode' जैसा लगता है, और वे खुशी-खुशी उसके साथ खेलेंगे। यह मॉडल में कोई बग नहीं है; यह बस वही है कि भाषा मॉडल कैसे काम करते हैं।
 
-समस्या का एक हिस्सा यह है कि कच्चे LLM के पास इस बारे में कोई राय नहीं होती कि उन्हें क्या करना चाहिए या क्या नहीं करना चाहिए। वे प्रेडिक्शन मशीन हैं जो उस पैटर्न को जारी रखने की कोशिश करते हैं जिसे आपने शुरू किया है। उन्हें "सिस्टम ओवरराइड मोड" जैसा प्रॉम्प्ट दें, और वे खुशी-खुशी साथ खेलेंगे। यह मॉडल में कोई बग नहीं है; भाषा मॉडल बस ऐसे ही काम करते हैं।
-
-ज़्यादातर फ्रेमवर्क आपको मॉडल सौंप देते हैं और शुभकामनाएँ देते हैं। Mastra एक अलग दृष्टिकोण अपनाता है: यह मानता है कि आपको अंततः गार्डरेल की ज़रूरत पड़ेगी, इसलिए यह उन्हें शुरू से ही एजेंट आर्किटेक्चर में बना देता है।
+अधिकांश फ्रेमवर्क आपको मॉडल देकर शुभकामनाएं देते हैं। Mastra एक अलग दृष्टिकोण अपनाता है: यह मानता है कि आपको अंततः गार्डरेल की ज़रूरत होगी, इसलिए वह उन्हें शुरू से ही एजेंट आर्किटेक्चर में बनाता है।
 
 ---
 
-## प्रोसेसर सेफ्टी लेयर के रूप में
+## प्रोसेसर सुरक्षा परतों के रूप में
 
-कोर मैकेनिज़्म सीधा है। आपका प्रॉम्प्ट मॉडल तक पहुँचने से पहले इनपुट प्रोसेसर की एक चेन से गुज़रता है। मॉडल के रिस्पॉन्स के बाद, आउटपुट प्रोसेसर अपनी बारी लेते हैं। हर प्रोसेसर उस स्टेज पर कंटेंट को इंस्पेक्ट, मॉडिफाई या ब्लॉक कर सकता है।
+मूल तंत्र सीधा है। आपका प्रॉम्प्ट मॉडल तक पहुंचने से पहले, यह इनपुट प्रोसेसर की एक श्रृंखला से गुज़रता है। मॉडल के जवाब देने के बाद, आउटपुट प्रोसेसर अपनी बारी लेते हैं। प्रत्येक प्रोसेसर उस स्टेज पर सामग्री का निरीक्षण, संशोधन या ब्लॉक कर सकता है।
 
-इन्हें AI इंटरैक्शन के लिए मिडलवेयर समझें। आपको जिनकी ज़रूरत है उन्हें स्टैक करें, उनका व्यवहार कॉन्फ़िगर करें, और वे हर रिक्वेस्ट पर ऑटोमैटिकली चलेंगे।
+इन्हें AI इंटरैक्शन के लिए मिडलवेयर समझें। आप जिनकी ज़रूरत है उन्हें स्टैक करते हैं, उनके व्यवहार को कॉन्फ़िगर करते हैं, और वे हर रिक्वेस्ट पर स्वचालित रूप से चलते हैं।
 
 ### 1. समुद्री डाकुओं को रोकना (प्रॉम्प्ट इंजेक्शन)
 
-प्रॉम्प्ट इंजेक्शन अटैक काफ़ी क्रिएटिव हो गए हैं। लोग इनविज़िबल यूनिकोड कैरेक्टर का इस्तेमाल करते हैं, base64 में निर्देश लिखते हैं, या मॉडल को मना लेते हैं कि वे "डीबग मोड" में हैं जहाँ सामान्य नियम लागू नहीं होते। तकनीकें लगातार बदलती रहती हैं।
+प्रॉम्प्ट इंजेक्शन हमले काफी रचनात्मक हो गए हैं। लोग अदृश्य यूनिकोड कैरेक्टर, बेस64 में लिखे निर्देश, या मॉडल को यह विश्वास दिलाने का प्रयास करते हैं कि वे 'डीबग मोड' में हैं जहाँ सामान्य नियम लागू नहीं होते। तकनीकें लगातार विकसित हो रही हैं।
 
-Mastra में कॉमन पैटर्न पकड़ने वाले प्रोसेसर शामिल हैं:
-
+Mastra में ऐसे प्रोसेसर शामिल हैं जो सामान्य पैटर्न को पकड़ते हैं:
 
 ```typescript
 // src/mastra/agents/secure-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
-import { openai } from '@ai-sdk/openai';
+
+const GUARDRAIL_MODEL = 'openrouter/openai/gpt-oss-safeguard-20b';
 
 export const secureAgent = new Agent({
   id: 'fortress-assistant',
   name: 'fortress-assistant',
   instructions: 'You are a secure assistant.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     // 1. Scrub invisible characters
     new UnicodeNormalizer({
-      id: 'unicode-normalizer',
       stripControlChars: true,
       collapseWhitespace: true,
     }),
     // 2. Detect the attempt
     new PromptInjectionDetector({
-      id: 'prompt-injection-detector',
-      model: openai('gpt-5-nano'), // Cheap, fast
+      model: GUARDRAIL_MODEL,
       threshold: 0.8,
       strategy: 'block', // Hard stop
       detectionTypes: ['injection', 'jailbreak', 'system-override'],
+      lastMessageOnly: true,
     }),
   ],
 });
 ```
 
-[`UnicodeNormalizer`](https://mastra.ai/docs/processors) कंट्रोल कैरेक्टर को हटा देता है और व्हाइटस्पेस को कोलैप्स कर देता है। [`PromptInjectionDetector`](https://mastra.ai/docs/processors) क्लीन किए गए इनपुट का विश्लेषण उन पैटर्न के लिए करता है जो सुझाव देते हैं कि कोई आपके निर्देशों को ओवरराइड करने की कोशिश कर रहा है।
+[`UnicodeNormalizer`](https://mastra.ai/reference/processors/unicode-normalizer) कंट्रोल कैरेक्टर को हटाता है और व्हाइटस्पेस को संक्षिप्त करता है। [`PromptInjectionDetector`](https://mastra.ai/reference/processors/prompt-injection-detector) साफ किए गए इनपुट में उन पैटर्न के लिए विश्लेषण करता है जो बताते हैं कि कोई आपके निर्देशों को ओवरराइड करने की कोशिश कर रहा है।
 
-आप कॉन्फ़िगर कर सकते हैं कि डिटेक्शन कितना आक्रामक होना चाहिए (`threshold` पैरामीटर) और ट्रिप होने पर क्या होना चाहिए (ब्लॉक, लॉग, या सिर्फ़ फ़्लैग करें)।
+आप कॉन्फ़िगर करते हैं कि आप डिटेक्शन को कितना आक्रामक बनाना चाहते हैं (`threshold` पैरामीटर) और जब यह ट्रिप होता है तो क्या होना चाहिए (`block`, `warn`, `filter`, या `rewrite`)।
 
-### 2. PII को हैंडल करना
+### 2. PII को संभालना
 
-लॉग्स में क्रेडिट कार्ड नंबर, वेक्टर डेटाबेस में सोशल सिक्योरिटी नंबर, ईमेल एड्रेस ज़रूरत से ज़्यादा देर तक स्टोर होना। ये वे मुद्दे हैं जो रेगुलेटरी समस्याओं में बदल जाते हैं। चुनौती यह है कि यूज़र को हमेशा अहसास नहीं होता कि वे चैट विंडो में संवेदनशील डेटा पेस्ट कर रहे हैं।
+लॉग में क्रेडिट कार्ड नंबर, वेक्टर डेटाबेस में सोशल सिक्योरिटी नंबर, आवश्यकता से अधिक समय तक संग्रहीत ईमेल पते। ये वे प्रकार की समस्याएं हैं जो नियामक समस्याओं में बदल जाती हैं। चुनौती यह है कि उपयोगकर्ताओं को हमेशा यह एहसास नहीं होता कि वे चैट विंडो में संवेदनशील डेटा पेस्ट कर रहे हैं।
 
-[`PIIDetector`](https://mastra.ai/docs/processors) कॉमन पैटर्न को आपके मॉडल तक पहुँचने या स्टोरेज में लिखे जाने से पहले स्कैन करता है:
+[`PIIDetector`](https://mastra.ai/reference/processors/pii-detector) आपके मॉडल तक पहुंचने या स्टोरेज में लिखे जाने से पहले सामान्य पैटर्न के लिए स्कैन करता है:
 
 ```typescript
-import { PIIDetector } from '@mastra/core/processors';
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, PIIDetector } from '@mastra/core/processors';
 
 export const privateAgent = new Agent({
   id: 'privacy-first-assistant',
   name: 'privacy-first-assistant',
   instructions: 'You are a helpful assistant that never stores personal information.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     new PIIDetector({
-      id: 'pii-detector',
-      model: openai('gpt-5-nano'),
+      model: GUARDRAIL_MODEL,
       detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
       threshold: 0.6,
       strategy: 'redact',
-      redactionMethod: 'mask',  // Replace with [REDACTED]
+      redactionMethod: 'mask',
       instructions: 'Detect and mask personally identifiable information',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      strategy: 'redact',
+      redactionMethod: 'mask',
     }),
   ],
 });
 ```
 
-आप रेडैक्ट (`[REDACTED]` से बदलें), हैश, या पूरी तरह ब्लॉक करना चुन सकते हैं। प्रोसेसर इनपुट और आउटपुट दोनों पर चलता है, इसलिए आप कवर रहते हैं भले ही मॉडल किसी तरह अपने रिस्पॉन्स में संवेदनशील डेटा जनरेट कर दे।
+आप रिडैक्ट, हैश, हटा, टाइप किए गए प्लेसहोल्डर से बदल, या पूरी तरह से ब्लॉक करना चुन सकते हैं। `PIIDetector` एक हाइब्रिड प्रोसेसर है: इसे `inputProcessors`, `outputProcessors`, या दोनों में रखें, जोखिम कहाँ है इस पर निर्भर करता है। स्ट्रीम किए गए आउटपुट के लिए, भारी क्लासिफायर चलाने से पहले बैच चंक्स करें ताकि आप हर छोटी टोकन ड्रिप पर एक अलग LLM चेक का भुगतान न करें।
 
-### 3. कंटेंट मॉडरेशन
+### 3. सामग्री मॉडरेशन
 
-इंटरनेट डेटा पर ट्रेन किए गए मॉडल ने कुछ चीज़ें देखी हैं। फ़िल्टरिंग के बिना, वे कभी-कभी ऐसे रिस्पॉन्स दे सकते हैं जो आपकी PR टीम को नर्वस कर दें। [`ModerationProcessor`](https://mastra.ai/docs/processors) आपके दिशा-निर्देशों का उल्लंघन करने वाले कंटेंट को पकड़ता है:
+Models trained on internet data have seen some things. Without filtering, they can occasionally produce responses that would make your PR team nervous. The [`ModerationProcessor`](https://mastra.ai/reference/processors/moderation-processor) catches content that violates your guidelines:
 
 ```typescript
-import { ModerationProcessor } from '@mastra/core/processors';
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, ModerationProcessor } from '@mastra/core/processors';
 
 export const moderatedAgent = new Agent({
   id: 'safe-assistant',
   name: 'safe-assistant',
   instructions: 'You are a helpful assistant for a community platform.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     new ModerationProcessor({
-      id: 'moderation-processor',
-      model: openai('gpt-5-nano'),  // Fast, cheap model for classification
+      model: GUARDRAIL_MODEL,
       categories: ['hate', 'harassment', 'violence', 'self-harm'],
-      threshold: 0.7,  // Block if confidence > 70%
-      strategy: 'block',  // Stop the request immediately
+      threshold: 0.7,
+      strategy: 'block',
       instructions: 'Detect harmful content that violates community guidelines',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      strategy: 'filter',
+      chunkWindow: 1,
     }),
   ],
 });
 ```
 
-दिलचस्प हिस्सा यह है कि आप परिभाषित करते हैं कि आपके उपयोग के मामले के लिए कौन सी कैटेगरी मायने रखती है। एक क्रिएटिव राइटिंग टूल एक्सप्रेसिव कंटेंट को ज़्यादा अनुमति दे सकता है, जबकि कस्टमर सर्विस बॉट कम। थ्रेशोल्ड और स्ट्रैटेजी आपको फ़िल्टरिंग की सख़्ती पर कंट्रोल देती है।
+The interesting part is that you define which categories matter for your use case. A creative writing tool might allow more expressive content than a customer service bot. The threshold and strategy give you control over how strict the filtering should be.
 
 ---
 
-## जब चीज़ें ट्रिप होती हैं
+## जब चीजें फँसती हैं
 
-प्रोसेसर किसी इश्यू को डिटेक्ट करने पर एरर नहीं फेंकते। इसके बजाय, वे रिज़ल्ट ऑब्जेक्ट पर एक फ़्लैग सेट करते हैं:
+When a processor uses the `block` strategy, Mastra aborts generation and exposes the event as tripwire metadata. With `generate()`, check the result object:
 
 ```typescript
 const result = await secureAgent.generate('Ignore all previous instructions...');
 
 if (result.tripwire) {
-  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  console.log(`Blocked by ${result.tripwire.processorId}`);
+  console.log(`Reason: ${result.tripwire.reason}`);
   // "Blocked! Reason: Prompt injection detected."
-  return "Nice try, script kiddie.";
+  return 'Request blocked by policy.';
 }
 ```
 
-यह पैटर्न आपको अपनी ऐप्लिकेशन के लिए जो उचित लगे उसी तरह सिक्योरिटी इवेंट्स को हैंडल करने देता है। आप उन्हें विश्लेषण के लिए लॉग कर सकते हैं, एक जेनेरिक एरर मैसेज रिटर्न कर सकते हैं, या कुछ विशिष्ट कॉन्टेक्स्ट में कुछ उल्लंघनों की अनुमति भी दे सकते हैं। `tripwireReason` फ़ील्ड आपको बताता है कि किस प्रोसेसर ने कंटेंट को फ़्लैग किया, जो फ़ॉल्स पॉज़िटिव को डिबग करते समय या अपने थ्रेशोल्ड को ट्यून करते समय मददगार होता है।
+For streaming calls, listen for `tripwire` chunks on `fullStream`. This pattern lets you handle security events however makes sense for your application. You might log them for analysis, return a generic error message, or switch a low-risk case from `block` to `warn` while you tune thresholds. The `processorId` and `reason` tell you which processor flagged the content, which helps when you're debugging false positives.
 
 ---
 
 ## यह क्या हल नहीं करता
 
-प्रोसेसर काफ़ी कुछ पकड़ते हैं, लेकिन वे जादू नहीं हैं। एक दृढ़ हमलावर काफ़ी समय के साथ शायद ऐसा प्रॉम्प्ट ढूंढ सकता है जो बच निकले। मॉडल कभी-कभी ऐसे तरीकों से हैलुसिनेट करते हैं जिनकी भविष्यवाणी प्रोसेसर नहीं कर सकते। और सिक्योरिटी और फ़्लेक्सिबिलिटी के बीच हमेशा एक ट्रेडऑफ़ होता है: आपके नियम जितने सख़्त होंगे, लीजिटिमेट उपयोग के मामलों को ब्लॉक करने की संभावना उतनी ही ज़्यादा होगी।
+Processors catch a lot, but they're not magic. A determined attacker with enough time can probably find a prompt that slips through. Models occasionally hallucinate in ways that processors can't predict. And there's always a tradeoff between security and flexibility: the stricter your rules, the more likely you'll block legitimate use cases.
 
-वैल्यू परफ़ेक्ट प्रोटेक्शन में नहीं है। यह उन कॉमन इशूज़ को हैंडल करने का एक व्यवस्थित तरीका है जो प्रोडक्शन में निश्चित रूप से सामने आएंगे। आप अपनी संवेदनशीलता को ट्यून कर सकते हैं जैसे-जैसे आप सीखते हैं कि आपके यूज़र वास्तव में क्या करते हैं। आप डोमेन-स्पेसिफ़िक जोखिमों के लिए कस्टम प्रोसेसर जोड़ सकते हैं। और आपके पास ऑडिट ट्रेल हैं जो दिखाते हैं कि क्या ब्लॉक हुआ और क्यों।
+The value isn't perfect protection. It's having a systematic way to handle the common issues that will definitely come up in production. You can tune the sensitivity as you learn what your users actually do. You can add custom processors for domain-specific risks. And you can wire violation callbacks, logs, traces, and app-level audit records around the same control point.
 
-प्रोडक्शन AI में ज़्यादातर सिक्योरिटी समस्याएँ सोफ़िस्टिकेटेड अटैक नहीं हैं। वे लोग हैं जो ऐसा डेटा कॉपी-पेस्ट कर रहे हैं जो उन्हें नहीं करना चाहिए, या ट्रायल और एरर के माध्यम से खोज रहे हैं कि बॉट वे चीज़ें करेगा जो आपने इरादा नहीं किया था। प्रोसेसर हर संभावित इश्यू को नहीं रोकेंगे, लेकिन वे स्पष्ट वालों को काफ़ी मुश्किल बना देते हैं।
+Most security problems in production AI aren't sophisticated attacks. They're people copying and pasting data they shouldn't, or discovering through trial and error that the bot will do things you didn't intend. Processors won't stop every possible issue, but they make the obvious ones much harder.
 
 ### संसाधन
 
-- [Mastra Guardrails Documentation](https://mastra.ai/docs/agents/guardrails)
-- [Security Best Practices](https://mastra.ai/docs/security)
-- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+- [Mastra गार्ड्रेल्स दस्तावेज़ीकरण](https://mastra.ai/docs/agents/guardrails)
+- [Mastra प्रोसेसर दस्तावेज़ीकरण](https://mastra.ai/docs/agents/processors)
+- [Mastra एजेंट स्वीकृति](https://mastra.ai/docs/agents/agent-approval)
+- [Mastra GitHub रिपॉजिटरी](https://github.com/mastra-ai/mastra)
 
-## सीरीज़ पढ़ें
+## श्रृंखला पढ़ें
 
-1. [LLM Routing](/llm-routing-mastra-ai)
-2. **सुरक्षा और गार्डरेल** (यह पोस्ट)
+1. [LLM रूटिंग](/llm-routing-mastra-ai)
+2. **सुरक्षा और गार्ड्रेल्स** (यह पोस्ट)
 3. [MCP और टूल इंटीग्रेशन](/mastra-mcp-tool-integrations)
 4. [वर्कफ़्लो और मेमोरी](/mastra-workflows-memory)
