@@ -1,26 +1,92 @@
 {
-  "selectedCommit": "55ea895736e87a697942d5d981f996fb376b4d1f",
+  "selectedCommit": "0c0c1cee312cbca1aee3fe9526aa5a5a009affd9",
   "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and professional French translation while strictly adhering to the MDX structure and heading counts. It correctly translates the title and subtitle which were missing in the 'current' version, and uses appropriate technical terminology (e.g., 'codebase', 'évaluations', 'aiguillages') that fits the engineering context. It also maintains the direct, slightly informal tone of the original English text better than the other candidates.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'Ne vous mariez pas avec votre modèle'",
+      "reason": "The frontmatter title was left empty in the candidate but should be translated as per instructions."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: 'Routage LLM, tellement tendance'",
+      "reason": "The frontmatter subTitle was left empty in the candidate but should be translated."
+    },
+    {
+      "priority": "high",
+      "match": "[Sécurité et barrières de protection](/mastra-security-guardrails)",
+      "replacement": "[Sécurité et garde-fous](/mastra-security-guardrails)",
+      "reason": "Standard technical term for LLM guardrails in French engineering contexts is 'garde-fous'."
+    }
+  ],
+  "rationale": "Candidate 0c0c1cee was chosen because it correctly localized the reader-facing strings inside the code blocks (descriptions and instructions), which are essential for understanding the routing logic. While it missed the frontmatter title/subTitle, these are easily corrected. The prose quality is high and maintains the direct, technical tone of the original.",
+  "confidence": "low",
+  "confidenceScore": 0.332,
+  "confidenceSignals": [
+    "3 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "llm-routing-mastra-ai",
   "locale": "fr",
   "candidateCommits": [
-    "55ea895736e87a697942d5d981f996fb376b4d1f",
-    "85bf52666d4559d918f89f6ce89118965e339f6a",
-    "2deb04ba730126f90d4e8af01ab044ec934af9f7",
-    "050a7b7ec85068011818db7d0f12475a37edb770",
-    "d43ca2ed4f3631d45f4fa404076999cda8fa754c"
+    "0c0c1cee312cbca1aee3fe9526aa5a5a009affd9",
+    "2af31d642fe1a131f5c44d49d4b2475dab56ebe9"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'Ne vous mariez pas avec votre modèle'",
+      "reason": "The frontmatter title was left empty in the candidate but should be translated as per instructions.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'Ne vous mariez pas avec votre modèle'",
+      "reason": "The frontmatter title was left empty in the candidate but should be translated as per instructions.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: 'Routage LLM, tellement tendance'",
+      "reason": "The frontmatter subTitle was left empty in the candidate but should be translated.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[Sécurité et barrières de protection](/mastra-security-guardrails)",
+      "replacement": "[Sécurité et garde-fous](/mastra-security-guardrails)",
+      "reason": "While 'barrières de protection' is okay, 'garde-fous' is the standard technical term for LLM guardrails in French engineering contexts.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
