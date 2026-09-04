@@ -1,27 +1,137 @@
 {
-  "selectedCommit": "f54c754dfb5e9cef77d8380afbdcad5e4430ad59",
+  "selectedCommit": "c52cb0dbeaa8e46c44e4575bc23c557aeeedbc39",
   "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 85,
+    "technicalAccuracy": 88,
+    "coherence": 90,
+    "relevance": 100,
+    "translationQuality": 85,
+    "mdxPreservation": 80,
+    "culturalAdaptation": 90,
+    "languagePurity": 90
   },
-  "suggestions": [],
-  "rationale": "The translation is technically accurate and maintains a natural flow in Hebrew. It correctly handles the MDX requirements, including the relative paths for assets (../). It uses 'מעקות בטיחות' for guardrails which is a standard translation in this context, and the overall tone matches the direct style of the original. The other candidate used 'מסילות' which is less common for software guardrails.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: \"אם לסוכן שלכם אין מעקות בטיחות, אתם לא מוכנים לפרודקשן.\"",
+      "reason": "The subTitle is empty in the translation but present in the English source. It must be translated."
+    },
+    {
+      "priority": "high",
+      "match": "### 3. ניטור תוכן\n\n### 3. ניטור תוכן",
+      "replacement": "### 3. ניטור תוכן",
+      "reason": "The heading '### 3. ניטור תוכן' is duplicated in the Hebrew MDX."
+    },
+    {
+      "priority": "high",
+      "match": "קבצו את הנתחים (batch) לפני הרצת מסווגים כבדים יותר כדי לא לשלם על בדיקת LLM נפרדת על כל טיפה קטנה של טוקן.",
+      "replacement": "קבצו את הנתחים (batch) לפני הרצת מסווגים כבדים יותר כדי לא לשלם על בדיקת LLM נפרדת על כל טיפה קטנה של טוקן.",
+      "reason": "The judge report mentioned a typo 'בצ'' but the current MDX already has 'קבצו'. However, the judge report also mentioned 'מהלים' which is indeed present in the text as 'הוזים' in the current version. I will verify the actual content of the provided Hebrew MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "מודלים הוזים לפעמים",
+      "replacement": "מודלים הוזים לפעמים",
+      "reason": "The judge report suggested fixing 'מהלים' to 'הוזים', but the provided Hebrew MDX already uses 'הוזים'. No change needed here, but I must fix the series links."
+    },
+    {
+      "priority": "medium",
+      "match": "1. [ניתוב LLM](../llm-routing-mastra-ai)",
+      "replacement": "1. [ניתוב LLM](/llm-routing-mastra-ai)",
+      "reason": "Internal series links should use root-relative paths as per the English source to ensure they resolve correctly across the site."
+    },
+    {
+      "priority": "medium",
+      "match": "3. [MCP ואינטגרציות כלים](../mastra-mcp-tool-integrations)",
+      "replacement": "3. [MCP ואינטגרציות כלים](/mastra-mcp-tool-integrations)",
+      "reason": "Internal series links should use root-relative paths."
+    },
+    {
+      "priority": "medium",
+      "match": "4. [זרימות עבודה וזיכרון](../mastra-workflows-memory)",
+      "replacement": "4. [זרימות עבודה וזיכרון](/mastra-workflows-memory)",
+      "reason": "Internal series links should use root-relative paths."
+    }
+  ],
+  "rationale": "The translation is generally good but has a few critical MDX issues: the subTitle is missing, a heading is duplicated, and the series links use relative paths instead of the root-relative paths found in the source. The judge report mentioned typos that seem to have been partially addressed in the provided text, but the structural issues remain.",
+  "confidence": "low",
+  "confidenceScore": 0.118,
+  "confidenceSignals": [
+    "3 high and 4 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 3,
+    "medium": 4,
+    "low": 0
+  },
   "slug": "mastra-security-guardrails",
   "locale": "he",
   "candidateCommits": [
-    "f54c754dfb5e9cef77d8380afbdcad5e4430ad59",
-    "06b4aeca5c49626fcd3337a6256dabfb6da3700d"
+    "c52cb0dbeaa8e46c44e4575bc23c557aeeedbc39"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "### 3. ניטור תוכן\n\n### 3. ניטור תוכן",
+      "replacement": "### 3. ניטור תוכן",
+      "reason": "The heading is duplicated in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: \"אם לסוכן שלכם אין מעקות בטיחות, אתם לא מוכנים לפרודקשן.\"",
+      "reason": "The subtitle was left empty but should be translated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[ניתוב LLM](../llm-routing-mastra-ai)",
+      "replacement": "[ניתוב LLM](/he/llm-routing-mastra-ai)",
+      "reason": "Internal links to other posts in the series should point to the localized version or follow the site's routing convention; the candidate used a relative path that might break depending on the router.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "בצ' את הנתחים",
+      "replacement": "קבצו את הנתחים (batch)",
+      "reason": "The word 'בצ'' is a typo or incomplete translation of 'batch'. Using 'קבצו' (group/batch) is more accurate.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "מודלים מהלים לפעמים",
+      "replacement": "מודלים הוזים לפעמים",
+      "reason": "The word 'מהלים' is a typo for 'הוזים' (hallucinate), which is the standard technical term in AI.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "1. [ניתוב LLM](/he/llm-routing-mastra-ai)",
+      "replacement": "1. [ניתוב LLM](/llm-routing-mastra-ai)",
+      "reason": "The site uses a root-relative path for internal links in the series list to ensure consistency across locales, as per the English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-security-guardrails --locale he --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale he --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/he/index.mdx failed structural parity with score 0.953 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/he/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h3\":1,\"headingSequence\":4,\"linkTargets\":3}. Differences: {\"h3\":1,\"headingSequence\":4,\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

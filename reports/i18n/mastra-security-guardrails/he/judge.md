@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: f54c754dfb5e9cef77d8380afbdcad5e4430ad59
+- Selected candidate: c52cb0dbeaa8e46c44e4575bc23c557aeeedbc39
 - Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.118)
 
-The translation is technically accurate and maintains a natural flow in Hebrew. It correctly handles the MDX requirements, including the relative paths for assets (../). It uses 'מעקות בטיחות' for guardrails which is a standard translation in this context, and the overall tone matches the direct style of the original. The other candidate used 'מסילות' which is less common for software guardrails.
+The translation is generally good but has a few critical MDX issues: the subTitle is missing, a heading is duplicated, and the series links use relative paths instead of the root-relative paths found in the source. The judge report mentioned typos that seem to have been partially addressed in the provided text, but the structural issues remain.
