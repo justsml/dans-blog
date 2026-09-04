@@ -1,0 +1,137 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 172.72
+- Input tokens: 4027
+- Output tokens: 10012
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 4015
+- Estimated cost: $0.020832
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: ''
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+La mayoría de los equipos de ingeniería eligen un modelo de lenguaje y se quedan con él. Un proveedor, un modelo, todas las tareas. Es como contratar a una sola persona para que programe, redacte tus textos y haga tu declaración de impuestos solo porque le fue bien en la primera entrevista.
+
+En cualquier momento dado, un modelo es mejor para código, otro maneja mejor contextos largos y desordenados, y otro es el caballo de batalla barato y aburrido para tareas de clasificación. Los nombres cambian. La forma del problema, no. Tratar un modelo como si destacara en todo significa que o estás pagando de más por tareas simples o obteniendo resultados mediocres en las especializadas.
+
+Vi a un equipo quemar miles de dólares ejecutando análisis de sentimiento con un modelo de 30 dólares por millón de tokens, cuando uno de 0,50 dólares habría hecho el trabajo igual de bien. Formateo JSON simple, tareas básicas de clasificación, todo pasando por su proveedor premium. Lo único que se estaba calentando era su factura de AWS.
+
+Hay una forma mejor, y no es particularmente complicada.
+
+## Delegación sobre devoción
+
+¿Qué pasaría si pudieras dirigir las solicitudes al modelo que realmente está mejor preparado para esa tarea específica? Usa tu modelo potente y caro para lo difícil, pero delega el análisis y formateo simple a algo más barato. Obtén los beneficios de múltiples proveedores sin tener que malabarear con ellos manualmente en tu código.
+
+Mastra te permite construir exactamente este tipo de sistema. Configuras agentes especialistas para distintos tipos de trabajo y luego creas un agente supervisor que decide qué especialista debe manejar cada solicitud. Los identificadores de modelo a continuación usan el formato de cadena `provider/model` actual de Mastra; son ejemplos, no una tabla de posiciones. Cámbialos por los modelos actuales que ganen tus evaluaciones y se ajusten a tu presupuesto.
+
+Piénsalo así: tienes tres especialistas en tu equipo.
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core/mastra';
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
+  instructions: 'You are a creative writer. Be weird.',
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
+});
+```
+
+Cada uno tiene un trabajo, y el campo `description` forma parte de la superficie de enrutamiento. Tu agente de código debe ser el modelo que apruebe tus evaluaciones de código específicas del repositorio. Tu agente de contexto largo debe ser el que sobreviva a tus documentos reales sin convertir la parte central en sopa. Tu agente general debe ser barato, fiable y aburrido de la mejor manera posible.
+
+Aquí es donde se pone interesante. Añades un supervisor ligero que actúa como un proxy inteligente:
+
+```typescript
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
+  name: 'The Boss',
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
+});
+
+export const mastra = new Mastra({
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+El propio supervisor puede ejecutarse en un modelo ligero porque su función principal es decidir hacia dónde enviar el tráfico. No estás pagando tarifas premium para averiguar qué otro modelo premium usar. Mídelo también; una capa de enrutamiento defectuosa convierte silenciosamente los ahorros en errores de enrutamiento.
+
+Cuando alguien pide una implementación de ordenamiento por burbuja, el enrutador lo reconoce como trabajo de código y se lo pasa a tu especialista en código. ¿Un prompt de escritura creativa? Eso va al modelo que hayas elegido por su voz y rango. ¿Una pregunta factual sobre eventos históricos? Dirígela al agente general, idealmente con recuperación cuando la actualidad o la citación sean importantes.
+
+## Beneficios prácticos
+
+**La eficiencia de costos importa más de lo que crees.** Un modelo de enrutamiento pequeño que toma decisiones de delegación cuesta una fracción de ejecutar cada solicitud a través de tu proveedor más caro. Con el tiempo, especialmente a escala, esto se traduce en dinero real. Solo pagas por la inteligencia de alto rendimiento cuando realmente la necesitas.
+
+**La calidad mejora cuando asignas modelos a tareas.** El ganador cambia según el mes, la tarea y la forma del prompt. Por eso la capa de enrutamiento debe depender de tus evaluaciones, no de qué modelo estaba ganando en Twitter la semana que escribiste la integración.
+
+**La resiliencia se vuelve posible, no automática.** El supervisor anterior no reintenta un proveedor fallido a través de otro agente, y depende de OpenAI para la propia decisión de enrutamiento. Si el conmutador por fallo de proveedores es importante, añade una política explícita de reintento/fallback en el código de la aplicación, mantén el enrutador de respaldo en un proveedor diferente y prueba la ruta de fallo. Un saco de agentes no es un cortacircuitos solo porque los modelos tengan logotipos distintos.
+
+No se trata de ser ingenioso por el simple hecho de serlo. Se trata de construir sistemas que tengan sentido tanto financiera como técnicamente. No usarías el mismo martillo para cada tarea de construcción, y probablemente tampoco deberías usar el mismo modelo de lenguaje para cada tarea de IA.
+
+La ventaja de este enfoque es que el código de tu aplicación no necesita un laberinto de condicionales. Sigues llamando a un solo agente. La complejidad de decidir qué modelo usar para qué tarea reside en un solo lugar, configurado una vez, en lugar de estar dispersa por todo tu código base en un montón de lógica condicional.
+
+### Recursos
+
+- [Documentación de Mastra.ai](https://mastra.ai/docs)
+- [Repositorio de GitHub de Mastra](https://github.com/mastra-ai/mastra)
+
+## Lee la serie
+
+1. **Enrutamiento de LLM** (Este artículo)
+2. [Seguridad y guardrails](/mastra-security-guardrails)
+3. [Integraciones de MCP y herramientas](/mastra-mcp-tool-integrations)
+4. [Flujos de trabajo y memoria](/mastra-workflows-memory)
+````
