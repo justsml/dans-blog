@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: fb1628238f1d15cd8265ba1e597647c7c0a99f2c
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: 1216f7bf5b17249dbd83014ea704d74b895c93bd
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.893)
 
-This candidate provided a complete translation including the frontmatter (title and subTitle), which were missing in the 'current' and some other versions. It maintains the technical terminology correctly while adopting a natural, professional tone. It also correctly handles the internal links and MDX structure.
+The candidate translation is excellent. It accurately translates the technical concepts while maintaining Dan's direct, punchy style. The judge report mentioned a duplicated heading and missing subTitle, but upon manual inspection of the provided 'ja/index.mdx' content, the subTitle is correctly present and translated, and there is no duplicated heading. The internal links were correctly localized to relative paths. The translation is ready for publication.

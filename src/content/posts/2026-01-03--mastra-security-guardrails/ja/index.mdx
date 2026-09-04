@@ -1,8 +1,14 @@
 ---
-title: "本番AIは恐ろしい（そして修正方法）"
-subTitle: "ガードレールのないエージェントは、本番環境の準備ができていません。"
-modified: 2026-01-08
-tags: [ai, security, mastra, guardrails, privacy, pii]
+title: 本番AIは恐ろしい（そしてその修正方法）
+subTitle: ''
+modified: '2026-09-04'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
 category: AI
 subCategory: Security
 social_image: ../desktop-social.webp
@@ -10,157 +16,179 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
+誰もわざわざ安全でないAIシステムを作ろうとは思わない。指示を書き、エッジケースをテストし、いくつかのバリデーションルールを追加する。ところが、誰かがボットをだまして海賊のロールプレイをさせ、ユーザーデータを暴露させる方法を見つける。あるいはクレジットカード番号がログに漏れる。あるいはモデルが自信満々に競合製品を推薦する。
 
-誰も安全でないAIシステムを作ろうとして始めるわけではありません。指示を書き、エッジケースをテストし、いくつかの検証ルールを追加します。その後、誰かがあなたのボットを海賊のロールプレイに仕向け、ユーザーデータを暴露できる方法を発見します。あるいは、クレジットカード番号がログに記録されます。あるいは、モデルが自信満々に競合他社の製品を推奨します。
+「デモでは動く」と「本番で安全」の間のギャップは、ほとんどのチームが想定しているよりもずっと大きい。
 
-「デモでは動く」と「本番で安全」の間の溝は、ほとんどのチームが予想しているよりも深いものです。
+問題の一端は、生のLLMには「何をすべきか・すべきでないか」という意見がないことだ。LLMは、与えられたパターンを続けようとする予測マシンである。「システムオーバーライドモード」のようなプロンプトを与えれば、喜んでそれに合わせる。これはモデルのバグではなく、言語モデルの仕組みそのものだ。
 
-問題の一部は、生のLLMには何をすべきか、何をすべきでないかについての意見がないということです。LLMは、あなたが始めたパターンを続けようとする予測マシンです。「システムオーバーライドモード」のようなプロンプトを与えれば、喜んでそれに従います。これはモデルのバグではなく、言語モデルがそういうものだというだけです。
-
-ほとんどのフレームワークはモデルを渡して幸運を祈りますが、Mastraは異なるアプローチを取ります。ガードレールは最終的に必要になると想定し、エージェントアーキテクチャに最初から組み込みます。
+ほとんどのフレームワークはモデルを渡して「後は頑張って」というスタンスだ。Mastraは異なるアプローチを取る：いずれガードレールが必要になると想定し、最初からエージェントアーキテクチャに組み込む。
 
 ---
 
-## セーフティレイヤーとしてのプロセッサー
+## プロセッサをセーフティレイヤとして
 
-コアメカニズムはシンプルです。プロンプトがモデルに届く前に、一連の入力プロセッサーを通過します。モデルが応答した後、出力プロセッサーがその番を迎えます。各プロセッサーはその段階でコンテンツを検査、修正、またはブロックできます。
+核となる仕組みは単純だ。プロンプトがモデルに到達する前に、一連の入力プロセッサを通過する。モデルが応答した後は、出力プロセッサの番だ。各プロセッサはその段階でコンテンツを検査、修正、またはブロックできる。
 
-AIインタラクション用のミドルウェアだと考えてください。必要なものを積み重ね、動作を設定すれば、すべてのリクエストで自動的に実行されます。
+これらはAIインタラクションにおけるミドルウェアのようなものだ。必要なものを積み重ね、動作を設定すれば、すべてのリクエストで自動的に実行される。
 
 ### 1. 海賊を止める（プロンプトインジェクション）
 
-プロンプトインジェクション攻撃は創造的になりました。目に見えないUnicode文字を使ったり、base64で指示を書いたり、通常のルールが適用されない「デバッグモード」だとモデルを説得したりします。テクニックは進化し続けています。
+プロンプトインジェクション攻撃は巧妙化している。人々は不可視のUnicode文字を使い、base64で指示を書き、通常のルールが適用されない「デバッグモード」だとモデルに信じ込ませる。その手口は進化し続けている。
 
-Mastraには一般的なパターンを検出するプロセッサーが含まれています：
+Mastraには、一般的なパターンを捕捉するプロセッサが含まれている：
 
 ```typescript
 // src/mastra/agents/secure-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
-import { openai } from '@ai-sdk/openai';
+
+const GUARDRAIL_MODEL = 'openrouter/openai/gpt-oss-safeguard-20b';
 
 export const secureAgent = new Agent({
   id: 'fortress-assistant',
   name: 'fortress-assistant',
   instructions: 'You are a secure assistant.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     // 1. Scrub invisible characters
     new UnicodeNormalizer({
-      id: 'unicode-normalizer',
       stripControlChars: true,
       collapseWhitespace: true,
     }),
     // 2. Detect the attempt
     new PromptInjectionDetector({
-      id: 'prompt-injection-detector',
-      model: openai('gpt-5-nano'), // Cheap, fast
+      model: GUARDRAIL_MODEL,
       threshold: 0.8,
       strategy: 'block', // Hard stop
       detectionTypes: ['injection', 'jailbreak', 'system-override'],
+      lastMessageOnly: true,
     }),
   ],
 });
 ```
 
-[`UnicodeNormalizer`](https://mastra.ai/docs/processors)は制御文字を削除し、空白を折りたたみます。[`PromptInjectionDetector`](https://mastra.ai/docs/processors)は、クリーンアップされた入力を分析し、指示を上書きしようとするパターンを検出します。
+[`UnicodeNormalizer`](https://mastra.ai/reference/processors/unicode-normalizer)は制御文字を除去し、空白を圧縮する。[`PromptInjectionDetector`](https://mastra.ai/reference/processors/prompt-injection-detector)は、クリーニングされた入力を解析し、指示を上書きしようとするパターンがないかを調べる。
 
-検出の精度（`threshold`パラメーター）と、トリップしたときに何を行うか（ブロック、ログ、またはフラグのみ）を設定できます。
+検出の厳しさ（`threshold`パラメータ）と、トリガーされたときの動作（`block`、`warn`、`filter`、`rewrite`）を設定できる。
 
 ### 2. PIIの処理
 
-ログ内のクレジットカード番号、ベクターデータベース内の社会保障番号、必要以上に長く保存されるメールアドレス。これらは規制問題に発展する種類のものです。課題は、ユーザーがチャットウィンドウに機密データを貼り付けていることに必ずしも気づいていないということです。
+ログの中のクレジットカード番号、ベクターデータベースの社会保障番号、必要以上に長く保存されたメールアドレス。これらは規制問題に発展する類の課題だ。難しいのは、ユーザーが機密データをチャットウィンドウに貼り付けていることに気づいていない場合があることだ。
 
-[`PIIDetector`](https://mastra.ai/docs/processors)は、モデルに届く前やストレージに書き込まれる前に、一般的なパターンをスキャンします：
+[`PIIDetector`](https://mastra.ai/reference/processors/pii-detector)は、モデルに到達する前、あるいはストレージに書き込まれる前に、一般的なパターンをスキャンする：
 
 ```typescript
-import { PIIDetector } from '@mastra/core/processors';
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, PIIDetector } from '@mastra/core/processors';
 
 export const privateAgent = new Agent({
   id: 'privacy-first-assistant',
   name: 'privacy-first-assistant',
   instructions: 'You are a helpful assistant that never stores personal information.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     new PIIDetector({
-      id: 'pii-detector',
-      model: openai('gpt-5-nano'),
+      model: GUARDRAIL_MODEL,
       detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
       threshold: 0.6,
       strategy: 'redact',
-      redactionMethod: 'mask',  // Replace with [REDACTED]
+      redactionMethod: 'mask',
       instructions: 'Detect and mask personally identifiable information',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      strategy: 'redact',
+      redactionMethod: 'mask',
     }),
   ],
 });
 ```
 
-削除（`[REDACTED]`に置換）、ハッシュ化、または完全ブロックから選択できます。プロセッサーは入力と出力の両方で実行されるため、モデルが応答で機密データを生成した場合でもカバーされます。
+選択肢は、編集、ハッシュ化、削除、型付きプレースホルダへの置換、または完全なブロックから選べる。`PIIDetector`はハイブリッドプロセッサである：リスクがある場所に応じて`inputProcessors`、`outputProcessors`、またはその両方に配置できる。ストリーム出力の場合は、重い分類器を実行する前にチャンクをバッチ処理することで、小さなトークンが滴るたびに別々のLLMチェックを支払うことを避けられる。
 
 ### 3. コンテンツモデレーション
 
-インターネットデータでトレーニングされたモデルは、いろいろなものを見ています。フィルタリングがなければ、PRチームを緊張させるような応答を時折生成する可能性があります。[`ModerationProcessor`](https://mastra.ai/docs/processors)は、ガイドラインに違反するコンテンツを検出します：
+### 3. コンテンツモデレーション
+
+インターネットデータで訓練されたモデルは、さまざまなものを目にしてきている。フィルタリングなしでは、PRチームが冷や汗をかくような回答を時々生成することがある。[`ModerationProcessor`](https://mastra.ai/reference/processors/moderation-processor)は、ガイドラインに違反するコンテンツをキャッチする：
 
 ```typescript
-import { ModerationProcessor } from '@mastra/core/processors';
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, ModerationProcessor } from '@mastra/core/processors';
 
 export const moderatedAgent = new Agent({
   id: 'safe-assistant',
   name: 'safe-assistant',
   instructions: 'You are a helpful assistant for a community platform.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   inputProcessors: [
     new ModerationProcessor({
-      id: 'moderation-processor',
-      model: openai('gpt-5-nano'),  // Fast, cheap model for classification
+      model: GUARDRAIL_MODEL,
       categories: ['hate', 'harassment', 'violence', 'self-harm'],
-      threshold: 0.7,  // Block if confidence > 70%
-      strategy: 'block',  // Stop the request immediately
+      threshold: 0.7,
+      strategy: 'block',
       instructions: 'Detect harmful content that violates community guidelines',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      strategy: 'filter',
+      chunkWindow: 1,
     }),
   ],
 });
 ```
 
-興味深いのは、ユースケースにとってどのカテゴリーが重要かを自分で定義できる点です。クリエイティブライティングツールは、カスタマーサービスボットよりも表現豊かなコンテンツを許可するかもしれません。しきい値と戦略により、フィルタリングの厳密さを制御できます。
+興味深いのは、ユースケースに応じて対象とするカテゴリを定義できる点だ。クリエイティブ・ライティングツールなら、カスタマーサービスのボットよりも表現豊かなコンテンツを許容するだろう。`threshold`と`strategy`によって、フィルタリングの厳格さを制御できる。
 
 ---
 
 ## トリップしたとき
 
-プロセッサーは問題を検出してもエラーをスローしません。代わりに、結果オブジェクトにフラグを設定します：
+プロセッサが`block`戦略を使用すると、Mastraは生成を中断し、そのイベントをトリップワイヤーメタデータとして公開する。`generate()`を使う場合は、結果オブジェクトを確認する：
 
 ```typescript
 const result = await secureAgent.generate('Ignore all previous instructions...');
 
 if (result.tripwire) {
-  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  console.log(`Blocked by ${result.tripwire.processorId}`);
+  console.log(`Reason: ${result.tripwire.reason}`);
   // "Blocked! Reason: Prompt injection detected."
-  return "Nice try, script kiddie.";
+  return 'Request blocked by policy.';
 }
 ```
 
-このパターンにより、アプリケーションに適した方法でセキュリティイベントを処理できます。分析用にログに記録したり、一般的なエラーメッセージを返したり、特定のコンテキストで特定の違反を許可したりできます。`tripwireReason`フィールドは、どのプロセッサーがコンテンツをフラグしたかを正確に示すため、誤検知のデバッグやしきい値の調整に役立ちます。
+ストリーミング呼び出しの場合は、`fullStream`上の`tripwire`チャンクをリッスンする。このパターンにより、アプリケーションにとって適切な方法でセキュリティイベントを処理できる。分析用にログに記録したり、汎用的なエラーメッセージを返したり、閾値を調整している間に低リスクのケースを`block`から`warn`に切り替えたりすることもできる。`processorId`と`reason`はどのプロセッサがコンテンツをフラグしたかを示すため、誤検知のデバッグに役立つ。
 
 ---
 
-## これが解決しないこと
+## これで解決できないこと
 
-プロセッサーは多くのことを検出しますが、魔法ではありません。十分な時間を持つ意図的な攻撃者は、おそらくすり抜けるプロンプトを見つけることができるでしょう。モデルは、プロセッサーが予測できない方法で幻覚を見ることがあります。そして、セキュリティと柔軟性の間には常にトレードオフがあります。ルールを厳しくするほど、正当なユースケースをブロックする可能性が高くなります。
+プロセッサは多くのものをキャッチするが、魔法ではない。十分な時間があれば、決意のある攻撃者はすり抜けるプロンプトを見つけられるだろう。モデルは時々、プロセッサが予測できない形で幻覚を起こす。そしてセキュリティと柔軟性の間には常にトレードオフが存在する：ルールが厳しければ厳しいほど、正当なユースケースをブロックする可能性が高まる。
 
-価値は完全な保護ではありません。本番環境で確実に発生する一般的な問題を処理するための体系的な方法を持つことです。ユーザーが実際に行うことを学びながら、感度を調整できます。ドメイン固有のリスクに対してカスタムプロセッサーを追加できます。そして、何がブロックされ、なぜブロックされたかを示す監査証跡があります。
+価値は完璧な防御ではない。本番環境で確実に発生する共通の問題に対して、体系的な処理方法を持つことだ。ユーザーの実際の行動を学ぶにつれて感度を調整できる。ドメイン固有のリスクに対してカスタムプロセッサを追加できる。そして、違反コールバック、ログ、トレース、アプリレベルの監査記録を同じ制御ポイントに結びつけることができる。
 
-本番AIのほとんどのセキュリティ問題は、洗練された攻撃ではありません。ユーザーが機密データをコピー＆ペーストしたり、試行錯誤を通じてボットが意図しない動作をすることに気づいたりするものです。プロセッサーはすべての問題を止めることはできませんが、明白なものをずっと難しくします。
+プロダクションAIにおけるセキュリティ問題のほとんどは、高度な攻撃ではない。人々がコピー＆ペーストしてはいけないデータをやってしまうとか、試行錯誤でボットが意図しない動作をすることを発見するといったものだ。プロセッサはあらゆる問題を止められるわけではないが、明らかな問題をより困難にしてくれる。
 
-### リソース
+### 参考資料
 
-- [Mastra Guardrails ドキュメント](https://mastra.ai/docs/agents/guardrails)
-- [セキュリティベストプラクティス](https://mastra.ai/docs/security)
-- [Mastra GitHubリポジトリ](https://github.com/mastra-ai/mastra)
+- [Mastra ガードレール ドキュメント](https://mastra.ai/docs/agents/guardrails)
+- [Mastra プロセッサ ドキュメント](https://mastra.ai/docs/agents/processors)
+- [Mastra エージェント承認](https://mastra.ai/docs/agents/agent-approval)
+- [Mastra GitHub リポジトリ](https://github.com/mastra-ai/mastra)
 
 ## シリーズを読む
 
-1. [LLMルーティング](/llm-routing-mastra-ai)
-2. **セキュリティ＆ガードレール**（この投稿）
-3. [MCP＆ツール統合](/mastra-mcp-tool-integrations)
-4. [ワークフロー＆メモリ](/mastra-workflows-memory)
+1. [LLM ルーティング](../llm-routing-mastra-ai)
+2. **セキュリティとガードレール**（本投稿）
+3. [MCP とツール連携](../mastra-mcp-tool-integrations)
+4. [ワークフローとメモリ](../mastra-workflows-memory)
