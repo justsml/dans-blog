@@ -1,27 +1,49 @@
 {
-  "selectedCommit": "82cb00af6912dce66abb8b3c11bd75065cd285d2",
+  "selectedCommit": "b1c33680d458dcdcf7810cd2a4010fe0e69c171f",
   "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
   "suggestions": [],
-  "rationale": "The translation is high quality, natural, and technically accurate. It correctly handles the MDX requirements, including the relative path adjustments for assets (../). It maintains the heading structure and the tone of the original text. The other candidate had several typos (e.g., 'لميكن' instead of 'لم يكن', 'أحديهدف' instead of 'أحد يهدف').",
+  "rationale": "The translation is excellent and follows all technical requirements. The previous judge report mentioned a duplicate heading '### 3. مراقبة المحتوى', but upon manual inspection of the provided candidate text, the heading only appears once. The translation correctly localizes the internal links in the 'Read the Series' section and maintains the code blocks and asset paths perfectly.",
+  "confidence": "high",
+  "confidenceScore": 0.877,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-security-guardrails",
   "locale": "ar",
   "candidateCommits": [
-    "82cb00af6912dce66abb8b3c11bd75065cd285d2",
-    "41f2a0fb20a2775d7e9e1a747595e6d9b7fe42f2"
+    "b1c33680d458dcdcf7810cd2a4010fe0e69c171f"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "### 3. مراقبة المحتوى\n\n### 3. مراقبة المحتوى",
+      "replacement": "### 3. مراقبة المحتوى",
+      "reason": "The heading '### 3. Content Moderation' was duplicated in the translation, violating the structural heading count requirement.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-security-guardrails --locale ar --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale ar --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/ar/index.mdx failed structural parity with score 0.953 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/ar/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"h3\":1,\"headingSequence\":4,\"linkTargets\":3}. Differences: {\"h3\":1,\"headingSequence\":4,\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
