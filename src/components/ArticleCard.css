@@ -69,7 +69,6 @@
   display: grid;
   gap: clamp(0.45rem, 1.1vw, 0.75rem);
   grid-template-areas:
-    "label"
     "title"
     "summary"
     "media"
@@ -119,20 +118,6 @@
     filter: grayscale(.25);
   }
 
-  .small-label {
-    align-self: start;
-    color: var(--article-card-accent-soft);
-    font-size: clamp(0.68rem, 1.2cqi, 0.76rem);
-    font-weight: 700;
-    grid-area: label;
-    justify-self: start;
-    letter-spacing: 0.08em;
-    line-height: 1;
-    padding-block: 0.15rem;
-    text-transform: uppercase;
-    transition: color 160ms ease;
-  }
-
   &:hover,
   &:focus-visible {
     border-color: color-mix(in srgb, var(--article-card-accent) 32%, transparent);
@@ -144,10 +129,6 @@
     &::before {
       opacity: 0.9;
       transform: scaleX(1);
-    }
-
-    .small-label {
-      color: color-mix(in srgb, var(--article-card-accent) 62%, white);
     }
 
     .article-card__media img {
@@ -234,12 +215,35 @@
     width: calc(100% + 2px);
   }
 
-  .info-grid {
+  .article-card__meta {
     color: rgba(221, 232, 233, 0.56);
     grid-area: meta;
     align-self: flex-end;
-    align-content: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.7rem;
+    font-size: 0.75rem;
     font-variant-numeric: tabular-nums;
+  }
+
+  .article-card__meta > * + *::before {
+    color: rgba(221, 232, 233, 0.32);
+    content: "·";
+    margin-inline-end: 0.7rem;
+  }
+
+  .article-card__category {
+    background: color-mix(in srgb, var(--article-card-accent) 9%, transparent);
+    border: 1px solid color-mix(in srgb, var(--article-card-accent) 26%, transparent);
+    border-radius: 999px;
+    color: var(--article-card-accent-soft);
+    font-weight: 650;
+    padding: 0.14rem 0.45rem;
+  }
+
+  .article-card__category-label {
+    color: rgba(221, 232, 233, 0.56);
+    font-weight: 400;
   }
 }
 
@@ -267,10 +271,6 @@
     gap: 0.42rem;
     grid-template-rows: auto;
     min-height: 0;
-  }
-
-  .article-card .small-label {
-    font-size: 0.66rem;
   }
 
   .article-card .post-title {
@@ -308,7 +308,7 @@
     width: 100%;
   }
 
-  .article-card .info-grid {
+  .article-card .article-card__meta {
     font-size: 0.68rem;
     line-height: 1.2;
   }

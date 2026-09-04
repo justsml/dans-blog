@@ -5,7 +5,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { GitHubIssueComments } from "../components/Comments";
-import { CreatedModifiedLabel } from "../components/CreatedModifiedLabel";
 import socialBanner from "../assets/social-banner.webp";
 
 import { Image, getImage } from "astro:assets";
@@ -33,6 +32,7 @@ type Props = {
   baseSlug?: string;
   locale?: Locale;
   isTranslation?: boolean;
+  readingTimeMinutes?: number;
 
   frontmatter?: {
     title: string;
@@ -76,6 +76,7 @@ const slug = Astro.props.slug;
 const baseSlug = Astro.props.baseSlug ?? slug.replace(/^[a-z]{2}\//, "");
 const locale = Astro.props.locale ?? DEFAULT_LOCALE;
 const isTranslation = Astro.props.isTranslation === true;
+const readingTimeMinutes = Astro.props.readingTimeMinutes ?? 1;
 const htmlLang = getHtmlLang(locale);
 const canonicalPath = PostCollections.getLocalizedPostHref(baseSlug, locale);
 const englishPath = PostCollections.getLocalizedPostHref(baseSlug, DEFAULT_LOCALE);
@@ -109,6 +110,11 @@ const alternateLanguageLinksHtml = joinHtmlList(
 const modDate = modified ? new Date(modified) : null;
 const modTime = modDate ? modDate.toISOString().split("T")[0] : "";
 const pubTime = date ? new Date(date).toISOString().split("T")[0] : "";
+const dateFormatter = new Intl.DateTimeFormat(htmlLang, {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+});
 
 // Add type guard for ImageMetadata
 const isImageMetadata = (img: any): img is ImageMetadata =>
@@ -293,8 +299,10 @@ const shouldCropMobileBanner =
       }
 
       <aside class="skinny screenshot-hidden">
-        <div class="info">
-          <CreatedModifiedLabel date={date} modified={modified} />
+        <div class="post-meta" aria-label="Article details">
+          {date && <time datetime={pubTime}>Published {dateFormatter.format(new Date(date))}</time>}
+          {modified && modTime !== pubTime && <time datetime={modTime}>Updated {dateFormatter.format(new Date(modified))}</time>}
+          <span>{readingTimeMinutes} min read</span>
           <CategoryLink category={category} class:list={"p-category"} />
           {
             isTranslation && isActiveLocale(locale) && (

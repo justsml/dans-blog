@@ -1,6 +1,5 @@
-import { InfoLabel } from "../components/ui/infoLabel";
 import { slugify } from "../shared/pathHelpers";
-import { getComputedDates } from "../shared/dateUtils";
+import { getReadingTimeMinutes } from "../shared/readingTime";
 import type { ArticlePost } from "../types";
 import { DEFAULT_LOCALE, getLocalizedPostPath, type Locale } from "../shared/i18n";
 import "./ArticleCard.css";
@@ -37,7 +36,13 @@ export const ArticleCard = ({
   const isTile = className?.includes("tile");
 
   // console.log('🚀 htmxArgs', htmxArgs);
-  const { createdAgo, modifiedAgo } = getComputedDates({ date, modified });
+  const readingTimeMinutes = getReadingTimeMinutes(article.body);
+  const publishedDate = date ? new Date(date) : undefined;
+  const dateLabel = publishedDate?.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
   const icon = cover_mobile;
   const popularity = article.data.popularity ?? 0;
@@ -95,15 +100,6 @@ export const ArticleCard = ({
       data-modified={modified}
       {...htmxArgs}
     >
-      <span
-        className="small-label"
-        title={tags && tags.join(", ")}
-        dangerouslySetInnerHTML={{
-          __html:
-            category +
-            (category === "Quiz" ? `: <sup>${subCategory}</sup>` : ``),
-        }}
-      ></span>
       {isTile ? (
         <h4 style={{ viewTransitionName }} className="post-title">
           {title}
@@ -115,9 +111,14 @@ export const ArticleCard = ({
       )}
       <p dangerouslySetInnerHTML={{ __html: subTitle.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
       {image && <span className="article-card__media">{image}</span>}
-      <InfoLabel
-        text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
-      />
+      <span className="article-card__meta" title={tags && tags.join(", ")}>
+        {publishedDate && <time dateTime={publishedDate.toISOString()}>{dateLabel}</time>}
+        <span>{readingTimeMinutes} min read</span>
+        <span className="article-card__category">
+          <span className="article-card__category-label">Category</span> {category}
+          {category === "Quiz" && subCategory ? `: ${subCategory}` : ""}
+        </span>
+      </span>
     </a>
   );
 };

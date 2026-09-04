@@ -4,6 +4,7 @@ import { render, type CollectionEntry } from "astro:content";
 import { PostCollections } from "../shared/postsCache";
 import { writeRedirectManifest } from "../scripts/redirectManager";
 import type { Locale } from "../shared/i18n";
+import { getReadingTimeMinutes } from "../shared/readingTime";
 
 export async function getStaticPaths() {
   const paths = PostCollections.getStaticPaths();
@@ -24,6 +25,7 @@ type Props = CollectionEntry<"posts"> & {
 const post = Astro.props as Props;
 const results = await render(post);
 const { Content } = results;
+const readingTimeMinutes = getReadingTimeMinutes(post.body);
 ---
 
 <Post
@@ -33,6 +35,7 @@ const { Content } = results;
   locale={post.locale}
   isTranslation={post.isTranslation}
   frontmatter={{ ...post.data }}
+  readingTimeMinutes={readingTimeMinutes}
 >
   <Content />
 </Post>

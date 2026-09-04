@@ -1,6 +1,5 @@
 ---
 import clsx from "clsx";
-import { PostCollections } from "../shared/postsCache.ts";
 import { slugify } from "../shared/pathHelpers.ts";
 
 type Props = {
@@ -9,8 +8,6 @@ type Props = {
 };
 
 const { category, className } = Astro.props;
-const posts = PostCollections.getPostsByCategory(category ?? "");
-const count = posts.length;
 
 // HACK: Check if we are in "quiz" land, and instead link to the challenges page
 const getHref = (category: string) =>
@@ -21,14 +18,9 @@ const getHref = (category: string) =>
 
 {
   category && (
-    <label
-      class={clsx("category-link", className)}
-      title={
-        count >= 2 ? `${count} posts in category` : `${count} post in category`
-      }
-    >
-      {count > 2 ? <a href={getHref(category)}>{category}</a> : category}&#160;
-      {count > 2 ? `(${count})` : ""}
-    </label>
+    <span class={clsx("category-link", className)}>
+      <span class="category-link__label">Category</span>
+      <a href={getHref(category)}>{category}</a>
+    </span>
   )
 }

@@ -12,7 +12,23 @@
   font-style: normal;
   /* The article header is above the fold. Avoid swapping a late font into
      that stack, which otherwise reflows the title and everything below it. */
-  font-display: optional;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/atkinson-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  src: url('/fonts/atkinson-bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
 
 /* From @fontsource-variable/playwrite-au-nsw */
@@ -358,6 +374,45 @@ body {
 body.post-page {
   --site-bg-glow-cyan: rgba(159, 184, 255, 0.13);
   --site-bg-glow-pink: rgba(40, 232, 223, 0.1);
+  font-family: "Atkinson Hyperlegible", "Lucida Sans", "Lucida Grande", sans-serif;
+  font-size: 1.1875rem;
+  line-height: 1.65;
+}
+
+.post-meta {
+  align-items: center;
+  color: rgba(221, 232, 233, 0.7);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  gap: 0.45rem 0.8rem;
+}
+
+.post-meta > * + *::before {
+  color: rgba(221, 232, 233, 0.34);
+  content: "·";
+  margin-inline-end: 0.8rem;
+}
+
+.post-meta .category-link {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.post-meta .category-link__label {
+  color: rgba(221, 232, 233, 0.56);
+}
+
+.post-meta .category-link a {
+  background: hsl(var(--neon-cyan) / 0.1);
+  border: 1px solid hsl(var(--neon-cyan) / 0.28);
+  border-radius: 999px;
+  color: hsl(var(--neon-cyan));
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  text-decoration: none;
 }
 
 /* Prevent background scrolling when search panel is open */
