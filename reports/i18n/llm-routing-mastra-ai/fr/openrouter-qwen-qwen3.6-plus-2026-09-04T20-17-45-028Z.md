@@ -1,0 +1,137 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 142.91
+- Input tokens: 3678
+- Output tokens: 8300
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 3666
+- Estimated cost: $0.017380
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: ''
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+La plupart des équipes d'ingénierie choisissent un modèle de langage et s'y tiennent. Un fournisseur, un modèle, toutes les tâches. C'est comme embaucher une seule personne pour coder, rédiger vos textes et faire votre déclaration d'impôts, simplement parce qu'elle a bien réussi la première interview.
+
+À tout moment, un modèle est meilleur pour le code, un autre gère mieux les contextes longs et désordonnés, et un troisième est le cheval de trait bon marché et ennuyeux pour la classification. Les noms changent. La forme du problème, non. Traiter un modèle comme s'il excellait dans tout revient soit à surpayer pour des tâches simples, soit à obtenir des résultats médiocres sur des cas spécialisés.
+
+J'ai vu une équipe brûler des milliers de dollars à faire tourner de l'analyse de sentiments sur un modèle à 30 $ le million de tokens, alors qu'un modèle à 0,50 $ aurait fait le travail tout aussi bien. Formatage JSON simple, tâches de classification basiques, tout passait par leur fournisseur premium. La seule chose qui chauffait, c'était leur facture AWS.
+
+Il existe une meilleure approche, et elle n'est pas particulièrement compliquée.
+
+## La délégation plutôt que la dévotion
+
+Et si vous pouviez router les requêtes vers le modèle réellement le plus adapté à cette tâche précise ? Utilisez votre modèle puissant et coûteux pour les cas complexes, mais déléguez le parsing et le formatage simples à une option moins chère. Bénéficiez des avantages de plusieurs fournisseurs sans avoir à les jongler manuellement dans votre base de code.
+
+Mastra permet de construire exactement ce type de système. Vous configurez des agents spécialistes pour différents types de travail, puis vous créez un agent superviseur qui détermine quel spécialiste doit traiter chaque requête. Les identifiants de modèles ci-dessous utilisent le format de chaîne `provider/model` actuel de Mastra ; ce sont des exemples, pas un classement. Remplacez-les par les modèles qui dominent vos évaluations et correspondent à votre budget.
+
+Voyez les choses ainsi : vous avez trois spécialistes dans votre équipe.
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core/mastra';
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
+  instructions: 'You are a creative writer. Be weird.',
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
+});
+```
+
+Chacun a un rôle, et le champ `description` fait partie de la surface de routage. Votre agent code doit être le modèle qui réussit vos évaluations de code spécifiques au dépôt. Votre agent contexte long doit être celui qui digère vos documents réels sans transformer le milieu en purée. Votre agent général doit être bon marché, fiable et ennuyeux de la meilleure façon possible.
+
+C'est là que ça devient intéressant. Vous ajoutez un superviseur léger qui agit comme un proxy intelligent :
+
+```typescript
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
+  name: 'The Boss',
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
+});
+
+export const mastra = new Mastra({
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+Le superviseur lui-même peut tourner sur un modèle léger, car son rôle consiste surtout à décider où envoyer le trafic. Vous ne payez pas des tarifs premium pour déterminer quel autre modèle premium utiliser. Mesurez cela aussi ; une couche de routage défaillante transforme silencieusement les économies en erreurs d'aiguillage.
+
+Quand quelqu'un demande une implémentation du tri à bulles, le routeur identifie cela comme du travail de code et le transmet à votre spécialiste code. Un prompt de rédaction créative ? Il va au modèle que vous avez choisi pour sa voix et sa polyvalence. Une question factuelle sur des événements historiques ? Routez-la vers l'agent général, idéalement avec un mécanisme de retrieval quand l'actualité ou les citations comptent.
+
+## Les avantages pratiques
+
+**L'efficacité coût compte plus que vous ne le pensez.** Un petit modèle de routage qui prend des décisions de délégation coûte une fraction du prix d'exécution de chaque requête via votre fournisseur le plus cher. Avec le temps, surtout à grande échelle, cela représente de l'argent réel. Vous ne payez pour la puissance des modèles lourds que lorsque vous en avez réellement besoin.
+
+**La qualité s'améliore quand vous associez les modèles aux tâches.** Le modèle gagnant change selon le mois, la tâche et la forme du prompt. C'est pourquoi la couche de routage doit dépendre de vos évaluations, et non du modèle qui faisait le buzz sur Twitter la semaine où vous avez écrit l'intégration.
+
+**La résilience devient possible, pas automatique.** Le superviseur ci-dessus ne retente pas un fournisseur en échec via un autre agent, et il dépend d'OpenAI pour la décision de routage elle-même. Si le basculement de fournisseur est critique, ajoutez une politique explicite de retry/fallback dans le code applicatif, maintenez le routeur de secours sur un fournisseur différent, et testez le chemin de défaillance. Une collection d'agents ne fait pas office de disjoncteur simplement parce que les modèles arborent des logos différents.
+
+Il ne s'agit pas d'être malin pour le plaisir. Il s'agit de construire des systèmes qui ont du sens, financièrement et techniquement. Vous n'utiliseriez pas le même marteau pour chaque tâche de construction, et vous ne devriez probablement pas utiliser le même modèle de langage pour chaque tâche IA non plus.
+
+La beauté de cette approche, c'est que votre code applicatif n'a pas besoin d'un labyrinthe de branchements. Vous appelez toujours un seul agent. La complexité de décider quel modèle utiliser pour quelle tâche réside en un seul endroit, configuré une fois, plutôt que d'être éparpillée dans toute votre base de code sous forme de logique conditionnelle.
+
+### Ressources
+
+- [Documentation Mastra.ai](https://mastra.ai/docs)
+- [Dépôt GitHub Mastra](https://github.com/mastra-ai/mastra)
+
+## Lire la série
+
+1. **Routage des LLM** (Cet article)
+2. [Sécurité et garde-fous](../mastra-security-guardrails)
+3. [Intégrations MCP et outils](../mastra-mcp-tool-integrations)
+4. [Workflows et mémoire](../mastra-workflows-memory)
+````
