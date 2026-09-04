@@ -1,26 +1,70 @@
 {
-  "selectedCommit": "b128f75cd49ed4524f208d8aa0524ba4d7b4ccf2",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "0e637470f0f98f355d6a432ceaa1a790497d3c58",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 92,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 95,
+    "languagePurity": 98
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly translates technical concepts like 'ground-truth' as 'données de référence' and 'embedded' as 'embarquée (embedded)', which is helpful for French developers. It maintains the direct, slightly informal tone of the original ('chercher les ennuis', 'fiabilité ennuyeuse'). It also perfectly preserves the MDX structure and heading counts.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "1. [Routage LLM](../llm-routing-mastra-ai)",
+      "replacement": "1. [Routage LLM](/llm-routing-mastra-ai)",
+      "reason": "The link should point to the root-relative path as per the English source to ensure consistency across the site's routing structure, rather than a relative path that might break depending on the deployment environment."
+    }
+  ],
+  "rationale": "The candidate translation is excellent, capturing the technical nuances and the author's direct tone perfectly. The previous judge report mentioned an empty title, but looking at the provided MDX for the candidate, the title is actually present and correctly translated. The only minor adjustment is ensuring the series links follow the root-relative pattern of the source.",
+  "confidence": "low",
+  "confidenceScore": 0.332,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-workflows-memory",
   "locale": "fr",
   "candidateCommits": [
-    "b128f75cd49ed4524f208d8aa0524ba4d7b4ccf2",
-    "6d68992b49ded8b3ce5b98cfe8343550f70d2055",
-    "de45bcd388ccdcdb21134fb7c3bcdd56cb541c28",
-    "329bb6f4666b8e42401bc539054235c544da35cb",
-    "87668b3969a4435b4f3c2bebadf913594a6ad001"
+    "0e637470f0f98f355d6a432ceaa1a790497d3c58"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: \"Arrêtez de créer des agents instables : utilisez les Workflows et la Mémoire\"",
+      "reason": "The frontmatter title is empty in the candidate, which is a major omission for reader-facing content.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Routage LLM](/llm-routing-mastra-ai)",
+      "replacement": "[Routage LLM](../llm-routing-mastra-ai)",
+      "reason": "Internal links to other posts in the series should ideally use relative paths consistent with the locale folder depth, though the source used absolute-style paths.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "1. [Routage LLM](../llm-routing-mastra-ai)",
+      "replacement": "1. [Routage LLM](/llm-routing-mastra-ai)",
+      "reason": "The link should point to the root-relative path as per the English source to ensure consistency across the site's routing structure, rather than a relative path that might break depending on the deployment environment.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",

@@ -10,42 +10,36 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-
-## Batch Judge Telemetry
-### Round 1, Batch 1
-- Runtime seconds: 2.10
-- Input tokens: 16894
-- Output tokens: 175
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.008972
-
-### Round 1, Batch 2
-- Runtime seconds: 2.16
-- Input tokens: 13964
-- Output tokens: 187
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007543
+- Confidence: low (0.332)
+- Confidence signals: 1 high and 0 medium issues; single judge
+- High/medium/low issue counts: 1/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.02
-- Input tokens: 13833
-- Output tokens: 183
+- Runtime seconds: 4.20
+- Input tokens: 8424
+- Output tokens: 426
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007465
+- OpenRouter cost credits: 0.005490
+- Estimated cost: $0.005490
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 3.53
+- Input tokens: 11644
+- Output tokens: 356
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.006890
+- Estimated cost: $0.006890
+
+## Judge Suggestions
+1. Pass 1: applied high priority suggestion. Match: "title: ''" Replacement: "title: \"Arrêtez de créer des agents instables : utilisez les Workflows et la Mémoire\"" Reason: The frontmatter title is empty in the candidate, which is a major omission for reader-facing content. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied medium priority suggestion. Match: "[Routage LLM](/llm-routing-mastra-ai)" Replacement: "[Routage LLM](../llm-routing-mastra-ai)" Reason: Internal links to other posts in the series should ideally use relative paths consistent with the locale folder depth, though the source used absolute-style paths. Note: Applied exact replacement to selected MDX.
+3. Pass 2: logged high priority suggestion. Match: "1. [Routage LLM](../llm-routing-mastra-ai)" Replacement: "1. [Routage LLM](/llm-routing-mastra-ai)" Reason: The link should point to the root-relative path as per the English source to ensure consistency across the site's routing structure, rather than a relative path that might break depending on the deployment environment. Note: Exact match not found in selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-01-05--mastra-workflows-memory/fr/index.mdx
-- b128f75cd49ed4524f208d8aa0524ba4d7b4ccf2 i18n candidate(fr): mastra-workflows-memory via openrouter/qwen/qwen3.6-plus
-- 6d68992b49ded8b3ce5b98cfe8343550f70d2055 i18n candidate(fr): mastra-workflows-memory via openrouter/deepseek/deepseek-v4-flash
-- de45bcd388ccdcdb21134fb7c3bcdd56cb541c28 i18n candidate(fr): mastra-workflows-memory via openrouter/minimax/minimax-m2.7
-- 329bb6f4666b8e42401bc539054235c544da35cb i18n candidate(fr): mastra-workflows-memory via openrouter/openai/gpt-oss-120b:nitro
-- 87668b3969a4435b4f3c2bebadf913594a6ad001 i18n candidate(fr): mastra-workflows-memory via openrouter/qwen/qwen3-32b:nitro
+- 0e637470f0f98f355d6a432ceaa1a790497d3c58 i18n candidate(fr): mastra-workflows-memory via openrouter/deepseek/deepseek-v4-flash
