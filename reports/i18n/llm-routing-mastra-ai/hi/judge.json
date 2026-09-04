@@ -1,98 +1,59 @@
 {
-  "selectedCommit": "7ebd4dc068c963334a5a083cf63c236a06e290fe",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "7b48f92febe0b235a0723c30188a1cbbae2e158b",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 90,
     "technicalAccuracy": 95,
-    "coherence": 95,
+    "coherence": 92,
     "relevance": 100,
-    "translationQuality": 92,
-    "mdxPreservation": 90,
-    "culturalAdaptation": 88,
+    "translationQuality": 90,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 85,
     "languagePurity": 90
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "[MCP एवं टूल इंटीग्रेशन](../mastra-mcp-tool-integrations)",
-      "replacement": "[MCP एवं टूल इंटीग्रेशन](/hi/mastra-mcp-tool-integrations)",
-      "reason": "Internal links must follow the localized absolute path convention (/hi/slug) to ensure consistent navigation, matching the English source structure."
-    },
-    {
-      "priority": "high",
-      "match": "[वर्कफ़्लो एवं मेमोरी](../mastra-workflows-memory)",
-      "replacement": "[वर्कफ़्लो एवं मेमोरी](/hi/mastra-workflows-memory)",
-      "reason": "Internal links must follow the localized absolute path convention (/hi/slug) to ensure consistent navigation, matching the English source structure."
-    }
-  ],
-  "rationale": "The translation is high quality and maintains the technical context and tone. However, the internal links in the 'Read the Series' section use relative paths (../) which break the site's routing convention for localized content. They should be absolute paths starting with /hi/ to match the English source's absolute path style.",
-  "confidence": "low",
-  "confidenceScore": 0.316,
+  "suggestions": [],
+  "rationale": "The selected commit (7b48f92febe0b235a0723c30188a1cbbae2e158b) is the only one that correctly translated the frontmatter title. The previous judge report suggested a fix for the subTitle, but looking at the current state of the file, the subTitle is already correctly translated as 'LLM रूटिंग, आजकल बहुत चर्चा में है'. The translation of 'Delegation' as 'डेलिगेशन' is also already present in the text, making the previous judge's suggestions redundant as they have already been applied or were already present in the candidate. The MDX structure, code blocks, and internal links are perfectly preserved.",
+  "confidence": "high",
+  "confidenceScore": 0.867,
   "confidenceSignals": [
-    "2 high and 0 medium issues",
+    "no high/medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 2,
+    "high": 0,
     "medium": 0,
     "low": 0
   },
   "slug": "llm-routing-mastra-ai",
   "locale": "hi",
   "candidateCommits": [
-    "7ebd4dc068c963334a5a083cf63c236a06e290fe"
+    "7b48f92febe0b235a0723c30188a1cbbae2e158b",
+    "9c35da2890af79cb9d2290d757fa66608d65ab23"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "[सुरक्षा एवं गार्डरेल्स](../mastra-security-guardrails)",
-      "replacement": "[सुरक्षा एवं गार्डरेल्स](/hi/mastra-security-guardrails)",
-      "reason": "Internal links to other posts in the series should point to the localized path or follow the site's routing convention. However, the instruction specifically mentioned that assets must use ../. For internal post links, usually, the slug remains or is prefixed. Given the constraint 'Locale files live one folder deeper', the relative link ../ is correct for assets, but for page navigation, it should ensure it doesn't break. More importantly, the English source used absolute-style paths (/mastra-security-guardrails).",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: 'LLM रूटिंग, आजकल बहुत चर्चा में है'",
+      "reason": "The subtitle was left empty in the translation but contains reader-facing content in the English source.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "medium",
-      "match": "लंबी‑गंदगी वाली संदर्भ",
-      "replacement": "जटिल और लंबे संदर्भ",
-      "reason": "'Long messy context' was translated too literally as 'long-dirty context'. 'जटिल' (complex) is more appropriate for technical writing.",
+      "match": "प्रतिनिधित्व बनाम समर्पण",
+      "replacement": "डेलिगेशन बनाम समर्पण",
+      "reason": "In a technical context, 'Delegation' is better understood as a loanword or transliterated, as 'प्रतिनिधित्व' (Representation) doesn't quite capture the technical meaning of delegating tasks to agents.",
       "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "[MCP एवं टूल इंटीग्रेशन](../mastra-mcp-tool-integrations)",
-      "replacement": "[MCP एवं टूल इंटीग्रेशन](/hi/mastra-mcp-tool-integrations)",
-      "reason": "Internal links must follow the localized path convention (/hi/slug) and match the absolute-style paths used in the English source, rather than using relative parent directory links which may break routing.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "[वर्कफ़्लो एवं मेमोरी](../mastra-workflows-memory)",
-      "replacement": "[वर्कफ़्लो एवं मेमोरी](/hi/mastra-workflows-memory)",
-      "reason": "Internal links must follow the localized path convention (/hi/slug) and match the absolute-style paths used in the English source.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "[सुरक्षा एवं गार्डरेल्स](../mastra-security-guardrails)",
-      "replacement": "[सुरक्षा एवं गार्डरेल्स](/hi/mastra-security-guardrails)",
-      "reason": "Internal links must follow the localized path convention (/hi/slug) to ensure consistent navigation across the site, matching the absolute-style paths in the English source.",
-      "pass": 3,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
   ],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx failed structural parity with score 0.969 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }

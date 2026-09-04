@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 7ebd4dc068c963334a5a083cf63c236a06e290fe
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: 7b48f92febe0b235a0723c30188a1cbbae2e158b
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: low (0.316)
+- Confidence: high (0.867)
 
-The translation is high quality and maintains the technical context and tone. However, the internal links in the 'Read the Series' section use relative paths (../) which break the site's routing convention for localized content. They should be absolute paths starting with /hi/ to match the English source's absolute path style.
+The selected commit (7b48f92febe0b235a0723c30188a1cbbae2e158b) is the only one that correctly translated the frontmatter title. The previous judge report suggested a fix for the subTitle, but looking at the current state of the file, the subTitle is already correctly translated as 'LLM रूटिंग, आजकल बहुत चर्चा में है'. The translation of 'Delegation' as 'डेलिगेशन' is also already present in the text, making the previous judge's suggestions redundant as they have already been applied or were already present in the candidate. The MDX structure, code blocks, and internal links are perfectly preserved.
