@@ -1,0 +1,213 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 76.69
+- Input tokens: 4650
+- Output tokens: 9104
+- Thinking tokens: unknown
+- Cached input tokens: 1792
+- Cache write tokens: 0
+- Estimated cost: $0.002954
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: AI בפרודקשן מפחיד (ואיך לתקן את זה)
+subTitle: ''
+modified: '2026-09-04'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+אף אחד לא יוצא לבנות מערכת AI לא בטוחה. אתה כותב הוראות, בודק מקרי קצה, מוסיף כמה כללי ולידציה. ואז מישהו מגלה שאפשר לשטות בבוט שלך שיתחפש לפיראט ויחשוף נתוני משתמשים. או שמספר כרטיס אשראי מגיע ללוגים שלך. או שהמודל ממליץ בביטחון על מוצר של מתחרה.
+
+הפער בין "עובד בדמו" לבין "בטוח בפרודקשן" רחב יותר ממה שרוב הצוותים מצפים.
+
+חלק מהבעיה הוא של-LLM גולמיים אין דעות לגבי מה הם צריכים או לא צריכים לעשות. הם מכונות חיזוי שמנסות להמשיך כל תבנית שהתחלת. תיתן להם פרומפט שנראה כמו "מצב עקיפת מערכת", והם ישחקו בהנאה. זו לא באג במודל; זה פשוט איך שמודלי שפה עובדים.
+
+רוב הפריימוורקים מוסרים לך את המודל ומאחלים לך בהצלחה. Mastra נוקטת בגישה אחרת: היא מניחה שתזדקק למעקות בטיחות בסופו של דבר, אז היא בונה אותם לתוך ארכיטקטורת הסוכן מההתחלה.
+
+---
+
+## מעבדים כשכבות בטיחות
+
+המנגנון המרכזי פשוט. לפני שהפרומפט שלך מגיע למודל, הוא עובר דרך שרשרת של מעבדי קלט. אחרי שהמודל מגיב, מעבדי הפלט מקבלים את תורם. כל מעבד יכול לבדוק, לשנות או לחסום את התוכן באותו שלב.
+
+חשבו עליהם כמתווכים (middleware) לאינטראקציות AI. אתם עורמים את אלה שאתם צריכים, מגדירים את ההתנהגות שלהם, והם רצים אוטומטית על כל בקשה.
+
+### 1. עצירת הפיראטים (הזרקת פרומפט)
+
+התקפות הזרקת פרומפט הפכו ליצירתיות. אנשים משתמשים בתווי Unicode בלתי נראים, כותבים הוראות ב-base64, או משכנעים את המודל שהם ב"מצב דיבוג" שבו חוקים רגילים לא חלים. הטכניקות ממשיכות להתפתח.
+
+Mastra כוללת מעבדים שתופסים תבניות נפוצות:
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+
+const GUARDRAIL_MODEL = 'openrouter/openai/gpt-oss-safeguard-20b';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    // 1. Scrub invisible characters
+    new UnicodeNormalizer({
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. Detect the attempt
+    new PromptInjectionDetector({
+      model: GUARDRAIL_MODEL,
+      threshold: 0.8,
+      strategy: 'block', // Hard stop
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+      lastMessageOnly: true,
+    }),
+  ],
+});
+```
+
+ה-[`UnicodeNormalizer`](https://mastra.ai/reference/processors/unicode-normalizer) מסיר תווי בקרה ומכווץ רווחים. ה-[`PromptInjectionDetector`](https://mastra.ai/reference/processors/prompt-injection-detector) מנתח את הקלט המנוקה לאיתור תבניות שמרמזות שמישהו מנסה לעקוף את ההוראות שלך.
+
+אתה מגדיר עד כמה אגרסיבית תהיה הזיהוי (פרמטר `threshold`) ומה יקרה כשהיא מופעלת (`block`, `warn`, `filter` או `rewrite`).
+
+### 2. טיפול ב-PII
+
+מספרי כרטיסי אשראי בלוגים, מספרי תעודת זהות במסדי נתונים וקטוריים, כתובות אימייל שנשמרות יותר מהנדרש. אלה סוגי הבעיות שהופכות לבעיות רגולטוריות. האתגר הוא שמשתמשים לא תמיד מבינים שהם מדביקים מידע רגיש לחלון צ'אט.
+
+ה-[`PIIDetector`](https://mastra.ai/reference/processors/pii-detector) סורק אחר תבניות נפוצות לפני שהן מגיעות למודל שלך או נכתבות לאחסון:
+
+```typescript
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+      instructions: 'Detect and mask personally identifiable information',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+    }),
+  ],
+});
+```
+
+אתה יכול לבחור להסתיר, לגזור hash, להסיר, להחליף במקום מוגדר-סוג, או לחסום לחלוטין. `PIIDetector` הוא מעבד היברידי: שים אותו ב-`inputProcessors`, `outputProcessors`, או בשניהם תלוי היכן הסיכון. עבור פלט בזרם, בצ' את הנתחים לפני הרצת מסווגים כבדים יותר כדי לא לשלם על בדיקת LLM נפרדת על כל טיפה קטנה של טוקן.
+
+### 3. ניטור תוכן
+
+### 3. ניטור תוכן
+
+מודלים שאומנו על נתוני אינטרנט כבר ראו דברים. ללא סינון, הם עלולים לייצר לעתים תגובות שיעשו לצוות יחסי הציבור שלך עצבניים. ה-[`ModerationProcessor`](https://mastra.ai/reference/processors/moderation-processor) תופס תוכן שמפר את ההנחיות שלך:
+
+```typescript
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,
+      strategy: 'block',
+      instructions: 'Detect harmful content that violates community guidelines',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      strategy: 'filter',
+      chunkWindow: 1,
+    }),
+  ],
+});
+```
+
+החלק המעניין הוא שאתה מגדיר אילו קטגוריות רלוונטיות למקרה השימוש שלך. כלי לכתיבה יוצרת עשוי לאפשר תוכן אקספרסיבי יותר מאשר בוט שירות לקוחות. הסף (threshold) והאסטרטגיה נותנים לך שליטה על מידת ההקפדה של הסינון.
+
+---
+
+## כשדברים נתפסים
+
+כאשר מעבד משתמש באסטרטגיית `block`, Mastra מפסיק את היצירה וחושף את האירוע כמידע tripwire מטה-דאטה. עם `generate()`, בדוק את אובייקט התוצאה:
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked by ${result.tripwire.processorId}`);
+  console.log(`Reason: ${result.tripwire.reason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return 'Request blocked by policy.';
+}
+```
+
+לקריאות streaming, האזן לנתחי `tripwire` ב-`fullStream`. תבנית זו מאפשרת לך לטפל באירועי אבטחה באופן שמתאים לאפליקציה שלך. ייתכן שתרצה לתעד אותם לניתוח, להחזיר הודעת שגיאה גנרית, או להעביר מקרה בסיכון נמוך מ-`block` ל-`warn` תוך כדי כוונון הספים. מזהי ה-`processorId` וה-`reason` אומרים לך איזה מעבד סימן את התוכן, מה שעוזר כשאתה מנפה תקלות חיוביות שגויות.
+
+---
+
+## מה זה לא פותר
+
+מעבדים תופסים הרבה, אבל הם לא קסם. תוקף נחוש עם מספיק זמן יכול כנראה למצוא פרומפט שמחליק דרך. מודלים מהלים לפעמים בדרכים שמעבדים לא יכולים לצפות. ותמיד יש tradeoff בין אבטחה לגמישות: ככל שהחוקים שלך מחמירים יותר, כך סביר יותר שתחסום מקרי שימוש לגיטימיים.
+
+הערך אינו הגנה מושלמת. זהו קיום דרך שיטתית לטפל בבעיות הנפוצות שבוודאי יצוצו בפרודקשן. אתה יכול לכוון את הרגישות תוך כדי למידה של מה המשתמשים שלך באמת עושים. אתה יכול להוסיף מעבדים מותאמים אישית לסיכונים ספציפיים לדומיין. ואתה יכול לחבר callbacks להפרות, לוגים, traces, ורשומות ביקורת ברמת האפליקציה סביב אותה נקודת בקרה.
+
+רוב בעיות האבטחה ב-AI בפרודקשן אינן מתקפות מתוחכמות. הן אנשים שמעתיקים ומדביקים נתונים שלא היו צריכים, או מגלים דרך ניסוי וטעייה שהבוט יעשה דברים שלא התכוונת אליהם. מעבדים לא יעצרו כל בעיה אפשרית, אבל הם הופכים את הברורות להרבה יותר קשות.
+
+### משאבים
+
+- [תיעוד Mastra Guardrails](https://mastra.ai/docs/agents/guardrails)
+- [תיעוד מעבדי Mastra](https://mastra.ai/docs/agents/processors)
+- [אישור סוכן Mastra](https://mastra.ai/docs/agents/agent-approval)
+- [מאגר Mastra ב-GitHub](https://github.com/mastra-ai/mastra)
+
+## קרא/י את הסדרה
+
+1. [ניתוב LLM](../llm-routing-mastra-ai)
+2. **אבטחה ומעקות בטיחות (הפוסט הנוכחי)**
+3. [MCP ואינטגרציות כלים](../mastra-mcp-tool-integrations)
+4. [זרימות עבודה וזיכרון](../mastra-workflows-memory)
+````
