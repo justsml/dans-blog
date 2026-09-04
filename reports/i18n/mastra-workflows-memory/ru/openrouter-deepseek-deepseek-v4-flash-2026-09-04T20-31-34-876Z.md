@@ -1,0 +1,303 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 69.55
+- Input tokens: 6568
+- Output tokens: 7522
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002745
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Хватит создавать ненадежных агентов: используйте воркфлоу и память'
+subTitle: Детерминированные паттерны для недетерминированных моделей.
+modified: '2026-09-04'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - supervisor-agents
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLM обладают странным свойством: они блестяще понимают нюансы, но ужасно следуют рецептам. Дайте сильной модели расплывчатую задачу — она переберет варианты. Дайте ей точную последовательность шагов — и она может пропустить шаг 3, потому что шаг 5 «показался более релевантным».
+
+Это не баг модели. Это фундаментальная характеристика вероятностных систем, пытающихся решать детерминированные задачи.
+
+Я видел, как команды борются с этим несоответствием. Они строят агента для обработки возвратов, дают ему дюжину инструментов и ожидают, что он будет надежно выполнять бизнес-процесс. Иногда работает идеально. Иногда галлюцинирует утверждения, которых никогда не было. Иногда зацикливается, трижды запрашивая одну и ту же информацию.
+
+Решение — не в лучших промптах. Оно в том, чтобы знать, когда перестать просить LLM «думать» и начать говорить ей «подчиняться».
+
+---
+
+## Когда детерминированность побеждает креативность
+
+Подумайте, что происходит, когда нужно обработать тикет в поддержке. Реальная бизнес-логика выглядит примерно так:
+
+1. Получить детали тикета из базы данных
+2. Проверить, имеет ли пользователь право на возврат (правила политики)
+3. Убедиться, что транзакция существует и ещё не была возвращена
+4. Рассчитать сумму возврата
+5. Выполнить обратный платёж
+6. Обновить статус тикета
+7. Отправить подтверждение по email
+
+Можно было бы передать это LLM как упражнение по вызову инструментов. По моему опыту, это напрашивается на неприятности. Модель может решить, что шаги 2 и 3 — «по сути одно и то же», и пропустить один из них. Или обработать возврат до проверки права, потому что пользователь казался расстроенным.
+
+Для таких сценариев и существуют воркфлоу (workflows). Они не впечатляют, но в этом и суть.
+
+### Создание планировщика активностей на основе погоды
+
+Вот практический пример, демонстрирующий паттерн. Нам нужны точные фактические данные о погоде в паре с креативными предложениями активностей. Получение погоды никогда не должно быть креативным, но предложения — должны.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: 'openai/gpt-5.5',
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities)
+  .commit();
+```
+
+`geocodeCity()` — это обычный прикладной код или вызов Maps API; это не решение модели. LLM никогда не касается погодного API. Она получает проверенные данные на вход, а затем делает то, в чём действительно сильна: даёт контекстные рекомендации. Если перевернуть этот порядок и позволить агенту самому получать данные о погоде, рано или поздно вы получите солнечный прогноз, когда на самом деле идёт дождь.
+
+**Когда стоит рассмотреть воркфлоу:**
+- У вас есть известная последовательность шагов, которые должны выполняться по порядку
+- Вам нужна наблюдаемость на каждом этапе (логи, метрики, тайминги)
+- Вам нужны повторные попытки для ненадёжных внешних API
+- Бизнес-правила нельзя «интерпретировать» — их нужно точно соблюдать
+
+---
+
+## Проблема контекстного окна, о которой никто не говорит
+
+Я постоянно вижу один и тот же паттерн. Кто-то строит чат-бота. Во время тестирования он работает отлично. А потом в продакшене пользователи ведут более длинные диалоги, и бот внезапно теряется.
+
+Разработчик смотрит логи и понимает, что отправляет всю историю беседы с каждым запросом. Все 47 сообщений. Они сжигают токены и контекстное пространство на информацию, которая по большей части нерелевантна.
+
+Хуже того, существует феномен, который исследователи называют «потеря в середине»: модели работают хуже, когда релевантная информация погребена в длинном контексте. Модель буквально не видит леса за деревьями.
+
+Отправка полной истории беседы кажется безопасным решением. Вы даёте модели «всю информацию». Но на самом деле вы затрудняете для модели фокусировку на том, что действительно важно.
+
+### Последние сообщения, рабочая память и семантический поиск
+
+Система памяти Mastra разделяет несколько задач, которые команды часто смешивают воедино. История последних сообщений хранит последние реплики, доступные через `lastMessages`. Рабочая память сохраняет постоянные структурированные факты, такие как предпочтения пользователя, цели и состояние проекта. Семантический поиск извлекает старые сообщения по смыслу, когда текущий запрос кажется связанным. Наблюдательная память идёт ещё на шаг вперёд для длительных бесед, сжимая старую необработанную историю в плотные наблюдения.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: 'openai/gpt-5.5',
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:./mastra.db',
+    }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    options: {
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
+      },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
+    },
+  }),
+});
+```
+
+Одно операционное примечание: в настоящее время `observationalMemory: true` использует `google/gemini-2.5-flash` в качестве модели наблюдателя по умолчанию. Это означает, что этот в остальном агент на базе OpenAI также требует доступа к модели Google, влечёт отдельное использование модели и может отправлять историю беседы через второго провайдера. В продакшене явно настройте модель наблюдательной памяти и проведите анализ выбора через те же проверки учётных данных, стоимости, местонахождения данных и хранения данных, что и для основной модели агента.
+
+Вот как это выглядит на практике. Пользователь спрашивает: «Что за итальянский ресторан ты рекомендовал в прошлом месяце?»
+
+Без семантического поиска или наблюдений агент видит последние 20 сообщений. Рекомендация ресторана была в сообщении №487 из 506. Она потеряна. Агент отвечает: «У меня нет такой информации».
+
+С семантическим поиском:
+1. Запрос преобразуется в эмбеддинг: `[0.234, -0.567, 0.891, ...]`
+2. Эмбеддинг сравнивается с историческими сообщениями
+3. Сообщение №487 («Я бы рекомендовал Trattoria Bella — их карбонара восхитительна») получает сходство 0.89
+4. Это сообщение внедряется в текущий контекст
+5. Агент отвечает: «Я рекомендовал Trattoria Bella. Меня привлекла их карбонара.»
+
+Агент выглядит так, будто обладает идеальной памятью, при этом используя лишь малую часть контекстного окна. Это не просто умная инженерия — это функциональная необходимость, как только диалоги выходят за пределы нескольких десятков сообщений.
+
+---
+
+## Координация через агентов-супервизоров
+
+Иногда нужны и структура, и гибкость. Чистые рабочие процессы слишком жёстки. Чистые агенты слишком непредсказуемы.
+
+Агенты-супервизоры предоставляют координатора, который решает, какой специализированный агент, рабочий процесс или инструмент должен сделать следующий шаг. Думайте об этом как об умном балансировщике нагрузки для возможностей ИИ.
+
+```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: 'openai/gpt-5.5',
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Supervisor state and delegation traces need somewhere durable to land.
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
+  }),
+});
+```
+
+Когда вы отправляете запрос этому супервизору, он анализирует запрос и направляет его соответственно:
+- «Нужны факты об X» — запускает исследовательского агента
+- «Спланировать выходные в Сиэтле» — выполняет рабочий процесс планировщика активностей
+- «Написать отчёт по Y» — привлекает агента-писателя
+
+Этот паттерн масштабируется лучше, чем попытка впихнуть всё в одного мега-агента. Специализированные агенты развивают узкую экспертизу. Координатор занимается маршрутизацией. Каждая часть делает то, что у неё получается лучше всего.
+
+---
+
+## Собираем всё вместе
+
+Реальные производственные системы ИИ требуют архитектуры, а не просто подсказок. Вы строите распределённые системы, где некоторые узлы оказываются языковыми моделями.
+
+Рабочие процессы дают вам гарантии, когда всё должно быть выполнено строго по порядку. Память даёт контекст без сжигания бюджета токенов. Агенты-супервизоры позволяют собирать сложность из более простых частей.
+
+В этом нет ничего гламурного. Но после того, как я увидел достаточно «полностью автономных агентов», терпящих неудачу в продакшне, я оценил скучную надёжность больше, чем захватывающую непредсказуемость.
+
+Ваш опыт может отличаться, но по моему опыту системы, которые действительно выпускаются и продолжают работать, — это те, которые относятся к LLM как к компонентам более крупной архитектуры, а не как к волшебным коробкам, решающим всё.
+
+### Ресурсы
+
+- [Документация Mastra Workflows](https://mastra.ai/docs/workflows/overview)
+- [Документация Mastra Memory](https://mastra.ai/docs/memory/overview)
+- [Агенты-супервизоры Mastra](https://mastra.ai/docs/agents/supervisor-agents)
+- [Семантическое воспоминание Mastra](https://mastra.ai/docs/memory/semantic-recall)
+
+## Читайте серию
+
+1. [Маршрутизация LLM](/llm-routing-mastra-ai)
+2. [Безопасность и ограничители](/mastra-security-guardrails)
+3. [Интеграции MCP и инструментов](/mastra-mcp-tool-integrations)
+4. **Рабочие процессы и память (этот пост)**
+````
