@@ -2,7 +2,7 @@
 title: "Stop Building Flaky Agents: Use Workflows & Memory"
 subTitle: "Deterministic patterns for non-deterministic models."
 date: 2026-01-05
-modified: 2026-07-03
+modified: 2026-09-04
 tags: [ai, workflows, memory, mastra, supervisor-agents, orchestration]
 category: AI
 subCategory: Architecture
@@ -185,6 +185,8 @@ export const memoryAgent = new Agent({
   }),
 });
 ```
+
+One operational footnote: `observationalMemory: true` currently uses `google/gemini-2.5-flash` as its default observer model. That means this otherwise OpenAI-backed agent also needs Google model access, incurs separate model usage, and may send conversation history through a second provider. In production, configure the observational-memory model explicitly and run the choice through the same credential, cost, residency, and data-retention review as the main agent model.
 
 Here's how this plays out in practice. A user asks: "What was that Italian restaurant you recommended last month?"
 

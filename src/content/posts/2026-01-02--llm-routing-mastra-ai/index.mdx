@@ -2,7 +2,7 @@
 title: "Don't Marry Your Model"
 subTitle: "LLM Routing, so hot right now"
 date: 2026-01-02
-modified: 2026-07-03
+modified: 2026-09-04
 tags: [ai, llm, typescript, mastra, agent-orchestration]
 category: AI
 subCategory: Engineering
@@ -96,7 +96,7 @@ When someone asks for a bubble sort implementation, the router recognizes it as 
 
 **Quality improves when you match models to tasks.** The winner changes by month, task, and prompt shape. That is why the routing layer should depend on your evals, not on whatever model was winning Twitter the week you wrote the integration.
 
-**Resilience becomes a side benefit.** When OpenAI has one of its periodic outages (and they do), your router can redirect traffic to other providers. You're not dead in the water waiting for one specific API to come back online.
+**Resilience becomes possible, not automatic.** The supervisor above does not retry a failed provider through another agent, and it depends on OpenAI for the routing decision itself. If provider failover matters, add an explicit retry/fallback policy in application code, keep the fallback router on a different provider, and test the failure path. A bag of agents is not a circuit breaker just because the models have different logos.
 
 This isn't about being clever for the sake of it. It's about building systems that make sense both financially and technically. You wouldn't use the same hammer for every construction task, and you probably shouldn't use the same language model for every AI task either.
 

@@ -2,7 +2,7 @@
 title: "Your AI Agent is Useless Without This"
 subTitle: "Why MCP is the USB-C of Artificial Intelligence."
 date: 2026-01-04
-modified: 2026-07-03
+modified: 2026-09-04
 tags: [ai, mcp, tools, integrations, mastra, salesforce, apis]
 category: AI
 subCategory: Integration
@@ -167,35 +167,59 @@ Sometimes you need to combine multiple MCP tools into a single operation. Maybe 
 You can wrap MCP tools in custom tool definitions:
 
 ```typescript
+import { createTool } from '@mastra/core/tools';
+import { z } from 'zod';
+
+type DirectionsResult = {
+  waypoints: Array<{ latitude: number; longitude: number }>;
+  [key: string]: unknown;
+};
+
+type ForecastResult = {
+  alerts?: unknown[];
+  severe?: boolean;
+};
+
 export const smartRouteTool = createTool({
   id: 'smart-route-planner',
   description: 'Plans optimal route considering traffic and weather conditions',
-  execute: async ({ context, mastra }) => {
-    // Get the raw tools
+  inputSchema: z.object({
+    origin: z.string(),
+    destination: z.string(),
+  }),
+  outputSchema: z.object({
+    route: z.record(z.string(), z.unknown()),
+    weatherAlerts: z.array(z.unknown()),
+    recommendation: z.string(),
+  }),
+  execute: async ({ origin, destination }, executionContext) => {
     const tools = await mcpClient.listTools();
-    
+
     // 1. Get base route from Google Maps
-    const routeData = await tools.googleMaps_getDirections.execute({ 
-      context: { 
-        origin: context.origin,
-        destination: context.destination 
-      } 
-    });
-    
+    const routeData = await tools.googleMaps_getDirections.execute(
+      { origin, destination },
+      executionContext,
+    ) as DirectionsResult;
+
     // 2. Check weather along the route
-    const weatherData = await tools.weather_getForecast.execute({
-      context: { coordinates: routeData.waypoints }
-    });
-    
+    const weatherData = await tools.weather_getForecast.execute(
+      { coordinates: routeData.waypoints },
+      executionContext,
+    ) as ForecastResult;
+
     // 3. Return enhanced route with weather warnings
-    return { 
-      ...routeData, 
-      weatherAlerts: weatherData.alerts,
-      recommendation: weatherData.severe ? 'Consider delaying trip' : 'Safe to travel'
+    return {
+      route: routeData,
+      weatherAlerts: weatherData.alerts ?? [],
+      recommendation: weatherData.severe
+        ? 'Consider delaying trip'
+        : 'Safe to travel',
     };
   },
 });
 ```
+
+Current Mastra tools receive validated input first and execution context second. Passing that context into the discovered MCP tools preserves request-scoped state, tracing, and cancellation. The names and result types above are example contracts; use the names and schemas advertised by the MCP servers you actually connect.
 
 This gives you fine-grained control over exactly how tools interact while still leveraging the MCP protocol for the heavy lifting.
 
