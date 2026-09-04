@@ -10,36 +10,45 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: medium (0.665)
+- Confidence signals: low blocking-issue rate; single judge
+- High/medium/low issue counts: 0/1/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.42
-- Input tokens: 10847
-- Output tokens: 420
+- Runtime seconds: 3.05
+- Input tokens: 8586
+- Output tokens: 281
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.006684
-- Estimated cost: $0.006684
+- OpenRouter cost credits: 0.005136
+- Estimated cost: $0.005136
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 3.28
-- Input tokens: 10412
-- Output tokens: 484
+- Runtime seconds: 2.98
+- Input tokens: 11734
+- Output tokens: 360
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.006658
-- Estimated cost: $0.006658
+- OpenRouter cost credits: 0.006947
+- Estimated cost: $0.006947
+
+### Pass 2
+- Runtime seconds: 2.85
+- Input tokens: 11735
+- Output tokens: 360
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.006947
+- Estimated cost: $0.006947
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "/../llm-routing-mastra-ai" Replacement: "../llm-routing-mastra-ai" Reason: The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied high priority suggestion. Match: "/../mastra-security-guardrails" Replacement: "../mastra-security-guardrails" Reason: The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure. Note: Applied exact replacement to selected MDX.
-3. Pass 1: applied high priority suggestion. Match: "/../mastra-mcp-tool-integrations" Replacement: "../mastra-mcp-tool-integrations" Reason: The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure. Note: Applied exact replacement to selected MDX.
-4. Pass 2: logged high priority suggestion. Match: "(../llm-routing-mastra-ai)" Replacement: "(/llm-routing-mastra-ai)" Reason: The English source uses root-relative paths (/llm-routing-mastra-ai). The translation changed them to relative parent paths (../) which will break links if the site structure expects root-relative URLs as per the source. Note: Exact match not found in selected MDX.
-5. Pass 2: logged high priority suggestion. Match: "(../mastra-security-guardrails)" Replacement: "(/mastra-security-guardrails)" Reason: Restoring root-relative path to match English source. Note: Exact match not found in selected MDX.
-6. Pass 2: logged high priority suggestion. Match: "(../mastra-mcp-tool-integrations)" Replacement: "(/mastra-mcp-tool-integrations)" Reason: Restoring root-relative path to match English source. Note: Exact match not found in selected MDX.
+1. Pass 1: applied medium priority suggestion. Match: "تسمح لك وكلاء الإشراف" Replacement: "يسمح لك وكلاء الإشراف" Reason: Grammatical agreement in Arabic: 'وكلاء' is plural, but the verb 'تسمح' (feminine singular) is less natural here than 'يسمح' (masculine singular/plural) for this construct. Note: Applied exact replacement to selected MDX.
+2. Pass 2: applied medium priority suggestion. Match: "تسمح لك وكلاء الإشراف" Replacement: "يسمح لك وكلاء الإشراف" Reason: Grammatical agreement in Arabic: 'وكلاء' is a broken plural (masculine), so the verb 'يسمح' (masculine) is more appropriate than 'تسمح' (feminine) in this context. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-01-05--mastra-workflows-memory/ar/index.mdx
-- 708c7d7891594e8aa7c6bfe6a21db611d08eec48 i18n candidate(ar): mastra-workflows-memory via openrouter/openai/gpt-oss-120b:nitro
+- d76bd493a6777a37e86ddd0f9b357ac7146edf67 i18n candidate(ar): mastra-workflows-memory via openrouter/deepseek/deepseek-v4-flash

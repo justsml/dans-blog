@@ -1,96 +1,59 @@
 {
-  "selectedCommit": "708c7d7891594e8aa7c6bfe6a21db611d08eec48",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "d76bd493a6777a37e86ddd0f9b357ac7146edf67",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 95,
     "technicalAccuracy": 98,
-    "coherence": 95,
+    "coherence": 96,
     "relevance": 100,
-    "translationQuality": 92,
-    "mdxPreservation": 90,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 92,
+    "languagePurity": 98
   },
   "suggestions": [
     {
-      "priority": "high",
-      "match": "(../llm-routing-mastra-ai)",
-      "replacement": "(/llm-routing-mastra-ai)",
-      "reason": "The English source uses root-relative paths (/llm-routing-mastra-ai). The translation changed them to relative parent paths (../) which will break links if the site structure expects root-relative URLs as per the source."
-    },
-    {
-      "priority": "high",
-      "match": "(../mastra-security-guardrails)",
-      "replacement": "(/mastra-security-guardrails)",
-      "reason": "Restoring root-relative path to match English source."
-    },
-    {
-      "priority": "high",
-      "match": "(../mastra-mcp-tool-integrations)",
-      "replacement": "(/mastra-mcp-tool-integrations)",
-      "reason": "Restoring root-relative path to match English source."
+      "priority": "medium",
+      "match": "تسمح لك وكلاء الإشراف",
+      "replacement": "يسمح لك وكلاء الإشراف",
+      "reason": "Grammatical agreement in Arabic: 'وكلاء' is a broken plural (masculine), so the verb 'يسمح' (masculine) is more appropriate than 'تسمح' (feminine) in this context."
     }
   ],
-  "rationale": "The candidate provides a superior translation of technical idioms like 'flaky' and 'lost in the middle' compared to the current version. It maintains Dan's direct, slightly informal tone well. The only significant issue is the modification of internal link paths in the 'Read the Series' section, which I have corrected to match the English source's root-relative structure.",
+  "rationale": "The translation is excellent, capturing Dan's direct and slightly cynical tone ('boring reliability over exciting unpredictability'). It correctly handles technical terms like 'deterministic' (حتمية) and 'probabilistic' (احتمالية). MDX structure is perfectly preserved, including the relative paths for images (../) and the internal links to other posts in the series. The Arabic prose is natural and technically accurate.",
+  "confidence": "medium",
+  "confidenceScore": 0.665,
+  "confidenceSignals": [
+    "low blocking-issue rate",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
   "slug": "mastra-workflows-memory",
   "locale": "ar",
   "candidateCommits": [
-    "708c7d7891594e8aa7c6bfe6a21db611d08eec48"
+    "d76bd493a6777a37e86ddd0f9b357ac7146edf67"
   ],
   "suggestionLog": [
     {
-      "priority": "high",
-      "match": "/../llm-routing-mastra-ai",
-      "replacement": "../llm-routing-mastra-ai",
-      "reason": "The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure.",
+      "priority": "medium",
+      "match": "تسمح لك وكلاء الإشراف",
+      "replacement": "يسمح لك وكلاء الإشراف",
+      "reason": "Grammatical agreement in Arabic: 'وكلاء' is plural, but the verb 'تسمح' (feminine singular) is less natural here than 'يسمح' (masculine singular/plural) for this construct.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
-      "priority": "high",
-      "match": "/../mastra-security-guardrails",
-      "replacement": "../mastra-security-guardrails",
-      "reason": "The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure.",
-      "pass": 1,
+      "priority": "medium",
+      "match": "تسمح لك وكلاء الإشراف",
+      "replacement": "يسمح لك وكلاء الإشراف",
+      "reason": "Grammatical agreement in Arabic: 'وكلاء' is a broken plural (masculine), so the verb 'يسمح' (masculine) is more appropriate than 'تسمح' (feminine) in this context.",
+      "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "/../mastra-mcp-tool-integrations",
-      "replacement": "../mastra-mcp-tool-integrations",
-      "reason": "The candidate added an extra leading slash to relative paths, which breaks navigation in the MDX structure.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "(../llm-routing-mastra-ai)",
-      "replacement": "(/llm-routing-mastra-ai)",
-      "reason": "The English source uses root-relative paths (/llm-routing-mastra-ai). The translation changed them to relative parent paths (../) which will break links if the site structure expects root-relative URLs as per the source.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "(../mastra-security-guardrails)",
-      "replacement": "(/mastra-security-guardrails)",
-      "reason": "Restoring root-relative path to match English source.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "(../mastra-mcp-tool-integrations)",
-      "replacement": "(/mastra-mcp-tool-integrations)",
-      "reason": "Restoring root-relative path to match English source.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {

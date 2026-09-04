@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 708c7d7891594e8aa7c6bfe6a21db611d08eec48
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: d76bd493a6777a37e86ddd0f9b357ac7146edf67
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: medium (0.665)
 
-The candidate provides a superior translation of technical idioms like 'flaky' and 'lost in the middle' compared to the current version. It maintains Dan's direct, slightly informal tone well. The only significant issue is the modification of internal link paths in the 'Read the Series' section, which I have corrected to match the English source's root-relative structure.
+The translation is excellent, capturing Dan's direct and slightly cynical tone ('boring reliability over exciting unpredictability'). It correctly handles technical terms like 'deterministic' (حتمية) and 'probabilistic' (احتمالية). MDX structure is perfectly preserved, including the relative paths for images (../) and the internal links to other posts in the series. The Arabic prose is natural and technically accurate.
