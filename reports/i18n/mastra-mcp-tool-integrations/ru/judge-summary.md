@@ -8,37 +8,39 @@
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
-- Validation: passed
+- Validation: failed
 - Validation scope: local
+- Confidence: high (0.892)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
+- Validation error: Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ru --skip-global
+$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale ru --skip-global
+224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+225 |   const comparison = compareMdxStructure(input);
+226 |   if (comparison.valid) return;
+227 | 
+228 |   const targetLabel = input.targetPath ?? "translation";
+229 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {"linkTargets":3}. Differences: {"linkTargets":3}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.29
-- Input tokens: 13449
-- Output tokens: 317
+- Runtime seconds: 2.51
+- Input tokens: 7345
+- Output tokens: 180
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007676
-
-## Pre-Publish Rescore Telemetry
-### Pass 1
-- Runtime seconds: 2.62
-- Input tokens: 8385
-- Output tokens: 214
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004835
-
-## Judge Suggestions
-1. Pass 1: applied medium priority suggestion. Match: "/llm-routing-mastra-ai" Replacement: "/ru/llm-routing-mastra-ai" Reason: The link should point to the Russian version of the post for consistency with the series navigation. Note: Applied exact replacement to selected MDX.
-2. Pass 1: applied medium priority suggestion. Match: "/mastra-security-guardrails" Replacement: "/ru/mastra-security-guardrails" Reason: The link should point to the Russian version of the post for consistency with the series navigation. Note: Applied exact replacement to selected MDX.
-3. Pass 1: applied medium priority suggestion. Match: "/mastra-workflows-memory" Replacement: "/ru/mastra-workflows-memory" Reason: The link should point to the Russian version of the post for consistency with the series navigation. Note: Applied exact replacement to selected MDX.
+- OpenRouter cost credits: 0.004213
+- Estimated cost: $0.004213
 
 ## Candidates
 - current src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx
-- 24d02096037e02b02e0b355d74fc7c1106e65e63 i18n candidate(ru): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash
-- 1b359da190258a2539eb0f7a91b80f8aade33d91 i18n candidate(ru): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v3.2
-- df480b79d4a9844250895fb1551902053b7db4fd i18n candidate(ru): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash
+- 93f665e8fdb8c801bec861f009950b134bb584e2 i18n candidate(ru): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash
