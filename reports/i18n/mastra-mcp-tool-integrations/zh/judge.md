@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: c3d5fbcb319737c6dda7bba6eb644cddf0567d1a
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
+- Selected candidate: e9105e14148ed315c357f8887101def92af2c947
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.886)
 
-The translation is technically sound and captures Dan's direct, punchy style well. It correctly preserves the MDX structure and code blocks. The only high-priority fix is reverting an incorrect relative link transformation on an external documentation URL.
+The candidate translation is excellent. The judge report mentioned a missing title, but looking at the provided zh/index.mdx content, the title is actually present and correctly translated as '没有这个，你的 AI 智能体就毫无用处'. The translation maintains technical accuracy, preserves MDX structure, correctly adjusts asset paths for the sub-directory, and captures the direct, professional tone of the original. No high-priority fixes are required.

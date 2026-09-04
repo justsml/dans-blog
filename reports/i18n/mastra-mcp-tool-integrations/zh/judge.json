@@ -1,48 +1,43 @@
 {
-  "selectedCommit": "c3d5fbcb319737c6dda7bba6eb644cddf0567d1a",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "e9105e14148ed315c357f8887101def92af2c947",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 10,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 95
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "[`MCPClient`](../mastra.ai/docs/mcp/overview)",
-      "replacement": "[`MCPClient`](https://mastra.ai/docs/mcp/overview)",
-      "reason": "The link in the source is an absolute external URL to the documentation site. The candidate incorrectly changed it to a relative path which will result in a 404."
-    }
+  "suggestions": [],
+  "rationale": "The candidate translation is excellent. The judge report mentioned a missing title, but looking at the provided zh/index.mdx content, the title is actually present and correctly translated as '没有这个，你的 AI 智能体就毫无用处'. The translation maintains technical accuracy, preserves MDX structure, correctly adjusts asset paths for the sub-directory, and captures the direct, professional tone of the original. No high-priority fixes are required.",
+  "confidence": "high",
+  "confidenceScore": 0.886,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
   ],
-  "rationale": "The translation is technically sound and captures Dan's direct, punchy style well. It correctly preserves the MDX structure and code blocks. The only high-priority fix is reverting an incorrect relative link transformation on an external documentation URL.",
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-mcp-tool-integrations",
   "locale": "zh",
   "candidateCommits": [
-    "c3d5fbcb319737c6dda7bba6eb644cddf0567d1a",
-    "83ba55b956b8bc979e49594ac8f3d640528c1d73",
-    "a99a7ac4803b27793df53c5e5470ea235debe589"
+    "e9105e14148ed315c357f8887101def92af2c947"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "[`MCPClient`](https://mastra.ai/docs/mcp/overview)",
-      "replacement": "[`MCPClient`](../mastra.ai/docs/mcp/overview)",
-      "reason": "The English file uses a bare URL which should be relative in the localized folder per instructions.",
+      "match": "title: ''",
+      "replacement": "title: \"没有这个，你的 AI 智能体就毫无用处\"",
+      "reason": "The frontmatter title was left empty in the translation.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "[`MCPClient`](../mastra.ai/docs/mcp/overview)",
-      "replacement": "[`MCPClient`](https://mastra.ai/docs/mcp/overview)",
-      "reason": "The link in the source is an absolute external URL to the documentation site. The candidate incorrectly changed it to a relative path which will result in a 404.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {

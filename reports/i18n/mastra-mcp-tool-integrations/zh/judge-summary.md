@@ -10,34 +10,34 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: high (0.886)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.61
-- Input tokens: 12071
-- Output tokens: 257
+- Runtime seconds: 2.34
+- Input tokens: 6927
+- Output tokens: 215
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.006807
-- Estimated cost: $0.006807
+- OpenRouter cost credits: 0.004109
+- Estimated cost: $0.004109
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.84
-- Input tokens: 7881
-- Output tokens: 298
+- Runtime seconds: 2.65
+- Input tokens: 9529
+- Output tokens: 266
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.004835
-- Estimated cost: $0.004835
+- OpenRouter cost credits: 0.005562
+- Estimated cost: $0.005562
 
 ## Judge Suggestions
-1. Pass 1: applied high priority suggestion. Match: "[`MCPClient`](https://mastra.ai/docs/mcp/overview)" Replacement: "[`MCPClient`](../mastra.ai/docs/mcp/overview)" Reason: The English file uses a bare URL which should be relative in the localized folder per instructions. Note: Applied exact replacement to selected MDX.
-2. Pass 2: logged high priority suggestion. Match: "[`MCPClient`](../mastra.ai/docs/mcp/overview)" Replacement: "[`MCPClient`](https://mastra.ai/docs/mcp/overview)" Reason: The link in the source is an absolute external URL to the documentation site. The candidate incorrectly changed it to a relative path which will result in a 404. Note: Exact match not found in selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "title: ''" Replacement: "title: \"没有这个，你的 AI 智能体就毫无用处\"" Reason: The frontmatter title was left empty in the translation. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-01-04--mastra-mcp-tool-integrations/zh/index.mdx
-- c3d5fbcb319737c6dda7bba6eb644cddf0567d1a i18n candidate(zh): mastra-mcp-tool-integrations via openrouter/openai/gpt-oss-120b:nitro
-- 83ba55b956b8bc979e49594ac8f3d640528c1d73 i18n candidate(zh): mastra-mcp-tool-integrations via openrouter/qwen/qwen3-32b:nitro
-- a99a7ac4803b27793df53c5e5470ea235debe589 i18n candidate(zh): mastra-mcp-tool-integrations via openrouter/google/gemini-3-flash-preview
+- e9105e14148ed315c357f8887101def92af2c947 i18n candidate(zh): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash
