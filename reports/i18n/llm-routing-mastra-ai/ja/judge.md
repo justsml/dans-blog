@@ -1,17 +1,8 @@
-## 判定結果
+# Translation Judge
 
-採用候補: `a0d37ceb350e15e85d3051a227ca89dfe58b6aaa`
+- Selected candidate: 7438a3ddabf3fdf57fe32d99ed62965758aa1d97
+- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.886)
 
-### 理由
-
-この候補が最も原文に忠実で、かつ日本語として自然だった。技術的な意味を落とさずに、Danの直截的な言い回しと軽い皮肉が保たれている。
-
-### 比較メモ
-
-- `9bb9d5ad...` は意味はほぼ合っているが、全体にやや硬く、ところどころ原文の勢いが弱い。
-- `b0aaacda...` は自然さはある一方で、語感が少し穏当すぎて、原文の刺さり方が薄い。
-- `f8091382...` は一部の表現が不自然で、ところどころ直訳調が残る。
-
-### 軽微な調整
-
-採用版では、MDX構造、コードブロック、リンク、見出しの保持を優先しつつ、語尾と語彙をほんの少しだけ整えた。内容の方向性は変えていない。
+The selected candidate (DeepSeek) provides a high-quality translation that captures the author's direct, punchy style ('今アツい', 'モデルと心中するな'). It correctly handles the frontmatter, including the subTitle which the other candidate missed. The technical terms and code blocks are preserved perfectly, and the Japanese prose is natural yet professional. The judge report mentioned a missing title in the suggestions, but looking at the provided ja/index.mdx for this commit, the title 'モデルと心中するな' is already present, and the resources are already localized. Therefore, no further suggestions are required.

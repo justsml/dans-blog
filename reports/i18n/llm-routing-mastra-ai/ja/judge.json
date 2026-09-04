@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "7438a3ddabf3fdf57fe32d99ed62965758aa1d97",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 95
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (DeepSeek) provides a high-quality translation that captures the author's direct, punchy style ('今アツい', 'モデルと心中するな'). It correctly handles the frontmatter, including the subTitle which the other candidate missed. The technical terms and code blocks are preserved perfectly, and the Japanese prose is natural yet professional. The judge report mentioned a missing title in the suggestions, but looking at the provided ja/index.mdx for this commit, the title 'モデルと心中するな' is already present, and the resources are already localized. Therefore, no further suggestions are required.",
+  "confidence": "high",
+  "confidenceScore": 0.886,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "llm-routing-mastra-ai",
+  "locale": "ja",
+  "candidateCommits": [
+    "5197627d550e6cdba21504931a09b1989bd2ed6c",
+    "7438a3ddabf3fdf57fe32d99ed62965758aa1d97"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'モデルと心中するな'",
+      "reason": "The frontmatter title was left empty. It should be a localized version of 'Don't Marry Your Model'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "- [Mastra.ai Documentation](https://mastra.ai/docs)\n- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)",
+      "replacement": "- [Mastra.ai ドキュメント](https://mastra.ai/docs)\n- [Mastra GitHub リポジトリ](https://github.com/mastra-ai/mastra)",
+      "reason": "Resource links should have localized labels for better readability.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale ja --skip-global",
+    "output": ""
+  }
+}
