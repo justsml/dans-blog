@@ -1,30 +1,39 @@
 {
-  "selectedCommit": "61ec25db5bf86941ed7b0df024975e40c39d9d14",
-  "selectedModel": "openrouter/z-ai/glm-5.1",
+  "selectedCommit": "9881b0db834f430b4dbf2521f8dfa6dc7a4b09a0",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 90,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "Candidate 61ec25db5bf86941ed7b0df024975e40c39d9d14 (GLM-5.1) provides the most natural and technically accurate translation. It maintains Dan's direct, slightly informal but professional tone ('だ/である' style) consistently. It correctly translates technical terms like 'process spawning' as 'プロセススパンニング' (or similar) and handles the MDX structure perfectly. Compared to 'current', it improves the flow of the text and ensures all headings and links are correctly preserved. Candidate 9edf09426d8334dde91e6ae07dbf9794849bbb7f uses 'です/ます' style which is less consistent with the desired direct tone for this technical blog series.",
+  "rationale": "The translation is excellent, capturing Dan's direct and technical tone perfectly. It correctly handles the MDX requirements, including the relative path adjustments for images and internal links (e.g., `../wide.webp` and `../llm-routing-mastra-ai`). The technical terminology is appropriate for a Japanese developer audience, and the code blocks are preserved exactly as required.",
+  "confidence": "high",
+  "confidenceScore": 0.886,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-mcp-tool-integrations",
   "locale": "ja",
   "candidateCommits": [
-    "9edf09426d8334dde91e6ae07dbf9794849bbb7f",
-    "96ccb81545eae49616344b042c77aaf08c6ccdf2",
-    "da9df04d6b80a81fb9a47c1cc6c4941115be16c0",
-    "61ec25db5bf86941ed7b0df024975e40c39d9d14",
-    "914852cba7c4d33426cffcd3b7c73ee82af54eb4"
+    "9881b0db834f430b4dbf2521f8dfa6dc7a4b09a0"
   ],
   "suggestionLog": [],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ja --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale ja --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ja/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale ja --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ja/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ja/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 61ec25db5bf86941ed7b0df024975e40c39d9d14
-- Selected model: openrouter/z-ai/glm-5.1
+- Selected candidate: 9881b0db834f430b4dbf2521f8dfa6dc7a4b09a0
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.886)
 
-Candidate 61ec25db5bf86941ed7b0df024975e40c39d9d14 (GLM-5.1) provides the most natural and technically accurate translation. It maintains Dan's direct, slightly informal but professional tone ('だ/である' style) consistently. It correctly translates technical terms like 'process spawning' as 'プロセススパンニング' (or similar) and handles the MDX structure perfectly. Compared to 'current', it improves the flow of the text and ensures all headings and links are correctly preserved. Candidate 9edf09426d8334dde91e6ae07dbf9794849bbb7f uses 'です/ます' style which is less consistent with the desired direct tone for this technical blog series.
+The translation is excellent, capturing Dan's direct and technical tone perfectly. It correctly handles the MDX requirements, including the relative path adjustments for images and internal links (e.g., `../wide.webp` and `../llm-routing-mastra-ai`). The technical terminology is appropriate for a Japanese developer audience, and the code blocks are preserved exactly as required.
