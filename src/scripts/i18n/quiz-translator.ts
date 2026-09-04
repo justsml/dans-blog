@@ -63,7 +63,7 @@ export interface LlmConfig {
       };
     };
   };
-  temperature: number;
+  temperature?: number;
   maxTokens: number;
   timeoutMs: number;
 }
@@ -201,7 +201,7 @@ export async function translateChallenge(
         "QUIZ CHALLENGE PROMPT PROFILE TUNING",
       )),
     ],
-    temperature: llmConfig.temperature,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxOutputTokens: llmConfig.maxTokens,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
@@ -374,7 +374,7 @@ export async function generateQuizDescription(
         `---`,
       ].join("\n")),
     ],
-    temperature: 0.3,
+    ...(llmConfig.modelId.includes("gpt-5.6") ? {} : { temperature: 0.3 }),
     maxOutputTokens: 500,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,

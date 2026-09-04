@@ -27,7 +27,7 @@ export const DEFAULT_AGENT_MODEL =
 export const DEFAULT_TRANSLATION_MODEL =
   "llm://openrouter/deepseek/deepseek-v4-flash?temp=0.15&max=26000&cache=true";
 export const DEFAULT_JUDGE_MODEL =
-  "llm://openrouter/google/gemini-3-flash-preview?temp=0&max=12000&cache=true";
+  "llm://openrouter/google/gemini-3.8-flash?temp=0&max=12000&cache=true";
 export const DEFAULT_SECOND_JUDGE_MODEL =
   "llm://openrouter/deepseek/deepseek-v4-flash:nitro?temp=0&max=12000&cache=true";
 export const DEFAULT_MAX_AGENT_STEPS = 80;

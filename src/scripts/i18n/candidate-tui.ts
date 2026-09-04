@@ -104,14 +104,14 @@ const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/deepseek/deepseek-v3.2",
   "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/google/gemini-3-flash-preview",
+  "openrouter/google/gemini-3.8-flash",
+  "openrouter/google/gemini-3.5-flash-lite",
   "openrouter/minimax/minimax-m2.5",
   "openrouter/minimax/minimax-m2.7",
   "openrouter/openai/gpt-oss-120b:nitro",
   "openrouter/qwen/qwen3-32b:nitro",
-  "openrouter/qwen/qwen3.6-plus",
-  "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/z-ai/glm-5-turbo",
+  "openrouter/qwen/qwen3.8-max",
+  "openrouter/z-ai/glm-5.3-flash",
 ];
 const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
 const OUT_OF_CREDIT_SETTLE_MS = 60_000;

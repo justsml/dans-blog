@@ -1,3 +1,4 @@
+import matter from "gray-matter";
 import { extractHeadingAnchors } from "./heading-link-validation.ts";
 
 export {
@@ -6,6 +7,37 @@ export {
 } from "./localized-mdx.ts";
 
 export const DEFAULT_MINIMUM_STRUCTURE_SCORE = 0.98;
+
+export function assertLocalizedFrontmatter({
+  sourceContents,
+  targetContents,
+  targetPath,
+}: {
+  sourceContents: string;
+  targetContents: string;
+  targetPath: string;
+}) {
+  if (!targetContents.startsWith("---")) {
+    throw new Error(`${targetPath} must start with frontmatter`);
+  }
+
+  const targetFrontmatterEnd = targetContents.indexOf("\n---", 3);
+  if (targetFrontmatterEnd === -1) {
+    throw new Error(`${targetPath} has unterminated frontmatter`);
+  }
+
+  const sourceData = matter(sourceContents).data;
+  const targetData = matter(targetContents).data;
+  for (const field of ["title", "subTitle"] as const) {
+    const sourceValue = sourceData[field];
+    if (typeof sourceValue !== "string" || sourceValue.trim() === "") continue;
+
+    const targetValue = targetData[field];
+    if (typeof targetValue !== "string" || targetValue.trim() === "") {
+      throw new Error(`${targetPath} must include a non-empty localized ${field}`);
+    }
+  }
+}
 
 export type StructuralSeverity = "high" | "medium" | "low";
 

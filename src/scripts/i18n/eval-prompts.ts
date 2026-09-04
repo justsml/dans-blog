@@ -11,7 +11,7 @@
  * Usage:
  *   bun run i18n:eval -- --dry-run
  *   bun run i18n:eval -- --locale ja
- *   bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+ *   bun run i18n:eval -- --models openrouter/qwen/qwen3.8-max,openrouter/google/gemini-3.8-flash
  *   bun run i18n:eval -- --slug stop-hardcoding-your-prompts --locale es
  *   bun run i18n:eval -- --kind article
  *   bun run i18n:eval -- --kind quiz --locale zh
@@ -115,10 +115,12 @@ const POSTS_DIR = join(process.cwd(), "src/content/posts");
 const EVAL_REPORT_DIR = join(process.cwd(), "reports/i18n/evals");
 const DEFAULT_MIN_SCORE = 72;
 const DEFAULT_MODELS = [
-  "openrouter/openai/gpt-oss-120b:nitro",
-  "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/z-ai/glm-5.3-flash",
+  "openrouter/qwen/qwen3.8-max",
+  "openrouter/google/gemini-3.8-flash",
+  "openrouter/google/gemini-3.5-flash-lite",
 ];
-const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
+const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
 const TIMEOUT_MS = 90_000;
 const MIN_OUTPUT_TOKENS = 28_000;
 const MAX_OUTPUT_TOKENS = 48_000;
@@ -627,7 +629,7 @@ async function scoreLlmJudge(
           "JUDGE PROMPT PROFILE SYSTEM TUNING",
         ),
         prompt,
-        temperature: 0.1,
+        ...evalTemperatureOption(judgeModel, 0.1),
         maxOutputTokens: 2000,
         timeout: { totalMs: TIMEOUT_MS },
         providerOptions: getEvalReasoningProviderOptions(judgeModel),
@@ -793,7 +795,7 @@ async function translate(input: EvalInput, model: string): Promise<EvalOutput> {
           ],
         },
       ],
-      temperature: 0.1,
+      ...evalTemperatureOption(model, 0.1),
       maxOutputTokens: getEvalMaxOutputTokens(input.source),
       timeout: { totalMs: TIMEOUT_MS },
       providerOptions: getEvalReasoningProviderOptions(model),
@@ -950,7 +952,7 @@ async function translateEvalQuizProse(
           ],
         },
       ],
-      temperature: 0.1,
+      ...evalTemperatureOption(model, 0.1),
       maxOutputTokens: getEvalChunkMaxOutputTokens(prose),
       timeout: { totalMs: TIMEOUT_MS },
       providerOptions: getEvalReasoningProviderOptions(model),
@@ -1101,7 +1103,7 @@ async function translateEvalChunk({
           ],
         },
       ],
-      temperature: 0.1,
+      ...evalTemperatureOption(model, 0.1),
       maxOutputTokens: getEvalChunkMaxOutputTokens(chunk.text),
       timeout: { totalMs: TIMEOUT_MS },
       providerOptions: getEvalReasoningProviderOptions(model),
@@ -1173,7 +1175,7 @@ async function translateEvalFrontmatter(
             ],
           },
         ],
-        temperature: 0.1,
+        ...evalTemperatureOption(model, 0.1),
         maxOutputTokens: 500,
         timeout: { totalMs: TIMEOUT_MS },
         providerOptions: getEvalReasoningProviderOptions(model),
@@ -1474,10 +1476,14 @@ function getEvalQuizLlmConfig(model: string): QuizLlmConfig {
     modelId: model.replace(/^openrouter\//, ""),
     providerSettings: {},
     providerOptions: getEvalQuizReasoningProviderOptions(model),
-    temperature: 0.1,
+    ...evalTemperatureOption(model, 0.1),
     maxTokens: 4000,
     timeoutMs: TIMEOUT_MS,
   };
+}
+
+function evalTemperatureOption(model: string, temperature: number) {
+  return model.replace(/^openrouter\//, "").includes("gpt-5.6") ? {} : { temperature };
 }
 
 function getEvalQuizReasoningProviderOptions(model: string): QuizLlmConfig["providerOptions"] {

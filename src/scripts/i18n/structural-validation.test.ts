@@ -1,9 +1,28 @@
 import { describe, expect, test } from "bun:test";
 import {
+  assertLocalizedFrontmatter,
   assertStructuralParity,
   compareMdxStructure,
   extractMdxStructure,
 } from "./structural-validation.ts";
+
+describe("assertLocalizedFrontmatter", () => {
+  test("rejects blank reader-facing fields required by the source", () => {
+    const source = ["---", "title: Source", "subTitle: Source subtitle", "---", "Body"].join("\n");
+    const target = ["---", "title: ''", "subTitle: ''", "---", "Translated body"].join("\n");
+
+    expect(() => assertLocalizedFrontmatter({ sourceContents: source, targetContents: target, targetPath: "ar/index.mdx" }))
+      .toThrow("ar/index.mdx must include a non-empty localized title");
+  });
+
+  test("does not require an optional source subtitle that is already blank", () => {
+    const source = ["---", "title: Source", "subTitle: ''", "---", "Body"].join("\n");
+    const target = ["---", "title: الهدف", "---", "Translated body"].join("\n");
+
+    expect(() => assertLocalizedFrontmatter({ sourceContents: source, targetContents: target, targetPath: "ar/index.mdx" }))
+      .not.toThrow();
+  });
+});
 
 describe("compareMdxStructure", () => {
   test("treats Markdown and HTML links, blockquotes, tables, and images as equivalent structure", () => {

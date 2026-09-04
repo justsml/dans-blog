@@ -7,7 +7,7 @@ import { parseArgs, parseList, randomizeListOrder, relativeToRepo } from "./util
 import { safeModelPathName } from "./translation-costs.ts";
 
 const DEFAULT_MODELS = [
-  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/qwen/qwen3.8-max",
   "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/openai/gpt-oss-120b:nitro",
   "openrouter/qwen/qwen3-32b:nitro",

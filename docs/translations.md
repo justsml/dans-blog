@@ -61,7 +61,7 @@ The translation pipeline is wrapped with Bun scripts:
 
 ```sh
 bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
-bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3-flash-preview
+bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3.8-flash
 bun run i18n:validate -- --slug the-last-to-think --locale es
 bun run i18n:coverage
 bun run i18n:promote -- --slug the-last-to-think --locale es
@@ -88,7 +88,7 @@ For broad baseline coverage, run the low-confidence Qwen queue directly on `main
 bun run i18n:qwen:baseline -- --push
 ```
 
-That queue is resumable. It skips slug+locale pairs that already have a successful `openrouter/qwen/qwen3.6-plus` report, pulls/rebases before each item, and can be scoped with `--limit`, `--latest-posts`, `--locales`, or `--slugs`.
+That queue is resumable. It skips slug+locale pairs that already have a successful `openrouter/qwen/qwen3.8-max` report, pulls/rebases before each item, and can be scoped with `--limit`, `--latest-posts`, `--locales`, or `--slugs`.
 
 Candidate generation is append-only per slug, locale, and model run. Re-running the same model should create a new timestamped candidate and append a new `candidates.jsonl` row instead of overwriting or skipping older candidates:
 
@@ -96,7 +96,7 @@ Candidate generation is append-only per slug, locale, and model run. Re-running 
 bun run i18n:translate:candidates -- \
   --slug the-last-to-think \
   --locale es \
-  --models openrouter/qwen/qwen3.6-plus
+  --models openrouter/qwen/qwen3.8-max
 ```
 
 Use `--only-modified` for refresh passes that should only re-translate existing locale files whose English `modified` frontmatter date is newer than the localized file's `modified` date. Locale files with no `modified` are treated as stale when English has one; missing locale files are not included by this flag. Fresh candidate and judge rounds ignore stale candidate artifacts whose translated `modified` date is older than English, and the stale live translation is kept out of judge comparisons. The flag is supported by the candidate, all-missing, Qwen baseline, chunked translator, and candidate TUI wrappers.
@@ -170,7 +170,7 @@ To keep the current Qwen/DeepSeek primary pair and add Nitro candidates after th
 bun run i18n:translate:candidates -- \
   --slug javascript-promises-quiz \
   --locale ja \
-  --models openrouter/qwen/qwen3.6-plus,openrouter/deepseek/deepseek-v4-flash,openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
+  --models openrouter/qwen/qwen3.8-max,openrouter/z-ai/glm-5.3-flash,openrouter/google/gemini-3.8-flash,openrouter/google/gemini-3.5-flash-lite \
   --task-concurrency 12 \
   --quiz-concurrency 24 \
   --challenge-retries 2 \
@@ -184,7 +184,7 @@ bun run i18n:judge -- \
   --slug javascript-promises-quiz \
   --locale ja \
   --candidate-limit 2 \
-  --model openrouter/google/gemini-3-flash-preview \
+  --model openrouter/google/gemini-3.8-flash \
   --timeout-seconds 240
 ```
 
@@ -195,7 +195,7 @@ bun run i18n:judge -- \
   --slug javascript-promises-quiz \
   --locale ja \
   --candidate-limit 3 \
-  --model openrouter/google/gemini-3-flash-preview \
+  --model openrouter/google/gemini-3.8-flash \
   --second-model openrouter/deepseek/deepseek-v3.2 \
   --escalate-model openrouter/anthropic/claude-sonnet-4.6 \
   --timeout-seconds 240
@@ -209,16 +209,18 @@ bun run i18n:judge -- \
   --locale ja \
   --candidate-models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
   --candidate-limit 2 \
-  --model openrouter/google/gemini-3-flash-preview \
+  --model openrouter/google/gemini-3.8-flash \
   --timeout-seconds 240
 ```
 
 Thinking-capable models are run with cheap reasoning variants by default:
 
 - `openrouter/openai/gpt-oss-120b:nitro`: `--variant low`
+- `openrouter/openai/gpt-5.6-luna`: `--variant low` (temperature omitted)
 - `openrouter/qwen/qwen3-32b:nitro`: `--variant low`
-- `openrouter/qwen/qwen3.6-plus`: `--variant low`
-- `openrouter/google/gemini-3-flash-preview`: `--variant minimal`
+- `openrouter/qwen/qwen3.8-max`: `--variant low`
+- `openrouter/google/gemini-3.8-flash`: `--variant minimal`
+- `openrouter/google/gemini-3.5-flash-lite`: `--variant minimal`
 - `openrouter/z-ai/glm-5.1`: `--variant low`
 
 `bun run i18n:report:models` regenerates `reports/i18n/model-performance.md`, including aggregate model stats, winner counts, and article/locale winner tables.
@@ -238,29 +240,30 @@ Default candidate models are defined in `src/scripts/i18n/translate-candidates.t
 Current low-cost OpenRouter set:
 
 ```text
-openrouter/qwen/qwen3.6-plus
+openrouter/qwen/qwen3.8-max
 openrouter/deepseek/deepseek-v4-flash
 openrouter/openai/gpt-oss-120b:nitro
+openrouter/openai/gpt-5.6-luna
 openrouter/qwen/qwen3-32b:nitro
-openrouter/z-ai/glm-4.7-flash
+openrouter/z-ai/glm-5.3-flash
 openrouter/minimax/minimax-m2.5
 openrouter/minimax/minimax-m2.7
-openrouter/google/gemini-3-flash-preview
+openrouter/google/gemini-3.8-flash
+openrouter/google/gemini-3.5-flash-lite
 openrouter/deepseek/deepseek-v3.2
-openrouter/z-ai/glm-5-turbo
 ```
 
 `--models` accepts full IDs or loose case-insensitive substrings matched against that list in order. For example, `--models nitro,32b,deepseek` resolves to `openrouter/openai/gpt-oss-120b:nitro`, `openrouter/qwen/qwen3-32b:nitro`, and the first DeepSeek match, `openrouter/deepseek/deepseek-v4-flash`.
 
 OpenRouter pricing checked on 2026-05-13 showed `openrouter/openai/gpt-oss-120b:nitro` at $0.039/M input and $0.18/M output tokens, and `openrouter/qwen/qwen3-32b:nitro` at $0.08/M input and $0.24/M output tokens. Both are kept after the current primary Qwen and DeepSeek candidates in the cheap pool.
 
-OpenRouter pricing checked on 2026-05-10 showed `openrouter/qwen/qwen3.6-plus` cheaper than `openrouter/z-ai/glm-5-turbo`, so GLM 5 Turbo is kept as a later fallback instead of an early default.
+OpenRouter's catalog checked on 2026-09-04 lists Gemini 3.8 as the latest Flash model and Gemini 3.5 as the latest Flash Lite model; no newer Flash Lite entry was available.
 
 Older batches also used Gemma, DeepSeek V4 Pro, Kimi, GLM 5.1, and OpenAI mini judges. Keep those reports as provenance, but do not treat them as the default path for new broad translation coverage.
 
 Qwen availability notes from earlier checks:
 
-- OpenRouter's public API exposed `qwen/qwen3.6-plus`, `qwen/qwen3.6-35b-a3b`, and `qwen/qwen3.6-flash`.
+- OpenRouter's public API exposed `qwen/qwen3.8-max`, `z-ai/glm-5.3-flash`, `google/gemini-3.8-flash`, and `google/gemini-3.5-flash-lite` on 2026-09-04.
 - The current script model list uses runnable OpenRouter IDs through the AI SDK provider.
 
 `minimax-m2.6` was requested during setup, but the available OpenRouter catalog did not expose that model ID. The closest available MiniMax candidate at the time was `openrouter/minimax/minimax-m2.7`.
@@ -268,7 +271,7 @@ Qwen availability notes from earlier checks:
 For judging, start cheap:
 
 ```text
-openrouter/google/gemini-3-flash-preview
+openrouter/google/gemini-3.8-flash
 ```
 
 Judge summaries include runtime, token, thinking-token, cached-token, and estimated-cost fields using the same telemetry shape as candidate reports.
@@ -279,7 +282,7 @@ Use a second judge when a batch is high-risk, when candidates are close, or when
 bun run i18n:judge -- \
   --slug the-last-to-think \
   --locale es \
-  --model openrouter/google/gemini-3-flash-preview \
+  --model openrouter/google/gemini-3.8-flash \
   --second-model openrouter/deepseek/deepseek-v3.2 \
   --escalate-model openrouter/anthropic/claude-sonnet-4.6
 ```
@@ -299,8 +302,8 @@ Keep every candidate, rejection, judge pass, and final polish commit in history.
 Commit subjects:
 
 ```text
-i18n candidate(es): the-last-to-think via openrouter/qwen/qwen3.6-plus
-i18n rejected(es): the-last-to-think via openrouter/google/gemini-3-flash-preview
+i18n candidate(es): the-last-to-think via openrouter/qwen/qwen3.8-max
+i18n rejected(es): the-last-to-think via openrouter/google/gemini-3.8-flash
 i18n judge(es): select translation for the-last-to-think
 i18n final(es): polish the-last-to-think
 i18n final(es): fix inherited asset paths for the-last-to-think

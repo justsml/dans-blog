@@ -129,7 +129,7 @@ function getLocaleCoverage(post: SourcePost, locale: ActiveLocale): LocaleCovera
       entry.name !== "candidate-shortfall.md",
     ).length,
     hasJudge: existsSync(join(reportPath, "judge-summary.md")) || existsSync(join(reportPath, "judge.md")),
-    hasQwenBaseline: existsSync(join(reportPath, "openrouter-qwen-qwen3.6-plus.md")),
+    hasQwenBaseline: existsSync(join(reportPath, "openrouter-qwen-qwen3.8-max.md")),
     hasTranslation: translationPath != null,
     headingLinks,
     locale,

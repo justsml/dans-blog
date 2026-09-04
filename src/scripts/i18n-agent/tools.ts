@@ -406,7 +406,7 @@ const modelConfigSummarySchema = z.object({
   provider: z.string().optional(),
   modelId: z.string(),
   mastraModel: z.string(),
-  temperature: z.number(),
+  temperature: z.number().optional(),
   maxTokens: z.number(),
   timeoutMs: z.number(),
   reasoningEffort: z.string(),

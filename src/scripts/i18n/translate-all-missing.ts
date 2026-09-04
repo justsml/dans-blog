@@ -26,7 +26,7 @@ import {
 } from "./model-presets.ts";
 import { modelIdsMatch, normalizeModelId } from "./model-id.ts";
 
-const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
+const JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
 const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
 const DEFAULT_TASK_CONCURRENCY = 8;
 
@@ -361,13 +361,16 @@ function parseOptionalPositiveInteger(rawValue: string | undefined) {
 function validateCandidateModels(models: string[]) {
   const forbiddenModels = models.filter((model) =>
     model.includes("-fast") ||
-    (model.startsWith("openrouter/openai/") && model !== "openrouter/openai/gpt-oss-120b:nitro") ||
+    (model.startsWith("openrouter/openai/") && ![
+      "openrouter/openai/gpt-oss-120b:nitro",
+      "openrouter/openai/gpt-5.6-luna",
+    ].includes(model)) ||
     model.startsWith("openrouter/anthropic/"),
   );
 
   if (forbiddenModels.length > 0) {
     throw new Error([
-      "Translation candidates must use cheap non-GPT/non-Anthropic models, except gpt-oss-120b:nitro, and must not use -fast variants.",
+      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro and gpt-5.6-luna. Anthropic and -fast variants are forbidden.",
       `Forbidden model(s): ${forbiddenModels.join(", ")}`,
     ].join(" "));
   }

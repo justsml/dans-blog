@@ -26,7 +26,7 @@ BRAINTRUST_API_KEY=sk-... bun run i18n:eval
 # Dry-run: list cases without spending tokens
 bun run i18n:eval -- --dry-run
 
-# Run defaults (newest article + newest quiz, all active locales, two models)
+# Run defaults (newest article + newest quiz, all active locales, four models)
 bun run i18n:eval
 
 # Multiple locales — each becomes its own set of eval cases
@@ -47,7 +47,7 @@ bun run i18n:eval -- --kind article
 bun run i18n:eval -- --kind quiz --locales zh
 
 # Override judge model
-bun run i18n:eval -- --judge-model openrouter/google/gemini-3-flash-preview
+bun run i18n:eval -- --judge-model openrouter/google/gemini-3.8-flash
 
 # Test a specific translation or judge prompt profile
 bun run i18n:eval -- --translation-prompt-profile-id ja-deepseek-deepseek-v4-flash
@@ -64,8 +64,8 @@ bun run i18n:eval -- --print-streams
 
 | Flag | Default | Description |
 | --- | --- | --- |
-| `--models` | two cheap defaults | Comma-separated translation models to compare in parallel |
-| `--judge-model` | `gemini-3-flash-preview` | Model used to score translations |
+| `--models` | four current defaults | Comma-separated translation models to compare in parallel |
+| `--judge-model` | `gemini-3.8-flash` | Model used to score translations |
 | `--locales` | all active locales | Comma-separated locales (`es,hi,ja,ru,de,fr,it,ar,he,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
 | `--slug` | — | Pin to one or more comma-separated slugs (auto-detects article vs quiz) |
@@ -79,7 +79,7 @@ bun run i18n:eval -- --print-streams
 
 All combinations of `--locales × --models` run in parallel via `Promise.all`. Each `(input × locale × model)` triple is an independent eval case scored by the same shared scorers, so results are directly comparable across any axis.
 
-Default models: `openrouter/openai/gpt-oss-120b:nitro` and `openrouter/deepseek/deepseek-v4-flash`.  
+Default models: `openrouter/z-ai/glm-5.3-flash`, `openrouter/qwen/qwen3.8-max`, `openrouter/google/gemini-3.8-flash`, and `openrouter/google/gemini-3.5-flash-lite`.
 Model names resolve through `model-presets.ts` — short substrings like `nitro` or `flash` are accepted.
 
 ## Input: real corpus posts

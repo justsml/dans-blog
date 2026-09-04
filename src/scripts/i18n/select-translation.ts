@@ -38,7 +38,7 @@ interface CandidateRecord {
   };
 }
 
-const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
+const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
 
 async function main() {
   const options = parseArgs();

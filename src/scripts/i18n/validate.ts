@@ -7,7 +7,11 @@ import {
   requireString,
   runInherited,
 } from "./utils.ts";
-import { assertStructuralParity, assertTranslationLength } from "./structural-validation.ts";
+import {
+  assertLocalizedFrontmatter,
+  assertStructuralParity,
+  assertTranslationLength,
+} from "./structural-validation.ts";
 import { assertNestedAssetPaths } from "./localized-mdx.ts";
 import { assertTranslationIntegrity } from "./integrity-checks.ts";
 
@@ -24,7 +28,7 @@ if (!existsSync(targetPath)) {
 const source = readFileSync(sourcePath, "utf8");
 const target = readFileSync(targetPath, "utf8");
 
-assertFrontmatter(target);
+assertLocalizedFrontmatter({ sourceContents: source, targetContents: target, targetPath });
 assertTranslationLength({ sourceContents: source, targetContents: target, targetPath });
 assertStructuralParity({ sourceContents: source, targetContents: target, targetPath });
 assertHeadingCounts(source, target);
@@ -53,22 +57,6 @@ try {
   runInherited("bun", ["run", "check"]);
 } finally {
   releaseGlobalCheckLock();
-}
-
-function assertFrontmatter(contents: string) {
-  if (!contents.startsWith("---")) {
-    throw new Error(`${targetPath} must start with frontmatter`);
-  }
-
-  const frontmatterEnd = contents.indexOf("\n---", 3);
-  if (frontmatterEnd === -1) {
-    throw new Error(`${targetPath} has unterminated frontmatter`);
-  }
-
-  const frontmatter = contents.slice(3, frontmatterEnd);
-  if (!/^title:\s+/m.test(frontmatter)) {
-    throw new Error(`${targetPath} must include localized title frontmatter`);
-  }
 }
 
 function assertProtectedTokens(sourceContents: string, targetContents: string) {

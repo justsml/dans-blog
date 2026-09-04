@@ -98,7 +98,7 @@ type ScoredTranslationRecord = {
   };
 };
 
-const DEFAULT_MODEL = "openrouter/google/gemini-3-flash-preview";
+const DEFAULT_MODEL = "openrouter/google/gemini-3.8-flash";
 const DEFAULT_TASK_CONCURRENCY = 16;
 const DEFAULT_TIMEOUT_MS = 200_000;
 const DEFAULT_MAX_SOURCE_CHARS = 120_000;
@@ -358,7 +358,7 @@ async function scoreTranslation({
     providerOptions: {
       openrouter: {
         reasoning: {
-          effort: "low",
+          effort: model.includes("gemini-3") ? "minimal" : "low",
         },
       },
     },

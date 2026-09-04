@@ -24,6 +24,7 @@ import {
   countHeadingsByLevel,
 } from "./integrity-checks.ts";
 import { resolveCheapFastTranslationModel } from "./model-presets.ts";
+import { resolveLlmConfig } from "./core/model-config.ts";
 import { buildUserPrompt } from "./prompts.ts";
 import { isCodeLikeOptionText } from "./quiz-translator.ts";
 
@@ -48,10 +49,25 @@ describe("resolveCheapFastTranslationModel", () => {
     expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/openai/gpt-oss-120b:nitro");
     expect(resolveCheapFastTranslationModel("32b")).toBe("openrouter/qwen/qwen3-32b:nitro");
     expect(resolveCheapFastTranslationModel("deepseek")).toBe("openrouter/deepseek/deepseek-v4-flash");
+    expect(resolveCheapFastTranslationModel("luna")).toBe("openrouter/openai/gpt-5.6-luna");
+    expect(resolveCheapFastTranslationModel("glm-5.3")).toBe("openrouter/z-ai/glm-5.3-flash");
+    expect(resolveCheapFastTranslationModel("qwen3.8-max")).toBe("openrouter/qwen/qwen3.8-max");
+    expect(resolveCheapFastTranslationModel("gemini-3.8")).toBe("openrouter/google/gemini-3.8-flash");
+    expect(resolveCheapFastTranslationModel("flash-lite")).toBe("openrouter/google/gemini-3.5-flash-lite");
   });
 
   test("returns unmatched input unchanged for custom or downstream handling", () => {
     expect(resolveCheapFastTranslationModel("not-a-real-model")).toBe("not-a-real-model");
+  });
+});
+
+describe("GPT-5.6 Luna configuration", () => {
+  test("uses low reasoning and omits unsupported temperature", () => {
+    const config = resolveLlmConfig("openrouter/openai/gpt-5.6-luna");
+
+    expect(config.reasoningEffort).toBe("low");
+    expect(config.providerOptions.openrouter.reasoning.effort).toBe("low");
+    expect(config.temperature).toBeUndefined();
   });
 });
 

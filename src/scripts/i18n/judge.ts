@@ -68,7 +68,7 @@ type JudgeOperationKind = "candidate-batch" | "final" | "fix-rescore" | "second"
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
-const judgeModel = optionalString(options, "model") ?? "openrouter/google/gemini-3-flash-preview";
+const judgeModel = optionalString(options, "model") ?? "openrouter/google/gemini-3.8-flash";
 const secondJudgeModel = optionalString(options, "second-model");
 const escalationJudgeModel = optionalString(options, "escalate-model");
 validateJudgeModels({ judgeModel, secondJudgeModel, escalationJudgeModel });
@@ -338,7 +338,7 @@ async function applyHighPrioritySuggestionsAndRescore({
       throw new Error(rescoreJudge.errorMessage);
     }
 
-    materializePrimaryJudgeResult(rescoreJudge, latestCandidates);
+    materializePrimaryJudgeResult(rescoreJudge, latestCandidates, "judge.md", judgeModel, true);
     telemetrySink.push({
       pass,
       telemetry: getRunTelemetry(judgeModel, rescoreJudge),
@@ -970,6 +970,7 @@ function materializePrimaryJudgeResult(
   candidates: CandidateRef[],
   judgeReportName = "judge.md",
   reportJudgeModel = judgeModel,
+  preserveTarget = false,
 ) {
   const parsed = parseJudgeOutput(judge.output);
   const selected = normalizeSelectedCandidate(parsed.selectedCommit, candidates, selectedCommit ?? undefined);
@@ -979,7 +980,7 @@ function materializePrimaryJudgeResult(
     : `Selected ${selected.id}.`;
   const confidence = deriveJudgeOutputConfidence(parsed, reportJudgeModel);
 
-  writeTextFile(targetPath, selectedBody);
+  if (!preserveTarget) writeTextFile(targetPath, selectedBody);
   writeTextFile(`${reportDir}/${judgeReportName}`, [
     `# Translation Judge`,
     ``,

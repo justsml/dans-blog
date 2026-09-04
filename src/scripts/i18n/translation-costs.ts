@@ -14,6 +14,12 @@ interface ModelPricing {
 }
 
 const MODEL_PRICING: Record<string, ModelPricing> = {
+  "openai/gpt-5.6-luna": {
+    inputPerMillionUsd: 0.2,
+    cachedInputPerMillionUsd: 0.02,
+    outputPerMillionUsd: 1.2,
+    source: "local-openrouter-estimate",
+  },
   "openai/gpt-oss-120b:nitro": {
     inputPerMillionUsd: 0.039,
     outputPerMillionUsd: 0.18,
@@ -24,9 +30,10 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     outputPerMillionUsd: 0.24,
     source: "local-openrouter-estimate",
   },
-  "qwen/qwen3.6-plus": {
-    inputPerMillionUsd: 0.325,
-    outputPerMillionUsd: 1.95,
+  "qwen/qwen3.8-max": {
+    inputPerMillionUsd: 2,
+    cachedInputPerMillionUsd: 0.25,
+    outputPerMillionUsd: 6,
     source: "local-openrouter-estimate",
   },
   "qwen/qwen3.6-flash": {
@@ -72,22 +79,22 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     outputPerMillionUsd: 0.378,
     source: "local-openrouter-estimate",
   },
-  "google/gemini-3-flash-preview": {
-    inputPerMillionUsd: 0.5,
-    cachedInputPerMillionUsd: 0.05,
-    outputPerMillionUsd: 3,
+  "google/gemini-3.8-flash": {
+    inputPerMillionUsd: 0.75,
+    cachedInputPerMillionUsd: 0.075,
+    outputPerMillionUsd: 3.75,
     source: "local-openrouter-estimate",
   },
-  "z-ai/glm-4.7-flash": {
-    inputPerMillionUsd: 0.06,
-    cachedInputPerMillionUsd: 0.01,
-    outputPerMillionUsd: 0.4,
+  "google/gemini-3.5-flash-lite": {
+    inputPerMillionUsd: 0.3,
+    cachedInputPerMillionUsd: 0.03,
+    outputPerMillionUsd: 2.5,
     source: "local-openrouter-estimate",
   },
-  "z-ai/glm-5-turbo": {
-    inputPerMillionUsd: 1.2,
-    cachedInputPerMillionUsd: 0.24,
-    outputPerMillionUsd: 4,
+  "z-ai/glm-5.3-flash": {
+    inputPerMillionUsd: 0.075,
+    cachedInputPerMillionUsd: 0.015,
+    outputPerMillionUsd: 0.25,
     source: "local-openrouter-estimate",
   },
   "minimax/minimax-m2.5": {

@@ -29,16 +29,16 @@ Default candidate models live in `src/scripts/i18n/translate-candidates.ts`.
 
 Current low-cost OpenRouter candidates:
 
-- `openrouter/qwen/qwen3.6-plus`
+- `openrouter/qwen/qwen3.8-max`
 - `openrouter/deepseek/deepseek-v4-flash`
 - `openrouter/openai/gpt-oss-120b:nitro`
 - `openrouter/qwen/qwen3-32b:nitro`
-- `openrouter/z-ai/glm-4.7-flash`
+- `openrouter/z-ai/glm-5.3-flash`
 - `openrouter/minimax/minimax-m2.5`
 - `openrouter/minimax/minimax-m2.7`
-- `openrouter/google/gemini-3-flash-preview`
+- `openrouter/google/gemini-3.8-flash`
+- `openrouter/google/gemini-3.5-flash-lite`
 - `openrouter/deepseek/deepseek-v3.2`
-- `openrouter/z-ai/glm-5-turbo`
 
 OpenRouter pricing checked on 2026-05-13 showed `openrouter/openai/gpt-oss-120b:nitro` at $0.039/M input and $0.18/M output tokens, and `openrouter/qwen/qwen3-32b:nitro` at $0.08/M input and $0.24/M output tokens. Both sit after the current primary Qwen and DeepSeek candidates in the cheap pool.
 
@@ -54,14 +54,14 @@ Older candidates retained in history:
 
 Judge with Gemini Flash by default:
 
-- `openrouter/google/gemini-3-flash-preview`
+- `openrouter/google/gemini-3.8-flash`
 
 Recent high-throughput coverage runs used this focused cheap candidate pair:
 
 - `openrouter/openai/gpt-oss-120b:nitro`
 - `openrouter/deepseek/deepseek-v4-flash`
 
-Use `openrouter/google/gemini-3-flash-preview` as the current default merge/judge model unless the user asks otherwise. The Chinese unblock run used DeepSeek V4 Flash as a requested judge; the Arabic/Hebrew completion run used Gemini 3 Flash as the requested judge.
+Use `openrouter/google/gemini-3.8-flash` as the current default merge/judge model unless the user asks otherwise. OpenRouter's catalog on 2026-09-04 listed Gemini 3.8 as the latest Flash model and Gemini 3.5 as the latest Flash Lite model.
 
 For higher-risk batches, add a second cheap judge explicitly with `--second-model`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-4.6` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
 
@@ -104,7 +104,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
      --slug javascript-promises-quiz \
      --locale ja \
      --candidate-limit 2 \
-     --model openrouter/google/gemini-3-flash-preview \
+     --model openrouter/google/gemini-3.8-flash \
      --timeout-seconds 240
    ```
 
@@ -120,7 +120,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
    bun run i18n:translate:all-missing -- \
      --models openrouter/openai/gpt-oss-120b:nitro,openrouter/deepseek/deepseek-v4-flash \
      --min-candidates 2 \
-     --judge-model openrouter/google/gemini-3-flash-preview \
+     --judge-model openrouter/google/gemini-3.8-flash \
      --judge-timeout-seconds 300 \
      --timeout-seconds 300 \
      --task-concurrency 12 \
@@ -138,7 +138,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
    bun run i18n:judge -- \
      --slug from-zero-to-regex-hero-extract-url-like-strings \
      --locale he \
-     --model openrouter/google/gemini-3-flash-preview \
+     --model openrouter/google/gemini-3.8-flash \
      --timeout-seconds 300 \
      --allow-single-candidate
    ```
@@ -147,7 +147,7 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 4. Judge only real candidate commits that changed the translated MDX:
 
    ```sh
-   bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3-flash-preview
+   bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3.8-flash
    ```
 
    Keep judge timeouts at 240 seconds for this translation pipeline unless there is a deliberate reason to shorten one.
@@ -204,8 +204,8 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
 ## Commit Subjects
 
-- `i18n candidate(es): slug via openrouter/qwen/qwen3.6-plus`
-- `i18n rejected(es): slug via openrouter/google/gemini-3-flash-preview`
+- `i18n candidate(es): slug via openrouter/qwen/qwen3.8-max`
+- `i18n rejected(es): slug via openrouter/google/gemini-3.8-flash`
 - `i18n judge(es): select translation for slug`
 - `i18n final(es): polish slug`
 - `i18n final(es): fix inherited asset paths for slug`

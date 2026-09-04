@@ -17,8 +17,8 @@ import {
   runInherited,
 } from "./utils.ts";
 
-const QWEN_BASELINE_MODEL = "openrouter/qwen/qwen3.6-plus";
-const QWEN_REPORT_FILE = "openrouter-qwen-qwen3.6-plus.md";
+const QWEN_BASELINE_MODEL = "openrouter/qwen/qwen3.8-max";
+const QWEN_REPORT_FILE = "openrouter-qwen-qwen3.8-max.md";
 const QWEN_DEFERRED_SLUGS = new Set([
   "quiz-is-your-memory-rusty",
 ]);

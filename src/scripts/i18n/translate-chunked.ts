@@ -6,7 +6,7 @@
  * giving the model bounded context.
  *
  * Usage:
- *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 18p --model openrouter/qwen/qwen3.6-plus
+ *   bun run i18n:translate:chunked -- --slug my-article --locale es --chunk 18p --model openrouter/qwen/qwen3.8-max
  *
  * Chunk formats:
  *   1p  = 1 paragraph per chunk
@@ -81,7 +81,7 @@ interface LlmConfig {
     };
   };
   reasoningEffort: string;
-  temperature: number;
+  temperature?: number;
   maxTokens: number;
   timeoutMs: number;
 }
@@ -123,13 +123,15 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
         },
       },
       reasoningEffort,
-      temperature: Number(parsed.params.temperature ?? parsed.params.temp ?? defaultTemperatureForModel(normalizedModelId)),
+      temperature: optionalNumberParam(
+        parsed.params.temperature ?? parsed.params.temp ?? defaultTemperatureForModel(normalizedModelId),
+      ),
       maxTokens: Number(parsed.params.max_tokens ?? parsed.params.maxTokens ?? 16000),
       timeoutMs: Number(parsed.params.timeout_ms ?? parsed.params.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS),
     };
   }
 
-  // Normalize OpenRouter-prefixed model IDs like "openrouter/qwen/qwen3.6-plus"
+  // Normalize OpenRouter-prefixed model IDs like "openrouter/qwen/qwen3.8-max"
   const modelId = modelInput.replace(/^openrouter\//, "");
 
   return {
@@ -152,6 +154,7 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
 
 function defaultTemperatureForModel(modelId: string) {
   const normalized = modelId.replace(/^openrouter\//, "");
+  if (normalized.includes("gpt-5.6")) return undefined;
   return normalized.includes("gpt-oss") ? 0.1 : 0.3;
 }
 
@@ -298,7 +301,7 @@ function createQuizRunReporter(
     locale,
     model: llmConfig.modelId,
     reasoningEffort: llmConfig.reasoningEffort,
-    temperature: llmConfig.temperature,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxTokens: llmConfig.maxTokens,
     timeoutMs: llmConfig.timeoutMs,
     concurrency,
@@ -488,7 +491,7 @@ function writeCandidateRun({
     sourceHash,
     outputHash,
     reasoningEffort: llmConfig.reasoningEffort,
-    temperature: llmConfig.temperature,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxTokens: llmConfig.maxTokens,
     timeoutMs: llmConfig.timeoutMs,
     articleSummary,
@@ -645,7 +648,7 @@ async function translateChunk(
         ],
       },
     ],
-    temperature: llmConfig.temperature,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxOutputTokens: llmConfig.maxTokens,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
@@ -679,7 +682,7 @@ async function generateSummary(
       promptTuning?.appendSummary,
       "TRANSLATION PROMPT PROFILE SUMMARY TUNING",
     ),
-    temperature: llmConfig.temperature,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxOutputTokens: 500,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
@@ -989,7 +992,7 @@ async function translateProse(
         ],
       },
     ],
-    temperature: llmConfig.temperature,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxOutputTokens: llmConfig.maxTokens,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
@@ -1343,7 +1346,7 @@ async function translateFrontmatter(
           ],
         },
       ],
-      temperature: llmConfig.temperature,
+      ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
       maxOutputTokens: 500,
       timeout: { totalMs: llmConfig.timeoutMs },
       providerOptions: llmConfig.providerOptions,

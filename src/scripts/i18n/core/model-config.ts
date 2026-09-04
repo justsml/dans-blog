@@ -23,7 +23,7 @@ export type ResolvedLlmConfig = {
   providerSettings: OpenRouterProviderSettings;
   providerOptions: OpenRouterProviderOptions;
   reasoningEffort: string;
-  temperature: number;
+  temperature?: number;
   maxTokens: number;
   timeoutMs: number;
 };
@@ -112,7 +112,11 @@ export function resolveLlmConfig(
     },
     providerOptions,
     reasoningEffort,
-    temperature: numberParam(params, ["temperature", "temp"], defaults.temperature ?? defaultTemperatureForModel(modelId)),
+    temperature: optionalNumberParam(
+      params,
+      ["temperature", "temp"],
+      defaults.temperature ?? defaultTemperatureForModel(modelId),
+    ),
     maxTokens: numberParam(
       params,
       ["max_tokens", "maxOutputTokens", "maxTokens", "max_completion_tokens", "max"],
@@ -124,6 +128,7 @@ export function resolveLlmConfig(
 
 function defaultTemperatureForModel(modelId: string) {
   const normalized = modelId.replace(/^openrouter\//, "");
+  if (normalized.includes("gpt-5.6")) return undefined;
   return normalized.includes("gpt-oss") ? 0.1 : 0.3;
 }
 
@@ -158,6 +163,16 @@ function stringParam(params: Record<string, string>, keys: string[]) {
 }
 
 function numberParam(params: Record<string, string>, keys: string[], fallback: number) {
+  for (const key of keys) {
+    const value = params[key];
+    if (value == null) continue;
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return fallback;
+}
+
+function optionalNumberParam(params: Record<string, string>, keys: string[], fallback: number | undefined) {
   for (const key of keys) {
     const value = params[key];
     if (value == null) continue;
