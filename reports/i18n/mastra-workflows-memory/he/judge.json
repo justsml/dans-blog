@@ -1,28 +1,83 @@
 {
-  "selectedCommit": "current",
-  "selectedModel": "current",
+  "selectedCommit": "514d565d9b927a2e3a1a2eec03228a5de35951a6",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
     "readability": 90,
     "technicalAccuracy": 95,
-    "coherence": 92,
+    "coherence": 95,
     "relevance": 100,
-    "translationQuality": 90,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 85,
+    "translationQuality": 92,
+    "mdxPreservation": 85,
+    "culturalAdaptation": 90,
     "languagePurity": 95
   },
-  "suggestions": [],
-  "rationale": "The current translation is superior in its natural flow and technical terminology in Hebrew. The candidate (gpt-oss-120b) introduced several awkward phrasing choices, such as 'בעיית חלון ההקשר שמדברים עליה אף אחד' (a literal and ungrammatical translation of 'The Context Window Problem Nobody Talks About') and 'החמרה' for 'Worse' (which means 'exacerbation' rather than the adverbial 'Worse, ...'). The current version correctly uses 'בעיית חלון ההקשר שמישהו לא מדבר עליה' and 'גרוע יותר'. The current version also maintains better consistency with the series navigation at the bottom.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "1. [ניתוב LLM](/llm-routing-mastra-ai)\n2. [אבטחה ומעקות בטיחות](../mastra-security-guardrails)\n3. [שילובי MCP וכלים](../mastra-mcp-tool-integrations)\n4. **זרימות עבודה וזיכרון** (פוסט זה)",
+      "replacement": "1. [ניתוב LLM](/llm-routing-mastra-ai)\n2. [אבטחה ומעקות בטיחות](/mastra-security-guardrails)\n3. [שילובי MCP וכלים](/mastra-mcp-tool-integrations)\n4. **זרימות עבודה וזיכרון** (פוסט זה)",
+      "reason": "The English source uses root-relative paths for the series links. The translation introduced relative paths (../) which break site navigation consistency."
+    }
+  ],
+  "rationale": "The translation is high quality and captures the technical nuances well. The frontmatter title was actually present in the candidate (the judge report seems to have misread the empty string in its own match field vs the actual file content), but the series links were incorrectly converted to relative paths, which needs fixing to match the source's root-relative structure.",
+  "confidence": "low",
+  "confidenceScore": 0.317,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-workflows-memory",
   "locale": "he",
   "candidateCommits": [
-    "dcca964e82c91153b63e16c079b0fc4e19c5cdc0"
+    "514d565d9b927a2e3a1a2eec03228a5de35951a6"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'הפסיקו לבנות סוכנים לא יציבים: השתמשו בתהליכי עבודה ובזיכרון'",
+      "reason": "The frontmatter title is empty in the translation but present in the English source. It must be translated.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[ניתוב LLM](../llm-routing-mastra-ai)",
+      "replacement": "[ניתוב LLM](/llm-routing-mastra-ai)",
+      "reason": "The English source uses absolute paths for the series links. The translation changed them to relative paths, which will break if the folder structure doesn't match exactly or if the site expects root-relative URLs.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[**זרימות עבודה וזיכרון** (פוסט זה)](../mastra-workflows-memory)",
+      "replacement": "**זרימות עבודה וזיכרון** (פוסט זה)",
+      "reason": "In the series list, the current post should not be a link to itself, matching the English source's bold text.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "1. [ניתוב LLM](/llm-routing-mastra-ai)\n2. [אבטחה ומעקות בטיחות](../mastra-security-guardrails)\n3. [שילובי MCP וכלים](../mastra-mcp-tool-integrations)\n4. **זרימות עבודה וזיכרון** (פוסט זה)",
+      "replacement": "1. [ניתוב LLM](/llm-routing-mastra-ai)\n2. [אבטחה ומעקות בטיחות](/mastra-security-guardrails)\n3. [שילובי MCP וכלים](/mastra-mcp-tool-integrations)\n4. **זרימות עבודה וזיכרון** (פוסט זה)",
+      "reason": "The English source uses root-relative paths for the series links. The translation introduced relative paths (../) which break site navigation consistency.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-workflows-memory --locale he --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug mastra-workflows-memory --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-workflows-memory --locale he --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/he/index.mdx failed structural parity with score 0.969 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/he/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"links\":1,\"linkTargets\":4}. Differences: {\"links\":1,\"linkTargets\":4}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

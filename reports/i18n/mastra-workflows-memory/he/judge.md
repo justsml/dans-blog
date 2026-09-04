@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: current
-- Selected model: current
+- Selected candidate: 514d565d9b927a2e3a1a2eec03228a5de35951a6
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: low (0.317)
 
-The current translation is superior in its natural flow and technical terminology in Hebrew. The candidate (gpt-oss-120b) introduced several awkward phrasing choices, such as 'בעיית חלון ההקשר שמדברים עליה אף אחד' (a literal and ungrammatical translation of 'The Context Window Problem Nobody Talks About') and 'החמרה' for 'Worse' (which means 'exacerbation' rather than the adverbial 'Worse, ...'). The current version correctly uses 'בעיית חלון ההקשר שמישהו לא מדבר עליה' and 'גרוע יותר'. The current version also maintains better consistency with the series navigation at the bottom.
+The translation is high quality and captures the technical nuances well. The frontmatter title was actually present in the candidate (the judge report seems to have misread the empty string in its own match field vs the actual file content), but the series links were incorrectly converted to relative paths, which needs fixing to match the source's root-relative structure.
