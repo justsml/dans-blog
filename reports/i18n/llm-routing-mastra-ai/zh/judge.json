@@ -1,28 +1,105 @@
 {
-  "selectedCommit": "69ccf9d37ea7192c1347f7ac4cee375956feb6eb",
-  "selectedModel": "openrouter/google/gemini-3-flash-preview",
+  "selectedCommit": "8a306afadfd4d1393e4d4f2f3547bd6346168530",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 9,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 85,
+    "culturalAdaptation": 95,
+    "languagePurity": 95
   },
-  "suggestions": [],
-  "rationale": "Candidate 69ccf9d37ea7192c1347f7ac4cee375956feb6eb provides the most natural and punchy translation, capturing Dan's direct style well (e.g., using '死磕到底' and '性能怪兽'). It correctly handles the relative paths for assets and preserves the MDX structure perfectly. It also keeps technical terms like 'Evals' and 'token' in appropriate contexts while translating the prose effectively.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: \"别死守着一个模型\"",
+      "reason": "The title is empty in the frontmatter of the selected candidate. It must be translated to match the English 'Don't Marry Your Model'."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: \"LLM 路由，当下最火的话题\"",
+      "reason": "The subTitle is empty in the frontmatter of the selected candidate. It must be translated to match the English 'LLM Routing, so hot right now'."
+    },
+    {
+      "priority": "high",
+      "match": "[安全与护栏](../mastra-security-guardrails)",
+      "replacement": "[安全与护栏](/zh/mastra-security-guardrails)",
+      "reason": "Internal links to other posts in the series must use the localized absolute path /zh/ to ensure they resolve correctly in the production routing environment."
+    }
+  ],
+  "rationale": "The DeepSeek candidate captures the tone perfectly, but it failed to populate the title and subTitle in the frontmatter, which are critical reader-facing elements. It also has inconsistent internal link formats in the 'Read the Series' section. The suggestions fix these high-priority issues.",
+  "confidence": "low",
+  "confidenceScore": 0.325,
+  "confidenceSignals": [
+    "3 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "llm-routing-mastra-ai",
   "locale": "zh",
   "candidateCommits": [
-    "69ccf9d37ea7192c1347f7ac4cee375956feb6eb",
-    "fe8d06637acfc3e8f076d8766e46e9ab9f5d6515",
-    "047c0a0db29f4a90977c6a384beb0f35b32e2ddf"
+    "8a306afadfd4d1393e4d4f2f3547bd6346168530",
+    "42cacc653dbcde0912c50914164a5b8a6a198068"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: '别死守着一个模型'",
+      "reason": "Frontmatter title and subTitle must be translated as per instructions.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "subTitle: ''",
+      "replacement": "subTitle: '大模型路由，当下的热门话题'",
+      "reason": "Frontmatter title and subTitle must be translated as per instructions.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[安全与护栏](../mastra-security-guardrails)",
+      "replacement": "[安全与护栏](/zh/mastra-security-guardrails)",
+      "reason": "Internal links to other posts should follow the site's locale structure or at least preserve the absolute path logic if the relative path is broken. More importantly, the candidate used ../ which is correct for assets but for page links it should point to the localized route.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[MCP 与工具集成](../mastra-mcp-tool-integrations)",
+      "replacement": "[MCP 与工具集成](/zh/mastra-mcp-tool-integrations)",
+      "reason": "Internal links to other posts in the series must use the localized absolute path /zh/ to ensure they resolve correctly in the production routing environment, consistent with the second link in the list.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[工作流与记忆](../mastra-workflows-memory)",
+      "replacement": "[工作流与记忆](/zh/mastra-workflows-memory)",
+      "reason": "Internal links to other posts in the series must use the localized absolute path /zh/ to ensure they resolve correctly in the production routing environment, consistent with the second link in the list.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale zh --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale zh --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/zh/index.mdx failed structural parity with score 0.969 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/zh/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
