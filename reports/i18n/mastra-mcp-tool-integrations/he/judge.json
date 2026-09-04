@@ -1,24 +1,70 @@
 {
-  "selectedCommit": "current",
-  "selectedModel": "current",
+  "selectedCommit": "5baa080903da1561d2fc85fc87c214cc53a0c97d",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 98,
-    "coherence": 95,
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 92,
     "relevance": 100,
-    "translationQuality": 92,
-    "mdxPreservation": 100,
+    "translationQuality": 90,
+    "mdxPreservation": 95,
     "culturalAdaptation": 90,
     "languagePurity": 95
   },
-  "suggestions": [],
-  "rationale": "The current version is superior in its handling of technical terminology and Hebrew grammar. The candidate commit has a typo in the subtitle ('הוא ה‑USB-C' vs 'הוא ה-USB-C' with a missing space or incorrect character joining), and it translates 'child processes' as 'תהליכי-ילד' which is less standard than 'תהליכים צאצאים' used in the current version. The current version also correctly localizes the series links at the bottom to Hebrew titles, whereas the candidate leaves them in English. Both preserve MDX structure well, but the current version feels more natural and technically accurate for a Hebrew-speaking developer.",
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "--- \n\n## אישור בגבול הכלי",
+      "replacement": "---\n\n## אישור בגבול הכלי",
+      "reason": "The previous judge report suggested a missing horizontal rule, but it is actually present in the candidate. However, there is a trailing space in the candidate's separator '--- ' which should be cleaned for MDX consistency."
+    }
+  ],
+  "rationale": "The candidate 5baa080903da1561d2fc85fc87c214cc53a0c97d actually has the title correctly translated in the provided text (the judge report seems to have misread the candidate content). The translation is high quality, preserves all code blocks, and correctly adjusts asset paths. The only minor issue is a trailing space on one horizontal rule.",
+  "confidence": "medium",
+  "confidenceScore": 0.65,
+  "confidenceSignals": [
+    "low blocking-issue rate",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
   "slug": "mastra-mcp-tool-integrations",
   "locale": "he",
   "candidateCommits": [
-    "a4831ab6fe1825d5fa824393d26ed2ca446c363d"
+    "5baa080903da1561d2fc85fc87c214cc53a0c97d"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: 'סוכן ה-AI שלך חסר תועלת בלי זה'",
+      "reason": "The frontmatter title was left empty in the translation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "## אישור בגבול הכלי",
+      "replacement": "--- \n\n## אישור בגבול הכלי",
+      "reason": "Missing horizontal rule (---) before the H2 heading compared to the source structure.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "--- \n\n## אישור בגבול הכלי",
+      "replacement": "---\n\n## אישור בגבול הכלי",
+      "reason": "The previous judge report suggested a missing horizontal rule, but it is actually present in the candidate. However, there is a trailing space in the candidate's separator '--- ' which should be cleaned for MDX consistency.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",

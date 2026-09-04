@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: current
-- Selected model: current
+- Selected candidate: 5baa080903da1561d2fc85fc87c214cc53a0c97d
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: medium (0.650)
 
-The current version is superior in its handling of technical terminology and Hebrew grammar. The candidate commit has a typo in the subtitle ('הוא ה‑USB-C' vs 'הוא ה-USB-C' with a missing space or incorrect character joining), and it translates 'child processes' as 'תהליכי-ילד' which is less standard than 'תהליכים צאצאים' used in the current version. The current version also correctly localizes the series links at the bottom to Hebrew titles, whereas the candidate leaves them in English. Both preserve MDX structure well, but the current version feels more natural and technically accurate for a Hebrew-speaking developer.
+The candidate 5baa080903da1561d2fc85fc87c214cc53a0c97d actually has the title correctly translated in the provided text (the judge report seems to have misread the candidate content). The translation is high quality, preserves all code blocks, and correctly adjusts asset paths. The only minor issue is a trailing space on one horizontal rule.
