@@ -1,32 +1,86 @@
 {
-  "selectedCommit": "7528cbadeaed5706276929221d152a264e6953e5",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "d45f4b507d922cec83f52d449b2530725896d39a",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 90,
+    "technicalAccuracy": 95,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 80,
+    "culturalAdaptation": 95,
+    "languagePurity": 98
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and technically accurate translation while maintaining Dan's direct, slightly informal style. It correctly handles technical terms like 'guardrails', 'prompt injection', and 'logs' in a way that sounds natural to a Spanish-speaking developer. It also preserves all MDX structures and links correctly.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "### 3. Moderación de contenido\n\n### 3. Moderación de contenido",
+      "replacement": "### 3. Moderación de contenido",
+      "reason": "The heading '3. Moderación de contenido' is duplicated in the candidate text."
+    },
+    {
+      "priority": "high",
+      "match": "instructions: 'You are a helpful assistant for a community platform.',",
+      "replacement": "instructions: 'Eres un asistente útil para una plataforma comunitaria.',",
+      "reason": "The instructions string inside the code block for the moderatedAgent was left in English, unlike the previous code blocks which were translated."
+    },
+    {
+      "priority": "high",
+      "match": "instructions: 'Detect harmful content that violates community guidelines',",
+      "replacement": "instructions: 'Detectar contenido dañino que viole las directrices de la comunidad',",
+      "reason": "The instructions property in the ModerationProcessor configuration was left in English."
+    }
+  ],
+  "rationale": "The translation is high quality and maintains Dan's direct style. However, there is a duplicated heading '3. Moderación de contenido' in the prose, and the third code block (ModerationProcessor) contains untranslated strings in the 'instructions' fields, which is inconsistent with the first two code blocks where these strings were localized.",
+  "confidence": "low",
+  "confidenceScore": 0.319,
+  "confidenceSignals": [
+    "3 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-security-guardrails",
   "locale": "es",
   "candidateCommits": [
-    "7528cbadeaed5706276929221d152a264e6953e5",
-    "190e14caf18e75b2a425dbd07ed7ff39744d6fdf",
-    "d4f7fe1e0c67ad61be20d2678ec95fe03f5255fa",
-    "be1268df3ba50ce880d28c0443c1432ee4574600",
-    "d6a8656ddf461103925fb7c2d44ac2549615f646",
-    "fabefe501725a28f52df8d18c5c7e22ed4e66459",
-    "19a82f31ff468e70701c7b46b2fd2ca956b6af63"
+    "d45f4b507d922cec83f52d449b2530725896d39a"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "### 3. Moderación de contenido\n\n### 3. Moderación de contenido",
+      "replacement": "### 3. Moderación de contenido",
+      "reason": "The heading is duplicated in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "instructions: 'You are a helpful assistant for a community platform.',",
+      "replacement": "instructions: 'Eres un asistente útil para una plataforma comunitaria.',",
+      "reason": "The instructions string inside the code block for the moderatedAgent was left in English, unlike the previous code blocks which were translated.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "instructions: 'Detect harmful content that violates community guidelines',",
+      "replacement": "instructions: 'Detectar contenido dañino que viole las directrices de la comunidad',",
+      "reason": "The instructions property in the ModerationProcessor configuration was left in English.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-security-guardrails --locale es --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug mastra-security-guardrails --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-security-guardrails --locale es --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/es/index.mdx failed structural parity with score 0.967 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-03--mastra-security-guardrails/es/index.mdx: Headings changed or moved. Differences: {\"h3\":1,\"headingSequence\":4}. Differences: {\"h3\":1,\"headingSequence\":4}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
