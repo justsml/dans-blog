@@ -1,0 +1,137 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: zh
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 149.41
+- Input tokens: 3797
+- Output tokens: 8565
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 3785
+- Estimated cost: $0.017936
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: ''
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+大多数工程团队选定一个大语言模型后就一直用下去。一个供应商，一个模型，包揽所有任务。这就像因为某人在一面时表现不错，就让他同时负责写代码、写文案和报税。
+
+在任何特定时刻，总有一个模型更擅长写代码，另一个更擅长处理冗长杂乱的上下文，还有一个则是做分类任务最便宜、最枯燥的干活主力。模型的名字会变，但问题的本质不会变。指望一个模型在所有方面都出类拔萃，结果要么是为简单任务过度付费，要么是在专业任务上拿到平庸的结果。
+
+我见过一个团队花掉几千美元，用每百万 token 30 美元的模型跑情感分析，而实际上 0.5 美元的模型就能干得一样好。简单的 JSON 格式化、基础的分类任务，全走他们的付费高级供应商。唯一“升温”的只有他们的 AWS 账单。
+
+有更好的做法，而且并不复杂。
+
+## 委派优于专一
+
+如果能将请求路由到真正最适合该特定任务的模型，会怎样？把昂贵的算力主力留给硬骨头，把简单的解析和格式化降级到更便宜的模型上。无需在代码库里手动来回切换，就能享受多供应商的优势。
+
+Mastra 让你能构建的正是这类系统。你为不同类型的工作设置专家 Agent，然后创建一个主管 Agent，由它来判断每个请求该交给哪个专家处理。下面的模型 ID 使用了 Mastra 当前的 `provider/model` 字符串格式；它们只是示例，不是排行榜。请替换成在你自己的评测中胜出且符合预算的当前模型。
+
+可以这么理解：你的团队里有三位专家。
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core/mastra';
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
+  instructions: 'You are a creative writer. Be weird.',
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
+});
+```
+
+每个 Agent 各司其职，而 `description` 字段正是路由决策的依据之一。你的代码 Agent 应该是能通过你仓库专属编程评测的模型。你的长上下文 Agent 应该能在你的真实文档中保持清醒，而不是把中间部分搅成一锅粥。你的通用 Agent 则应该便宜、可靠，并且以最理想的方式“枯燥”。
+
+有意思的地方来了。你添加一个轻量级的主管 Agent，让它充当智能代理：
+
+```typescript
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
+  name: 'The Boss',
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
+});
+
+export const mastra = new Mastra({
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+主管本身完全可以跑在轻量级模型上，因为它的主要工作只是决定流量往哪送。你不需要花高价去决定该用哪个高价模型。这一点也要纳入评测；糟糕的路由层会悄无声息地把省下的钱变成错误路由的开销。
+
+当有人要求实现冒泡排序时，路由器会识别出这是代码工作，并将其交给你的代码专家。创意写作提示？交给那个你选定用于把控文风和广度的模型。关于历史事件的事实性问题？路由给通用 Agent，如果时效性或引用很重要，最好配合检索增强。
+
+## 实际收益
+
+**成本效率比你想象的更重要。** 一个负责委派决策的小型路由模型，其成本只是将所有请求都塞进最贵供应商的一小部分。随着时间推移，尤其是在规模化场景下，这会累积成实实在在的真金白银。你只在真正需要时才为重型智能付费。
+
+**将模型与任务匹配能提升质量。** 胜出者会随月份、任务和提示词结构而变化。这就是为什么路由层应该依赖你自己的评测结果，而不是你写集成代码那周在 Twitter 上正火的模型。
+
+**韧性成为可能，但不会自动发生。** 上面的主管 Agent 不会在某个供应商失败时通过另一个 Agent 重试，而且路由决策本身还依赖 OpenAI。如果供应商故障转移对你很重要，请在应用代码中添加明确的重试/回退策略，将回退路由器放在不同的供应商上，并测试故障路径。仅仅因为模型挂着不同的 Logo，一堆 Agent 并不会自动变成断路器。
+
+这不是为了炫技。而是为了构建在财务和技术上都合理的系统。你不会在所有的施工任务里都用同一把锤子，大概也不该在所有的 AI 任务里都用同一个大语言模型。
+
+这种做法的精妙之处在于，你的应用代码不需要陷入分支迷宫。你依然只调用一个 Agent。决定哪个任务用哪个模型的复杂性被集中在一处，一次配置即可，而不是以一堆条件逻辑的形式散落在整个代码库中。
+
+### 参考资料
+
+- [Mastra.ai 文档](https://mastra.ai/docs)
+- [Mastra GitHub 仓库](https://github.com/mastra-ai/mastra)
+
+## 系列文章
+
+1. **LLM 路由**（本文）
+2. [安全与护栏](/mastra-security-guardrails)
+3. [MCP 与工具集成](/mastra-mcp-tool-integrations)
+4. [工作流与记忆](/mastra-workflows-memory)
+````
