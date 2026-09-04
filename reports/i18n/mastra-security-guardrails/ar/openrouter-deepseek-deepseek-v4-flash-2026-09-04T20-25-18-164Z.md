@@ -1,0 +1,213 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 44.19
+- Input tokens: 4532
+- Output tokens: 4915
+- Thinking tokens: unknown
+- Cached input tokens: 1792
+- Cache write tokens: 0
+- Estimated cost: $0.001765
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: الذكاء الاصطناعي في الإنتاج مرعب (وكيفية إصلاحه)
+subTitle: إذا لم يكن لدى وكيلك حواجز أمان، فأنت غير جاهز للإنتاج.
+modified: '2026-09-04'
+tags:
+  - ai
+  - security
+  - mastra
+  - guardrails
+  - privacy
+  - pii
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+لا أحد يبدأ ببناء نظام ذكاء اصطناعي غير آمن. تكتب التعليمات، وتختبر الحالات الحدّية، وتضيف بعض قواعد التحقق. ثم يكتشف شخص ما أنه يمكنه خداع الروبوت ليتظاهر بأنه قرصان ويكشف بيانات المستخدمين. أو ينتهي رقم بطاقة ائتمان في سجلاتك. أو يوصي النموذج بمنتج منافس دون تردد.
+
+الفجوة بين "يعمل في العرض التوضيحي" و"آمن في الإنتاج" أوسع مما يتوقعه معظم الفِرق.
+
+جزء من المشكلة هو أن نماذج اللغة الخام (LLM) ليس لديها رأي بشأن ما ينبغي أو لا ينبغي لها فعله. إنها آلات تنبؤ تحاول الاستمرار في أي نمط بدأته. أعطِها تعليماً يبدو كـ "وضع تجاوز النظام"، وستتقمص الدور بسعادة. هذا ليس عِلّةً في النموذج؛ إنها فقط كيفية عمل نماذج اللغة.
+
+معظم الأُطُر تعطيك النموذج وتتمنى لك التوفيق. ماسترا تتبع نهجاً مختلفاً: تفترض أنك ستحتاج إلى سياجات حماية عاجلاً أم آجلاً، لذا تدمجها في بنية الوكيل من البداية.
+
+---
+
+## المعالجات كطبقات أمان
+
+الآلية الأساسية واضحة. قبل أن يصل تعليمك إلى النموذج، يمر عبر سلسلة من معالجات الإدخال. بعد أن يرد النموذج، يأتي دور معالجات الإخراج. يمكن لكل معالج فحص المحتوى أو تعديله أو حجبه في تلك المرحلة.
+
+اعتبرها وسيطة (middleware) لتفاعلات الذكاء الاصطناعي. ترصّ ما تحتاجه منها، وتضبط سلوكها، وتعمل تلقائياً على كل طلب.
+
+### 1. إيقاف القراصنة (حقن الأوامر)
+
+أصبحت هجمات حقن الأوامر إبداعية. يستخدم الناس أحرف يونيكود غير مرئية، ويكتبون التعليمات بصيغة base64، أو يقنعون النموذج بأنهم في "وضع التصحيح" حيث لا تنطبق القواعد العادية. هذه التقنيات تتطور باستمرار.
+
+تتضمن ماسترا معالجات تلتقط الأنماط الشائعة:
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+
+const GUARDRAIL_MODEL = 'openrouter/openai/gpt-oss-safeguard-20b';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    // 1. Scrub invisible characters
+    new UnicodeNormalizer({
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. Detect the attempt
+    new PromptInjectionDetector({
+      model: GUARDRAIL_MODEL,
+      threshold: 0.8,
+      strategy: 'block', // Hard stop
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+      lastMessageOnly: true,
+    }),
+  ],
+});
+```
+
+يقوم [`UnicodeNormalizer`](https://mastra.ai/reference/processors/unicode-normalizer) بإزالة الأحرف غير المطبوعة وطي المسافات البيضاء. يحلل [`PromptInjectionDetector`](https://mastra.ai/reference/processors/prompt-injection-detector) الإدخال المنقّى ليبحث عن أنماط توحي بأن أحدهم يحاول تجاوز تعليماتك.
+
+يمكنك ضبط مدى عدوانية الكشف (المُعامِل `threshold`) وما يحدث عند تفعيله (`block`، `warn`، `filter`، أو `rewrite`).
+
+### 2. معالجة المعلومات الشخصية (PII)
+
+أرقام بطاقات الائتمان في السجلات، وأرقام الضمان الاجتماعي في قواعد البيانات المتجهة، وعناوين البريد الإلكتروني المخزّنة لفترة أطول من اللازم. هذه هي المشكلات التي تتحول إلى قضايا تنظيمية. التحدي أن المستخدمين لا يدركون دائماً أنهم يلصقون بيانات حساسة في نافذة الدردشة.
+
+يقوم [`PIIDetector`](https://mastra.ai/reference/processors/pii-detector) بمسح الأنماط الشائعة قبل أن تصل إلى نموذجك أو تُكتب في التخزين:
+
+```typescript
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+      instructions: 'Detect and mask personally identifiable information',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new PIIDetector({
+      model: GUARDRAIL_MODEL,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+    }),
+  ],
+});
+```
+
+يمكنك اختيار الحذف، أو التجزئة، أو الإزالة، أو الاستبدال بعلامات مكانية مصنفة، أو الحجب التام. `PIIDetector` هو معالج هجين: ضعه في `inputProcessors` أو `outputProcessors` أو كليهما حسب مكان الخطر. في الإخراج المتدفّق، قم بتجميع الدفعات قبل تشغيل المصنفات الثقيلة، لئلا تدفع مقابل فحص منفصل من نماذج LLM مع كل قطرة رمز صغيرة.
+
+### 3. مراقبة المحتوى
+
+### 3. مراقبة المحتوى
+
+النماذج المُدرَّبة على بيانات الإنترنت رأت بعض الأمور. بدون تصفية، قد تُنتج أحياناً ردوداً تثير قلق فريق العلاقات العامة لديك. يلتقط [`ModerationProcessor`](https://mastra.ai/reference/processors/moderation-processor) المحتوى الذي ينتهك إرشاداتك:
+
+```typescript
+import { Agent } from '@mastra/core/agent';
+import { BatchPartsProcessor, ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: 'openai/gpt-5.5',
+  inputProcessors: [
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,
+      strategy: 'block',
+      instructions: 'Detect harmful content that violates community guidelines',
+      lastMessageOnly: true,
+    }),
+  ],
+  outputProcessors: [
+    new BatchPartsProcessor({ batchSize: 10 }),
+    new ModerationProcessor({
+      model: GUARDRAIL_MODEL,
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      strategy: 'filter',
+      chunkWindow: 1,
+    }),
+  ],
+});
+```
+
+الجزء المثير للاهتمام هو أنك تُحدد الفئات التي تهم حالتك الاستخدامية. قد تسمح أداة الكتابة الإبداعية بمحتوى أكثر تعبيراً من روبوت خدمة العملاء. العتبة والاستراتيجية يمنحانك التحكم في مدى صرامة التصفية.
+
+---
+
+## متى تتعطل الأمور
+
+عندما يستخدم المعالج استراتيجية `block`، يوقف Mastra التوليد ويكشف الحدث كبيانات تعريفية للكشف (tripwire). مع `generate()`، افحص كائن النتيجة:
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked by ${result.tripwire.processorId}`);
+  console.log(`Reason: ${result.tripwire.reason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return 'Request blocked by policy.';
+}
+```
+
+بالنسبة للاستدعاءات المتدفّقة، استمع إلى أجزاء `tripwire` عبر `fullStream`. هذا النمط يسمح لك بمعالجة أحداث الأمان بالطريقة التي تناسب تطبيقك. قد تُسجلها للتحليل، أو تُعيد رسالة خطأ عامة، أو تحوّل حالة منخفضة المخاطر من `block` إلى `warn` أثناء ضبط العتبات. يُخبرك `processorId` و `reason` بأي معالج قد علّم المحتوى، مما يساعد عند تصحيح الإيجابيات الخاطئة.
+
+---
+
+## ما لا تحلّه هذه المعالجات
+
+تلتقط المعالجات الكثير، لكنها ليست سحرية. يمكن للمهاجم المُصمَّم أن يجد بمرور الوقت تعليمة تخترق الحماية. النماذج أحياناً تُهلوس بطرق لا تستطيع المعالجات توقعها. وهناك دائماً مقايضة بين الأمان والمرونة: فكلما كانت قواعدك أكثر تشدداً، زاد احتمال حجب حالات استخدام مشروعة.
+
+القيمة ليست في الحماية المثالية. بل في وجود طريقة منهجية للتعامل مع المشكلات الشائعة التي ستظهر حتماً في الإنتاج. يمكنك ضبط الحساسية كلما تعلمت ما يفعله مستخدموك فعلاً. يمكنك إضافة معالجات مخصصة للمخاطر الخاصة بالمجال. ويمكنك ربط ردود فعل الانتهاكات، والسجلات، والتتبعات، وسجلات التدقيق على مستوى التطبيق حول نفس نقطة التحكم.
+
+معظم مشكلات الأمان في الذكاء الاصطناعي الإنتاجي ليست هجمات متطورة. إنها أشخاص ينسخون ويلصقون بيانات لا ينبغي لهم، أو يكتشفون من خلال التجربة والخطأ أن الروبوت سيفعل أشياءً لم تقصدها. لن تمنع المعالجات كل مشكلة محتملة، لكنها تجعل المشكلات الواضحة أصعب بكثير.
+
+### الموارد
+
+- [توثيق حواجز الحماية في Mastra](https://mastra.ai/docs/agents/guardrails)
+- [توثيق معالجات Mastra](https://mastra.ai/docs/agents/processors)
+- [موافقة وكيل Mastra](https://mastra.ai/docs/agents/agent-approval)
+- [مستودع Mastra على GitHub](https://github.com/mastra-ai/mastra)
+
+## اقرأ السلسلة
+
+1. [توجيه LLM](../llm-routing-mastra-ai)
+2. **الأمان والحواجز** (هذا المقال)
+3. [تكاملات MCP والأدوات](../mastra-mcp-tool-integrations)
+4. [سير العمل والذاكرة](../mastra-workflows-memory)
+````
