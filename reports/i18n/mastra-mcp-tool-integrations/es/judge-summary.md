@@ -10,17 +10,20 @@
 - Selected commit hint: judge selected
 - Validation: failed
 - Validation scope: local
+- Confidence: high (0.889)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 - Validation error: Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale es --skip-global
 $ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale es --skip-global
-207 |     ...targetContents.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
-208 |   ];
-209 | 
-210 |   if (nestedAssetReferences.length === 0) return;
-211 | 
-212 |   throw new Error(
+224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+225 |   const comparison = compareMdxStructure(input);
+226 |   if (comparison.valid) return;
+227 | 
+228 |   const targetLabel = input.targetPath ?? "translation";
+229 |   throw new Error(
                   ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.
-      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {"linkTargets":3}. Differences: {"linkTargets":3}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
       at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
       at loadAndEvaluateModule (2:1)
 
@@ -28,67 +31,32 @@ Bun v1.3.1 (macOS arm64)
 error: script "i18n:validate" exited with code 1
 
 
-## Batch Judge Telemetry
-### Round 1, Batch 1
-- Runtime seconds: 2.60
-- Input tokens: 12884
-- Output tokens: 237
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007153
-
-### Round 1, Batch 2
-- Runtime seconds: 3.16
-- Input tokens: 13056
-- Output tokens: 325
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007503
-
 ## Primary Judge Telemetry
-- Runtime seconds: 2.73
-- Input tokens: 10483
-- Output tokens: 293
+- Runtime seconds: 4.91
+- Input tokens: 7202
+- Output tokens: 567
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.006121
+- OpenRouter cost credits: 0.005302
+- Estimated cost: $0.005302
 
 ## Pre-Publish Rescore Telemetry
 ### Pass 1
-- Runtime seconds: 2.77
-- Input tokens: 8353
-- Output tokens: 363
+- Runtime seconds: 3.43
+- Input tokens: 10102
+- Output tokens: 270
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.005266
-
-### Pass 2
-- Runtime seconds: 2.27
-- Input tokens: 8353
-- Output tokens: 239
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004894
+- OpenRouter cost credits: 0.005861
+- Estimated cost: $0.005861
 
 ## Judge Suggestions
-1. Pass 1: applied medium priority suggestion. Match: "name: 'Navigation & Directions Assistant'," Replacement: "name: 'Asistente de Navegación y Direcciones'," Reason: The agent name in the code block should be translated for consistency with the rest of the Spanish content, as seen in other candidates. Note: Applied exact replacement to selected MDX.
-2. Pass 2: applied high priority suggestion. Match: "name: 'Navigation & Directions Assistant'," Replacement: "name: 'Asistente de Navegación y Direcciones'," Reason: The agent name in the code block should be translated for consistency with the rest of the Spanish content, as seen in other candidates. Note: Applied exact replacement to selected MDX.
+1. Pass 1: applied high priority suggestion. Match: "1. [Enrutamiento LLM](../llm-routing-mastra-ai)" Replacement: "1. [Enrutamiento LLM](/es/llm-routing-mastra-ai)" Reason: The link should point to the localized version of the post. Using ../ is for assets, but internal post links in this project structure usually follow the /es/slug pattern or relative slug. However, the candidate changed the absolute path /llm-routing-mastra-ai to a relative one ../llm-routing-mastra-ai which might break depending on the router. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied high priority suggestion. Match: "2. [Seguridad y Barreras de Protección](../mastra-security-guardrails)" Replacement: "2. [Seguridad y Barreras de Protección](/es/mastra-security-guardrails)" Reason: Internal links to other posts should be localized. Note: Applied exact replacement to selected MDX.
+3. Pass 1: applied high priority suggestion. Match: "4. [Flujos de Trabajo y Memoria](../mastra-workflows-memory)" Replacement: "4. [Flujos de Trabajo y Memoria](/es/mastra-workflows-memory)" Reason: Internal links to other posts should be localized. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx
-- 34773b65bbb97cb93dba5a26509b847f59ae85bc i18n candidate(es): mastra-mcp-tool-integrations via openrouter/qwen/qwen3.6-plus
-- fe0607434c3c3ead14b02d47ad87c42f87db1bef i18n candidate(es): mastra-mcp-tool-integrations via openrouter/moonshotai/kimi-k2.6
-- be2e320a0a5c900e01dbf3c075cb128cbe2e5d92 i18n candidate(es): mastra-mcp-tool-integrations via openrouter/z-ai/glm-5.1
-- 90d8c8b6d12626345bc783e55b9aaf7eb9c81590 i18n candidate(es): mastra-mcp-tool-integrations via openrouter/minimax/minimax-m2.7
-- 40a5fb724e88b084c5fef0ca5d72102c3d1081e3 i18n candidate(es): mastra-mcp-tool-integrations via openrouter/openai/gpt-oss-120b:nitro
-- b93e4039c0c17ff84ba520302ed44aef46a8273b i18n candidate(es): mastra-mcp-tool-integrations via openrouter/qwen/qwen3-32b:nitro
+- 1823dafa5e2d0227e7d87fc2d6c4b917024d7df8 i18n candidate(es): mastra-mcp-tool-integrations via openrouter/deepseek/deepseek-v4-flash

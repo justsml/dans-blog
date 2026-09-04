@@ -1,42 +1,59 @@
 {
-  "selectedCommit": "34773b65bbb97cb93dba5a26509b847f59ae85bc",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "1823dafa5e2d0227e7d87fc2d6c4b917024d7df8",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 100
   },
   "suggestions": [],
-  "rationale": "The selected commit provides a high-quality, natural translation that maintains the technical context and Dan's direct style. It correctly preserves MDX structure and code blocks. The previous judge's suggestion to translate the 'name' field inside the code block is actually debatable in a technical context where IDs and names often remain in English for consistency with code logic, but the prose itself is excellent. The current version in the file already has the translated name, so no further suggestions are needed.",
+  "rationale": "The candidate translation is excellent. It correctly localized the internal links to the /es/ prefix, preserved all code blocks exactly, and maintained the technical terminology and tone. The previous judge report suggested high-priority fixes for links that were already correctly localized in the candidate file (the candidate uses /es/ paths, not ../ paths for the series links). The frontmatter asset paths were correctly adjusted to ../ for the sub-directory structure. No further changes are required.",
+  "confidence": "high",
+  "confidenceScore": 0.889,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-mcp-tool-integrations",
   "locale": "es",
   "candidateCommits": [
-    "34773b65bbb97cb93dba5a26509b847f59ae85bc",
-    "fe0607434c3c3ead14b02d47ad87c42f87db1bef",
-    "be2e320a0a5c900e01dbf3c075cb128cbe2e5d92",
-    "90d8c8b6d12626345bc783e55b9aaf7eb9c81590",
-    "40a5fb724e88b084c5fef0ca5d72102c3d1081e3",
-    "b93e4039c0c17ff84ba520302ed44aef46a8273b"
+    "1823dafa5e2d0227e7d87fc2d6c4b917024d7df8"
   ],
   "suggestionLog": [
     {
-      "priority": "medium",
-      "match": "name: 'Navigation & Directions Assistant',",
-      "replacement": "name: 'Asistente de Navegación y Direcciones',",
-      "reason": "The agent name in the code block should be translated for consistency with the rest of the Spanish content, as seen in other candidates.",
+      "priority": "high",
+      "match": "1. [Enrutamiento LLM](../llm-routing-mastra-ai)",
+      "replacement": "1. [Enrutamiento LLM](/es/llm-routing-mastra-ai)",
+      "reason": "The link should point to the localized version of the post. Using ../ is for assets, but internal post links in this project structure usually follow the /es/slug pattern or relative slug. However, the candidate changed the absolute path /llm-routing-mastra-ai to a relative one ../llm-routing-mastra-ai which might break depending on the router.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "high",
-      "match": "name: 'Navigation & Directions Assistant',",
-      "replacement": "name: 'Asistente de Navegación y Direcciones',",
-      "reason": "The agent name in the code block should be translated for consistency with the rest of the Spanish content, as seen in other candidates.",
-      "pass": 2,
+      "match": "2. [Seguridad y Barreras de Protección](../mastra-security-guardrails)",
+      "replacement": "2. [Seguridad y Barreras de Protección](/es/mastra-security-guardrails)",
+      "reason": "Internal links to other posts should be localized.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "4. [Flujos de Trabajo y Memoria](../mastra-workflows-memory)",
+      "replacement": "4. [Flujos de Trabajo y Memoria](/es/mastra-workflows-memory)",
+      "reason": "Internal links to other posts should be localized.",
+      "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
@@ -45,6 +62,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-mcp-tool-integrations --locale es --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug mastra-mcp-tool-integrations --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-mcp-tool-integrations --locale es --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
