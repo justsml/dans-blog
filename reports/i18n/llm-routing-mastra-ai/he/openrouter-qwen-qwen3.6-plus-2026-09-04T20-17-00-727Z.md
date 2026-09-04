@@ -1,0 +1,137 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: he
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 192.00
+- Input tokens: 3791
+- Output tokens: 11206
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 3779
+- Estimated cost: $0.023084
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: ''
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+רוב צוותי ההנדסה בוחרים מודל שפה אחד ונצמדים אליו. ספק אחד, מודל אחד, לכל המשימות. זה כמו לשכור אדם אחד שיכתוב קוד, יעתיב שיווקי ויגיש דוחות מס, רק כי הוא עשה רושם טוב בראיון הראשון.
+
+בכל רגע נתון, מודל אחד טוב יותר בקוד, אחר מתמודד טוב יותר עם הקשר ארוך ומבולגן, ושלישי הוא סוס העבודה הזול והמשעמם לסיווג. השמות משתנים. צורת הבעיה לא. להתייחס למודל אחד כאילו הוא מצטיין בהכל אומר שאתה או משלם יותר מדי על משימות פשוטות, או מקבל תוצאות בינוניות במשימות ייעודיות.
+
+ראיתי צוות שורף אלפי דולרים על הרצת ניתוח סנטימנט דרך מודל שעולה 30 דולר למיליון טוקנים, כשמודל של 50 סנט היה עושה את העבודה בדיוק באותה מידה. עיצוב JSON פשוט, משימות סיווג בסיסיות – הכל עובר דרך הספק הפרימיום שלהם. הדבר היחיד שהתחמם היה חשבון ה-AWS.
+
+יש דרך טובה יותר, והיא לא מסובכת במיוחד.
+
+## העדפת האצלה על פני התמסרות
+
+מה אם היית יכול לנתב בקשות למודל שמתאים באמת לאותה משימה ספציפית? להשתמש במפלצת היקרה שלך לדברים הקשים, אבל להוריד את הפענוח והעיצוב הפשוטים למשהו זול יותר. לקבל את היתרונות של מספר ספקים בלי לאלץ את עצמך ללהטט ביניהם ידנית בקוד.
+
+Mastra מאפשרת לבנות בדיוק את סוג המערכת הזה. מגדירים סוכנים ייעודיים לסוגי עבודה שונים, ואז יוצרים סוכן מפקח שמחליט איזה סוכן ייעודי יטפל בכל בקשה. מזהי המודלים למטה משתמשים בפורמט המחרוזת הנוכחי של Mastra מסוג `provider/model`; אלו דוגמאות, לא טבלת דירוג. החליפו אותם במודלים העדכניים שמנצחים ב-evals שלכם ומתאימים לתקציב.
+
+תחשבו על זה ככה: יש לכם שלושה מומחים בצוות.
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core/mastra';
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
+  instructions: 'You are a creative writer. Be weird.',
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
+});
+```
+
+לכל אחד יש תפקיד, ושדה ה-`description` הוא חלק משטח הניתוב. סוכן הקוד שלכם צריך להיות המודל שעובר את מבחני הקוד הספציפיים ל-repo שלכם. סוכן ההקשר הארוך צריך להיות זה ששורד את המסמכים האמיתיים שלכם בלי להפוך את האמצע למרק. הסוכן הכללי צריך להיות זול, אמין, ומשעמם בדרך הכי טובה שאפשר.
+
+כאן זה נהיה מעניין. מוסיפים מפקח קל משקל שמתפקד כ-proxy חכם:
+
+```typescript
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
+  name: 'The Boss',
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
+});
+
+export const mastra = new Mastra({
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+המפקח עצמו יכול לרוץ על מודל קל משקל כי התפקיד שלו הוא בעיקר להחליט לאן לשלוח תעבורה. אתם לא משלמים תעריף פרימיום כדי להבין איזה מודל פרימיום אחר להשתמש בו. תמדדו גם את זה; שכבת ניתוב גרועה הופכת בשקט חיסכון לניתובים שגויים.
+
+כשמישהו מבקש מימוש של מיון בועות, הנתב מזהה את זה כעבודת קוד ומעביר את זה לסוכן הקוד שלכם. פרומפט לכתיבה יצירתית? זה הולך למודל שבחרתם בשביל טווח וסגנון. שאלה עובדתית על אירועים היסטוריים? נתבו אותה לסוכן הכללי, רצוי עם מנגנון אחזור כשטריות או ציטוט מקורות חשובים.
+
+## היתרונות המעשיים
+
+**יעילות עלותית חשובה יותר ממה שחושבים.** מודל ניתוב קטן שמקבל החלטות האצלה עולה שבריר מהעלות של הרצת כל בקשה בודדת דרך הספק היקר ביותר שלכם. לאורך זמן, ובמיוחד בקנה מידה גדול, זה מצטסף לסכומים משמעותיים. משלמים על אינטליגנציה כבדה רק כשבאמת צריך אותה.
+
+**האיכות משתפרת כשמתאימים מודלים למשימות.** המנצח משתנה לפי חודש, משימה וצורת הפרומפט. לכן שכבת הניתוב צריכה להסתמך על ה-evals שלכם, לא על איזה מודל הוביל בטוויטר בשבוע שבו כתבתם את האינטגרציה.
+
+**עמידות הופכת לאפשרית, לא אוטומטית.** המפקח למעלה לא מנסה מחדש ספק שנכשל דרך סוכן אחר, והוא תלוי ב-OpenAI עבור החלטת הניתוב עצמה. אם מעבר בין ספקים חשוב, הוסיפו מדיניות ניסיון חוזר/גיבוי מפורשת בקוד האפליקציה, שמרו את נתב הגיבוי על ספק אחר, ובדקו את נתיב הכשל. אוסף של סוכנים לא מהווה מפסק זרם רק שלמודלים יש לוגואים שונים.
+
+זה לא עניין של להיות חכם סתם כי אפשר. זה עניין של לבנות מערכות שיש להן היגיון גם כלכלית וגם טכנית. לא תשתמשו באותו פטיש לכל משימת בנייה, וכנראה שגם לא כדאי להשתמש באותו מודל שפה לכל משימת AI.
+
+היופי בגישה הזו הוא שקוד האפליקציה שלכם לא צריך מבוך של תנאים. עדיין קוראים לסוכן אחד. המורכבות של ההחלטה איזה מודל להשתמש לאיזו משימה נמצאת במקום אחד, מוגדרת פעם אחת, במקום להיות מפוזרת בכל הקודבאס בתוך ערימה של לוגיקה מותנית.
+
+### משאבים
+
+- [תיעוד Mastra.ai](https://mastra.ai/docs)
+- [מאגר GitHub של Mastra](https://github.com/mastra-ai/mastra)
+
+## קריאה בסדרה
+
+1. **ניתוב LLM** (מאמר זה)
+2. [אבטחה ומגבלות פעולה](/mastra-security-guardrails)
+3. [MCP ואינטגרציות עם כלים](/mastra-mcp-tool-integrations)
+4. [תהליכי עבודה וזיכרון](/mastra-workflows-memory)
+````
