@@ -28,13 +28,27 @@
   pointer-events: none;
 }
 
-.article-list-loader__indicator {
-  background: linear-gradient(90deg, transparent, hsl(var(--neon-cyan) / 0.42), transparent);
-  block-size: 1px;
-  display: block;
-  inline-size: min(18rem, 38vw);
-  opacity: 0.42;
-  transform: scaleX(0.36);
+.article-list-loader__button {
+  background: transparent;
+  border: 1px solid hsl(var(--neon-cyan) / 0.38);
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 650;
+  padding: 0.7rem 1.15rem;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.article-list-loader__button:hover,
+.article-list-loader__button:focus-visible {
+  background: hsl(var(--neon-cyan) / 0.08);
+  border-color: hsl(var(--neon-cyan) / 0.72);
+  outline: 2px solid transparent;
+}
+
+.article-list-loader__button:active {
+  transform: translateY(1px);
 }
 
 .article-card {

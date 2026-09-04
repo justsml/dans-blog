@@ -3,14 +3,12 @@ import type { PagePath, ArticlePost } from "../../../types";
 import { PostCollections } from "../../../shared/postsCache";
 import {
   buildArchivePagePaths,
-  getArchiveArticleListCtaOccurrence,
   getArchiveNextUrl,
   type ArchiveStaticPath,
   type ArchiveRouteProps,
 } from "../../../shared/archivePagination";
 import { ArticleCard } from "../../../components/ArticleCard";
 import ArticleListSkeleton from "../../../components/ArticleListSkeleton.astro";
-import ArticleListConsultingCTA from "../../../components/ArticleListConsultingCTA.astro";
 import { PaginateFunction } from "astro";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../../shared/i18n";
 
@@ -53,23 +51,9 @@ const nextUrl = getArchiveNextUrl({
 ---
 
 {
-  data.map(({ props }: any, index) => {
-    const ctaOccurrence = getArchiveArticleListCtaOccurrence(index, currentPage);
-
-    return (
-    <>
-      <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
-      {ctaOccurrence !== null && (
-        <ArticleListConsultingCTA
-          category={ctaOccurrence === 1 ? undefined : (props as ArticlePost).data.category}
-          compact
-          pageCount={ctaOccurrence}
-          singleColumn
-        />
-      )}
-    </>
-    );
-  })
+  data.map(({ props }: any) => (
+    <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
+  ))
 }
 
 <ArticleListSkeleton nextUrl={nextUrl} />

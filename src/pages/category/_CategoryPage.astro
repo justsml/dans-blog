@@ -1,9 +1,7 @@
 ---
 import { ArticleCard } from "../../components/ArticleCard";
-import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import Page from "../../layouts/Page.astro";
 import { PostCollections } from "../../shared/postsCache";
-import { getArticleListCtaOccurrence } from "../../shared/articleListCta";
 import type { ArticlePost } from "../../types";
 import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../../shared/i18n";
 import { getUiCopy } from "../../shared/uiTranslations";
@@ -45,22 +43,7 @@ const posts: ArticlePost[] = PostCollections.getPostsByCategory(category, locale
   <p style="margin: .2rem .75rem">{copy.category.found(count)}</p>
   <div class:list={["article-list"]}>
     {
-      posts.map((post, index) => {
-        const ctaOccurrence = getArticleListCtaOccurrence(index);
-
-        return (
-        <>
-          <ArticleCard article={post} locale={locale} />
-          {ctaOccurrence !== null && (
-            <ArticleListConsultingCTA
-              category={ctaOccurrence === 1 ? undefined : category}
-              compact={count < 6}
-              pageCount={ctaOccurrence}
-            />
-          )}
-        </>
-        );
-      })
+      posts.map((post) => <ArticleCard article={post} locale={locale} />)
     }
   </div>
 </Page>

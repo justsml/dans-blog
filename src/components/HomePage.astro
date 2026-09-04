@@ -5,16 +5,10 @@ import { getImage } from "astro:assets";
 import { PostCollections } from "../shared/postsCache.ts";
 import { ArticleCard } from "./ArticleCard";
 import ArticleListSkeleton from "./ArticleListSkeleton.astro";
-import ArticleListConsultingCTA from "./ArticleListConsultingCTA.astro";
 // import FloatingLines from "./FloatingLines";
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
-import {
-  HOME_ARTICLE_LIST_CTA_INTERVALS,
-  HOME_ARTICLE_LIST_CTA_LIMIT,
-  getArticleListCtaOccurrence,
-} from "../shared/articleListCta";
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -108,13 +102,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
   </section>
 
   <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
-    <div class="spotlight-copy">
-      <p class="eyebrow">{copy.home.resourcesEyebrow}</p>
-      <h2 id="home-link-spotlight-title">{copy.home.resourcesTitle}</h2>
-      <p>
-        {copy.home.resourcesText}
-      </p>
-    </div>
+    <h2 id="home-link-spotlight-title" class="visually-hidden">{copy.home.resourcesTitle}</h2>
     <div class="spotlight-actions" aria-label="Featured links">
       <a class="spotlight-link consulting-link" href={getLocalizedPagePath("/consulting/", locale)}>
         <span class="link-kicker">{copy.home.hireKicker}</span>
@@ -127,43 +115,11 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     </div>
   </section>
 
-  <section class="archive-intro" aria-labelledby="archive-title">
-    <div>
-      <p class="eyebrow">{copy.home.latestEyebrow}</p>
-      <h2 id="archive-title">{copy.home.latestTitle}</h2>
-      <p>
-        {copy.home.latestText}
-      </p>
-    </div>
-  </section>
-
-  <div class:list={["article-list"]}>
+  <div class:list={["article-list"]} aria-label={copy.home.latestTitle}>
     {
-      posts
-        // .filter(
-        //   ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
-        // )
-        .map((props: any, index) => {
-          const ctaOccurrence = getArticleListCtaOccurrence(
-            index,
-            0,
-            HOME_ARTICLE_LIST_CTA_LIMIT,
-            HOME_ARTICLE_LIST_CTA_INTERVALS,
-          );
-
-          return (
-          <>
-            <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
-            {ctaOccurrence !== null && (
-              <ArticleListConsultingCTA
-                category={ctaOccurrence === 1 ? undefined : (props as ArticlePost).data.category}
-                pageCount={ctaOccurrence}
-                singleColumn
-              />
-            )}
-          </>
-          );
-        })
+      posts.map((props: any) => (
+        <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
+      ))
     }
     <ArticleListSkeleton nextUrl={defaultNextUrl} />
   </div>
@@ -189,8 +145,11 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
   }
 
   function scheduleHtmxLoad() {
-    const target = document.querySelector("[hx-get][hx-trigger='revealed']");
+    const target = document.querySelector("[hx-get][hx-trigger='click']");
     if (!target) return;
+
+    target.addEventListener("pointerenter", loadHtmx, { once: true, passive: true });
+    target.addEventListener("focusin", loadHtmx, { once: true });
 
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
@@ -205,8 +164,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
       return;
     }
 
-    target.addEventListener("pointerenter", loadHtmx, { once: true, passive: true });
-    target.addEventListener("focusin", loadHtmx, { once: true });
+    loadHtmx();
   }
 
   document.addEventListener("astro:page-load", scheduleHtmxLoad);
@@ -264,7 +222,6 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
 
   .home-explainer,
   .home-link-spotlight,
-  .archive-intro,
   .article-list {
     grid-column: 1 / -1;
     justify-self: center;
@@ -273,8 +230,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     z-index: 1;
   }
 
-  .home-explainer,
-  .archive-intro {
+  .home-explainer {
     margin-inline: auto;
     max-width: none;
   }
@@ -303,9 +259,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     text-wrap: wrap;
   }
 
-  .home-explainer p:not(.eyebrow),
-  .spotlight-copy p:not(.eyebrow),
-  .archive-intro p:not(.eyebrow) {
+  .home-explainer p:not(.eyebrow) {
     color: hsl(var(--muted-foreground));
     font-size: clamp(0.98rem, 1.15vw, 1.08rem);
     line-height: 1.65;
@@ -319,11 +273,9 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     --spotlight-lime: #b8ff5f;
     --spotlight-ink: rgb(5, 8, 10);
     align-items: center;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr;
+    display: block;
     isolation: isolate;
-    margin: 0.75rem auto 1.75rem;
+    margin: 0.65rem auto 0;
     max-width: none;
     overflow: hidden;
     position: relative;
@@ -341,22 +293,6 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     width: 100%;
   }
 
-  .spotlight-copy {
-    display: grid;
-    gap: 0.2rem;
-    padding-top: 1.4rem;
-  }
-
-  .spotlight-copy h2 {
-    color: var(--clr-muted-100);
-    font-size: 1.75rem;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 1.1;
-    margin: 0;
-    text-wrap: balance;
-  }
-
   .eyebrow {
     color: var(--spotlight-cyan, hsl(var(--neon-cyan)));
     font-size: 0.78rem;
@@ -372,47 +308,8 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     grid-template-columns: 1fr;
   }
 
-  .archive-intro {
-    align-items: end;
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: minmax(0, 1fr);
-    margin-top: clamp(1.5rem, 4vw, 3rem);
-    padding-top: 1.4rem;
-    position: relative;
-  }
-
-  .archive-intro::before {
-    background:
-      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent),
-      linear-gradient(
-        90deg,
-        var(--spotlight-cyan, hsl(var(--neon-cyan))),
-        var(--spotlight-lime, #b8ff5f),
-        var(--spotlight-pink, hsl(var(--neon-pink)))
-      );
-    content: "";
-    height: 1px;
-    inset: 0 auto auto 0;
-    opacity: 0.82;
-    position: absolute;
-    width: 100%;
-  }
-
-  .archive-intro h2 {
-    color: var(--clr-muted-100);
-    font-size: 1.75rem;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: 1.1;
-    margin: 0;
-    max-width: 18ch;
-    text-shadow: none;
-    text-wrap: balance;
-  }
-
   .article-list {
-    margin-top: clamp(1rem, 3vw, 2rem);
+    margin-top: clamp(0.6rem, 1.5vw, 1rem);
     max-width: none;
   }
 
@@ -430,7 +327,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
       0 0 1rem color-mix(in srgb, var(--link-accent), transparent 84%);
     color: var(--clr-muted-100);
     display: grid;
-    min-height: 5.6rem;
+    min-height: 4.4rem;
     overflow: hidden;
     padding: 1rem;
     position: relative;
@@ -532,24 +429,11 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
 
   @media (min-width: 720px) {
     .home-link-spotlight {
-      grid-template-columns: minmax(15rem, 0.72fr) minmax(25rem, 1fr);
-      margin-top: 1.25rem;
+      margin-top: 0.85rem;
     }
 
     .spotlight-actions {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .spotlight-copy {
-      padding-block: 1.2rem;
-    }
-
-    .spotlight-copy h2 {
-      font-size: 2rem;
-    }
-
-    .archive-intro h2 {
-      font-size: 2rem;
     }
 
     .link-title {

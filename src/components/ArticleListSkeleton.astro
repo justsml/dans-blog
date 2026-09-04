@@ -11,12 +11,10 @@ const { nextUrl } = Astro.props as Props;
     <div
       class="article-list-loader"
       hx-get={nextUrl}
-      hx-trigger="revealed"
+      hx-trigger="click"
       hx-swap="outerHTML"
-      role="status"
-      aria-label="Loading more posts"
     >
-      <span class="article-list-loader__indicator" aria-hidden="true"></span>
+      <button class="article-list-loader__button" type="button">More posts</button>
     </div>
   )
 }
