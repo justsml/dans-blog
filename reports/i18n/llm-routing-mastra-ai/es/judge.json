@@ -1,32 +1,96 @@
 {
-  "selectedCommit": "3e1478bf960fd904ffcbd28f2d5077de013e8d5b",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "353096182f0b7b1dc72c21f71181cf439f5f4874",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 100,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 95,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 90,
+    "languagePurity": 100
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and professional translation while maintaining the technical context. It correctly translates 'parsing' and 'evals' in a way that sounds natural to a Spanish-speaking developer. It also correctly handles the relative paths in the 'Read the Series' section, ensuring they point to the correct locations without unnecessary '../' prefixes that might break depending on the routing setup, though it follows the English source's logic. The tone is direct and matches the original author's style.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "2. [Seguridad y Protecciones](../mastra-security-guardrails)",
+      "replacement": "2. [Seguridad y Protecciones](/mastra-security-guardrails)",
+      "reason": "The English source uses root-relative paths for internal links. Adding '../' breaks these links in the production routing environment."
+    },
+    {
+      "priority": "high",
+      "match": "3. [MCP e Integraciones de Herramientas](../mastra-mcp-tool-integrations)",
+      "replacement": "3. [MCP e Integraciones de Herramientas](/mastra-mcp-tool-integrations)",
+      "reason": "The English source uses root-relative paths for internal links. Adding '../' breaks these links in the production routing environment."
+    },
+    {
+      "priority": "high",
+      "match": "4. [Flujos de trabajo y Memoria](../mastra-workflows-memory)",
+      "replacement": "4. [Flujos de trabajo y Memoria](/mastra-workflows-memory)",
+      "reason": "The English source uses root-relative paths for internal links. Adding '../' breaks these links in the production routing environment."
+    }
+  ],
+  "rationale": "The selected candidate provided a complete translation including frontmatter and maintained the technical structure. However, it incorrectly converted root-relative internal links (starting with /) to relative links (starting with ../) in the 'Read the Series' section. These must be restored to match the source's routing logic. The translation of 'so hot right now' as 'tan candente ahora' is a good cultural adaptation of the meme.",
+  "confidence": "low",
+  "confidenceScore": 0.33,
+  "confidenceSignals": [
+    "3 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "llm-routing-mastra-ai",
   "locale": "es",
   "candidateCommits": [
-    "3e1478bf960fd904ffcbd28f2d5077de013e8d5b",
-    "ba548ebd1755e09d399bd6826d5c2e287c562aec",
-    "aab829c8860f02df316795b1fa6542e568a49849",
-    "f0b2dfdb14e35c7eab29b92487f389ad213c45d2",
-    "575e0dcebb70237cfafff227c21c78f76ce9c74d",
-    "81acc624b6c091d3bc750abfdb8b6b02a1dc56af",
-    "5673b16128966a85ac42d041501b08ef59a52d48"
+    "353096182f0b7b1dc72c21f71181cf439f5f4874",
+    "96b9296fd0039efa9aa662467bd4754ffa0b7c5d"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "subTitle: 'Ruteo de LLM, tan candente ahora'",
+      "replacement": "subTitle: \"Enrutamiento de LLM, muy de moda ahora\"",
+      "reason": "The phrase 'tan candente ahora' is a literal translation of 'so hot right now' that sounds unnatural in Spanish. 'Muy de moda' or 'en tendencia' is better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Seguridad y Protecciones](../mastra-security-guardrails)",
+      "replacement": "Seguridad y Protecciones](/mastra-security-guardrails)",
+      "reason": "The English source uses absolute paths for internal links in the series list. The candidate added ../ which breaks the link if the site uses root-relative routing for these specific links.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "3. [MCP e Integraciones de Herramientas](../mastra-mcp-tool-integrations)",
+      "replacement": "3. [MCP e Integraciones de Herramientas](/mastra-mcp-tool-integrations)",
+      "reason": "The English source uses root-relative paths for internal links. Adding '../' breaks these links in the production routing environment.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "4. [Flujos de trabajo y Memoria](../mastra-workflows-memory)",
+      "replacement": "4. [Flujos de trabajo y Memoria](/mastra-workflows-memory)",
+      "reason": "The English source uses root-relative paths for internal links. Adding '../' breaks these links in the production routing environment.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-routing-mastra-ai --locale es --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug llm-routing-mastra-ai --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-routing-mastra-ai --locale es --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/es/index.mdx failed structural parity with score 0.969 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-02--llm-routing-mastra-ai/es/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
