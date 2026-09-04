@@ -10,42 +10,35 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-
-## Batch Judge Telemetry
-### Round 1, Batch 1
-- Runtime seconds: 4.71
-- Input tokens: 16609
-- Output tokens: 200
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.008904
-
-### Round 1, Batch 2
-- Runtime seconds: 2.70
-- Input tokens: 13658
-- Output tokens: 237
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007540
+- Confidence: high (0.888)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 1.96
-- Input tokens: 13434
-- Output tokens: 165
+- Runtime seconds: 3.27
+- Input tokens: 8396
+- Output tokens: 330
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.007212
+- OpenRouter cost credits: 0.005188
+- Estimated cost: $0.005188
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 2.69
+- Input tokens: 11614
+- Output tokens: 267
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.006608
+- Estimated cost: $0.006608
+
+## Judge Suggestions
+1. Pass 1: applied high priority suggestion. Match: "title: ''" Replacement: "title: \"Hör auf, unzuverlässige Agenten zu bauen: Nutze Workflows & Memory\"" Reason: The frontmatter title is empty in the candidate, which is a major omission for a reader-facing document. Note: Applied exact replacement to selected MDX.
+2. Pass 1: applied medium priority suggestion. Match: "[Mastra Workflows Dokumentation](https://mastra.ai/docs/workflows/overview)" Replacement: "[Mastra Workflows-Dokumentation](https://mastra.ai/docs/workflows/overview)" Reason: German compound nouns should be hyphenated or joined; 'Workflows Dokumentation' is a common grammatical error (Deppenleerzeichen). Note: Applied exact replacement to selected MDX.
 
 ## Candidates
 - current src/content/posts/2026-01-05--mastra-workflows-memory/de/index.mdx
-- be00f5608cb8e352eb5183e11d11a0bae6e972cb i18n candidate(de): mastra-workflows-memory via openrouter/qwen/qwen3.6-plus
-- 33d68be60e5dba00e387a8a85448d9903d89d022 i18n candidate(de): mastra-workflows-memory via openrouter/deepseek/deepseek-v4-flash
-- f043e69a6ddbdf86843f3ea1df4e7bc986842651 i18n candidate(de): mastra-workflows-memory via openrouter/minimax/minimax-m2.7
-- 858b5b725c85ccfd905fb98c34a4f6229e8042f0 i18n candidate(de): mastra-workflows-memory via openrouter/openai/gpt-oss-120b:nitro
-- 1f1175e700c7f8e05b9a8803814c1c2ae5a98105 i18n candidate(de): mastra-workflows-memory via openrouter/qwen/qwen3-32b:nitro
+- 61cebdaaf4100a45580a9de981734fc392b29e22 i18n candidate(de): mastra-workflows-memory via openrouter/deepseek/deepseek-v4-flash

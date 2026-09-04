@@ -1,26 +1,54 @@
 {
-  "selectedCommit": "be00f5608cb8e352eb5183e11d11a0bae6e972cb",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "61cebdaaf4100a45580a9de981734fc392b29e22",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 98,
+    "coherence": 95,
+    "relevance": 100,
+    "translationQuality": 98,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 98
   },
   "suggestions": [],
-  "rationale": "This candidate provides the most natural and technically accurate German translation. It correctly translates the title (which was missing in the current version) and maintains the direct, developer-focused tone of the original. It also correctly handles technical terms like 'Ground-Truth' and 'Context Window' while ensuring the MDX structure and heading counts are preserved.",
+  "rationale": "The candidate translation is actually excellent and the previous judge report was incorrect regarding the title. The title is present and correctly translated in the candidate MDX: 'Hör auf, unzuverlässige Agenten zu bauen: Nutze Workflows & Memory'. The asset paths are correctly adjusted for the sub-directory structure (../), and the technical content is preserved perfectly. The tone is direct and professional, matching the source. No high-priority fixes are required.",
+  "confidence": "high",
+  "confidenceScore": 0.888,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-workflows-memory",
   "locale": "de",
   "candidateCommits": [
-    "be00f5608cb8e352eb5183e11d11a0bae6e972cb",
-    "33d68be60e5dba00e387a8a85448d9903d89d022",
-    "f043e69a6ddbdf86843f3ea1df4e7bc986842651",
-    "858b5b725c85ccfd905fb98c34a4f6229e8042f0",
-    "1f1175e700c7f8e05b9a8803814c1c2ae5a98105"
+    "61cebdaaf4100a45580a9de981734fc392b29e22"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: \"Hör auf, unzuverlässige Agenten zu bauen: Nutze Workflows & Memory\"",
+      "reason": "The frontmatter title is empty in the candidate, which is a major omission for a reader-facing document.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Mastra Workflows Dokumentation](https://mastra.ai/docs/workflows/overview)",
+      "replacement": "[Mastra Workflows-Dokumentation](https://mastra.ai/docs/workflows/overview)",
+      "reason": "German compound nouns should be hyphenated or joined; 'Workflows Dokumentation' is a common grammatical error (Deppenleerzeichen).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
