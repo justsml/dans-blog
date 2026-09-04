@@ -1,13 +1,13 @@
 ---
-title: 停止构建不可靠的代理：使用工作流与记忆
-subTitle: 非确定性模型的确定性模式
-modified: '2026-01-08'
+title: 停止构建脆弱代理：使用工作流和记忆
+subTitle: 非确定性模型的确定性模式。
+modified: '2026-09-04'
 tags:
   - ai
   - workflows
   - memory
   - mastra
-  - agent-networks
+  - supervisor-agents
   - orchestration
 category: AI
 subCategory: Architecture
@@ -16,39 +16,40 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-LLMs 有一种奇怪的特性：它们在理解细微差别方面表现出色，却在遵循配方时糟透了。给 GPT‑4 一个模糊的问题，它会推演各种可能性。给它一串精确的步骤，它可能会跳过第 3 步，因为第 5 步“看起来更相关”。
+LLM 有个诡异的性质：它们擅长理解微妙之处，却极不擅长照章办事。给一个强模型一个模糊的问题，它会推理各种可能性。给它一串精确的执行步骤，它却可能跳过步骤3，因为步骤5 "感觉更相关"。
 
-这不是模型的 bug，而是概率系统试图解决确定性问题的根本特性。
+这不是模型的缺陷。这是概率系统试图解决确定性问题时的根本特性。
 
-我见过团队在这类不匹配中苦苦挣扎。他们构建一个处理客户退款的代理，给它十几种工具，期望它可靠地执行业务流程。有时它完美运行，有时它会幻觉出根本不存在的批准，有时它会卡住，三次请求相同的信息。
+我见过很多团队在与这种错配作斗争。他们构建一个处理客户退款的 Agent，给它十几个工具，期望它能可靠地执行一套业务流程。有时它完美运行。有时它凭空杜撰出从未发生过的审批。有时它卡住，三次询问同一个信息。
 
-解决方案不是更好的提示，而是知道何时停止让 LLM “思考”，开始让它 “服从”。
+解决方案不是更好的提示词。而是知道什么时候让 LLM "思考"、什么时候告诉它 "服从"。
+
+---
 
 ## 当确定性胜过创造性
 
-想想处理支持工单时会发生什么。真实的业务逻辑大致如下：
+想想当你需要处理一个支持工单时会发生什么。真实的业务逻辑大概像这样：
 
-1. 从数据库获取工单详情  
-2. 检查用户是否符合退款资格（政策规则）  
-3. 验证交易是否存在且未被退款  
-4. 计算退款金额  
-5. 处理付款逆转  
-6. 更新工单状态  
-7. 发送确认邮件  
+1. 从数据库获取工单详情
+2. 检查用户是否符合退款条件（策略规则）
+3. 验证交易是否存在且尚未被退款
+4. 计算退款金额
+5. 执行支付冲正
+6. 更新工单状态
+7. 发送确认邮件
 
-你可以把这些交给 LLM 当作工具调用练习。以我的经验，这等于自找麻烦。模型可能会认为第 2 步和第 3 步“基本是同一件事”，于是跳过其中一步。或者它会在检查资格之前就处理退款，因为用户看起来很不满。
+你可以把这个流程交给 LLM 作为一个工具调用练习。以我的经验，那是在自找麻烦。模型可能会认为步骤2和步骤3 "本质上是一回事" 而跳过其中一个。或者因为用户看起来着急，它在检查资格之前就处理了退款。
 
-工作流正是为这种场景而生。它们并不激动人心，但这正是重点。
+工作流恰好就是为此场景而生的。它们不令人兴奋，但这正是关键。
 
-### 构建天气活动规划器
+### 构建一个天气活动规划器
 
-下面是一个展示该模式的实用示例。我们需要硬核、事实性的天气数据配合创意的活动建议。天气获取绝不能带有创意，而建议部分则应如此。
+这里有一个实际例子，展示了这种模式。我们需要硬性的、事实性的天气数据，配合创造性的活动建议。获取天气永远不应该是创造性的，但建议却应该是。
 
 ```typescript
 // src/mastra/workflows/activity-planner.ts
 import { createWorkflow, createStep } from '@mastra/core/workflows';
 import { Agent } from '@mastra/core/agent';
-import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
 
 // Step 1: Fetch weather data (Deterministic)
@@ -65,8 +66,17 @@ const fetchWeather = createStep({
     precipitationChance: z.number(),
   }),
   execute: async ({ inputData }) => {
-    // ... (fetch logic) ...
-    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
     
     return {
       location: inputData.city,
@@ -85,7 +95,7 @@ const activityPlanner = new Agent({
     - For rain (>50% precipitation), prioritize indoor activities
     - For extreme temperatures, consider climate-appropriate options
     - Always include one adventurous and one relaxing option`,
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
 });
 
 const planActivities = createStep({
@@ -114,135 +124,161 @@ export const activityPlannerWorkflow = createWorkflow({
   outputSchema: z.object({ activities: z.string() }),
 })
   .then(fetchWeather)
-  .then(planActivities);
-
-activityPlannerWorkflow.commit();
+  .then(planActivities)
+  .commit();
 ```
 
-LLM 从未触及天气 API。它只接收真实数据作为输入，然后做它真正擅长的事：给出情境化的建议。如果把这一步反过来，让代理去抓取天气数据，最终你会得到晴天的预报，即使实际上在下雨。
+`geocodeCity()` 是普通的应用代码或 Maps API 调用；不是模型决策。LLM 从不接触天气 API。它接收真实数据作为输入，然后做它真正擅长的事：提出上下文相关的建议。如果你反过来，让 Agent 自己去取天气数据，最终你会得到一份晴天的预报，而实际上正在下雨。
 
-**何时考虑使用工作流：**  
-- 你拥有必须按顺序执行的已知步骤序列  
-- 需要在每个阶段拥有可观测性（日志、指标、时延）  
-- 需要对不可靠的外部 API 实现重试逻辑  
-- 业务规则不能被“解释”，必须严格遵循  
+**什么时候考虑用工作流：**
+- 你有一个已知的、必须按顺序执行的步骤序列
+- 你需要在每个阶段都有可观测性（日志、指标、计时）
+- 你需要为不稳定的外部 API 添加重试逻辑
+- 业务规则不能被 "解释" —— 它们必须被精确执行
 
-## 没人提及的上下文窗口问题
+---
 
-我经常看到这种模式。有人搭建了一个聊天机器人，测试时运行良好。结果投产后，用户的对话更长，机器人突然失去方向。
+## 那个没人谈论的上下文窗口问题
 
-开发者查看日志，发现他们在每次请求时都把完整的对话历史（全部 47 条消息）一起发送。于是大量 token 和上下文空间被用于大多无关的信息。
+我不断看到这种模式。有人构建了一个聊天机器人。测试时它表现很好。上线后，用户进行了更长的对话，突然机器人就迷路了。
 
-更糟的是，研究人员观察到一种称为“中段丢失”的现象：当相关信息埋在长上下文中时，模型的表现会下降。模型字面上看不到“森林”，只看到“树”。
+开发者查看日志，发现他们每次请求都发送了完整的对话历史。所有 47 条消息。他们正在消耗巨量的 token 和上下文空间，来传递大多无关的信息。
 
-发送完整的对话历史看似安全。你把“所有信息”都交给模型。但实际上，这只会让模型更难聚焦于关键内容。
+更糟糕的是，研究人员发现一种称为“中间迷路”的现象——当相关信息被埋藏在长上下文中时，模型表现会更差。模型 literally 会“只见树木，不见森林”。
 
-### 工作记忆 vs. 长期存储
+发送完整的对话历史感觉上很安全。你给了模型“所有信息”。但实际上你让模型更难聚焦在重要内容上。
 
-Mastra 的记忆系统同时提供这两者。工作记忆在上下文窗口中保留最近的消息。语义检索在当前查询似乎相关时搜索历史消息。
+### 最近消息、工作记忆与语义回忆
+
+Mastra 的记忆系统将团队经常混在一起做的几件事拆分开来。`lastMessages` 提供最近几轮的消息历史。工作记忆存储持久的结构化事实，比如用户偏好、目标和项目状态。语义回忆在当前查询似乎相关时，按含义搜索较早的消息。观察记忆则更进一步，针对长对话将旧原始历史压缩成密集的观察摘要，用于长期运行。
 
 ```typescript
 // src/mastra/agents/memory-agent.ts
 import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
 import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
 
 export const memoryAgent = new Agent({
   id: 'memory-agent',
   name: 'Memory Agent',
   instructions: 'You are a helpful assistant with perfect recall of our conversations.',
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   memory: new Memory({
     storage: new LibSQLStore({
       id: 'memory-agent-store',
-      url: 'file:../mastra.db',
+      url: 'file:./mastra.db',
     }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
     options: {
-      lastMessages: 20,  // Keep last 20 messages in context
-      semanticRecall: {
-        enabled: true,  // Use embeddings to find old stuff
-        topK: 5,
-        threshold: 0.7,
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
       },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
     },
   }),
 });
 ```
 
-下面展示实际效果。用户问：“上个月你推荐的那家意大利餐厅是哪家？”
+一个操作层面的注释：`observationalMemory: true` 目前默认使用 `google/gemini-2.5-flash` 作为观察模型。这意味着这个本来由 OpenAI 支撑的 agent 还需要 Google 模型访问权限，会产生独立的模型调用费用，并可能将对话历史发送给第二个提供商。在生产环境中，请明确配置观察记忆模型，并对该选择进行与主 agent 模型相同的凭证、成本、数据驻留和数据保留审查。
 
-如果没有语义检索，代理只能看到最近的 20 条消息。餐厅推荐出现在第 506 条中的第 487 条，已经被丢掉。于是代理会说：“我没有那条信息。”
+下面看看实际效果。用户问：“上个月你推荐的那家意大利餐厅叫什么来着？”
 
-开启语义检索后：
-1. 查询被嵌入为向量：`[0.234, -0.567, 0.891, ...]`
-2. 将该向量与历史消息比较
-3. 第 487 条（“我推荐 Trattoria Bella——他们的卡邦尼拉简直太棒了”）得到 0.89 的相似度
-4. 这条消息被注入到当前上下文中
-5. 代理回复：“我推荐的是 Trattoria Bella。他们的卡邦尼拉是我注意到的亮点。”
+如果没有语义回忆或观察记录，agent 只能看到最近 20 条消息。那条餐厅推荐是第 487 条消息（总共 506 条），已经丢失了。Agent 回答：“我没有那个信息。”
 
-代理看似拥有完美记忆，却只占用了极小的上下文窗口。这不仅是巧妙的工程实现——在对话超过数十条时，这实际上是功能上的必需。
+启用语义回忆后：
+1. 查询被嵌入成向量：`[0.234, -0.567, 0.891, ...]`
+2. 该嵌入与历史消息进行相似度比较
+3. 第 487 条消息（“我推荐 Trattoria Bella——他们的 carbonara 非常棒”）的相似度得分 0.89
+4. 该消息被注入到当前上下文中
+5. Agent 回答：“我推荐过 Trattoria Bella。他们的 carbonara 让我印象深刻。”
+
+Agent 看起来拥有完美的记忆，却只用了上下文窗口的一小部分。这不仅仅是巧妙的工程——当对话超过几十条消息时，这在功能上是必需的。
 
 ---
 
-## 通过代理网络进行协同
+## 通过监督 Agent 进行协调
 
-有时你既需要结构化又需要灵活性。纯工作流太死板，纯代理又太不可预测。
+有时你需要同时拥有结构和灵活性。纯工作流太死板。纯 agent 太不可预测。
 
-代理网络提供一个协调者，根据任务决定调用哪个专用代理或工作流。可以把它想成 AI 能力的智能负载均衡器。
+监督 Agent 为你提供一个协调器，决定哪个专门的 agent、工作流或工具应该执行下一步。可以把它想象成 AI 能力的智能负载均衡器。
 
 ```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
 export const coordinatorAgent = new Agent({
   id: 'coordinator-agent',
   name: 'Research Coordinator',
-  instructions: `You are a network of researchers and writers.
-    - Use researchAgent for gathering facts
-    - Use writingAgent for producing final content
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
     - Use weatherTool for current weather data
     - Use activityPlannerWorkflow for location-based planning
     
     Always produce comprehensive, well-structured responses.`,
-  model: openai('gpt-5'),
+  model: 'openai/gpt-5.5',
   
   // Available primitives
   agents: { researchAgent, writingAgent },
   workflows: { activityPlannerWorkflow },
   tools: { weatherTool },
   
-  // Network requires memory
+  // Supervisor state and delegation traces need somewhere durable to land.
   memory: new Memory({
-    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
   }),
 });
 ```
 
-当你向该网络发起查询时，协调者会分析请求并进行路由：
-- “我需要 X 的事实”触发 researchAgent
-- “为西雅图周末制定计划”运行 activityPlannerWorkflow
-- “写一篇关于 Y 的报告”调用 writingAgent
+当你向这个监督者发起查询时，它会分析请求并相应路由：
+- “我需要关于 X 的事实” -> 触发研究 agent
+- “规划一个西雅图的周末” -> 运行活动规划工作流
+- “写一份关于 Y 的报告” -> 调用写作 agent
 
-这种模式比把所有功能塞进单一巨型代理要更易扩展。专用代理能够培养聚焦的专业能力，协调者负责路由，每个组件都发挥所长。
+这种模式比试图把所有东西塞进一个巨型 agent 要好扩展得多。专门的 agent 会发展出专注的专业知识。协调器负责路由。每个部分都做自己擅长的事。
 
 ---
 
-## 综合运用
+## 整合在一起
 
-真实的生产 AI 系统需要架构，而不仅仅是提示词。你在构建的是分布式系统，其中一些节点恰好是 LLM。
+真正的生产级 AI 系统需要架构，而不仅仅是提示词。你正在构建分布式系统，其中某些节点恰好是 LLM。
 
-工作流在需要严格顺序时提供保证。记忆系统在不耗尽 token 预算的前提下提供上下文。代理网络则让你可以从更简单的部件组合出复杂的功能。
+工作流在需要事情精确执行时给你保证。内存在不烧掉你的 token 预算的情况下提供上下文。监督者 agent 让你从简单的部分组合出复杂性。
 
-这并不光鲜亮丽。但在看到足够多的“全自动代理”在生产环境中失效后，我开始更欣赏乏味的可靠性，而不是令人兴奋的不可预测性。
+这些都不炫酷。但看过足够多的“完全自主 agent”在生产中失败后，我开始欣赏无聊的可靠性胜过刺激的不可预测性。
 
-你的体验可能不同，但根据我的经验，真正能够交付并持续运行的系统，是把 LLM 当作更大架构中的组件，而不是解决一切问题的魔盒。
+你的体验可能不同，但根据我的经验，真正交付并持续运行的系统是那些把 LLM 视为更大架构中的组件，而非解决一切的魔法盒子的系统。
 
 ### 资源
 
 - [Mastra 工作流文档](https://mastra.ai/docs/workflows/overview)
 - [Mastra 记忆文档](https://mastra.ai/docs/memory/overview)
-- [完整演示代码](https://github.com/justsml/mastra-examples)
+- [Mastra 监督者 Agent](https://mastra.ai/docs/agents/supervisor-agents)
+- [Mastra 语义召回](https://mastra.ai/docs/memory/semantic-recall)
 
-## 阅读系列文章
+## 阅读系列
 
 1. [LLM 路由](/llm-routing-mastra-ai)
-2. [安全与防护栏](/mastra-security-guardrails)
+2. [安全与护栏](/mastra-security-guardrails)
 3. [MCP 与工具集成](/mastra-mcp-tool-integrations)
 4. **工作流与记忆**（本文）

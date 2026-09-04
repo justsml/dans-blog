@@ -10,19 +10,20 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
+- Confidence: high (0.885)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.69
-- Input tokens: 14889
-- Output tokens: 234
+- Runtime seconds: 2.48
+- Input tokens: 7947
+- Output tokens: 210
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.008146
-- Estimated cost: $0.008146
+- OpenRouter cost credits: 0.004603
+- Estimated cost: $0.004603
 
 ## Candidates
 - current src/content/posts/2026-01-05--mastra-workflows-memory/zh/index.mdx
-- 450a663884b11417320c006eae143ab7c74a1f1b i18n candidate(zh): mastra-workflows-memory via openrouter/openai/gpt-oss-120b:nitro
-- f5e7f0a341fc5c20d0dfd851eb4fa5f5bb8abdd4 i18n candidate(zh): mastra-workflows-memory via deepseek/deepseek-v4-flash
-- acda42511ee63808cd070d4469acd6911988559d i18n candidate(zh): mastra-workflows-memory via openrouter/qwen/qwen3-32b:nitro
+- 8dec9c9d9003d934cdd3a4d0b0d7b821e6bbec84 i18n candidate(zh): mastra-workflows-memory via openrouter/deepseek/deepseek-v4-flash
