@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 071449f22d81d262d8b49ce76844230d35f33980
-- Selected model: openrouter/deepseek/deepseek-v4-flash
+- Selected candidate: b5104880d313d97b93e2d25e7d94058be52cbf8d
+- Selected model: openrouter/qwen/qwen3.6-plus
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.887)
 
-The translation is excellent, capturing Dan's direct and slightly informal tone ('so hot right now', 'turning the middle into soup'). It correctly handles technical terms and code blocks. However, the internal links in the 'Read the Series' section were corrupted with '..../' prefixes which will break the site navigation.
+The translation is excellent and captures the technical nuances and tone perfectly. The previous judge report claimed the title and subTitle were empty, but looking at the provided Arabic MDX content, they are clearly present and well-translated. The asset paths are correctly adjusted for the sub-directory structure, and the code blocks are preserved exactly as required.
