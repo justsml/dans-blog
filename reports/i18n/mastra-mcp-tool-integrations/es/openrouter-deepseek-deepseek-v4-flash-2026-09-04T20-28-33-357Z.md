@@ -1,0 +1,294 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: es
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 51.28
+- Input tokens: 6392
+- Output tokens: 5771
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.002089
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Tu agente de IA es inútil sin esto
+subTitle: Por qué MCP es el USB-C de la inteligencia artificial.
+modified: '2026-09-04'
+tags:
+  - ai
+  - mcp
+  - tools
+  - integrations
+  - mastra
+  - salesforce
+  - apis
+category: AI
+subCategory: Integration
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+Has construido un agente de IA. Quizás incluso uno bueno. Los prompts son precisos, el modelo es rápido y las respuestas se sienten naturales.
+
+Pero entonces alguien le pide que consulte Salesforce para obtener un registro de cliente. O que saque los últimos tickets de Jira. O que busque en tu documentación interna.
+
+Y tu hermoso agente simplemente… no puede.
+
+Este es el problema de integración al que toda plataforma de IA termina enfrentándose. Tu agente necesita manos. Necesita ojos para ver tus sistemas de negocio reales. Sin ellos, solo estás ejecutando un chatbot caro.
+
+¿La solución tradicional? Escribir un wrapper de API personalizado para cada servicio que quieras conectar. Leer su documentación, manejar su autenticación, lidiar con sus límites de tasa, rezar para que no cambien sus endpoints el mes que viene. Y luego hacerlo de nuevo para el siguiente servicio. Y el siguiente.
+
+El Model Context Protocol cambia este cálculo por completo.
+
+---
+
+## Lo que MCP realmente resuelve
+
+Piensa en USB antes del USB-C. Tenías Mini-USB, Micro-USB, conectores propietarios de Apple y un cajón lleno de cables que solo funcionaban con dispositivos específicos. USB-C no solo añadió un nuevo conector: estableció un estándar que significaba que cualquier cable podía funcionar con cualquier dispositivo.
+
+MCP está haciendo lo mismo para las integraciones de herramientas de IA.
+
+En lugar de escribir código personalizado para conectar tu agente a Salesforce, HubSpot, GitHub o cualquier otro servicio, implementas el protocolo una vez (o descargas un servidor preconstruido), y cualquier agente compatible con MCP puede hablar con él de inmediato.
+
+El protocolo maneja la capa de comunicación. Tú solo defines qué hacen tus herramientas y qué datos necesitan.
+
+---
+
+## Configuración de múltiples integraciones
+
+Mastra tiene soporte nativo para MCP a través de su [`MCPClient`](https://mastra.ai/docs/mcp/overview). Puedes conectar tanto herramientas locales (ejecutándose como procesos hijo) como servicios remotos (ejecutándose en su propia infraestructura).
+
+Aquí hay una configuración representativa que conecta mapas, clima y búsqueda local en Wikipedia:
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  id: 'navigation-mcp',
+  servers: {
+    // Local tool (Stdio)
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // Maps & Navigation (Remote/HTTP)
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
+        },
+      },
+    },
+    // Weather Service Integration
+    weather: {
+      url: new URL(process.env.WEATHER_MCP_URL!),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
+    },
+  },
+});
+```
+
+El cliente gestiona el ciclo de vida de la conexión, maneja el lanzamiento de procesos para herramientas locales y mantiene conexiones HTTP para servidores remotos. No tocas sockets ni stdio directamente.
+
+## Conectando Herramientas a Agentes
+
+Una vez que tienes tu cliente MCP configurado, darle esas herramientas a un agente es directo:
+
+```typescript
+// src/mastra/agents/navigation-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { mcpClient } from '../mcp';
+
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: 'Navigation & Directions Assistant',
+  instructions: `You are a helpful navigation assistant that provides route planning and travel advice.
+    - Always confirm the start and destination locations
+    - Use Google Maps tools to find optimal routes
+    - Check weather conditions along the route
+    - Provide estimated travel times and suggest alternatives if weather is poor
+    - Include relevant details like traffic, road conditions, and points of interest
+    - Keep responses clear and actionable`,
+  model: 'openai/gpt-5.5',
+  tools: await mcpClient.listTools(), // <--- Esta es la línea mágica
+});
+```
+
+Cuando un usuario pregunta: *"¿Cuál es la mejor ruta de San Francisco a Lake Tahoe, y debería preocuparme por el clima?"*
+
+El agente lee las definiciones de herramientas disponibles, se da cuenta de que tiene acceso a herramientas de enrutamiento de Google Maps y pronóstico del clima, las ejecuta con los parámetros correctos y responde con una ruta óptima más las condiciones climáticas actuales a lo largo del camino.
+
+No escribiste ni una sola línea de código de la API de Google Maps ni de integración con servicios meteorológicos.
+
+---
+
+## Autenticación por Usuario
+
+Hay un error de seguridad fácil de cometer aquí: codificar credenciales.
+
+Si pones una única clave de API de Google Maps en tus variables de entorno y te olvidas, todos los usuarios comparten la misma cuota y límites de velocidad. Más importante aún, si usas servicios que almacenan preferencias de usuario (como ubicaciones guardadas o rutas favoritas), todos verían los mismos datos. Esto funciona bien para demos. Es un lastre en producción.
+
+Mastra lo soporta permitiéndote crear clientes MCP dinámicamente con credenciales específicas de cada usuario y pasar sus conjuntos de herramientas en el momento de la solicitud. Sigues teniendo la plomería habitual de SaaS: almacenar tokens de forma segura, refrescarlos y decidir qué usuarios pueden conectar qué servicios.
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // Crea un cliente para ESTE usuario específico
+  const userMcp = new MCPClient({
+    id: `maps-${userCredentials.userId}`,
+    servers: {
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+        requestInit: {
+          headers: {
+            // Clave o token de API específico del usuario
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
+        },
+      },
+    },
+  });
+
+  try {
+    const agent = mastra.getAgent('navigationDirectionsAgent');
+    
+    // Inyecta herramientas en tiempo de ejecución
+    const response = await agent.generate(userPrompt, {
+      toolsets: await userMcp.listToolsets(),
+    });
+
+    return response;
+  } finally {
+    await userMcp.disconnect();
+  }
+}
+```
+
+Cada usuario obtiene su propio conjunto de herramientas aislado con sus propias cuotas de API y preferencias. Las ubicaciones guardadas del Usuario A se mantienen privadas, el historial de rutas del Usuario B está separado. Así funcionan los agentes SaaS multiinquilino en la práctica.
+
+---
+
+## Construyendo Herramientas Compuestas
+
+A veces necesitas combinar múltiples herramientas MCP en una sola operación. Quizás quieras planificar una ruta que tenga en cuenta tanto el tráfico en tiempo real como las condiciones climáticas a lo largo del camino.
+
+Puedes envolver herramientas MCP en definiciones de herramientas personalizadas:
+
+```typescript
+import { createTool } from '@mastra/core/tools';
+import { z } from 'zod';
+
+type DirectionsResult = {
+  waypoints: Array<{ latitude: number; longitude: number }>;
+  [key: string]: unknown;
+};
+
+type ForecastResult = {
+  alerts?: unknown[];
+  severe?: boolean;
+};
+
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: 'Planifica la ruta óptima considerando tráfico y condiciones climáticas',
+  inputSchema: z.object({
+    origin: z.string(),
+    destination: z.string(),
+  }),
+  outputSchema: z.object({
+    route: z.record(z.string(), z.unknown()),
+    weatherAlerts: z.array(z.unknown()),
+    recommendation: z.string(),
+  }),
+  execute: async ({ origin, destination }, executionContext) => {
+    const tools = await mcpClient.listTools();
+
+    // 1. Obtén la ruta base de Google Maps
+    const routeData = await tools.googleMaps_getDirections.execute(
+      { origin, destination },
+      executionContext,
+    ) as DirectionsResult;
+
+    // 2. Verifica el clima a lo largo de la ruta
+    const weatherData = await tools.weather_getForecast.execute(
+      { coordinates: routeData.waypoints },
+      executionContext,
+    ) as ForecastResult;
+
+    // 3. Devuelve la ruta mejorada con advertencias climáticas
+    return {
+      route: routeData,
+      weatherAlerts: weatherData.alerts ?? [],
+      recommendation: weatherData.severe
+        ? 'Considera retrasar el viaje'
+        : 'Seguro para viajar',
+    };
+  },
+});
+```
+
+Las herramientas actuales de Mastra reciben primero la entrada validada y luego el contexto de ejecución. Pasar ese contexto a las herramientas MCP descubiertas preserva el estado del ámbito de la solicitud, el trazado y la cancelación. Los nombres y tipos de resultado anteriores son contratos de ejemplo; usa los nombres y esquemas que anuncien los servidores MCP a los que realmente te conectes.
+
+Esto te da un control fino sobre exactamente cómo interactúan las herramientas, mientras sigues aprovechando el protocolo MCP para el trabajo pesado.
+
+## La Aprobación Pertenece al Límite de la Herramienta
+
+MCP facilita la conexión de herramientas. Eso no significa que cada herramienta deba funcionar sin fricción.
+
+El `MCPClient` de Mastra puede requerir aprobación a nivel de servidor, ya sea para cada herramienta en ese servidor o dinámicamente por llamada:
+
+```typescript
+export const githubMcp = new MCPClient({
+  id: 'github-mcp',
+  servers: {
+    github: {
+      url: new URL(process.env.GITHUB_MCP_URL!),
+      requireToolApproval: ({ toolName, annotations }) => {
+        if (annotations?.readOnlyHint) return false;
+        if (toolName.includes('delete_')) return true;
+        return annotations?.destructiveHint ?? true;
+      },
+    },
+  },
+});
+```
+
+Esa aprobación debe seguir tratándose como una política de aplicación, no como un hechizo mágico. Las anotaciones de herramientas MCP son pistas útiles de servidores de confianza; no son un límite de seguridad por sí mismas. Para servidores de terceros, haz que el valor por defecto sea aburrido y pregunta antes de que el agente mute algo importante.
+
+---
+
+## Hacia Dónde Nos Lleva Esto
+
+Escribir clientes API personalizados para cada servicio con el que tu agente de IA necesita hablar nunca fue sostenible. Escala mal, se rompe a menudo y ata tu plataforma a implementaciones específicas.
+
+MCP no resuelve todos los desafíos de integración: la autenticación sigue siendo compleja, la limitación de tasa sigue importando, y no todos los servicios tienen un servidor MCP todavía. Pero establece una base que hace que construir plataformas de agentes sea significativamente menos doloroso.
+
+Si estás arquitectando un sistema de IA que necesita interactuar con servicios externos, entender MCP probablemente vale la pena.
+
+### Recursos
+
+- [Documentación de MCP de Mastra](https://mastra.ai/docs/mcp/overview)
+- [Registro MCP](https://registry.modelcontextprotocol.io)
+- [Klavis AI (MCP Empresarial)](https://klavis.ai)
+- [Repositorio de Mastra en GitHub](https://github.com/mastra-ai/mastra)
+
+## Lee la Serie
+
+1. [Enrutamiento LLM](../llm-routing-mastra-ai)
+2. [Seguridad y Barreras de Protección](../mastra-security-guardrails)
+3. **MCP e Integraciones de Herramientas** (Este Artículo)
+4. [Flujos de Trabajo y Memoria](../mastra-workflows-memory)
+````
