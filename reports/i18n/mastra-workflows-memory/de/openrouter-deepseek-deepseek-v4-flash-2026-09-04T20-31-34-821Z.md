@@ -1,0 +1,303 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 52.97
+- Input tokens: 6563
+- Output tokens: 6023
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002324
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: ''
+subTitle: Deterministische Muster für nicht-deterministische Modelle.
+modified: '2026-09-04'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - supervisor-agents
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+LLMs haben diese seltsame Eigenschaft: Sie sind brillant darin, Nuancen zu verstehen, aber schrecklich darin, Rezepte zu befolgen. Geben Sie einem starken Modell ein vages Problem, und es wird über Möglichkeiten nachdenken. Geben Sie ihm eine präzise Abfolge von Schritten, und es überspringt möglicherweise Schritt 3, weil Schritt 5 „relevanter erschien“.
+
+Das ist kein Fehler im Modell. Es ist eine grundlegende Eigenschaft probabilistischer Systeme, die versuchen, deterministische Probleme zu lösen.
+
+Ich habe Teams mit dieser Diskrepanz kämpfen sehen. Sie bauen einen Agenten zur Bearbeitung von Kundenrückerstattungen, geben ihm ein Dutzend Werkzeuge und erwarten, dass er zuverlässig einen Geschäftsprozess ausführt. Manchmal funktioniert es perfekt. Manchmal halluziniert es Genehmigungen, die nie stattgefunden haben. Manchmal bleibt es hängen und fragt dreimal nach denselben Informationen.
+
+Die Lösung sind nicht bessere Prompts. Es geht darum zu wissen, wann man aufhört, das LLM zum „Nachdenken“ aufzufordern, und anfängt, ihm zu sagen, dass es „gehorchen“ soll.
+
+---
+
+## Wenn Deterministisches Kreatives schlägt
+
+Denken Sie daran, was passiert, wenn Sie ein Support-Ticket bearbeiten müssen. Echte Geschäftslogik sieht in etwa so aus:
+
+1. Die Ticketdetails aus der Datenbank abrufen
+2. Prüfen, ob der Nutzer für eine Rückerstattung berechtigt ist (Richtlinienregeln)
+3. Überprüfen, ob die Transaktion existiert und noch nicht erstattet wurde
+4. Den Rückerstattungsbetrag berechnen
+5. Die Zahlungsrückbuchung durchführen
+6. Den Ticketstatus aktualisieren
+7. Bestätigungs-E-Mail senden
+
+Sie könnten dies einem LLM als Tool-Calling-Übung übergeben. Meiner Erfahrung nach ist das eine Einladung zu Problemen. Das Modell könnte entscheiden, dass Schritt 2 und 3 „im Grunde dasselbe“ sind, und einen überspringen. Oder es könnte die Rückerstattung vor der Berechtigungsprüfung durchführen, weil der Nutzer verärgert wirkte.
+
+Workflows existieren genau für dieses Szenario. Sie sind nicht aufregend, aber das ist der Punkt.
+
+### Erstellen eines Aktivitätsplaners für das Wetter
+
+Hier ist ein praktisches Beispiel, das das Muster zeigt. Wir benötigen harte, faktische Wetterdaten, gepaart mit kreativen Aktivitätsvorschlägen. Der Wetterabruf sollte niemals kreativ sein, aber die Vorschläge sollten es sein.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: 'openai/gpt-5.5',
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities)
+  .commit();
+```
+
+`geocodeCity()` ist gewöhnlicher Anwendungscode oder ein Maps-API-Aufruf; es ist keine Modellentscheidung. Das LLM berührt niemals die Wetter-API. Es erhält Ground-Truth-Daten als Eingabe und macht dann das, was es wirklich gut kann: kontextbezogene Vorschläge machen. Wenn Sie das umdrehen und den Agenten die Wetterdaten abrufen lassen, werden Sie irgendwann eine sonnige Vorhersage bekommen, wenn es tatsächlich regnet.
+
+**Wann sollten Sie Workflows in Betracht ziehen:**
+- Sie haben eine bekannte Abfolge von Schritten, die in einer bestimmten Reihenfolge ablaufen müssen
+- Sie benötigen Beobachtbarkeit in jeder Phase (Logs, Metriken, Timing)
+- Sie benötigen Wiederholungslogik für instabile externe APIs
+- Geschäftsregeln können nicht „interpretiert“ werden – sie müssen exakt befolgt werden
+
+---
+
+## Das Kontextfenster-Problem, über das niemand spricht
+
+Es gibt ein Muster, das ich immer wieder sehe. Jemand baut einen Chatbot. Er funktioniert während des Testens großartig. Dann, in der Produktion, haben die Nutzer längere Unterhaltungen und plötzlich verirrt sich der Bot.
+
+Der Entwickler schaut in die Logs und stellt fest, dass sie den gesamten Gesprächsverlauf mit jeder Anfrage senden. Alle 47 Nachrichten. Sie verbrennen Tokens und Kontextspeicherplatz für Informationen, die größtenteils irrelevant sind.
+
+Schlimmer noch: Es gibt ein Phänomen, das Forscher „Lost in the Middle" nennen – Modelle arbeiten schlechter, wenn relevante Information in einem langen Kontext begraben liegt. Das Modell sieht buchstäblich den Wald vor lauter Bäumen nicht.
+
+Den gesamten Gesprächsverlauf mitzuschicken fühlt sich sicher an. Man gibt dem Modell „alle Informationen". Aber eigentlich macht man es dem Modell schwerer, sich auf das Wesentliche zu konzentrieren.
+
+### Letzte Nachrichten, Arbeitsgedächtnis und Rückbesinnung
+
+Mastras Memory-System trennt einige Aufgaben, die Teams oft vermischen. Der Verlauf der letzten Nachrichten hält die letzten Turns mit `lastMessages` verfügbar. Das Arbeitsgedächtnis speichert dauerhafte strukturierte Fakten wie Benutzereinstellungen, Ziele und Projektstatus. Die semantische Rückbesinnung durchsucht ältere Nachrichten nach Bedeutung, wenn die aktuelle Anfrage verwandt erscheint. Das beobachtende Gedächtnis geht für langlebige Gespräche noch einen Schritt weiter, indem es alten Rohverlauf zu dichten Beobachtungen komprimiert.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: 'openai/gpt-5.5',
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:./mastra.db',
+    }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    options: {
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
+      },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
+    },
+  }),
+});
+```
+
+Eine betriebliche Randnotiz: `observationalMemory: true` verwendet derzeit `google/gemini-2.5-flash` als Standard-Beobachtermodell. Das bedeutet, dass dieser ansonsten auf OpenAI basierende Agent auch Google-Modellzugriff benötigt, separate Modellnutzung verursacht und möglicherweise Gesprächsverlauf über einen zweiten Anbieter sendet. In der Produktion sollte man das Modell für das beobachtende Gedächtnis explizit konfigurieren und die Wahl derselben Prüfung von Anmeldedaten, Kosten, Datenaufbewahrungsort und Datenspeicherung unterziehen wie das Haupt-Agent-Modell.
+
+So spielt sich das in der Praxis ab. Ein Benutzer fragt: „Was war das für ein italienisches Restaurant, das Sie letzten Monat empfohlen haben?"
+
+Ohne semantische Rückbesinnung oder Beobachtungen sieht der Agent die letzten 20 Nachrichten. Die Restaurantempfehlung war Nachricht 487 von 506. Sie ist weg. Der Agent sagt: „Diese Information habe ich nicht."
+
+Mit semantischer Rückbesinnung:
+1. Die Anfrage wird eingebettet: `[0.234, -0.567, 0.891, ...]`
+2. Die Einbettung wird mit historischen Nachrichten verglichen
+3. Nachricht 487 („Ich würde die Trattoria Bella empfehlen – ihre Carbonara ist unglaublich") erzielt eine Ähnlichkeit von 0,89
+4. Diese Nachricht wird in den aktuellen Kontext eingefügt
+5. Der Agent antwortet: „Ich habe die Trattoria Bella empfohlen. Ihre Carbonara hatte es mir angetan."
+
+Der Agent scheint ein perfektes Gedächtnis zu haben, nutzt aber nur einen Bruchteil des Kontextfensters. Das ist nicht nur clevere Technik – es ist funktional notwendig, sobald Gespräche über ein paar Dutzend Nachrichten hinausgehen.
+
+---
+
+## Koordination durch Supervisor-Agenten
+
+Manchmal braucht man sowohl Struktur als auch Flexibilität. Reine Workflows sind zu starr. Reine Agenten sind zu unberechenbar.
+
+Supervisor-Agenten liefern einen Koordinator, der entscheidet, welcher spezialisierte Agent, Workflow oder welches Tool den nächsten Schritt übernehmen soll. Man kann es sich wie einen intelligenten Lastverteiler für KI-Fähigkeiten vorstellen.
+
+```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: 'openai/gpt-5.5',
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Supervisor state and delegation traces need somewhere durable to land.
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
+  }),
+});
+```
+
+Wenn man diesen Supervisor befragt, analysiert er die Anfrage und leitet entsprechend weiter:
+- „Ich brauche Fakten über X" löst den Research-Agenten aus
+- „Planen Sie ein Wochenende in Seattle" führt den Activity-Planner-Workflow aus
+- „Schreiben Sie einen Bericht über Y" schaltet den Writing-Agenten ein
+
+Dieses Muster skaliert besser, als zu versuchen, alles in einen einzigen Mega-Agenten zu stopfen. Spezialisierte Agenten entwickeln fokussiertes Fachwissen. Der Koordinator übernimmt das Routing. Jedes Teil macht das, was es gut kann.
+
+---
+
+## Zusammengefasst
+
+Echte KI-Systeme in der Produktion brauchen Architektur, nicht nur Prompts. Man baut verteilte Systeme, in denen einige Knoten zufällig LLMs sind.
+
+Workflows geben dir Garantien, wenn Dinge exakt richtig laufen müssen. Memory liefert Kontext, ohne dein Token-Budget zu sprengen. Supervisor-Agenten erlauben dir, Komplexität aus einfacheren Teilen zusammenzusetzen.
+
+Nichts davon ist glamourös. Aber nachdem ich genug „vollständig autonome Agenten“ in der Produktion habe scheitern sehen, schätze ich langweilige Zuverlässigkeit mehr als aufregende Unberechenbarkeit.
+
+Ihre Erfahrung mag abweichen, aber meiner Erfahrung nach sind die Systeme, die tatsächlich ausgeliefert werden und laufen bleiben, diejenigen, die LLMs als Komponenten in einer größeren Architektur behandeln – und nicht als magische Kisten, die alles lösen.
+
+### Ressourcen
+
+- [Mastra Workflows Dokumentation](https://mastra.ai/docs/workflows/overview)
+- [Mastra Memory Dokumentation](https://mastra.ai/docs/memory/overview)
+- [Mastra Supervisor-Agenten](https://mastra.ai/docs/agents/supervisor-agents)
+- [Mastra Semantic Recall](https://mastra.ai/docs/memory/semantic-recall)
+
+## Die Serie lesen
+
+1. [LLM-Routing](/llm-routing-mastra-ai)
+2. [Sicherheit & Schutzmechanismen](/mastra-security-guardrails)
+3. [MCP & Tool-Integrationen](/mastra-mcp-tool-integrations)
+4. **Workflows & Speicher** (Dieser Beitrag)
+````
