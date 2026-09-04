@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: d8f2f28ac8fa38473647f4477b7dbb1dd7e6b9c5
-- Selected model: openrouter/qwen/qwen3.6-plus
+- Selected candidate: e0f77b8fbcb41b7e83c4b698e72d464549394bad
+- Selected model: openrouter/deepseek/deepseek-v4-flash
 - Judge model: openrouter/google/gemini-3-flash-preview
+- Confidence: high (0.882)
 
-The candidate d8f2f28ac8fa38473647f4477b7dbb1dd7e6b9c5 provides the most natural and professional Hindi translation. It avoids the awkward Hinglish phrasing found in the 'current' version (e.g., 'jaise saved locations' or 'work done मान लेते हैं') and uses appropriate technical terminology while maintaining readability. It also correctly preserves all MDX structures and heading counts.
+The translation is excellent. It maintains the technical tone while using natural Hindi phrasing. It correctly handles MDX asset paths by adding the required '../' prefix. The heading structure and code blocks are perfectly preserved. Technical terms like 'rate limiting' and 'multi-tenant' are handled appropriately for a developer audience.
