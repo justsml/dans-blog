@@ -1,0 +1,118 @@
+---
+title: אל תתחתן עם המודל שלך
+subTitle: 'ניתוב LLM, כל כך לוהט עכשיו'
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - typescript
+  - mastra
+  - agent-orchestration
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+רוב צוותי הפיתוח בוחרים מודל שפה אחד ונשארים איתו. ספק אחד, מודל אחד, כל המשימות. זה כמו לשכור אדם אחד שיעשה לכם גם קוד, גם קופירייטינג וגם מס הכנסה, רק בגלל שבמקרה הוא היה טוב בראיון הראשון.
+
+בכל רגע נתון, מודל אחד טוב יותר בקוד, אחר טוב יותר עם קונטקסט ארוך ומבולגן, ואחר הוא סוס העבודה הזול והמשעמם לסיווג. השמות מתחלפים. צורת הבעיה לא. כשמתייחסים למודל אחד כאילו הוא מצטיין בהכול, או שמשלמים יותר מדי על משימות פשוטות, או שמקבלים תוצאות בינוניות במשימות מתמחות.
+
+ראיתי צוות שורף אלפי דולרים על ניתוח סנטימנט דרך מודל של 30 דולר למיליון טוקנים, כשמודל של 0.50 דולר היה עושה את העבודה באותה מידה. עיצוב JSON פשוט, משימות סיווג בסיסיות, הכול עבר דרך ספק הפרימיום שלהם. הדבר היחיד שהתחמם היה החשבון של AWS.
+
+יש דרך טובה יותר, והיא לא מסובכת במיוחד.
+
+## האצלה במקום התמסרות
+
+מה אם הייתם יכולים לנתב בקשות למודל שבאמת הכי מתאים למשימה הספציפית? משתמשים בכוח העילית היקר שלכם לדברים הקשים, אבל מורידים את העיבוד והעיצוב הפשוטים למשהו זול יותר. מקבלים את היתרונות של ספקים מרובים בלי להטוטף איתם ידנית בקוד.
+
+Mastra מאפשרת לבנות בדיוק מערכת כזו. מקימים סוכנים מתמחים לסוגי עבודה שונים, ואז יוצרים סוכן מפקח שמבין איזה מומחה צריך לטפל בכל בקשה. מזהי המודלים למטה משתמשים בפורמט המחרוזתי הנוכחי של `provider/model` ב-Mastra; הם דוגמאות, לא טבלת ליגה. החליפו אותם במודלים הנוכחיים שמנצחים ב-evals שלכם ומתאימים לתקציב.
+
+תחשבו על זה ככה: יש לכם שלושה מומחים בצוות.
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core/mastra';
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  description: 'Handles implementation, refactoring, and code review tasks.',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: process.env.CODE_MODEL ?? 'anthropic/claude-sonnet-4-6',
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  description: 'Handles long-context synthesis and messy document analysis.',
+  instructions: 'You are a creative writer. Be weird.',
+  model: process.env.LONG_CONTEXT_MODEL ?? 'google/gemini-2.5-pro',
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  description: 'Handles routine classification, formatting, and general Q&A.',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: process.env.GENERAL_MODEL ?? 'openai/gpt-5-mini',
+});
+```
+
+לכל אחד יש תפקיד, ושדה ה-`description` הוא חלק ממשטח הניתוב. סוכן הקוד שלכם צריך להיות המודל שעובר את ה-evals הקוד הספציפיים ל-repo שלכם. סוכן הקונטקסט הארוך צריך להיות זה ששורד את המסמכים האמיתיים שלכם בלי להפוך את האמצע למרק. הסוכן הכללי צריך להיות זול, אמין ומשעמם במובן הטוב ביותר.
+
+וכאן זה נהיה מעניין. מוסיפים מפקח קליל שפועל כפרוקסי חכם:
+
+```typescript
+export const supervisorAgent = new Agent({
+  id: 'supervisor-agent',
+  name: 'The Boss',
+  instructions: `You route work to the right specialist.
+  Delegate coding work to claude-agent.
+  Delegate long-context document work to gemini-agent.
+  Delegate routine classification and formatting to gpt-agent.
+  Do not do specialist work yourself unless delegation is unnecessary.`,
+  model: process.env.ROUTER_MODEL ?? 'openai/gpt-5-mini',
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'router-memory', url: 'file:mastra.db' }),
+  }),
+});
+
+export const mastra = new Mastra({
+  agents: { supervisorAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+המפקח עצמו יכול לרוץ על מודל קליל, כי הוא בעיקר מחליט לאן לנתב תעבורה. אתם לא משלמים תעריפי פרימיום כדי להבין באיזה מודל פרימיום אחר להשתמש. תמדדו גם את זה; שכבת ניתוב גרועה הופכת בשקט את החיסכון לניתובים שגויים.
+
+כשמישהו מבקש מימוש של bubble sort, הנתב מזהה את זה כעבודת קוד ומעביר את זה למומחה הקוד. פרומפט לכתיבה יצירתית? זה הולך למודל שבחרתם בשביל קול וטווח ביטוי. שאלה עובדתית על אירועים היסטוריים? מנתבים לסוכן הכללי, באופן אידיאלי עם שליפה כשהאקטואליות או הציטוט חשובים.
+
+## היתרונות המעשיים
+
+**יעילות עלות חשובה יותר ממה שנדמה לכם.** מודל ניתוב קטן שמקבל החלטות האצלה עולה שבריר מהעלות של הרצת כל בקשה דרך הספק היקר ביותר שלכם. לאורך זמן, במיוחד בסקייל, זה מצטבר לכסף אמיתי. אתם משלמים על האינטליגנציה הכבדה רק כשבאמת צריך אותה.
+
+**האיכות משתפרת כשמתאימים מודלים למשימות.** המנצח משתנה מחודש לחודש, ממשימה למשימה, ומהצורה של הפרומפט. לכן שכבת הניתוב צריכה להתבסס על ה-evals שלכם, לא על איזה מודל ניצח בטוויטר בשבוע שבו כתבתם את האינטגרציה.
+
+**חוסן הופך לאפשרי, לא לאוטומטי.** המפקח שלמעלה לא מנסה שוב ספק שנכשל דרך סוכן אחר, והוא תלוי ב-OpenAI לצורך החלטת הניתוב עצמה. אם failover בין ספקים חשוב לכם, הוסיפו מדיניות retry/fallback מפורשת בקוד האפליקציה, שמרו את נתב הגיבוי על ספק אחר, ותבדקו את תרחיש הכשל. שק של סוכנים הוא לא circuit breaker רק בגלל שיש למודלים לוגואים שונים.
+
+זה לא על חכמה לשם החכמה. זה על בניית מערכות שהגיוניות גם כלכלית וגם טכנית. לא הייתם משתמשים באותו פטיש לכל משימת בנייה, וכנראה שלא כדאי להשתמש באותו מודל שפה לכל משימת AI.
+
+היופי בגישה הזו הוא שקוד האפליקציה שלכם לא צריך מבוך של תנאים. עדיין קוראים לסוכן אחד. המורכבות של ההחלטה באיזה מודל להשתמש לאיזו משימה נמצאת במקום אחד, מוגדרת פעם אחת, במקום להיות מפוזרת בכל הקודבייס בתוך ערימה של לוגיקה תנאית.
+
+### משאבים
+
+- [תיעוד Mastra.ai](https://mastra.ai/docs)
+- [מאגר Mastra ב-GitHub](https://github.com/mastra-ai/mastra)
+
+## קראו את הסדרה
+
+1. **ניתוב LLM** (הפוסט הזה)
+2. [אבטחה וגדרות](../mastra-security-guardrails)
+3. [MCP ואינטגרציות כלים](../mastra-mcp-tool-integrations)
+4. [עבודות זרימה וזיכרון](../mastra-workflows-memory)
