@@ -1,32 +1,74 @@
 {
-  "selectedCommit": "1e22fa8477a78d447f9e13d1e7f3ac67929387b1",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "1a4eda607d5808aca88fc86a87975c204681e2a2",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 92,
+    "technicalAccuracy": 95,
+    "coherence": 94,
+    "relevance": 100,
+    "translationQuality": 92,
+    "mdxPreservation": 90,
+    "culturalAdaptation": 90,
+    "languagePurity": 95
   },
-  "suggestions": [],
-  "rationale": "The candidate 1e22fa8477a78d447f9e13d1e7f3ac67929387b1 provides a high-quality, natural-sounding Hindi translation that correctly handles technical terms (like 'deterministic' as 'नियतात्मक' and 'probabilistic' as 'प्रायिकता'). It maintains the direct, professional tone of the original English text. Unlike the 'current' and '35c40584' candidates, it correctly translates the title and subtitle in the frontmatter. It also preserves all MDX structures and code blocks perfectly.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "1. [LLM रूटिंग](/hi/llm-routing-mastra-ai)\n2. [सुरक्षा और गार्डरेल्स](../mastra-security-guardrails)\n3. [MCP और टूल एकीकरण](../mastra-mcp-tool-integrations)",
+      "replacement": "1. [LLM रूटिंग](/hi/llm-routing-mastra-ai)\n2. [सुरक्षा और गार्डरेल्स](/hi/mastra-security-guardrails)\n3. [MCP और टूल एकीकरण](/hi/mastra-mcp-tool-integrations)",
+      "reason": "Internal series links must use consistent localized absolute paths (/hi/...) rather than relative paths (../) to ensure routing works correctly across the site structure."
+    }
+  ],
+  "rationale": "The translation is technically sound and captures the direct tone of the source. The previous judge report mentioned an empty title, but the provided MDX content for the candidate actually contains a valid translated title. The main remaining issue is the inconsistency in the series links at the end of the document, where some use relative paths instead of the standard localized absolute paths.",
+  "confidence": "low",
+  "confidenceScore": 0.321,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "mastra-workflows-memory",
   "locale": "hi",
   "candidateCommits": [
-    "1e22fa8477a78d447f9e13d1e7f3ac67929387b1",
-    "8cfc41d76371ab9480e0729a1e1cd55b8daf52af",
-    "f3027a10e41680d48605920297a8c88ca047722a",
-    "e20627596c1b65b7875bc24e64275e0821469ddb",
-    "b27721766c5b29ef3918a73a1e9b1452c42d7475",
-    "cda134e6e4c9ce211988b09828c81c1b1af33f9e",
-    "35c40584e6bb8e302ea26d247fb96f71412f9e6a"
+    "1a4eda607d5808aca88fc86a87975c204681e2a2"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "title: ''",
+      "replacement": "title: \"फ्लैकी एजेंट बनाना बंद करें: वर्कफ़्लो और मेमोरी का उपयोग करें\"",
+      "reason": "The frontmatter title was left empty in the translation.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[LLM रूटिंग](../llm-routing-mastra-ai)",
+      "replacement": "[LLM रूटिंग](/hi/llm-routing-mastra-ai)",
+      "reason": "The link should point to the localized path or the absolute path provided in the source, but the candidate changed it to a relative path that might break depending on the routing setup. More importantly, the title was missing.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "1. [LLM रूटिंग](/hi/llm-routing-mastra-ai)\n2. [सुरक्षा और गार्डरेल्स](../mastra-security-guardrails)\n3. [MCP और टूल एकीकरण](../mastra-mcp-tool-integrations)",
+      "replacement": "1. [LLM रूटिंग](/hi/llm-routing-mastra-ai)\n2. [सुरक्षा और गार्डरेल्स](/hi/mastra-security-guardrails)\n3. [MCP और टूल एकीकरण](/hi/mastra-mcp-tool-integrations)",
+      "reason": "Internal series links must use consistent localized absolute paths (/hi/...) rather than relative paths (../) to ensure routing works correctly across the site structure.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug mastra-workflows-memory --locale hi --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug mastra-workflows-memory --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-workflows-memory --locale hi --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug mastra-workflows-memory --locale hi --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-workflows-memory --locale hi --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx failed structural parity with score 0.978 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":3}. Differences: {\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
