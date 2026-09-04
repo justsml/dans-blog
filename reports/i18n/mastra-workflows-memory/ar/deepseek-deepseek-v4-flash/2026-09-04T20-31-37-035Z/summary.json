@@ -1,0 +1,66 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-09-04T20-31-37-035Z",
+  "slug": "mastra-workflows-memory",
+  "locale": "ar",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-09-04T20:32:42.740Z",
+  "sourcePath": "src/content/posts/2026-01-05--mastra-workflows-memory/index.mdx",
+  "targetPath": "src/content/posts/2026-01-05--mastra-workflows-memory/ar/index.mdx",
+  "candidatePath": "reports/i18n/mastra-workflows-memory/ar/deepseek-deepseek-v4-flash/2026-09-04T20-31-37-035Z/candidate.mdx",
+  "sourceHash": "5d15541ed93b1f1c0b76838bc8031a442acda1bb6d33eca220426911a430d7a9",
+  "outputHash": "a3808cbdae0bb02d66bb2d91ba4a443a88b8db7102b50ca29f4d1f4acfe09063",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that large language models (LLMs) excel at nuanced, creative reasoning but fail at executing precise, deterministic business logic—leading to flaky agents. The solution is to decouple deterministic steps (e.g., API calls, validation) into **workflows** that enforce order, retry logic, and observability, while reserving LLMs for creative tasks like generating suggestions. A practical TypeScript example (using @mastra/core) demonstrates this pattern with a weather-activity planner, where a hard-coded step fetches weather data and an LLM only suggests activities. The article also highlights the “context window problem” (and “lost in the middle” effect), advocating for memory management over sending full conversation history. The tone is analytical with a tutorial bent, aimed at developers building production-grade LLM applications.",
+  "totalInputTokens": 6738,
+  "totalOutputTokens": 5884,
+  "totalCacheReadTokens": 2816,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 53505,
+  "totalCostUsd": 0.0022044848000000003,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "18p",
+    "totalChunks": 3,
+    "totalInputTokens": 6738,
+    "totalOutputTokens": 5884,
+    "totalCacheReadTokens": 2816,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 53505,
+    "totalCostUsd": 0.0022044848000000003,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 2475,
+        "outputTokens": 1894,
+        "cacheReadTokens": 768,
+        "cacheWriteTokens": 0,
+        "durationMs": 16795,
+        "costUsd": 0.0007714504
+      },
+      {
+        "index": 1,
+        "inputTokens": 2623,
+        "outputTokens": 2243,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 20481,
+        "costUsd": 0.0008547672
+      },
+      {
+        "index": 2,
+        "inputTokens": 1640,
+        "outputTokens": 1747,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 16229,
+        "costUsd": 0.0005782672000000001
+      }
+    ]
+  }
+}

@@ -1,0 +1,303 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ar
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ar/index.mdx
+- Validation: deferred
+- Runtime seconds: 53.51
+- Input tokens: 6738
+- Output tokens: 5884
+- Thinking tokens: unknown
+- Cached input tokens: 2816
+- Cache write tokens: 0
+- Estimated cost: $0.002204
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'توقف عن بناء وكلاء غير موثوقين: استخدم سير العمل والذاكرة'
+subTitle: أنماط حتمية لنماذج غير حتمية.
+modified: '2026-09-04'
+tags:
+  - ai
+  - workflows
+  - memory
+  - mastra
+  - supervisor-agents
+  - orchestration
+category: AI
+subCategory: Architecture
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+لدى نماذج اللغة الكبيرة (LLMs) خاصية غريبة: إنها بارعة في فهم الفروق الدقيقة، لكنها سيئة في اتباع الوصفات. أعطِ نموذجًا قويًا مشكلةً غامضةً، وسيفكر في الاحتمالات. أعطِه سلسلة دقيقة من الخطوات، وقد يتخطى الخطوة الثالثة لأن الخطوة الخامسة "بدت أكثر صلة".
+
+هذا ليس عيبًا في النموذج. إنها سمة أساسية للأنظمة الاحتمالية التي تحاول حل مشكلات قطعية.
+
+رأيت فرقًا تعاني من هذا التضارب. يبنون وكيلًا لمعالجة مرتجعات العملاء، ويمنحونه دزينةً من الأدوات، ويتوقعون منه تنفيذ عملية تجارية بموثوقية. أحيانًا يعمل بكمال. وأحيانًا يهلوس موافقات لم تحدث أبدًا. وأحيانًا يعلق يطلب نفس المعلومات ثلاث مرات.
+
+الحل ليس في تحسين التعليمات. إنه في معرفة متى تتوقف عن مطالبة النموذج بأن "يفكر" وتبدأ في إخباره بأن "يمتثل".
+
+---
+
+## عندما يكون القطعي أفضل من الإبداعي
+
+فكر فيما يحدث عندما تحتاج إلى معالجة تذكرة دعم. منطق الأعمال الواقعي يبدو شيئًا مثل:
+
+1. جلب تفاصيل التذكرة من قاعدة البيانات
+2. التحقق مما إذا كان المستخدم مؤهلاً للاسترداد (قواعد السياسة)
+3. التأكد من وجود المعاملة وعدم استردادها بالفعل
+4. حساب مبلغ الاسترداد
+5. معالجة إعادة الدفع
+6. تحديث حالة التذكرة
+7. إرسال بريد إلكتروني للتأكيد
+
+يمكنك تسليم هذا للنموذج كتمرين لاستدعاء الأدوات. في تجربتي، هذا يطلب المتاعب. قد يقرر النموذج أن الخطوتين 2 و3 "متماثلتان بشكل أساسي" ويتخطى إحداهما. أو قد يعالج الاسترداد قبل التحقق من الأهلية لأن المستخدم بدا منزعجًا.
+
+سير العمل (workflows) موجودة تمامًا لهذا السيناريو. إنها ليست مثيرة، لكن هذا هو الهدف.
+
+### بناء مخطط الأنشطة الجوية
+
+إليك مثال عملي يوضح النمط. نحتاج بيانات جوية صلبة وواقعية مقترنة باقتراحات أنشطة إبداعية. جلب الطقس يجب ألا يكون إبداعيًا أبدًا، لكن الاقتراحات يجب أن تكون كذلك.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    const coordinates = await geocodeCity(inputData.city);
+    const params = new URLSearchParams({
+      latitude: String(coordinates.latitude),
+      longitude: String(coordinates.longitude),
+      current: 'temperature_2m,weather_code',
+      daily: 'precipitation_probability_mean',
+      timezone: 'auto',
+    });
+
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`)
+      .then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: 'openai/gpt-5.5',
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities)
+  .commit();
+```
+
+`geocodeCity()` هي كود تطبيق عادي أو استدعاء لواجهة برمجة تطبيقات الخرائط؛ إنها ليست قرارًا للنموذج. النموذج لا يلمس أبدًا واجهة الطقس. يحصل على بيانات موثوقة كمدخلات، ثم يفعل ما يجيده حقًا: تقديم اقتراحات سياقية. إذا قلبت هذا وتركت الوكيل يجلب بيانات الطقس، فسينتهي بك الأمر بتوقعات مشمسة بينما تمطر بالفعل.
+
+**متى تنظر في استخدام سير العمل:**
+- لديك سلسلة معروفة من الخطوات يجب أن تحدث بالترتيب
+- تحتاج إلى قابلية المراقبة في كل مرحلة (سجلات، مقاييس، توقيت)
+- تحتاج إلى منطق إعادة المحاولة لواجهات برمجة التطبيقات الخارجية غير المستقرة
+- قواعد العمل لا يمكن "تفسيرها" - يجب اتباعها بدقة
+
+---
+
+## مشكلة نافذة السياق التي لا يتحدث عنها أحد
+
+هذا النمط الذي أراه باستمرار. شخص ما يبني روبوت محادثة. يعمل بشكل رائع أثناء الاختبار. ثم في الإنتاج، يجري المستخدمون محادثات أطول وفجأة يضيع الروبوت.
+
+ينظر المطور إلى السجلات ويدرك أنهم يرسلون تاريخ المحادثة بالكامل مع كل طلب. جميع الرسائل الـ 47. يحرقون الرموز ومساحة السياق على معلومات غير ذات صلة في الغالب.
+
+أسوأ من ذلك، هناك ظاهرة يسميها الباحثون "الضياع في المنتصف" (lost in the middle)، حيث يكون أداء النماذج أسوأ عندما تُدفن المعلومات ذات الصلة في سياق طويل. النموذج حرفيًا لا يرى الغابة من كثرة الأشجار.
+
+إرسال تاريخ المحادثة بالكامل يبدو آمنًا. أنت تعطي النموذج "كل المعلومات". لكنك في الواقع تجعل من الصعب على النموذج التركيز على ما يهم.
+
+### الرسائل الأخيرة، الذاكرة العاملة، والاستدعاء الدلالي
+
+نظام الذاكرة في ماسترا يفصل عدة مهام تخلطها الفرق عادةً معًا. يحتفظ سجل الرسائل الأخيرة بآخر الجولات باستخدام `lastMessages`. تخزّن الذاكرة العاملة حقائق منظمة مستمرة مثل تفضيلات المستخدم وأهدافه وحالة المشروع. يبحث الاستدعاء الدلالي في الرسائل الأقدم حسب المعنى عندما يبدو الاستعلام الحالي ذا صلة. تذهب الذاكرة الملاحظاتية خطوة أبعد للمحادثات الطويلة عن طريق ضغط التاريخ الخام القديم في ملاحظات كثيفة.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: 'openai/gpt-5.5',
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:./mastra.db',
+    }),
+    vector: new LibSQLVector({
+      id: 'memory-agent-vector',
+      url: 'file:./mastra.db',
+    }),
+    embedder: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    options: {
+      lastMessages: 20,
+      workingMemory: {
+        enabled: true,
+      },
+      semanticRecall: {
+        topK: 5,
+        messageRange: 2,
+        scope: 'resource',
+      },
+      observationalMemory: true,
+    },
+  }),
+});
+```
+
+ملاحظة تشغيلية واحدة: `observationalMemory: true` يستخدم حاليًا `google/gemini-2.5-flash` كنموذج المراقب الافتراضي. هذا يعني أن هذا الوكيل المعتمد على OpenAI يحتاج أيضًا إلى الوصول إلى نموذج Google، ويتكبد استخدام نموذج منفصل، وقد يرسل تاريخ المحادثة عبر مزود ثانٍ. في الإنتاج، قم بتكوين نموذج الذاكرة الملاحظاتية بشكل صريح، وأجرِ تقييمًا للاختيار من خلال نفس مراجعة بيانات الاعتماد والتكلفة والإقامة والاحتفاظ بالبيانات المستخدمة مع نموذج الوكيل الرئيسي.
+
+إليك كيف يبدو هذا عمليًا. يسأل المستخدم: "ما هو ذلك المطعم الإيطالي الذي أوصيت به الشهر الماضي؟"
+
+بدون الاستدعاء الدلالي أو الملاحظات، يرى الوكيل آخر 20 رسالة. كانت توصية المطعم هي الرسالة رقم 487 من أصل 506. لقد اختفت. يقول الوكيل "ليس لدي تلك المعلومات."
+
+مع الاستدعاء الدلالي:
+1. يتم تضمين الاستعلام: `[0.234, -0.567, 0.891, ...]`
+2. تتم مقارنة التضمين بالرسائل التاريخية
+3. الرسالة 487 ("أوصي بمطعم Trattoria Bella - طبق الكاربونارا رائع") تحصل على درجة تشابه 0.89
+4. يتم حقن تلك الرسالة في السياق الحالي
+5. يرد الوكيل: "لقد أوصيت بمطعم Trattoria Bella. طبق الكاربونارا هو ما جذب انتباهي."
+
+يبدو الوكيل وكأنه يتمتع بذاكرة مثالية بينما يستخدم فقط جزءًا صغيرًا من نافذة السياق. هذه ليست مجرد هندسة ذكية - بل هي ضرورة وظيفية بمجرد أن تتجاوز المحادثات بضع عشرات من الرسائل.
+
+---
+
+## التنسيق عبر الوكلاء المشرفين
+
+أحيانًا تحتاج إلى كل من البنية والمرونة. مسارات العمل البحتة جامدة جدًا. الوكلاء البحتون غير متوقعين جدًا.
+
+يمنحك الوكلاء المشرفون منسقًا يقرر أي وكيل متخصص أو مسار عمل أو أداة يجب أن تتولى الخطوة التالية. فكر فيه كموازن تحميل ذكي لقدرات الذكاء الاصطناعي.
+
+```typescript
+const researchAgent = new Agent({
+  id: 'research-agent',
+  description: 'Gathers facts and returns sourced research notes.',
+  model: 'openai/gpt-5-mini',
+});
+
+const writingAgent = new Agent({
+  id: 'writing-agent',
+  description: 'Turns research notes into clear, structured prose.',
+  model: 'openai/gpt-5-mini',
+});
+
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You coordinate researchers, writers, tools, and workflows.
+    - Delegate fact gathering to research-agent
+    - Delegate final prose to writing-agent
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: 'openai/gpt-5.5',
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Supervisor state and delegation traces need somewhere durable to land.
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'supervisor-store', url: 'file:./supervisor.db' }),
+  }),
+});
+```
+
+عند الاستعلام لهذا المشرف، يقوم بتحليل الطلب وتوجيهه وفقًا لذلك:
+- "أحتاج حقائق حول X" يُفعّل وكيل البحث
+- "خطط لعطلة نهاية الأسبوع في سياتل" يُشغّل مسار عمل مخطط النشاطات
+- "اكتب تقريرًا عن Y" يُشغّل وكيل الكتابة
+
+هذا النمط يتوسع بشكل أفضل من محاولة حشر كل شيء في وكيل عملاق واحد. يطور الوكلاء المتخصصون خبرة مركزة. يتولى المنسق التوجيه. كل جزء يفعل ما يجيده.
+
+---
+
+## تجميع القطع معًا
+
+تحتاج أنظمة الذكاء الاصطناعي الإنتاجية الحقيقية إلى بنية، وليس مجرد تعليمات (prompts). أنت تبني أنظمة موزعة حيث تكون بعض العقد عبارة عن نماذج لغوية كبيرة.
+
+تمنحك سير العمل ضمانات عندما تحتاج إلى تنفيذ الأمور بدقة تامة. تمنحك الذاكرة سياقًا دون حرق ميزانية الرموز المميزة لديك. تسمح لك وكلاء الإشراف بتجميع التعقيد من أجزاء أبسط.
+
+لا شيء من هذا يبدو براقًا. لكن بعد مشاهدة عدد كافٍ من "الوكلاء المستقلين تمامًا" يفشلون في الإنتاج، توصلت إلى تقدير الموثوقية المملة على عدم القدرة على التنبؤ المثير.
+
+قد تختلف النتائج حسب السياق، لكن في تجربتي، الأنظمة التي تُطلق فعليًا وتظل تعمل هي تلك التي تعامل النماذج اللغوية الكبيرة كمكونات في بنية أكبر بدلاً من صناديق سحرية تحل كل شيء.
+
+### الموارد
+
+- [وثائق سير عمل ماسترا](https://mastra.ai/docs/workflows/overview)
+- [وثائق ذاكرة ماسترا](https://mastra.ai/docs/memory/overview)
+- [وكلاء الإشراف من ماسترا](https://mastra.ai/docs/agents/supervisor-agents)
+- [الاستدعاء الدلالي من ماسترا](https://mastra.ai/docs/memory/semantic-recall)
+
+## اقرأ السلسلة
+
+1. [توجيه النماذج اللغوية الكبيرة](/llm-routing-mastra-ai)
+2. [الأمان والحواجز الوقائية](/mastra-security-guardrails)
+3. [تكاملات MCP والأدوات](/mastra-mcp-tool-integrations)
+4. **سير العمل والذاكرة** (هذه المقالة)
+````
