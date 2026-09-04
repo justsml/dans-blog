@@ -410,9 +410,12 @@ html {
     }
 
     button {
-      max-width: 7rem;
+      box-sizing: border-box;
+      max-width: 100%;
       max-height: 2rem;
+      min-width: 0;
       align-self: flex-end;
+      white-space: nowrap;
 
       z-index: 90;
       padding-right: 0.5rem;
@@ -432,11 +435,11 @@ html {
         translate 0.25s ease-in-out;
       border-radius: 0.5rem 0rem 0rem 0rem;
 
-      transform: translateX(0.4rem);
+      transform: none;
       margin-bottom: -1px;
       &:hover {
         opacity: 0.95;
-        transform: translateX(0);
+        transform: translateY(-1px);
         /* background-color: var(--quiz-bg-solid);
         color: var(--quiz-fg); */
         box-shadow: 0 0 0px 0.5px var(--quiz-muted-fg);
