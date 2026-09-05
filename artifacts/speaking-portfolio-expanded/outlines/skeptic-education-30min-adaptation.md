@@ -1,26 +1,24 @@
 # A Skeptic's Guide to Surviving AI in Education: 30-minute standard
 
-Uses the 40-minute deck with unlisted slides hidden. Slide numbers refer to [the full notes](skeptic-education-40min.md). Timings exclude Q&A.
+Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](skeptic-education-40min.md). No Q&A in the timings.
 
-**Strategy for 30 minutes.** Keep all four failure modes, the demo, a shortened pre-mortem, and the pilot. Cut the failure-story preview and the proportional-evidence slide.
+**Strategy.** Every slide survives; each loses about a quarter of its time. The demo drops to one switch plus narration, the pre-mortem to ninety seconds.
 
 | Time | Slide | Section | Bridge or cut |
 | --- | ---: | --- | --- |
-| 0:00–2:00 | 1 | Assume access. Demand evidence. | As written. |
-| 2:00–3:30 | 2 | Skepticism is a method | As written. |
-| 3:30–5:00 | 4 | The proxy is not the capability | As written. |
-| 5:00–7:30 | 5 | Delegate / Augment / Preserve | As written, with the write. |
-| 7:30–11:00 | 6 | Demo | Full runbook sequence. |
-| 11:00–12:30 | 7 | Failure mode 1: the confirming tutor | As written. |
-| 12:30–14:30 | 8 | Failure mode 2: vanished gains | As written. |
-| 14:30–16:00 | 9 | When it works | As written. |
-| 16:00–17:30 | 10 | Failure mode 3: detector as judge | As written. |
-| 17:30–19:00 | 11 | Failure mode 4: unequal access | As written. |
-| 19:00–21:30 | 12 | Pre-mortem | Pairs, 90 seconds instead of two minutes. |
-| 21:30–23:00 | 13 | Evaluate the tutor on your work | Add slide 14 in one sentence: "one added question beats a keystroke log." |
-| 23:00–24:30 | 15 | Humans at consequential decisions | As written. |
-| 24:30–27:00 | 16 | Pilot one assignment | As written. |
-| 27:00–28:30 | 17 | Ask a better procurement question | As written. |
-| 28:30–30:00 | 18 | Keep the reason students are here | As written. |
+| 0:00–2:00 | 1 | Assume access. Demand evidence. | |
+| 2:00–4:00 | 2 | Skepticism is a method | |
+| 4:00–5:30 | 3 | The proxy is not the capability | |
+| 5:30–8:00 | 4 | Delegate / Augment / Preserve | |
+| 8:00–11:30 | 5 | Demo | Two switches; narrate the third. |
+| 11:30–13:00 | 6 | The tutor that agrees with you | Drop the story. |
+| 13:00–16:00 | 7 | Gains that vanish, and when they don't | |
+| 16:00–17:30 | 8 | The detector as judge | |
+| 17:30–19:00 | 9 | Unequal access | |
+| 19:00–22:00 | 10 | Pre-mortem | Pairs, ninety seconds. |
+| 22:00–24:00 | 11 | Local eval set and proportional evidence | |
+| 24:00–25:30 | 12 | Humans at consequential decisions | |
+| 25:30–28:30 | 13 | Pilot one assignment; ask one better question | Drop the story. |
+| 28:30–30:00 | 14 | Keep the reason students are here | Shorten the write to twenty seconds. |
 
-**Closing for this length.** Keep the three-sentence write; shorten the pause to twenty seconds.
+**Close.** As written.

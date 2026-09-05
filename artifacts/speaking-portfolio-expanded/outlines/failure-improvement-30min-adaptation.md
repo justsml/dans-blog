@@ -1,25 +1,24 @@
 # Automating Improvement From Failure: 30-minute standard
 
-Uses the 40-minute deck with unlisted slides hidden. Slide numbers refer to [the full notes](failure-improvement-40min.md). Timings exclude Q&A.
+Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](failure-improvement-40min.md). No Q&A in the timings.
 
-**Strategy for 30 minutes.** Keep the full hierarchy, the fixtures, the demo, the search ladder, the prompt optimizers, the managed stack, and pruning. Cut the metrics, the restraint slide, and the exercise; fold their one-line versions into the close.
+**Strategy.** Keep the ladder, the fixtures, the full demo, the search ladder, the optimizers, the managed stack, and pruning. Cut owner-and-rollback and the metrics slide; say each in one line where noted.
 
 | Time | Slide | Section | Bridge or cut |
 | --- | ---: | --- | --- |
-| 0:00–2:00 | 1 | Yesterday's fix should survive today | As written, with the story slot. |
-| 2:00–3:30 | 2 | The human became the database | As written. |
-| 3:30–5:00 | 3 | Capture a case, not a confession | As written. |
-| 5:00–7:30 | 4 | Every lesson needs a destination | As written. |
-| 7:30–9:00 | 5 | Eliminate, prevent, encode | Drop the story slot. |
-| 9:00–11:30 | 6 | Skills, plugins, and AGENTS.md | As written. |
-| 11:30–13:30 | 7 | Hooks | As written. |
-| 13:30–15:00 | 8 | A correction is a candidate change | As written. |
-| 15:00–16:30 | 9 | The tiny fixture | Skip the audience question. |
-| 16:30–20:30 | 10 | Demo | Full runbook sequence, skip the port switch if behind. |
-| 20:30–23:00 | 11 | Search before inventing memory | As written. |
-| 23:00–25:00 | 12 | GEPA and DSPy | As written. |
-| 25:00–26:30 | 13 | Managed stack | Drop the comparison table; name the three platforms and the shared contract. |
-| 26:30–28:30 | 14 | Expiry and pruning | As written. |
-| 28:30–30:00 | 18 | Manufacture cheap determinism | Add one sentence from slide 16: "measure recurrence, not lesson count." Ask slide 17's question. |
+| 0:00–2:00 | 1 | Yesterday's fix should survive today | |
+| 2:00–3:30 | 2 | The human became the database | |
+| 3:30–6:00 | 3 | Every lesson needs a destination | |
+| 6:00–7:30 | 4 | Eliminate, prevent, encode | Drop the story. |
+| 7:30–10:00 | 5 | Skills, plugins, AGENTS.md | |
+| 10:00–12:00 | 6 | Hooks | |
+| 12:00–13:30 | 7 | A correction is a candidate change | |
+| 13:30–15:00 | 8 | The tiny fixture | Skip the audience question. |
+| 15:00–19:30 | 9 | Demo | Full sequence. When the third checkbox appears, say slide 10's line: "owner, rollback, ceremony matched to consequence." |
+| 19:30–22:30 | 11 | Search before inventing memory | |
+| 22:30–24:30 | 12 | GEPA and DSPy | |
+| 24:30–26:00 | 13 | Managed stack | Name the three platforms and the shared contract; skip the comparison table. |
+| 26:00–28:00 | 14 | Expiry and pruning | |
+| 28:00–30:00 | 16 | Manufacture cheap determinism | Add slide 15's one line: "measure recurrence, not lesson count." Ask the question. |
 
-**Closing for this length.** The promotion gate (slide 15) is covered by the demo; say "owner and rollback" once when the third checkbox appears. Leave the exercise to Q&A.
+**Close.** Leave the write-it-down exercise to Q&A.

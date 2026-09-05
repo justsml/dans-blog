@@ -1,26 +1,24 @@
 # Outsmart Your Lying, Cheating Students: 30-minute standard
 
-Uses the 40-minute deck with unlisted slides hidden. Slide numbers refer to [the full notes](evidence-learning-40min.md). Timings exclude Q&A.
+Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](evidence-learning-40min.md). No Q&A in the timings.
 
-**Strategy for 30 minutes.** Keep the full reconstruction with the kit, the rubric, the record, purposeful follow-ups, and a shortened worksheet. Cut replay and local context.
+**Strategy.** Keep the full reconstruction with the kit, the rubric, the record, purposeful follow-ups, and a shortened worksheet. Cut local context.
 
 | Time | Slide | Section | Bridge or cut |
 | --- | ---: | --- | --- |
-| 0:00–2:00 | 1 | Stop asking who typed the sentence | As written. |
-| 2:00–3:30 | 2 | The arms race | As written. |
-| 3:30–5:00 | 3 | Detector evidence has boundaries | As written. |
-| 5:00–6:30 | 4 | Define the capability | As written. |
-| 6:30–8:00 | 5 | One polished answer | As written. |
-| 8:00–9:30 | 6 | Ask for an attempt | As written. |
-| 9:30–11:00 | 7 | Escalate help | As written. |
-| 11:00–15:30 | 8 | Reconstruction | Full runbook sequence plus the live $100 and $80 items. |
-| 15:30–17:30 | 9 | Score the reasoning | As written. |
-| 17:30–19:00 | 10 | Store observations | Add slide 11 in one sentence: "a replay is context, not proof." |
-| 19:00–20:30 | 12 | Follow-up questions need a purpose | As written. |
-| 20:30–22:30 | 14 | Grade learning | As written. |
-| 22:30–24:00 | 15 | AI can help collect evidence | Drop the story slot. |
-| 24:00–25:00 | 16 | Design the staff workload | One example only. |
-| 25:00–28:30 | 17 | Redesign one checkpoint | Pairs, two minutes instead of three. |
-| 28:30–30:00 | 18 | Change the game | As written. |
+| 0:00–2:00 | 1 | Stop asking who typed the sentence | |
+| 2:00–4:00 | 2 | The arms race asks the wrong question | |
+| 4:00–5:30 | 3 | Define the capability | |
+| 5:30–7:00 | 4 | One polished answer | |
+| 7:00–8:30 | 5 | Ask for an attempt | |
+| 8:30–10:00 | 6 | Escalate help | |
+| 10:00–15:00 | 7 | Reconstruction | Full sequence plus the live $100 and $80 items. |
+| 15:00–17:00 | 8 | Score the reasoning | |
+| 17:00–18:30 | 9 | Store observations | |
+| 18:30–20:00 | 10 | Follow-ups and replay | |
+| 20:00–22:00 | 12 | Grade learning | |
+| 22:00–24:30 | 13 | AI collects evidence; people carry the workload | Drop the story. |
+| 24:30–28:30 | 14 | Redesign one checkpoint | Pairs, two minutes. |
+| 28:30–30:00 | 15 | Change the game | |
 
-**Closing for this length.** Keep the full closing sequence.
+**Close.** As written.
