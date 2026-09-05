@@ -2,11 +2,11 @@
 
 15 minutes · 8 slides
 
-**In one line.** The future product engineer automates how the company learns what product to build.
+**In one line.** Conway's law now includes your agents. Give every function an agent, every agent an owner, and every risk spike a guard.
 
-**Arc.** Warm open on one small onboarding question, steady through the loop, peak at the demo, land on ownership.
+**Arc.** Warm open on Conway's law and the thesis, steady through the roster, peak at the demo, steady through the guards, land on Conway read forward.
 
-**Scope.** Proposed operating model, fictional onboarding case, synthetic demo numbers that show a decision gate. Say it once on slide 1.
+**Scope.** Proposed operating model, synthetic demo numbers that show a guard. Say it once on slide 1.
 
 **Demo.** Compact version of [runbook section 6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering). Fallback: the table on slide 5.
 
@@ -18,55 +18,62 @@
 
 ---
 
-## 1. When the product team becomes an executable loop
+## 1. Conway's law still applies
 
-0:00–1:30 · warm
+0:00–2:00 · warm
 
-<!-- image: two phone screens side by side, one showing a row of empty avatar circles and one showing a single checkmark, a question mark floating between them, dark slate background, amber accent on the question mark, flat vector, no text -->
+<!-- image: an org chart drawn as boxes and lines on the left, a system architecture diagram on the right with the identical shape, a thin mirror line between them, dark slate background, amber accent on the mirror line, flat vector, no text -->
 
-Should onboarding ask a new user to invite teammates before they have seen any value? An AI can generate either screen in seconds. The hard problem is deciding which screen deserves to exist and what evidence would change that decision.
+> Your code reflects your organization, and vice versa
+> From a five-person startup to a thousand-person change committee, every process is about to adapt
 
-Scope, once: proposed operating model, fictional case, synthetic numbers.
+Conway, 1968. The organization now includes agents, and their shape will show up in the product. Whether you are five people shipping without a meeting or thousands with a risk and reward rubric, every process you run is a candidate for automation and a place judgment can leak out.
 
-Story: [thirty seconds: the screen you shipped fast and should not have shipped at all]
+Scope, once: proposed operating model, synthetic numbers, guard behavior only.
 
-## 2. Code generation is the easy part to notice
+Source: Conway (1968), [How Do Committees Invent?](http://www.melconway.com/Home/Committees_Paper.html)
 
-1:30–3:00 · warm
+Story: [thirty seconds: a system whose architecture you could read off the org chart]
 
-<!-- image: thirty small identical window frames stacked in a pile on a desk, one hand holding a single frame up to the light, dark slate background, amber accent on the held frame, flat vector, no text -->
+## 2. Who gets rewarded, and who suffers
 
-> A component appears in seconds
-> The product question remains: what should exist?
+2:00–3:30 · warm
 
-Thirty polished onboarding variants before lunch. The backlog moved into choosing, testing, and understanding consequences. Shift attention from the speed of producing a component to the time between a customer signal and a supported decision. Integration, operation, and accessibility still cost real engineering.
+<!-- image: two hands side by side, the left hand holding a precise set of calipers, the right hand holding a party balloon, dark slate background, amber accent on the calipers, flat vector, no text -->
 
-## 3. The learning loop becomes programmable
+> Automate the right things: rewarded richly
+> Trade taste and judgment for AI vibes: suffer
 
-3:00–5:00 · steady
+Taste is knowing what the product should refuse to do. Judgment is knowing which decisions get a human. Keep both, automate nearly everything else.
 
-<!-- image: a circular loop of eight small stations drawn as icons, an eye, a lightbulb, a flask, a ruler, a gavel, a bookmark, with two stations occupied by a small robot and one by a person, dark slate background, amber accent on the person, flat vector, no text -->
+## 3. One agent per function, one owner per agent
 
-> Observe → understand → hypothesize → experiment
-> Measure → judge → learn → observe
+3:30–5:30 · steady
 
-Users visit integrations before invitations. Research proposes the order is confusing. A prototype tests a clearer first action. Instrumentation records a completed useful task, not a click. Review weighs support burden. The result becomes a searchable decision. The arrows are responsibilities and evidence transfers; an agent can help at several of them, not all.
+<!-- image: a row of six desks each with a small robot seated at it, behind each desk a standing human figure with one hand resting on the robot's shoulder, dark slate background, amber accent on the human hands, flat vector, no text -->
 
-## 4. Research needs receipts
+> Mimic each function of the product group as an agent
+> Map each agent to the person who owns that responsibility
 
-5:00–6:30 · steady
+Conway's law used deliberately. Draw the roster before it draws itself. The owner owns the agent's instructions, inputs, limits, and mistakes.
 
-<!-- image: three index cards in a row, the first with a single speech bubble, the second with a cluster of bubbles, the third with a lightbulb, thin receipt strips attached beneath each, dark slate background, amber accent on the receipt strips, flat vector, no text -->
+## 4. The roster, in the order work flows
 
-> A support message is evidence
-> A cluster is an interpretation
-> A hypothesis is a proposal
+5:30–7:30 · steady
 
-One complaint does not estimate prevalence; a cluster overrepresents vocal customers; a confident explanation does not establish cause. Every synthesized claim links to its evidence and keeps the disconfirming cases.
+<!-- image: five small robots in a row along a conveyor, the first at a periscope, the second at a funnel, the third holding a magnifying glass over a phone, the fourth turning a valve between tanks, the fifth holding open a door with a toggle switch, dark slate background, amber accent on the toggle switch, flat vector, no text -->
 
-## 5. Demo: a win can be a worse product
+> Research agent: competitors, the landscape, people talking about you
+> Feedback agent: ingest, cluster, link to customers, feed the weekly review
+> Gap analysis agent: walk the product, flag usability defects
+> Marketing and sales agents: analytics, customer records, the warehouse; propose, then test narrowly
+> Beta enrollment: find users like the feedback cluster, invite them to opt in behind a flag
 
-6:30–10:00 · peak
+Effort estimation has already left the rubric; nobody t-shirt sizes anymore. What remains is evidence and risk. This roster produces the evidence cheaply. Ideas come from a cluster of customers, so invite users like them into a flag with honest beta language, and collect narrow feedback before anything widens.
+
+## 5. Demo: the guard blocks the apparent winner
+
+7:30–11:00 · peak
 
 <!-- image: a podium with three places, the tallest position has a barrier gate closed in front of it, the second position has an open gate and a small review stamp hovering, dark slate background, amber accent on the closed gate, flat vector, no text -->
 
@@ -76,39 +83,38 @@ One complaint does not estimate prevalence; a cluster overrepresents vocal custo
 | Pressure copy | 48% | 9% | False |
 | Clear first step | 45% | 4% | None |
 
-Activation from 40% to 48%. Win? Then support from 3% to 9%, and false urgency in the treatment. Give the room a moment to change its answer. The system optimized a visible metric while violating an operational threshold and the product's promise.
+Activation from 40% to 48%. Win? Then support triples and the copy invents urgency. Give the room a moment to change its answer. Rules written before the scorecard: support at most 5%, no fabricated urgency. Pressure copy blocked. Clear first step eligible for the owner's review, not shipped.
 
-## 6. Taste becomes a constraint; a quieter candidate survives
+## 6. Put the guards where risk spikes
 
-10:00–12:00 · steady
+11:00–12:30 · steady
 
-<!-- image: a rulebook open on a table with three short lines drawn as icons, a percent sign, a crossed-out stopwatch, and an open door, a modest card beside it with a small review stamp, dark slate background, amber accent on the stamp, flat vector, no text -->
+<!-- image: a winding road seen from above with three toll gates placed exactly at the points where the road widens, one gate at a bridge, one at a construction site, one at a demolition site with a wrecking ball, dark slate background, amber accent on the gate arms, flat vector, no text -->
 
-> Support rate at most 5% · No fabricated urgency · No hidden exit
-> Clear first step: 45%, 4%, no urgency → eligible for human review
+> Subset → all users · Cheap run → expensive run
+> Deploying infrastructure → tearing it down
 
-Rules shown before the decision. The ceiling and the urgency ban were chosen by humans for this scenario. Some checks are deterministic, such as whether an exit exists; others need calibrated review. The clearer first step passes. That does not prove it is the better product. A real experiment still needs trustworthy assignment, adequate observation, and a decision owner. Automated evaluation narrows the queue without laundering an experiment into a decision.
+Human in the loop means guards where exposure spikes, owned by the person who owns the agent. Below those thresholds, the work runs without a human reading every token.
 
-## 7. Humans own the product promise
+## 7. Every experiment carries a hypothesis and reports itself
 
-12:00–13:30 · land
+12:30–13:30 · land
 
-<!-- image: a long assembly line of small robots, with four raised stations along it where a person sits holding a pen, dark slate background, amber accent on the pens, flat vector, no text -->
+<!-- image: a single index card with an arrow drawn from one shape to another, beneath it a small gauge and a paper airplane in flight toward a chat bubble, dark slate background, amber accent on the gauge needle, flat vector, no text -->
 
-> Vision and strategy · Taste and consequential tradeoffs
-> Customer communication · Accountability for release
+> If we do X, we expect Y to move
+> Generate the measurement with the hypothesis; post the outcome where the team already looks
 
-Automate evidence gathering, hypothesis drafting, and reversible changes. Name the people accountable for direction, sensitive personalization, pricing, and release. Boundaries move with risk and demonstrated reliability; they do not vanish because a system can technically act.
+Success, failure, and surprise reach the channel automatically. Customers who see you respond become forthcoming, so the feedback agent has to be ready for the volume.
 
-## 8. Automate how the company learns
+## 8. Conway's law, read forward
 
 13:30–15:00 · land
 
-<!-- image: the two phone screens from slide 1 now set aside, in front of them a single decision card with a signature, a small evidence stack, and a name tag, dark slate background, amber accent on the signature, flat vector, no text -->
+<!-- image: the org chart and architecture diagram from slide 1, now with a third mirrored panel showing a row of small robots each standing beside a person, all three panels sharing one shape, dark slate background, amber accent on the people, flat vector, no text -->
 
-> Keep the evidence · Encode the boundaries
-> Name the decision owner · Learn what deserves to exist
+> Your agents will mirror your organization
+> Draw the roster on purpose. Name the owners. Place the guards.
+> Automate the right things. Keep the taste.
 
-The strongest artifact is now a decision with its evidence, limits, and owner, not a generated screen. Choose one handoff where evidence gets lost and make it inspectable this week. The future product engineer does not just automate building the product; they automate how the company learns what product to build.
-
-Pause. Leave the loop on screen.
+Pause. Leave the three mirrored panels on screen.

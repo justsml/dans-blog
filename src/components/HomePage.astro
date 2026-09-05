@@ -9,6 +9,7 @@ import ArticleListSkeleton from "./ArticleListSkeleton.astro";
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
+import { getListedArchivePosts, sortArchivePosts } from "../shared/archivePagination";
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -20,7 +21,10 @@ import type { ImageMetadata } from "astro";
 const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 const copy = getUiCopy(locale);
 
-let posts = PostCollections.getPostsForLocale(locale).map((p) =>
+let posts = sortArchivePosts(
+  getListedArchivePosts(PostCollections.getPostsForLocale(locale)),
+  { field: "date", direction: "desc" },
+).map((p) =>
   omit(p as ArticlePost, [
     "data.body",
     "data.cover",
@@ -29,14 +33,14 @@ let posts = PostCollections.getPostsForLocale(locale).map((p) =>
 )
 .filter((p) => !p.data?.unlisted && !p.data?.hidden) as ArticlePost[];
 
-const hasMorePosts = posts.length > pageSize - 1;
+const hasMorePosts = posts.length > pageSize;
 const defaultNextUrl = hasMorePosts
   ? locale === DEFAULT_LOCALE
     ? "/pages/2-date-desc.html"
     : `/${locale}/pages/2-date-desc.html`
   : null;
 
-posts = posts.slice(0, pageSize - 1);
+posts = posts.slice(0, pageSize);
 posts = await Promise.all(posts.map(withOptimizedCardImage));
 
 const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
@@ -125,56 +129,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
   </div>
 </Page>
 
-<script>
-  let htmxRequested = false;
-
-  function loadHtmx() {
-    if (htmxRequested || document.querySelector("script[data-x-htmx-tag]")) return;
-    htmxRequested = true;
-
-    const scriptEl = document.createElement("script");
-    scriptEl.setAttribute("data-x-htmx-tag", "");
-    scriptEl.setAttribute("defer", "");
-    scriptEl.src = "/js/htmx.min.js";
-    scriptEl.onload = () => {
-      // @ts-expect-error - htmx is a global
-      window.htmx?.process(document.body);
-    };
-
-    document.body.appendChild(scriptEl);
-  }
-
-  function scheduleHtmxLoad() {
-    const target = document.querySelector("[hx-get][hx-trigger='click']");
-    if (!target) return;
-
-    target.addEventListener("pointerenter", loadHtmx, { once: true, passive: true });
-    target.addEventListener("focusin", loadHtmx, { once: true });
-
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((entry) => entry.isIntersecting)) return;
-          observer.disconnect();
-          loadHtmx();
-        },
-        { rootMargin: "0px 0px 320px" },
-      );
-      observer.observe(target);
-      return;
-    }
-
-    loadHtmx();
-  }
-
-  document.addEventListener("astro:page-load", scheduleHtmxLoad);
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", scheduleHtmxLoad, { once: true });
-  } else {
-    scheduleHtmxLoad();
-  }
-</script>
+<script is:inline src="/js/htmx.min.js" defer></script>
 
 <style>
   .background-effect {

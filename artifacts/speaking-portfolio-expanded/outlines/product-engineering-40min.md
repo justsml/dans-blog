@@ -1,14 +1,14 @@
-# The Future of Product Engineering: Technical Blueprint
+# The Future of Product Engineering: Conway's Law, Applied on Purpose
 
 40 minutes · 15 slides
 
-**In one line.** An architecture for a product learning loop that agents can run, with governors that keep the product promise human-owned.
+**In one line.** Every function in a product organization becomes an agent with a human owner; the people who automate the right things win, and the people who trade taste for AI vibes lose.
 
-**Arc.** Warm open, steady through state and evidence, build through the typed hypothesis and the instrument, peak at the demo, steady through statistics and taste, land on the smallest loop.
+**Arc.** Warm open on Conway's law and the scale spectrum, steady through the thesis and the agent roster, build through the loop from outside-in research to targeted beta enrollment, steady through the deluge and the guards, peak at the demo, land on hypothesis-backed reporting and Conway's law read forward.
 
-**Scope.** A proposed reference design. The demo is a deterministic policy replay with synthetic numbers; it shows gate behavior, not significance or customer benefit. Say it once on slide 1.
+**Scope.** A proposed operating model, not a report from a deployment. The demo is a deterministic policy replay with synthetic numbers; it shows guard behavior, not significance or customer benefit. Tools named in the notes are examples, not endorsements. Say it once on slide 1.
 
-**Demo.** [Runbook section 6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering) · [Kit](../demos/index.html). Fallback: the table on slide 10.
+**Demo.** [Runbook section 6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering) · [Kit](../demos/index.html). Fallback: the table on slide 13.
 
 **Before each delivery.** Fill the `Story` lines.
 
@@ -18,121 +18,186 @@
 
 ---
 
-## 1. Design the product learning loop
+## 1. Conway's law still applies
 
 0:00–2:30 · warm
 
-<!-- image: a circular conveyor loop with small labeled crates moving around it, one station on the loop is a raised booth with a person inside holding a lever, dark slate background, amber accent on the lever, flat vector, no text -->
+<!-- image: an org chart drawn as boxes and lines on the left, a system architecture diagram on the right with the identical shape, a thin mirror line between them, dark slate background, amber accent on the mirror line, flat vector, no text -->
 
-> A technical blueprint with governors
+> Your code reflects your organization. Your organization reflects your code.
+> In the agentic era, both start reflecting your agents.
 
-How would a product agent discover that onboarding confuses users, propose a change, and stop itself from shipping a manipulative version that raises activation? That is the systems question, and every intermediate artifact must be inspectable.
+Conway wrote it down in 1968: a system's structure copies the communication structure of the organization that built it. Nothing about language models repeals that. What changes is that the "organization" now includes agents, and the shape you give them will show up in your product whether you planned it or not.
 
-Scope, once: proposed design, synthetic demo numbers, gate behavior only. The agent prepares hypotheses and changes; the organization owns what it promises customers. From here on I build.
+Scope, once: proposed operating model, synthetic demo numbers, guard behavior only, example tools not endorsements. Then the question for the next forty minutes: which functions become agents, who owns each one, and where do the guards go?
 
-Story: [the experiment that "won" and made the product worse]
+Source: Conway (1968), [How Do Committees Invent?](http://www.melconway.com/Home/Committees_Paper.html)
 
-## 2. An executable loop needs durable state
+Story: [a system whose architecture you could read straight off the org chart]
 
-2:30–4:30 · warm
+## 2. The scale spectrum: committees at one end, five people at the other
 
-<!-- image: a row of labeled filing drawers each connected to the next by a short pipe, one drawer half open with a numbered tag, dark slate background, amber accent on the tag, flat vector, no text -->
+2:30–5:00 · warm
 
-> Observe → hypothesize → prepare
-> Approve → expose → measure
-> Judge → record → learn
+<!-- image: a long horizontal slider bar, at the left end a tiny huddle of five figures around one laptop, at the right end a large boardroom table with many chairs and a stack of binders, the slider handle sitting in the middle, dark slate background, amber accent on the slider handle, flat vector, no text -->
 
-Each state is a durable record with an identifier, not a function call in a long conversation. Approval names a revision; exposure references an experiment configuration; a decision references a scorecard. If a process restarts, it resumes measurement instead of starting a second experiment. Plain tables and a queue are enough to start.
+> Thousands of employees, millions of customers: change procedure, risk and reward analysis, prioritization rubric
+> Fewer than five people: no committee, no meeting, ship the feature
+> Every process on this range is about to adapt
 
-## 3. Provenance in, tables out
+At one end, a company with thousands of employees and millions of customers. It has a change procedure, a risk and reward analysis, a prioritization rubric, and it should. At the other end, a scrappy startup that does not need a committee to ship. Most rooms sit somewhere between.
 
-4:30–8:00 · steady
+The point is not that one end is right. Every system and process that exists anywhere on this range is something that will adapt in the AI age. The rubric, the standup, the release checklist, the quarterly roadmap review. Each one is a candidate for automation, and each one is a place where judgment can quietly leak out.
 
-<!-- image: a stream of small tickets entering a sorting machine, each stamped, exiting into a neat grid of boxes linked by thin lines, a shredder slot on the side, dark slate background, amber accent on one stamped ticket, flat vector, no text -->
+Ask (30 s): where on the slider is your team, and what is the heaviest process you run?
 
-> Identity, time, source, consent scope, schema, confidence, deletion rules
-> Customer → segment → observation · Hypothesis → experiment → decision
-> Every claim keeps its source, including the failures
+## 3. Who gets rewarded, and who suffers
 
-Start with events and feedback the organization is authorized to use. Normalize timestamps, identifiers, event versions, links to source. Define access, retention, and deletion at ingestion. An unresolved identity stays unresolved; a language model does not guess it.
+5:00–7:00 · steady
 
-Then the memory. Do not reach for a graph database because the diagram has arrows. Tables with stable identifiers are enough. Store observations apart from interpretations; connect decisions to the evidence available at the time. The key query: have we tested a similar intervention on a comparable segment? Keep failures and rejected ideas, or the memory teaches future agents to repeat attractive mistakes.
+<!-- image: two hands side by side, the left hand holding a precise set of calipers, the right hand holding a party balloon, dark slate background, amber accent on the calipers, flat vector, no text -->
 
-## 4. Researchers produce evidence packets
+> Automate the right things: rewarded richly
+> Trade taste and judgment for AI vibes: suffer
 
-8:00–10:00 · steady
+The thesis in one line. The teams that automate the right things, with taste intact, will be rewarded richly. The teams that hand judgment to whatever the model says will suffer, and the suffering arrives later than the speed does, which is what makes it dangerous.
 
-<!-- image: a manila folder open on a desk containing four stacked cards, one card with a plus sign, one with a minus sign, one with a question mark, one with a small human silhouette, dark slate background, amber accent on the question mark card, flat vector, no text -->
+Taste here means knowing what the product should refuse to do. Judgment means knowing which decisions get a human. The rest of the talk is about keeping both while automating almost everything else.
 
-> Observation · Supporting and contrary evidence
-> Alternative explanations · Gaps needing human research
+## 4. Map every function to an agent, and every agent to an owner
 
-Constrain the research step's output. For onboarding: integration visits, support complaints, cohort changes, missing information, with citations to internal records and preserved contradictions. The agent flags when a customer interview is needed. Synthesis cannot manufacture access to motives or make a correlation causal.
+7:00–9:30 · steady
 
-## 5. The hypothesis is a typed proposal
+<!-- image: a row of six desks each with a small robot seated at it, behind each desk a standing human figure with one hand resting on the robot's shoulder, dark slate background, amber accent on the human hands, flat vector, no text -->
 
-10:00–12:30 · steady
+> Mimic each function of the product group as an agent
+> Map each agent to a person who owns that responsibility
+> Owning the function means owning the agent
 
-<!-- image: a form with clearly outlined fields, all filled, held against a cutout template that matches its shape exactly, dark slate background, amber accent on the template edge, flat vector, no text -->
+The craft of building a product engineering group in this era is to mimic each function you already have, or would have at scale, as an agent, and then map each agent to a person. The person owns the responsibility, so the person owns the agent: its instructions, its inputs, its limits, and its mistakes.
 
-> Segment and expected outcome
-> Primary metric and counter-hypothesis
-> Guardrails, exposure, evidence references, owner
+This is Conway's law used deliberately. If your agent roster is going to mirror your org chart anyway, draw the roster first. A five-person startup gets the research function, the feedback function, and the analytics function it could never afford to staff. A large company gets the same functions with the accountability lines it already has.
 
-A schema rejects missing fields; a human decides whether the experiment is worth doing. Confidence in the idea and permission to act are different things. The onboarding hypothesis: clarify the first useful step while keeping support demand within the agreed boundary.
+The next six slides walk that roster in the order work flows through it.
 
-Show the hypothesis as a fifteen-line record.
+## 5. The product research agent looks outward
 
-## 6. Plan a portfolio, then control interference
+9:30–12:00 · steady
 
-12:30–14:30 · steady
+<!-- image: a small robot at a periscope, the periscope rising above a wall and pointing at a distant skyline of competitor buildings, a few speech bubbles floating in the sky, dark slate background, amber accent on the periscope lens, flat vector, no text -->
 
-<!-- image: many small paper sketches pinned loosely on a board, below them two glass lanes with traffic flowing that must not cross, a registry book beside the lanes, dark slate background, amber accent on the registry, flat vector, no text -->
+> Competitors and the landscape · People talking about you · Features others have that you lack
+> A web-crawling bot with browser tools you control
 
-> Explore several cheap candidates
-> Limit concurrent exposure
-> Register overlaps. Choose the analysis plan first.
+Start outside-in. A product research agent scans competitors, watches the landscape, and finds people talking about you, especially when they mention a feature someone else has. Much of this is a web-crawling bot with a browser, scheduled, with a summary at the end.
 
-Drafts are cheap to parallelize because they touch no customers. Live experiments interact, share participants, and compete for traffic. Use a registry for eligible populations and overlaps. The agent does not allocate traffic opportunistically.
+Integrated marketing platforms already scrape social media for you. The difference is ownership. Your own agent with your own browser tools means you decide what it looks at, what it keeps, and what it ignores. The output is a standing brief, not a dashboard nobody opens.
 
-## 7. Approved intent becomes a reversible change
+## 6. The feedback agent looks inward, and the review is a ritual
 
-14:30–16:30 · build
+12:00–14:30 · steady
 
-<!-- image: a git branch drawn as a railway siding with a switch lever, a small flag on the siding, and a return track leading back to the main line, dark slate background, amber accent on the switch lever, flat vector, no text -->
+<!-- image: a funnel with many small envelopes and speech bubbles pouring in at the top, a single neat stack of cards coming out the bottom onto a table with a wall calendar behind it, dark slate background, amber accent on one calendar day, flat vector, no text -->
 
-> Branch and feature flag · Tests and instrumentation
-> Approval tied to revision · Rollback prepared before exposure
+> Ingest support tickets, interviews, reviews, and in-app feedback automatically
+> Daily or weekly review with leadership and the product team
+> Output: what belongs at the top of the list, and why
 
-Implementation is a bounded transaction. Approval refers to the exact revision and settings, so later edits cannot inherit permission. Deployment is idempotent and observable. Pricing, external communication, and sensitive targeting follow their own authority boundaries. A generated patch is evidence to review.
+Organizations already collect feedback from users. What changes is that ingestion is automated: clustering, deduplication, linking each cluster back to the customers who said it. The agent prepares; it does not decide.
 
-## 8. Verify the measuring instrument
+Then a ritual. A daily or weekly review where the product team and leadership look at the brief from slide 5 and the clusters from this slide and argue about exactly which features belong at the top. Keep the meeting. It is where taste gets exercised in public, and it is the first guard in the system.
 
-16:30–19:30 · build
+Story: [a feedback cluster that changed what the team built that quarter]
 
-<!-- image: a set of kitchen scales being checked against a reference weight, two identical cups on the pans, one pan slightly lower, dark slate background, amber accent on the reference weight, flat vector, no text -->
+## 7. Prioritization needs a rethink, because estimation is already gone
 
-> Event schema and assignment · A/A checks
-> Sample ratio mismatch · Stable outcome definitions
+14:30–17:00 · build
 
-Before exposure grows, test event emission, assignment persistence, and metric definitions. Microsoft's experimentation group treats sample ratio mismatch as a data-quality signal requiring investigation. A balanced count does not prove correct randomization. Otherwise the fastest agent optimizes a broken dashboard.
+<!-- image: a planning poker deck of cards fanned out on a table with a thin layer of dust on it, beside it a single clean card with a question mark, dark slate background, amber accent on the clean card, flat vector, no text -->
 
-Source: Microsoft ExP (2021), [Patterns of trustworthy experimentation: during-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-during-experiment-stage/).
+> Effort used to be half the rubric
+> Nobody t-shirt sizes anymore; points, if they exist, are assigned by an agent
+> We still have to decide what to ship
 
-## 9. Keep optimization and permission separate
+The rankings that dominated software planning were effort against value. Effort is evaporating as an input. I have not heard an engineering team discuss level of effort on a ticket in months. No t-shirt sizing; story points, where they survive, are auto-assigned by an agent and nobody argues about them.
 
-19:30–21:30 · build
+That does not remove the need to choose. It moves the rubric. What is left is evidence for the idea, risk of the change, and what it does to the product promise. Slides 8 through 10 are about producing that evidence cheaply, and slides 12 through 14 are about the risk side.
 
-<!-- image: four separate boxes in a row connected by arrows, a scoreboard, a barrier gate, a magnifying glass, and a chair with a person, dark slate background, amber accent on the barrier gate, flat vector, no text -->
+## 8. Gap analysis agents on your own product
 
-> Score outcomes · Apply nonnegotiable gates
-> Check evidence sufficiency · Request the accountable decision
+17:00–19:00 · build
 
-Four functions with different jobs: scorecard, policy layer, evidence check, owner decision. One weighted score would let enough activation uplift buy off a forbidden pattern. Hard constraints cannot be purchased with a metric gain. The output shows exactly why a candidate stopped.
+<!-- image: a magnifying glass held over a phone screen, revealing under the lens a tangle of overlapping buttons and misaligned labels while the rest of the screen looks clean, dark slate background, amber accent on the lens rim, flat vector, no text -->
 
-## 10. Demo: the apparent winner is blocked
+> Walk the product as a new user
+> Find usability defects and gaps against the research brief
+> Propose ways to streamline the visual information hierarchy
 
-21:30–26:30 · peak
+Once you think in terms of agents with responsibilities, a general-purpose agent can also review the product itself. Point it at a build with a browser and ask it to walk the onboarding, compare what it finds with the competitor brief, and flag usability defects and opportunities to simplify the information hierarchy.
+
+The output is a list of candidate changes with screenshots and reasons, feeding the same review as the customer feedback. It is cheap to produce and cheap to reject, which is exactly the property you want in a proposal pipeline.
+
+## 9. Extend the loop past product and engineering
+
+19:00–21:30 · build
+
+<!-- image: a set of pipes connecting four labeled-by-shape tanks, a bar chart tank, a shopping cart tank, a customer card tank, and a large warehouse tank, with a small robot turning a valve where they join, dark slate background, amber accent on the valve, flat vector, no text -->
+
+> Website analytics and engagement → ecommerce and customer records → the warehouse
+> Ask the agents to find opportunities
+> Draft ads and videos into a proposal queue, or auto-test them
+
+The same pattern applies to the full life cycle. Connect agents to website analytics and engagement metrics, connect those to your ecommerce platform or customer records, connect all of it to your warehouse. Then you can ask: where are the opportunities?
+
+From there the marketing agent drafts ads and videos into a proposal queue, or, for low-stakes media, tests them automatically. That is the same shape as the feature pipeline: propose cheaply, test narrowly, escalate before anything broad. Tool names here are placeholders. The ownership pattern is the point.
+
+## 10. Test features the way you test ads: targeted beta enrollment
+
+21:30–24:30 · build
+
+<!-- image: a cluster of five figures highlighted among a crowd of grey figures, a dotted line from the cluster to a small door marked only with a toggle switch, one figure stepping through, dark slate background, amber accent on the toggle switch, flat vector, no text -->
+
+> This idea came from a cluster of feedback
+> Find users similar to that cluster
+> Invite them to opt in; enroll them in a feature flag; collect narrow feedback
+
+Every feature idea from slides 5 through 8 can be tested the same way media assets are. A/B tests where the traffic supports it. Where it does not, use the provenance: this idea came from a cluster of customers, so find the users similar to them and push an invitation.
+
+The invitation is opt-in. It says this is a beta, it may break things, here is how to turn it off, with whatever warning language your context requires. Accepting drops them into feature flag enrollment. You get an automatic loop of narrow data collection that starts as a safety check on a small subset and widens only when the evidence and the owner say so.
+
+## 11. Customers reward attention, so be ready for the deluge
+
+24:30–26:30 · steady
+
+<!-- image: a single person shouting into a dark void on the left, on the right the same person now at a table with a small robot taking notes, a stream of letters arriving in a tray, dark slate background, amber accent on the notepad, flat vector, no text -->
+
+> Even a fumbled feature earns goodwill from the people who asked for it
+> Once customers see you respond, they tell you exactly what they think
+> Your systems must capture and act on that automatically
+
+Even if you fumble the feature, the customers who asked for it will notice that someone heard them screaming into the void. They are more likely to tell you what needs to change, and it is remarkable how forthcoming people become once they see a response.
+
+That is the good news and the operational problem. The volume of feedback goes up sharply. If the feedback agent from slide 6 is not ready to ingest it, cluster it, and route it, you have taught your best customers that responding is a one-time event.
+
+Story: [the customer who became a collaborator after one beta invitation]
+
+## 12. Put the guards where risk spikes
+
+26:30–29:00 · steady
+
+<!-- image: a winding road seen from above with three toll gates placed exactly at the points where the road widens, one gate at a bridge, one at a construction site, one at a demolition site with a wrecking ball, dark slate background, amber accent on the gate arms, flat vector, no text -->
+
+> A subset of users → all users
+> A cheap run → an expensive model or API run
+> Deploying new infrastructure → tearing down existing infrastructure
+
+The human-in-the-loop part is not "a human reads everything." It is placing guards where the risk exposure spikes. Going from a subset to all users. Running a test that burns an expensive model or a metered API. Deploying new infrastructure. Riskier still, tearing down infrastructure that exists.
+
+Any agent action that could lead to one of these needs a guard in front of it, and the guard belongs to the owner from slide 4. Everything below those thresholds should run without a human reading every token, or you have automated nothing.
+
+## 13. Demo: the guard blocks the apparent winner
+
+29:00–34:00 · peak
 
 <!-- image: a podium with three places, the tallest position has a barrier gate closed in front of it, the second position has an open gate and a small review stamp hovering, dark slate background, amber accent on the closed gate, flat vector, no text -->
 
@@ -144,73 +209,38 @@ Four functions with different jobs: scorecard, policy layer, evidence check, own
 
 Follow [runbook section 6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering). Reveal activation first. Show of hands: which ships?
 
-Reveal support and urgency. Pressure copy breaches the 5% ceiling and fabricates urgency: blocked. Raise the ceiling to 10%: the principle still rejects it. Clear first step passes and is eligible for review, not shipped. Changing a threshold is a policy edit, not a reason to rerun until a favorite passes.
+Reveal support and urgency. Pressure copy breaches the 5% support ceiling and invents urgency: blocked. Raise the ceiling to 10%: the urgency rule still rejects it. Clear first step passes and becomes eligible for the owner's review. It is not shipped. This is the guard from slide 12 in code: the rule was written before the scorecard, so a metric win cannot buy off a product principle.
 
 Compression: at two minutes, the table and the block; skip the threshold change.
 
-## 11. Bandits and peeking change the rules of inference
+## 14. Every experiment carries a hypothesis and reports itself
 
-26:30–29:30 · steady
+34:00–37:00 · land
 
-<!-- image: a slot machine lever beside a wall clock with its hands removed and placed on the table, a sealed envelope leaning on the clock, dark slate background, amber accent on the sealed envelope, flat vector, no text -->
+<!-- image: a single index card with an arrow drawn from one shape to another, beneath it a small gauge and a paper airplane in flight toward a chat bubble, dark slate background, amber accent on the gauge needle, flat vector, no text -->
 
-> Adaptive allocation is a different design: log propensities, preserve holdouts
-> Fixed horizon: honor the plan. Sequential: use valid methods.
-> Safety stops are explicit. Multiple comparisons need treatment.
+> If we do X, we expect Y to move
+> For every experiment, a metric that runs automatically
+> Success, failure, and surprise reported to wherever the team already looks
 
-Traffic optimization and causal estimation are different jobs. Changing assignment probabilities changes the analysis; fixed-horizon intervals do not bolt onto a bandit. For a first version, a well-designed randomized experiment is easier to trust.
+Every beta, every ad test, every feature flag from slides 9 and 10 gets a hypothesis. If we change this, we expect that to increase. Vague expectations become invisible failures.
 
-Then peeking. An always-on system can inspect results constantly and announce a winner at the first favorable moment, which destroys the test's error guarantees. Johari, Pekelis, and Walsh developed always-valid inference for continuous monitoring. Choose the method and stopping rules before launch. Safety stops are operational controls, not efficacy wins. The planner does not get to change statistical rules when a result looks promising.
+For every hypothesis, generate the measurement with it. A dashboard in your metrics tool if you like, but it does not need to be visual. A scheduled check that posts stats to the team channel is enough. What matters is that success, failure, and unexpected outcomes reach the logging, reporting, or notification system the team already watches, without a human remembering to look.
 
-Source: Johari, Pekelis, Walsh (2015), [Always Valid Inference: Bringing Sequential Analysis to A/B Testing](https://arxiv.org/abs/1512.04922).
+Source: Microsoft ExP (2021), [Patterns of trustworthy experimentation: pre-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/).
 
-## 12. Taste tests are a mixed system
+Write it (45 s): one process from your slider position, the agent that would run it, and the person who would own it.
 
-29:30–32:30 · steady
+## 15. Conway's law, read forward
 
-<!-- image: a tasting table with three small plates, one under a mechanical sensor, one under a magnifying glass, one being lifted by a human hand, dark slate background, amber accent on the human hand, flat vector, no text -->
+37:00–40:00 · land
 
-> Deterministic interaction checks · Examples of acceptable voice
-> Calibrated model review · Human decisions on disputed cases
+<!-- image: the org chart and architecture diagram from slide 1, now with a third mirrored panel showing a row of small robots each standing beside a person, all three panels sharing one shape, dark slate background, amber accent on the people, flat vector, no text -->
 
-The principle: explain the next useful action without inventing urgency. Some violations are flags or interface tests; subtle pressure needs interpretation. Keep reference examples and periodically compare model judgments with human ones. Log disagreement instead of false precision. Taste becomes discussable instead of discovered after release.
+> Your agents will mirror your organization
+> So draw the roster on purpose, name the owners, place the guards
+> Automate the right things. Keep the taste.
 
-Story: [a product principle your team wrote down only after breaking it]
+We started with Conway. Your product mirrors your organization, and your organization is about to include a roster of agents. Left alone, that roster will mirror whatever accidents your org chart already has.
 
-## 13. Authority follows risk, not agent confidence
-
-32:30–34:30 · steady
-
-<!-- image: four keys of increasing size on a ring, the smallest key in a lock, the largest key held by a person standing apart, dark slate background, amber accent on the largest key, flat vector, no text -->
-
-> Low-risk synthesis can run
-> Exposure and messages need policy
-> Pricing and strategy have owners. Irreversible actions escalate.
-
-Define action classes by reversibility, blast radius, sensitivity, money, and strategic significance. Give tools the narrow permissions for their class. Approval attaches to specific actions; audit shows who authorized them. Routine work moves without a human reading every token.
-
-## 14. Capture a bounded lesson, then build the smallest loop
-
-34:30–38:00 · land
-
-<!-- image: a single index card with a date stamp and a small expiry tag, resting on top of a very small machine with one input pipe and one output tray, dark slate background, amber accent on the expiry tag, flat vector, no text -->
-
-> What changed, for whom, when · Result and uncertainty · Decision · Revisit trigger
-> One signal source · One hypothesis schema · One reversible experiment type · One owner
-
-"Clearer onboarding helped this cohort under these conditions" beats "shorter flows always win." Include an expiry or revisit trigger. Later agents retrieve the record before proposing similar work. Training the system through evidence and memory, not the model.
-
-Then the first implementation. One signal source and one recurring product question. Deterministic checks and a simple registry before research agents or dynamic allocation. Measure time to a supported decision, not hypotheses generated.
-
-Write it (45 s): the signal source and the question.
-
-## 15. Programmable learning needs human direction
-
-38:00–40:00 · land
-
-<!-- image: the conveyor loop from slide 1 now moving faster with a blur, the booth with the person and lever unchanged and clearly in focus, dark slate background, amber accent on the lever, flat vector, no text -->
-
-> Observe → understand → experiment → measure → judge → remember
-> The product promise stays human-owned
-
-The system noticed friction, prepared an experiment, and refused to promote the candidate that won through pressure. It did not discover the company's values; humans supplied them. The payoff is a shorter path from customer evidence to a trustworthy change, with reusable learning afterward. The next product organization automates learning while keeping the taste and judgment that make the product worth using.
+So draw it deliberately. One agent per function, one owner per agent, guards where risk spikes, a hypothesis and a report on everything that touches a customer. The teams that do this will be rewarded richly. The teams that trade their taste for vibes will discover the cost later, when it is expensive. Automate the right things. Keep the judgment.

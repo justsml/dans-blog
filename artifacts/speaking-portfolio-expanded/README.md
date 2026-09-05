@@ -4,7 +4,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and an image prompt in an HTML comment, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match.
+**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and an image prompt in an HTML comment, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match. The three Product Engineering outlines were rewritten again on 2026-09-05 around Conway's law and the agent roster; the reveal.js HTML deck, packet, formats, CFP, and evidence notes follow them. The three Product Engineering PPTX files still predate the rewrite.
 
 **Before each delivery.** Fill every `Story` line with a first-hand example. The free-tier talk also needs current dated reporting on its slide 3.
 
@@ -35,8 +35,8 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 15 | [Regenerate](decks/evidence-learning-40min.pptx) | [Education](education/CFP.md) |
 | Rethinking Parallelization in the Agentic Era | [40 min](outlines/parallelization-40min.md) | 16 | None yet | None yet |
 | The Future of Product Engineering: Big Idea | [15 min](outlines/product-engineering-15min.md) | 8 | [Regenerate](decks/product-engineering-15min.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: Feedback Systems | [30 min](outlines/product-engineering-30min.md) | 11 | [Regenerate](decks/product-engineering-30min.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: Technical Blueprint | [40 min](outlines/product-engineering-40min.md) | 15 | [Regenerate](decks/product-engineering-40min.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: The Agent Roster | [30 min](outlines/product-engineering-30min.md) | 11 | [Regenerate](decks/product-engineering-30min.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: Conway's Law, Applied on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Regenerate](decks/product-engineering-40min.pptx) | [Product variants](economics-product/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 
@@ -69,7 +69,7 @@ Every slide has an `<!-- image: ... -->` comment with a complete one-shot prompt
 | Free Tier | Which of my assumptions depend on today's price, and what has free inference already shaped? | Free parking's second-order effects mapped onto software; one workload under 1× to 10× prices. |
 | Outsmart Your Lying, Cheating Students | What follow-up would distinguish understanding from a polished artifact? | The percentage-change reconstruction and transfer item, plus a scripted learner replay. |
 | Parallelization | Which of the five new axes of parallelism pays for its coordination cost on my workload? | A capped three-way tournament that ends by compiling the winner into a script. |
-| Product Engineering | Which faster learning loops still honor the product promise? | An activation winner violates support and false-urgency constraints. |
+| Product Engineering | Which functions of my product group become agents, who owns each one, and where do the guards go? | An activation winner violates support and false-urgency constraints. |
 
 The two education talks use different worked examples so they can be booked together.
 

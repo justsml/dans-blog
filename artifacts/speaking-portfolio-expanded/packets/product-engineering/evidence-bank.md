@@ -40,8 +40,8 @@ Resume basis: Quizlet, JavaScript/TypeScript SME for a platform serving 50M user
 
 Resume basis: Hotel Engine, continuous feedback rituals while scaling.
 
-- **Problem and operating context:** [the meeting where three teams had three true explanations]
-- **What I personally built or changed:** [the evidence packet or decision record that replaced the argument]
+- **Problem and operating context:** [which functions had an owner and which did not; where the org chart showed up in the product]
+- **What I personally built or changed:** [the feedback ritual or ingestion step; who owned it]
 - **What failed:** [ ]
 - **Before and after measurements:** [time from signal to decision, if recorded]
 - **Diagram or screenshot:** [ ]
@@ -57,9 +57,10 @@ Resume basis: Hotel Engine, continuous feedback rituals while scaling.
 
 | Deck | Slide | Slot |
 | --- | --- | --- |
-| 40 min | 1 | The experiment that "won" and made the product worse |
-| 40 min | 12 | A product principle written down only after breaking it |
-| 30 min | 1 | Three teams, three true explanations, nobody could pick |
-| 30 min | 7 | A metric that looked great for two weeks |
-| 30 min | 9 | A principle only articulable as a pair of examples |
-| 15 min | 1 | The screen shipped fast that should not have shipped |
+| 40 min | 1 | A system whose architecture you could read off the org chart |
+| 40 min | 6 | A feedback cluster that changed what the team built that quarter |
+| 40 min | 11 | The customer who became a collaborator after one beta invitation |
+| 30 min | 1 | A system whose architecture you could read off the org chart |
+| 30 min | 4 | A feedback cluster that changed what the team built that quarter |
+| 30 min | 7 | The customer who became a collaborator after one beta invitation |
+| 15 min | 1 | Thirty seconds: a system whose architecture you could read off the org chart |

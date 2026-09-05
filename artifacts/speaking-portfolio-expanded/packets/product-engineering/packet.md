@@ -1,76 +1,76 @@
 # Talk packet: The Future of Product Engineering
 
-Outlines: [40 min blueprint](../../outlines/product-engineering-40min.md) · [30 min feedback systems](../../outlines/product-engineering-30min.md) · [15 min big idea](../../outlines/product-engineering-15min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+Outlines: [40 min Conway's law and the agent roster](../../outlines/product-engineering-40min.md) · [30 min the agent roster](../../outlines/product-engineering-30min.md) · [15 min big idea](../../outlines/product-engineering-15min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles
 
 - **Primary:** The Future of Product Engineering
-- Automate How the Company Learns
-- The Product Team as an Executable Loop
-- A Win Can Be a Worse Product
+- Conway's Law, Applied on Purpose
+- One Agent per Function, One Owner per Agent
+- Automate the Right Things. Keep the Taste.
 
 ## Abstracts
 
 ### 50 words
 
-Code generation is the easy part to notice. The harder problem is deciding what should exist and what evidence would change that decision. This talk designs a product learning loop agents can run, with governors that block the activation winner that cheats, and keeps the product promise human-owned.
+Conway's law still applies, and your organization now includes agents. This talk maps every function of a product group, from competitor research to beta enrollment, onto an agent with a human owner, shows where the guards go when risk spikes, and argues that teams who trade taste for AI vibes will pay later.
 
 ### 100 words
 
-An AI can generate either onboarding screen in seconds. Which one deserves to exist? This talk proposes an architecture for a product learning loop: signals with provenance, evidence packets that preserve disagreement, typed hypotheses, reversible changes, verified instruments, and a decision layer that keeps optimization and permission separate. A deterministic demo shows a candidate that raises activation from 40% to 48% blocked because support contacts tripled and the copy invented urgency. It covers bandits, peeking, taste as a mixed system of checks and human judgment, authority that follows risk, and a bounded lesson record. The product promise stays human-owned.
+Your code mirrors your organization, and your organization is about to include a roster of agents. Left alone, that roster mirrors whatever accidents your org chart already has. This talk draws it deliberately: one agent per function, one human owner per agent. A research agent looks outward at competitors and mentions; a feedback agent clusters what customers say and feeds a weekly review; gap analysis, marketing, and sales agents extend the loop to analytics and the warehouse; ideas are tested through targeted, opt-in beta enrollment behind feature flags. Guards sit where risk spikes. A deterministic demo shows one blocking an activation winner that cheated.
 
 ### 250 words
 
-Should onboarding ask a new user to invite teammates before they have seen any value? An AI can generate either screen in seconds. The hard problem is deciding which screen deserves to exist and what evidence would change that decision. This talk argues that the next product organization automates how it learns, and builds the architecture to do it with governors.
+Conway wrote in 1968 that a system copies the communication structure of the organization that built it. Nothing about language models repeals that. What changes is that the organization now includes agents, and the shape you give them shows up in your product whether or not you planned it.
 
-The loop has durable state: a hypothesis with an identifier, an approval that names a revision, exposure that references an experiment configuration, a decision that references a scorecard. Signals enter with provenance and consent scope; memory begins as ordinary tables that keep failures as well as wins. Research agents produce evidence packets with supporting and contrary evidence, alternative explanations, and the gaps that need a human interview. Hypotheses are typed proposals a schema can reject. Implementation is a reversible transaction: branch, flag, tests, approval tied to a revision, rollback prepared before exposure.
+Every process on the scale spectrum, from a five-person startup shipping without a meeting to a thousand-person company with a change procedure and a prioritization rubric, is about to adapt. The teams that automate the right things with taste intact will be rewarded richly. The teams that hand judgment to whatever the model says will suffer, later, when it is expensive.
 
-Measurement gets its own discipline. Verify the instrument before trusting the result. Bandits change the analysis. Peeking destroys error guarantees; choose stopping rules before launch. Taste is a mixed system: deterministic checks, reference examples, calibrated model review, and a human for disputed cases.
+The craft is to mimic each function of the product group as an agent and map each agent to the person who owns that responsibility. The talk walks the roster in the order work flows: a research agent that crawls competitors and mentions with browser tools you control; a feedback agent that ingests and clusters what customers already tell you and feeds a daily or weekly review; a rethink of prioritization now that effort estimation has quietly disappeared; gap analysis agents walking your own product; marketing and sales agents connected to analytics, customer records, and the warehouse; and targeted beta enrollment that invites users similar to a feedback cluster into an opt-in feature flag.
 
-The demo shows an activation winner blocked by a support ceiling and a rule against fabricated urgency, then a quieter candidate that becomes eligible for review, not shipped. Authority follows risk, not agent confidence. Lessons are bounded, with revisit triggers. The first implementation is small: one signal, one schema, one experiment type, one owner.
+Then the guards: subset to all users, cheap to expensive runs, deploying and tearing down infrastructure. A deterministic demo shows a guard blocking an activation winner that tripled support contacts and invented urgency. Every experiment carries a hypothesis and reports itself to the channel the team already watches.
 
 ## Learning outcomes
 
 Attendees will be able to:
 
-1. Separate a product learning loop into durable states with identifiers and explain what each enables for retries and audit.
-2. Design an evaluation layer that keeps scorecards, nonnegotiable gates, evidence sufficiency, and the human decision as distinct functions.
-3. Specify a first implementation with one signal source, one hypothesis schema, one reversible experiment type, and one accountable owner.
+1. Map the functions of their product organization onto an agent roster, and name a human owner for each agent.
+2. Place human-in-the-loop guards at the specific transitions where risk exposure spikes, rather than on every action.
+3. Attach a falsifiable hypothesis and an automatic report to any beta, ad test, or feature flag before it reaches customers.
 
 ## Audience and prerequisites
 
-Product engineers, engineering leaders, and product managers building or evaluating AI-assisted product workflows. Familiarity with A/B testing and feature flags. No statistics beyond the basics.
+Product engineers, engineering leaders, founders, and product managers building or evaluating AI-assisted product workflows. Familiarity with feature flags and basic A/B testing. No statistics beyond the basics.
 
 ## Practical takeaways
 
-- The typed hypothesis record with counter-hypothesis, guardrails, and owner.
-- The four-function evaluation split: scorecard, policy, evidence check, decision.
-- The smallest trustworthy loop checklist.
+- The agent roster: research, feedback, gap analysis, marketing and sales, beta enrollment, each with an owner.
+- The four risk spikes that get a guard.
+- The hypothesis-plus-report rule for every experiment.
 
 ## Not a product pitch
 
-The talk cites Microsoft's experimentation guidance and Johari, Pekelis, and Walsh on always-valid inference. It names no experimentation platform, analytics tool, or agent framework. The demo is offline and vendor-free.
+The talk cites Conway's 1968 paper and Microsoft's experimentation guidance. It names no experimentation platform, analytics tool, warehouse, or agent framework; tools mentioned in speaker notes are examples. The demo is offline and vendor-free.
 
 ## References
 
-- Microsoft ExP (2021). Patterns of trustworthy experimentation: [pre-experiment](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/), [during-experiment](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-during-experiment-stage/), and [post-experiment](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-post-experiment-stage/) stages.
-- Johari, Pekelis, Walsh (2015). [Always Valid Inference: Bringing Sequential Analysis to A/B Testing](https://arxiv.org/abs/1512.04922).
+- Conway (1968). [How Do Committees Invent?](http://www.melconway.com/Home/Committees_Paper.html)
+- Microsoft ExP (2021). [Patterns of trustworthy experimentation: pre-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/).
 - Anthropic (2024). [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents).
 
 ## Audience-specific abstracts (100 words each)
 
 ### Engineering practitioner
 
-Thirty polished onboarding variants before lunch, and the backlog has moved into choosing. This session builds the loop that does the choosing: durable state with identifiers, evidence packets that cite internal records, typed hypotheses a schema rejects, reversible changes with approval tied to a revision, and instrument checks before any result is trusted. The evaluation layer splits into four functions so a metric gain cannot buy off a forbidden pattern. A deterministic demo blocks the activation winner. Then bandits, peeking, always-valid inference, and taste as deterministic checks plus calibrated review. You leave with the schema and the four-function split.
+Nobody on your team has t-shirt sized a ticket in months, and the agents that write the code are not the interesting part. This session builds the rest of the roster: a research agent with browser tools you own, a feedback agent that clusters tickets and links them to customers, a gap analysis agent that walks your build, and beta enrollment that drops opt-in users into a feature flag. Guards sit at four risk spikes: subset to all, cheap to expensive, deploy, tear down. A deterministic demo shows one blocking the activation winner. You leave with the roster and the guard list.
 
 ### Engineering leadership and product
 
-A product organization is a feedback system, and most of its delay is in the handoffs between support, analytics, sales, and the roadmap. This talk maps the loop, shows where agents shorten it, and where they must not: the objective, the constraints, and the release decision. It explains why faster loops amplify the wrong objective, why passing gates is not a shipping decision, and why every experiment needs a decision record with an expiry. The demo shows a metric win that violates the product promise. Leaders leave with one loop to map, its slowest transfer, and one nonnegotiable constraint.
+Conway's law still applies, and your org chart is about to grow a column of agents. This talk argues you should draw that column on purpose: one agent per function, one accountable owner per agent, from competitor research through the weekly prioritization review to targeted beta enrollment. It covers what replaces effort estimation in the rubric, why customers become forthcoming once they see a response, and where the guards go when exposure spikes. The demo shows a metric win blocked by a rule written in advance. Leaders leave with one process to automate, its agent, and its owner.
 
-### Education and instructional design
+### Founders and small teams
 
-Adapted for edtech product teams: learning products are experiments on learners, and the loop that runs them needs governors. This session shows how to state a product principle, such as explain the next useful step without inventing urgency, as checks a system can enforce and examples a human can judge. It covers hypotheses with counter-hypotheses, guardrails on support burden, instrument checks before trusting an uplift, and decision records that keep a narrow lesson narrow. The demo blocks a candidate that raises activation through pressure. No statistics beyond the basics; the emphasis is on what stays human.
+You do not need a committee to ship, and you never will. What you can have now is the research, feedback, and analytics function a five-person team could never staff. This talk shows how to stand each one up as an agent you own, feed a weekly review that keeps your taste in charge, and test ideas by inviting the exact customers who asked into an opt-in flag. It covers the four moments that still need a human, and a demo where a guard blocks a winning variant that would have cost you trust. Leave with a roster you can build this quarter.
 
 ### Executive and general technology
 
-AI can now generate a product change in seconds. Deciding whether it should exist takes the same time it always did, unless the organization automates how it learns. This talk describes that loop, from customer signal to a decision with evidence and an owner, and the governors that keep it honest: constraints a metric gain cannot buy off, approvals tied to specific changes, and a human who owns the product promise. It shows a change that "won" and would have made the product worse, and closes with the smallest version any team can start next quarter.
+Your product mirrors your organization, and your organization is about to include agents. Left alone, they mirror your accidents. This talk describes a deliberate version: every function a product group performs, from watching competitors to enrolling beta users, becomes an agent with a named human owner. It explains where human review belongs, at the moments risk spikes rather than on every action, and why teams that trade judgment for AI output will pay later. It shows a change that "won" and would have made the product worse, and closes with the smallest roster any team can start next quarter.

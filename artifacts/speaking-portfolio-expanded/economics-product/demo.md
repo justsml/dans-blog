@@ -44,7 +44,7 @@ Both demonstrations run offline in the portfolio demo kit. They use fixed, synth
 
 ## 2. Product Engineering — “The winning treatment fails the product”
 
-**Duration:** 4:00 in the 30- and 40-minute variants; 3:00 in the lightning variant. Use the product policy replay panel. Deck demo slides: 15-minute slide 5, 30-minute slide 7, 40-minute slide 11.
+**Duration:** 4:00 in the 30- and 40-minute variants; 3:00 in the lightning variant. Use the product policy replay panel. Deck demo slides: 15-minute slide 5, 30-minute slide 9, 40-minute slide 13.
 
 **Question:** “Which onboarding treatment would you promote if activation were the only number you saw?”
 
@@ -67,7 +67,7 @@ Policy is chosen **before** viewing results: support rate must be at most 5%; fa
 | 1:00–1:45 | Show the predeclared policy. Run the replay. Pressure copy is blocked for support above 5% and fabricated urgency. |
 | 1:45–2:30 | Highlight the clearer first-step candidate: 45% activation, 4% support, no false urgency. It is eligible for human review. Say: “Passing a gate is different from having enough evidence to ship.” |
 | 2:30–3:15 | Inspect or narrate the reasons. Explain that hard prohibitions cannot be offset by a higher weighted activation score. A policy edit requires an accountable decision; it is not an optimization trick. |
-| 3:15–4:00 | State what a real experiment still needs: valid assignment, event checks, observation window, analysis suited to the design, uncertainty, and a named owner. Close: “Taste becomes a constraint on optimization. The product promise stays human-owned.” |
+| 3:15–4:00 | State what a real experiment still needs: valid assignment, event checks, observation window, analysis suited to the design, uncertainty, and a named owner. Close: “The rule was written before the scorecard. Automate the right things; keep the taste.” |
 
 **Lightning timing:** 0:00–0:30 setup; 0:30–1:00 reveal; 1:00–1:45 run gates; 1:45–2:15 contrast blocked and review-eligible candidates; 2:15–3:00 limits and human ownership. Slides 6–7 then unpack the constraint and candidate without rerunning the demo.
 
