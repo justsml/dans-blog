@@ -18,19 +18,34 @@ Facts below come from the 2026 resumes and the site config. Bracketed fields nee
 - **Email:** [dan@danlevy.net](mailto:dan@danlevy.net)
 - **Headshots:** [square 1200×1200 and landscape 1920×1080, high resolution, plain background; file paths]
 
+## Employment history (with dates)
+
+| Dates | Role | Organization |
+| --- | --- | --- |
+| 2024–present | Founder / AI Advisory | Independent AI Consultant & Open-Source Builder |
+| Mar 2025–Apr 2026 | Sr. AI Staff Engineer | MagicSchool.ai |
+| Jul 2021–Jul 2024 | Principal Engineer / Senior Engineering Manager | Hotel Engine |
+| Mar 2020–Dec 2020 | Sr. Lead Engineer | Quizlet |
+| Dec 2013–Dec 2018 | Founding Engineer & CTO | Property X-Ray / Core Title Co. |
+| 2019 | Director | Lambda School |
+| Sep 2017–Feb 2019 | Lead Instructor | Galvanize |
+| Mar 1999–Sep 2014 | Co-owner / VP Engineering | Hillside Software |
+
+The independent consulting practice and MagicSchool.ai overlapped for about a year; MagicSchool.ai ended April 2026 and the independent practice is the current primary role.
+
 ## 50-word bio
 
 Dan Levy is a Denver-based principal AI engineer and engineering leader with 25 years of production experience. He builds ExploitHunter.app, an open-source agent security and evaluation workbench, advises enterprise teams on agent architecture and AI security, and previously led agentic memory, retrieval, and evaluation at MagicSchool.ai.
 
 ## 100-word bio
 
-Dan Levy is a Denver-based principal AI engineer, engineering leader, and educator with 25 years building production systems. He is the founder of ExploitHunter.app, an open-source agent security and evaluation workbench whose public benchmark spans 173 model profiles and more than 400 million evaluated tokens. As an independent consultant he advises enterprise teams on agent architecture, evaluation, retrieval, model routing, and AI security. He was previously Sr. AI Staff Engineer at MagicSchool.ai, where he led agentic memory, retrieval, and evaluation while the organization scaled from roughly 10 to 100+, and a principal engineer at Hotel Engine. He writes at danlevy.net.
+Dan Levy is a Denver-based principal AI engineer, engineering leader, and educator with 25 years building production systems. He is the founder of ExploitHunter.app, an open-source agent security and evaluation workbench whose public benchmark spans 173 model profiles and more than 400 million evaluated tokens. As an independent consultant he advises enterprise teams on agent architecture, evaluation, retrieval, model routing, and AI security. He was previously Sr. AI Staff Engineer at MagicSchool.ai, leading agentic memory and evaluation, and a principal engineer at Hotel Engine. He writes at danlevy.net.
 
 ## 200-word bio
 
 Dan Levy is a principal AI engineer, technical founder, and engineering leader based in Denver, Colorado, with 25 years of experience building production systems across application, platform, and delivery layers. He is the founder and technical lead of ExploitHunter.app, an open-source agent security and evaluation workbench with durable project state, multi-model routing, browser and terminal tools, human approval gates, and evidence capture. Its checked-in benchmark covers 173 model profiles, more than 400 million evaluated tokens, and roughly 23,000 tool calls, scoring route choice, trajectory quality, cost, latency, and security behavior separately.
 
-As an independent consultant he advises enterprise teams on agent architecture, evaluation, retrieval, model routing, observability, and AI security. Previously, as Sr. AI Staff Engineer at MagicSchool.ai, he led technical direction for agentic memory, retrieval, sandboxed execution, and evaluation, running more than 250 billion tokens through production evaluations. Earlier he helped scale Hotel Engine's engineering organization from six to more than sixty, directed a 2,500-student division at Lambda School, and led a full-stack immersive at Galvanize. His teaching and enablement work has reached more than 4,000 engineers.
+As an independent consultant he advises enterprise teams on agent architecture, evaluation, retrieval, model routing, observability, and AI security. Previously, as Sr. AI Staff Engineer at MagicSchool.ai, he led technical direction for agentic memory, retrieval, sandboxed execution, and evaluation, running more than 250 billion tokens through production evaluations. He also helped scale Hotel Engine's engineering organization from six to sixty, directed a 2,500-student division at Lambda School, and led a full-stack immersive at Galvanize. His teaching and enablement work has reached more than 4,000 engineers.
 
 He authored the llm:// URI scheme Internet-Draft and contributes to Mastra, LanceDB, Node.js, PostGIS, and Docker.
 
