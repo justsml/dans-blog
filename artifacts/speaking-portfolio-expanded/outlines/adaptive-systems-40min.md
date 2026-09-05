@@ -1,207 +1,263 @@
 # Building Adaptive & Dynamic AI Systems
 
-40 minutes · 18 slides · 40min
+40 minutes · 17 slides
 
-Timings are rehearsal targets, excluding Q&A. Speaker notes are delivery guidance, not a verbatim script.
+**Arc.** Warm open on two mismatched requests, steady through the planner contract and both scaling axes, build through the agent-builder and caps, peak at the demo, build again through A/B and model onboarding, land on AGENTS.md.
 
-## 1. Building Adaptive & Dynamic AI Systems
+**Scope.** A proposed architecture: a bounded runtime planner choosing from approved capabilities, with budgets, permissions, and accountability enforced outside it. The incident is synthetic; the demo replays fixtures. Say it once on slide 1.
 
-0.0–1.0 minutes
+**Demo.** [Runbook section 3](../demos/DEMO-RUNBOOK.md#3-building-adaptive--dynamic-ai-systems) · [Kit](../demos/index.html). Fallback: narrate the three strategies and two caps on slide 10.
 
-Different work, different compute.
-Choose architecture at runtime.
+**Before each delivery.** Fill the `Story` lines.
 
-Open with two requests: retrieve a known password-reset procedure and investigate intermittent WebSocket disconnects. Giving both the same model, context window, agent count, and tool permissions is a choice, even when it is accidental. This talk proposes a bounded runtime planner that chooses a strategy from approved capabilities and revises it when observed evidence warrants more effort. It does not claim an unconstrained system can design its own reliable organization. The worked example is synthetic, and the demonstration replays deterministic planner fixtures. The useful change is moving selected workload-dependent decisions into an observable control loop while keeping budgets, permissions, and accountability outside the planner’s discretion.
+**Image style.** Dark slate background, one amber accent, flat vector, generous negative space, no text or logos. Each slide comment is a complete prompt.
+
+**Timings** are rehearsal targets, no Q&A. Notes are cues.
+
+---
+
+## 1. Different work, different compute
+
+0:00–2:30 · warm
+
+<!-- image: two envelopes arriving at one identical machine, one envelope thin and one thick and bulging, the machine shaped exactly the same for both, dark slate background, amber accent on the thick envelope, flat vector, no text -->
+
+> Choose architecture at runtime.
+
+Two requests arrive. Retrieve the password-reset procedure. Investigate intermittent WebSocket disconnects. Giving both the same model, context window, agent count, and tool permissions is a choice, even when it is accidental.
+
+Scope, once: proposed design, synthetic incident, replayed demo. The planner chooses within an approved contract and never grants itself authority. From here on I build.
+
+Story: [a request your system over-served or under-served because the architecture was fixed, and what it cost]
 
 ## 2. A static architecture hides a policy
 
-1.0–3.0 minutes
+2:30–4:00 · warm
 
-Same model
-Same context
-Same agents
-Different problem
+<!-- image: two arrows of different thickness entering one rigid square box, exiting as identical thin arrows, dark slate background, amber accent on the box outline, flat vector, no text -->
 
-Draw two arrows entering one fixed agent box. Ask what the organization pays for simplicity and what it gains from predictability. A fixed workflow can be exactly right for a stable, narrow workload. Adaptation earns its complexity only if different task classes benefit from different strategies. The reset question might be answered from an approved deterministic lookup; the incident may require competing explanations and evidence collection. This is a proposed architectural distinction, not a promise that adding routing improves every application. First establish a baseline for the current system. Without that baseline, a more elaborate planner can make the diagram more interesting while making the product slower, costlier, or less dependable.
+> Same model · Same context · Same agents · Different problem
+
+A fixed workflow is exactly right for a stable, narrow workload. Adaptation earns its complexity only when task classes benefit from different strategies. Establish a baseline before building a planner, or the diagram gets more interesting while the product gets slower and costlier.
 
 ## 3. Choose a strategy, not merely a model
 
-3.0–5.0 minutes
+4:00–6:00 · steady
 
-Tool or code → known work
-Small model → bounded ambiguity
-Specialists → separable evidence
-Human → consequential uncertainty
+<!-- image: a menu board with four rows, a wrench, a small chip, three figures, and a human silhouette, one row lit, dark slate background, amber accent on the lit row, flat vector, no text -->
 
-Define the planner’s output as a complete strategy: model, prompt, retrieval policy, tool scopes, topology, verification, and stop conditions. A router that changes only the model misses many available improvements. The deterministic reset lookup needs no generated reasoning if the user has asked only for instructions. The incident investigator may need read-only logs and a controlled reproducer. Distinguish information gathering from remediation; being allowed to inspect a failure does not imply permission to change production. Anthropic describes routing and orchestrator-worker patterns as useful building blocks. The decision contract shown here extends those patterns with explicit resource and authority bounds for this proposed system.
+> Tool or code → known work
+> Small model → bounded ambiguity
+> Specialists → separable evidence
+> Human → consequential uncertainty
 
-Sources: [Reference](https://www.anthropic.com/engineering/building-effective-agents)
+The planner's output is a complete strategy: model, prompt, retrieval policy, tool scopes, topology, verification, stop conditions. A router that only swaps models misses most of the available improvement. Permission to inspect a failure is not permission to change production.
 
-## 4. Make the planner produce a contract
+Source: Anthropic (2024), [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents).
 
-5.0–8.0 minutes
+## 4. The work planner produces a contract
 
-Goal + evidence required
-DAG + expected artifacts
-Budget + deadline + tool scopes
-Termination + escalation
+6:00–9:00 · steady
 
-For the disconnect case, require the planner to name the question each worker will answer and the evidence it should return. The network investigator inspects timing around proxy behavior; the application investigator checks heartbeat and reconnect events. A reviewer consumes both reports after they complete. Encode those dependencies as a small directed acyclic graph. Attach a deadline and remaining budget to the plan, then reject unsupported tools or excessive fan-out before execution. The planner may propose a graph, but a deterministic validator decides whether the proposal satisfies the contract. This separation lets the system vary its organization without allowing a generated plan to grant itself additional authority.
+<!-- image: a blueprint sheet with three connected nodes and a stamp of approval in one corner, a ruler and a small coin purse resting on it, dark slate background, amber accent on the stamp, flat vector, no text -->
+
+> Goal + evidence required
+> DAG + expected artifacts
+> Budget + deadline + tool scopes
+> Termination + escalation
+
+For the disconnect case, the planner names the question each worker answers and the evidence it returns. Network investigator: timing around proxy behavior. Application investigator: heartbeat and reconnect events. Reviewer reads both. A small DAG with a deadline, remaining budget, and tool scopes.
+
+The planner proposes; a deterministic validator accepts or rejects. That split lets the organization vary without a generated plan expanding its own authority.
+
+Show a twelve-line JSON contract: goal, three nodes, budget, deadline, scopes.
 
 ## 5. Vertical scaling: deepen one attempt
 
-8.0–10.0 minutes
+9:00–11:00 · steady
 
-Stronger model
-More reasoning time
-Better evidence and tools
-Larger useful context
+<!-- image: a single drill bit going deeper into layered rock, each layer a different shade, a small light at the tip, dark slate background, amber accent on the light, flat vector, no text -->
 
-When one investigator cannot interpret a complicated timing trace, adding more independent agents may repeat the same misunderstanding. Vertical scaling means improving the resources available to that attempt: a more capable model, additional time, a better tool, or carefully selected context. Test-time compute research studies how allocating inference effort can affect performance in particular experimental settings. It does not establish a universal benefit from simply adding tokens. In this incident, first ask whether the missing input is an omitted timeout configuration. Better evidence may matter more than a larger model. Record the change and compare the resulting outcome so the escalation can be evaluated rather than celebrated automatically.
+> Stronger model · More reasoning time
+> Better evidence and tools · Larger useful context
 
-Sources: [Reference](https://arxiv.org/abs/2408.03314)
+When one investigator misreads a timing trace, more agents may repeat the misunderstanding. Vertical scaling improves that one attempt. Test-time compute research shows allocation matters in specific settings; it does not make more tokens a universal win. First ask whether the missing input is an omitted timeout configuration. Better evidence often beats a bigger model. Record the escalation so it can be evaluated.
+
+Source: Snell, Lee, Xu, Kumar (2024), [Scaling LLM Test-Time Compute Optimally](https://arxiv.org/abs/2408.03314).
 
 ## 6. Horizontal scaling: separate the questions
 
-10.0–12.0 minutes
+11:00–13:00 · steady
 
-Network evidence
-Application evidence
-State and persistence evidence
-Independent adversarial review
+<!-- image: three separate flashlights pointing at three different corners of a dark room, beams not overlapping, a fourth flashlight pointing back at the others, dark slate background, amber accent on the fourth beam, flat vector, no text -->
 
-Horizontal scaling adds workers when there is useful independence. The network and application investigators can inspect separate evidence without editing shared files. A state investigator is justified only if reconnection state is implicated; do not invent roles to fill a team chart. An adversarial reviewer should search for evidence against the favored hypothesis instead of restating it. Anthropic’s research-system report describes orchestrator-led parallel investigation and also notes coordination and token costs. Treat that report as evidence from its research workload, not a speedup guarantee for debugging. Our proposed planner pays for each additional branch only when the branch answers a distinct unresolved question that affects the final decision.
+> Network evidence · Application evidence
+> State evidence · Adversarial review
 
-Sources: [Reference](https://www.anthropic.com/engineering/multi-agent-research-system)
+Add workers only where there is useful independence. Network and application investigators read separate evidence without editing shared files. A state investigator exists only if reconnection state is implicated. An adversarial reviewer hunts evidence against the favored hypothesis. Anthropic's research-system report shows orchestrator-led parallelism working on its workload, with real coordination and token costs. Pay for a branch only when it answers a distinct question that affects the decision.
 
-## 7. Topology is an output of planning
+Two investigators agreeing on "proxy timeout" is a lead, not a verdict. They may have read the same misleading log line. A reproducible check outranks a vote.
 
-12.0–14.0 minutes
+Source: Anthropic (June 2025), [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system).
 
-Plan → validate → execute
-Observe → revise within bounds
-Retire workers when their job ends.
+## 7. The agent-builder: topology is an output
 
-Show the initial incident organization as two investigators followed by a reviewer. A new clue about reconnect state can justify replacing a weak branch with a state investigator. The topology changes because the evidence requirement changes. It should not expand simply because an agent can request helpers. Each worker has an explicit artifact, such as a timeline with source event identifiers, and an exit condition. Completed workers do not linger as permanent roles. This gives the phrase dynamic organization a concrete meaning: task-specific dependencies and scopes chosen at runtime from approved options. The organization remains inspectable, and a human can understand why a branch existed even after its execution has ended.
+13:00–15:30 · build
 
-## 8. Agreement is a lead, not a verdict
+<!-- image: a crane assembling a small scaffold of three figures from a pile of parts, one figure being lifted away as another is set down, dark slate background, amber accent on the crane hook, flat vector, no text -->
 
-14.0–16.0 minutes
+> Plan → validate → execute
+> Observe → revise within bounds
+> Retire workers when their job ends
 
-Shared models can share blind spots.
-Different prompts, same bad evidence.
-A reproducible check outranks a vote.
+The orchestrator does not pick from a menu of fixed pipelines. It assembles a team for this request from approved roles, each with a scoped tool set, an explicit artifact, and an exit condition. A new clue about reconnect state can replace a weak branch with a state investigator. The topology changes because the evidence requirement changed, never because an agent asked for helpers.
 
-Two investigators conclude that the proxy timeout caused the disconnect. That agreement is useful only if their evidence is sound. Both may have copied the same misleading log annotation or assumed the same default configuration. Require the reviewer to distinguish independent corroboration from repeated wording. The next useful action is a controlled check that separates timeout behavior from an application heartbeat issue. Do not transform three matching answers into a calibrated probability of correctness. In the proposed system, agreement can prioritize verification, but the acceptance gate uses explicit evidence requirements. Where the claim cannot be tested directly, retain uncertainty and route consequential decisions to an accountable reviewer instead of hiding doubt behind consensus.
+Finished workers do not linger. A human can read why a branch existed after it ended. That is what dynamic organization means in practice.
+
+Story: [a fixed pipeline that forced a bolted-on special case a planner would have handled]
+
+## 8. Elastic compute: reservations, caps, cancellation
+
+15:30–17:30 · build
+
+<!-- image: a circuit breaker panel with several switches, one hand reaching to flip a switch off, a small meter beside it, dark slate background, amber accent on the meter needle, flat vector, no text -->
+
+> Reserve spend atomically before fan-out
+> Deadline cancels dispatch and in-flight work
+> Fan out across providers and hardware within data boundaries
+
+The controller reserves budget before launching parallel work, so workers cannot each spend the same remaining balance. Deadlines stop dispatch and cancel supported operations, recording what was billed anyway. Provider and data-boundary checks run before the call, in code. Fan-out across clouds or hardware is a controller decision driven by the contract's latency and cost bounds. The planner can propose more effort. It cannot approve its own exception.
 
 ## 9. Confidence must be earned on your work
 
-16.0–19.0 minutes
+17:30–20:00 · build
 
-Compare predicted and actual success.
-Calibrate by task and strategy.
-Recheck after model or data changes.
+<!-- image: a bathroom scale with a large confident number on its display and a tiny footprint on the platform, a second scale beside it calibrated with a weight, dark slate background, amber accent on the calibration weight, flat vector, no text -->
 
-A model saying confidence equals ninety percent is not sufficient input for a budget controller. Define confidence as an empirically evaluated estimate for a workload and strategy, with a known calibration procedure and held-out cases. A useful routing policy can also rely on simpler observable signals: failed assertions, missing required evidence, or novelty outside supported categories. Prefer those signals when reliable probabilities are unavailable. RouteLLM studies learned routing from preference data; its results motivate measurement of cost-quality tradeoffs, not trust in untested self-reports. In our stage demo, escalation follows explicit fixture flags so the audience can see the rule. The demo does not claim to implement statistical calibration.
+> Compare predicted and actual success, by task and strategy
+> Prefer observable signals: failed assertions, missing evidence, novelty
 
-Sources: [Reference](https://arxiv.org/abs/2406.18665)
+"Confidence 90%" from a model is not an input to a budget controller. Confidence is an evaluated estimate for a workload and a strategy, with held-out cases. Simpler signals usually work better: a failed assertion, missing required evidence, a task outside supported categories. RouteLLM shows learned routing can trade quality for cost and shows how much depends on the routing data.
+
+Source: Ong et al. (2024), [RouteLLM: Learning to Route LLMs with Preference Data](https://arxiv.org/abs/2406.18665).
 
 ## 10. Demo: one task, three bounded strategies
 
-19.0–23.0 minutes
+20:00–25:00 · peak
 
-Lookup → deterministic path
-Novel → two hypotheses + verifier
-Budget or deadline → stop
+<!-- image: three doors side by side, the first plain and small, the second medium with one figure, the third large with three figures, a red stop sign and a human silhouette to the far right, dark slate background, amber accent on the stop sign, flat vector, no text -->
 
-Replay the bundled deterministic routing fixture. A lookup selects a tool path with zero agents; a simple task selects one agent; a novel task selects three roles, two hypothesis generators and a verifier. Show the assigned costs and durations as illustrative inputs, never provider prices or measured performance. Reduce the remaining budget below the chosen strategy cost and display the blocked result; repeat with an insufficient deadline. A high-risk task routes to a human regardless of available budget. The fixture exercises policy selection, not dynamic model planning or statistical confidence calibration. Real deployment still requires enforceable reservations, cancellation behavior, calibrated workload signals, scoped tool access, and repeated evaluation before a generated planner receives control.
+> Lookup → deterministic path, zero agents
+> Routine → one agent
+> Novel → two hypotheses + verifier
+> Budget or deadline → stop. High risk → human.
 
-## 11. Governors sit outside the planner
+Follow [runbook section 3](../demos/DEMO-RUNBOOK.md#3-building-adaptive--dynamic-ai-systems). Known lookup, routine task, novel failure: watch the organization change. Budget to $0.10, deadline to five seconds: it stops. Toggle the consequential-action gate: a human, regardless of budget.
 
-23.0–25.0 minutes
+Costs and durations are fixture values. The demo exercises policy selection and caps; it does not plan or calibrate.
 
-Maximum spend and wall-clock time
-Maximum agents and concurrent work
-Allowed providers and data boundaries
-Tool scopes and approval gates
+Which of these three routes does your system take for everything today?
 
-The planner can propose additional effort; it cannot approve its own exception. Enforce spend reservation atomically before launching parallel work so separate workers cannot each consume the same remaining budget. Track actual usage and reconcile it against reservations. Deadline cancellation should stop further dispatch and attempt to cancel supported in-flight operations, while recording any unavoidable billed work. Provider and data-boundary checks must precede calls, not appear only in prompts. The fixture demo simplifies all of this to deterministic cost units, which makes the policy visible but does not implement production accounting. The architecture requires a trusted controller around the planner precisely because generated plans may misunderstand or ignore their constraints.
+Compression: at two minutes, the novel case, one cap, and the human gate.
 
-## 12. Why did this request get this architecture?
+## 11. Why did this request get this architecture?
 
-25.0–28.0 minutes
+25:00–27:00 · steady
 
-Record strategy version and reason
-Keep evidence references
-Capture cost, latency, and outcome
-Explain escalation and termination
+<!-- image: a flight recorder black box opened to reveal a neat stack of labeled cards, dark slate background, amber accent on the top card, flat vector, no text -->
 
-Design the trace around decisions a maintainer will need to reconstruct. Store the strategy version, planner proposal, validator result, evidence references, chosen scopes, reservations, actual spend, and final outcome. A concise explanation should identify observable inputs, such as missing a required timeout configuration, rather than exposing private internal reasoning. If the network branch was cancelled, record whether the deadline, budget, or new evidence caused it. The practical diagnostic question is why this request received this architecture. A final answer alone cannot distinguish a poor model from a bad plan, an unavailable tool, or an overstrict budget. This instrumentation also supplies the cases used to evaluate future routing changes.
+> Strategy version and reason
+> Planner proposal, validator result, evidence references
+> Reservations, actual spend, latency, outcome
+> Why a branch was cancelled
 
-## 13. Score the whole strategy by failure class
+Design the trace around the questions a maintainer will ask. The explanation names observable inputs ("required timeout config missing"), not private reasoning. A final answer alone cannot separate a poor model from a bad plan, an unavailable tool, or an overstrict budget. This trace is also the eval set for every future routing change.
 
-28.0–30.0 minutes
+## 12. Score the whole strategy by failure class
 
-Outcome and required assertions
-Cost and latency distributions
-Escalation and human correction
-Novel versus familiar workloads
+27:00–28:30 · steady
 
-Compare complete strategies on the same workload slices. The incident plan may improve evidence coverage while worsening latency; a smaller model may perform well on familiar cases but fail on new environments. Report those differences instead of compressing every dimension into a leaderboard. Anthropic’s agent-evaluation guidance distinguishes transcripts from final outcomes; this supports checking what the system achieved as well as how it acted. Our proposed scorecard adds workload-specific limits and operational costs. Avoid grading a plan solely for matching one expected topology, because another valid arrangement may satisfy the contract. Keep process assertions for real constraints such as forbidden tool use, then judge outcomes against the task’s requirements.
+<!-- image: a scorecard with four separate columns of bars rather than one total, a red pen crossing out a single trophy icon, dark slate background, amber accent on the pen, flat vector, no text -->
 
-Sources: [Reference](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
+> Outcome and required assertions
+> Cost and latency distributions
+> Escalation and human correction
+> Novel versus familiar workloads
 
-## 14. New models enter through qualification
+Compare complete strategies on the same workload slices. The incident plan may improve coverage and worsen latency; a small model may win on familiar cases and fail on new environments. Report the dimensions. Keep process assertions for real constraints such as forbidden tool use; judge outcomes against the task.
 
-30.0–32.0 minutes
+Source: Anthropic (January 2026), [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents).
 
-Baseline → adapt → rerun
-Compare on held-out workloads
-Shadow or canary promising candidates
-Promote with rollback
+## 13. Dynamic A/B of strategies
 
-A new model announcement should trigger a repeatable qualification process only when the organization has authorized that process. This presentation configures no monitoring or scheduler. The proposed workflow records the current baseline, tries documented model-appropriate prompting, reruns both regression and capability cases, and compares quality with cost and latency. Keep tuning examples separate from held-out evaluation. If a candidate looks promising, use a bounded rollout or shadow evaluation with data permissions respected. Model replacement should not silently alter tool authority or success criteria. Retain the prior strategy version for rollback. The goal is a maintainable route to adoption, not a perpetual contest that promotes whatever won yesterday’s tiny sample.
+28:30–30:30 · build
 
-## 15. Adaptation has a second feedback loop
+<!-- image: a fork in a pipeline splitting traffic into two channels of equal width, a referee whistle hanging above the fork, dark slate background, amber accent on the whistle, flat vector, no text -->
 
-32.0–34.0 minutes
+> Split comparable traffic between two strategies
+> Declare the analysis plan before exposure
+> Guardrails on cost, latency, escalation rate
+> Winner is eligible for promotion, not auto-promoted
 
-Run → score → propose policy change
-Evaluate the proposed policy
-Promote separately from execution
-Retire stale routes
+Once strategies are versioned and traced, run them against each other on live comparable traffic. Treat it as an experiment: declared design, fixed metrics, guardrails, a stopping rule chosen in advance. An always-on system that peeks and declares winners early destroys its own error guarantees. The winner becomes a promotion candidate; a human owns the promotion.
 
-Distinguish the request-time loop from the policy-improvement loop. During a request, the system selects approved strategies within current rules. Across requests, observed failures can motivate a different routing threshold, topology, tool, or deterministic replacement. That proposal must pass evaluation before it changes the policy for everyone. Otherwise, one unusual incident can rewrite the behavior of the entire system. Add expiry and ownership to model-specific exceptions, and retire routes that no longer have supporting evidence. This connects the talk to improvement from failure while keeping its focus on allocation. Learning changes the policy through a controlled promotion path; runtime flexibility does not imply self-authorized global reconfiguration.
+## 14. New models enter through mirrored traffic
 
-## 16. A known problem should get cheaper
+30:30–33:30 · build
 
-34.0–36.0 minutes
+<!-- image: a stream of paper airplanes flying toward one destination, a mirror beside the path reflecting a faint copy of each plane toward a second smaller destination, dark slate background, amber accent on the mirror edge, flat vector, no text -->
 
-Novel investigation → evidence
-Evidence → tested diagnosis rule
-Rule → deterministic tool
-Next request skips the committee
+> Baseline → adapt prompts → rerun evals
+> Mirror a slice of traffic; compare offline
+> Tune in a loop until it clears the bar, or park it
+> Promote with rollback
 
-Return to the WebSocket incident after the team has established a reproducible cause. If a particular configuration and event pattern reliably identifies the issue within a defined scope, encode that check in a tested diagnostic tool. Future matching requests can run the tool before launching investigators. Preserve negative cases so the rule does not misclassify unrelated disconnects. A deterministic artifact is not inherently correct; it is easier to execute consistently and test within its contract. The proposed optimization is to spend reasoning where uncertainty remains. Familiar work should not keep renting the full investigative organization just because that organization once discovered the answer. This is how adaptive systems can reduce their own recurring complexity.
+A frontier lab ships a new model. When the organization has authorized the process: record the baseline, apply documented model-appropriate prompting, rerun regression and capability cases, mirror a slice of production traffic to the candidate with data permissions respected, compare offline. If it is close, run the eval-and-tuning loop until it clears the bar or you park it. Keep tuning examples apart from held-out evaluation.
 
-## 17. Put trajectory in the operating contract
+Model replacement must not silently change tool authority or success criteria. Keep the prior strategy version for rollback. A maintainable path to adoption, not a perpetual contest won by yesterday's tiny sample.
 
-36.0–39.0 minutes
+Story: [a model upgrade that regressed something nobody was measuring]
 
-Current: satisfy this workload
-Ongoing: reduce recurring uncertainty
-Future: qualify migrations and changes
-Always: respect authority and budgets
+## 15. The second loop: compile the work you understand
 
-An operating document can describe current objectives, ongoing improvement priorities, and predictable future changes without becoming an unrestricted mandate. Current work might require a diagnostic report. Ongoing goals might include fewer unnecessary escalations and more deterministic coverage. Future work might include a provider migration with explicit qualification criteria. Each needs an owner, scope, and activation condition. Merely writing evaluate new models into AGENTS.md should not authorize purchases, external communication, or recurring jobs. Separate desired direction from granted capabilities. End the practical guidance with a small adoption path: instrument one existing workflow, identify one meaningful routing distinction, evaluate it, and add a bounded alternative only when the evidence supports it.
+33:30–35:30 · build
 
-## 18. Autoscaling, but for cognition
+<!-- image: a committee table with five chairs, four chairs stacked away in the corner and one small vending machine standing where the table was, dark slate background, amber accent on the vending machine, flat vector, no text -->
 
-39.0–40.0 minutes
+> Run → score → propose policy change
+> Evaluate, then promote separately from execution
+> Known problem → tested rule → deterministic tool
+> Next request skips the committee
 
-Choose effort from evidence.
-Enforce limits in code.
-Compile the work you understand.
+Request-time loop: choose approved strategies within current rules. Policy loop: observed failures propose new thresholds, topologies, or deterministic replacements, which pass evaluation before changing policy for everyone. Then the payoff. Once the WebSocket cause is reproducible, encode the check as a tested diagnostic tool. Future matching requests run it before launching investigators. Familiar work stops renting the full investigative organization.
 
-Close on the two opening requests. The known lookup receives a small deterministic path; the uncertain incident receives a bounded investigation with evidence requirements. Neither decision is virtuous by itself. The right architecture is the one that satisfies the workload within its constraints, and its quality must be measured. Preserve the signature idea that topology can become an output of planning, while making the operational limit explicit: the planner chooses within an approved contract. The system should explain when it escalates, when it stops, and when a previously difficult class of work no longer needs an agent. Invite attendees to choose one hard-coded decision in their own system and ask whether runtime evidence could improve it.
+## 16. What your AGENTS.md should include
 
+35:30–38:30 · land
+
+<!-- image: a single page pinned to a wall divided into three horizontal bands, a clock icon on the first, a loop icon on the second, a calendar icon on the third, a padlock hanging off the page edge, dark slate background, amber accent on the padlock, flat vector, no text -->
+
+> Now: satisfy this workload; here are the strategies and limits
+> Ongoing: reduce recurring uncertainty; compile known cases
+> Future, predictable: qualify each major frontier release via mirrored traffic
+> Always: authority, budgets, and data boundaries live in code, not here
+
+Three time horizons. Now: the current objective and the approved strategy set. Ongoing: fewer unnecessary escalations, more deterministic coverage, expiry on model-specific exceptions. Future and predictable: when a frontier lab ships a major model, run slide 14; when a provider migration is planned, here are the qualification criteria. Each item has an owner, a scope, and an activation condition.
+
+Writing "evaluate new models" in AGENTS.md does not authorize purchases, external communication, or recurring jobs. Direction goes in the document. Granted capabilities go in the controller.
+
+Show a fifteen-line excerpt with the three horizons.
+
+Source: [AGENTS.md](https://agents.md).
+
+## 17. Autoscaling, but for cognition
+
+38:30–40:00 · land
+
+<!-- image: the two envelopes from slide 1 now entering two differently shaped machines, one tiny and one large, both machines inside a single drawn boundary line, dark slate background, amber accent on the boundary line, flat vector, no text -->
+
+> Choose effort from evidence. Enforce limits in code. Compile the work you understand.
+
+Back to the two requests. The lookup gets a deterministic path; the incident gets a bounded investigation with evidence requirements. Neither is virtuous alone. The right architecture satisfies the workload within its constraints, and you measure that. Topology becomes an output of planning, inside an approved contract.
+
+Pick one hard-coded decision in your system. Could runtime evidence make it better?

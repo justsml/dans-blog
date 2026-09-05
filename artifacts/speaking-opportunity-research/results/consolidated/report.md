@@ -7,52 +7,75 @@ Authority: discovery and preparation only; no outreach, submissions, registratio
 
 ## Direct answer
 
-The portfolio has credible near-term speaking routes. The strongest immediate opportunities are concentrated in four clusters:
+The preference-weighted shortlist now favors practical routes in or near the named cities. San Diego Python, RMAIIG, ACM Austin, Denver DevOps, and FrontEndParty all reach the top seven because they combine a good location with a lightweight public route and observable community activity. ISTELive in Boston and SREcon Americas in Seattle remain near the top because their fit and popularity overcome a somewhat more involved application.
 
-- Software testing and evaluation: STAREAST, AI Agent Event, EuroSTAR, and Observability Day.
-- General developer and product programs: DeveloperWeek, ProductWorld, and GIDS.
-- Education and assessment: CHEA, ICAI, UPCEA DT&L, ISTELive, and OLC Innovate.
-- Architecture and agent systems: PlatformCon, KubeCon Europe, Cloud Native AI + Inference Day, AOmA, and ICSA's Software Architecture in Practice track.
+The final ranking covers 166 currently actionable or monitorable opportunities. It includes 58 community routes: 22 in Denver/Colorado, 21 across the preferred U.S. cities, and 15 remote or later-overseas options. A meetup's published form or organizer contact is a route to propose a session, not proof that a slot is open for the next listed gathering.
 
-The ten research lanes produced 244 source event records and 250 talk-to-edition matches. Consolidation resolved those into 148 event series and 158 distinct editions or submission routes, backed by 506 evidence records. Sixty-four editions match more than one talk. Those overlaps are useful, but they create a submission-choice problem: the strongest talk for the audience should lead, with one backup held until the event's multiple-proposal and exclusivity rules are confirmed.
+The ten original research lanes produced 244 source event records and 250 talk-to-edition matches. Consolidation resolved those into 148 event series and 158 distinct editions or submission routes, backed by 506 evidence records. Sixty-four editions match more than one talk. The ranking keeps one primary talk and a backup where supported; it does not assume an event permits both proposals.
 
-## Immediate preparation decisions
+## Composite ranking method
 
-1. **STAREAST is the first go/no-go decision.** Its verified date is September 6, 2026, but the public source did not state a cutoff time or time zone. The `benchmarks` talk is a strong fit; the application also needs a bio, headshot, and marketing consent.
-2. **AI Agent Event and CES are next, both dated September 9.** AI Agent Event is the stronger technical fit, but its novelty clause, unstated duration, and preference for real deployment evidence need review. CES is broader and favors visible industry influence; travel and participation are self-funded.
-3. **CHEA closes September 11.** Use `evidence-learning` only if Dan can support a quality-assurance or accreditation angle. The program prefers varied perspectives, which may favor a co-presenter.
-4. **Resolve the September 18 and September 30 clusters before drafting.** ProductWorld, DeveloperWeek, ICAI, GIDS, UPCEA, EuroSTAR, and ISTELive each impose different audience, evidence, membership, or format constraints. A shared abstract should not be sent unchanged across them.
+Lower composite scores are better. The weights are:
 
-These are preparation decisions, not authorization to apply.
+- Location preference: 30%. `1` is a named preferred city or a genuine remote route; `2` is a nearby metro; `3` is elsewhere in the United States; `4` is Canada, Mexico, or overseas on or after March 5, 2027; `5` is earlier overseas travel.
+- Application burden: 20%. `1` is an easy public form or organizer route; `5` requires substantial industry credentials, prior recordings, publication, institutional standing, or firsthand implementation evidence.
+- Evidence-adjusted talk fit: 25%. The original fit score is discounted by how much of the evidence rubric was actually verified, then converted to a `1`–`5` penalty.
+- Popularity: 15%. `5` is the strongest observed reach and `1` means little public evidence. Member counts, registrations, waitlists, recurrence, sponsor history, and established conference status are signals, not comparable audited attendance figures.
+- Timing and actionability: 10%. Confirmed near deadlines rank ahead of undated routes. A community event date is not treated as a speaker deadline.
+
+The score is a triage device, not an acceptance probability.
 
 ## Consolidated top 20
 
-The list is ordered by confirmed deadline urgency, then evidence-backed fit. `Score/coverage` reports the lane's known-points score and the percentage of the scoring rubric supported by evidence. It is a triage measure, not an acceptance estimate.
+`Ease` runs from `1` easiest to `5` most demanding. `Popularity` runs in the opposite desirability direction: `5` is the strongest public signal. Community rows without deadlines require a fresh slot check before any pitch.
 
-| Rank | Deadline | Edition | Primary talk | Backup | Score/coverage | Status |
-|---:|---|---|---|---|---:|---|
-| 1 | 2026-09-06 | [STAREAST](https://stareast.techwell.com/) | `benchmarks` | — | 94/90% | Open |
-| 2 | 2026-09-09 | [AI Agent Event](https://www.aiagentevent.com/east/) | `benchmarks` | `adaptive-systems` | 98/93% | Open |
-| 3 | 2026-09-09 | [CES](https://www.ces.tech/) | `judgment` | `product-engineering` | 83/100% | Open |
-| 4 | 2026-09-11 | [CHEA Annual Conference](https://www.chea.org/chea-2027-annual-conference-call-proposals) | `evidence-learning` | `skeptic-education` | 85/83% | Open |
-| 5 | 2026-09-18 | [DeveloperWeek](https://www.developerweek.com/) | `retrieval` | `free-tier` | 95/82% | Open |
-| 6 | 2026-09-18 | [ProductWorld](https://productworld.co/) | `product-engineering` | `judgment` | 94/100% | Open |
-| 7 | 2026-09-18 | [ICAI Annual Conference](https://academicintegrity.org/aws/ICAI/pt/sp/conference_home_page) | `evidence-learning` | — | 89/86% | Open |
-| 8 | 2026-09-30 | [Great International Developer Summit](https://developersummit.com/) | `judgment` | `benchmarks` | 97/100% | Open |
-| 9 | 2026-09-30 | [UPCEA Digital Teaching & Learning Conference](https://conferences.upcea.edu/DTL2027/) | `skeptic-education` | `evidence-learning` | 95/100% | Open |
-| 10 | 2026-09-30 | [EuroSTAR Software Testing Conference](https://conference.eurostarsoftwaretesting.com/) | `benchmarks` | `failure-improvement` | 94/88% | Open |
-| 11 | 2026-09-30 | [ISTELive](https://conference.iste.org/2027/) | `skeptic-education` | — | 88/83% | Open |
-| 12 | 2026-10-01 | [Lilly Conference San Diego](https://www.lillyconferences.com/) | `skeptic-education` | `evidence-learning` | 86/83% | Open |
-| 13 | 2026-10-04 | [PlatformCon Live Day San Francisco](https://sanfrancisco.platformcon.com/) | `parallelization` | `failure-improvement` | 89/100% | Open |
-| 14 | 2026-10-05 | [Visual Studio Live! Austin](https://vslive.com/events/austin-2027/home.aspx) | `failure-improvement` | `parallelization` | 93/100% | Open |
-| 15 | 2026-10-11 | [KubeCon + CloudNativeCon Europe](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/) | `adaptive-systems` | `retrieval` | 94/92% | Open |
-| 16 | 2026-10-18 | [Observability Day Europe](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/co-located-events/observability-day/) | `benchmarks` | — | 96/90% | Open |
-| 17 | 2026-10-18 | [Cloud Native AI + Inference Day Europe](https://events.linuxfoundation.org/kubecon-cloudnativecon-europe/co-located-events/cloud-native-ai-inference-day-europe/) | `retrieval` | `adaptive-systems` | 90/88% | Open |
-| 18 | 2026-10-23 | [AOmA](https://aoma-conference.com/2027/) | `adaptive-systems` | `retrieval` | 96/90% | Open; deadline conflict retained |
-| 19 | 2026-10-30 | [ICSA Software Architecture in Practice](https://conf.researchr.org/track/icsa-2027/icsa-2027-software-architecture-in-practice-track) | `adaptive-systems` | — | 89/92% | Open |
-| 20 | 2026-11-10 | [OLC Innovate](https://onlinelearningconsortium.org/conferences/olc-innovate2027/) | `skeptic-education` | `evidence-learning` | 95/100% | Opens 2026-09-15 |
+| Rank | Opportunity | Location | Primary talk | Ease | Popularity | Deadline | Composite |
+|---:|---|---|---|---:|---:|---|---:|
+| 1 | [San Diego Python](https://www.sandiegopython.org/) | San Diego / remote speakers accepted | `failure-improvement` | 1 | 5 | — | 1.545 |
+| 2 | [ISTELive](https://conference.iste.org/2027/presenters/submit_proposal.php) | Boston | `skeptic-education` | 2 | 5 | 2026-09-30 | 1.570 |
+| 3 | [Rocky Mountain AI Interest Group](https://docs.google.com/forms/d/e/1FAIpQLSfN6b3LnMY6p6ppoCWQRxPisIXOZxNIUELyiobzZ3J8BHj5fw/viewform) | Boulder / Broomfield / Denver / Fort Collins | `skeptic-education` | 1 | 4 | — | 1.630 |
+| 4 | [SREcon Americas](https://www.usenix.org/conference/srecon27americas/call-for-participation) | Seattle | `retrieval` | 2 | 4 | 2026-11-19 | 1.657 |
+| 5 | [ACM Austin: Enterprise AI & Engineering](https://sessionize.com/austin-acm-meetup/) | Austin / some online programming | `product-engineering` | 1 | 4 | — | 1.695 |
+| 6 | [Denver DevOps](https://www.meetup.com/denverdevops/) | Denver | `failure-improvement` | 1 | 4 | — | 1.695 |
+| 7 | [FrontEndParty](https://www.meetup.com/frontendparty/) | New Orleans | `product-engineering` | 1 | 4 | — | 1.695 |
+| 8 | [DeveloperWeek](https://www.developerweek.com/speakers/apply-to-speak/) | Santa Clara | `failure-improvement` | 2 | 5 | 2026-09-18 | 1.708 |
+| 9 | [ProductWorld](https://sessionize.com/productworld-2027/) | Santa Clara | `product-engineering` | 2 | 4 | 2026-09-18 | 1.710 |
+| 10 | [PlatformCon](https://platformcon.com/) | New York / London / online | `free-tier` | 2 | 5 | — | 1.740 |
+| 11 | [Boston AI Developers / AI Camp](https://www.meetup.com/aittg-boston/) | Boston / some online events | `adaptive-systems` | 2 | 5 | — | 1.745 |
+| 12 | [NYC AI Developers / AI Camp](https://www.meetup.com/aittg-nyc/) | New York City | `adaptive-systems` | 2 | 5 | — | 1.745 |
+| 13 | [Orlando Developers](https://www.meetup.com/orlandodevs/) | Orlando | `product-engineering` | 2 | 5 | — | 1.745 |
+| 14 | [Artificial Intelligencers](https://www.meetup.com/nashville-ai-engineering/) | Nashville / Brentwood | `adaptive-systems` | 1 | 3 | — | 1.780 |
+| 15 | [Data Summit](https://www.dbta.com/DataSummit/2027/CallForSpeakers.aspx) | Boston | `parallelization` | 2 | 4 | 2026-12-11 | 1.820 |
+| 16 | [AI & Product Colorado](https://www.meetup.com/meetup-group-ai-and-product/) | Boulder / Denver | `product-engineering` | 2 | 4 | — | 1.830 |
+| 17 | [OLLI at the University of Denver](https://olli.du.edu/olli/about/) | Denver metro / Zoom | `adaptive-systems` | 2 | 4 | — | 1.830 |
+| 18 | [Lilly Conference Austin](https://www.lillyconferences-tx.com/proposals) | Austin | `evidence-learning` | 2 | 4 | 2026-11-15 | 1.833 |
+| 19 | [Denver AI and Machine Learning Group](https://www.meetup.com/denverml/) | Westminster / Denver | `adaptive-systems` | 1 | 3 | — | 1.845 |
+| 20 | [AI LA](https://www.meetup.com/ai-la-meetup/) | Los Angeles | `skeptic-education` | 2 | 4 | — | 1.895 |
 
-The machine-readable shortlist contains the proposed title, format, fit evidence, constraints, next action, CFP link, and deadline evidence for every row.
+## Popular community routes
+
+The strongest local/community signals were:
+
+- San Diego Python: 5,573 members, 1,524 ratings, 869 past Meetup events, and an explicit presenter form.
+- RMAIIG: 4,515 members, 902 ratings, 42 events, recent attendance signals of 199 and 261, and a demo form or organizer route.
+- ACM Austin: 1,771 members, a recent 96-of-101 attendance signal, and a rolling Sessionize route.
+- Denver DevOps: 2,245 members, 125 past events, and an explicit call for speakers.
+- FrontEndParty: 1,761 members, 127 events, and a direct application route.
+- Boston AI Developers, NYC AI Developers, and Orlando Developers report 6,265, 12,221, and 8,545 members respectively.
+
+These are platform or organizer signals captured on September 5, 2026. They show reach and continuity, not guaranteed turnout or acceptance.
+
+## Later overseas and remote routes
+
+The overseas shortlist is intentionally held behind domestic and remote options until March 2027. Strong later routes include PyData London, AI Tinkerers chapters in London, Paris, Berlin, Amsterdam, Toronto, and Singapore, Cloud Native Amsterdam and Berlin, and ProductTank's digital/international network. DataTalks.Club is a high-reach remote rehearsal and recording route, though its speaker process still needs confirmation.
+
+AI Tinkerers is not a normal slide-deck circuit. Its chapters generally expect a working live demo in roughly five to seven minutes. That is a content conversion project, not a shorter version of the existing deck. The dated conference anchors remain KubeCon and Agentics Day in Barcelona, EuroSTAR in Copenhagen, AOmA in Berlin, and GIDS in Bengaluru; the exact CFP, travel-support, and eligibility rules remain in the canonical tables.
+
+## Deadline-sensitive routes
+
+The composite ranking should not hide urgent but harder applications. STAREAST closes September 6, AI Agent Event and CES on September 9, CHEA on September 11, and DeveloperWeek and ProductWorld on September 18. The September 30 cluster includes ICAI, GIDS, UPCEA, EuroSTAR, and ISTELive. Each requires a separate go/no-go decision based on credentials, evidence, format, and willingness to self-fund. See `confirmed-deadline-calendar.csv` for the full calendar and source notes.
+
+These are preparation decisions, not authorization to apply.
 
 ## Submission-rule constraints
 
@@ -70,9 +93,9 @@ Where simultaneous-submission, repeat-talk, recording, exclusivity, or multiple-
 
 ## Material unknowns
 
-The following facts were not supplied and could change the shortlist:
+The location preferences and later-overseas window are now reflected in the ranking. The following facts could still change it:
 
-- Dan's travel origin, travel budget, preferred regions, availability, visa needs, and willingness to self-fund presenter registration.
+- Dan's exact travel origin, travel budget, availability, visa needs, and willingness to self-fund presenter registration.
 - Compensation threshold, acceptable rights and recording terms, and accessibility needs.
 - Professional memberships, institutional affiliation, education-sector credentials, and role-specific eligibility.
 - Permission to name organizations, systems, outcomes, or firsthand production work.
@@ -100,11 +123,15 @@ Each packet contains its own top-10 shortlist where the evidence supports ten, t
 ## Data guide
 
 - `events.csv`, `editions.csv`, `deadlines.csv`, `talk_matches.csv`, and `evidence.csv` are the canonical merged tables.
-- `portfolio-top-20.csv` is the actionable portfolio shortlist above.
+- `composite-ranking.csv` contains all 166 ranked opportunities and every component score.
+- `portfolio-top-20.csv` is the preference-weighted shortlist above.
+- `community-opportunities.csv` contains the 58 Denver, preferred-city, remote, and later-overseas community routes.
+- `speaking-opportunity-rankings.xlsx` is the formatted workbook with priorities, scoring notes, all opportunities, community routes, and the deadline calendar.
 - `confirmed-deadline-calendar.csv` contains future exact or confirmed milestones, including explicit conflicts with their notes and sources.
 - `historical-monitoring.csv` keeps closed and prior-cycle fits out of the confirmed calendar.
 - `source-conflicts.csv` records source disagreements and merge variants instead of overwriting them.
 - `event_aliases.csv` and `edition_aliases.csv` preserve the mapping from every talk packet to the canonical IDs.
+- `../community-research/denver.md`, `preferred-us-cities.md`, and `overseas-later.md` preserve the popularity evidence, route details, and source links behind the community scores.
 
 ## Research limits and stopping point
 

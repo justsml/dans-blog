@@ -1,18 +1,19 @@
-# Cry Me a Free Tier
+# Cry Me a Free Tier: 15-minute lightning
 
-15-minute adaptation of the 40-minute deck. Hide the unlisted slides. These timings replace the full-deck timings and exclude Q&A.
+Uses the 40-minute deck with unlisted slides hidden. Slide numbers refer to [the full notes](free-tier-40min.md). Timings exclude Q&A.
 
-Keep the sensitivity calculation and the falling-cost counterargument. Treat market consequences as questions to investigate, not a predicted price shock.
+**Strategy for 15 minutes.** Lead with what has been reported, run the parking argument to its second-order effects, map it to software, show the 1× and 10× rows, give the counterargument its sentence, and leave three prices.
 
-| Time | Source slide | Section |
-| --- | ---: | --- |
-| 0–1 min | 1 | Cry Me a Free Tier |
-| 1–2.5 min | 2 | The invoice is not the whole story |
-| 2.5–4.5 min | 6 | Architecture learns the price signal |
-| 4.5–6.5 min | 8 | A fictional workload before the price changes |
-| 6.5–8.5 min | 9 | Change one assumption. Watch the unit cost. |
-| 8.5–10.5 min | 10 | Now change the architecture |
-| 10.5–12.5 min | 13 | The counterargument deserves its own slide |
-| 12.5–15 min | 18 | Cheap intelligence changes incentives first |
+| Time | Slide | Section | Bridge or cut |
+| --- | ---: | --- | --- |
+| 0:00–1:30 | 1 | Free electricity for a year | Keep the five-second pause; drop the story slot. |
+| 1:30–3:30 | 3 | Playing with fire: what has been reported | Bridge in: "Invoices hide margins; here is what has leaked out anyway." Fold slide 4 into one sentence: "credits expire; that is the one documented fact." |
+| 3:30–5:30 | 5 | Free parking is an argument about incentives | As written. |
+| 5:30–8:00 | 7 | Map it: second-order effects of free inference | Bridge: state two parking effects from slide 6 in one breath (density falls, rents carry the space), then map. |
+| 8:00–9:30 | 10 | Measure the successful outcome | Skip the audience question. State slide 11's fixture verbally: 1,000 attempts, 750 accepted, 3¢ per attempt. |
+| 9:30–11:30 | 12 | Demo, compressed | Show only the 1× and 10× rows. |
+| 11:30–13:00 | 14 | The counterargument | Add one sentence from slide 15: "Epoch tracked large, uneven price declines through 2025." |
+| 13:00–14:00 | 17 | Three prices for the next design review | Three numbers only; skip the four actions. |
+| 14:00–15:00 | 18 | Cheap intelligence changes incentives first | As written. |
 
-Use the [full speaker notes](free-tier-40min.md) for the examples and source citations. In the lightning version, demonstrate one branch and state the others. In the 30-minute version, retain the exercise but reduce audience discussion. Rehearse the chosen route before a hard cutoff.
+**Closing for this length.** Deliver the signature line and stop. Do not leave the table up; there is no time for assumption questions.

@@ -63,7 +63,7 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     if not rows:
         return
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -124,9 +124,9 @@ def popularity_score(text: str, event_name: str = "") -> tuple[int, str]:
         "devopsdays", "data summit", "lilly conference",
     )
     lowered = event_name.lower()
-    if any(item in lowered for item in flagship):
+    if any(re.search(rf"\b{re.escape(item)}\b", lowered) for item in flagship):
         return 5, "Established flagship or large organizer-backed event; exact audience count may be an organizer claim or unstated."
-    if any(item in lowered for item in established):
+    if any(re.search(rf"\b{re.escape(item)}\b", lowered) for item in established):
         return 4, "Established recurring conference or community series with visible program history."
     if any(word in text.lower() for word in ("recurring", "monthly", "annual", "multi-year", "past events", "sponsor")):
         return 2, "Recurring program or sponsor/history evidence is visible; no strong comparable audience count was found."
@@ -221,15 +221,22 @@ def composite(location: int, ease: int, fit: float, popularity: int, timing: int
 def parse_markdown_tables(path: Path, source_group: str) -> list[dict[str, str]]:
     rows: list[dict[str, str]] = []
     headers: list[str] = []
+    section = ""
     for raw_line in path.read_text(encoding="utf-8").splitlines():
         line = raw_line.strip()
+        if line.startswith("## "):
+            section = line[3:].strip()
+            headers = []
+            continue
         if not line.startswith("|"):
+            continue
+        if source_group.startswith("Overseas") and section != "Best community routes":
             continue
         cells = [cell.strip() for cell in line.strip("|").split("|")]
         if cells and cells[0] in ("Event or group", "Route", "Event"):
             headers = cells
             continue
-        if not headers or not cells or not cells[0].startswith("**"):
+        if not headers or not cells or cells[0].startswith("---"):
             continue
         if len(cells) != len(headers):
             continue
@@ -265,7 +272,24 @@ def parse_markdown_tables(path: Path, source_group: str) -> list[dict[str, str]]
 
 
 def topic_primary(text: str, name: str) -> str:
-    lowered = f"{text} {name}".lower()
+    combined = f"{text} {name}"
+    code_map = {
+        "SE": "skeptic-education",
+        "EL": "evidence-learning",
+        "FI": "failure-improvement",
+        "AS": "adaptive-systems",
+        "FT": "free-tier",
+        "PE": "product-engineering",
+        "RT": "retrieval",
+        "BM": "benchmarks",
+        "PA": "parallelization",
+        "JU": "judgment",
+    }
+    code_match = re.search(r"\b(SE|EL|FI|AS|FT|PE|RT|BM|PA|JU)\b", combined.upper())
+    if code_match:
+        return code_map[code_match.group(1)]
+
+    lowered = combined.lower()
     ordered = (
         ("evidence", "evidence-learning"),
         ("education", "skeptic-education"),
@@ -277,16 +301,6 @@ def topic_primary(text: str, name: str) -> str:
         ("benchmark", "benchmarks"),
         ("parallel", "parallelization"),
         ("judgment", "judgment"),
-        ("`fi`", "failure-improvement"),
-        ("`as`", "adaptive-systems"),
-        ("`rt`", "retrieval"),
-        ("`bm`", "benchmarks"),
-        ("`pa`", "parallelization"),
-        ("`ju`", "judgment"),
-        ("`pe`", "product-engineering"),
-        ("`ft`", "free-tier"),
-        ("`el`", "evidence-learning"),
-        ("`se`", "skeptic-education"),
     )
     hits = [(lowered.find(marker), talk_id) for marker, talk_id in ordered if marker in lowered]
     if hits:

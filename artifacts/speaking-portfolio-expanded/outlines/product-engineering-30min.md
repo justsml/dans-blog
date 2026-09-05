@@ -1,82 +1,82 @@
-# The Future of Product Engineering
+# The Future of Product Engineering: Feedback Systems
 
-30 minutes · 14 slides · 30min
+30 minutes · 14 slides
 
-Timings are rehearsal targets, excluding Q&A. Speaker notes are delivery guidance, not a verbatim script.
+**Talk in one line.** A product organization is a feedback system. Shorten the loop, keep the steering wheel.
 
-## 1. A Product Organization Is a Feedback System
+**Scope and claims (say once, on slide 1).** The opening meeting and the onboarding case are fictional. The demo is a deterministic replay with synthetic numbers that shows policy enforcement, not significance or a production result. After slide 1, argue plainly.
 
-0.0–1.5 minutes
+**Demo.** [Runbook section 6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering) · [Open the kit](../demos/index.html). Fallback: the table on slide 7.
 
-The Future of Product Engineering
-Shorter loops. Explicit boundaries.
+**Story slots.** Lines marked `Story:` need a first-hand example before rehearsal.
 
-Open at the point where a weekly product meeting stalls. In this fictional scene, support thinks onboarding is confusing, analytics sees an activation drop, and sales wants more invitations. Everybody has a signal; nobody shares an explanation. Ask how long it takes this organization to move from a signal to a defensible decision. This version treats that delay as a system design problem. The objective is faster learning with visible controls, rather than simply generating more experiments or replacing the people who own product direction.
+**Timings** are rehearsal targets, excluding Q&A. Notes are cues, not a script.
+
+---
+
+## 1. A product organization is a feedback system
+
+0:00–2:00
+
+> Shorter loops. Explicit boundaries.
+
+**Say:** A weekly product meeting stalls. Support thinks onboarding is confusing; analytics sees an activation drop; sales wants more invitations. Everybody has a signal; nobody shares an explanation. How long does it take this organization to go from signal to defensible decision?
+
+**Say (scope, once):** Fictional meeting, synthetic demo numbers, policy behavior only. That is the caveat; from here on, the design.
+
+**Story:** [The meeting where three teams had three true explanations and nobody could pick.]
 
 ## 2. Map the missing feedback
 
-1.5–3.5 minutes
+2:00–4:00
 
-Signal → interpretation → action
-Action → behavior → evidence
-Evidence → decision → memory
+> Signal → interpretation → action
+> Action → behavior → evidence
+> Evidence → decision → memory
 
-Draw the loop and ask where a typical organization waits. Customer evidence may sit in support software while product decisions live in meetings and experiment results disappear into dashboards. Those gaps are candidates for automation because they impede learning, not because every manual activity is waste. Use the onboarding case to identify one missing connection: repeated integration visits were observed, but no one connected them to the invitation sequence. Treat this as a hypothesis to investigate rather than an analytical conclusion.
+**Say:** Draw the loop; ask where the organization waits. Evidence sits in support software; decisions live in meetings; results vanish into dashboards. Those gaps are automation candidates because they impede learning. In the onboarding case: repeated integration visits were observed, but nobody connected them to the invitation step.
 
 ## 3. Do not compress away disagreement
 
-3.5–5.5 minutes
+4:00–6:00
 
-Support says: confusing sequence
-Sales says: missing team value
-Analytics says: cohort changed
-All three can be plausible
+> Support: confusing sequence · Sales: missing team value
+> Analytics: cohort changed · All three plausible
 
-Give three explanations equal airtime. The same drop in activation could reflect confusing onboarding, weak team value, or a changed acquisition mix. A synthesis agent should preserve those alternatives with source links instead of producing a tidy consensus. Ask what evidence would distinguish them. For example, inspect behavior within stable acquisition cohorts and interview users who stopped at different points. This is the value of the research step: create testable uncertainty, keep provenance, and prevent the first persuasive narrative from becoming the roadmap.
+**Say:** A synthesis agent preserves the alternatives with source links instead of producing consensus. Ask what evidence would distinguish them: behavior within stable cohorts, interviews with users who stopped at different points. The research step creates testable uncertainty and stops the first persuasive story from becoming the roadmap.
 
 ## 4. Make the hypothesis falsifiable
 
-5.5–7.5 minutes
+6:00–8:00
 
-If we clarify the first useful step
-more new users will complete it
-without extra support demand
+> If we clarify the first useful step,
+> more new users complete it, without extra support demand
 
-Translate the broad complaint into a narrow experiment proposal. Specify who sees the change, what first useful action means, and which supporting evidence made this plausible. Include a counter-hypothesis: perhaps the issue is the missing integration itself, which copy cannot repair. Microsoft experimentation guidance emphasizes clear hypotheses and complementary metric categories. Use that as support for disciplined experiment design, not as evidence that this particular onboarding idea works. The audience should be able to explain what result would cause the team to abandon the idea.
+**Say:** Specify who sees the change, what "first useful action" means, and the counter-hypothesis: maybe the missing integration is the problem and copy cannot fix it. Microsoft's guidance supports disciplined hypotheses and complementary metric categories. The audience should be able to say what result kills the idea.
 
-Sources: [Reference](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/)
+Source: Microsoft ExP (2021), [Patterns of trustworthy experimentation: pre-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/).
 
 ## 5. The experiment is a contract
 
-7.5–9.5 minutes
+8:00–10:00
 
-Hypothesis and primary metric
-Guardrails and exposure
-Stopping rule and rollback
-Named decision owner
+> Hypothesis and primary metric · Guardrails and exposure
+> Stopping rule and rollback · Named decision owner
 
-Treat an experiment proposal as a contract between the implementer, analyst, and accountable owner. It specifies the population, randomization unit, planned duration or sequential method, primary metric, guardrails, and rollback. Set thresholds before looking at treatment results. Product-specific constraints such as no fabricated urgency sit alongside operational metrics. The contract also states which decisions an agent may make and which require human review. This reduces ambiguous handoffs without assuming that a schema alone guarantees a trustworthy experiment or a worthwhile product change.
+**Say:** A contract between implementer, analyst, and owner: population, randomization unit, duration or sequential method, primary metric, guardrails, rollback. Thresholds set before looking at results. "No fabricated urgency" sits beside operational metrics. The contract says which decisions an agent may make.
 
 ## 6. Fast loops can amplify the wrong objective
 
-9.5–11.5 minutes
+10:00–12:00
 
-Clicks are easy to count
-Trust is easier to spend than rebuild
-Local success can create system cost
+> Clicks are easy to count
+> Trust is easier to spend than rebuild
 
-Use an ordinary control-system analogy: making corrections more often is unhelpful when the sensor measures the wrong thing. A system rewarded for invitations may add pressure that creates low-quality signups and extra support. More frequent optimization can reinforce that mistake. Avoid promising a single metric for trust; instead name observable guardrails, prohibited patterns, qualitative review, and longer-term outcomes. The central systems lesson is that increased response speed makes the choice of objective and the reliability of feedback more consequential.
+**Say:** Control-system analogy: correcting more often is harmful when the sensor measures the wrong thing. A system rewarded for invitations adds pressure, gets low-quality signups and support load, and optimizes harder. Faster response makes the choice of objective and the reliability of feedback more consequential.
 
-## 7. Let the audience pick the winner
+## 7. Demo: let the audience pick the winner
 
-11.5–15.5 minutes
-
-Control: 40% activation, 3% support
-Pressure: 48% activation, 9% support
-Clear step: 45% activation, 4% support
-Synthetic fixture; no causal claim
-
-Run the four-minute product demonstration. Reveal activation first and invite a show of hands, then show support rates and the false-urgency flag. Apply the five-percent support ceiling and the rule against fabricated urgency. Pressure copy is blocked; the clearer first-step candidate is eligible for human review. Explicitly state that these invented aggregates demonstrate policy enforcement, not significance, a causal estimate, or a production result. The twist is that the policy was defined before the scorecard, so the system cannot move the goalposts to protect its favorite candidate.
+12:00–17:00
 
 | Candidate | Activation | Support | Urgency |
 | --- | --- | --- | --- |
@@ -84,81 +84,82 @@ Run the four-minute product demonstration. Reveal activation first and invite a 
 | Pressure copy | 48% | 9% | False |
 | Clear first step | 45% | 4% | None |
 
+**Show:** Follow [runbook section 6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering). Activation first.
+
+**Ask (30 s):** Show of hands.
+
+**Show:** Support and urgency. Apply the 5% ceiling and the urgency rule. Pressure copy blocked; clear first step eligible for review. The policy was defined before the scorecard, so the system cannot move the goalposts.
+
+**Compression plan:** at 2 minutes, show the table and the block only.
+
 ## 8. Passing gates is not a shipping decision
 
-15.5–17.5 minutes
+17:00–19:00
 
-Eligible for review
-Evidence can still be insufficient
-Owner weighs tradeoffs
-Decision records why
+> Eligible for review · Evidence can still be insufficient
+> Owner weighs tradeoffs · Decision records why
 
-Distinguish blocking conditions from positive evidence. An experiment that violates a hard constraint should not advance. One that avoids violations may still be underpowered, strategically irrelevant, or poorly understood. The decision owner records whether to ship, continue observing under the existing plan, investigate data quality, or reject the treatment. An agent can assemble that evidence packet and flag missing fields. The improvement is a better decision process, not an automatic green light whenever a score exceeds an arbitrary threshold.
+**Say:** Blocking conditions versus positive evidence. A candidate that avoids violations may still be underpowered or strategically irrelevant. The owner ships, continues under the plan, investigates data quality, or rejects. The agent assembles the packet and flags missing fields.
 
 ## 9. Feedback has a delay
 
-17.5–19.5 minutes
+19:00–21:00
 
-Activation appears early
-Retention arrives later
-Support can lag exposure
-Respect the observation window
+> Activation appears early · Retention arrives later
+> Support lags exposure · Respect the window
 
-Explain why a fast product loop cannot make every outcome arrive faster. A new user can activate today while retention requires later observation, and support contacts may follow delayed confusion. The system must represent pending evidence instead of turning an incomplete window into a zero. Keep the experiment plan stable unless a predefined safety stop triggers. Ask the audience which of its current success metrics is available sooner than the harm it might cause. That mismatch should influence rollout speed and the human review schedule.
+**Say:** A fast loop cannot make every outcome arrive faster. Represent pending evidence instead of treating an incomplete window as zero. Keep the plan stable unless a predefined safety stop triggers.
+
+**Ask (30 s):** Which of your success metrics arrives sooner than the harm it might cause?
 
 ## 10. Instrumentation is part of the treatment
 
-19.5–21.5 minutes
+21:00–23:00
 
-Verify assignment
-Verify event meaning
-Check sample ratios
-Inspect denominators
+> Verify assignment · Verify event meaning
+> Check sample ratios · Inspect denominators
 
-Describe a fictional logging change that records successful onboarding more reliably in the treatment arm. The dashboard may report an uplift even though the customer experience has not improved. Microsoft researchers document this class of telemetry and denominator problems. The implication is concrete: validate assignment and event semantics before interpreting outcomes, and investigate sample ratio mismatch rather than dismissing it as a dashboard detail. Passing a ratio check is necessary in this design but does not establish that every other source of bias has been removed.
+**Say:** A logging change that records onboarding more reliably in the treatment arm produces an uplift with no real improvement. Validate assignment and event semantics first; investigate sample ratio mismatch rather than dismissing it.
 
-Sources: [Reference](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-post-experiment-stage/)
+Source: Microsoft ExP (2021), [Patterns of trustworthy experimentation: post-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-post-experiment-stage/).
 
 ## 11. Activation and reactivation need bounds
 
-21.5–23.5 minutes
+23:00–25:00
 
-Useful help at the right moment
-Frequency caps and preferences
-Respect opt-outs
-Review external communication
+> Useful help at the right moment · Frequency caps
+> Respect opt-outs · Review external communication
 
-Move beyond the experiment to the follow-up loop. A stalled account might benefit from contextual help, but repeatedly nudging a user can turn assistance into noise. Give an agent access to relevant product events and customer preferences, with a bounded set of proposed interventions. Put external communication behind the organization's chosen review process and log the reason for any approved message. A successful activation metric does not justify violating preferences. The system's objective includes whether the intervention supports the customer's task, not simply whether it attracts a click.
+**Say:** A stalled account might benefit from contextual help; repeated nudges turn assistance into noise. Bounded interventions, preferences respected, external messages behind review with a logged reason. A successful activation metric does not justify violating preferences.
 
 ## 12. Taste needs examples and owners
 
-23.5–25.5 minutes
+25:00–27:00
 
-Principle: earn the next action
-Allowed: explain the useful step
-Forbidden: invent a deadline
-Review disputed cases
+> Principle: earn the next action
+> Allowed: explain the useful step · Forbidden: invent a deadline
 
-Show how an abstract product value becomes operational. The principle is to earn the next action. The allowed example explains what a user can accomplish; the forbidden example invents urgency. A small set of contrasting examples helps reviewers and evaluators apply the principle consistently. Keep a human owner for disputed cases and periodically compare automated judgments with that person's decisions. A numerical taste score is an aid, not authority. This makes product values inspectable while leaving room for context and deliberate changes in strategy.
+**Say:** Contrasting examples make a principle applicable. A human owns disputed cases; automated judgments are periodically compared with that person's. A taste score is an aid, not authority.
+
+**Story:** [A principle your team could only articulate as a pair of examples.]
 
 ## 13. Remember the decision, not just the metric
 
-25.5–27.5 minutes
+27:00–28:30
 
-Hypothesis and segment
-Evidence and uncertainty
-Human decision and rationale
-Expiry or revisit trigger
+> Hypothesis and segment · Evidence and uncertainty
+> Human decision and rationale · Expiry or revisit trigger
 
-Finish the feedback loop with a durable decision record. Capture the experiment, the population, the scorecard, what was surprising, what the owner decided, and what would justify revisiting it. Link the shipped implementation or rejected candidate so future agents can inspect what actually changed. Avoid universal lessons such as pressure never works from one narrow test. Store scope and uncertainty. The next research agent should retrieve this case when it proposes a similar intervention, saving the organization from relitigating the same incomplete story.
+**Say:** Capture the experiment, population, scorecard, surprise, decision, and revisit condition. Link the shipped or rejected candidate. Avoid universal lessons from one narrow test. The next research agent retrieves this before proposing similar work.
 
 ## 14. Shorten the loop. Keep the steering wheel.
 
-27.5–30.0 minutes
+28:30–30:00
 
-Machines prepare evidence and options
-Rules constrain execution
-Humans own the product promise
+> Machines prepare evidence and options
+> Rules constrain execution
+> Humans own the product promise
 
-Return to the opening meeting. Support, analytics, and sales now have a shared evidence packet, explicit hypotheses, and an owner who can make a bounded decision. They may still disagree; the system has made the disagreement productive and traceable. Ask the audience to map one product loop, identify its slowest evidence transfer, and write one nonnegotiable constraint. Close by separating learning speed from experiment count. A product organization improves when it makes better supported decisions sooner, while retaining responsibility for the experience it creates.
+**Say (close):** Back to the meeting. Support, analytics, and sales now share an evidence packet, explicit hypotheses, and an owner who can decide. They may still disagree; the disagreement is now productive and traceable.
 
+**Ask (close):** Map one product loop, find its slowest evidence transfer, and write one nonnegotiable constraint.

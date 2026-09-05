@@ -1,24 +1,25 @@
-# Building Adaptive & Dynamic AI Systems
+# Building Adaptive & Dynamic AI Systems: 30-minute standard
 
-30-minute adaptation of the 40-minute deck. Hide the unlisted slides. These timings replace the full-deck timings and exclude Q&A.
+Uses the 40-minute deck with unlisted slides hidden. Slide numbers refer to [the full notes](adaptive-systems-40min.md). Timings exclude Q&A.
 
-Compare one deeper attempt with multiple attempts, then make the budget and human gate visible in the offline policy demonstration.
+**Strategy for 30 minutes.** Keep the planner, both scaling axes, the agent-builder, caps, the full demo, dynamic A/B, model onboarding, and AGENTS.md. Cut agreement-versus-verdict, scoring by failure class, and the second loop; each gets one sentence where noted.
 
-| Time | Source slide | Section |
-| --- | ---: | --- |
-| 0–1 min | 1 | Building Adaptive & Dynamic AI Systems |
-| 1–3.5 min | 3 | Choose a strategy, not merely a model |
-| 3.5–6 min | 5 | Vertical scaling: deepen one attempt |
-| 6–8.5 min | 6 | Horizontal scaling: separate the questions |
-| 8.5–11 min | 7 | Topology is an output of planning |
-| 11–13.5 min | 8 | Agreement is a lead, not a verdict |
-| 13.5–16 min | 9 | Confidence must be earned on your work |
-| 16–18 min | 10 | Demo: one task, three bounded strategies |
-| 18–20 min | 11 | Governors sit outside the planner |
-| 20–22 min | 12 | Why did this request get this architecture? |
-| 22–24 min | 13 | Score the whole strategy by failure class |
-| 24–26 min | 15 | Adaptation has a second feedback loop |
-| 26–28 min | 16 | A known problem should get cheaper |
-| 28–30 min | 18 | Autoscaling, but for cognition |
+| Time | Slide | Section | Bridge or cut |
+| --- | ---: | --- | --- |
+| 0:00–2:00 | 1 | Different work, different compute | As written. |
+| 2:00–3:30 | 2 | A static architecture hides a policy | As written. |
+| 3:30–5:00 | 3 | Choose a strategy | As written. |
+| 5:00–7:30 | 4 | The work planner produces a contract | As written. |
+| 7:30–9:00 | 5 | Vertical scaling | As written. |
+| 9:00–10:30 | 6 | Horizontal scaling | Add slide 9 in one sentence: "two agents agreeing is a lead, not a verdict." |
+| 10:30–13:00 | 7 | The agent-builder | As written. |
+| 13:00–15:00 | 8 | Elastic compute | As written. |
+| 15:00–16:30 | 10 | Confidence must be earned | As written. |
+| 16:30–20:30 | 11 | Demo | Full runbook sequence. |
+| 20:30–21:30 | 12 | Observability | Add slide 13 in one sentence: "score whole strategies by failure class, not one leaderboard." |
+| 21:30–23:30 | 14 | Dynamic A/B of strategies | As written. |
+| 23:30–26:00 | 15 | Mirrored traffic and the tuning loop | As written. |
+| 26:00–28:00 | 17 | What your AGENTS.md should include | Add slide 16 in one sentence under "Ongoing": "compile known cases into deterministic tools." |
+| 28:00–30:00 | 18 | Autoscaling, but for cognition | As written. |
 
-Use the [full speaker notes](adaptive-systems-40min.md) for the examples and source citations. In the lightning version, demonstrate one branch and state the others. In the 30-minute version, retain the exercise but reduce audience discussion. Rehearse the chosen route before a hard cutoff.
+**Closing for this length.** Keep the closing question and the two-request recap.

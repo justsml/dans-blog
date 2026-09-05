@@ -1,201 +1,218 @@
 # Outsmart Your Lying, Cheating Students
 
-40 minutes · 18 slides · 40min
+40 minutes · 15 slides
 
-Timings are rehearsal targets, excluding Q&A. Speaker notes are delivery guidance, not a verbatim script.
+**Event-friendly title.** Stop Trying to Catch Students Using AI. Offer both; the title slide carries whichever the organizer chose.
 
-## 1. Outsmart Your Lying, Cheating Students
+**In one line.** Redesign one assessment so the question becomes "what does the learner understand?" instead of "who typed the sentence?"
 
-0.0–2.0 minutes
+**Arc.** Warm open, steady through capability and fixture, build through the hint ladder, peak at the live reconstruction, steady through rubric and records, peak again at the worksheet, land.
 
-Stop asking who typed the sentence.
-Collect evidence of understanding.
+**Scope.** Fixtures are authored for the demonstration. The rubric is proposed, not validated. The reconstruction shows evidence collection, not a learning effect. Integrity processes stay in place. Say it once on slide 1.
 
-Deliver the title, then immediately make the target clear: the provocation is aimed at an assessment design problem, not a claim that students are inherently dishonest. A teacher, a student, and a detector can all work hard while the institution still lacks evidence of learning. Today we redesign one small assessment so the next question is what the learner understands. The event friendly title is Stop Trying to Catch Students Using AI. Keep both options available to organizers. Promise a usable task, a hint sequence, a compact evidence record, and a rubric. Do not promise cheating proof assessment. That would recreate the same sales pitch this talk is trying to move beyond.
+**Demo.** [Runbook section 5](../demos/DEMO-RUNBOOK.md#5-outsmart-your-lying-cheating-students) · [Kit](../demos/index.html). Fallback: the scripted turns on slides 5 and 7.
+
+**Worked example.** $100, +20%, then −20%. The strategic education talk uses a different example, so the two can be booked together.
+
+**Before each delivery.** Fill the `Story` lines.
+
+**Image style.** Dark slate background, one amber accent, flat vector, generous negative space, no text or logos. Each slide comment is a complete prompt.
+
+**Timings** are rehearsal targets, no Q&A. Notes are cues.
+
+---
+
+## 1. Stop asking who typed the sentence
+
+0:00–2:30 · warm
+
+<!-- image: a typewriter with its keys removed and laid out in a neat row beside it, a single lightbulb above the empty platen, dark slate background, amber accent on the bulb, flat vector, no text -->
+
+> Collect evidence of understanding.
+
+The title is a provocation aimed at an assessment design problem, not at students. A teacher, a student, and a detector can all work hard while the institution still has no evidence of learning.
+
+Scope, once: authored fixtures, a proposed rubric, an exercise that shows evidence collection. Integrity processes stay. From here: a task, a hint ladder, an evidence record, a rubric.
+
+Story: [the submission that made you realize the grade and the understanding had come apart]
 
 ## 2. The arms race asks the wrong question
 
-2.0–4.0 minutes
+2:30–5:30 · warm
 
-Student produces text
-System predicts authorship
-Teacher still needs learning evidence
+<!-- image: two figures on opposite sides of a wall each holding a taller ladder, a small open door in the wall between them that neither is using, dark slate background, amber accent on the door, flat vector, no text -->
 
-Describe a hypothetical cycle rather than attributing it to a real school. A policy prohibits AI, a student submits a polished answer, and software reports a likelihood of machine involvement. Even if the institution could settle authorship, a second question remains: can the learner perform the intended intellectual task? Authorship and learning are related in some assessments but are not interchangeable measurements. Preserve appropriate academic integrity processes; do not imply that dishonesty no longer matters. The design failure is making a classifier the central source of confidence about competence. We will replace that dependency with explicit opportunities to explain, repair, and apply an idea, then have a person interpret consequential evidence in context.
+> Student produces text → system predicts authorship
+> Teacher still needs learning evidence
+> Tested tool ≠ every detector · Style ≠ authorship · Authorship ≠ understanding
 
-## 3. Detector evidence has boundaries
+A policy bans AI; a student submits polished work; software reports a likelihood. Even with authorship settled, the second question remains: can the learner do the intended task? Related measurements in some assessments, never the same one.
 
-4.0–6.0 minutes
+Liang and colleagues found fairness and robustness problems in the detectors they tested. Cite the narrow finding. The institutional boundary is ours: never outsource an accusation to a probabilistic score. The opposite error too: a clean score is not proof of learning. We need an assessment that does not depend on solving authorship first.
 
-Tested tool ≠ every future detector
-Writing style ≠ authorship proof
-Authorship ≠ understanding
+Source: Liang et al. (2023), [GPT detectors are biased against non-native English writers](https://doi.org/10.1016/j.patter.2023.100779), Patterns.
 
-The 2023 Liang study found problems with fairness and robustness in its tested detector setting. Cite that narrow finding; avoid saying every current or future detector has the same error rate. Our recommendation goes beyond measurement: never outsource disciplinary accusation to a probabilistic detector. That is a proposed institutional boundary, not a finding from a laboratory experiment. A score can invite questions only within an appropriate human process; it cannot replace evidence, context, or a chance to respond. Also resist the opposite mistake of treating a clean detector score as proof of learning. Both shortcuts leave the original educational inference unsupported. We need an assessment whose success does not depend on solving text authorship first.
+## 3. Define the capability before the task
 
-Sources: [Reference](https://doi.org/10.1016/j.patter.2023.100779)
+5:30–8:00 · steady
 
-## 4. Define the capability before the task
+<!-- image: a target with four concentric rings, a single dart in the center ring, the outer rings labeled only by faint tick marks, dark slate background, amber accent on the dart, flat vector, no text -->
 
-6.0–8.0 minutes
+> Explain sequential percentage changes
+> Identify the denominator
+> Repair an incorrect argument
+> Apply the rule to a new case
 
-Explain sequential percentage changes
-Identify the denominator
-Repair an incorrect argument
-Apply the rule to a new case
+Narrow enough that the room can inspect the evidence. The learner must explain why percentages act on a base and how the base changes across a sequence. Independent competence and competent tool use both belong in a course. They need different evidence. Say which one this checkpoint measures.
 
-Choose an objective narrow enough that participants can inspect the evidence themselves. Our learner must explain why percentages act on a base and how that base changes across a sequence. This is more specific than understands percentages, and different from can generate a correct answer with tools. Both independent competence and competent tool use may belong in a course, but they require different evidence. State which one this checkpoint assesses. The example is deliberately simple so the audience can focus on assessment design rather than subject expertise. For their own courses, participants should substitute a disciplinary capability while keeping the same structure: identify the reasoning move, create a visible opportunity to perform it, and decide how assistance affects the interpretation.
+## 4. One polished answer, missing understanding
 
-## 5. One polished answer, missing understanding
+8:00–10:00 · steady
 
-8.0–10.0 minutes
+<!-- image: a perfectly ironed shirt on a hanger with a large hole in the back only visible in a mirror behind it, dark slate background, amber accent on the mirror frame, flat vector, no text -->
 
-“A 20% rise and 20% fall cancel.”
-The prose is clean.
-The denominator is wrong.
+> "A 20% rise and a 20% fall cancel."
+> The prose is clean. The denominator is wrong.
 
-Show this fixture exactly: A shop raises a one hundred dollar price by twenty percent, then reduces the new price by twenty percent. Because the changes are equal and opposite, the final price is one hundred dollars. Label it as deliberately authored for the demonstration; no real student or model produced this record. Ask the audience what a conventional final answer assessment would capture. The error is visible here, but imagine a correct final number with the same faulty explanation hidden behind it. That version exposes the bigger issue. A grade attached only to the final artifact may miss the learner's mental model. Our redesigned task asks for the explanation that the polished answer leaves out.
+The fixture: $100, up 20%, then the new price down 20%, "so the final price is $100."
 
-## 6. Ask for an attempt before a solution
+What would a final-answer assessment capture here? Now imagine the correct number with this faulty explanation hidden behind it.
 
-10.0–12.0 minutes
+## 5. Ask for an attempt before a solution
 
-“Which price does the discount use?”
-Learner: “The original $100.”
-Tutor: “What is the price after rise?”
+10:00–12:00 · steady
 
-Demonstrate the first two turns without calling a live model. The learner says the discount uses the original one hundred dollars. The tutor asks for the price after the increase. That is a diagnostic move: it reveals the place where the base was lost. The tutor should neither praise the incorrect reasoning nor dump a complete worked solution immediately. However, do not turn attempt first into a punishment for a student who cannot begin. Clarifying the terms or showing a parallel example may be the appropriate next move. The tutor's job is to supply useful support while preserving an opportunity for the learner to think. Shared instructions express that intent; they do not guarantee that any model will follow it.
+<!-- image: two speech bubbles in a vertical exchange, the lower one shaped like a small key, dark slate background, amber accent on the key bubble, flat vector, no text -->
 
-## 7. Escalate help deliberately
+> "Which price does the discount use?"
+> Learner: "The original $100."
+> Tutor: "What is the price after the rise?"
 
-12.0–14.0 minutes
+Two scripted turns. The diagnostic question reveals where the base was lost. The tutor neither praises the error nor dumps a solution. But attempt-first must not punish a student who cannot begin; clarifying terms or a parallel example may be the right move. Instructions express intent; they do not guarantee a model follows it.
 
-Clarify → conceptual hint
-Locate the missing step
-Show part of an example
-Then check reconstruction
+## 6. Escalate help deliberately
 
-Walk through assistance levels using the same misconception. Clarification establishes that the second change acts on the new price. A conceptual hint asks the student to identify the current base. A missing step hint requests the intermediate one hundred twenty. A partial example demonstrates multiplying a different amount by zero point eight. If the student remains stuck, a full explanation may be appropriate, followed by a fresh reconstruction or later transfer task. Do not record help as moral failure. Record it because independent and supported performance mean different things. The useful design choice is the smallest support that helps this learner proceed, not an inflexible ladder that forces everyone through identical turns or withholds necessary explanation.
+12:00–14:00 · build
 
-## 8. Run the four minute reconstruction
+<!-- image: a staircase of five shallow steps with a small figure on the second step, a hand offering a single step-sized block from the side, dark slate background, amber accent on the offered block, flat vector, no text -->
 
-14.0–18.0 minutes
+> Clarify → conceptual hint → missing step
+> Part of an example → full explanation → fresh reconstruction
 
-$100 → $120 → $96
-Why does the second base change?
-Now: $80 → +25% → −20%
+Clarification: the second change acts on the new price. Conceptual hint: identify the current base. Missing step: the intermediate $120. Partial example: multiply a different amount by 0.8. Full explanation, then a fresh reconstruction later. Record help because supported and independent performance mean different things. Never as a moral failure.
 
-Use the accompanying scripted exercise. First reveal the incorrect argument, then allow time for participants to locate the mistaken base. Reveal one hundred twenty only after the diagnostic question. Ask for the discounted result and a sentence explaining it. Next change the starting price to eighty dollars, increase it by twenty five percent, and decrease the result by twenty percent. The final eighty challenges an oversimplified rule that opposite percentage changes never cancel. Participants should explain that the multipliers now multiply to one. This four minute sequence demonstrates evidence collection; it does not establish a learning effect. If the room is quiet, present the prepared learner response rather than pressuring an individual into an impromptu public assessment.
+## 7. Demo: the four-minute reconstruction
 
-## 9. Score the reasoning you requested
+14:00–19:30 · peak
 
-18.0–20.0 minutes
+<!-- image: three price tags in a row reading as shapes only, the middle one larger, an arrow looping from the third back to the first, dark slate background, amber accent on the looping arrow, flat vector, no text -->
 
-Base identified: 0–2
-Calculation justified: 0–2
-Transfer explained: 0–2
-Assistance recorded separately
+> $100 → $120 → $96. Why does the second base change?
+> Now: $80 → +25% → −20%
 
-Offer a proposed rubric, not a validated instrument. For base identification, zero means the wrong base persists, one means the right amount appears without explanation, and two means the learner explains the current amount. For calculation, look for a correct operation and a defensible account of it. For transfer, ask why the second example returns to its starting value while the first does not. Record assistance separately from the capability score so educators can interpret what support was present. Do not automatically deduct a point for asking a question. Before consequential use, calibrate the rubric on sample work, inspect disagreements, and decide whether it matches the learning objective rather than merely rewarding the vocabulary of the example.
+Follow [runbook section 5](../demos/DEMO-RUNBOOK.md#5-outsmart-your-lying-cheating-students) for the two scripted learners. Then live: reveal the wrong argument, let the room find the base, reveal $120 only after the diagnostic question, ask for $96 and a sentence.
 
-## 10. Store observations, not a permanent label
+Change to $80, +25%, −20%. It returns to $80 because 1.25 × 0.8 = 1. That breaks the shortcut "opposite changes never cancel."
 
-20.0–22.0 minutes
+If the room is quiet, present the prepared learner response. Never pressure an individual into a public assessment.
 
-Concept and task
-Observed explanation
-Support provided
-Next check and review date
+Compression: at two minutes, skip the kit, run only the $100 sequence, state the $80 item.
 
-Build a minimal fictional record: concept equals changing percentage base; observed explanation equals second percentage used original amount; support equals conceptual hint; next check equals new item after practice. Avoid converting that one interaction into learner is weak at reasoning or likely cheated. Separate what the learner said from what a model inferred. A transcript excerpt may support an observation, while a confidence score remains a system estimate. Keep revision possible when the teacher or student identifies an error. The phrase education finally gets a stateful interface names a design opportunity; it does not erase decades of learning records and tutoring systems. The proposal is to make state useful for the next teaching decision without letting stale judgments harden into identity.
+## 8. Score the reasoning you requested
 
-## 11. Replay can support review
+19:30–22:00 · steady
 
-22.0–24.0 minutes
+<!-- image: a three-row scorecard with small filled and empty circles, a separate detached column of tally marks beside it, dark slate background, amber accent on the detached column, flat vector, no text -->
 
-Question → attempt → hint → revision
-Select the relevant excerpt
-Allow correction and alternatives
-Do not mistake replay for proof
+> Base identified 0–2 · Calculation justified 0–2
+> Transfer explained 0–2 · Assistance recorded separately
 
-A replayable discussion can show which question preceded a correction and how much support was supplied. That may help an educator interpret a confusing artifact without reading every interaction. Voice is one interface, not a requirement or a guarantee of authenticity. Use written or otherwise accessible alternatives when they serve the same objective, and define recording and retention choices before collecting data. A replay can still be incomplete, rehearsed, mis-transcribed, or generated. Its value is contextual evidence, not certainty about who did the thinking. For our example, a short annotated calculation plus the follow-up answer might be enough. Do not build a surveillance archive when a smaller evidence record supports the next teaching decision.
+Zero: the wrong base persists. One: the right amount, no explanation. Two: the learner explains the current amount. Assistance goes in its own column so educators can interpret support. No deduction for asking a question. Calibrate on sample work before consequential use.
 
-## 12. Follow-up questions need a purpose
+## 9. Store observations, not a permanent label
 
-24.0–26.0 minutes
+22:00–24:00 · steady
 
-Why this denominator?
-What if the order changes?
-Which claim would fail?
-What would change your mind?
+<!-- image: a filing card with four short lines and a pencil eraser at the corner, beside it a heavy metal stamp lying unused on its side, dark slate background, amber accent on the eraser, flat vector, no text -->
 
-Adaptive questioning should follow an assessment blueprint rather than an unconstrained chatbot's curiosity. Decide which concept each question probes and what an adequate answer would reveal. For the percentage fixture, asking whether reversing the two multipliers changes the result probes multiplicative structure, while asking for a story about a discount may probe language more than mathematics. Choose deliberately. Varying questions can make a rehearsed explanation less sufficient, but variation also changes difficulty. Do not interpret a harder follow-up as a fair comparison unless the design supports it. A teacher should be able to inspect the question, response, assistance, and reason for the next question. That makes disagreement reviewable without pretending an adaptive conversation is cheating proof.
+> Concept · Observed explanation · Support provided · Next check and review date
 
-## 13. Local context helps; it is not a shield
+A record: concept, changing percentage base; observed, second percentage used the original amount; support, conceptual hint; next check, new item after practice. Never "weak at reasoning" or "likely cheated." Separate what the learner said from what a model inferred. A stateful interface for education is an opportunity only if state serves the next teaching decision instead of hardening into identity.
 
-26.0–28.0 minutes
+## 10. Follow-ups need a purpose; replay is context, not proof
 
-Use a class experiment
-Ask about a surprising observation
-Change one constraint
-Expect tools to remain useful
+24:00–26:30 · steady
 
-Unique context can improve relevance and reveal choices a generic answer might miss. Imagine a class collecting actual shop price changes, then comparing them with our idealized fixture. Students could explain which prices include taxes, whether promotions apply to the current amount, and what assumptions their model makes. AI may still help them analyze that data, and an agent could potentially produce a plausible explanation. That does not make the assignment worthless. The question is whether the designed checkpoints let the learner demonstrate the intended reasoning. Avoid promising AI resistant tasks merely because a dataset is local or a prompt is unusual. Use context to create meaningful decisions, then collect evidence about those decisions at an appropriate point.
+<!-- image: a compass rose with four labeled points drawn as simple icons, a tape cassette resting at the center, dark slate background, amber accent on the compass needle, flat vector, no text -->
 
-## 14. Grade learning, not the assistance log
+> Why this denominator? What if the order changes? Which claim would fail?
+> Replay: question → attempt → hint → revision
 
-28.0–30.0 minutes
+Adaptive questioning follows a blueprint, not chatbot curiosity. "Does reversing the multipliers change the result?" probes multiplicative structure. "Tell a story about a discount" probes language. Variation changes difficulty, so a harder follow-up is not a fair comparison. A teacher should be able to see why each question was asked.
 
-Supported success is useful evidence
-Independent success is different
-A mismatch needs interpretation
-Neither proves misconduct
+A replay shows which question preceded a correction and how much support was given. Voice is one interface. Define retention before collecting. A replay can be incomplete, rehearsed, or generated; its value is context. Do not build a surveillance archive when a short annotated calculation is enough.
 
-Return to the distinction between a learning aid and an assessment result. The mathematics trial discussed in the evidence brief found that immediate supported performance and later unaided performance could diverge. Our design response is to record the conditions under which an answer was produced and include an independent check when that is the objective. This does not justify treating every mismatch as misconduct. Anxiety, misunderstanding, task difficulty, or ordinary forgetting could also explain it. Give the learner another appropriate opportunity and use a human to interpret consequential ambiguity. The tutor can suggest practice based on an observed error. It should not convert a difference between two performances into an accusation or an irrevocable judgment about the student.
+## 11. Local context helps; it is not a shield
 
-Sources: [Reference](https://doi.org/10.1073/pnas.2422633122)
+26:30–28:00 · steady
 
-## 15. AI can help collect evidence
+<!-- image: a small shop receipt pinned to a corkboard beside a printed worksheet, both with the same numbers circled, dark slate background, amber accent on the circles, flat vector, no text -->
 
-30.0–32.0 minutes
+> Use a class experiment · Change one constraint · Expect tools to stay useful
 
-Draft candidate follow-up questions
-Summarize with links to excerpts
-Flag uncertainty for review
-Keep decisions accountable
+A class collects real shop prices and compares them with the fixture. Students explain taxes, promotions, assumptions. AI can still help analyze the data; the assignment is not worthless for that. The question is whether the checkpoints let the learner show the reasoning. Never promise "AI-resistant."
 
-Assign automation bounded work. A tutor can draft questions against a teacher supplied blueprint, extract the exact sentence that suggests a misconception, and prepare a short summary for review. Require each summary claim to link to its supporting excerpt. If the evidence is absent, the system should say so instead of filling the gap with a plausible diagnosis. Sample outputs for educator review and track errors in both directions: missed misunderstandings and invented ones. Consequential grading, accusations, and sensitive support decisions remain human owned in this proposed design. The point is to reduce the cost of seeing relevant evidence, not to hide decisions inside a longer transcript or create an automatic discipline pipeline.
+## 12. Grade learning, not the assistance log
 
-## 16. Design the staff workload too
+28:00–30:30 · build
 
-32.0–34.0 minutes
+<!-- image: two bar charts side by side, the first taller with a supporting brace, the second shorter and freestanding, an equals sign crossed out between them, dark slate background, amber accent on the brace, flat vector, no text -->
 
-Review by educational consequence
-Sample routine summaries
-Route ambiguity to a person
-Measure time as well as quality
+> Supported success is useful evidence
+> Independent success is different
+> A mismatch needs interpretation. Neither proves misconduct.
 
-A richer assessment that no instructor has time to review will fail operationally. Estimate the minutes needed to design prompts, calibrate a rubric, inspect samples, and handle exceptions. If every routine interaction creates a notification, the interface has merely moved the workload. Define which observations require action and which can wait for a scheduled review. In the percentage example, repeated incorrect bases across independent checks might prompt targeted support; a single corrected arithmetic slip need not trigger an urgent alert. Measure whether the new evidence changes teaching decisions enough to justify its cost. This is an operational proposal for a pilot, not a claim that automated oral assessment is already inexpensive or reliable at every institutional scale.
+Bastani and colleagues found immediate supported performance and later unaided performance can diverge. Our response: record the conditions and include an independent check when that is the objective. Anxiety, difficulty, or forgetting can explain a mismatch. Give another opportunity; let a human interpret.
 
-## 17. Redesign one checkpoint this week
+Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check it before quoting figures.
 
-34.0–38.0 minutes
+## 13. AI collects evidence; people carry the workload
 
-Objective → task → evidence
-Permitted help → follow-up → rubric
-Access → retention → human review
+30:30–33:30 · build
 
-Use the remaining workshop time to redesign a real checkpoint. Ask participants to write the target capability, the initial task, one purposeful follow-up, the permitted assistance, and the interpretation they could defend from the result. Then have a neighbor challenge a hidden assumption: does the task also measure language fluency, access to a paid tool, or comfort speaking under pressure? TEQSA's discussion emphasizes contextual assessment and multiple approaches; the worksheet is our own practical implementation proposal. Choose one adjustment before leaving the room. The output is a reviewable assessment sketch, not a complete institutional policy. A small pilot with student feedback and educator calibration is the next step before the task affects consequential decisions.
+<!-- image: a robot arm placing highlighted paper excerpts into a tray, a person at the tray reading one excerpt with a cup of coffee, a clock on the wall, dark slate background, amber accent on the highlighted excerpt, flat vector, no text -->
 
-Sources: [Reference](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence)
+> Draft follow-ups against a blueprint · Summarize with links to excerpts
+> Flag uncertainty · Review by consequence · Measure the minutes
 
-## 18. Change the game they are playing
+Bounded automation: draft questions from a teacher's blueprint, extract the sentence that suggests a misconception, prepare a summary where every claim links to its excerpt. If evidence is absent, say so. Sample outputs and track errors in both directions. Grading, accusations, and sensitive support stay human.
 
-38.0–40.0 minutes
+Then the workload. A richer assessment nobody has time to review fails operationally. Estimate minutes for prompts, calibration, sampling, exceptions. Repeated wrong bases across independent checks prompt support; a single corrected slip pages nobody.
 
-Explain it. Challenge it.
-Change it. Apply it. Defend it.
-Collect evidence of understanding.
+Story: [a summary, human or machine, that invented a diagnosis the evidence did not support]
 
-Close with the authored sequence: Stop trying to prove who typed the sentence. Start asking whether the student can explain it, challenge it, change it, apply it, and defend it. Then clarify that no single defense settles every educational or integrity question. We are improving the evidence used for a particular learning judgment. The original title earns its provocation only if the conclusion treats students as learners rather than opponents. The practical takeaway is not another detector setting or a longer surveillance log. It is one changed task, one meaningful follow-up, a clear account of allowed support, and a human who can explain the decision. Invite the audience to test that design against their own discipline before scaling it.
+## 14. Redesign one checkpoint this week
 
+33:30–38:00 · peak
+
+<!-- image: a worksheet with three rows of blank boxes, one box filled in with a pencil, a second pencil entering from the opposite side of the page, dark slate background, amber accent on the second pencil, flat vector, no text -->
+
+> Objective → task → evidence
+> Permitted help → follow-up → rubric
+> Access → retention → human review
+
+Pairs, three minutes. Write the capability, the task, one purposeful follow-up, the permitted assistance, and the interpretation you could defend. Then your neighbor challenges one hidden assumption: does this also measure fluency, paid-tool access, or comfort speaking under pressure?
+
+TEQSA's guidance supports contextual, multiple approaches. This worksheet is our implementation. Output: a reviewable sketch, then a small pilot.
+
+Source: TEQSA (2023), [Assessment reform for the age of artificial intelligence](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence).
+
+## 15. Change the game they are playing
+
+38:00–40:00 · land
+
+<!-- image: a chessboard tilted so the pieces slide off, replaced by an open notebook with five short handwritten lines, dark slate background, amber accent on the notebook, flat vector, no text -->
+
+> Explain it. Challenge it. Change it. Apply it. Defend it.
+
+Stop trying to prove who typed the sentence. Start asking whether the student can explain it, challenge it, change it, apply it, and defend it. No single defense settles every question; we are improving the evidence for one learning judgment. The provocative title earns itself only if we treat students as learners, not opponents. One changed task, one meaningful follow-up, a clear account of allowed support, and a human who can explain the decision.

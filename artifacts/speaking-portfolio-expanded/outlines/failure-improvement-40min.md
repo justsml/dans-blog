@@ -1,192 +1,258 @@
 # Automating Improvement From Failure
 
-40 minutes · 18 slides · 40min
+40 minutes · 16 slides
 
-Timings are rehearsal targets, excluding Q&A. Speaker notes are delivery guidance, not a verbatim script.
+**Arc.** Warm open on one boring failure, steady through the destination hierarchy, build through hooks and fixtures, peak at the demo and the promotion gate, build again through search and optimizers, land on pruning and the exercise.
 
-## 1. Automating Improvement From Failure
+**Scope.** A proposed workflow with synthetic fixtures. The demo replays; it makes no model calls and edits nothing. Say that once on slide 1.
 
-0.0–1.0 minutes
+**Demo.** [Runbook section 2](../demos/DEMO-RUNBOOK.md#2-automating-improvement-from-failure) · [Kit](../demos/index.html). Fallback: narrate the fixtures on slide 8 and the gates on slide 9.
 
-Yesterday’s fix should survive today.
-Train the system, not just the model.
+**Before each delivery.** Fill the `Story` lines with incidents from your own work.
 
-Open with an intentionally ordinary failure: an agent launches integration tests while the database is still starting. A person recognizes the error, waits, reruns, and gets a green result. Tomorrow another session repeats the same sequence. Nobody needs a more eloquent apology. We need yesterday’s discovery to change tomorrow’s execution. This talk develops a proposed engineering workflow, illustrated with synthetic fixtures, rather than claiming an autonomous learning system has been deployed. The model can help diagnose and propose. Durable artifacts, regression checks, and an accountable owner decide what survives. Ask the room to recall one correction they have made more than once.
+**Image style.** Dark slate background, one amber accent, flat vector, generous negative space, no text or logos. Each slide comment is a complete prompt.
+
+**Timings** are rehearsal targets, no Q&A. Notes are cues.
+
+---
+
+## 1. Yesterday's fix should survive today
+
+0:00–2:00 · warm
+
+<!-- image: a terminal window showing a red error line, a hand reaching in from the side to press a single key, the same scene repeated three times smaller in the background, dark slate background, amber accent on the key, flat vector, no text -->
+
+> Train the system, not just the model.
+> Fail → explain → retry → forget.
+
+An agent launches integration tests while the database is still starting. A person recognizes the error, waits, reruns, gets green. Tomorrow another session does the exact same thing. We do not need a more eloquent apology. We need yesterday's discovery to change tomorrow's execution.
+
+Scope, once: proposed workflow, synthetic fixtures, a demo that replays rather than learns. I will not repeat that.
+
+Story: [the correction you have personally made more than three times to the same agent or teammate, with the actual error text]
+
+Hands up if you typed the same fix into a chat window this week.
 
 ## 2. The human became the database
 
-1.0–3.0 minutes
+2:00–4:00 · warm
 
-Fail → explain → retry → forget
-Then pay the human again.
+<!-- image: a person sitting inside a server rack in place of a hard drive, cables plugged into their shoulders, dark slate background, amber accent on the cables, flat vector, no text -->
 
-Follow the database example through three separate sessions. Each session succeeds locally, so a completion dashboard can look healthy while the repeated interruption remains invisible. The missing metric is recurrence after a known resolution exists. Capture the initial error and the corrective action, not merely the final success. Count only comparable episodes: a missing database service, invalid credentials, and a migration failure may share connection symptoms but demand different fixes. The proposed lesson is organizational: if a person keeps supplying the same prerequisite, the workflow has externalized state into that person. Learning starts by making that repeated dependency visible and reproducible before prescribing a fix.
+> Then pay the human again.
+> The missing metric: recurrence after a known fix exists.
 
-## 3. Capture a case, not a confession
+Three sessions, each locally green, so the completion dashboard looks healthy while the interruption repeats invisibly. Capture the first error and the corrective action, not the final success. Count comparable episodes only: a missing service, bad credentials, and a migration failure share symptoms and need different fixes.
 
-3.0–5.0 minutes
+If a person keeps supplying the same prerequisite, the workflow has externalized state into that person. Learning starts by making that dependency visible.
 
-Error + environment + action
-Cause + scope + expected outcome
-Redact before retention.
+## 3. Every lesson needs a destination
 
-Create a case record with a normalized error, service version, execution phase, observed readiness state, correction, and expected outcome. Preserve a source reference so another engineer can inspect the evidence. Strip secrets and unnecessary personal data before storing or indexing traces. Mark the root cause as a hypothesis until a reproduction supports it. In our synthetic case, connection refused during startup differs from authentication denied after readiness. That distinction will become an explicit negative example. An agent’s explanation of what happened is useful evidence, but it is not the event itself. Prefer tool results and observed state when they contradict a confident retrospective narrative.
+4:00–7:30 · steady
 
-## 4. First ask whether the work should exist
+<!-- image: a tall ladder leaning against a wall with eight rungs, the top rungs solid steel and the bottom rungs turning to smoke, dark slate background, amber accent on the top rung, flat vector, no text -->
 
-5.0–8.0 minutes
+> 1 Eliminate · 2 Prevent · 3 Code, test, hook · 4 Tool
+> 5 Skill · 6 Retrievable knowledge · 7 Instruction · 8 Hope
 
-1 Eliminate the underlying problem
-2 Prevent it deterministically
-3 Encode code, test, or hook
-4 Offer a reusable tool
+The spine of the talk, on one slide. Cheap, deterministic, narrow destinations at the top. Expensive, probabilistic, global ones at the bottom. Hope is where most teams currently store their lessons.
 
-Before writing another instruction, inspect the architecture. Could the test harness own service startup and readiness as one operation? If so, remove the caller’s obligation to remember ordering. If separate orchestration remains necessary, enforce a readiness check in code. Package the operation as a tested entry point before exposing it as a tool. These are preferences, not universal rankings: a rarely used workflow may justify a small scoped note instead of a new subsystem. The important question is whether the correction can disappear from the agent’s decision space. Our worked case chooses a harness precondition because the prerequisite is objective and applies to every integration run.
+Preferences, not laws. A rarely used workflow may deserve a scoped note instead of a subsystem. The question is always whether the correction can disappear from the agent's decision space. The next three slides show what each tier looks like in a real harness.
 
-## 5. Put uncertain knowledge in a smaller scope
+## 4. Eliminate, prevent, encode
 
-8.0–10.0 minutes
+7:30–9:30 · steady
 
-5 Skill for a reusable workflow
-6 Retrieve contextual knowledge
-7 Instruction as the last durable stop
-8 Hope is not a storage layer
+<!-- image: a door with its doorknob removed and the wall painted over smooth where the door used to be, dark slate background, amber accent on the paint edge, flat vector, no text -->
 
-Some corrections cannot become a reliable boolean check. A migration investigation may require a sequence of judgments across tools, making a reusable skill appropriate. A vendor-specific limitation may belong in retrievable knowledge with version scope. A brief instruction can be justified when the rule is stable and broadly applicable, but globally injecting every incident increases ambiguity and context cost. In our example, retain the readiness rationale near the harness documentation, and remove the redundant global reminder once code enforces it. This hierarchy is the talk’s proposed design discipline. It does not establish that skills always outperform instructions or that memory itself improves every task.
+> Could the harness own startup and readiness?
+> If not: a readiness check in code
+> Then a tested entry point, then a tool
 
-## 6. A correction is a candidate change
+Before writing another instruction, look at the architecture. If the test harness owns startup plus readiness as one operation, the caller's obligation to remember ordering disappears. If orchestration must stay separate, enforce readiness in code. Package it as a tested entry point before exposing it as a tool. Our case picks a harness precondition because the prerequisite is objective and applies to every run.
 
-10.0–12.0 minutes
+Story: [a fix you turned into a script or test so nobody has to remember it; name the file]
 
-Trace → label → candidate patch
-Reproduce → compare → review
-Promote only after the gate
+## 5. Skills, plugins, AGENTS.md
 
-Separate discovering a lesson from granting it authority. The extraction stage can suggest that startup readiness caused the failure; a candidate patch can add a preflight function. Neither should silently rewrite repository rules. Give the proposal an owner, scope, supporting cases, and rollback path. Run the reproducer and related regression cases before promotion. Anthropic’s evaluation guidance supports combining code, model, and human grading; the specific promotion workflow here is our engineering proposal. The distinction matters because a system can confidently learn the wrong lesson from a successful workaround. A sleep may hide a race without fixing it, and a retry may hide an authorization problem.
+9:30–12:00 · steady
 
-Sources: [Reference](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
+<!-- image: three nested containers, a small labeled card inside a toolbox inside a filing cabinet drawer, dark slate background, amber accent on the small card, flat vector, no text -->
 
-## 7. The tiny fixture that catches the wrong lesson
+> SKILL.md: a reusable workflow, loaded on demand
+> Plugin: skills + hooks + commands, versioned together
+> AGENTS.md: stable, broadly applicable rules only
 
-12.0–14.0 minutes
+Some corrections cannot become a boolean. A migration investigation is a sequence of judgments across tools, so it belongs in a skill: a `SKILL.md` with a description that says when to load it, the steps, and the cases where it does not apply. Loaded when relevant, so it does not tax every session.
 
-Starting → wait, then run
-Ready → run once
-Denied → stop; do not retry
-Deadline → stop; explain
+A plugin bundles skills with hooks and commands, so the fix ships as one versioned unit across repos. `AGENTS.md` is the last durable stop: rules that are stable and apply almost everywhere. Every incident pasted into a global file raises ambiguity and context cost. In our example, the readiness rationale lives beside the harness docs and the global reminder goes away once code enforces it.
 
-Introduce four synthetic stage fixtures. In the first, service readiness changes from starting to ready. In the second, it is already ready. The third reports denied credentials. The fourth never becomes ready before the deadline. Ask which cases a fixed sleep handles correctly and which it merely postpones. The desired behavior is not that all runs report success: the denied and deadline cases must stop honestly. This is where a vague lesson becomes a behavioral contract. The demo will replay deterministic status events, so attendees can inspect the exact decision without waiting for a model or an actual database. These cases illustrate coverage; they are not production reliability measurements.
+Show a ten-line `SKILL.md` skeleton.
 
-## 8. Demo: yesterday’s failure becomes a test
+Sources: Anthropic, [Agent Skills overview](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) · [AGENTS.md](https://agents.md).
 
-14.0–18.0 minutes
+## 6. Hooks: the deterministic edge of the harness
 
-Normalize two connection failures
-Propose a scoped readiness check
-Block promotion without holdout proof
+12:00–14:30 · build
 
-Run the bundled offline fixture demonstration and explain that it extracts a proposal; it does not repair a live system. Two connection-refused messages with different local ports normalize to the same error family. The system proposes a readiness check within the stated startup scope. Permission denied remains unknown rather than inheriting that advice. Show the promotion record: regressionPassed, holdoutPassed, and scopeMatches must all be true. The checkboxes represent verification evidence, not executed tests. Toggle holdout to false and show promotion blocked. The four-minute segment demonstrates evidence gating and conservative retrieval. No model call, database connection, or automatic repository mutation occurs. The surrounding readiness scenarios are conceptual test designs for a future implementation, not measured results from this fixture kit.
+<!-- image: a conveyor belt with three mechanical gates along it, one gate closed and blocking a package, a stamp marking the next package, dark slate background, amber accent on the closed gate, flat vector, no text -->
 
-## 9. Run the old cases too
+> Pre-tool: block the test command until readiness passes
+> Post-tool: normalize the error and write the case record
+> Stop: refuse to end with an unrecorded failure
 
-18.0–21.0 minutes
+Hooks run real code at fixed points in the agent loop, so the rule executes whether or not the model remembers it. A pre-tool hook runs the readiness check before any test command. A post-tool hook turns the failure into a case record: normalized error, service version, phase, observed readiness state, correction, expected outcome, source reference, secrets stripped. Capture stops being manual. Root cause stays a hypothesis until a reproduction supports it; the agent's story of what happened is evidence, not the event.
 
-A new fix can reopen an old bug.
-Keep held-out cases and severity gates.
-Version the candidate and the grader.
+Source: Anthropic, [Claude Code hooks reference](https://docs.claude.com/en/docs/claude-code/hooks).
 
-A reproducer is necessary but easy to overfit. Add an already-ready service so waiting logic cannot delay every run. Add denied credentials so retries cannot become the universal response. Keep a separate holdout set when tuning prompts or rules repeatedly, and report performance by failure class and severity. For actual stochastic agent runs, repeat trials and report uncertainty; a deterministic fixture has no sampling variance but still has limited coverage. The proposed promotion gate rejects new critical failures, requires the targeted regression to pass, and records changes in runtime or resource use. Thresholds belong to the workload owner. A prettier aggregate score cannot waive an explicit safety or correctness invariant.
+## 7. A correction is a candidate change
 
-## 10. Search the incident before inventing memory
+14:30–16:00 · build
 
-21.0–23.0 minutes
+<!-- image: a pull request card with a diff, held up to a light by a hand, a rubber stamp hovering but not yet pressed, dark slate background, amber accent on the stamp, flat vector, no text -->
 
-Exact error → normalized error
-Then full-text or similarity search
-Always filter by applicability.
+> Trace → label → candidate patch
+> Reproduce → compare → review
+> Promote only after the gate
 
-Suppose another session sees connection refused. An exact error index may already retrieve the relevant startup case. Add normalization for changing ports or temporary paths while preserving distinctions that explain root cause. Filter by service and version before expanding to fuzzy matching, full-text search, or vectors. Similar wording does not establish the same cause: a network policy can produce a superficially related connection error. Return the case’s applicability, evidence, and replacement artifact alongside its fix. Boring search is a deliberate starting point because its matches are easy to inspect. Upgrade retrieval only when measured misses justify the additional machinery and operational burden for this corpus.
+Discovering a lesson and granting it authority are different steps. Extraction can suggest startup readiness caused the failure and draft a preflight function. Neither silently rewrites repo rules. Owner, scope, supporting cases, rollback path. A sleep hides a race; a retry hides an authorization problem. A system can confidently learn the wrong lesson from a successful workaround.
 
-## 11. Give each lesson an expiry story
+Source: Anthropic (January 2026), [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents).
 
-23.0–25.0 minutes
+## 8. The tiny fixture that catches the wrong lesson
 
-Owner + scope + source
-Last verified + last triggered
-Supersedes + replacement artifact
+16:00–18:00 · build
 
-Create a lifecycle for the retained readiness lesson. At creation, record the affected harness version and the cases used to verify it. When a new harness owns readiness internally, point the record at the enforcing code and mark the older reminder as superseded. Do not erase the incident history: future debugging may need to understand why the gate exists. Separate a searchable historical archive from instructions injected into active sessions. Trigger counts help locate unused material, but low frequency does not prove a rare critical rule is disposable. An owner should review scope, current enforcement, and consequence before retiring the lesson. This is proposed maintenance policy rather than a model capability.
+<!-- image: four small glass jars in a row each holding a different colored traffic light state, green, green, red, and an hourglass, dark slate background, amber accent on the hourglass, flat vector, no text -->
 
-## 12. Memory without garbage collection is a leak
+> Starting → wait, then run
+> Ready → run once
+> Denied → stop; do not retry
+> Deadline → stop; explain
 
-25.0–28.0 minutes
+Four fixtures. Which does a fixed sleep handle, and which does it merely postpone? Denied and deadline must stop honestly. A vague lesson becomes a behavioral contract here.
 
-Merge duplicates
-Retire rules enforced by code
-Reverify version-bound advice
-Archive the reasoning
+Which of the four would your retry logic get wrong today?
 
-Show three copies of the same reminder: a global instruction, a skill paragraph, and an incident entry. They were useful at different stages, but now the harness makes the behavior automatic. Keeping all three active creates opportunities for drift when someone updates only one. Merge the explanation near the implementation, preserve the original incident as historical evidence, and retire redundant prompt material. Pruning should follow a reviewable diff, just like adding a lesson. Avoid treating age as the only signal; an old invariant can remain valid. The operational objective is less active ambiguity while retaining provenance. Forgetting is controlled removal from execution context, not destruction of organizational history.
+## 9. Demo: yesterday's failure becomes a test
 
-## 13. The loop needs an owner and a rollback
+18:00–23:00 · peak
 
-28.0–30.0 minutes
+<!-- image: two identical error messages on cards being pulled together by a magnet, behind them three toggle switches in a row with only two flipped up, dark slate background, amber accent on the unflipped switch, flat vector, no text -->
 
-Propose separately from promote
-Protect data and policy boundaries
-Canary bounded changes
-Restore the prior artifact
+> Normalize two connection failures
+> Propose a scoped readiness check
+> Block promotion without holdout proof
 
-A system that edits its own instructions creates a new change channel. Give that channel the same protections as ordinary code: reviewable artifacts, scoped permissions, regression checks, deployment history, and rollback. Do not let text found in a trace become executable policy merely because the model labels it a lesson. Treat retained customer content and tool output as data. For the readiness patch, the owner can inspect a small code change and four assertions before adoption. For a learned routing change, the review may require more evidence and a staged rollout. Adapt the gate to the consequence of error rather than applying equal ceremony to every documentation correction.
+Follow [runbook section 2](../demos/DEMO-RUNBOOK.md#2-automating-improvement-from-failure). Two connection-refused errors on different ports normalize to one family. Switch ports; the prior case comes back. Permission denied stays unknown.
 
-## 14. Managed stack or five-dollar loop?
+Evaluate promotion with all gates off. Regression only. Holdout. Scope. Promotion only with all three. The checkboxes stand for evidence a real system must collect; clicking runs nothing. Flip holdout off and show the block.
 
-30.0–32.0 minutes
+What is your equivalent of "scope matches"? Most teams have regression tests and no scope check.
 
-Same evidence contract
-Different storage and workflow
-Buy coordination when you need it.
+Compression: at two minutes, skip the port switch, show the three-gate sequence.
 
-A hosted observability and evaluation stack can centralize traces, annotation, datasets, and comparison runs. A small team can begin with sanitized structured records, a local replay command, and a pull request containing the proposed fix. Both require a concrete definition of success and a promotion decision. The talk does not compare vendor pricing or promise the small version literally costs five dollars; the phrase describes a deliberately modest starting point. Choose infrastructure based on volume, collaboration needs, access control, and retention requirements. In our case, the interesting artifact is a readiness gate with evidence, not a dashboard. Keep the feedback contract portable so the workflow survives tooling changes.
+## 10. Owner and rollback
 
-## 15. Measure recurrence, not lesson count
+23:00–24:30 · peak
 
-32.0–34.0 minutes
+<!-- image: a large lever with a hand resting on it, a small name tag hanging from the handle, a reverse arrow painted on the floor, dark slate background, amber accent on the name tag, flat vector, no text -->
 
-Repeat failures per comparable run
-Human correction time
-Regression escapes
-Active instruction burden
+> Propose separately from promote
+> Text in a trace is data, not policy
+> Match ceremony to consequence
 
-Avoid celebrating the number of memories created. A system can generate hundreds of lessons without changing behavior. Track repeated failures among runs where a lesson should apply, the time people spend correcting them, and any regressions introduced by the intervention. Also monitor the amount of active instruction material, because growth can signal that deterministic work is still being delegated to probabilistic recall. Attribute improvements cautiously: changes in workload or environment may explain a lower incident count. Compare like with like and retain the denominator. For the stage example, we can show that four fixtures satisfy their contracts; we cannot infer a real-world reduction in support burden from that exercise.
+A system that edits its own instructions is a new change channel. Give it what code gets: reviewable artifacts, scoped permissions, regression checks, deployment history, rollback. Text found in a trace does not become policy because the model called it a lesson. The readiness patch is a small diff and four assertions. A learned routing change gets a staged rollout.
 
-## 16. When should you leave the failure alone?
+## 11. Search the incident before inventing memory
 
-34.0–36.0 minutes
+24:30–28:00 · build
 
-One-off event? Archive it.
-Uncertain cause? Investigate it.
-Broad rule? Demand broader evidence.
+<!-- image: a staircase of four steps rising left to right, a magnifying glass on the first step, a three-letter tile on the second, a branching tree on the third, a cloud of dots on the fourth, dark slate background, amber accent on the first step, flat vector, no text -->
 
-Not every surprising run warrants a permanent correction. A one-time outage may deserve an incident record but no agent instruction. An uncertain cause needs diagnosis before encoding a workaround. A proposal that broadens permissions or disables checks should face a much stronger burden of evidence than a scoped documentation clarification. Return to the readiness example: a single connection failure cannot establish that all connections need retries. The four cases force us to narrow the rule to a particular startup state and deadline. This is the restraint that keeps improvement from becoming drift. The system should retain what the evidence supports and label the rest as unresolved, rather than manufacturing confidence.
+> Exact match → trigram → tree/AST → vector
+> Filter by service and version first
+> Return applicability and the replacement artifact, not just the fix
 
-## 17. The next failure has a destination
+Another session sees connection refused. Start cheap: an exact-error index. Then trigram similarity on the normalized error and the surrounding chat context. It survives changing ports and paths and is one Postgres extension away. Then structural matching on a parse tree or stack shape when wording varies but structure repeats. Vectors last, when measured misses justify them.
 
-36.0–39.0 minutes
+Similar wording does not mean the same cause. Filter by applicability before fuzzy matching. Return the case's evidence and its replacement artifact with the fix. A skill can set this up: it knows how to query the store, what to filter on, and how to present a match for review. Boring search wins because its matches are easy to inspect.
 
-Test or code when enforceable
-Tool or skill when reusable
-Scoped knowledge when contextual
-Review, promote, and prune
+Story: [a "similar" error that led you to the wrong fix]
 
-Offer a practical exercise for the following week. Select one recurring correction with a clear owner and a reproducible symptom. Write down the expected behavior and one nearby situation where the same fix would be wrong. Choose the smallest durable intervention using the hierarchy introduced earlier. Compare it against current behavior, review the diff, and record how to undo it. Schedule a lifecycle review only if the organization chooses to adopt the workflow; this presentation creates no automation. The deliverable is one intervention with evidence, not a new platform. If the exercise produces no safe generalization, a well-scoped incident record is still useful work and an honest outcome.
+Source: PostgreSQL, [pg_trgm](https://www.postgresql.org/docs/current/pgtrgm.html).
 
-## 18. Manufacture cheap determinism
+## 12. Prompt optimizers: GEPA and DSPy
 
-39.0–40.0 minutes
+28:00–30:30 · build
 
-Use expensive nondeterminism
-to manufacture cheap determinism.
+<!-- image: a sheet of paper being fed through a loop of arrows, each pass leaving the text slightly bolder, a small scale weighing two versions, dark slate background, amber accent on the scale, flat vector, no text -->
 
-Close by replaying the opening incident. The database is starting, but now the harness checks readiness and either runs safely within its contract or stops with an accurate explanation. The model did not acquire a permanent new memory inside its weights. The surrounding system changed. Preserve the user’s central distinction: training the system does not require training the model. The valuable output of a difficult reasoning episode may be a small function, a test, a clearer interface, or a narrower rule. Ask attendees to name where their next recurring failure will go. End on a concrete standard: the discovery should make the next comparable task cheaper to execute or easier to verify.
+> Failures become training signal for the prompt, not the weights
+> DSPy: declare the pipeline, compile the prompts
+> GEPA: reflect on traces, evolve the instruction
 
+Between hand-edited instructions and fine-tuning sits a middle tier. DSPy treats prompts as compiled artifacts: declare the module signature, supply examples and a metric, let the optimizer choose demonstrations and wording. GEPA reads execution traces, reflects in natural language on what failed, and proposes edited instructions kept only if the metric improves.
+
+This is the lower-lift route when the recurring issue is judgment quality rather than a missing precondition. The fixtures from slide 8 become the eval set. The output is still text you can diff, review, and version, and the same gates apply. You need a metric that reflects the real failure, and optimized prompts overfit small sets. Keep the holdout.
+
+Sources: Khattab et al. (2023), [DSPy](https://arxiv.org/abs/2310.03714) · Agrawal et al. (2025), [GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning](https://arxiv.org/abs/2507.19457).
+
+## 13. The managed stack
+
+30:30–33:00 · steady
+
+<!-- image: a glass-walled control room with three monitors showing traces, annotations, and a comparison chart, beside it a small wooden desk with a notebook and a five-dollar bill, dark slate background, amber accent on the bill, flat vector, no text -->
+
+> LangSmith · Braintrust · Langfuse
+> Traces → annotation queues → datasets → experiments
+> Same evidence contract as the five-dollar loop
+
+The fully managed end. All three centralize traces, let humans annotate failures, turn annotated traces into datasets, and run comparison experiments. That is the case store, the fixture set, and the regression gate from this talk, hosted.
+
+A small team can start with sanitized structured records, a local replay command, and a pull request. Both ends need a definition of success and a promotion decision. Choose by volume, collaborators, access control, retention. Keep the evidence contract portable so the workflow survives a tooling change.
+
+Show one row per platform: trace capture, annotation, datasets, evals, self-host. Verify feature names before the talk.
+
+Sources: [LangSmith docs](https://docs.langchain.com/langsmith) · [Braintrust docs](https://www.braintrust.dev/docs) · [Langfuse docs](https://langfuse.com/docs).
+
+## 14. Give each lesson an expiry, then prune
+
+33:00–35:30 · steady
+
+<!-- image: three identical sticky notes on a wall, two being peeled off by a hand and one remaining with a small date stamp, a shredder below, dark slate background, amber accent on the remaining note, flat vector, no text -->
+
+> Owner + scope + source + last verified + last triggered
+> Superseded by: the enforcing code
+> Prune on a reviewable diff, like any change
+
+At creation, record harness version and verifying cases. When a new harness owns readiness internally, point the record at the enforcing code and mark the reminder superseded. Keep the incident history; remove the text from active sessions.
+
+The pruning provision. Three copies of the same reminder: a global instruction, a skill paragraph, an incident entry. Merge the explanation near the implementation, retire the redundant prompt material, and do it through a diff someone reviews. Trigger counts find unused material, but low frequency does not make a rare critical rule disposable. Memory without garbage collection is a leak.
+
+## 15. Measure recurrence, then pick one
+
+35:30–38:00 · land
+
+<!-- image: a tally board with many chalk marks crossed out and a single mark circled, a small notebook open beneath with one line written, dark slate background, amber accent on the circle, flat vector, no text -->
+
+> Repeat failures per comparable run · Human correction time
+> Regression escapes · Active instruction burden
+
+A system can generate hundreds of lessons without changing behavior. Track repeats among runs where a lesson should apply, time people spend correcting, regressions introduced, and the volume of active instruction text. Growth in that last number means deterministic work is still delegated to recall. Keep the denominator.
+
+Write it down (60 s): one recurring correction, its tier on the ladder, and one nearby case where the fix would be wrong. The deliverable is one intervention with evidence, not a platform. If nothing generalizes safely, a scoped incident record is honest work.
+
+## 16. Manufacture cheap determinism
+
+38:00–40:00 · land
+
+<!-- image: a glowing chaotic cloud of particles funneling down into a single small clean gear, dark slate background, amber accent on the gear, flat vector, no text -->
+
+> Use expensive nondeterminism to manufacture cheap determinism.
+
+Replay the opening. The database is starting; the harness now checks readiness and either runs within contract or stops with an accurate explanation. The model did not grow a new memory in its weights. The system around it changed.
+
+The output of a hard reasoning episode should be a small function, a test, a clearer interface, a narrower rule, or an optimized prompt you can diff. The standard: the discovery makes the next comparable task cheaper to run or easier to verify.
+
+Where does your next recurring failure go?

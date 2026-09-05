@@ -1,24 +1,25 @@
-# Automating Improvement From Failure
+# Automating Improvement From Failure: 30-minute standard
 
-30-minute adaptation of the 40-minute deck. Hide the unlisted slides. These timings replace the full-deck timings and exclude Q&A.
+Uses the 40-minute deck with unlisted slides hidden. Slide numbers refer to [the full notes](failure-improvement-40min.md). Timings exclude Q&A.
 
-Demonstrate one local failure, one unrelated failure, and the promotion gates. Summarize pruning as the closing maintenance obligation.
+**Strategy for 30 minutes.** Keep the full hierarchy, the fixtures, the demo, the search ladder, the prompt optimizers, the managed stack, and pruning. Cut the metrics, the restraint slide, and the exercise; fold their one-line versions into the close.
 
-| Time | Source slide | Section |
-| --- | ---: | --- |
-| 0–1 min | 1 | Automating Improvement From Failure |
-| 1–3.5 min | 2 | The human became the database |
-| 3.5–6 min | 4 | First ask whether the work should exist |
-| 6–8.5 min | 6 | A correction is a candidate change |
-| 8.5–11 min | 7 | The tiny fixture that catches the wrong lesson |
-| 11–13.5 min | 8 | Demo: yesterday’s failure becomes a test |
-| 13.5–16 min | 9 | Run the old cases too |
-| 16–18 min | 10 | Search the incident before inventing memory |
-| 18–20 min | 11 | Give each lesson an expiry story |
-| 20–22 min | 12 | Memory without garbage collection is a leak |
-| 22–24 min | 13 | The loop needs an owner and a rollback |
-| 24–26 min | 15 | Measure recurrence, not lesson count |
-| 26–28 min | 17 | The next failure has a destination |
-| 28–30 min | 18 | Manufacture cheap determinism |
+| Time | Slide | Section | Bridge or cut |
+| --- | ---: | --- | --- |
+| 0:00–2:00 | 1 | Yesterday's fix should survive today | As written, with the story slot. |
+| 2:00–3:30 | 2 | The human became the database | As written. |
+| 3:30–5:00 | 3 | Capture a case, not a confession | As written. |
+| 5:00–7:30 | 4 | Every lesson needs a destination | As written. |
+| 7:30–9:00 | 5 | Eliminate, prevent, encode | Drop the story slot. |
+| 9:00–11:30 | 6 | Skills, plugins, and AGENTS.md | As written. |
+| 11:30–13:30 | 7 | Hooks | As written. |
+| 13:30–15:00 | 8 | A correction is a candidate change | As written. |
+| 15:00–16:30 | 9 | The tiny fixture | Skip the audience question. |
+| 16:30–20:30 | 10 | Demo | Full runbook sequence, skip the port switch if behind. |
+| 20:30–23:00 | 11 | Search before inventing memory | As written. |
+| 23:00–25:00 | 12 | GEPA and DSPy | As written. |
+| 25:00–26:30 | 13 | Managed stack | Drop the comparison table; name the three platforms and the shared contract. |
+| 26:30–28:30 | 14 | Expiry and pruning | As written. |
+| 28:30–30:00 | 18 | Manufacture cheap determinism | Add one sentence from slide 16: "measure recurrence, not lesson count." Ask slide 17's question. |
 
-Use the [full speaker notes](failure-improvement-40min.md) for the examples and source citations. In the lightning version, demonstrate one branch and state the others. In the 30-minute version, retain the exercise but reduce audience discussion. Rehearse the chosen route before a hard cutoff.
+**Closing for this length.** The promotion gate (slide 15) is covered by the demo; say "owner and rollback" once when the third checkbox appears. Leave the exercise to Q&A.
