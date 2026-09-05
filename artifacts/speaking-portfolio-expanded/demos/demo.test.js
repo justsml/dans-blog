@@ -1,0 +1,18 @@
+import {test,expect} from 'bun:test';
+import './demo-logic.js';
+const d=globalThis.PortfolioDemo;
+test('learning objective changes whether correction is delegated',()=>{expect(d.cases.spelling.decision).toBe('Preserve');expect(d.cases.argument.decision).toBe('Augment')});
+test('normalization reuses resolution across local ports',()=>{expect(d.matchFailure('connect ECONNREFUSED 127.0.0.1:5433').known).toBe(true);expect(d.matchFailure('connect ECONNREFUSED localhost:5444').known).toBe(true)});
+test('unrelated permission errors stay unknown',()=>expect(d.matchFailure('permission denied /var/data').known).toBe(false));
+test('failed holdout prevents promotion',()=>expect(d.promote({regressionPassed:true,holdoutPassed:false,scopeMatches:true})).toContain('review'));
+test('scope mismatch prevents promotion',()=>expect(d.promote({regressionPassed:true,holdoutPassed:true,scopeMatches:false})).toContain('review'));
+test('three gates permit promotion',()=>expect(d.promote({regressionPassed:true,holdoutPassed:true,scopeMatches:true})).toContain('Promote'));
+test('lookup avoids a model',()=>expect(d.route({task:'lookup',budget:1,deadline:2,highRisk:false}).agents).toBe(0));
+test('budget prevents fan-out',()=>expect(d.route({task:'novel',budget:.1,deadline:30,highRisk:false}).blocked).toBe(true));
+test('deadline prevents fan-out',()=>expect(d.route({task:'novel',budget:1,deadline:5,highRisk:false}).blocked).toBe(true));
+test('consequential action reaches human',()=>expect(d.route({task:'simple',budget:10,deadline:50,highRisk:true}).human).toBe(true));
+test('cost per success includes failed attempts',()=>{let r=d.economics({requests:1000,inference:.02,other:.01,pass:.75,multiplier:5});expect(r.total).toBeCloseTo(110);expect(r.costPerSuccess).toBeCloseTo(.1466667)});
+test('zero success is rejected',()=>expect(()=>d.economics({requests:1000,inference:.02,other:.01,pass:0,multiplier:1})).toThrow());
+test('negative inference cost is rejected',()=>expect(()=>d.economics({requests:1,inference:-1,other:0,pass:1,multiplier:1})).toThrow());
+test('highest conversion candidate violates both gates',()=>expect(d.decideExperiment({index:1,maxSupport:.05,allowFalseUrgency:false}).reasons).toHaveLength(2));
+test('acceptable metric does not authorize automatic shipping',()=>expect(d.decideExperiment({index:2,maxSupport:.05,allowFalseUrgency:false}).status).toBe('Eligible for human review'));
