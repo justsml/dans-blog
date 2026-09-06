@@ -62,6 +62,81 @@ const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
 const TALKS: Record<string, Talk> = {
+  "benchmarks": {
+  "slug": "benchmarks",
+  "title": "Stop Looking at My Benchmarks… Get Your Own!",
+  "description": "Validate the instrument before optimizing its score.",
+  "deckFile": "benchmarks.html",
+  "eyebrow": "Stop Looking at My Benchmarks… Get Your Own! · Dan Levy",
+  "routes": {
+    "30": {
+      "minutes": 30.0,
+      "keep": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        12,
+        14,
+        15
+      ],
+      "times": [
+        2,
+        1.5,
+        2.5,
+        2.5,
+        2.5,
+        2,
+        3,
+        3.5,
+        3.5,
+        2,
+        2.5,
+        2.5
+      ],
+      "bridges": {
+        "9": "Bridge: keep release evidence separate from development; repeated tuning spends a holdout. The IR history is in the companion talk.",
+        "12": "Bridge: use code for state and schema checks, calibrated graders for language judgments, and people for disputed policy."
+      },
+      "note": "Keeps the argument, cancellation setup, and small-sample arithmetic. Drops history, contamination, and the check ladder as standalone slides."
+    },
+    "15": {
+      "minutes": 15.0,
+      "keep": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        15
+      ],
+      "times": [
+        1,
+        1,
+        1,
+        1.5,
+        1.5,
+        2,
+        3,
+        2.5,
+        1.5
+      ],
+      "bridges": {
+        "1": "Bridge: our cancellation workload reverses the fictional leaderboard. The scoring question changed.",
+        "9": "Bridge: separate held-out evidence, report slices and counts, version the scorer, and set the rejection rule before viewing the candidate."
+      },
+      "note": "The number and its sampling assumptions stay together. Calibration uses the always-pass confusion matrix."
+    }
+  }
+},
   "judgment": {
   "slug": "judgment",
   "title": "Code Is Cheap. Judgment Is Expensive.",
