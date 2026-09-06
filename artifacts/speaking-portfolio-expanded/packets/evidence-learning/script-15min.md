@@ -30,6 +30,8 @@ Here's the fixture for the rest of the talk. A shop raises a $100 price by 20%, 
 
 The capability we're after is narrow enough for the room to inspect: explain why a percentage acts on a base, and how the base changes across a sequence. Now imagine the correct number with this faulty explanation hiding behind it. What would a final-answer assessment have caught? Nothing.
 
+Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264. Cited on slide 3.
+
 Delivery: Ask the room what the final answer alone would have told you. One answer, then move.
 
 ## 04:00 to 06:00: slide 5, Outsmart move one: make verification feel like cheating
@@ -59,6 +61,8 @@ Zero: the wrong base persists. One: the right number, no explanation. Two: the l
 The record is four lines. Concept: changing percentage base. Observed: used the original amount for the second change. Support: conceptual hint. Next check: a new item after practice. Keep what the learner said separate from what a model inferred. Follow-ups come from a blueprint, not chatbot curiosity: "does reversing the multipliers change the result?" probes structure; a harder question is not a fair comparison.
 
 Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check it before quoting figures.
+
+Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
 ## 11:30 to 13:30: slide 9, Outsmart move two: make them say it out loud
 

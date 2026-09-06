@@ -62,6 +62,10 @@ Resume basis: Claude Code skills and hooks for evaluation; Mastra output-process
 - **What remains uncertain:** [ ]
 - **Organization may be named publicly:** [ ]
 
+## Models named on slide 10
+
+Verify the week you present; this list rots faster than anything else in the talk. As measured by Dan on multi-step dynamic browser tasks: `GPT-5.6-luna`, `GLM-5.3-flash`, `deepseek-v4-flash`, `gemini-3.7-flash`. The $0.36 to $0.81 per selective run is Dan's own figure on his own codebase over his own suite. It is not a benchmark, and it should never be presented as one.
+
 ## Already public, citable today
 
 These need no permission and can go in an application as work samples.

@@ -10,7 +10,7 @@ AI education debates keep choosing between miracle tutors and cheating machines.
 
 ### 150-word abstract
 
-AI will give every student a brilliant tutor. AI will destroy learning. Educators are being asked to choose between two sales pitches when they need a defensible plan for Monday. This talk starts elsewhere: what human capability was this assignment supposed to develop, and what evidence would show that it did? We will use Delegate, Augment, and Preserve as contextual decisions, not permanent lists of permitted activities. A worked percentage problem shows why a polished answer, a corrected explanation, and an independent transfer task support different conclusions. Research on tutoring and detector limitations provides boundaries rather than universal verdicts. Participants will practice interrogating a plausible answer, sketch a redesign of one assignment, and identify the outcomes an educational AI pilot should measure. The session closes with practical choices about staff workload, access, and human accountability. Bring one assignment you teach or support; no coding, tools, or enthusiasm for AI required.
+AI will give every student a brilliant tutor. AI will destroy learning. Educators are being asked to choose between two sales pitches when they need a defensible plan for Monday. This talk starts elsewhere: what human capability was this assignment supposed to develop, and what evidence would show that it did? We will use Delegate, Augment, and Preserve as contextual decisions, not permanent lists of permitted activities. A history essay weighing two conflicting primary sources shows why a polished artifact, a corrected explanation, and an independent transfer task support different conclusions. Research on tutoring and detector limitations provides boundaries rather than universal verdicts. Participants will practice interrogating a plausible answer, sketch a redesign of one assignment, and identify the outcomes an educational AI pilot should measure. The session closes with practical choices about staff workload, access, and human accountability. Bring one assignment you teach or support; no coding, tools, or enthusiasm for AI required.
 
 ### Audience
 
@@ -26,7 +26,7 @@ Faculty, instructional designers, education leaders, EdTech evaluators, workforc
 
 Strategic education talk, with one practical exercise. It is distinct from Evidence of Learning: the central decision is what human capability to develop and where AI assistance belongs. Conditional tutoring evidence; no universal claim that AI helps or harms. The framework is the speaker’s proposed organizing device, not a validated taxonomy.
 
-**Format:** 40 minutes, 18 slides, including a four-minute exercise and four-minute application discussion. Adaptation: 15-minute lightning by retaining the opening, central framework or assessment sequence, worked example, limitations, and closing. The long outline lives in the slide JSON and speaker notes rather than being duplicated here.
+**Format:** 40 minutes, 14 slides, including a three-minute assistance exercise and a two-minute pre-mortem in pairs. 15- and 30-minute routes are prepared.
 
 ## Outsmart Your Lying, Cheating Students
 

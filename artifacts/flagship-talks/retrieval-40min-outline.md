@@ -19,7 +19,7 @@ RAG. Embeddings. Memory. MCP.
 Structured output. Judges. Traces.
 A lot of nouns. A recognizable system.
 
-Read the supplied opening sentence in full, with increasing speed if that fits the delivery. Pause before translating it into search, state, API calls, typed data, automated checks, and traces. The humor should target the language rather than people learning it. Say that the shorthand is deliberately incomplete: generation is part of RAG, and an LLM judge is not a deterministic assertion. Those gaps are the point of the talk. Invite the audience to hold both the familiar behavior and the new failure modes in mind.
+The sentence to read, in full and with increasing speed if that fits the delivery: “Our agent uses RAG over an embedding store, adds memories to context, calls MCP tools, emits structured outputs, gets evaluated by an LLM judge, and traces the whole thing through our agent observability platform.” Read it Pause before translating it into search, state, API calls, typed data, automated checks, and traces. The humor should target the language rather than people learning it. Say that the shorthand is deliberately incomplete: generation is part of RAG, and an LLM judge is not a deterministic assertion. Those gaps are the point of the talk. Invite the audience to hold both the familiar behavior and the new failure modes in mind.
 
 ## 3. The translation is useful, but imperfect
 

@@ -6,7 +6,7 @@ These are **interactive deterministic demonstrations with synthetic inputs**, no
 
 ## 1. A Skeptic's Guide to Surviving AI in Education
 
-**Three minutes.** Begin with “Spelling without assistance.” The result says Preserve. Switch to “Strength of an argument” and then “Scientific explanation.” The same general assistance changes category as the capability under assessment changes.
+**Four and a half minutes**, matching slide 5 of the outline; compress to two by running one switch and stating the other two. Begin with “Spelling without assistance.” The result says Preserve. Switch to “Strength of an argument” and then “Scientific explanation.” The same general assistance changes category as the capability under assessment changes.
 
 Ask the audience to name evidence that would demonstrate the intended capability. Explain that formatting can be incidental while source interpretation remains central. The categories apply to a learning objective and a stage of learning. They are not permanent labels attached to a task.
 

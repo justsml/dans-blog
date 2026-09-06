@@ -69,7 +69,7 @@ Conway's law used deliberately. Draw the roster before it draws itself. The owne
 > Marketing and sales agents: analytics, customer records, the warehouse; propose, then test narrowly
 > Beta enrollment: find users like the feedback cluster, invite them to opt in behind a flag
 
-Effort estimation has already left the rubric; nobody t-shirt sizes anymore. What remains is evidence and risk. This roster produces the evidence cheaply. Ideas come from a cluster of customers, so invite users like them into a flag with honest beta language, and collect narrow feedback before anything widens.
+I have not heard a team discuss level of effort in months, and I have stopped asking. Say it as your own observation and invite the room to disagree. What remains is evidence and risk. This roster produces the evidence cheaply. Ideas come from a cluster of customers, so invite users like them into a flag with honest beta language, and collect narrow feedback before anything widens.
 
 ## 5. Demo: the guard blocks the apparent winner
 

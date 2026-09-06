@@ -1,6 +1,6 @@
 # Education stage exercises
 
-All fixtures are authored examples. Read the role cards or use a prepared replay; do not present them as a live model evaluation. No student account, internet, paid model, or personal data is required. The two talks share a numerical example but ask different questions: the Skeptic talk allocates assistance; Evidence of Learning designs an assessment sequence.
+All fixtures are authored examples. Read the role cards or use a prepared replay; do not present them as a live model evaluation. No student account, internet, paid model, or personal data is required. The percentage fixture belongs to Outsmart Your Lying, Cheating Students, which uses it for reconstruction and transfer. The Skeptic capability audit below is written against the same numbers only so a presenter delivering both can reuse one worked example; when the talks are booked separately, run the Skeptic version against its own history-essay fixture (two primary sources disagreeing about the same event) so the two do not repeat.
 
 ## A Skeptic's Guide: four-minute capability audit
 

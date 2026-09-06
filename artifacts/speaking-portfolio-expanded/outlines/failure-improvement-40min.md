@@ -176,7 +176,11 @@ The economics. Many teams run an end-to-end pipeline that takes hours, sharded s
 
 Against that, an LLM driving a short targeted session with its judgment does not look ridiculous. Short multi-step tool-call tasks run fine on the cheapest current tier of models, up to a point. I have seen remarkable results and some curious actions, and usually a cost saving on the giant suites.
 
-Name a few cheap models you have measured multi-step dynamic browser tasks with: `GPT-5.6-luna`, `GLM-5.3-flash`, `deepseek-v4-flash`, `gemini-3.7-flash`. We traded several-hour-long E2E test suite with an LLM based selection of the "3 individual tests most likely to be affected by the current change" for $0.36-$0.81. Roughly the same cost as a single run of the full suite, and now we have reduced flaky failures and a better chance of catching the real ones. The agent can even run the full suite on a schedule, and report only the failures that are new. There are additional ways to help the model associate & target the optimal test(s) when given a feature/PR's description & code changes, ask me later if you are curious about the advanced options here.
+Name the cheap models you have actually measured on multi-step browser tasks. Mine are in the evidence bank and they rot fast, so check them the week you present.
+
+Here is the trade I made. Instead of the multi-hour suite on every change, a model picks the three tests most likely to be affected by this diff. That run costs me between thirty-six and eighty-one cents, which is roughly what one run of the full suite costs, and it comes with fewer flaky failures and a better chance of catching a real one. The full suite still runs on a schedule, and the agent reports only what is newly broken.
+
+Two honest caveats, because this is the one number I am going to say out loud. Those cents are mine, on my codebase, not a benchmark. And picking tests from a diff is its own small discipline that I got wrong twice before it worked, which is exactly why the fallback is a scheduled full run rather than trust.
 
 ## 11. Compile what repeats
 

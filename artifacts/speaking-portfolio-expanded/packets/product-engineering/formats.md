@@ -10,7 +10,7 @@ This talk has three purpose-built lengths rather than one deck with adaptations.
 | 15 min | Big idea | [15-minute outline](../../outlines/product-engineering-15min.md) |
 | 25–30 min | The agent roster | [30-minute outline](../../outlines/product-engineering-30min.md); drop slide 6 for 25 |
 | 40–45 min | Conway's law, applied on purpose | [40-minute outline](../../outlines/product-engineering-40min.md) plus five minutes of questions |
-| 60–75 min | Workshop | Below |
+| 90 min | Workshop | Below; the table runs 0:00 to 1:35 |
 
 ## 5–10 minute lightning talk (slides)
 
@@ -27,7 +27,7 @@ Seven minutes from the 15-minute deck: slides 1, 3, 5, 8.
 
 A qualifying demo runs two agents from the roster live against data you are permitted to show: the research agent produces a competitor or mentions brief with links to sources, the feedback agent clusters a batch of real or realistic tickets and links each cluster to its customers, and the guard script blocks one of two candidate changes with the reason printed. Five minutes. Requires a working crawler, a clustering step, and the gate script.
 
-## 60–75 minute workshop
+## 90-minute workshop
 
 Participants map their own organization onto an agent roster and leave with owners, guards, and a hypothesis-plus-report for one experiment.
 

@@ -108,17 +108,23 @@ Delivery: Five minutes from demo.md. Ask the room for each next transition befor
 
 Change the unit of work from images to whole designs. Give the batch-job problem to three generated agents with the same requirements and different priorities: a minimalist, a maintainer, a security and performance reviewer. Keep first drafts separate so they do not converge on the first plausible answer. They can still share a blind spot; the contrast is the product.
 
+That last part is not a hunch, and software engineering settled it forty years ago. Knight and Leveson ran the experiment in 1986: twenty-seven teams wrote the same program from the same specification, independently, and after a million tests the versions failed together far more often than independence predicts. Independently written does not mean independently wrong. Parallel attempts buy you contrast. They do not buy you coverage, and anyone selling you three-model consensus as a correctness argument is selling the assumption that experiment rejected.
+
 Write the gates before reading the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. Run executable checks first. In the exercise every candidate fails a gate, including the careful one, which is the point: the judge is allowed to reject the room.
 
 Then combine compatible ideas into a new candidate with one coherent set of assumptions and run the gates again. Passing parts do not make a passing whole. Stop at the review budget; an endless debate is an expensive way to not ship.
+
+Source: Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109.
 
 Delivery: Score the three candidates in demo.md. Have the room find each candidate's failed gate before revealing it.
 
 ## 34:00 to 37:00: slide 13, Measure the accepted outcome
 
-Starting three workers does not delete the serial parts. Waiting on every branch can make a finished task slower. Count the whole thing: all candidates, failed work, reserved uncertainty, judging and human review, and compare against one competent attempt on the same task set.
+Starting three workers does not delete the serial parts. That is Amdahl, 1967, and it is unkind: if a tenth of the job is serial, ten workers get you five and a quarter times, and a hundred workers get you nine. Waiting on every branch can make a finished task slower. Count the whole thing: all candidates, failed work, reserved uncertainty, judging and human review, and compare against one competent attempt on the same task set.
 
 Measure accepted outcomes, not launched workers. Start with one extra attempt or one batch boundary; if it does not buy quality, time or cost, keep the simpler path. We are trying to buy useful work, not maximize the number of things blinking.
+
+Source: Amdahl (1967), Validity of the single processor approach to achieving large scale computing capabilities, AFIPS Conference Proceedings 30, 483 to 485.
 
 Delivery: Ninety seconds: choose a baseline, a cap and an acceptance gate. Keep latency and total cost as separate numbers.
 

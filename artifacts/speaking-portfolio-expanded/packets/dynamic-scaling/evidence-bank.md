@@ -31,6 +31,8 @@ Prices and limits change. Recheck before quoting any of them in Q&A.
 
 - [AWS retry with backoff](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/retry-backoff.html): supports slide 6.
 - [Anthropic, Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): parallelization and evaluator vocabulary for slide 12; it does not evaluate persona councils.
+- Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109. Twenty-seven versions from one specification, one million tests, coincident failures well above the independence prediction. Cited on slide 12. It is about independently written programs, not about models or prompts; the talk uses it as the reason to expect correlated blind spots, not as a measurement of them.
+- Amdahl (1967), Validity of the single processor approach to achieving large scale computing capabilities, AFIPS Conference Proceedings 30, 483 to 485. Cited on slide 13. The arithmetic on the slide is the standard formula: with a serial tenth, ten workers give 5.26x and a hundred give 9.17x. Checkable on stage.
 
 ## Cuts
 

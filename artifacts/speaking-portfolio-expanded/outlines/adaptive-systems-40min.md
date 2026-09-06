@@ -98,11 +98,15 @@ Stage direction: Draw the three boxes: orchestrator, generated agent, tool catal
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
 
+This is least privilege, and Saltzer and Schroeder wrote it down in 1975: every program runs with the least set of privileges the job needs. We have all been nodding at that for fifty years and shipping service accounts that can do anything. A per-job agent is the first thing I have built where complying is genuinely easier than not.
+
 Second, watch the boundary between systems. An agent that can read customer data and an agent that can post to a vendor are two agents, with a filter between them. That is where data leaks: not through the model being evil, but through a tool result flowing into the next tool call.
 
 For sensitive processing, the planner gets an opaque job reference. A trusted dispatcher grants a local worker scoped access; the worker touches the data; only an allowlisted status comes back. A signed download URL is a bearer credential. Handing it to a model while asking the model not to use it is not isolation, it is hope.
 
 Story: The client setup with local models for sensitive data and a frontier orchestrator. Say which parts were real and which are the stronger design you would build now.
+
+Source: Saltzer and Schroeder (1975), [The Protection of Information in Computer Systems](https://doi.org/10.1109/PROC.1975.9939), Proceedings of the IEEE 63(9), 1278 to 1308. Least privilege is their principle (f).
 
 Stage direction: Point at the filter between worker and planner. Ask what else crosses it: prompts, traces, error bodies, notification previews.
 
@@ -221,6 +225,10 @@ The daily report should tell an engineer where to look. Unresolved semantic chan
 
 Log decisions and artifacts, not private reasoning. The inputs to the policy decision, the validator result, and the executed action are enough to reconstruct an incident. Urgent problems page through existing thresholds; the digest is for drift. Never make an agent the sole judge of whether its own failure deserves attention.
 
+One warning about that report, and it is the warning for this whole talk. In 1983 Lisanne Bainbridge published a paper called Ironies of Automation. The irony is that automating the routine cases does not remove the human, it promotes them to monitoring a system that is almost always right, and people are measurably bad at that job. Skitka and colleagues put numbers on it in 1999: people given a highly but imperfectly reliable aid did worse than people given no aid at all. So keep the report short, ranked, and usually almost empty. A digest nobody can finish is a digest nobody reads, and then the guard post is decorative.
+
+Source: Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6), 775 to 779. Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
+
 Stage direction: Read the sample report in contracts.md. Find the one item that needs an owner today.
 
 ## 13. Widen authority only from measured outcomes
@@ -234,6 +242,10 @@ Stage direction: Read the sample report in contracts.md. Find the one item that 
 Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
 Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute.
+
+Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance. Every widening is locally reasonable. Each one cites the last one as precedent. Nobody ever decides to be reckless. That is exactly why authority expands per class and from measured outcomes for that class, and never from how the last six went.
+
+Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Press, on normalization of deviance.
 
 Stage direction: Ninety seconds on the recovery card in contracts.md. Compare two answers for one minute.
 

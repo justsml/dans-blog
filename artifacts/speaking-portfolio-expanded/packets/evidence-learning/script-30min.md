@@ -30,11 +30,15 @@ Write the trajectory down. Where does handwriting live, and why: the spatial and
 
 Then, in the same document, tell students you're going to teach them the tool. On purpose. Independent competence and competent tool use both belong in a course. They need different evidence, and every checkpoint should say which one it's measuring.
 
+This tension is older than the panic and it has a name. Koedinger and Aleven called it the assistance dilemma in 2007: give too much help and the learner never has to generate anything, give too little and they stall out. Nobody has solved it. Say that out loud, because a vendor whose tutor has the help level exactly right is selling you a solved version of an open problem.
+
 ## 05:30 to 07:00: slide 4, The polished answer with a hole in it
 
 Here's the fixture for the rest of the talk. A shop raises a $100 price by 20%, then discounts the new price by 20%. The student writes: equal and opposite, so the final price is $100. Clean sentence. Confident. Wrong base.
 
 The capability we're after is narrow enough for the room to inspect: explain why a percentage acts on a base, and how the base changes across a sequence. Now imagine the correct number with this faulty explanation hiding behind it. What would a final-answer assessment have caught? Nothing.
+
+Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264. Cited on slide 3.
 
 Delivery: Ask the room what the final answer alone would have told you. One answer, then move.
 
@@ -70,9 +74,13 @@ Zero: the wrong base persists. One: the right number, no explanation. Two: the l
 
 The record is four lines. Concept: changing percentage base. Observed: used the original amount for the second change. Support: conceptual hint. Next check: a new item after practice. Keep what the learner said separate from what a model inferred. Follow-ups come from a blueprint, not chatbot curiosity: "does reversing the multipliers change the result?" probes structure; a harder question is not a fair comparison.
 
-Bastani and colleagues found supported performance and later unaided performance can diverge, and the safeguards that matter come from teachers. So record the conditions, and include an independent check when independence is the objective. A mismatch needs a human to interpret it. None of this convicts anyone; your integrity process stays where it is. This is the last time I'll say that.
+Bastani and colleagues found supported performance and later unaided performance can diverge, and the safeguards that matter come from teachers. So record the conditions, and include an independent check when independence is the objective. A mismatch needs a human to interpret it.
+
+And that finding is not news, which is the useful part. Soderstrom and Bjork reviewed fifty years of it in 2015: how well someone performs while being helped and how much they actually learned come apart routinely, and the conditions that flatter practice frequently damage retention. A tutor is a machine for removing difficulty. Some of that difficulty was the part where they learned. None of this convicts anyone; your integrity process stays where it is. This is the last time I'll say that.
 
 Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check it before quoting figures.
+
+Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
 ## 18:00 to 20:30: slide 9, Outsmart move two: make them say it out loud
 
@@ -87,6 +95,10 @@ Now the care, and it's real. A student's voice identifies them and can be cloned
 You already count who's talking, how much silence there is, whose engagement it is. Add one factor: AI time. How much of it did you guide, and how much was a student alone with the model.
 
 Then the view you have never had. Every transcript from a class of 30 or a course of 300, and a qualitative pass run by the model. Show me the five students who opened a line of inquiry I didn't teach. Show me the one who reached the answer by a path worth putting on the board tomorrow. The same pass surfaces the kid who typed exactly the right terms, or pasted a big block from somewhere. Before you conclude anything: a big block also looks like voice-to-text. Look first.
+
+And know what you are up against when you read the model's summary instead of the transcript. Skitka and colleagues measured it in 1999: people given a highly but imperfectly reliable aid did worse than people given no aid at all, because it is right often enough that you stop checking. The summary is a place to start looking, never a place to stop.
+
+Source: Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 
 Story: A transcript that showed you a path to the answer you would not have taught.
 

@@ -22,6 +22,10 @@
 - [AWS S3 presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html): presigned URLs are bearer credentials. Supports the signed-URL line on slide 5.
 - [Anthropic, Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): workflow versus agent vocabulary, orchestrator-workers pattern. Supports the pattern language on slide 4; it does not evaluate per-job agent generation.
 - [Fly.io agent sandboxes](https://fly.io/learn/agent-sandbox/): egress policy applied from outside the sandbox. Supports the least-privilege claim on slide 11.
+- Saltzer and Schroeder (1975), [The Protection of Information in Computer Systems](https://doi.org/10.1109/PROC.1975.9939), Proceedings of the IEEE 63(9), 1278 to 1308. Least privilege is principle (f). Cited on slide 5; the talk claims the per-job agent makes compliance easier, which is a design argument, not a finding of theirs.
+- Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6), 775 to 779. Cited on slide 12. Written about industrial process control; the transfer to an agent's daily digest is the speaker's argument.
+- Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006. A simulated flight task, not a software review task. Say measured in a cockpit simulator; do not quote an effect size.
+- Vaughan (1996), The Challenger Launch Decision, University of Chicago Press. Normalization of deviance, cited on slide 13. An organizational case study; use it as a named pattern to watch for, not as evidence about agent rollouts.
 
 ## Claims to keep modest
 

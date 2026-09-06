@@ -54,6 +54,15 @@ Resume basis: MagicSchool.ai student experiences.
 - [The Last to Think](../../../../src/content/posts/2025-05-31--the-last-to-think/index.mdx): the assessment-redesign argument behind the whole talk.
 - The site's quiz system (Candidate 2 above) is a live, public example of stored observations with retry counts. Screenshots need no permission.
 
+## Sources cited on stage
+
+Added 2026-09-06. Each is used as a frame, not as a measurement of AI in classrooms; say the boundary out loud where noted.
+
+- Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264. Slide 3. They named the dilemma inside intelligent tutoring systems. The talk's claim that it is unsolved is fair to their framing; do not attribute a recommended help level to them.
+- Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199. Slide 8, to frame Bastani as an instance of a long-standing dissociation rather than news. It is a review of laboratory and motor-learning work, not a study of AI tutors.
+- Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006. Slide 10. Measured in a simulated flight task; the transfer to a teacher reading a model's summary is the speaker's argument. Do not quote an effect size.
+- Liang et al. (2023), Bastani et al. (2025) with its correction, and TEQSA (2023) are cited in the outline with their boundaries attached.
+
 ## Story slots in the outline that these entries feed
 
 | Slide | Slot |

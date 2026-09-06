@@ -102,6 +102,8 @@ An engineer picks the architecture in a design review on a Tuesday. Finance sees
 
 And notice what Shoup actually recommended, because everyone gets this wrong. He never said ban parking. He said charge the right price for it, and give the money back to the neighborhood. Same here. The fix is not austerity and it is not a policy forbidding the model. It is putting the number in front of the person making the choice, at the moment they make it. Estimated cost per accepted outcome, in the design doc, next to the latency budget.
 
+Source: Holmstrom (1979), Moral Hazard and Observability, Bell Journal of Economics 10(1), 74 to 91. Nobel 2016.
+
 Delivery: Ask who can see a per-feature inference cost without filing a ticket. Very few hands. That is the slide.
 
 ## 22:00 to 25:00: slide 10, Your acceptance rate is a price multiplier

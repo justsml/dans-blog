@@ -37,6 +37,7 @@ Ask the audience to pick a model using only the public scores, then read the wor
 
 5.5–7.5 minutes
 
+A benchmark is a compressed specification
 Useful for research and shortlists
 Missing: your users, tools, failure costs
 Scores depend on test conditions

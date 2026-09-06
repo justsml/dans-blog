@@ -36,4 +36,4 @@ Use the 40-minute deck and hide the slides listed below. The remaining slide tim
 
 Benchmark scores, workload pass rates and costs are illustrative fictional data supplied with the talk concept. They do not compare current products. Agent budget examples are hypothetical. The talks make no measured productivity or cost-saving claims. Their technical arguments and speaker guidance develop the supplied talk concepts.
 
-The [parallelization talk](../speaking-portfolio-expanded/packets/parallelization/packet.md) lives in the expanded portfolio, with 15/30/40-minute scripts and a [browser deck](../reveal-talks/parallelization.html).
+[Dynamic Scaling of Agentic Workloads](../speaking-portfolio-expanded/packets/dynamic-scaling/packet.md), formerly Rethinking Parallelization, lives in the expanded portfolio with 15/30/40-minute scripts and a [browser deck](../reveal-talks/dynamic-scaling.html).
