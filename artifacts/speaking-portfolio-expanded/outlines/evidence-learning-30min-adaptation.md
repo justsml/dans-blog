@@ -1,24 +1,21 @@
-# Outsmart Your Lying, Cheating Students: 30-minute standard
+# Outsmart Your Lying, Cheating Students: 30-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](evidence-learning-40min.md). No Q&A in the timings.
+Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14. Hide the others in presenter preparation. [Complete talk track](../packets/evidence-learning/script-30min.md).
 
-**Strategy.** Keep the confession opener, the smudge assignment, the full reconstruction with the kit, the rubric and record, AI time, the agent-addressed objective, and a shortened worksheet. Cut voice, workload, and the sculptor.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 02:00 | 1 | The cat is out of the bag |
+| 02:00 to 04:00 | 2 | The doom loop |
+| 04:00 to 05:30 | 3 | Write down where the foundations happen |
+| 05:30 to 07:00 | 4 | The polished answer with a hole in it |
+| 07:00 to 09:30 | 5 | Outsmart move one: make verification feel like cheating |
+| 09:30 to 11:00 | 6 | Ask for an attempt, then ration the help |
+| 11:00 to 15:30 | 7 | Demo: the four-minute reconstruction |
+| 15:30 to 18:00 | 8 | Score the reasoning, then write down what you saw |
+| 18:00 to 20:30 | 9 | Outsmart move two: make them say it out loud |
+| 20:30 to 22:30 | 10 | Outsmart move three: count AI time, then read all 300 transcripts |
+| 22:30 to 24:30 | 11 | Write the objective to the agent |
+| 24:30 to 28:00 | 13 | Redesign one checkpoint this week |
+| 28:00 to 30:00 | 14 | A purpose-built machine |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–2:00 | 1 | The cat is out of the bag | |
-| 2:00–4:00 | 2 | The doom loop | |
-| 4:00–5:30 | 3 | Foundations, then teach the tool | |
-| 5:30–6:30 | 4 | One polished answer | |
-| 6:30–8:30 | 5 | Make verification feel like cheating | |
-| 8:30–10:00 | 6 | Ask for an attempt, then escalate | |
-| 10:00–15:00 | 7 | Reconstruction | Full sequence plus the live $100 and $80 items. |
-| 15:00–17:00 | 8 | Score the reasoning; store observations | |
-| 17:00–19:00 | 9 | Measure AI time | Drop the story. |
-| 19:00–20:30 | 11 | Grade learning | |
-| 20:30–23:00 | 12 | Write the objective to the agent | Drop the ADHD aside and the story. |
-| 23:00–24:00 | 13 | AI collects evidence; people carry the workload | One sentence on minutes; bridge into the worksheet. |
-| 24:00–28:00 | 15 | Redesign one checkpoint | Pairs, two minutes. |
-| 28:00–30:00 | 16 | A purpose-built machine | |
-
-**Close.** As written.
+The sculptor (slide 12) is cut; its bookend line survives in the close. Reconstruction runs at four and a half minutes with the kit. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

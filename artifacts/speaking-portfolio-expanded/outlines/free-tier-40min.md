@@ -8,7 +8,7 @@
 
 **Demo.** [Runbook section 4](../demos/DEMO-RUNBOOK.md#4-cry-me-a-free-tier) · [Kit](../demos/index.html). Fallback: the table on slide 10.
 
-**Before each delivery.** Fill the `Story` lines. Update slide 3 with current, dated reporting.
+**Before each delivery.** Fill the `Story` lines. Recheck the dated commitments and credit offer on slide 3.
 
 **Image style.** Dark slate background, one amber accent, flat vector, generous negative space, no text or logos. Each slide comment is a complete prompt.
 
@@ -40,20 +40,21 @@ Story: [the first time a bill, quota, or rate change broke an assumption in some
 
 Draw the four boxes with your hands. The invoice records what the buyer pays. It hides utilization, depreciation, training allocation, and margin. Customer value is a fifth box. A free allowance can be worth a lot to a provider as acquisition while burning real resources. Which of these does your system measure, and which does it assume?
 
-## 3. Playing with fire: what has been reported
+## 3. Dated commitments and offers
 
 4:00–7:30 · steady
 
-<!-- image: a stack of newspapers on fire in a dark room, embers rising, dark slate background, amber flame accent, flat vector, no text -->
+> $250B incremental Azure services contracted by OpenAI · Microsoft, October 28, 2025
+> More than $100B AWS commitment over ten years · Amazon, April 20, 2026
+> Up to $200K AWS Activate credits for eligible startups · offer checked September 5, 2026
 
-> Reported losses at frontier labs
-> Multi-year compute commitments
-> Credit programs measured in billions
-> Reported is not disclosed
+Microsoft announced on 28 October 2025 that OpenAI had contracted to purchase an incremental $250 billion of Azure services. Amazon announced in April 2026 that Anthropic committed more than $100 billion of AWS spending over ten years. AWS Activate offers up to $200,000 in credits for eligible startups, checked 5 September 2026. These are corporate announcements and an offer, not audited statements of inference margins. Do not infer a provider loss per query from them. Terms can change. Ask which architectural choices depend on the present effective rate. Recheck the offer immediately before delivery.
 
-[Insert before each delivery: three or four current items with outlet and date. Reported annual losses or cash burn at a frontier lab; a large compute commitment; the size of a cloud credit program; a consumer-tier price change.]
+Source: [Microsoft · 28 Oct 2025](https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/).
 
-Reporting is not accounting. A reported loss may be training investment, not inference subsidy. The pattern still holds: prices set for growth, funded by capital that expects a return. That is the fire. Nobody knows when the terms change. Everybody knows they can. My answer is not to guess the date. It is to know which parts of your system are betting on it.
+Source: [Amazon · Apr 2026](https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai).
+
+Source: [AWS Activate · accessed 5 Sep 2026](https://aws.amazon.com/startups/credits/).
 
 ## 4. Subsidy is a hypothesis
 

@@ -1,5 +1,7 @@
 # Talk packet: A Skeptic's Guide to Surviving AI in Education
 
+[40min screen PPTX](../../decks/skeptic-education-40min-screen.pptx) · [handout PPTX](../../decks/skeptic-education-40min-handout.pptx)
+
 Outline: [40 min](../../outlines/skeptic-education-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles

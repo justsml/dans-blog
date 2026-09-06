@@ -1,5 +1,7 @@
 # Formats: A Skeptic's Guide to Surviving AI in Education
 
+[40min screen PPTX](../../decks/skeptic-education-40min-screen.pptx) · [handout PPTX](../../decks/skeptic-education-40min-handout.pptx)
+
 | Length | Format | Source |
 | --- | --- | --- |
 | 5–10 min | Lightning or live demo | Below |

@@ -1,41 +1,43 @@
 # Talk packet: Outsmart Your Lying, Cheating Students
 
-Outline: [40 min](../../outlines/evidence-learning-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+[Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Working notes](notes-2026-09-05.md) · [Deck](../../../reveal-talks/evidence-learning.html)
+
+Outline: [40 min](../../outlines/evidence-learning-40min.md). The PPTX exports in [decks](../../decks/README.md) predate the 2026-09-06 rewrite.
 
 ## Titles
 
 - **Primary:** Outsmart Your Lying, Cheating Students
 - **Event-friendly:** Stop Trying to Catch Students Using AI
-- Collect Evidence of Understanding
 - Stop Asking Who Typed the Sentence
+- Make Verification Feel Like Cheating
 
 ## Abstracts
 
 ### 50 words
 
-Detectors ask who typed the sentence. Teachers need to know what the learner understands. This session redesigns one small assessment around that question: a narrow capability, a hint ladder, a four-minute live reconstruction, a rubric that scores reasoning and records assistance separately, and a record that stores observations instead of labels.
+Math class survived the calculator watch. Your class will survive the chatbot, but not by catching anyone. This session shows three ways to out-design students instead: an assignment where verification feels like cheating, a four-minute spoken reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
 
 ### 100 words
 
-The arms race between students and detectors asks the wrong question. Even with authorship settled, a teacher still needs evidence of learning, and a detector score gives none. This session redesigns one assessment around a narrow capability, explaining sequential percentage changes, and walks it through a hint ladder, a live four-minute reconstruction with a transfer item, a proposed rubric that scores reasoning and records help separately, and an observation record that resists hardening into a label. It covers what AI can do for evidence collection and what stays human, and ends with a worksheet participants use to redesign one checkpoint of their own that week.
+Proctoring fails, detectors flag the wrong kids, and the pop quiz only proves what you already knew. This session stops trying to catch students and starts out-designing them. Three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group speaking where reading a model aloud and recalling from memory produce different mistakes, and a qualitative pass over every transcript that surfaces the five students who found a path worth showing the room. Around them: a four-minute live reconstruction, a rubric that scores reasoning and logs help separately, and a record that never hardens into a label.
 
 ### 250 words
 
-A policy bans AI. A student submits polished work. Software reports a likelihood of machine involvement. Even if the institution could settle authorship, a second question remains: can the learner perform the intended intellectual task? Authorship and learning are not the same measurement, and the detector answers neither reliably.
+The historical parallels have been beaten to death, so one and done: math class survived the Casio calculator watch, and the speaker may have used one on an assessment. The panic is familiar. So is the doom loop that follows it: proctoring fails, detectors flag non-native writers, and the pop quiz proves the student can't hit the first rung of Bloom's taxonomy. Getting away with it becomes the reward.
 
-This session moves the design question from "who typed it" to "what does the learner understand." The worked example is deliberately small: a shop raises a price by twenty percent and then discounts the new price by twenty percent. A fixture answer argues the changes cancel. The prose is clean; the denominator is wrong.
+This session stops trying to catch students and starts out-designing them. It opens by writing down where the foundations happen without a model (pencil, whiteboard, peers) and, in the same document, promising to teach the tool on purpose.
 
-From that fixture the session builds a hint ladder from clarification through conceptual hint, missing step, partial example, and full explanation, with help recorded rather than penalized. It runs a live four-minute reconstruction in the room, then changes the numbers to eighty dollars, up twenty-five percent, down twenty percent, which returns to the start and breaks the shortcut learners just formed. A proposed rubric scores base identification, calculation, and transfer, with assistance in its own column. An observation record stores concept, observed explanation, support, and next check, never "weak at reasoning" or "likely cheated."
+Then three moves. First, an assignment where verification feels like cheating: photograph a sheet of a hundred problems, feed it to the model, and discover the smudged 8 that came back as a 9. Second, speaking: small groups out loud, where reading a model's output and answering from memory produce different classes of error, with the biometric care that voice demands. Third, counting AI time the way teachers already count talk time, then running a qualitative pass across every transcript in a course.
 
-The back half covers purposeful follow-up questions, replay as context rather than proof, the Bastani finding that supported and unaided performance diverge, and what AI can do for evidence collection while grading stays human. It ends with a pairs worksheet and five verbs: explain it, challenge it, change it, apply it, defend it.
+The worked example is small enough to inspect: a price rises 20% and falls 20%, and a clean sentence argues the changes cancel. A hint ladder, a live four-minute reconstruction with a transfer item that breaks the shortcut, a rubric that scores reasoning and logs help separately, and a four-line observation record carry the middle of the talk. It ends with a sculptor who never touched the clay, a pairs worksheet, and five verbs: explain it, challenge it, change it, apply it, defend it.
 
 ## Learning outcomes
 
 Attendees will be able to:
 
-1. Define a learning capability narrowly enough that its evidence can be inspected, and distinguish it from the artifact a task produces.
-2. Build a hint ladder and a reconstruction task for one concept, and score the result with a rubric that records assistance separately from capability.
-3. Write an observation record that supports the next teaching decision without becoming a permanent label or an accusation.
+1. Design an assignment in which the model's error is the lesson, and state the personalization constraint that keeps it honest.
+2. Run a diagnostic question, a hint ladder, and a reconstruction with a transfer item for one concept, and score it with a rubric that records help separately.
+3. Write a four-line observation record and a checkpoint redesign that a colleague can review, including the minutes it costs to read a class set.
 
 ## Audience and prerequisites
 
@@ -43,9 +45,10 @@ Instructors, assessment designers, academic integrity staff, and edtech product 
 
 ## Practical takeaways
 
-- The hint ladder template with recorded-assistance levels.
+- The smudged-sheet assignment pattern and the prompt-as-worksheet handout.
+- The hint ladder with recorded-assistance rungs.
 - The two-item reconstruction and transfer pattern, adaptable to any concept with a hidden invariant.
-- The observation record and the checkpoint redesign worksheet.
+- The rubric, the four-line record, and the checkpoint worksheet.
 
 ## Not a product pitch
 
@@ -56,23 +59,22 @@ The speaker has built AI systems at an education technology company. The session
 - Liang et al. (2023). [GPT detectors are biased against non-native English writers](https://doi.org/10.1016/j.patter.2023.100779). Patterns.
 - Bastani et al. (2025). [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122). PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check before quoting figures.
 - TEQSA (2023). [Assessment reform for the age of artificial intelligence](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence).
-- Kestin et al. (2025). [AI tutoring outperforms in-class active learning](https://www.nature.com/articles/s41598-025-97652-6). Scientific Reports.
-- Perkins, Furze, Roe, MacVaugh (2024). The Artificial Intelligence Assessment Scale (AIAS). Journal of University Teaching and Learning Practice. [Verify citation and add DOI before submission.]
+- Lemov, D. Teach Like a Champion: the 4Ms objective criteria (manageable, measurable, made first, most important), cited on slide 11.
 
 ## Audience-specific abstracts (100 words each)
 
 ### Engineering practitioner
 
-If you build assessment or tutoring features, this session shows what the evidence of learning looks like from the teacher's side, and what your system must record to support it. We redesign one small assessment around a hint ladder, a reconstruction task with a transfer item, and a rubric that scores reasoning while logging assistance separately. Then the data model: an observation record with concept, explanation, support, and next check, and nothing that hardens into a label. We cover what a model can draft and summarize, what it must link to excerpts, and why no consequence is automated from a score.
+If you build assessment or tutoring features, this session shows what evidence of learning looks like from the teacher's side and what your system has to record to support it. Three classroom moves set the requirements: an assignment where the model's mistake is the lesson, spoken small-group work with biometric-grade care for voice, and a qualitative pass across every transcript in a course. Then the data model: a hint ladder with recorded rungs, a rubric with a separate help column, and a four-line observation record with nothing that hardens into a label. No consequence is ever automated from a score.
 
 ### Engineering leadership and product
 
-Detector features are a liability; evidence features are a product. This session, for edtech product and engineering leaders, reframes the integrity problem as an assessment design problem and shows the artifacts a product should produce: a hint ladder with recorded assistance, a reconstruction and transfer task, a rubric with a separate assistance column, and observation records that support the next teaching decision. It draws on trial evidence that supported and unaided performance diverge, and it closes with the staff-workload question every pilot must answer. The speaker has built AI systems at an education technology company and names no product.
+Detector features are a liability; evidence features are a product. This session reframes integrity as assessment design and shows the artifacts a product should produce: an assignment pattern where verification feels like cheating, a hint ladder with recorded help, a reconstruction task with a transfer item, a rubric with a separate assistance column, and observation records that support the next teaching decision. It covers what a transcript view across 300 students can surface, the care voice data demands, and the staff-minutes question every pilot must answer. The speaker has built AI systems at an education technology company and names no product.
 
 ### Education and instructional design
 
-Stop trying to catch students using AI; start collecting evidence of understanding. This hands-on session redesigns one small assessment: a narrow capability, a hint ladder that records help rather than punishing it, a live four-minute reconstruction with a transfer item, a rubric that scores reasoning, and an observation record that never becomes a label. We cover purposeful follow-up questions, replay as context not proof, and what stays human when AI helps collect evidence. Bring one checkpoint from your course; the closing worksheet redesigns it in pairs. Evidence from recent trials is cited with its limits intact.
+Stop trying to catch students using AI. Out-design them. This hands-on session gives you three moves you can run next week: the smudged arithmetic sheet that teaches verification, small-group speaking that resets the incentives, and counting AI time the way you already count talk time. Around them, a worked percentage example with a hint ladder, a live four-minute reconstruction, a rubric that scores reasoning, and a record that never becomes a label. Bring one checkpoint from your course; the closing worksheet redesigns it in pairs and asks the question nobody budgets for: how many minutes to read a class set?
 
 ### Executive and general technology
 
-Institutions are spending on detectors that answer a question nobody needs answered. This talk explains, without jargon, why authorship and learning are different measurements, why a probability score cannot support a disciplinary decision, and what an assessment designed around understanding looks like instead. It shows a four-minute reconstruction anyone can follow, the rubric and record that go with it, and the staffing question a pilot must resolve. Leaders leave with a different procurement question: not "does it catch cheating" but "does it help a teacher see what a student understands."
+Institutions are buying detectors that answer a question nobody needs answered. This talk explains, without jargon, why "who typed it" and "did they learn it" are different measurements, why a probability score cannot carry a disciplinary decision, and what an assessment designed around understanding looks like instead. It shows a four-minute reconstruction anyone can follow, an assignment where the model's error is the lesson, and the staffing question a pilot has to resolve. Leaders leave with a different procurement question: not "does it catch cheating" but "does it help a teacher see what a student understands."

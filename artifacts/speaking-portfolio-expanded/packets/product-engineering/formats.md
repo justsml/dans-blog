@@ -1,5 +1,7 @@
 # Formats: The Future of Product Engineering
 
+[15min screen PPTX](../../decks/product-engineering-15min-screen.pptx) · [handout PPTX](../../decks/product-engineering-15min-handout.pptx) · [30min screen PPTX](../../decks/product-engineering-30min-screen.pptx) · [handout PPTX](../../decks/product-engineering-30min-handout.pptx) · [40min screen PPTX](../../decks/product-engineering-40min-screen.pptx) · [handout PPTX](../../decks/product-engineering-40min-handout.pptx)
+
 This talk has three purpose-built lengths rather than one deck with adaptations.
 
 | Length | Format | Source |

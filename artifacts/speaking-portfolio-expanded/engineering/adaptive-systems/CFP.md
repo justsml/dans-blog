@@ -2,16 +2,16 @@
 
 ## Short abstract (50 words)
 
-A vendor renames a field. Your ingest breaks. Can an agent investigate the change, propose a mapping and keep the job moving? This talk designs bounded recovery around semantic checks, versioned artifacts, resource limits and explicit uncertainty, so engineers can delegate investigation without quietly delegating permission to corrupt production data.
+A vendor renames a field at 2 a.m. Can your app investigate, propose a fix, prove it, and keep records moving, without holding a permission you'd be scared to give it? This talk shows how: conjure a narrow agent per job, guard the dangerous tools, prove every repair, and let the app ask for its own scale.
 
 ## Standard abstract (100 words)
 
-API changes, unavailable providers and incomplete responses are ordinary integration problems. Adaptive, agentic apps can investigate unfamiliar failures and propose recovery strategies, provided their authority stays bounded. Following one ingest job, this session distinguishes a field rename from a semantic change, turns repairs into versioned mapping artifacts, and tests them against conflicting and missing data. It covers bounded retries, approved regional fallback, uncertain external outcomes, and reports that help engineers see what changed. Attendees leave with a recovery contract, failure fixtures, and a rollout sequence that begins in shadow mode and expands only from evidence about correctness, cost and intervention.
+We are building toward assistants with access to every customer record and tools that can email, refund, delete and deploy. Most of the damage they will do is accidental. This talk is a strategy for giving them that access anyway: an orchestrator that generates a narrowly scoped agent per job, with a tailored prompt, the minimum tools, a hard budget, and a logged path to ask for more. Following one address ingest through a rename, a change in meaning and a lost provider response, we cover semantic proof, versioned repairs, guarded tool classes, and per-customer compute that the app requests rather than ops pre-provisions.
 
 ## Outcomes
 
-- Distinguish a reversible mapping repair from an ambiguous semantic change.
-- Specify evidence, authority, resource caps and stop conditions for a recovery job.
-- Design versioned promotion, reconciliation and reporting before expanding automatic action.
+- Design an orchestrator that generates per-job agents with minimum tools, a hard budget, and a logged tool-request gate.
+- Distinguish a reversible mapping repair from a change in meaning, and prove it with fixtures the agent did not write.
+- Specify tool risk classes, cross-system boundaries, and per-job compute requests before widening automatic authority.
 
-Audience: application and platform engineers. 16 slides, 40 minutes including a five-minute paper walkthrough; 15 and 30 minute routes available. Proposed architecture and synthetic fixtures, no live model or measured improvement claim. [Full submission packet](../../packets/adaptive-systems/packet.md).
+Audience: application and platform engineers. 15 slides, 40 minutes including a five-minute paper walkthrough; 15 and 30 minute routes available. The agent generator is the speaker's working prototype. [Full submission packet](../../packets/adaptive-systems/packet.md).

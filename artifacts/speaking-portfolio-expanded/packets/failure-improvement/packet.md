@@ -1,5 +1,7 @@
 # Talk packet: Automating Improvement From Failure
 
+[40min screen PPTX](../../decks/failure-improvement-40min-screen.pptx) · [handout PPTX](../../decks/failure-improvement-40min-handout.pptx)
+
 Outline: [40 min](../../outlines/failure-improvement-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles

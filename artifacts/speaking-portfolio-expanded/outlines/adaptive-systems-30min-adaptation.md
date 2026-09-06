@@ -1,22 +1,20 @@
 # Adaptive, agentic apps: 30-minute adaptation
 
-Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16. Hide the others in presenter preparation. [Complete talk track](../packets/adaptive-systems/script-30min.md).
+Keep slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 15. Hide the others in presenter preparation. [Complete talk track](../packets/adaptive-systems/script-30min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |
 | 00:00 to 01:30 | 1 | The vendor renamed a field |
-| 01:30 to 03:00 | 2 | Recovery needs a definition of success |
-| 03:00 to 05:00 | 3 | Give the planner a bounded job |
-| 05:00 to 08:00 | 4 | Repair syntax; prove meaning |
-| 08:00 to 10:00 | 5 | The repair is a versioned artifact |
-| 10:00 to 12:30 | 6 | Make a plausible repair fail a test |
-| 12:30 to 14:30 | 7 | Known failures should stay boring |
-| 14:30 to 16:30 | 8 | Regional recovery has a contract |
-| 16:30 to 18:30 | 9 | A timeout leaves a question |
-| 18:30 to 22:30 | 10 | Walkthrough: one ingest, three decisions |
-| 22:30 to 24:30 | 11 | Show engineers what changed today |
-| 24:30 to 26:30 | 12 | Measure recovery, including its mistakes |
-| 26:30 to 28:30 | 14 | Let recurring discoveries become code |
-| 28:30 to 30:00 | 16 | The next surprise should cost less |
+| 01:30 to 03:00 | 2 | The bar is: diff the schema and page a human |
+| 03:00 to 05:30 | 3 | Now imagine the assistant that has everything |
+| 05:30 to 09:00 | 4 | Conjure the agent the job needs |
+| 09:00 to 11:30 | 5 | Guard the tools that can hurt |
+| 11:30 to 14:00 | 6 | Repair syntax; prove meaning |
+| 14:00 to 15:30 | 7 | The repair is a versioned artifact |
+| 15:30 to 17:00 | 9 | A lost response leaves a question |
+| 17:00 to 21:30 | 10 | Walkthrough: one ingest, three decisions |
+| 21:30 to 24:00 | 11 | Scale becomes something the app asks for |
+| 24:00 to 27:00 | 13 | Widen authority only from measured outcomes |
+| 27:00 to 30:00 | 15 | The next surprise should cost less |
 
-Cut dependencies are supplied as bridge sentences in the script. The five-minute walkthrough is retained for 15 minutes; the 30-minute version uses four minutes. Use the paper trace if there is no live runtime. End with slide 16, not a compressed tour of omitted slides.
+The walkthrough runs at four and a half minutes. Slides 8, 12 and 14 are cut; their one-sentence bridges are in the script. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

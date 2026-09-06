@@ -1,19 +1,16 @@
-# Outsmart Your Lying, Cheating Students: 15-minute lightning
+# Outsmart Your Lying, Cheating Students: 15-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](evidence-learning-40min.md). No Q&A in the timings.
+Keep slides 1, 2, 4, 5, 7, 8, 9, 14. Hide the others in presenter preparation. [Complete talk track](../packets/evidence-learning/script-15min.md).
 
-**Strategy.** The confession opener, one fixture, the smudge assignment, the live reconstruction without the kit, the rubric, supported versus independent, the purpose-built close.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 01:30 | 1 | The cat is out of the bag |
+| 01:30 to 03:00 | 2 | The doom loop |
+| 03:00 to 04:00 | 4 | The polished answer with a hole in it |
+| 04:00 to 06:00 | 5 | Outsmart move one: make verification feel like cheating |
+| 06:00 to 09:30 | 7 | Demo: the four-minute reconstruction |
+| 09:30 to 11:30 | 8 | Score the reasoning, then write down what you saw |
+| 11:30 to 13:30 | 9 | Outsmart move two: make them say it out loud |
+| 13:30 to 15:00 | 14 | A purpose-built machine |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–1:30 | 1 | The cat is out of the bag | Casio watch and confession only. Drop the story. |
-| 1:30–3:00 | 2 | The doom loop | Detector boundary in one line. |
-| 3:00–4:00 | 4 | One polished answer | Bridge in with slide 3's capability in one sentence. |
-| 4:00–6:00 | 5 | Make verification feel like cheating | Skip the privacy aside. |
-| 6:00–7:00 | 6 | Ask for an attempt, then escalate | The diagnostic question and two rungs. |
-| 7:00–10:00 | 7 | Reconstruction, compressed | No kit. The $100 sequence live; state the $80 item. |
-| 10:00–11:30 | 8 | Score the reasoning; store observations | Rubric only. |
-| 11:30–13:00 | 11 | Grade learning, not the assistance log | |
-| 13:00–15:00 | 16 | A purpose-built machine | |
-
-**Close.** Five verbs, "too much power to hold casually," stop. The worksheet is a handout.
+Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

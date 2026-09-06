@@ -32,11 +32,11 @@ Strategic education talk, with one practical exercise. It is distinct from Evide
 
 ### 50-word abstract
 
-A polished assignment cannot answer every question about learning. This provocative session moves from guessing authorship to observing understanding. Redesign one assessment through diagnostic questions, staged hints, reconstruction, and transfer. Leave with a worked example, a compact evidence record, and a rubric that keeps consequential interpretation with an accountable human.
+Math class survived the calculator watch. Your class will survive the chatbot, but not by catching anyone. This session shows three ways to out-design students instead: an assignment where verification feels like cheating, a four-minute spoken reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
 
 ### 150-word abstract
 
-If your assessment depends on reliably identifying who typed a paragraph, the detector has become part of your curriculum. This talk changes the question: can the learner explain, challenge, repair, and apply the idea? We will rebuild a percentage task into a sequence of diagnostic questions, staged hints, reconstruction, and transfer. Participants see exactly what evidence each step adds, how to separate supported performance from independent competence, and why a replay is useful context rather than proof. The proposed design includes a small rubric, an editable learner record, accessible alternatives to voice, and boundaries around automated summaries and consequential decisions. Research on detector limitations and learning with assistance grounds the argument without promising cheating proof assessment. The title is deliberately provocative; the target is a brittle measurement strategy, not students. Leave with a checkpoint redesign and a plan to test its educational value against the staff work it creates locally.
+Proctoring fails, detectors flag non-native writers, and the pop quiz only proves what you already knew. If your assessment depends on knowing who typed a paragraph, the detector has become part of your curriculum. This session stops trying to catch students and starts out-designing them. It writes down where the foundations happen without a model, promises in the same document to teach the tool, and then makes three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group speaking where reading a model aloud and recalling from memory produce different mistakes, and a qualitative pass across every transcript in a course. A worked percentage task carries the middle: a hint ladder, a live four-minute reconstruction with a transfer item, a rubric that scores reasoning and logs help separately, and a four-line record that never becomes a label. Participants leave with one checkpoint redesigned and the minutes it costs to review.
 
 ### Audience
 
@@ -44,12 +44,12 @@ Faculty, assessment leads, instructional designers, learning-platform builders, 
 
 ### Three learning outcomes
 
-1. Design a diagnostic question and staged hint sequence tied to a specific capability.
-2. Separate observed reasoning, assistance supplied, and independent transfer in a small evidence record.
-3. Define a reviewable rubric and human escalation boundary without treating a detector or replay as proof.
+1. Design an assignment in which the model's error is the lesson, with the personalization constraint that keeps it honest.
+2. Run a diagnostic question, hint ladder, and reconstruction with a transfer item, and score it with help recorded separately.
+3. Write a four-line observation record and a reviewable checkpoint redesign, including the staff minutes it costs.
 
 ### Reviewer notes
 
-The provocative title targets brittle assessment design, not student character. For educator-heavy committees, use “Stop Trying to Catch Students Using AI” with subtitle “Designing Better Evidence of Learning.” This practical assessment session is distinct from the strategic Skeptic talk. No live learner data, detector stunt, or automatic misconduct judgment. The stage exercise is explicitly scripted and mathematically checkable.
+The title is self-aware: the speaker confesses to the calculator watch in the first minute, and the target is a brittle measurement strategy, not students. For educator-heavy committees, use "Stop Trying to Catch Students Using AI." Distinct from the strategic Skeptic talk, which allocates assistance; this one designs the assessment and the classroom moves. No live learner data, no detector stunt, no automated misconduct judgment. The stage exercise is scripted and mathematically checkable; the fixtures are authored and the rubric is proposed.
 
-**Format:** 40 minutes, 18 slides, including a four-minute exercise and four-minute application discussion. Adaptation: 15-minute lightning by retaining the opening, central framework or assessment sequence, worked example, limitations, and closing. The long outline lives in the slide JSON and speaker notes rather than being duplicated here.
+**Format:** 40 minutes, 14 slides, including a five-minute live reconstruction and a four-minute pairs worksheet. 15- and 30-minute routes and a 60-minute workshop are prepared.

@@ -1,5 +1,7 @@
 # Talk packet: Cry Me a Free Tier
 
+[40min screen PPTX](../../decks/free-tier-40min-screen.pptx) · [handout PPTX](../../decks/free-tier-40min-handout.pptx)
+
 Outline: [40 min](../../outlines/free-tier-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles

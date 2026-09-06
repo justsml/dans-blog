@@ -4,9 +4,9 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and visual guidance, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match. The three Product Engineering outlines were rewritten again on 2026-09-05 around Conway's law and the agent roster; the reveal.js HTML deck, packet, formats, CFP, and evidence notes follow them. The three Product Engineering PPTX files still predate the rewrite. The Improvement From Failure outline was rewritten on 2026-09-05 around the fail-to-win loop (logs to agent, enrichment, scheduled distill-and-classify, guarded tickets and PRs, feedback); the reveal.js deck, packet, formats, CFP, evidence notes, and demo notes follow it. Its PPTX and the slide images under `images/failure-improvement-40min/` still show the previous arc and must be regenerated from the outline's image prompts.
+**Deck sync.** Four talks have refreshed on-screen and handout PPTX editions from their current outlines ([download both editions](decks/README.md)). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads and Outsmart Your Lying, Cheating Students were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and their PPTX exports predate the rewrite and must be regenerated.
 
-**Before each delivery.** Fill every `Story` line with a first-hand example. The free-tier talk also needs current dated reporting on its slide 3.
+**Before each delivery.** Fill every `Story` line with a first-hand example. Recheck the dated commitments and credit offer on free-tier slide 3.
 
 ## Submission packets
 
@@ -21,22 +21,22 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | Adaptive, agentic apps | [packet](packets/adaptive-systems/packet.md) | [formats](packets/adaptive-systems/formats.md) | [evidence](packets/adaptive-systems/evidence-bank.md) |
 | Free Tier | [packet](packets/free-tier/packet.md) | [formats](packets/free-tier/formats.md) | [evidence](packets/free-tier/evidence-bank.md) |
 | Outsmart Your Students | [packet](packets/evidence-learning/packet.md) | [formats](packets/evidence-learning/formats.md) | [evidence](packets/evidence-learning/evidence-bank.md) |
-| Parallelization | [packet](packets/parallelization/packet.md) | [formats](packets/parallelization/formats.md) | [evidence](packets/parallelization/evidence-bank.md) |
+| Dynamic Scaling | [packet](packets/dynamic-scaling/packet.md) | [formats](packets/dynamic-scaling/formats.md) | [evidence](packets/dynamic-scaling/evidence-bank.md) |
 | Product Engineering | [packet](packets/product-engineering/packet.md) | [formats](packets/product-engineering/formats.md) | [evidence](packets/product-engineering/evidence-bank.md) |
 
 ## Decks and submission copy
 
 | Talk | Outline | Slides | Deck | CFP package |
 | --- | --- | ---: | --- | --- |
-| A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [Regenerate](decks/skeptic-education-40min.pptx) | [Education](education/CFP.md) |
-| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [Regenerate](decks/failure-improvement-40min.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
-| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 16 | [Browser deck](../reveal-talks/adaptive-systems.html) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
-| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Regenerate](decks/free-tier-40min.pptx) | [Economics](economics-product/CFP.md) |
-| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 16 | [Regenerate](decks/evidence-learning-40min.pptx) | [Education](education/CFP.md) |
-| Rethinking Parallelization in the Agentic Era | [40 min](outlines/parallelization-40min.md) | 16 | [Browser deck](../reveal-talks/parallelization.html) | [Parallelization](engineering/parallelization/CFP.md) |
-| The Future of Product Engineering: Big Idea | [15 min](outlines/product-engineering-15min.md) | 8 | [Regenerate](decks/product-engineering-15min.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: The Agent Roster | [30 min](outlines/product-engineering-30min.md) | 11 | [Regenerate](decks/product-engineering-30min.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: Conway's Law, Applied on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Regenerate](decks/product-engineering-40min.pptx) | [Product variants](economics-product/CFP.md) |
+| A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [Screen](decks/skeptic-education-40min-screen.pptx) · [Handout](decks/skeptic-education-40min-handout.pptx) | [Education](education/CFP.md) |
+| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [Screen](decks/failure-improvement-40min-screen.pptx) · [Handout](decks/failure-improvement-40min-handout.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
+| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser deck](../reveal-talks/adaptive-systems.html) · PPTX stale, regenerate | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
+| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Screen](decks/free-tier-40min-screen.pptx) · [Handout](decks/free-tier-40min-handout.pptx) | [Economics](economics-product/CFP.md) |
+| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser deck](../reveal-talks/evidence-learning.html) · PPTX stale, regenerate | [Education](education/CFP.md) |
+| Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser deck](../reveal-talks/dynamic-scaling.html) · PPTX stale, regenerate | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
+| The Future of Product Engineering: Big Idea | [15 min](outlines/product-engineering-15min.md) | 8 | [Screen](decks/product-engineering-15min-screen.pptx) · [Handout](decks/product-engineering-15min-handout.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: The Agent Roster | [30 min](outlines/product-engineering-30min.md) | 11 | [Screen](decks/product-engineering-30min-screen.pptx) · [Handout](decks/product-engineering-30min-handout.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: Conway's Law, Applied on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Screen](decks/product-engineering-40min-screen.pptx) · [Handout](decks/product-engineering-40min-handout.pptx) | [Product variants](economics-product/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 
@@ -51,13 +51,13 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | Adaptive, agentic apps | [Lightning](outlines/adaptive-systems-15min-adaptation.md) | [Standard](outlines/adaptive-systems-30min-adaptation.md) |
 | Cry Me a Free Tier | [Lightning](outlines/free-tier-15min-adaptation.md) | [Standard](outlines/free-tier-30min-adaptation.md) |
 | Outsmart Your Lying, Cheating Students | [Lightning](outlines/evidence-learning-15min-adaptation.md) | [Standard](outlines/evidence-learning-30min-adaptation.md) |
-| Rethinking Parallelization in the Agentic Era | [Lightning](outlines/parallelization-15min-adaptation.md) | [Standard](outlines/parallelization-30min-adaptation.md) |
+| Dynamic Scaling of Agentic Workloads | [Lightning](outlines/dynamic-scaling-15min-adaptation.md) | [Standard](outlines/dynamic-scaling-30min-adaptation.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Adaptive and parallelization include presenter scripts; other outlines use speaker cues.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Adaptive, Dynamic Scaling and Outsmart include generated presenter scripts; other outlines use speaker cues.
 
 ## Image prompts
 
-Adaptive and parallelization use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [parallelization visual inventory](packets/parallelization/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for parallelization, and readable labels. Other outlines retain `<!-- image: ... -->` prompts for their illustrations.
+Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [dynamic-scaling visual inventory](packets/dynamic-scaling/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for dynamic scaling, and readable labels. Other outlines retain `<!-- image: ... -->` prompts for their illustrations.
 
 ## What makes the talks distinct
 
@@ -65,10 +65,10 @@ Adaptive and parallelization use actual SVG diagrams linked from their outlines,
 | --- | --- | --- |
 | Skeptic's Guide | How do I adopt AI in a course with justified confidence, and what will fail first? | A history essay weighing two conflicting sources; four failure modes and a pre-mortem. |
 | Improvement From Failure | What is the smallest step toward a system that fixes itself, and what access do you grant next? | An agent with log access grows into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback. |
-| Adaptive, agentic apps | Which unfamiliar failures may the application repair, with what evidence and authority? | A field rename, ambiguous status and lost provider response lead to distinct recovery decisions. |
+| Adaptive, agentic apps | How do we give an assistant real access and manage the risk? Conjure a narrow agent per job, prove every repair, let the app ask for its own scale. | One address ingest: a rename, an ambiguous status and a lost provider response; a per-job agent generator with a logged tool gate. |
 | Free Tier | Which of my assumptions depend on today's price, and what has free inference already shaped? | Free parking's second-order effects mapped onto software; one workload under 1× to 10× prices. |
-| Outsmart Your Lying, Cheating Students | What follow-up would distinguish understanding from a polished artifact, once you stop trying to catch anyone? | The percentage-change reconstruction and transfer item, the smudged arithmetic sheet, plus a scripted learner replay. |
-| Parallelization | Where do aggregate limits and durable state belong when work fans out? | Forty hidden image jobs, a recovered batch, and three competing designs with a fixed rubric. |
+| Outsmart Your Lying, Cheating Students | Once you stop trying to catch anyone, how do you out-design them? | Three moves (the smudged sheet, small-group speaking, AI time across 300 transcripts) around the percentage reconstruction, a rubric and a four-line record. |
+| Dynamic Scaling | Now that agents can direct their own compute, where do the limits live? | Four legitimate callers, forty image jobs; a $2 ledger; a reclaimed spot worker; compute as a request, catalog and lease; the ephemeral vendor substrate. |
 | Product Engineering | Which functions of my product group become agents, who owns each one, and where do the guards go? | An activation winner violates support and false-urgency constraints. |
 
 The two education talks use different worked examples so they can be booked together.
@@ -82,14 +82,14 @@ The two education talks use different worked examples so they can be booked toge
 
 Each outline names its sources with author, year and linked title. The Bastani PNAS paper has a published correction whose full text was inaccessible during research; the talks avoid its numeric effect sizes. Sources added in this revision (DSPy, GEPA, hooks, skills, pg_trgm, the three eval platforms, Shoup) are cited in the outlines and not yet in the evidence notes.
 
-The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and parallelization refreshes use explicit synthetic paper walkthroughs. Their recovery scenarios are documented in the packet walkthroughs; the offline resource-policy exercise demonstrates only strategy selection and caps.
+The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and dynamic-scaling talks use paper walkthroughs with fixtures. Their recovery scenarios are documented in the packet walkthroughs; the offline resource-policy exercise demonstrates only strategy selection and caps.
 
 ## Reuse across the portfolio
 
-Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or parallelization when the audience wants to grow an agent's authority and change execution policy; all three include a "compile what repeats" beat. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
+Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or dynamic scaling when the audience wants to grow an agent's authority and change execution policy; all three include a "compile what repeats" beat. Adaptive and Dynamic Scaling are companions: adaptive owns per-job agent generation and repair authority, dynamic scaling owns admission, ledgers and the compute substrate. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
-The six retrieval, benchmarks and judgment decks remain in the sibling `flagship-talks` directory. Adaptive and parallelization use the browser decks linked above.
+The six retrieval, benchmarks and judgment decks remain in the sibling `flagship-talks` directory. Adaptive and Dynamic Scaling use the browser decks linked above.
 
-## Adaptive and parallelization refresh, September 5
+## Adaptive and Dynamic Scaling rewrite, September 6
 
-The two companion talks now have 16-slide browser decks, 15/30/40-minute outlines and presenter talk tracks, five-minute lightning scripts, 60/75-minute workshop plans, CFP copy, evidence notes, contracts and paper walkthroughs. Start with the [refresh guide](packets/adaptive-parallel-refresh.md). Timing targets include worked examples and audience interaction; they are not measured recordings. No new live AI demo or production controller is claimed.
+Both talks were rewritten around Dan's direction: the assistant-with-everything question and a per-job agent generator for adaptive; the infra inversion, agent-directed compute and the ephemeral vendor substrate for dynamic scaling (formerly Rethinking Parallelization). Each outline is the single source; `bun artifacts/speaking-portfolio-expanded/build-talk.ts <talk>` regenerates the 40/30/15 scripts, the two adaptations and the browser deck. Disclaimers are said once per talk. Story slots are listed in each evidence bank and must be filled before delivery. Timings are rehearsal targets, not recordings.

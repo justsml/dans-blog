@@ -59,6 +59,8 @@ Resume basis: MagicSchool.ai student experiences.
 | Slide | Slot |
 | --- | --- |
 | 1 | The submission where the grade and the understanding came apart |
-| 9 | A transcript that showed a path to the answer you would not have taught |
-| 12 | The student who told the tutor not to give answers |
-| 13 | A summary, human or machine, that invented a diagnosis |
+| 10 | A transcript that showed a path to the answer you would not have taught |
+| 11 | The student who told the tutor not to give answers |
+| 12 | The sculptor is already first-hand; confirm the friend is comfortable with the retelling |
+
+Slide numbers follow the 2026-09-06 outline (14 slides).

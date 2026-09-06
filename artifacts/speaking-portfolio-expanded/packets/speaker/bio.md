@@ -64,18 +64,18 @@ Adjacent evidence already documented: 100+ hours of recorded instruction at Galv
 
 | Post | Supports |
 | --- | --- |
-| [Announcing ExploitHunter.app](../../../../src/content/posts/2026-07-17--announcing-exploithunter-app/index.mdx) | Adaptive systems, parallelization, failure improvement |
-| [Don't Fear the Model Router](../../../../src/content/posts/2026-07-03--dont-fear-the-model-router/index.mdx) | Adaptive systems, free tier, parallelization |
-| [Security Agent Model Router](../../../../src/content/posts/2026-06-30--security-agent-model-router/index.mdx) | Adaptive systems, parallelization |
+| [Announcing ExploitHunter.app](../../../../src/content/posts/2026-07-17--announcing-exploithunter-app/index.mdx) | Adaptive systems, dynamic scaling, failure improvement |
+| [Don't Fear the Model Router](../../../../src/content/posts/2026-07-03--dont-fear-the-model-router/index.mdx) | Adaptive systems, free tier, dynamic scaling |
+| [Security Agent Model Router](../../../../src/content/posts/2026-06-30--security-agent-model-router/index.mdx) | Adaptive systems, dynamic scaling |
 | [Into the Breach](../../../../src/content/posts/2026-05-13--into-the-breach/index.mdx) | Adaptive systems (governors), failure improvement (hooks) |
 | [Auto-Tune Your LLM Judge](../../../../src/content/posts/2026-08-11--auto-tune-your-llm-judge/index.mdx) | Failure improvement, adaptive systems |
 | [Fight Evils with Evals!](../../../../src/content/posts/2026-05-06--llm-evals-are-broken/index.mdx) | Failure improvement, product engineering |
 | [Semantic Vector Search](../../../../src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx) | Failure improvement (search ladder), adaptive systems |
-| [Production AI is Terrifying](../../../../src/content/posts/2026-01-03--mastra-security-guardrails/index.mdx) | Adaptive systems, parallelization (boundaries) |
-| [LLM Connection Strings](../../../../src/content/posts/2026-01-30--llm-connection-strings/index.mdx) | Free tier (provider portability), parallelization (distribute) |
+| [Production AI is Terrifying](../../../../src/content/posts/2026-01-03--mastra-security-guardrails/index.mdx) | Adaptive systems, dynamic scaling (boundaries) |
+| [LLM Connection Strings](../../../../src/content/posts/2026-01-30--llm-connection-strings/index.mdx) | Free tier (provider portability), dynamic scaling (distribute) |
 | [The Unassuming Power of Multiple-Choice Questions](../../../../src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx) | Evidence of learning, skeptic's guide |
 | [The Last to Think](../../../../src/content/posts/2025-05-31--the-last-to-think/index.mdx) | Skeptic's guide, evidence of learning |
-| [One Weird Trick](../../../../src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx) | Product engineering, parallelization |
+| [One Weird Trick](../../../../src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx) | Product engineering, dynamic scaling |
 
 ## One-line variants for forms
 

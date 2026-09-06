@@ -22,7 +22,7 @@ Click Evaluate proposed promotion with all gates unchecked. The fix stays in rev
 
 ## 3. Resource-policy exercise
 
-This standalone exercise covers strategy selection and caps. For the current talks, use the [adaptive recovery walkthrough](../packets/adaptive-systems/demo.md) or [parallel job walkthrough](../packets/parallelization/demo.md).
+This standalone exercise covers strategy selection and caps. For the current talks, use the [adaptive recovery walkthrough](../packets/adaptive-systems/demo.md) or [dynamic-scaling walkthrough](../packets/dynamic-scaling/demo.md).
 
 **Four minutes.** Show the known status lookup with no model agent. Select a routine task, then a novel intermittent failure. The selected organization changes. For the novel case, lower the budget to $0.10 or the deadline to five seconds. The system stops because the modeled strategy does not fit.
 

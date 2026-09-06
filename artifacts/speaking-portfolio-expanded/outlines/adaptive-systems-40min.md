@@ -1,12 +1,12 @@
 # Adaptive, agentic apps
 
-Recover from unexpected failures without inventing new permissions.
+Give each job exactly enough agent. Prove every repair. Let the app ask for its own scale.
 
-Updated 2026-09-05 from Dan's dictated notes. 40 minutes, 16 slides, no Q&A. Add five minutes for a 45-minute booking. Timings include the specified walkthroughs and audience exercises. Speaker text is a rehearsal talk track, not a claim of 40 minutes of continuous scripted speech.
+Rewritten 2026-09-06 from Dan's notes. 40 minutes, 15 slides, four audience moments, no Q&A. Add five minutes for a 45-minute booking. The design is Dan's; the incidents are composites of real integrations with the names filed off. Say that once, on slide 1, and never apologize for it again.
 
 [Presenter scripts](../packets/adaptive-systems/script-40min.md) · [Contracts](../packets/adaptive-systems/contracts.md) · [Walkthrough](../packets/adaptive-systems/demo.md) · [Evidence](../packets/adaptive-systems/evidence-bank.md)
 
-Scope: proposed architecture; synthetic walkthroughs and illustrative costs; no measured reliability or speedup claim. Say this once at the opening.
+Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts adaptive-systems`.
 
 ## 1. The vendor renamed a field
 
@@ -16,284 +16,253 @@ Scope: proposed architecture; synthetic walkthroughs and illustrative costs; no 
 
 > Yesterday: zip
 > Today: postal_code
-> Your ingest stops.
+> Your ingest stops. The status page is green.
 
 The API still returns 200. Authentication works. The vendor's status page is green. Your ingest is broken because somebody renamed a field. If you work around B2B integrations, this is a very boring way to have a very expensive morning.
 
-I want to talk about adaptive, agentic apps: applications that can investigate an unfamiliar failure and propose a recovery using the tools we give them. The ambition is useful fault tolerance. The difficult part is deciding which repairs deserve automatic execution.
+Here is the promise of this talk. An application can notice that, investigate it, propose a fix, prove the fix, and keep the other ninety-eight percent of records flowing, all before you wake up. And it can do that without ever holding a permission you would be scared to give it.
 
-This is a proposed design with synthetic examples, not a claim that an agent can repair arbitrary APIs. We will follow one ingest job through a rename, a semantic change, and a provider failure.
+The design is mine. The incidents are composites; I have had this exact morning more than once. We will follow one address ingest job through a rename, a change in meaning, and a provider that stops answering.
 
-Stage direction: Ask who has seen a successful HTTP response carry a breaking change. Take one brief example; return to the ingest job.
+Story: The vendor rename you actually lived through. Name the field, the hour you noticed, and what it cost.
 
-## 2. Recovery needs a definition of success
+Stage direction: Hands up for a 200 response that carried a breaking change. Take one story, thirty seconds, and return to the ingest job.
+
+## 2. The bar is: diff the schema and page a human
 
 02:00 to 04:00 · warm
 
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
+> Baseline: alert, wait for a person, replay
+> Agent: investigate, propose, prove, continue
+> Win condition: faster recovery, zero new false repairs
 
-> Preserve meaning
-> Bound spend and time
-> Keep uncertain records visible
+Before anyone gets excited about agents, name the boring alternative. A schema diff, an alert, and a human who replays the batch after coffee. It works. It costs a morning per surprise, and it does nothing for the unaffected records that are stuck behind the broken ones.
 
-Imagine telling an OCR agent: get the highest quality extraction, prefer our cheap provider, make it so. What happens when a slightly better result costs a hundred times more? What happens when the score improves if the system quietly drops difficult pages?
+The agent has to beat that. Not on vibes. On time to recover, on records kept moving, and on a number the baseline gets for free: false repairs. Alert-and-wait never turns a rename into plausible wrong data. If the adaptive version does, even once, it has made operations worse.
 
-Neither behavior needs a science-fiction motive. We supplied an incomplete objective. A quality metric can reward the wrong behavior, and even honest optimization can exceed a budget we never specified.
+So every slide from here is about buying recovery speed without buying corruption. Keep that trade in your head; it is the whole talk.
 
-Define acceptable field accuracy on representative labeled documents, retain page coverage, and set resource ceilings. If no approved route meets the quality floor inside those ceilings, return an explicit incomplete result. The agent cannot lower the floor or conceal rejected records to declare victory.
+Stage direction: Write the three metrics on the board and leave them there.
 
-Stage direction: Write an OCR objective with a quality floor, coverage requirement, spend ceiling and incomplete outcome. Explain which is a hard constraint.
+## 3. Now imagine the assistant that has everything
 
-## 3. Give the planner a bounded job
+04:00 to 07:00 · build
 
-04:00 to 06:00 · steady
+![One agent holding every customer record and every dangerous tool is a breach waiting for a typo.](../../reveal-talks/assets/adaptive-systems/03-the-assistant-with-everything.svg)
 
-![The planner proposes a mapping; trusted code validates and controls its activation.](../../reveal-talks/assets/adaptive-systems/03-proposal-and-authority-are-separate.svg)
+> All customer data
+> Tools that email, refund, delete, deploy
+> Accidents first. Then people who mean it.
 
-> Observe → propose → validate
-> Execute → verify → record
+Zoom out from the ingest job. The thing we are all building toward is an assistant with access to every customer's data and a toolbox that can send email, issue refunds, delete records and ship code. Most of the damage it will ever do will be an accident: a confident mapping, a helpful cleanup, a tool called with the wrong ID.
 
-The model gets room to investigate. It can inspect approved samples, compare a contract, consult a vendor changelog, and propose a mapping. A controller checks that proposal before anything changes.
+Then there are the people who mean it. That renamed field could carry a sentence aimed at the model. A vendor payload is untrusted input that now gets read by something that can act.
 
-The contract names the goal, available evidence, permitted actions, deadline, budget and stop conditions. The model can choose a different investigation strategy inside that contract. It cannot grant itself a new database permission because the current one is inconvenient.
+So the question for the next few years is not whether to give the assistant access. It is which strategies let us give it access and manage the risk. My answer, and what I have been building, is: never build the one assistant that has everything. Conjure a small one for each job, with exactly enough.
 
-Keep the ordinary path simple. A known mapping runs as code. An unexpected mismatch opens a bounded investigation. We do not need to rent a committee every time a CSV arrives.
+Story: Your own near miss with an over-permissioned agent, or a tool call you were glad had a dry-run flag.
 
-Stage direction: Draw the boundary between planner and controller. Place schema reads inside; place deployment credentials outside.
+Stage direction: Pause on the third line. Let the room feel that the accident case is the common one.
 
-## 4. Repair syntax; prove meaning
+## 4. Conjure the agent the job needs
 
-06:00 to 09:00 · build
+07:00 to 11:00 · peak
+
+![The orchestrator writes a tailored prompt, selects the minimum tools from a catalog, and loops until the job is done or must stop.](../../reveal-talks/assets/adaptive-systems/04-conjure-the-agent-the-job-needs.svg)
+
+> Tailored prompt, minimum tools, hard budget
+> Tool search on request, policy decides, request logged
+> Orchestrator loops: done, more help, or stop
+
+Here is the shape. An orchestrator reads the failure and writes a job: goal, evidence it may read, actions it may take, deadline, spend, and the conditions that end it. Then it generates an agent for that job with a tailored prompt and only the tools it expects to need. A schema-diff agent gets read access to two samples and a contract. It does not get the database.
+
+If the agent needs something else, it asks. Dynamic tool search lets it discover a tool; policy decides whether this job may have it; the request and the answer are logged whether or not it was granted. That log is the most interesting file in the system.
+
+The orchestrator runs the result through a loop: is the job done, does it need another specialist, or must it stop? A diff agent hands to a fixture-writer agent hands to a reviewer, each with its own blast radius, each disposable when finished. Nobody rents a committee every time a CSV arrives; the known mapping runs as code, and only the unfamiliar case conjures anything.
+
+I have this working as a prototype on my own integrations. I am not going to give you a success rate today, because I do not have one I trust yet. I can tell you the log of denied tool requests taught me more about my own permissions than any audit.
+
+Story: What the prototype's first denied tool request was, and what it revealed.
+
+Stage direction: Draw the three boxes: orchestrator, generated agent, tool catalog with policy gate. Show one request crossing the gate and being refused.
+
+## 5. Guard the tools that can hurt
+
+11:00 to 14:00 · build
+
+![Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.](../../reveal-talks/assets/adaptive-systems/13-keep-access-capabilities-out-of-the-planner.svg)
+
+> High-risk classes: write, send, pay, delete, deploy, export
+> Read customer data and post to a vendor never share one agent
+> A signed URL is a credential
+
+Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
+
+Second, watch the boundary between systems. An agent that can read customer data and an agent that can post to a vendor are two agents, with a filter between them. That is where data leaks: not through the model being evil, but through a tool result flowing into the next tool call.
+
+For sensitive processing, the planner gets an opaque job reference. A trusted dispatcher grants a local worker scoped access; the worker touches the data; only an allowlisted status comes back. A signed download URL is a bearer credential. Handing it to a model while asking the model not to use it is not isolation, it is hope.
+
+Story: The client setup with local models for sensitive data and a frontier orchestrator. Say which parts were real and which are the stronger design you would build now.
+
+Stage direction: Point at the filter between worker and planner. Ask what else crosses it: prompts, traces, error bodies, notification previews.
+
+## 6. Repair syntax; prove meaning
+
+14:00 to 17:00 · build
 
 ![A documented rename can preserve meaning; an undefined business state needs an owner.](../../reveal-talks/assets/adaptive-systems/04-a-rename-is-not-a-new-meaning.svg)
 
 > zip → postal_code: investigate
 > status: true → pending: stop
 
-A name resemblance is a hypothesis. It is not evidence that two fields mean the same thing. A postal code is not always a US ZIP code. Preserve leading zeros and country context. ZIP+4 has a four-digit extension, and throwing it away is a policy decision.
+Back to the ingest. A name resemblance is a hypothesis, not evidence. A postal code is not always a US ZIP. Keep the leading zero, keep the country, and remember ZIP+4 has a four-digit extension that somebody, somewhere, is joining on.
 
-A Boolean status becoming an enum is harder. Does true mean active, eligible, verified, or anything except cancelled? Pending cannot safely become true just because both values are truthy in JavaScript.
+A Boolean status becoming an enum is harder. Does true mean active, eligible, verified, or anything except cancelled? Pending cannot become true just because both are truthy in JavaScript.
 
-Let the system propose a reversible field mapping when evidence supports semantic equivalence. Quarantine ambiguous records. An unexplained business-state transition goes to an owner. Automatic recovery is useful precisely because it has somewhere honest to stop.
+So the generated agent may propose a reversible mapping when evidence supports equivalence, and it must quarantine the rest. An unexplained business-state change goes to an owner with samples and a question. Automatic recovery is useful precisely because it has somewhere honest to stop.
 
-Stage direction: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each case.
+Stage direction: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each. Two answers, then move.
 
-## 5. The repair is a versioned artifact
+## 7. The repair is a versioned artifact
 
-09:00 to 11:00 · steady
+17:00 to 19:00 · steady
 
 ![Promote a tested mapping within its allowed scope; reconcile writes if you roll back.](../../reveal-talks/assets/adaptive-systems/05-a-repair-has-a-version-and-a-scope.svg)
 
 > Input fingerprint + mapping version
-> Evidence + tests + rollback
+> Evidence + fixtures + rollback
 > No silent mutation of the database
 
-Have the agent produce a mapping artifact, not a paragraph saying it fixed things. Tie it to the observed input contract and a parent version. Include the field transformations, rejected cases, evidence references and validation results.
+The agent produces a mapping artifact, not a paragraph saying it fixed things. Parent version, input fingerprint, the transforms, the rejected cases, the evidence it read, and the fixture results.
 
-A narrow mapping adjustment can pass a preauthorized promotion policy. A database migration has a different blast radius and needs its own approval path. Do not smuggle a destructive migration through a tool called repair mapping.
+A narrow mapping change can pass a pre-authorized canary policy. A schema migration has a different blast radius and its own approval path. Keep the source records so you can replay; keep the old mapping so you can restore. Rollback changes future processing. It does not un-write yesterday's downstream rows; those need reconciliation.
 
-Keep the source records so you can replay them. Keep the old mapping so you can restore it. Rollback changes future processing; it does not magically undo records already written downstream. Those need reconciliation.
+Stage direction: Walk the mapping artifact in contracts.md. Point at parent version, activation scope, replay reference.
 
-Stage direction: Walk the mapping contract in contracts.md. Point to the parent version, activation scope and replay identifier.
-
-## 6. Make a plausible repair fail a test
-
-11:00 to 14:00 · build
-
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
-
-> Leading zeros
-> Missing country
-> Conflicting old and new fields
-> Unknown business state
-
-Here is where we try to embarrass the repair before a customer does. Test the renamed field, but also send both names with conflicting values. Send a missing field, a null, a leading zero, and a value from another country.
-
-The agent should not author the only examples that judge its own work. Keep regression cases and held-out examples under separate control. Schema validation tells us that output has the right shape. It cannot tell us that a policyholder is eligible or that an address is deliverable.
-
-Release to a narrow approved slice, compare accepted and quarantined records, and watch downstream invariants. A high success count is worthless if the denominator quietly shrank.
-
-Stage direction: Run the four paper fixtures in demo.md. Ask the audience to reject the conflicting-field fixture before revealing its expected outcome.
-
-## 7. Known failures should stay boring
-
-14:00 to 16:00 · steady
-
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
-
-> 429: respect limits
-> 503: bounded retry or approved fallback
-> 401 / 403: investigate authority
-
-A familiar transient error usually belongs in ordinary retry code. Use bounded backoff with jitter, respect applicable retry guidance, and give the entire operation one retry budget. Three nested layers each retrying independently can multiply traffic during an outage.
-
-Debouncing combines bursts of events. Backoff spaces retries. A circuit breaker stops repeatedly calling an unhealthy dependency. They solve different problems.
-
-The agent becomes useful when the failure does not match an approved playbook, or when it must assemble evidence to choose among permitted recovery routes. It can recommend lowering concurrency. The scheduler performs the change. An access denial is not permission to hunt for an IP address that gets through.
-
-Stage direction: Classify 429, 503 and 403. Explain why retrying an operation with side effects requires an idempotency or reconciliation plan.
-
-## 8. Regional recovery has a contract
-
-16:00 to 19:00 · build
-
-![Check the entire dependency path; lower latency alone does not authorize a destination.](../../reveal-talks/assets/adaptive-systems/08-recovery-stays-inside-approved-regions.svg)
-
-> Approved regions only
-> Dependency health + workload probes
-> Residency, capacity and deadline checks
-
-A regional failure might justify moving work. A status page is one input. Probe the dependency from an approved alternative and check whether the whole path works, including storage, credentials and callbacks.
-
-The next region with the lowest latency is only a candidate. Data residency, account permissions, available capacity and startup time can disqualify it. A different IP does not fix an invalid credential, and an account-wide quota may follow you everywhere.
-
-Give the planner a catalog of permitted destinations and operations. Let it choose within that catalog. Provisioning tools enforce instance classes, leases and teardown. Otherwise a recovery experiment can become an infrastructure bill with a very creative explanation.
-
-Stage direction: Compare an approved nearby region with an unapproved faster region. Have the audience choose and justify the allowed action.
-
-## 9. A timeout leaves a question
+## 8. The agent does not write its own exam
 
 19:00 to 21:00 · steady
+
+> Held-out fixtures under separate control
+> Conflicting old and new fields
+> Watch the denominator
+
+Here is where we try to embarrass the repair before a customer does. The agent that proposed the mapping does not author the only tests that judge it. Regression fixtures and held-out cases live under separate control, and a generated fixture-writer agent adds to them without seeing the proposal.
+
+Schema validation says the output has the right shape. It cannot say an address is deliverable. So release to a narrow slice, compare accepted against quarantined, and watch downstream invariants. A high success count is worthless if the denominator quietly shrank.
+
+Stage direction: Keep the fixtures hidden. They are revealed in the walkthrough.
+
+## 9. A lost response leaves a question
+
+21:00 to 23:00 · steady
 
 ![Reconcile the operation identity before another submission; retain unresolved reservations.](../../reveal-talks/assets/adaptive-systems/09-a-lost-response-leaves-an-unknown-outcome.svg)
 
 > Did it fail?
-> Or did the response disappear?
+> Or did the answer disappear?
 
-Suppose the provider accepted our OCR job and charged for it, then the connection broke. Launching the same job elsewhere might recover latency and duplicate both the work and the charge.
+The same ingest calls an address-verification provider. Suppose the provider accepted the batch and charged for it, then the connection dropped. Resubmitting elsewhere recovers latency and doubles the bill.
 
-Record an operation identity before dispatch. Retain provider job IDs. Use provider-supported idempotency where available. If acceptance is uncertain, reconcile before resubmitting, or stop with an unknown outcome when the provider offers no reliable query.
+Record an operation identity before dispatch. Keep the provider's job ID. Reconcile before resubmitting, and when the provider offers no way to ask, stop with an unknown outcome and say so. A deadline ends new dispatch; it does not reverse a side effect already performed. The ledger has to hold that uncertainty, reserved money included, until the answer arrives.
 
-A deadline stops further dispatch. It can request cancellation where cancellation exists. It does not reverse a side effect already performed. The job ledger needs to preserve that uncertainty, including outstanding financial reservations, until we know what happened.
-
-Stage direction: Walk a lost-response timeline. Mark the point at which the local process knows less than the provider.
+Stage direction: Mark the moment on the timeline where your process knows less than the provider does.
 
 ## 10. Walkthrough: one ingest, three decisions
 
-21:00 to 26:00 · peak
+23:00 to 28:00 · peak
 
 ![Recovery, quarantine and reconciliation are all legitimate outcomes of the same ingest job.](../../reveal-talks/assets/adaptive-systems/10-three-events-require-three-decisions.svg)
 
-> Rename → validated mapping
-> Unknown status → quarantine
-> Lost response → reconcile
+> Rename → validated mapping, canary
+> Unknown status → quarantine, owner
+> Lost response → reconcile, hold the reservation
 
-Let us run the design against three events. The rename has contract evidence and passes both positive and negative fixtures. Our policy permits a canary of that mapping version. The job continues for matching records.
+Run the design. The rename has contract evidence. The conjured diff agent proposes copy-string; now reveal the fixtures one at a time and let the room reject the one that must not be repaired. Passing both, policy permits a canary of that mapping version and the job continues for matching records.
 
-The status change lacks semantic evidence. The job isolates affected records, reports what remains incomplete, and gives an owner the samples and the question they need to answer.
+The status change has no semantic evidence. The job isolates affected records, reports what is incomplete, and hands an owner the samples and the exact question.
 
-The provider timeout has an uncertain external outcome. The controller queries the saved job ID instead of submitting another extraction. Where it cannot establish status, it retains the unresolved operation.
+The provider timeout has an uncertain outcome. The controller queries the saved job ID instead of submitting again, and where it cannot, it holds the unresolved operation and its reservation.
 
-All three are valid outcomes. If your dashboard only has success and failure, it will hide the most interesting operational state.
+Three events, three different right answers, none of them success or failure. If your dashboard only has two states, it is hiding the most interesting one.
 
-Stage direction: Use demo.md as a five-minute paper walkthrough. Allocate one minute to each event and two minutes to decisions and questions. No live agent claim.
+Stage direction: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
-## 11. Show engineers what changed today
+## 11. Scale becomes something the app asks for
 
-26:00 to 28:00 · steady
+28:00 to 31:00 · build
 
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
+![The orchestrator requests shape, size and duration inside a per-customer ceiling; the scheduler resolves it against a catalog and issues a lease.](../../reveal-talks/assets/adaptive-systems/11-scale-becomes-a-capability.svg)
+
+> Old: ops sizes the fleet for everyone
+> New: the job describes its shape and asks
+> Per-customer, per-job cost controls and pay-for-performance
+
+One more thing the orchestrator can conjure: compute. Today scaling is an infra decision made once for everyone. Replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
+
+So it asks. The request names shape, size, duration and a cost cap, and it is charged to this customer or this job rather than to a shared cluster. That is a new product surface: a customer can buy a faster turnaround, and a finance team can cap a single workflow instead of a whole environment.
+
+The guard is the same one we used for tools. The agent chooses from a catalog of approved instance classes; the scheduler enforces leases and teardown; an unapproved faster region is not a candidate no matter how good the latency looks. The mechanics and the ecosystem are a companion talk.
+
+Story: A job where per-customer compute would have changed the pricing conversation.
+
+Stage direction: Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
+
+## 12. Show engineers what changed today
+
+31:00 to 33:00 · steady
 
 > Promoted changes and scope
 > Quarantined records and reasons
-> Outstanding jobs and reserved spend
-> Owner, evidence and next action
+> Outstanding jobs, reserved spend, denied tool requests
+> Owner, evidence, next action
 
-The daily report should help an engineer decide where to look. Rank unresolved semantic changes above routine retries. Show the number of records affected, the mapping versions in use, the evidence for each promotion and the outstanding external operations.
+The daily report should tell an engineer where to look. Unresolved semantic changes above routine retries. Records affected, mapping versions in use, evidence for each promotion, outstanding external operations, and every tool request the policy refused.
 
-Log observable decisions and artifacts. We need the inputs to a policy decision, the validator result and the executed action. We do not need private model reasoning to reconstruct an incident.
+Log decisions and artifacts, not private reasoning. The inputs to the policy decision, the validator result, and the executed action are enough to reconstruct an incident. Urgent problems page through existing thresholds; the digest is for drift. Never make an agent the sole judge of whether its own failure deserves attention.
 
-Urgent problems should page through existing thresholds. A daily digest is for accumulated observations and lower-priority drift. Avoid making an agent the sole judge of whether its own failure deserves attention.
+Stage direction: Read the sample report in contracts.md. Find the one item that needs an owner today.
 
-Stage direction: Read the sample report in contracts.md. Identify the one item that needs an owner today.
+## 13. Widen authority only from measured outcomes
 
-## 12. Measure recovery, including its mistakes
+33:00 to 36:00 · land
 
-28:00 to 30:00 · build
+> Shadow: propose, apply nothing
+> Canary: one reversible change class
+> Expand: from correct recoveries, false repairs, cost, interventions
 
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
+Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
-> Correct recovery rate
-> Silent corruption and false repair
-> Time, cost and human intervention
+Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute.
 
-Compare this design with the existing static mapping and retry policy on the same recorded incidents. Measure recovery, but also false repairs, missing records, cost, elapsed time and human corrections.
-
-A system that turns obvious failures into plausible wrong data has made operations worse. Your test corpus needs semantic ambiguity and unrecoverable cases, not just friendly renames. Calibrate any escalation score against actual outcomes by failure class. A model saying ninety percent confident does not settle the question.
-
-Start in shadow mode with authorized data: propose artifacts without applying them. Then permit a narrow reversible change class. Expand authority only when the evidence supports that class of action.
-
-Stage direction: Ask what metric would expose a system that silently drops ten percent of input. Add it to the scorecard.
-
-## 13. Keep private data out of the planner
-
-30:00 to 32:00 · build
-
-![Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.](../../reveal-talks/assets/adaptive-systems/13-keep-access-capabilities-out-of-the-planner.svg)
-
-> Opaque job reference
-> Trusted worker resolves access
-> Allowlisted status returns
-
-An optional architecture for sensitive processing separates orchestration from payload access. The frontier planner requests a job using an opaque reference. A trusted dispatcher checks the request and grants the local worker scoped access. The worker processes the data and stores the result in approved storage.
-
-Return only an allowlisted status or summary to the planner. Prompts, tool results, traces, errors and notification previews all need the same data boundary.
-
-A signed download URL is a credential. Giving it to a model while asking the model not to use it does not isolate the data. Keep those capabilities outside its context when payload separation is the requirement.
-
-Stage direction: Optional: use Dan's client account only as an unverified, anonymized recollection. Draw the proposed strengthened boundary from contracts.md; do not present it as the client's audited implementation.
+Stage direction: Ninety seconds on the recovery card in contracts.md. Compare two answers for one minute.
 
 ## 14. Let recurring discoveries become code
 
-32:00 to 34:00 · steady
-
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
+36:00 to 38:00 · steady
 
 > Runtime: recover within current policy
 > Offline: evaluate a proposed policy change
-> Known case: run the tested adapter
+> Known case: run the tested adapter, conjure nothing
 
-There are two loops. The runtime loop serves this job inside current limits. The improvement loop proposes a reusable adapter, a revised threshold, or a better investigation strategy, then evaluates it before promotion.
+Two loops. The runtime loop serves this job inside current limits. The improvement loop turns a repeated discovery into a tested adapter, a revised threshold, or a better investigation strategy, evaluated before promotion. Once zip and postal_code are understood, the next matching payload never opens an investigation.
 
-This is where the system becomes less expensive to operate. Once a mapping is understood, the next matching payload goes through the tested adapter. It should not need another conversation about whether zip and postal_code might be related.
+New models qualify against the same incidents without inheriting new permissions. The full improvement loop is the failure-improvement talk; here the point is the boundary between a local recovery and a policy change.
 
-New models can be qualified against the same incidents and held-out cases without inheriting new permissions. Keep old strategy versions for rollback. The detailed improvement loop belongs in the companion failure-improvement talk; here we need the boundary between a local recovery and a policy change.
+Stage direction: Name one repair that deserves a deterministic adapter and one that should stay a human decision.
 
-Stage direction: Name one observed repair that deserves a deterministic adapter and one that should remain a human decision.
-
-## 15. Start with one reversible failure class
-
-34:00 to 38:00 · land
-
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
-
-> Observe first
-> Propose in shadow
-> Permit a narrow canary
-> Expand from measured outcomes
-
-Pick one integration that already costs your team time. Write down the invariant you refuse to violate, the evidence that would justify a repair, the allowed action, and the stop condition.
-
-Run historical incidents through it. Include the failures where the correct answer is to stop. Start with a reversible adapter change rather than production schema surgery. Give the daily report a human owner before you enable automatic promotion.
-
-The practical question is how much investigation we can delegate while preserving the meaning of our data. That is a much more useful engineering question than whether the system feels autonomous.
-
-Stage direction: Give attendees 90 seconds to fill the recovery card in contracts.md, then compare two answers for one minute.
-
-## 16. The next surprise should cost less
+## 15. The next surprise should cost less
 
 38:00 to 40:00 · land
 
-Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
-
-> Investigate the unfamiliar
-> Verify the repair
+> Conjure exactly enough
+> Prove the repair
 > Remember the known case
 
-Return to the field that changed overnight. We did not predict its spelling. We did define what had to remain true, what evidence a repair needed, and how far the application could go without us.
+Return to the field that changed overnight. We did not predict its spelling. We did define what had to stay true, what evidence a repair needed, which tools this one job could have, and how far the app could go without us.
 
-That is the promise I care about. The next surprise costs less attention because the application can do the investigation, preserve the evidence, and either recover within policy or hand us a useful unresolved question.
+And return to the assistant with everything. We never built it. We built a factory for small ones, each with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent you have to trust, but many you can afford to check.
 
-Choose one recurring integration failure. Give an agent a bounded way to investigate it, a test that can reject its proposal, and a place to record what happened. That is enough to start.
+Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. That is enough to start.
 
-Stage direction: Pause on the recovery card. Close with the final paragraph; do not reopen the provider catalog.
+Stage direction: Land on the third line. Stop talking.

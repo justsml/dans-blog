@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="llm:// connection strings for AI: one portable URI for provider, model, and runtime configuration. Fifteen-minute talk with three demo moments."><title>llm:// Connection Strings for AI (15 min) | Dan Levy</title><link rel="stylesheet" href="assets/reveal.css"><link rel="stylesheet" href="assets/deck.css"><link rel="stylesheet" href="assets/llm-uri.css"></head><body data-topic="llm-uri"><div class="reveal"><div class="slides">
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="llm:// connection strings for AI: one portable URI for provider, model, and runtime configuration. Fifteen-minute talk."><title>llm:// Connection Strings for AI (15 min) | Dan Levy</title><link rel="stylesheet" href="assets/reveal.css"><link rel="stylesheet" href="assets/deck.css"><link rel="stylesheet" href="assets/llm-uri.css"></head><body data-topic="llm-uri"><div class="reveal"><div class="slides">
 
-<section data-slide="1" data-timing="180" aria-label="Remember database configuration hell?">
+<section data-slide="1" data-timing="150" aria-label="Remember database configuration hell?">
 <p class="eyebrow">llm:// · 15 minute talk</p>
 <h2>Remember database configuration hell?</h2>
 <div class="split">
-<div class="panel"><p class="label">.env, circa 2009</p><pre><code><span class="k">DB_HOST</span>=
+<div class="panel"><p class="label">.env, the bad old days</p><pre><code><span class="k">DB_HOST</span>=
 <span class="k">DB_PORT</span>=
 <span class="k">DB_USER</span>=      <span class="c"># or DB_USERNAME?</span>
 <span class="k">DB_PASSWORD</span>=  <span class="c"># or DB_PASS?</span>
@@ -22,95 +22,88 @@
 <span class="bad">MODEL_NAME</span>=  <span class="c"># plus temperature in code</span></code></pre></div>
 </div>
 <p class="quip fragment" data-fragment-index="2">Apparently we decided to do the whole thing again.</p>
-<div class="tags fragment" data-fragment-index="3" style="margin-top:26px"><span>provider</span><span>endpoint</span><span>model</span><span>auth</span><span>temperature</span><span>top-p</span><span>token limit</span><span>reasoning effort</span><span>caching</span><span>deployment</span><span>region</span><span>retries</span><span>failover</span></div>
-<aside class="notes"><p>llm:// (15 min) | slide 1 | 3 minutes</p><p>Open on the left panel and let people remember. Was it DB_USER or DB_USERNAME? DB_PASS or DB_PASSWORD?</p><p>First click: one portable, parseable, language-independent string ended that argument.</p><p>Second click: the AI env file and the punchline. Pause.</p><p>Third click: AI configuration is becoming infrastructure. An LLM call now has all of these dimensions. Most applications represent them across the environment, the SDK constructor, and the call site. The next slide shows that smear and the fix.</p><p>Personal-story prompt: name the actual project where the .env file annoyed you enough to write the post.</p></aside>
+<div class="tags fragment" data-fragment-index="3"><span>provider</span><span>endpoint</span><span>model</span><span>auth</span><span>temperature</span><span>top-p</span><span>token limit</span><span>reasoning effort</span><span>caching</span><span>deployment</span><span>region</span><span>retries</span></div>
+<aside class="notes"><p>llm:// (15 min) | slide 1 | 2.5 minutes</p><p>Open on the left panel and let people remember. Was it DB_USER or DB_USERNAME? DB_PASS or DB_PASSWORD?</p><p>First click: one portable, parseable, language-independent string ended that argument.</p><p>Second click: the AI env file and the punchline. Pause.</p><p>Third click: an LLM call now has all of these dimensions, and most applications smear them across the environment, the SDK constructor, and the call site.</p><p>Story: name the actual project where the .env file annoyed you enough to write the post.</p></aside>
 </section>
 
-<section data-slide="2" data-timing="180" aria-label="Steal the database connection string">
+<section data-slide="2" data-timing="150" aria-label="One dependency, one address">
 <p class="eyebrow">So steal the database connection string</p>
 <h2>One logical dependency deserves one address.</h2>
 <div class="split">
 <div class="panel"><p class="label">environment · constructor · call site</p><pre><code><span class="c">// init  (keys and URLs come from .env)</span>
-new OpenAI({
-  apiKey:  process.env.OPENAI_API_KEY,
-  baseURL: process.env.OPENAI_BASE_URL,
-})
+new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
 
 <span class="c">// every call site</span>
-model: <span class="v">"gpt-5.2"</span>, temperature: <span class="v">0.7</span>,
-maxTokens: <span class="v">1500</span>,
-reasoning: { effort: <span class="v">"none"</span> }</code></pre></div>
-<div class="panel fragment" data-fragment-index="1"><p class="label">one string</p><pre><code><span class="hl">LLM_URL</span>=llm://api.openai.com/gpt-5.2
-        ?reasoning_effort=none
-        &amp;temp=0.7
-        &amp;max_tokens=1500
+model: <span class="v">"claude-fable-5-1"</span>,
+max_tokens: <span class="v">2000</span>,
+cache_control: { type: <span class="v">"ephemeral"</span> }</code></pre></div>
+<div class="panel fragment"><p class="label">one string</p><pre><code><span class="k">LLM_URL</span>=<span class="hl">llm://anthropic/fable-5.1?cache=true&amp;max=2000</span>
 
 <span class="c">// init, anywhere, any language</span>
 const model = connect(process.env.LLM_URL)</code></pre></div>
 </div>
-<div class="anatomy fragment" data-fragment-index="2" style="margin-top:34px">
-<div style="--c:var(--scheme)"><code>llm://</code><b>Scheme.</b> Resource type.</div>
-<div style="--c:var(--host)"><code>api.openai.com</code><b>Host.</b> Provider or endpoint.</div>
-<div style="--c:var(--path)"><code>/gpt-5.2</code><b>Path.</b> Model or deployment.</div>
-<div style="--c:var(--query)"><code>?temp=0.7</code><b>Query.</b> Runtime configuration.</div>
-</div>
-<aside class="notes"><p>llm:// (15 min) | slide 2 | 3 minutes</p><p>Left: the same dependency configured three times in three places. Nobody chose this; it accreted.</p><p>Click: the right panel collapses it into one string, consumed by one connect call, in any language.</p><p>Click: the anatomy. Scheme, host, path, query. Walk each segment by color. The exact syntax is not sacred. The point is that LLM configuration deserves a standard connection-string abstraction.</p></aside>
+<img class="diagram fragment" src="assets/llm-uri/inline-url-diagram-dark.svg" alt="The parts of an LLM connection string: scheme, credentials, host, model path and query parameters, each labeled.">
+<aside class="notes"><p>llm:// (15 min) | slide 2 | 2.5 minutes</p><p>Left: the same dependency configured three times in three places. Nobody chose this; it accreted.</p><p>Click: the right panel collapses it into one string, consumed by one connect call, in any language.</p><p>Click: the anatomy. Scheme says this is a model. Host says who serves it: a provider alias like anthropic, a hostname like api.anthropic.com, a gateway, or localhost:11434. Path names the model. Query carries the knobs.</p><p>Settle the first syntax question here so it does not derail Q&amp;A: a local model is a host, not a new scheme. postgres:// did not need a laptop:// variant.</p></aside>
 </section>
 
-<section data-slide="3" data-timing="210" aria-label="Three demo moments">
+<section data-slide="3" data-timing="180" aria-label="Three demo moments">
 <p class="eyebrow">URLs already know how to do this</p>
 <h2>Three places it stops being aesthetic.</h2>
 <div class="cards">
-<div><h3>1 · CLI swap</h3><pre><code><span class="k">export</span> LLM_URL=<span class="v">llm://api.openai.com/gpt-5.2</span>
+<div><h3>1 · CLI swap</h3><pre><code><span class="k">export</span> LLM_URL=<span class="v">llm://openai/gpt-5.6-sol?cache=false</span>
 my-agent
 
-<span class="k">export</span> LLM_URL=<span class="v">ollama://localhost/qwen</span>
+<span class="k">export</span> LLM_URL=<span class="v">llm://anthropic/fable-5.1?cache=true</span>
 my-agent</code></pre><p style="margin-top:14px">Zero application changes.</p></div>
 <div class="fragment"><h3>2 · Eval matrix</h3><pre><code><span class="c"># models.txt</span>
-llm://provider-a/model-a
-llm://provider-b/model-b
-llm://localhost/model-c</code></pre><p style="margin-top:14px">The runner iterates strings. Benchmarks and tests get the same loop.</p></div>
-<div class="fragment"><h3>3 · Router config</h3><pre><code><span class="k">fast:</span>      llm://provider/small
-<span class="k">reasoning:</span> llm://provider/frontier
-<span class="k">local:</span>     llm://localhost/qwen</code></pre><p style="margin-top:14px">A router is a map of names to connection strings.</p></div>
+llm://openai/gpt-6-astra?effort=medium
+llm://anthropic/fable-5.1?cache=true
+llm://openrouter/glm-5.3-flash?thinking=low</code></pre><p style="margin-top:14px">The runner iterates strings. Adding a model is adding a line.</p></div>
+<div class="fragment"><h3>3 · Router config</h3><pre><code><span class="k">fast:</span>      llm://openrouter/glm-5.3-flash?thinking=low
+<span class="k">reasoning:</span> llm://openai/gpt-6-astra?effort=max
+<span class="k">default:</span>   llm://anthropic/fable-5.1?cache=true</code></pre><p style="margin-top:14px">A router is a map of names to connection strings.</p></div>
 </div>
-<div class="rows fragment">
-<div><b>Portable · parseable</b><span>Laptop, CI, Docker, serverless, Kubernetes. Every language ships a URL parser.</span></div>
-<div><b>Serializable · composable</b><span>Store, pass, compare, override, validate, redact. Reuse config tooling you already have.</span></div>
-</div>
-<aside class="notes"><p>llm:// (15 min) | slide 3 | 3.5 minutes</p><p>Demo one: same binary, two exports, cloud then local. If a live terminal is available, run it here; otherwise narrate the exports.</p><p>Click, demo two: an eval harness that reads a text file of connection strings. Adding a model is adding a line.</p><p>Click, demo three: the router. Fast, reasoning, local. This is why the idea matters beyond shaving three env vars.</p><p>Click, the property list at speed. These are inherited from being a URL, not designed.</p><p>Key line: we don't need to invent AI-specific YAML for something URLs have handled for thirty years.</p></aside>
+<img class="shot tight fragment" src="assets/llm-uri/playground-filled.webp" alt="The llm-strings playground with a built string: llm://api.anthropic.com/claude-fable-5-1?cache=ephemeral&amp;effort=medium, marked valid.">
+<aside class="notes"><p>llm:// (15 min) | slide 3 | 3 minutes</p><p>Demo one: same binary, two exports, two providers. Run it live if a terminal is available; otherwise narrate.</p><p>Click, demo two: an eval harness that reads a text file of connection strings.</p><p>Click, demo three: the router. Fast, reasoning, default. This is why the idea matters beyond shaving three env vars: a router is a map of names to strings, and an orchestrator can pass one around.</p><p>Click: the playground at elite-libs.github.io/llm-strings. Click a provider, click a model, add a parameter; it builds and validates the string. Show it live if you can.</p></aside>
 </section>
 
-<section data-slide="4" data-timing="210" aria-label="Objections: secrets, provider differences, failover">
-<p class="eyebrow">The objections, in the order you will hear them</p>
-<h2>Secrets. Provider differences. Failover.</h2>
-<div class="cards">
+<section data-slide="4" data-timing="150" aria-label="Every provider is different, and that is fine">
+<p class="eyebrow">“Every provider is different.”</p>
+<h2>Standardize the envelope. Normalize the common knobs.</h2>
+<table class="norm">
+<tr><th>You write</th><th>openai</th><th>anthropic</th><th>google</th><th>bedrock</th></tr>
+<tr><td class="in">max=2000</td><td>max_completion_tokens</td><td>max_tokens</td><td>maxOutputTokens</td><td>max_tokens</td></tr>
+<tr><td class="in">cache=5m</td><td>—</td><td>cache_control + ttl 5m</td><td>—</td><td>cache point</td></tr>
+<tr><td class="in">effort=medium</td><td>reasoning_effort</td><td>effort</td><td>—</td><td>—</td></tr>
+<tr><td class="in">vendor.x=1</td><td colspan="4">passes through under a namespace; strict mode rejects unknown params</td></tr>
+<tr class="fragment"><td class="in">cache=2h</td><td colspan="4" class="err">validate(): "cache_ttl" must be one of [5m, 1h]. Caught before you spend a token.</td></tr>
+</table>
+<p class="quip small fragment">Postgres, MySQL and Redis are not identical either. The string standardizes the envelope, not every capability. What is new is that you can <em>check</em> it.</p>
+<aside class="notes"><p>llm:// (15 min) | slide 4 | 2.5 minutes</p><p>This is the objection everyone raises, and it is the slide that answers it with evidence instead of an analogy. The table is real output from the llm-strings normalizer: max=2000 becomes max_completion_tokens, max_tokens, or maxOutputTokens depending on the host. cache=5m becomes Anthropic cache control with a TTL or a Bedrock cache point. Unknown vendor params pass through; strict mode rejects them.</p><p>Click: validation. cache=2h fails inside your process, before the request leaves. Three names for one knob is exactly the mess a standard envelope exists to hide.</p><p>Click: the bottom line, then move on.</p></aside>
+</section>
+
+<section data-slide="5" data-timing="150" aria-label="Secrets, and the shapes we already tried">
+<p class="eyebrow">The other two objections</p>
+<h2>Secrets. And “we already have provider/model.”</h2>
+<div class="split">
 <div><h3>“Credentials in a URL?”</h3>
-<p class="uri small"><span class="s">llm://</span><span class="gone">user:secret@</span><wbr><span class="h">provider</span><span class="p">/model</span></p>
-<p class="uri small"><span class="s">llm://</span><span class="h">provider</span><span class="p">/model</span><span class="q"><wbr>?credential=env:OPENAI_API_KEY</span></p>
-<p style="margin-top:14px">URI syntax allows it. Logs, shell history, and telemetry say don't. <b>Standardize the string; keep credential policy separate.</b> Prefer indirection over literals.</p></div>
-<div class="fragment"><h3>“Every provider is different.”</h3>
-<p class="uri small"><span class="s">llm://</span><span class="h">provider</span><span class="p">/model</span><span class="q"><wbr>?temperature=.7<wbr>&amp;vendor.some_feature=true</span></p>
-<p style="margin-top:14px">So are Postgres, MySQL, Redis, and Mongo. Connection strings standardize <b>the envelope, not every capability.</b> Common params normalize; vendor params get a namespace.</p></div>
-<div class="fragment"><h3>“What about fallback?”</h3>
-<p class="uri small"><span class="s">llms://</span><span class="h">primary.example,<wbr>backup.example</span><span class="p">/model</span></p>
-<p class="uri small"><span class="s">llm://</span><span class="h">provider</span><span class="p">/model</span><span class="q"><wbr>?timeout=20s<wbr>&amp;retries=2</span></p>
-<p style="margin-top:14px">Databases eventually encoded SSL, timeouts, replicas, pools. <b>Same problem class.</b> Whether this exact syntax survives matters less than the abstraction.</p></div>
+<p class="uri small"><span class="s">llm://</span><span class="gone">app:sk-live-…@</span><span class="h">openai</span><span class="p">/gpt-5.6-sol</span></p>
+<p class="uri small"><span class="s">llm://</span><span class="dim">worker@</span><span class="h">openai</span><span class="p">/gpt-5.6-sol</span> <span class="dim">+ key from env or a secret manager</span></p>
+<p style="font-size:25px;color:var(--muted);margin-top:14px">The userinfo slot exists, the way it does in postgres://. Logs, shell history and telemetry say use it sparingly. <b style="color:var(--ink)">Standardize the string; keep credential policy separate.</b></p></div>
+<div class="fragment"><h3>“We already have a shorthand.”</h3>
+<div class="tags" style="margin:6px 0 16px"><span>provider/model</span><span>model@provider</span><span>provider:model</span><span>{ provider, model, apiKey, baseUrl }</span></div>
+<p style="font-size:25px;color:var(--muted);margin:0">Each one stops at the model name. No home for parameters, no credential position, no parser, nothing to validate. <b style="color:var(--ink)"><code>llm://provider/model</code> keeps the shorthand you already use</b> and gives it a query string and a spec.</p></div>
 </div>
-<p class="quip small fragment">The URI is an interchange format, not a claim that every model is the same.</p>
-<aside class="notes"><p>llm:// (15 min) | slide 4 | 3.5 minutes</p><p>Card one is deliberately controversial. Yes, the syntax supports credentials. No, that does not license pasting secrets into dashboards. Separate the two ideas: connection-string standardization is useful; credential handling still matters. A production implementation might reference the credential by an env indirection or a secret manager.</p><p>Click, card two. Yes, providers differ. So do databases, and connection strings stayed useful because they standardize the envelope. Common parameters normalize; provider-specific ones stay namespaced or pass through.</p><p>Click, card three. The article proposes llms:// as the plural form for multi-host behavior. Databases went through the same evolution with replicas and failover.</p><p>Click for the bottom line, then move to the close.</p></aside>
+<aside class="notes"><p>llm:// (15 min) | slide 5 | 2.5 minutes</p><p>Left: yes, the syntax allows a key in the userinfo position. No, that does not license pasting keys into dashboards. A production implementation references the credential by an env indirection or a secret manager and keeps the label. Do not make this a fight; nobody disagrees.</p><p>Click, right: the honest objection is that provider/model already won as a de facto shorthand. Agreed. It is the host and path of this URI. What it lacks is everything after the slash: parameters, a credential position, a parser, validation. llm:// is provider/model with a query string and a spec, not a replacement for it.</p></aside>
 </section>
 
-<section data-slide="5" data-timing="120" aria-label="Models are becoming infrastructure" class="cover">
+<section data-slide="6" data-timing="120" aria-label="Models are becoming infrastructure" class="cover">
 <p class="eyebrow">The bigger idea: stop making every library invent this</p>
-<div class="split" style="align-items:center;margin-bottom:24px">
-<div class="tags" style="margin:0"><span>provider/model</span><span>model@provider</span><span>provider:model</span><span>{ provider, model, apiKey, baseUrl }</span><span class="on">llm://provider/model?…</span></div>
-<p class="lede" style="margin:0;font-size:30px!important">A human picking a model once can tolerate awkward config. An orchestrator choosing among cloud, local, and specialist endpoints at runtime needs a <em>machine-readable model target.</em></p>
-</div>
+<p class="lede" style="margin-bottom:24px">A human picking a model once can tolerate awkward config. An orchestrator choosing among cloud, local and specialist endpoints at runtime needs a <em>machine-readable model target.</em></p>
 <p class="ledger"><span class="on"><em>postgres://</em> Databases are infrastructure.</span><span class="on"><em>amqp://</em> Queues are infrastructure.</span><span class="on"><em>s3://</em> Object storage is infrastructure.</span><span class="on fragment"><em>llm://</em> Models are becoming infrastructure too.</span></p>
 <p class="closing fragment">Let's give them connection strings.<br><span style="color:var(--muted)">One string. Any model. Any provider. Stop configuring models like it's 1999.</span></p>
-<p class="byline">Started as a blog post about an annoying <code>.env</code> file. Now an Internet-Draft for an <code>llm://</code> URI scheme. Edge cases should be challenged, syntax should evolve, libraries should experiment. Come argue with me.</p>
-<aside class="notes"><p>llm:// (15 min) | slide 5 | 2 minutes</p><p>Left: every SDK ecosystem reinvents serialization. A URI is a lingua franca between shell scripts, SDKs, agents, eval systems, CI, config managers, routers, and observability. That is more important than shaving three env vars.</p><p>Right: the agentic argument. If models are becoming infrastructure, they need infrastructure-grade addressing so an orchestrator can accept llm:// the way infrastructure accepts postgres, redis, s3, and https.</p><p>Read the ledger one line per beat. Click for the fourth line, click for the closer.</p><p>Byline: I wrote this because I was annoyed at my .env file. Apparently that is how standards begin. Invite objections and stop.</p></aside>
+<p class="byline">Blog post → Internet-Draft (<code>draft-levy-llm-uri-scheme</code>) → <code>llm-strings</code> on npm, zero dependencies, with a playground. Edge cases should be challenged, syntax should evolve, libraries should experiment. Come argue with me.</p>
+<aside class="notes"><p>llm:// (15 min) | slide 6 | 2 minutes</p><p>Every SDK ecosystem reinvents serialization. A URI is a lingua franca between shell scripts, SDKs, agents, eval systems, CI, config managers, routers and observability. That matters more than shaving three env vars.</p><p>The agentic argument: if models are infrastructure they need infrastructure-grade addressing, so an orchestrator can accept llm:// the way it accepts postgres, redis, s3 and https.</p><p>Read the ledger one line per beat. Click for the fourth line, click for the closer.</p><p>Byline: I wrote this because I was annoyed at my .env file. Apparently that is how standards begin. Refresh the Internet-Draft status before presenting. Invite objections and stop.</p></aside>
 </section>
 
 </div></div><script src="assets/reveal.js"></script><script src="assets/notes.js"></script><script src="assets/deck.js"></script><script>Reveal.configure({totalTime:900});</script></body></html>

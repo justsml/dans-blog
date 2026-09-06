@@ -6,29 +6,29 @@
 
 - Adaptive, agentic apps
 - When the API changes overnight
-- Recovery with evidence
+- Conjure exactly enough agent
 
 ## Short abstract (50 words)
 
-A vendor renames a field. Your ingest breaks. Can an agent investigate the change, propose a mapping and keep the job moving? This talk designs bounded recovery around semantic checks, versioned artifacts, resource limits and explicit uncertainty, so engineers can delegate investigation without quietly delegating permission to corrupt production data.
+A vendor renames a field at 2 a.m. Can your app investigate, propose a fix, prove it, and keep records moving, without holding a permission you'd be scared to give it? This talk shows how: conjure a narrow agent per job, guard the dangerous tools, prove every repair, and let the app ask for its own scale.
 
 ## Standard abstract (100 words)
 
-API changes, unavailable providers and incomplete responses are ordinary integration problems. Adaptive, agentic apps can investigate unfamiliar failures and propose recovery strategies, provided their authority stays bounded. Following one ingest job, this session distinguishes a field rename from a semantic change, turns repairs into versioned mapping artifacts, and tests them against conflicting and missing data. It covers bounded retries, approved regional fallback, uncertain external outcomes, and reports that help engineers see what changed. Attendees leave with a recovery contract, failure fixtures, and a rollout sequence that begins in shadow mode and expands only from evidence about correctness, cost and intervention.
+We are building toward assistants with access to every customer record and tools that can email, refund, delete and deploy. Most of the damage they will do is accidental. This talk is a strategy for giving them that access anyway: an orchestrator that generates a narrowly scoped agent per job, with a tailored prompt, the minimum tools, a hard budget, and a logged path to ask for more. Following one address ingest through a rename, a change in meaning and a lost provider response, we cover semantic proof, versioned repairs, guarded tool classes, and per-customer compute that the app requests rather than ops pre-provisions.
 
-## Extended abstract (215 words)
+## Extended abstract (210 words)
 
-API changes, unavailable providers and incomplete responses are ordinary integration problems. Adaptive, agentic apps can investigate unfamiliar failures and propose recovery strategies, provided their authority stays bounded. Following one ingest job, this session distinguishes a field rename from a semantic change, turns repairs into versioned mapping artifacts, and tests them against conflicting and missing data. It covers bounded retries, approved regional fallback, uncertain external outcomes, and reports that help engineers see what changed. Attendees leave with a recovery contract, failure fixtures, and a rollout sequence that begins in shadow mode and expands only from evidence about correctness, cost and intervention.
+We are building toward assistants with access to every customer record and tools that can email, refund, delete and deploy. Most of the damage they will do is accidental. This talk is a strategy for giving them that access anyway: an orchestrator that generates a narrowly scoped agent per job, with a tailored prompt, the minimum tools, a hard budget, and a logged path to ask for more.
 
-The worked example follows three decisions. A documented rename can become a candidate adapter. A status field with an unknown business meaning remains quarantined. A timed-out provider submission remains unresolved until its external outcome can be checked. The application records evidence and preserves partial progress instead of disguising every interruption as success or failure.
+The worked example follows one address ingest through three events. A documented rename becomes a candidate adapter, proven against fixtures the proposing agent did not write and promoted as a versioned artifact with a rollback. A status field with unknown business meaning stays quarantined and goes to an owner with samples and the exact question. A lost provider response stays unresolved, reservation held, until the outcome can be checked.
 
-The model proposes an investigation or repair; an independent controller enforces allowed tools, regions, budgets and promotion policy. The session includes a paper walkthrough with negative fixtures, a daily operations report, and an optional architecture for keeping sensitive payloads outside a frontier planner. It ends by separating request-time recovery from the evaluated policy changes that make known failures cheaper next time.
+Around that example: the baseline the agent must beat (diff the schema and page a human), tool risk classes and the cross-system boundary where data actually leaks, an optional architecture that keeps signed URLs and payloads out of the planner, and compute as something the orchestrator requests per job inside a per-customer cost cap. It closes with the rollout sequence: shadow, one reversible change class, then wider authority only from measured recoveries, false repairs and interventions.
 
 ## Learning outcomes
 
-1. Distinguish a reversible mapping repair from an ambiguous semantic change.
-2. Specify evidence, authority, resource caps and stop conditions for a recovery job.
-3. Design versioned promotion, reconciliation and reporting before expanding automatic action.
+1. Design an orchestrator that generates per-job agents with minimum tools, a hard budget, and a logged tool-request gate.
+2. Distinguish a reversible mapping repair from a change in meaning, and prove the repair with fixtures the agent did not write.
+3. Specify tool risk classes, cross-system boundaries, and per-job compute requests before widening automatic authority.
 
 ## Audience and prerequisites
 
@@ -36,13 +36,13 @@ Application, platform and staff engineers building tool-using agents. Familiarit
 
 ## Reviewer notes
 
-16 slides; 15-, 30- and 40-minute routes; 60- or 75-minute workshop. Synthetic paper walkthroughs, no measured production gains or live agent demonstration claimed. The browser deck follows the current outline. References support individual mechanisms, not a benchmark of the proposed architecture. No vendor pitch.
+15 slides; 15-, 30- and 40-minute routes; 60- or 75-minute workshop. The agent generator is the speaker's working prototype; the walkthrough is a paper trace with fixtures. No benchmark or vendor pitch.
 
 ## Audience adaptations
 
 | Audience | Lead with | Retain |
 | --- | --- | --- |
-| Practitioners | The failure trace | Contracts and negative tests |
-| Engineering leadership | Cost of accepted outcomes and intervention | Ownership and rollout limits |
-| Education technologists | An ingest or media-generation workflow | Data meaning and review |
-| General technology | What happens after an unexpected failure | One concrete example and an honest stop |
+| Practitioners | The failure trace and the denied-request log | Contracts and fixtures |
+| Engineering leadership | The assistant-with-everything question and per-job cost controls | Rollout sequence and ownership |
+| Security | Tool risk classes and the cross-system boundary | Dispatcher design, signed-URL point |
+| General technology | What happens after an unexpected failure | One example and an honest stop |

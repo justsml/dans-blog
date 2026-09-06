@@ -22,10 +22,12 @@ The retrieval, benchmarks, and judgment decks use `../flagship-talks/*-40min-out
 
 The free-tier deck includes dated company announcements and an AWS credit offer checked September 5, 2026. Refresh these before presenting. Synthetic scores and costs remain illustrative, not measurements of current products.
 
-Edit the HTML directly. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. Adaptive and parallelization use these HTML decks; their obsolete PowerPoint exports have been removed.
+Edit the HTML directly. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. The seven portfolio talks also have refreshed [on-screen and handout PowerPoint editions](../speaking-portfolio-expanded/decks/README.md). Their obsolete exports have been replaced.
+
+The adaptive-systems and dynamic-scaling decks are generated from their outlines: edit `../speaking-portfolio-expanded/outlines/<talk>-40min.md`, then run `bun artifacts/speaking-portfolio-expanded/build-talk.ts <talk>`. The shared head lives in `templates/engineering-head.html`. Their PowerPoint exports predate the September 6 rewrite and must be regenerated.
 
 Implementation follows the official [initialization](https://revealjs.com/initialization/) and [speaker view](https://revealjs.com/speaker-view/) documentation.
 
 ## Lightning talk: `llm://` connection strings
 
-Three cuts of the same talk, sized for lightning and short-session slots: `llm-uri-5min.html` (4 slides), `llm-uri-10min.html` (5 slides), and `llm-uri-15min.html` (5 slides). They share `assets/llm-uri.css` for art direction and set reveal.js `totalTime` to match their length, so the speaker-view timer counts down correctly. Fragments are used heavily; press Space to step through each slide's beats. Notes carry per-slide timings and the objections to expect. Refresh the Internet-Draft status on the closing slide before presenting.
+Three cuts of the same talk, sized for lightning and short-session slots: `llm-uri-5min.html` (4 slides), `llm-uri-10min.html` (5 slides), and `llm-uri-15min.html` (6 slides). Example strings use the short provider alias form from the `llm-strings` README; the host names the provider, and local models are a host rather than a separate scheme. The longer cuts show the real normalizer output as a table and a screen grab of the playground in `assets/llm-uri/`. They share `assets/llm-uri.css` for art direction and set reveal.js `totalTime` to match their length, so the speaker-view timer counts down correctly. Fragments are used heavily; press Space to step through each slide's beats. Notes carry per-slide timings and the objections to expect. Refresh the Internet-Draft status on the closing slide before presenting.

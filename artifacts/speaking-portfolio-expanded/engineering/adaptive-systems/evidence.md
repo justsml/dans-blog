@@ -1,3 +1,3 @@
 # Evidence: adaptive-systems
 
-The current claim ledger, source links, anecdote boundaries and verification date are in the [evidence bank](../../packets/adaptive-systems/evidence-bank.md).
+Claim ledger, first-hand material, story slots and cuts are in the [evidence bank](../../packets/adaptive-systems/evidence-bank.md).
