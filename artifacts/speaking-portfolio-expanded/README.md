@@ -6,6 +6,8 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 **Deck sync.** Five talks have a single PPTX export in [decks](decks/). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads, Outsmart Your Lying, Cheating Students and Cry Me a Free Tier were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and their PPTX exports predate the rewrite and must be regenerated.
 
+**Critical reviews.** The six talks that have not been rewritten each have an independent [critical review](reviews/README.md) with a verdict, a proposed arc, and the missing discipline. Nothing in those talks has been edited; the reviews are proposals.
+
 **Before each delivery.** Fill every `Story` line with a first-hand example. Recheck the dated commitments and credit offer on free-tier slide 4.
 
 ## Submission packets
