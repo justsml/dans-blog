@@ -22,6 +22,10 @@ The parallelization talk starts with four calls launching forty jobs. It follows
 
 Hardware shopping, Wi-Fi sensors, the unidentified Ryan Dahl release and speculative product-version claims are cut. The long anomaly-detection anecdote belongs in optional discussion. The separate [failure-improvement talk](failure-improvement/packet.md) owns the detailed continuous-improvement loop.
 
+## Visuals
+
+Both decks contain eight editable SVG diagrams, with a slide-by-slide [adaptive inventory](adaptive-systems/visuals.md) and [parallelization inventory](parallelization/visuals.md). The remaining slides use typography. Outlines link the displayed assets directly; no unused illustration prompts remain in these talks.
+
 ## Delivery status
 
 Browser decks and talk documents reflect this revision. The scripts are spoken talk tracks with explicit stage directions and interaction, not 40 minutes of uninterrupted prose. Timings are rehearsal targets. No production capability, provider benchmark, real billing result or live AI demonstration is claimed.

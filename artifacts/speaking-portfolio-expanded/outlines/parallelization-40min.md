@@ -12,7 +12,7 @@ Scope: proposed architecture; synthetic walkthroughs and illustrative costs; no 
 
 00:00 to 02:00 · warm
 
-<!-- image: Editorial flat vector illustration of four calls. forty images., dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Each of four batch-tool calls starts ten jobs: 4 × 10 = 40, before retries.](../../reveal-talks/assets/parallelization/01-four-calls-hide-forty-provider-jobs.svg)
 
 > 4 tool calls × 10 images
 > = 40 provider jobs
@@ -29,7 +29,7 @@ Stage direction: Let the audience calculate the fan-out before showing forty. As
 
 02:00 to 04:00 · warm
 
-<!-- image: Editorial flat vector illustration of name the work you are parallelizing, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Tasks: split the workload
 > Attempts: compare solutions
@@ -47,7 +47,7 @@ Stage direction: Classify image batches, route-optimization scenarios, three cod
 
 04:00 to 06:00 · steady
 
-<!-- image: Editorial flat vector illustration of tool slots hide downstream work, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![One retry per item can turn 40 logical items into 80 provider attempts.](../../reveal-talks/assets/parallelization/03-count-items-and-attempts-separately.svg)
 
 > Agent slots
 > Tool batch size
@@ -66,7 +66,7 @@ Stage direction: Draw four callers, ten child jobs each, then one retry layer. C
 
 06:00 to 09:00 · build
 
-<!-- image: Editorial flat vector illustration of put admission below every caller, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![One coordinated reservation protects tenant spend and entitlement across all callers.](../../reveal-talks/assets/parallelization/04-every-caller-crosses-shared-admission.svg)
 
 > Reserve before dispatch
 > Share tenant and provider limits
@@ -84,7 +84,7 @@ Stage direction: Walk two simultaneous callers in contracts.md. Show why read-ba
 
 09:00 to 11:00 · steady
 
-<!-- image: Editorial flat vector illustration of count money separately from slots, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Illustrative $2 run cap: settled + reserved ≤ $2. Prices here are invented fixture values.](../../reveal-talks/assets/parallelization/05-reservations-and-charges-share-one-ceiling.svg)
 
 > Concurrency ≠ requests per minute
 > Reserved ≠ charged
@@ -102,7 +102,7 @@ Stage direction: Use the $2 illustrative ledger in contracts.md. Verify settled 
 
 11:00 to 14:00 · build
 
-<!-- image: Editorial flat vector illustration of adapt pressure without moving the ceiling, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![The scheduler reduces admission after throttling; every increase remains inside the approved maximum.](../../reveal-talks/assets/parallelization/06-adapt-pressure-within-a-fixed-limit.svg)
 
 > Rate limit → wait and reduce
 > Successful window → cautious increase
@@ -120,7 +120,7 @@ Stage direction: Walk 10 → 5 after throttling, then a cautious recovery within
 
 14:00 to 16:00 · steady
 
-<!-- image: Editorial flat vector illustration of waiting does not need a gpu, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > CPU work → compute worker
 > Provider wait → persisted job state
@@ -138,7 +138,7 @@ Stage direction: Place a local graph solver, a remote image request and a file c
 
 16:00 to 19:00 · build
 
-<!-- image: Editorial flat vector illustration of a durable job survives the conversation, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Persist intent and provider identity; uncertain acceptance goes to reconciliation, not blind replay.](../../reveal-talks/assets/parallelization/08-a-job-survives-the-caller.svg)
 
 > accepted → submitted → waiting
 > completed / failed / unresolved
@@ -156,7 +156,7 @@ Stage direction: Draw the state machine in contracts.md. Crash after provider su
 
 19:00 to 21:00 · steady
 
-<!-- image: Editorial flat vector illustration of completion and notification are different jobs, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Persist output first
 > Enqueue notification once
@@ -174,7 +174,7 @@ Stage direction: Inject a notification timeout after all outputs are stored. Ask
 
 21:00 to 26:00 · peak
 
-<!-- image: Editorial flat vector illustration of walkthrough: restart the batch, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Two callers share a limit
 > One response goes missing
@@ -192,7 +192,7 @@ Stage direction: Use demo.md for the five-minute paper trace. Ask the room for t
 
 26:00 to 28:00 · steady
 
-<!-- image: Editorial flat vector illustration of parallel attempts explore different answers, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Different priorities expose tradeoffs. Common requirements and checks apply to every candidate.](../../reveal-talks/assets/parallelization/11-independent-attempts-share-requirements.svg)
 
 > Minimal scope
 > Maintainable design
@@ -210,7 +210,7 @@ Stage direction: Use the batch-job design as the common problem. Read the three 
 
 28:00 to 30:00 · build
 
-<!-- image: Editorial flat vector illustration of make the judge earn its vote, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Fixed requirements
 > Executable checks first
@@ -229,7 +229,7 @@ Stage direction: Score the synthetic candidates in demo.md. Reject the fastest c
 
 30:00 to 32:00 · build
 
-<!-- image: Editorial flat vector illustration of synthesis creates a new candidate, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Useful parts can conflict. A combined design is a new candidate, not an inherited pass.](../../reveal-talks/assets/parallelization/13-synthesis-must-pass-the-gates-again.svg)
 
 > Select compatible ideas
 > Resolve conflicting assumptions
@@ -247,7 +247,7 @@ Stage direction: Combine the small batch API with durable state and shared admis
 
 32:00 to 34:00 · steady
 
-<!-- image: Editorial flat vector illustration of keep the procedure you discovered, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Investigate once
 > Encode the stable procedure
@@ -265,7 +265,7 @@ Stage direction: Identify one deterministic artifact from the exercise and the n
 
 34:00 to 38:00 · land
 
-<!-- image: Editorial flat vector illustration of measure the accepted outcome, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Dispatch + queue + longest branch
 > Merge + verification + delivery
@@ -283,7 +283,7 @@ Stage direction: Give attendees 90 seconds to choose a baseline, a cap and an ac
 
 38:00 to 40:00 · land
 
-<!-- image: Editorial flat vector illustration of count the work below the tool call, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > One budget across every branch
 > Durable state across every restart

@@ -1,6 +1,6 @@
 # Talk packet: Adaptive, agentic apps
 
-[Formats](formats.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/adaptive-systems.html)
+[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/adaptive-systems.html)
 
 ## Titles
 

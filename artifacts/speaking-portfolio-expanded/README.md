@@ -4,7 +4,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and an image prompt in an HTML comment, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match. The three Product Engineering outlines were rewritten again on 2026-09-05 around Conway's law and the agent roster; the reveal.js HTML deck, packet, formats, CFP, and evidence notes follow them. The three Product Engineering PPTX files still predate the rewrite. The Improvement From Failure outline was rewritten on 2026-09-05 around the fail-to-win loop (logs to agent, enrichment, scheduled distill-and-classify, guarded tickets and PRs, feedback); the reveal.js deck, packet, formats, CFP, evidence notes, and demo notes follow it. Its PPTX and the slide images under `images/failure-improvement-40min/` still show the previous arc and must be regenerated from the outline's image prompts.
+**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and visual guidance, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match. The three Product Engineering outlines were rewritten again on 2026-09-05 around Conway's law and the agent roster; the reveal.js HTML deck, packet, formats, CFP, and evidence notes follow them. The three Product Engineering PPTX files still predate the rewrite. The Improvement From Failure outline was rewritten on 2026-09-05 around the fail-to-win loop (logs to agent, enrichment, scheduled distill-and-classify, guarded tickets and PRs, feedback); the reveal.js deck, packet, formats, CFP, evidence notes, and demo notes follow it. Its PPTX and the slide images under `images/failure-improvement-40min/` still show the previous arc and must be regenerated from the outline's image prompts.
 
 **Before each delivery.** Fill every `Story` line with a first-hand example. The free-tier talk also needs current dated reporting on its slide 3.
 
@@ -57,7 +57,7 @@ A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings a
 
 ## Image prompts
 
-Every slide has an `<!-- image: ... -->` comment with a complete one-shot prompt. All decks share one style: dark slate background, one amber accent, flat vector, generous negative space, no text or logos. Opening and closing slides in each talk reuse the same subject so the deck visibly comes home.
+Adaptive and parallelization use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [parallelization visual inventory](packets/parallelization/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for parallelization, and readable labels. Other outlines retain `<!-- image: ... -->` prompts for their illustrations.
 
 ## What makes the talks distinct
 

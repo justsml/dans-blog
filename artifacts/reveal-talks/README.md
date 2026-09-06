@@ -25,3 +25,7 @@ The free-tier deck includes dated company announcements and an AWS credit offer 
 Edit the HTML directly. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. Adaptive and parallelization use these HTML decks; their obsolete PowerPoint exports have been removed.
 
 Implementation follows the official [initialization](https://revealjs.com/initialization/) and [speaker view](https://revealjs.com/speaker-view/) documentation.
+
+## Lightning talk: `llm://` connection strings
+
+Three cuts of the same talk, sized for lightning and short-session slots: `llm-uri-5min.html` (4 slides), `llm-uri-10min.html` (5 slides), and `llm-uri-15min.html` (5 slides). They share `assets/llm-uri.css` for art direction and set reveal.js `totalTime` to match their length, so the speaker-view timer counts down correctly. Fragments are used heavily; press Space to step through each slide's beats. Notes carry per-slide timings and the objections to expect. Refresh the Internet-Draft status on the closing slide before presenting.

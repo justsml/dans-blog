@@ -12,7 +12,7 @@ Scope: proposed architecture; synthetic walkthroughs and illustrative costs; no 
 
 00:00 to 02:00 · warm
 
-<!-- image: Editorial flat vector illustration of the vendor renamed a field, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![HTTP success does not establish that the payload still matches your contract.](../../reveal-talks/assets/adaptive-systems/01-a-successful-response-can-break-ingest.svg)
 
 > Yesterday: zip
 > Today: postal_code
@@ -30,7 +30,7 @@ Stage direction: Ask who has seen a successful HTTP response carry a breaking ch
 
 02:00 to 04:00 · warm
 
-<!-- image: Editorial flat vector illustration of recovery needs a definition of success, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Preserve meaning
 > Bound spend and time
@@ -48,7 +48,7 @@ Stage direction: Write an OCR objective with a quality floor, coverage requireme
 
 04:00 to 06:00 · steady
 
-<!-- image: Editorial flat vector illustration of give the planner a bounded job, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![The planner proposes a mapping; trusted code validates and controls its activation.](../../reveal-talks/assets/adaptive-systems/03-proposal-and-authority-are-separate.svg)
 
 > Observe → propose → validate
 > Execute → verify → record
@@ -65,7 +65,7 @@ Stage direction: Draw the boundary between planner and controller. Place schema 
 
 06:00 to 09:00 · build
 
-<!-- image: Editorial flat vector illustration of repair syntax; prove meaning, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![A documented rename can preserve meaning; an undefined business state needs an owner.](../../reveal-talks/assets/adaptive-systems/04-a-rename-is-not-a-new-meaning.svg)
 
 > zip → postal_code: investigate
 > status: true → pending: stop
@@ -82,7 +82,7 @@ Stage direction: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pen
 
 09:00 to 11:00 · steady
 
-<!-- image: Editorial flat vector illustration of the repair is a versioned artifact, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Promote a tested mapping within its allowed scope; reconcile writes if you roll back.](../../reveal-talks/assets/adaptive-systems/05-a-repair-has-a-version-and-a-scope.svg)
 
 > Input fingerprint + mapping version
 > Evidence + tests + rollback
@@ -100,7 +100,7 @@ Stage direction: Walk the mapping contract in contracts.md. Point to the parent 
 
 11:00 to 14:00 · build
 
-<!-- image: Editorial flat vector illustration of make a plausible repair fail a test, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Leading zeros
 > Missing country
@@ -119,7 +119,7 @@ Stage direction: Run the four paper fixtures in demo.md. Ask the audience to rej
 
 14:00 to 16:00 · steady
 
-<!-- image: Editorial flat vector illustration of known failures should stay boring, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > 429: respect limits
 > 503: bounded retry or approved fallback
@@ -137,7 +137,7 @@ Stage direction: Classify 429, 503 and 403. Explain why retrying an operation wi
 
 16:00 to 19:00 · build
 
-<!-- image: Editorial flat vector illustration of regional recovery has a contract, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Check the entire dependency path; lower latency alone does not authorize a destination.](../../reveal-talks/assets/adaptive-systems/08-recovery-stays-inside-approved-regions.svg)
 
 > Approved regions only
 > Dependency health + workload probes
@@ -155,7 +155,7 @@ Stage direction: Compare an approved nearby region with an unapproved faster reg
 
 19:00 to 21:00 · steady
 
-<!-- image: Editorial flat vector illustration of a timeout leaves a question, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Reconcile the operation identity before another submission; retain unresolved reservations.](../../reveal-talks/assets/adaptive-systems/09-a-lost-response-leaves-an-unknown-outcome.svg)
 
 > Did it fail?
 > Or did the response disappear?
@@ -172,7 +172,7 @@ Stage direction: Walk a lost-response timeline. Mark the point at which the loca
 
 21:00 to 26:00 · peak
 
-<!-- image: Editorial flat vector illustration of walkthrough: one ingest, three decisions, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Recovery, quarantine and reconciliation are all legitimate outcomes of the same ingest job.](../../reveal-talks/assets/adaptive-systems/10-three-events-require-three-decisions.svg)
 
 > Rename → validated mapping
 > Unknown status → quarantine
@@ -192,7 +192,7 @@ Stage direction: Use demo.md as a five-minute paper walkthrough. Allocate one mi
 
 26:00 to 28:00 · steady
 
-<!-- image: Editorial flat vector illustration of show engineers what changed today, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Promoted changes and scope
 > Quarantined records and reasons
@@ -211,7 +211,7 @@ Stage direction: Read the sample report in contracts.md. Identify the one item t
 
 28:00 to 30:00 · build
 
-<!-- image: Editorial flat vector illustration of measure recovery, including its mistakes, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Correct recovery rate
 > Silent corruption and false repair
@@ -229,7 +229,7 @@ Stage direction: Ask what metric would expose a system that silently drops ten p
 
 30:00 to 32:00 · build
 
-<!-- image: Editorial flat vector illustration of keep private data out of the planner, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+![Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.](../../reveal-talks/assets/adaptive-systems/13-keep-access-capabilities-out-of-the-planner.svg)
 
 > Opaque job reference
 > Trusted worker resolves access
@@ -247,7 +247,7 @@ Stage direction: Optional: use Dan's client account only as an unverified, anony
 
 32:00 to 34:00 · steady
 
-<!-- image: Editorial flat vector illustration of let recurring discoveries become code, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Runtime: recover within current policy
 > Offline: evaluate a proposed policy change
@@ -265,7 +265,7 @@ Stage direction: Name one observed repair that deserves a deterministic adapter 
 
 34:00 to 38:00 · land
 
-<!-- image: Editorial flat vector illustration of start with one reversible failure class, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Observe first
 > Propose in shadow
@@ -284,7 +284,7 @@ Stage direction: Give attendees 90 seconds to fill the recovery card in contract
 
 38:00 to 40:00 · land
 
-<!-- image: Editorial flat vector illustration of the next surprise should cost less, dark slate background, one amber accent, generous negative space, no text, no logos. -->
+Visual direction: typography slide. Keep the visible copy below; no decorative illustration is needed.
 
 > Investigate the unfamiliar
 > Verify the repair
