@@ -9,7 +9,7 @@ Nothing in the talks was edited. These are proposals.
 | Talk | Verdict | The one thing |
 | --- | --- | --- |
 | [Automating Improvement From Failure](failure-improvement-review.md) | Wins a slot, not yet the recorded flagship | Name what monitoring a usually-correct system does to the reviewer (Bainbridge) |
-| [A Skeptic's Guide to Surviving AI in Education](skeptic-education-review.md) | Reserve, not accept | Perform skepticism on stage instead of describing it; open on the two-sigma correction |
+| [A Skeptic's Guide to Surviving AI in Education](skeptic-education-review.md) | Reserve, not accept. Retirement under consideration; see the [transplant plan](skeptic-education-retirement-plan.md) | Perform skepticism on stage instead of describing it; open on the two-sigma correction |
 | [The Future of Product Engineering](product-engineering-review.md) | Wins product-leadership, loses competitive engineering | Make the Coase inversion the spine; move the demo ahead of the guards |
 | [Code Is Cheap. Judgment Is Expensive.](judgment-review.md) | Correct and therefore uncontestable | Put Kingman's curve in the first ten minutes and derive the rest from it |
 | [Stop Looking at My Benchmarks](benchmarks-review.md) | Weaker than Dan's own posts on the subject | Validate the instrument; an eval suite is a measuring instrument nobody validates |
