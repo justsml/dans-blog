@@ -62,6 +62,79 @@ const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
 const TALKS: Record<string, Talk> = {
+  "judgment": {
+  "slug": "judgment",
+  "title": "Code Is Cheap. Judgment Is Expensive.",
+  "description": "Protect review capacity by changing arrivals, variance, and utilization.",
+  "deckFile": "judgment.html",
+  "eyebrow": "Code Is Cheap. Judgment Is Expensive. · Dan Levy",
+  "routes": {
+    "30": {
+      "minutes": 30.0,
+      "keep": [
+        1,
+        2,
+        3,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14
+      ],
+      "times": [
+        3,
+        2,
+        3,
+        2,
+        2,
+        2,
+        2,
+        4,
+        2.5,
+        2.5,
+        2,
+        3
+      ],
+      "bridges": {
+        "3": "Bridge: speeding only generation leaves review as the unchanged stage. Improve what arrives there.",
+        "10": "Bridge: writing the branch is cheap; deciding the permission boundary is still conceptual work."
+      },
+      "note": "Drops Amdahl and Brooks as standalone slides; the permissions block is four minutes. The rubber stamp keeps four minutes."
+    },
+    "15": {
+      "minutes": 15.0,
+      "keep": [
+        1,
+        3,
+        6,
+        7,
+        9,
+        12,
+        14
+      ],
+      "times": [
+        1.5,
+        2.5,
+        1.5,
+        1.5,
+        3.5,
+        2.5,
+        2
+      ],
+      "bridges": {
+        "1": "Bridge: distinguish hands-on review from waiting to start it.",
+        "3": "Bridge: improve the process producing the queue. Start with the request before the code exists.",
+        "7": "Bridge: review also teaches the system; a green test cannot replace understanding.",
+        "9": "Bridge: give the reviewer authority to stop work, enough context, and time to recover it."
+      },
+      "note": "Introduce the permission request before its criteria. Pairs get 30 seconds; the demo gets 3:30."
+    }
+  }
+},
   "product-engineering": {
   "slug": "product-engineering",
   "title": "The Future of Product Engineering",
@@ -543,6 +616,18 @@ for (const s of slides) {
   expect = toSec(s.end);
 }
 if (expect !== 2400) throw new Error(`outline sums to ${expect / 60} minutes, expected 40`);
+
+// Validate every route before writing any generated file.
+for (const key of [30, 15] as const) {
+  const r = talk.routes[key];
+  if (r.minutes !== key || r.keep.length !== r.times.length ||
+      new Set(r.keep).size !== r.keep.length ||
+      r.keep.some(n => !slides.some(s => s.n === n)) ||
+      r.times.some(t => !Number.isFinite(t) || t <= 0) ||
+      Math.abs(r.times.reduce((a, b) => a + b, 0) - key) > 0.01) {
+    throw new Error(`${slug}: invalid ${key}-minute route`);
+  }
+}
 
 const packet = join(root, "packets", slug);
 mkdirSync(packet, { recursive: true });
