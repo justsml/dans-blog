@@ -4,6 +4,11 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15. Read the prose as the 
 
 ## 00:00 to 02:30: slide 1, The sentence
 
+On screen:
+
+> RAG · embeddings · memory · MCP · judges · traces
+> There is a reading list under that pitch.
+
 Our agent uses RAG over an embedding store, adds memories to context, calls MCP tools, emits structured outputs, gets evaluated by an LLM judge, and traces the whole thing through our agent observability platform.
 
 That sentence used to be the talk. Translate the nouns and everybody feels less behind. But knowing what the nouns mean does not tell us whether the retrieval works. The useful question is what the people who studied it already found out.
@@ -14,6 +19,11 @@ Delivery: Read the opening sentence quickly and straight-faced. Pause after it. 
 
 ## 02:30 to 04:00: slide 2, The bet, and the eight words
 
+On screen:
+
+> You are joining an old field late
+> Term specificity → assessor disagreement
+
 This is an engineer's reading of information retrieval, with synthetic exercises and sources attached. The claim is that we skipped useful evaluation work, not that IR researchers solved every problem in RAG.
 
 Eight words will do the work: term specificity, vector space model, vocabulary problem, passage retrieval, relevance judgment, the Cranfield paradigm, pooling, and assessor disagreement.
@@ -23,6 +33,11 @@ By the end we will use them to find a hole in a golden dataset. The hole will ma
 Story: The retrieval improvement your eval rejected because it found evidence outside the original expected set. Bring the query, old labels, new document, and rejudgment.
 
 ## 04:00 to 05:30: slide 3, 1972: rare words matter more
+
+On screen:
+
+> Karen Sparck Jones · term specificity
+> 1972 → 2026 = 54 years
 
 Karen Sparck Jones published a statistical interpretation of term specificity in 1972. A word that appears in almost every document tells you less about which document you want than a rare term does.
 
@@ -36,6 +51,11 @@ Delivery: Compare a generic support phrase with an exact error identifier. Ask t
 
 ## 05:30 to 07:00: slide 4, 1975 and 1990: the vector was already there
 
+On screen:
+
+> Salton, Wong, Yang · vector space model · 1975
+> Deerwester and colleagues · latent semantic analysis · 1990
+
 Salton, Wong, and Yang described a vector space model for automatic indexing in 1975. Documents become weighted representations that support comparisons. In 1990, Deerwester and colleagues described latent semantic analysis using a low-rank representation of term-document structure.
 
 Modern neural embeddings differ in how they learn and what they represent. The useful continuity is representing text numerically so related material can be retrieved despite imperfect word matching.
@@ -45,6 +65,11 @@ A vector store gives you a place to search those representations. It does not ch
 Source: Salton, Wong, and Yang (1975), [A vector space model for automatic indexing](https://doi.org/10.1145/361219.361220), Communications of the ACM 18(11), 613–620. Deerwester, Dumais, Furnas, Landauer, and Harshman (1990), [Indexing by Latent Semantic Analysis](https://www.cs.csustan.edu/~mmartin/LDS/Deerwester-et-al.pdf), JASIS 41(6), 391–407.
 
 ## 07:00 to 08:30: slide 5, The vocabulary problem
+
+On screen:
+
+> The customer says “stop billing”
+> The document says “terminate renewal”
 
 Two people can refer to the same thing using different words. Furnas, Landauer, Gomez, and Dumais studied that vocabulary problem in human-system communication in 1987.
 
@@ -58,6 +83,11 @@ Delivery: Ask for two phrases a customer uses that never appear in the internal 
 
 ## 08:30 to 10:00: slide 6, Chunking is passage retrieval
 
+On screen:
+
+> Salton, Allan, Buckley · 1993
+> The useful passage may cross your boundary
+
 Passage retrieval was being studied before our chunk-size arguments acquired a token budget. Salton, Allan, and Buckley compared approaches in 1993.
 
 Take a policy paragraph that says cancellation is allowed, followed by an exception for annual contracts. Split between those paragraphs and the first chunk becomes a very persuasive wrong answer. Make the chunk enormous and the exception competes with a page of irrelevant material.
@@ -67,6 +97,11 @@ The old papers do not contain the perfect chunk size for your current generator.
 Source: Salton, Allan, and Buckley (1993), [Approaches to passage retrieval in full text information systems](https://doi.org/10.1145/160688.160693), SIGIR, 49–58.
 
 ## 10:00 to 11:30: slide 7, BM25 is still standing there
+
+On screen:
+
+> BEIR, 2021: a robust lexical baseline
+> Compare lexical, dense, and hybrid on your task
 
 BEIR's 2021 experiments found BM25 a robust baseline across heterogeneous retrieval tasks. Reranking and late-interaction models performed best on average in that study, at higher computational cost.
 
@@ -78,6 +113,14 @@ Source: Thakur et al. (2021), [BEIR: A Heterogeneous Benchmark for Zero-shot Eva
 
 ## 11:30 to 14:30: slide 8, Judge these five documents
 
+On screen:
+
+> A · current generic policy; 30-day notice
+> B · signed Acme addendum; “see Schedule R”
+> C · expired Acme terms; immediate cancellation
+> D · current terms for another customer
+> E · support note; “probably immediate”
+
 Acme asks whether it can cancel today without a fee. Which documents belong in the evidence supplied to answer it? Work in pairs for sixty seconds.
 
 A is current but generic. B is signed and specific, but refers to a schedule we have not supplied. C has the answer we might like and is expired. D is about somebody else. E is an employee's guess.
@@ -88,6 +131,11 @@ Delivery: Give 60 seconds in pairs and collect two judgments with reasons. Do no
 
 ## 14:30 to 17:00: slide 9, Cranfield, Bedfordshire, 1966
 
+On screen:
+
+> Corpus + queries + relevance judgments
+> 1966 → 2026 = 60 years
+
 Cleverdon, Mills, and Keen's Cranfield report is dated 1966. Fix a document collection, define questions, judge relevance, and compare systems under the same conditions. Sixty years later, that is a recognizable shape for an eval harness.
 
 The name is the Cranfield paradigm. It gives you a controlled comparison. It also forces choices about who writes the questions, who judges the evidence, and what the collection represents.
@@ -97,6 +145,12 @@ Your golden dataset is a test collection with a flattering filename. Write down 
 Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
 ## 17:00 to 21:00: slide 10, Demo: the hole in the golden set
+
+On screen:
+
+> Old pool: A, B, C, D, E
+> New result: F · signed Schedule R
+> Unjudged is not a relevance judgment
 
 The old retrievers contributed A through E to the judgment pool. Our new retriever finds F: the signed Schedule R referenced by B. It waives Acme's cancellation fee. Nobody judged it because nobody retrieved it.
 
@@ -112,6 +166,11 @@ Delivery: Run `bun artifacts/speaking-portfolio-expanded/packets/retrieval/pooli
 
 ## 21:00 to 23:30: slide 11, Assessors disagree. Rankings can survive.
 
+On screen:
+
+> Voorhees, 2000: changed judgments, stable comparisons
+> Test your comparison under more than one assessor
+
 Voorhees varied relevance judgments and examined the resulting system rankings. The comparative results stayed stable despite substantial judgment differences in those experiments.
 
 An absolute score and an A-versus-B ordering make different demands on the labels. That does not mean a model judge is trustworthy because it ranks two answers. It means we have a specific test to run: relabel a sample independently, then see which conclusions survive.
@@ -122,6 +181,11 @@ Source: Ellen M. Voorhees (2000), [Variations in Relevance Judgments and the Mea
 
 ## 23:30 to 26:00: slide 12, What changed: the next reader is a generator
 
+On screen:
+
+> Useful to inspect ≠ sufficient to answer
+> Score retrieval and the resulting answer separately
+
 A person inspecting a ranked list can notice that the signed addendum refers to a missing schedule and go looking. Our generator may instead turn the generic thirty-day policy into a fluent answer about Acme.
 
 We can build abstention and verification into that system. We cannot infer that it will use them from a good retrieval score. The retrieved material must be applicable, sufficiently complete, and represented with the qualifiers the answer needs.
@@ -129,6 +193,11 @@ We can build abstention and verification into that system. We cannot infer that 
 Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model. IR also studied machine consumers before modern RAG; the change here is this particular generative handoff and its failure modes.
 
 ## 26:00 to 28:00: slide 13, Retrieved text now sits beside instructions
+
+On screen:
+
+> Relevance gives evidence, not authority
+> A document cannot grant a tool permission
 
 Put a sentence in the retrieved support note telling the assistant to ignore policy and issue a credit. It may be relevant text in a support corpus. It is still untrusted input.
 
@@ -141,6 +210,11 @@ Delivery: Use a harmless printed instruction in the synthetic support note. Do n
 Bridge: name the owner who updates the corpus and invalidates stale knowledge; the R1 maintenance comparison is in the long route.
 
 ## 28:00 to 30:00: slide 15, Eight words. Sixty years. One instruction.
+
+On screen:
+
+> Your eval suite has a grandfather.
+> Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
 

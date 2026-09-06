@@ -4,6 +4,12 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15. Read the prose as the talk tra
 
 ## 00:00 to 02:00: slide 1, A leaderboard, and the question it isn't answering
 
+On screen:
+
+> A · 89.7
+> B · 88.9
+> C · 84.3
+
 Every new model arrives wearing a tuxedo of benchmarks. Here are three scores. Pick the model you would try first.
 
 One scope statement: the model names and workload numbers in this fixture are invented. The arithmetic and cited research are checkable. We are choosing a support system, not measuring general intelligence.
@@ -14,6 +20,12 @@ Delivery: Take one show of hands. Do not ask the room to vote again on the next 
 
 ## 02:00 to 03:30: slide 2, Same three models, your work
 
+On screen:
+
+> A · 71% pass · $0.34/run
+> B · 82% pass · $0.28/run
+> C · 90% pass · $0.20/run
+
 Now the same models attempt our cancellation workflow. C has the best pass rate in this fixture. The winner changed because the question changed.
 
 We still need to know what pass meant. Did the system cancel the right account, or did it write a reassuring answer? Did it perform an authorized action, or did it merely mention policy? If the scorer only reads the chat, a polite failure can beat a terse success.
@@ -21,6 +33,11 @@ We still need to know what pass meant. Did the system cancel the right account, 
 Prices can help choose among acceptable systems. They cannot tell us which systems are acceptable. The cost-per-success arithmetic belongs to Cry Me a Free Tier. Today the question is whether this score means anything.
 
 ## 03:30 to 06:00: slide 3, Goodhart, Campbell, and the target
+
+On screen:
+
+> Reward a proxy and behavior changes
+> Credit Strathern for the familiar Goodhart wording
 
 Goodhart described statistical regularities breaking under pressure from their use in control. Campbell described the pressure that social decision-making puts on indicators and on the processes they measure. The familiar sentence about a measure becoming a target comes through Marilyn Strathern.
 
@@ -32,6 +49,11 @@ Source: Campbell (1979), [Assessing the impact of planned social change](https:/
 
 ## 06:00 to 08:30: slide 4, Your eval suite is a measuring instrument
 
+On screen:
+
+> The suite needs an eval
+> A green run is an inference, not a warranty
+
 Your eval suite is a psychometric instrument somebody checked into Git. It produces scores from tasks and judgments, then we use those scores to make decisions. Where is its validation?
 
 Try a response that sounds excellent but leaves the account active. Try a correct cancellation with awkward wording. Try an unauthorized cancellation with a perfect explanation. The instrument should distinguish those for the reasons you intended.
@@ -41,6 +63,11 @@ Nobody needs another dashboard to discover that the grader rewards tone. We need
 Story: The green eval run followed by a production failure. Bring the case, the score, the observed state, and the assumption the scorer missed.
 
 ## 08:30 to 11:00: slide 5, One number is a comforting fiction
+
+On screen:
+
+> What is the score a score of?
+> Construct validity: evidence for the interpretation
 
 Cronbach and Meehl gave us construct validity. What property does this test actually measure, and what evidence supports that interpretation? Messick puts interpretation and use at the center of validation. A score used to shortlist a model and the same score used to authorize refunds are different claims.
 
@@ -52,6 +79,11 @@ Source: Cronbach and Meehl (1955), [Construct validity in psychological tests](h
 
 ## 11:00 to 13:00: slide 6, "Cancel my account."
 
+On screen:
+
+> Right account. Applicable policy. Authorized action.
+> Verify state. Include the refusal path.
+
 A customer asks to cancel. Identify the account through an authenticated context. Resolve the applicable policy. Check authority. Execute the allowed operation and read the resulting state. The response must match what happened.
 
 Now vary one thing at a time. Wrong tenant. Expired session. Cancellation already completed. A tool times out after accepting the request. An account type that requires another approval. Each case names the expected state and what the assistant should tell the customer.
@@ -61,6 +93,12 @@ A trace becomes a test when it answers a specific question. A transcript without
 Delivery: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
 
 ## 13:00 to 16:00: slide 7, Run it five times
+
+On screen:
+
+> 94, 82, 91, 97, 89
+> 78, 79, 81, 82, 80 · pass at ≥ 80
+> Majority disagreement: 2 / 5 = 40%
 
 Your judge scores ninety-four, then eighty-two, then ninety-one, then ninety-seven, then eighty-nine. Same case, different answers. Noise wearing a lab coat.
 
@@ -73,6 +111,11 @@ Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-
 Delivery: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
 
 ## 16:00 to 19:30: slide 8, Twenty green cases. About one in seven.
+
+On screen:
+
+> Zero failures in 20 independent representative trials
+> 95% upper bound: 3 / 20 ≈ 15%; exact 13.9%
 
 Twenty for twenty feels finished. Here is what it buys under independent, identically distributed sampling from the population you care about.
 
@@ -88,6 +131,11 @@ Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection wou
 
 ## 19:30 to 23:00: slide 9, Your grader is an instrument too
 
+On screen:
+
+> 90 expert passes. Ten expert failures.
+> Always-pass judge: 90% agreement, κ = 0
+
 Take a hundred cases. Experts pass ninety and fail ten. Our judge passes everything. Ninety-percent agreement. Congratulations, we have calibrated a button.
 
 Cohen's kappa compares observed agreement with agreement expected from the marginal label rates. Here both are point nine, so kappa is zero. But kappa also changes with prevalence. Do not replace blind faith in raw agreement with blind faith in a kappa threshold. Keep the confusion matrix and inspect the disagreements.
@@ -102,6 +150,11 @@ Bridge: keep release evidence separate from development; repeated tuning spends 
 
 ## 23:00 to 25:00: slide 12, Stop averaging away failure
 
+On screen:
+
+> Slice by failure mechanism
+> Show counts, variation, and critical violations
+
 An overall pass rate weights whatever mix you put in the file. Add easy cases and it rises. Nothing about the hard cases had to improve.
 
 Report cancellation by account type, authorization state, language, and tool outcome. Start with slices that correspond to plausible failure mechanisms. Show the count in each slice and repeat-run variation. A two-case slice should look like two cases, not a confident percentage.
@@ -112,6 +165,11 @@ Bridge: use code for state and schema checks, calibrated graders for language ju
 
 ## 25:00 to 27:30: slide 14, Make it a release gate
 
+On screen:
+
+> Version cases, scorer, rubric, and candidate
+> Write the rejection rule before the flattering result
+
 A release comparison needs the system version, prompt, tool configuration, corpus revision, scorer revision, and baseline. Otherwise the difference between two scores may be a difference between two instruments.
 
 Set the rejection rule before viewing the candidate. Compare by slice. Keep critical violations visible and inspect uncertainty before celebrating a small gain. Each distinct production failure should leave a regression case with an acceptance criterion, while fresh sampling checks what the incident archive misses.
@@ -121,6 +179,11 @@ What would block your next rollout? Write one answer that the current suite coul
 Delivery: Give 45 seconds to write. Take one rule and ask which observable state would trigger it.
 
 ## 27:30 to 30:00: slide 15, What does good mean here?
+
+On screen:
+
+> Validity · reliability · agreement
+> Power · contamination · Goodhart
 
 Start with twenty cases tomorrow. Attach the acceptance criterion, the source, and the reason each case belongs. Then attach the honest limitation: twenty green cases do not establish broad reliability.
 

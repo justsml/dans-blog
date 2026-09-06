@@ -61,7 +61,95 @@ type Talk = {
 const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
-const TALKS: Record<string, Talk> = {
+export const TALKS: Record<string, Talk> = {
+  "skeptic-education": {
+  "slug": "skeptic-education",
+  "title": "A Skeptic's Guide to Surviving AI in Education",
+  "description": "A Skeptic's Guide to Surviving AI in Education",
+  "deckFile": "skeptic-education.html",
+  "eyebrow": "A Skeptic's Guide to Surviving AI in Education · Dan Levy",
+  "routes": {
+    "15": {
+      "minutes": 15,
+      "keep": [
+        1,
+        2,
+        4,
+        5,
+        7,
+        8,
+        10,
+        13,
+        14
+      ],
+      "times": [
+        1.5,
+        1.0,
+        2.5,
+        2.5,
+        2.0,
+        1.5,
+        1.5,
+        1.5,
+        1.0
+      ],
+      "bridges": {
+        "1": "Keep \"hold one assignment\"; drop the story.",
+        "2": "Three questions only; skip the two-failures preview.",
+        "4": "Bridge in with slide 3's objective in one sentence: \"a history essay that must weigh two conflicting sources.\" Keep the write.",
+        "5": "One switch; state the other two.",
+        "7": "Bridge in with slide 6 in one line: \"the first failure is a tutor that agrees with a wrong answer.\"",
+        "10": "Solo, sixty seconds, written.",
+        "13": "Pilot steps only; skip the vendor questions and the story.",
+        "14": "Skip the write; deliver the closing line."
+      },
+      "note": "Slide selections, timing and delivery instructions retained from the existing adaptation."
+    },
+    "30": {
+      "minutes": 30,
+      "keep": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "times": [
+        2.0,
+        2.0,
+        1.5,
+        2.5,
+        3.5,
+        1.5,
+        3.0,
+        1.5,
+        1.5,
+        3.0,
+        2.0,
+        1.5,
+        3.0,
+        1.5
+      ],
+      "bridges": {
+        "5": "Two switches; narrate the third.",
+        "6": "Drop the story.",
+        "10": "Pairs, ninety seconds.",
+        "13": "Drop the story.",
+        "14": "Shorten the write to twenty seconds."
+      },
+      "note": "Slide selections, timing and delivery instructions retained from the existing adaptation."
+    }
+  }
+},
   "retrieval": {
   "slug": "retrieval",
   "title": "Your Eval Suite Has a Grandfather",
@@ -464,7 +552,7 @@ const TALKS: Record<string, Talk> = {
           6: "Bridge: a repair ships as a versioned artifact with a rollback, and it has to pass fixtures it did not write.",
           10: "Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is a companion talk.",
         },
-        trim: { 3: [0, 1, 3], 4: [0, 1, 3], 10: [0, 1, 2], 14: [0, 1, 3, 4] },
+        trim: { 3: [0, 1, 2], 4: [0, 1, 3], 10: [0, 1, 2], 14: [0, 1, 3, 4] },
         note: "Lightning route: the assistant with everything, the conjured agent, the guarded tools, then the semantic test a compressed walkthrough, and one agent with an execution memory.",
       },
     },
@@ -564,14 +652,14 @@ const TALKS: Record<string, Talk> = {
           8: "Bridge: a job survives the caller when its intent, provider IDs and reservations are persisted before dispatch.",
           11: "Bridge: attempts are a scaling axis too; bound them, gate them, and treat any synthesis as a new candidate.",
         },
-        trim: { 2: [0, 1], 7: [0, 1, 2], 8: [0, 1, 2], 11: [0, 1, 2, 3] },
+        trim: { 2: [0, 1], 7: [0, 1, 2], 8: [0, 1, 2], 11: [0, 1, 2] },
         note: "Lightning route: the multiplication, the inversion, the ecosystem, then a compressed restart walkthrough.",
       },
     },
   },
 };
 
-function parseOutline(md: string): { title: string; front: string[]; slides: Slide[] } {
+export function parseOutline(md: string): { title: string; front: string[]; slides: Slide[] } {
   const lines = md.split("\n");
   const title = lines[0].replace(/^#\s*/, "").trim();
   const slides: Slide[] = [];
@@ -582,7 +670,7 @@ function parseOutline(md: string): { title: string; front: string[]; slides: Sli
     if (!para.length) return;
     const text = para.join(" ").trim();
     para = [];
-    if (!text) return;
+    if (!text || text === "---") return;
     if (!cur) {
       front.push(text);
       return;
@@ -591,10 +679,10 @@ function parseOutline(md: string): { title: string; front: string[]; slides: Sli
     else if (/^Source:/.test(text)) cur.sources.push(text.replace(/^Source:\s*/, ""));
     else if (/^<!--\s*image:/.test(text)) cur.imagePrompt = text.replace(/^<!--\s*image:\s*/, "").replace(/\s*-->$/, "");
     else if (/^Story:/.test(text)) cur.story = text.replace(/^Story:\s*/, "");
-    else if (/^\d\d:\d\d to \d\d:\d\d/.test(text)) {
-      const m = text.match(/^(\d\d:\d\d) to (\d\d:\d\d)\s*·\s*(\w+)/)!;
-      cur.start = m[1];
-      cur.end = m[2];
+    else if (/^\d{1,2}:\d\d(?: to |–)\d{1,2}:\d\d/.test(text)) {
+      const m = text.match(/^(\d{1,2}:\d\d)(?: to |–)(\d{1,2}:\d\d)\s*·\s*(\w+)/)!;
+      cur.start = m[1].padStart(5, "0");
+      cur.end = m[2].padStart(5, "0");
       cur.pacing = m[3];
     } else if (/^!\[/.test(text)) {
       const m = text.match(/^!\[(.*?)\]\((.*?)\)/)!;
@@ -634,21 +722,23 @@ function parseOutline(md: string): { title: string; front: string[]; slides: Sli
   return { title, front, slides };
 }
 
-const toSec = (t: string) => {
+export const toSec = (t: string) => {
   const [m, s] = t.split(":").map(Number);
   return m * 60 + s;
 };
-const fmt = (min: number) => {
+export const fmt = (min: number) => {
   const total = Math.round(min * 60);
   return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
 };
 const minutesLabel = (min: number) => (Number.isInteger(min) ? `${min} minutes` : `${min} minutes`);
 const mdLinks = (s: string) =>
-  esc(s).replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g, (_m, t, u) => `<a href="${u}">${t}</a>`);
+  esc(s).replace(/\[([^\]]+)\]\((https?:\/\/.+)\)/g, (_m, t, u) => `<a href="${u}">${t}</a>`);
+const forScript = (s: string) => s.replace(/\]\(\.\.\//g, "](../../");
+const forDeck = (s: string) => s.replace(/\]\(\.\.\//g, "](../speaking-portfolio-expanded/");
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
 
-function scriptFor(talk: Talk, slides: Slide[], keep: number[], times: number[], bridges: Record<number, string>, trim: Record<number, number[]> | undefined, minutes: number, note: string) {
+export function scriptFor(talk: Talk, slides: Slide[], keep: number[], times: number[], bridges: Record<number, string>, trim: Record<number, number[]> | undefined, minutes: number, note: string) {
   const out: string[] = [];
   out.push(`# ${talk.title}: ${minutes}-minute presenter script`);
   out.push("");
@@ -662,17 +752,18 @@ function scriptFor(talk: Talk, slides: Slide[], keep: number[], times: number[],
     const dur = times[i];
     out.push(`## ${fmt(t)} to ${fmt(t + dur)}: slide ${n}, ${s.heading}`);
     out.push("");
+    if (s.visible.length) out.push("On screen:", "", ...s.visible.map(v => `> ${forScript(v)}`), "");
     const paras = trim?.[n] ? trim[n].map((k) => s.spoken[k]).filter(Boolean) : s.spoken;
-    for (const p of paras) out.push(p, "");
+    for (const p of paras) out.push(forScript(p), "");
     if (s.table) {
       out.push(`| ${s.table[0].join(" | ")} |`);
       out.push(`| ${s.table[0].map(() => "---").join(" | ")} |`);
       for (const row of s.table.slice(1)) out.push(`| ${row.join(" | ")} |`);
       out.push("");
     }
-    for (const src of s.sources) out.push(`Source: ${src}`, "");
-    if (s.story) out.push(`Story: ${s.story}`, "");
-    if (s.stage) out.push(`Delivery: ${s.stage}`, "");
+    for (const src of s.sources) out.push(`Source: ${forScript(src)}`, "");
+    if (s.story) out.push(`Story: ${forScript(s.story)}`, "");
+    if (s.stage) out.push(`Delivery: ${forScript(s.stage)}`, "");
     if (bridges[n]) out.push(bridges[n], "");
     t += dur;
   });
@@ -680,7 +771,7 @@ function scriptFor(talk: Talk, slides: Slide[], keep: number[], times: number[],
   return out.join("\n").trimEnd() + "\n";
 }
 
-function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
+export function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
   const out: string[] = [];
   out.push(`# ${talk.title}: ${route.minutes}-minute adaptation`);
   out.push("");
@@ -698,7 +789,7 @@ function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
   return out.join("\n") + "\n";
 }
 
-function deckFor(talk: Talk, slides: Slide[]) {
+export function deckFor(talk: Talk, slides: Slide[]) {
   const head = readFileSync(join(revealDir, "templates", "engineering-head.html"), "utf8")
     .replace("<title>", '<link rel="icon" href="data:,"><title>')
     .replace("{{DESCRIPTION}}", esc(talk.description))
@@ -714,8 +805,8 @@ body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[dat
     const first = i === 0;
     const notes =
       `<aside class="notes"><p>${esc(talk.title)} | slide ${s.n} | ${minutesLabel(mins)}</p>` +
-      s.spoken.map((p) => `<p>${esc(p)}</p>`).join("") +
-      s.sources.map((src) => `<p>Source: ${mdLinks(src)}</p>`).join("") +
+      s.spoken.map((p) => `<p>${esc(forDeck(p))}</p>`).join("") +
+      s.sources.map((src) => `<p>Source: ${mdLinks(forDeck(src))}</p>`).join("") +
       (s.story ? `<p>Story: ${esc(s.story)}</p>` : "") +
       (s.imagePrompt ? `<p>Image prompt: ${esc(s.imagePrompt)}</p>` : "") +
       (s.stage ? `<p>Stage direction: ${esc(s.stage)}</p>` : "") +
@@ -751,7 +842,7 @@ body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[dat
   );
 }
 
-const slug = process.argv[2];
+export function buildTalk(slug: string) {
 const talk = TALKS[slug];
 if (!talk) {
   console.error(`Unknown talk. Choose one of: ${Object.keys(TALKS).join(", ")}`);
@@ -792,3 +883,7 @@ for (const key of [30, 15] as const) {
 }
 writeFileSync(join(revealDir, talk.deckFile), deckFor(talk, slides));
 console.log(`${slug}: ${slides.length} slides, scripts 40/30/15, adaptations 30/15, deck ${talk.deckFile}`);
+
+}
+
+if (import.meta.main) buildTalk(process.argv[2]);

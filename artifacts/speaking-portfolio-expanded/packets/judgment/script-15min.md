@@ -4,6 +4,11 @@ Use slides 1, 3, 6, 7, 9, 12, 14. Read the prose as the talk track; perform the 
 
 ## 00:00 to 01:30: slide 1, The morning four good implementations arrive
 
+On screen:
+
+> 95% utilized → 19× waiting
+> Four plausible implementations. One reviewer.
+
 Four good implementations arrive before lunch. The reviewer is still on yesterday's change. Generation got cheaper. Delivery acquired a queue.
 
 If your organization uses AI to build an infinite feature machine, you have tragically missed the potential of the magic AI genie. We can spend the gain on fewer defects and smaller changes. We do not have to spend it all on more code.
@@ -15,6 +20,11 @@ Story: The change that waited longer for review than it took to write. Bring arr
 Bridge: distinguish hands-on review from waiting to start it.
 
 ## 01:30 to 04:00: slide 3, A queue does not care how you feel about it
+
+On screen:
+
+> Wq ≈ ((ca² + cs²) / 2) × ρ / (1 − ρ) × E[S]
+> V = 1: 80% → 4×; 90% → 9×; 95% → 19×
 
 Kingman's single-server approximation separates three things: variability, utilization, and mean service time. Call the variability term V. Set V to one for this curve. At eighty percent utilization, point eight divided by point two is four. At ninety-five, point nine five divided by point zero five is nineteen.
 
@@ -30,6 +40,12 @@ Bridge: improve the process producing the queue. Start with the request before t
 
 ## 04:00 to 05:30: slide 6, "Add enterprise permissions"
 
+On screen:
+
+> Who can do what, in which tenant?
+> What happens when access changes?
+> What must never happen?
+
 Add enterprise permissions. That is the entire request.
 
 Spend sixty seconds with the person next to you. Write the questions you need answered before implementing it. You do not get a second page of requirements; that is the point.
@@ -42,6 +58,12 @@ Delivery: Read the request once. Give pairs a full 60 seconds, collect two answe
 
 ## 05:30 to 07:00: slide 7, A spec reduces variance
 
+On screen:
+
+> Actor + tenant + action + resource
+> Revocation changes the next decision
+> Denied actions leave state unchanged
+
 For this example, an administrator can grant a role only inside the tenant they administer. A revoked role cannot authorize the next operation. A denied change leaves protected state untouched and records the failed attempt.
 
 Those statements produce cases. An admin in tenant A requests a change in A: allow. The same admin requests a change in B: deny. Revoke the role, repeat the A request: deny. Check the resulting state, not just the status message.
@@ -53,6 +75,12 @@ Delivery: Write the three cases beside the request. Keep the cross-tenant case v
 Bridge: review also teaches the system; a green test cannot replace understanding.
 
 ## 07:00 to 10:30: slide 9, Demo: the rubber stamp
+
+On screen:
+
+> canEdit(user) = user.roles.includes("admin")
+> Test: admin user → allowed
+> PASS
 
 Here is the implementation. Here is its test. The user has the admin role. The function allows the edit. The test passes.
 
@@ -70,6 +98,12 @@ Bridge: give the reviewer authority to stop work, enough context, and time to re
 
 ## 10:30 to 13:00: slide 12, Three levers on the queue
 
+On screen:
+
+> Arrivals: decline work before generating it
+> Variance: bounded diffs and explicit behavior
+> Utilization: reserve actual review capacity
+
 Fewer arrivals means deciding which changes should exist. It includes declining a second implementation after the first already met the need. Comparing fleets of candidate agents belongs to Dynamic Scaling. Here we are protecting the person who accepts the resulting work.
 
 Smaller variance means reducing surprises at review. Keep one purpose per diff, include the behavioral cases, and separate mechanical changes from policy changes. Small in line count is useful only when it is also small in meaning.
@@ -77,6 +111,11 @@ Smaller variance means reducing surprises at review. Keep one purpose per diff, 
 Protect slack by reserving review time and limiting work in progress. If the reviewer is on call, their calendar is not eight hours of service capacity. Measure interruptions before declaring them underutilized. Pilot these changes on one recurring workflow and keep the baseline.
 
 ## 13:00 to 15:00: slide 14, Knowing when to stop
+
+On screen:
+
+> What should exist? Does it work?
+> Is it worth maintaining?
 
 Back to the curve. The reviewer did not get slower. We filled the space that let them absorb uneven work.
 

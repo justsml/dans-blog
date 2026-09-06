@@ -4,7 +4,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** Five talks have a single PPTX export in [decks](decks/). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads, Outsmart Your Lying, Cheating Students and Cry Me a Free Tier were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and the other rewritten talks’ PPTX exports still need regeneration. Adaptive now has refreshed [15-slide screen](decks/adaptive-systems-screen.pptx) and [22-page handout](decks/adaptive-systems-handout.pptx) editions, including the simpler [execution-memory pattern and prompt](packets/adaptive-systems/memory-pattern.md).
+**Deck sync.** All ten talks have synchronized 15-, 30-, and 40-minute browser decks, presenter scripts, screen PowerPoints, and handout PowerPoints. The [PowerPoint download index](decks/README.md) links all 60 editions. Adaptive includes the [execution-memory pattern and prompt](packets/adaptive-systems/memory-pattern.md) in its current outline and 40-minute handout.
 
 **Critical reviews.** The [six reviews](reviews/README.md) preserve the pre-rewrite verdicts. Failure Improvement, Product Engineering, Judgment, Benchmarks, and Retrieval now follow their proposed arcs, with source corrections recorded in the evidence banks. Skeptic remains unchanged pending a retire-or-procurement decision.
 
@@ -12,7 +12,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 ## Submission packets
 
-Each talk has a packet directory under [packets/](packets/) with three files: `packet.md` (titles, 50/100/250-word abstracts, outcomes, audience, takeaways, not-a-pitch statement, references, and four audience-specific abstracts), `formats.md` (5–10 minute lightning and live-demo notes, pointers to the 15/30/40 versions, and a 60–75 minute workshop plan), and `evidence-bank.md` (firsthand example templates keyed to the outline's story slots, with candidate contexts from the resume and every measurement left for you to supply).
+Each talk has a packet directory under [packets/](packets/). Its `formats.md` indexes the synchronized editions while retaining any authored lightning, live-demo, and workshop material already present. Existing packet, evidence, contract, walkthrough, and visual-reference content remains in place.
 
 The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from the resume, links, location, and a past-speaking template. The [recording plan](packets/speaker/recording-plan.md) specifies the 25-minute talk to record first and the five-minute live demo that AI Tinkerers routes require.
 
@@ -25,18 +25,24 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | Outsmart Your Students | [packet](packets/evidence-learning/packet.md) | [formats](packets/evidence-learning/formats.md) | [evidence](packets/evidence-learning/evidence-bank.md) |
 | Dynamic Scaling | [packet](packets/dynamic-scaling/packet.md) | [formats](packets/dynamic-scaling/formats.md) | [evidence](packets/dynamic-scaling/evidence-bank.md) |
 | Product Engineering | [packet](packets/product-engineering/packet.md) | [formats](packets/product-engineering/formats.md) | [evidence](packets/product-engineering/evidence-bank.md) |
+| Your Eval Suite Has a Grandfather | [packet](packets/retrieval/packet.md) | [formats](packets/retrieval/formats.md) | [evidence](packets/retrieval/evidence-bank.md) |
+| Benchmarks | [packet](packets/benchmarks/packet.md) | [formats](packets/benchmarks/formats.md) | [evidence](packets/benchmarks/evidence-bank.md) |
+| Judgment | [packet](packets/judgment/packet.md) | [formats](packets/judgment/formats.md) | [evidence](packets/judgment/evidence-bank.md) |
 
 ## Decks and submission copy
 
-| Talk | Outline | Slides | Deck | CFP package |
+| Talk | Outline | Slides | Editions | CFP package |
 | --- | --- | ---: | --- | --- |
-| A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [PPTX](decks/skeptic-education-40min.pptx) | [Education](education/CFP.md) |
+| A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Education](education/CFP.md) |
 | Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 15 | [Browser deck](../reveal-talks/failure-improvement.html) | [Failure improvement](engineering/failure-improvement/CFP.md) |
-| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser deck](../reveal-talks/adaptive-systems.html) · PPTX stale, regenerate | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
-| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser deck](../reveal-talks/free-tier.html) · PPTX stale, regenerate | [Economics](economics-product/CFP.md) |
-| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser deck](../reveal-talks/evidence-learning.html) · PPTX stale, regenerate | [Education](education/CFP.md) |
-| Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser deck](../reveal-talks/dynamic-scaling.html) · PPTX stale, regenerate | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
+| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
+| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Economics](economics-product/CFP.md) |
+| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Education](education/CFP.md) |
+| Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
 | The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Browser deck](../reveal-talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
+| Your Eval Suite Has a Grandfather | [40 min](outlines/retrieval-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | — |
+| Stop Looking at My Benchmarks… Get Your Own! | [40 min](outlines/benchmarks-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | — |
+| Code Is Cheap. Judgment Is Expensive. | [40 min](outlines/judgment-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | — |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 
@@ -57,7 +63,7 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | Benchmarks | [Lightning](outlines/benchmarks-15min-adaptation.md) | [Standard](outlines/benchmarks-30min-adaptation.md) |
 | Your Eval Suite Has a Grandfather | [Lightning](outlines/retrieval-15min-adaptation.md) | [Standard](outlines/retrieval-30min-adaptation.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. The nine talks rewritten in this review cycle include generated 40/30/15 presenter scripts. Skeptic’s editorial decision is separate from this rewrite.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All ten talks include generated 40/30/15 presenter scripts.
 
 ## Image prompts
 
@@ -92,7 +98,7 @@ The offline kit uses scripted or deterministic fixtures. It makes no model calls
 
 Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or dynamic scaling when the audience wants to grow an agent's authority and change execution policy; failure improvement owns the offline loop and compile-what-repeats beat. Adaptive and Dynamic Scaling are companions: adaptive owns per-job agent generation and repair authority, dynamic scaling owns admission, ledgers and the compute substrate. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
-Retrieval, Benchmarks, and Judgment now use canonical outlines here. The [former flagship directory](../flagship-talks/README.md) links to current sources and retains historical PowerPoints.
+Retrieval, Benchmarks, and Judgment now use canonical outlines here. The [former flagship directory](../flagship-talks/README.md) links its stable filenames to the current PowerPoint exports.
 
 ## Adaptive and Dynamic Scaling rewrite, September 6
 

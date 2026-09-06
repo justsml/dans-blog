@@ -1,3 +1,15 @@
+<!-- BEGIN GENERATED EDITIONS -->
+# Synchronized editions
+
+Generated from [the current 40-minute outline](../../outlines/adaptive-systems-40min.md).
+
+| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
+| ---: | --- | --- | --- | --- |
+| 15 min | [Open](../../../reveal-talks/adaptive-systems-15min.html) | [Download](../../decks/adaptive-systems-15min-screen.pptx) | [Download](../../decks/adaptive-systems-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../reveal-talks/adaptive-systems-30min.html) | [Download](../../decks/adaptive-systems-30min-screen.pptx) | [Download](../../decks/adaptive-systems-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../reveal-talks/adaptive-systems-40min.html) | [Download](../../decks/adaptive-systems-40min-screen.pptx) | [Download](../../decks/adaptive-systems-40min-handout.pptx) | [Script](script-40min.md) |
+<!-- END GENERATED EDITIONS -->
+
 # Formats: Adaptive, agentic apps
 
 [On-screen PPTX](../../decks/adaptive-systems-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-handout.pptx)

@@ -4,6 +4,11 @@ Use slides 1, 2, 4, 6, 8, 9, 13, 15. Read the prose as the talk track; perform t
 
 ## 00:00 to 01:00: slide 1, Your logs are a roadmap nobody reads
 
+On screen:
+
+> The pager trained you to ignore it
+> The next improvement is already in the scroll
+
 The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will eventually call urgent. Usually after somebody sends an angry email.
 
 This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery belongs to Adaptive, agentic apps.
@@ -18,6 +23,11 @@ Delivery: Scroll a sanitized export. Take a show of hands: who learned about a l
 
 ## 01:00 to 02:00: slide 2, Step one: hand an agent the logs
 
+On screen:
+
+> Already better than the nobody who was doing it before
+> Read access. One question. One saved answer.
+
 Give a coding agent a sanitized export. Ask what broke since yesterday. That is the first version. A file and a question.
 
 It may group unrelated failures together. It may miss the one line you care about. Inspect the answer against the input before you wire it to anything. But for the queue nobody was reading, we finally have a candidate reader. Already better than the nobody who was doing it before.
@@ -27,6 +37,11 @@ Save the answer with the input window. Tomorrow, you want to know whether it fou
 Bridge: add only the integration needed for one failure class; the check preserves counts and evidence.
 
 ## 02:00 to 03:30: slide 4, The out-of-band check
+
+On screen:
+
+> Schedule → bookmark → distill → artifact
+> Advance the bookmark after durable output
 
 Run outside the request path. A scheduled job reads the last completed bookmark, fetches a bounded window, strips secrets, and produces an artifact. Each family gets a count, first seen, last seen, and links to the evidence.
 
@@ -39,6 +54,12 @@ Delivery: Open contracts.md and trace one interrupted run. Show which artifact s
 Bridge: distill before classifying, and give unexplained cases an unknown result.
 
 ## 03:30 to 05:30: slide 6, The retry that hid the auth failure
+
+On screen:
+
+> A retry hides an auth failure
+> A sleep hides a race
+> Successful workaround ≠ repaired system
 
 A request fails. The agent retries. It works. Score the loop on eventual success and the lesson is obvious: retry more.
 
@@ -56,6 +77,11 @@ Bridge: tickets and PRs carry evidence into a bounded review queue.
 
 ## 05:30 to 09:30: slide 8, Demo: nothing leaves without evidence
 
+On screen:
+
+> Regression · holdout · scope · human
+> The useful result is permission denied
+
 The candidate removes the visible failure. That is the beginning of the demo, not the result.
 
 Run the regression. Now run the held-out authorization case. It fails. The proposed retry used authority that belonged to somebody else. The gate holds the change without asking the agent whether it feels finished.
@@ -69,6 +95,11 @@ Source: Toyota, [Toyota Production System](https://global.toyota/en/company/visi
 Delivery: Use the live sequence in engineering/failure-improvement/demo.md. Full slot 5:30. Run real tests; never substitute the checkbox kit for execution. Recording remains blocked until a sanitized production export, working tracker integration, and captured gate run exist.
 
 ## 09:30 to 11:30: slide 9, Who reviews the robot's PRs?
+
+On screen:
+
+> The easy cases disappear
+> The reviewer keeps the exceptions
 
 The robot opens good PRs for a month. What happens to the person reviewing them?
 
@@ -84,6 +115,11 @@ Bridge: compile repeated paths into tested scripts; feedback uses the same queue
 
 ## 11:30 to 13:30: slide 13, The metrics that will lie to you
 
+On screen:
+
+> 100 tickets. 90 wrong. Ten worth reading.
+> Measure recurrence and wrong tickets, with denominators
+
 Suppose the agent files a hundred tickets and a reviewer closes ninety as wrong. Time-to-ticket looks terrific. Ten percent were worth reading. That is our arithmetic fixture, and it is the number I want next to the throughput chart.
 
 Goodhart is the warning here: once we reward a proxy, we change the behavior producing it. Faster tickets are very easy to manufacture. Faster learning is harder.
@@ -95,6 +131,11 @@ Source: Marilyn Strathern (1997), [Improving ratings: audit in the British Unive
 Bridge: choose one failure class and one integration on Monday.
 
 ## 13:30 to 15:00: slide 15, Fail to win
+
+On screen:
+
+> Alert fatigue · normalization of deviance
+> Jidoka · automation irony · Goodhart
 
 The scroll is still arriving. Now the loop leaves a smaller pile of inspectable work, and it knows where to stop.
 

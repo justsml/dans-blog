@@ -4,6 +4,12 @@ Use slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Read the prose as the talk track; perform
 
 ## 00:00 to 01:00: slide 1, A leaderboard, and the question it isn't answering
 
+On screen:
+
+> A · 89.7
+> B · 88.9
+> C · 84.3
+
 Every new model arrives wearing a tuxedo of benchmarks. Here are three scores. Pick the model you would try first.
 
 One scope statement: the model names and workload numbers in this fixture are invented. The arithmetic and cited research are checkable. We are choosing a support system, not measuring general intelligence.
@@ -16,6 +22,11 @@ Bridge: our cancellation workload reverses the fictional leaderboard. The scorin
 
 ## 01:00 to 02:00: slide 3, Goodhart, Campbell, and the target
 
+On screen:
+
+> Reward a proxy and behavior changes
+> Credit Strathern for the familiar Goodhart wording
+
 Goodhart described statistical regularities breaking under pressure from their use in control. Campbell described the pressure that social decision-making puts on indicators and on the processes they measure. The familiar sentence about a measure becoming a target comes through Marilyn Strathern.
 
 The practical question is the same. What behavior improves the number without improving the thing we care about? A support assistant can shorten handling time by closing the conversation before it solves the problem. A judge can reward confident prose while the backend state stays wrong.
@@ -25,6 +36,11 @@ Write that loophole down before optimizing. Then add a case that exploits it. If
 Source: Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are paraphrases.
 
 ## 02:00 to 03:00: slide 4, Your eval suite is a measuring instrument
+
+On screen:
+
+> The suite needs an eval
+> A green run is an inference, not a warranty
 
 Your eval suite is a psychometric instrument somebody checked into Git. It produces scores from tasks and judgments, then we use those scores to make decisions. Where is its validation?
 
@@ -36,6 +52,11 @@ Story: The green eval run followed by a production failure. Bring the case, the 
 
 ## 03:00 to 04:30: slide 5, One number is a comforting fiction
 
+On screen:
+
+> What is the score a score of?
+> Construct validity: evidence for the interpretation
+
 Cronbach and Meehl gave us construct validity. What property does this test actually measure, and what evidence supports that interpretation? Messick puts interpretation and use at the center of validation. A score used to shortlist a model and the same score used to authorize refunds are different claims.
 
 Raji and colleagues make the problem explicit for broad AI benchmarks. A collection of tasks does not automatically justify a claim about everything the model can do.
@@ -46,6 +67,11 @@ Source: Cronbach and Meehl (1955), [Construct validity in psychological tests](h
 
 ## 04:30 to 06:00: slide 6, "Cancel my account."
 
+On screen:
+
+> Right account. Applicable policy. Authorized action.
+> Verify state. Include the refusal path.
+
 A customer asks to cancel. Identify the account through an authenticated context. Resolve the applicable policy. Check authority. Execute the allowed operation and read the resulting state. The response must match what happened.
 
 Now vary one thing at a time. Wrong tenant. Expired session. Cancellation already completed. A tool times out after accepting the request. An account type that requires another approval. Each case names the expected state and what the assistant should tell the customer.
@@ -55,6 +81,12 @@ A trace becomes a test when it answers a specific question. A transcript without
 Delivery: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
 
 ## 06:00 to 08:00: slide 7, Run it five times
+
+On screen:
+
+> 94, 82, 91, 97, 89
+> 78, 79, 81, 82, 80 · pass at ≥ 80
+> Majority disagreement: 2 / 5 = 40%
 
 Your judge scores ninety-four, then eighty-two, then ninety-one, then ninety-seven, then eighty-nine. Same case, different answers. Noise wearing a lab coat.
 
@@ -67,6 +99,11 @@ Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-
 Delivery: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
 
 ## 08:00 to 11:00: slide 8, Twenty green cases. About one in seven.
+
+On screen:
+
+> Zero failures in 20 independent representative trials
+> 95% upper bound: 3 / 20 ≈ 15%; exact 13.9%
 
 Twenty for twenty feels finished. Here is what it buys under independent, identically distributed sampling from the population you care about.
 
@@ -82,6 +119,11 @@ Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection wou
 
 ## 11:00 to 13:30: slide 9, Your grader is an instrument too
 
+On screen:
+
+> 90 expert passes. Ten expert failures.
+> Always-pass judge: 90% agreement, κ = 0
+
 Take a hundred cases. Experts pass ninety and fail ten. Our judge passes everything. Ninety-percent agreement. Congratulations, we have calibrated a button.
 
 Cohen's kappa compares observed agreement with agreement expected from the marginal label rates. Here both are point nine, so kappa is zero. But kappa also changes with prevalence. Do not replace blind faith in raw agreement with blind faith in a kappa threshold. Keep the confusion matrix and inspect the disagreements.
@@ -95,6 +137,11 @@ Delivery: Write the 90/10 confusion matrix. Compute (0.9 − 0.9)/(1 − 0.9). A
 Bridge: separate held-out evidence, report slices and counts, version the scorer, and set the rejection rule before viewing the candidate.
 
 ## 13:30 to 15:00: slide 15, What does good mean here?
+
+On screen:
+
+> Validity · reliability · agreement
+> Power · contamination · Goodhart
 
 Start with twenty cases tomorrow. Attach the acceptance criterion, the source, and the reason each case belongs. Then attach the honest limitation: twenty green cases do not establish broad reliability.
 

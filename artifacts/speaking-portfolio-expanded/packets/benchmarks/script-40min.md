@@ -4,6 +4,12 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as 
 
 ## 00:00 to 02:30: slide 1, A leaderboard, and the question it isn't answering
 
+On screen:
+
+> A · 89.7
+> B · 88.9
+> C · 84.3
+
 Every new model arrives wearing a tuxedo of benchmarks. Here are three scores. Pick the model you would try first.
 
 One scope statement: the model names and workload numbers in this fixture are invented. The arithmetic and cited research are checkable. We are choosing a support system, not measuring general intelligence.
@@ -14,6 +20,12 @@ Delivery: Take one show of hands. Do not ask the room to vote again on the next 
 
 ## 02:30 to 04:30: slide 2, Same three models, your work
 
+On screen:
+
+> A · 71% pass · $0.34/run
+> B · 82% pass · $0.28/run
+> C · 90% pass · $0.20/run
+
 Now the same models attempt our cancellation workflow. C has the best pass rate in this fixture. The winner changed because the question changed.
 
 We still need to know what pass meant. Did the system cancel the right account, or did it write a reassuring answer? Did it perform an authorized action, or did it merely mention policy? If the scorer only reads the chat, a polite failure can beat a terse success.
@@ -21,6 +33,11 @@ We still need to know what pass meant. Did the system cancel the right account, 
 Prices can help choose among acceptable systems. They cannot tell us which systems are acceptable. The cost-per-success arithmetic belongs to Cry Me a Free Tier. Today the question is whether this score means anything.
 
 ## 04:30 to 07:00: slide 3, Goodhart, Campbell, and the target
+
+On screen:
+
+> Reward a proxy and behavior changes
+> Credit Strathern for the familiar Goodhart wording
 
 Goodhart described statistical regularities breaking under pressure from their use in control. Campbell described the pressure that social decision-making puts on indicators and on the processes they measure. The familiar sentence about a measure becoming a target comes through Marilyn Strathern.
 
@@ -32,6 +49,11 @@ Source: Campbell (1979), [Assessing the impact of planned social change](https:/
 
 ## 07:00 to 09:30: slide 4, Your eval suite is a measuring instrument
 
+On screen:
+
+> The suite needs an eval
+> A green run is an inference, not a warranty
+
 Your eval suite is a psychometric instrument somebody checked into Git. It produces scores from tasks and judgments, then we use those scores to make decisions. Where is its validation?
 
 Try a response that sounds excellent but leaves the account active. Try a correct cancellation with awkward wording. Try an unauthorized cancellation with a perfect explanation. The instrument should distinguish those for the reasons you intended.
@@ -41,6 +63,11 @@ Nobody needs another dashboard to discover that the grader rewards tone. We need
 Story: The green eval run followed by a production failure. Bring the case, the score, the observed state, and the assumption the scorer missed.
 
 ## 09:30 to 12:00: slide 5, One number is a comforting fiction
+
+On screen:
+
+> What is the score a score of?
+> Construct validity: evidence for the interpretation
 
 Cronbach and Meehl gave us construct validity. What property does this test actually measure, and what evidence supports that interpretation? Messick puts interpretation and use at the center of validation. A score used to shortlist a model and the same score used to authorize refunds are different claims.
 
@@ -52,6 +79,11 @@ Source: Cronbach and Meehl (1955), [Construct validity in psychological tests](h
 
 ## 12:00 to 15:00: slide 6, "Cancel my account."
 
+On screen:
+
+> Right account. Applicable policy. Authorized action.
+> Verify state. Include the refusal path.
+
 A customer asks to cancel. Identify the account through an authenticated context. Resolve the applicable policy. Check authority. Execute the allowed operation and read the resulting state. The response must match what happened.
 
 Now vary one thing at a time. Wrong tenant. Expired session. Cancellation already completed. A tool times out after accepting the request. An account type that requires another approval. Each case names the expected state and what the assistant should tell the customer.
@@ -61,6 +93,12 @@ A trace becomes a test when it answers a specific question. A transcript without
 Delivery: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
 
 ## 15:00 to 18:00: slide 7, Run it five times
+
+On screen:
+
+> 94, 82, 91, 97, 89
+> 78, 79, 81, 82, 80 · pass at ≥ 80
+> Majority disagreement: 2 / 5 = 40%
 
 Your judge scores ninety-four, then eighty-two, then ninety-one, then ninety-seven, then eighty-nine. Same case, different answers. Noise wearing a lab coat.
 
@@ -73,6 +111,11 @@ Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-
 Delivery: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
 
 ## 18:00 to 21:30: slide 8, Twenty green cases. About one in seven.
+
+On screen:
+
+> Zero failures in 20 independent representative trials
+> 95% upper bound: 3 / 20 ≈ 15%; exact 13.9%
 
 Twenty for twenty feels finished. Here is what it buys under independent, identically distributed sampling from the population you care about.
 
@@ -88,6 +131,11 @@ Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection wou
 
 ## 21:30 to 25:00: slide 9, Your grader is an instrument too
 
+On screen:
+
+> 90 expert passes. Ten expert failures.
+> Always-pass judge: 90% agreement, κ = 0
+
 Take a hundred cases. Experts pass ninety and fail ten. Our judge passes everything. Ninety-percent agreement. Congratulations, we have calibrated a button.
 
 Cohen's kappa compares observed agreement with agreement expected from the marginal label rates. Here both are point nine, so kappa is zero. But kappa also changes with prevalence. Do not replace blind faith in raw agreement with blind faith in a kappa threshold. Keep the confusion matrix and inspect the disagreements.
@@ -100,6 +148,11 @@ Delivery: Write the 90/10 confusion matrix. Compute (0.9 − 0.9)/(1 − 0.9). A
 
 ## 25:00 to 27:30: slide 10, Cranfield had a test collection
 
+On screen:
+
+> Fixed corpus. Queries. Relevance judgments.
+> TREC started in 1992. It studied its own measurement.
+
 Cleverdon, Mills, and Keen documented the Cranfield test collections in 1966. Fix the documents, fix the questions, judge relevance, and compare systems. NIST started TREC in 1992 and built a shared evaluation program around this kind of work.
 
 The discipline also investigated its weak points. Incomplete judgments and disagreement among assessors affect what a score means. Voorhees found comparative rankings remarkably stable under changed judgments in the experiments she studied. That is evidence about those comparisons, not permission to trust any automated grader.
@@ -109,6 +162,11 @@ The Retrieval talk follows that history and its pooling problem. The point here 
 Source: Cleverdon, Mills, and Keen (1966), [Cranfield report front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf). [NIST TREC overview](https://trec.nist.gov/overview.html). Voorhees (2000), [Variations in Relevance Judgments](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness).
 
 ## 27:30 to 30:30: slide 11, Contamination and the reusable holdout
+
+On screen:
+
+> Public tests may have entered training
+> Repeated tuning spends the holdout
 
 Two different leaks. A public test may already be in the training data. Oren and colleagues show a way to detect contamination in black-box models under their method's assumptions. That does not make every public score meaningless. It makes provenance a question you must ask.
 
@@ -120,6 +178,11 @@ Source: Oren et al. (2024), [Proving Test Set Contamination in Black-Box Languag
 
 ## 30:30 to 33:00: slide 12, Stop averaging away failure
 
+On screen:
+
+> Slice by failure mechanism
+> Show counts, variation, and critical violations
+
 An overall pass rate weights whatever mix you put in the file. Add easy cases and it rises. Nothing about the hard cases had to improve.
 
 Report cancellation by account type, authorization state, language, and tool outcome. Start with slices that correspond to plausible failure mechanisms. Show the count in each slice and repeat-run variation. A two-case slice should look like two cases, not a confident percentage.
@@ -128,6 +191,11 @@ Track critical violations separately. Nine friendly answers do not compensate fo
 
 ## 33:00 to 35:00: slide 13, Use the cheapest check that can honestly fail
 
+On screen:
+
+> State and schema belong in code
+> Use judgment where the criterion requires it
+
 Check the account state with code. Check whether a required field exists with code. Do not ask a model whether a JSON parser would accept the payload.
 
 Use a model grader where the criterion requires language judgment, and validate it against labeled cases. Use people for disputed policy, hard ambiguity, and consequential decisions that need their authority. Each layer should be capable of rejecting a plausible wrong answer.
@@ -135,6 +203,11 @@ Use a model grader where the criterion requires language judgment, and validate 
 The ladder is a division of questions. It is not a contest to see how many things we can put behind an LLM call.
 
 ## 35:00 to 37:30: slide 14, Make it a release gate
+
+On screen:
+
+> Version cases, scorer, rubric, and candidate
+> Write the rejection rule before the flattering result
 
 A release comparison needs the system version, prompt, tool configuration, corpus revision, scorer revision, and baseline. Otherwise the difference between two scores may be a difference between two instruments.
 
@@ -145,6 +218,11 @@ What would block your next rollout? Write one answer that the current suite coul
 Delivery: Give 45 seconds to write. Take one rule and ask which observable state would trigger it.
 
 ## 37:30 to 40:00: slide 15, What does good mean here?
+
+On screen:
+
+> Validity · reliability · agreement
+> Power · contamination · Goodhart
 
 Start with twenty cases tomorrow. Attach the acceptance criterion, the source, and the reason each case belongs. Then attach the honest limitation: twenty green cases do not establish broad reliability.
 

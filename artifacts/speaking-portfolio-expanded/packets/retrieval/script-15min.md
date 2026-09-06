@@ -4,6 +4,11 @@ Use slides 1, 2, 8, 9, 10, 11, 12, 15. Read the prose as the talk track; perform
 
 ## 00:00 to 01:30: slide 1, The sentence
 
+On screen:
+
+> RAG · embeddings · memory · MCP · judges · traces
+> There is a reading list under that pitch.
+
 Our agent uses RAG over an embedding store, adds memories to context, calls MCP tools, emits structured outputs, gets evaluated by an LLM judge, and traces the whole thing through our agent observability platform.
 
 That sentence used to be the talk. Translate the nouns and everybody feels less behind. But knowing what the nouns mean does not tell us whether the retrieval works. The useful question is what the people who studied it already found out.
@@ -13,6 +18,11 @@ We spent years calling it search. Then we called it a vector database and raised
 Delivery: Read the opening sentence quickly and straight-faced. Pause after it. Keep this hook in every route.
 
 ## 01:30 to 02:30: slide 2, The bet, and the eight words
+
+On screen:
+
+> You are joining an old field late
+> Term specificity → assessor disagreement
 
 This is an engineer's reading of information retrieval, with synthetic exercises and sources attached. The claim is that we skipped useful evaluation work, not that IR researchers solved every problem in RAG.
 
@@ -26,6 +36,14 @@ Bridge: term specificity, vectors, vocabulary mismatch, and passage retrieval ex
 
 ## 02:30 to 05:00: slide 8, Judge these five documents
 
+On screen:
+
+> A · current generic policy; 30-day notice
+> B · signed Acme addendum; “see Schedule R”
+> C · expired Acme terms; immediate cancellation
+> D · current terms for another customer
+> E · support note; “probably immediate”
+
 Acme asks whether it can cancel today without a fee. Which documents belong in the evidence supplied to answer it? Work in pairs for sixty seconds.
 
 A is current but generic. B is signed and specific, but refers to a schedule we have not supplied. C has the answer we might like and is expired. D is about somebody else. E is an employee's guess.
@@ -36,6 +54,11 @@ Delivery: Give 60 seconds in pairs and collect two judgments with reasons. Do no
 
 ## 05:00 to 06:30: slide 9, Cranfield, Bedfordshire, 1966
 
+On screen:
+
+> Corpus + queries + relevance judgments
+> 1966 → 2026 = 60 years
+
 Cleverdon, Mills, and Keen's Cranfield report is dated 1966. Fix a document collection, define questions, judge relevance, and compare systems under the same conditions. Sixty years later, that is a recognizable shape for an eval harness.
 
 The name is the Cranfield paradigm. It gives you a controlled comparison. It also forces choices about who writes the questions, who judges the evidence, and what the collection represents.
@@ -45,6 +68,12 @@ Your golden dataset is a test collection with a flattering filename. Write down 
 Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
 ## 06:30 to 09:30: slide 10, Demo: the hole in the golden set
+
+On screen:
+
+> Old pool: A, B, C, D, E
+> New result: F · signed Schedule R
+> Unjudged is not a relevance judgment
 
 The old retrievers contributed A through E to the judgment pool. Our new retriever finds F: the signed Schedule R referenced by B. It waives Acme's cancellation fee. Nobody judged it because nobody retrieved it.
 
@@ -60,6 +89,11 @@ Delivery: Run `bun artifacts/speaking-portfolio-expanded/packets/retrieval/pooli
 
 ## 09:30 to 11:30: slide 11, Assessors disagree. Rankings can survive.
 
+On screen:
+
+> Voorhees, 2000: changed judgments, stable comparisons
+> Test your comparison under more than one assessor
+
 Voorhees varied relevance judgments and examined the resulting system rankings. The comparative results stayed stable despite substantial judgment differences in those experiments.
 
 An absolute score and an A-versus-B ordering make different demands on the labels. That does not mean a model judge is trustworthy because it ranks two answers. It means we have a specific test to run: relabel a sample independently, then see which conclusions survive.
@@ -70,6 +104,11 @@ Source: Ellen M. Voorhees (2000), [Variations in Relevance Judgments and the Mea
 
 ## 11:30 to 13:30: slide 12, What changed: the next reader is a generator
 
+On screen:
+
+> Useful to inspect ≠ sufficient to answer
+> Score retrieval and the resulting answer separately
+
 A person inspecting a ranked list can notice that the signed addendum refers to a missing schedule and go looking. Our generator may instead turn the generic thirty-day policy into a fluent answer about Acme.
 
 We can build abstention and verification into that system. We cannot infer that it will use them from a good retrieval score. The retrieved material must be applicable, sufficiently complete, and represented with the qualifiers the answer needs.
@@ -79,6 +118,11 @@ Evaluate the handoff. Did retrieval find B and F? Did context assembly keep thei
 Bridge: retrieved text supplies evidence, never tool authority. Name a corpus owner and an update path.
 
 ## 13:30 to 15:00: slide 15, Eight words. Sixty years. One instruction.
+
+On screen:
+
+> Your eval suite has a grandfather.
+> Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
 

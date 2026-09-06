@@ -4,6 +4,11 @@ Use slides 1, 2, 4, 5, 7, 8, 9, 14. Read the prose as the talk track; perform th
 
 ## 00:00 to 01:30: slide 1, The cat is out of the bag
 
+On screen:
+
+> Horse out of the barn. Cat out of the bag.
+> Math class survived the Casio watch.
+
 The historical parallels have been beaten to death, so one and done: the calculator panic. Specifically the Casio calculator watch. Math class was dead. The kid sitting next to the Casio owner didn't even need one.
 
 Confession: I may have used one or two on an assessment. But we're not here for that. What I did was wholesome. These kids are phoning it in. Not even trying. Infuriating, right?
@@ -16,6 +21,12 @@ Delivery: Let the confession land before the pivot. The laugh is the title doing
 
 ## 01:30 to 03:00: slide 2, The doom loop
 
+On screen:
+
+> Proctoring fails. The pop quiz proves what you already knew.
+> Getting away with it is the reward.
+> Students are the original adversarial actors.
+
 It can feel like you've lost. The proctoring tools fail readily. What still works is the cold call or the pop quiz, and all it proves is that the student can't hit the first rung of Bloom's taxonomy. Can't recall it. Can't spell it. That crushes you, and it cements the loop: the student learns they can cheat through, and the reward is getting away with it. Even when caught, there's no stigma for using something as common as a phone.
 
 Pummeling them with gotcha quizzes proves what you already knew: Johnny ain't learning too good. Block the chatbot on the network and they share a VPN from a phone. Life finds a way. Students are the original adversarial actors.
@@ -26,6 +37,11 @@ Bridge: write down where pencil, whiteboard and peers live, and in the same docu
 
 ## 03:00 to 04:00: slide 4, The polished answer with a hole in it
 
+On screen:
+
+> "A 20% rise and a 20% fall cancel."
+> The prose is clean. The denominator is wrong.
+
 Here's the fixture for the rest of the talk. A shop raises a $100 price by 20%, then discounts the new price by 20%. The student writes: equal and opposite, so the final price is $100. Clean sentence. Confident. Wrong base.
 
 The capability we're after is narrow enough for the room to inspect: explain why a percentage acts on a base, and how the base changes across a sequence. Now imagine the correct number with this faulty explanation hiding behind it. What would a final-answer assessment have caught? Nothing.
@@ -35,6 +51,12 @@ Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experi
 Delivery: Ask the room what the final answer alone would have told you. One answer, then move.
 
 ## 04:00 to 06:00: slide 5, Outsmart move one: make verification feel like cheating
+
+On screen:
+
+> "Take a picture of these hundred problems and make the model do them."
+> A 1 that looks like a 7. A smudge that turns an 8 into a 9.
+> "You didn't check the results? Johnny, you're not gonna make it."
 
 The highest-leverage assignment I know lets students feel like they're cheating. Photograph the sheet, feed it to the model, submit. The trap is in the sheet: a stroke that reads as either digit, a smudge. The wrong answers come back and the lesson teaches itself. You were supposed to check.
 
@@ -48,6 +70,11 @@ Bridge: ask for an attempt first, then ration help rung by rung, and write down 
 
 ## 06:00 to 09:30: slide 7, Demo: the four-minute reconstruction
 
+On screen:
+
+> $100 → $120 → $96. Why does the second base change?
+> Now: $80 → +25% → −20%
+
 Run the two scripted learners from the runbook, then go live. Reveal the wrong argument. Let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it.
 
 Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.25 times 0.8 is 1. That breaks the shortcut the room just formed, "opposite changes never cancel," and that's the point. A transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example.
@@ -55,6 +82,12 @@ Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.
 Delivery: Runbook section 5 for the scripted turns. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
 
 ## 09:30 to 11:30: slide 8, Score the reasoning, then write down what you saw
+
+On screen:
+
+> Base identified 0–2 · Calculation justified 0–2 · Transfer explained 0–2 · Help in its own column
+> Record: concept · what they said · what help they got · next check
+> Never "weak at reasoning." Never "likely cheated."
 
 Zero: the wrong base persists. One: the right number, no explanation. Two: the learner explains the current amount. Help goes in its own column so a human can read it, and asking a question costs nothing. Try the rubric on sample work before it touches a grade.
 
@@ -66,6 +99,12 @@ Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrativ
 
 ## 11:30 to 13:30: slide 9, Outsmart move two: make them say it out loud
 
+On screen:
+
+> Recall errors and reading errors are different animals
+> Small groups, speaking: the incentives reset
+> Voice is biometric. Offline. Zero retention. Age-appropriate. Written alternative.
+
 Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely, never to convict.
 
 Small groups, speaking, in class: that resets the table. It adds social pressure against cheating and hands you knobs on an incentive structure that today is a magical cheating genie. Not foolproof. A student can build an agent told to seem dumb at first and then learn. Fine. We're changing incentives, not buying certainty.
@@ -73,6 +112,11 @@ Small groups, speaking, in class: that resets the table. It adds social pressure
 Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout.
 
 ## 13:30 to 15:00: slide 14, A purpose-built machine
+
+On screen:
+
+> Explain it. Challenge it. Change it. Apply it. Defend it.
+> Too much power to hold casually. Prove the value constantly.
 
 Stop trying to prove who typed the sentence. Ask whether the student can explain it, challenge it, change it, apply it, and defend it. That means teaching changes: how we put agents in the room, how we model using them, how we design group work around them.
 

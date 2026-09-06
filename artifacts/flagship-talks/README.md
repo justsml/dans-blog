@@ -1,6 +1,6 @@
 # Retrieval, Benchmarks, and Judgment
 
-The current talks use canonical structured outlines in the expanded portfolio. `build-talk.ts` derives the browser decks, 40/30/15 presenter scripts, and short-route timings. Files in this directory remain as compatibility pointers; retained PowerPoints are historical exports.
+The current talks use canonical structured outlines in the expanded portfolio. `sync-talks.ts` derives the browser decks, 40/30/15 presenter scripts, short-route timings, and both PowerPoint editions. Files in this directory remain as compatibility pointers; the retained PowerPoint filenames are synchronized aliases of the current screen editions.
 
 | Talk | Audience | Canonical outline | Browser deck | Short routes |
 | --- | --- | --- | --- | --- |

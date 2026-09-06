@@ -4,6 +4,11 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as 
 
 ## 00:00 to 02:30: slide 1, The architecture you could read off the org chart
 
+On screen:
+
+> Conway, 1968: communication structures constrain designs
+> Which of those boundaries still earns its keep?
+
 Conway said organizations designing systems "are constrained to produce designs which are copies of the communication structures of these organizations." Constrained. Communication structures. The wires matter more than the boxes.
 
 This is a proposed operating model. The demo uses synthetic numbers to execute a policy, not measure customer benefit. My bet is that cheaper coordination makes some of our current boundaries obsolete. We should find those boundaries before we photocopy them onto agents.
@@ -16,6 +21,11 @@ Story: A system whose API boundaries reproduced the team handoffs, and the chang
 
 ## 02:30 to 05:00: slide 2, Mirroring is measured. It is not destiny.
 
+On screen:
+
+> 142 studies reviewed
+> Firm/industry descriptive studies: 70% strong, 22% partial, 8% no support
+
 Colfer and Baldwin reviewed 142 empirical studies. The firm and industry descriptive studies mostly supported mirroring: seventy percent strongly, twenty-two percent partially, eight percent not at all. The open collaborative projects looked different. Do not turn that into a claim that one third of companies broke Conway's law.
 
 Their useful finding is that firms can deliberately break the mirror through modular partitions or relationships across organizational boundaries. MacCormack, Rusnak, and Baldwin also found differences in modularity across development arrangements. These are studies of association and organization, not a randomized trial of rearranging your teams.
@@ -25,6 +35,11 @@ So the org chart is evidence about why the software looks like this. It is not a
 Source: Colfer and Baldwin (2016), [The mirroring hypothesis: theory, evidence, and exceptions](https://doi.org/10.1093/icc/dtw027), Industrial and Corporate Change 25(5), 709–738. MacCormack, Rusnak, and Baldwin (2012), [Exploring the duality between product and organizational architectures](https://www.hbs.edu/ris/Publication%20Files/Research%20Policy%2041%20%282012%29%201309%E2%80%93%201324_c5c2350e-013c-4065-a2f9-d95eb32177d5.pdf), Research Policy 41(8), 1309–1324.
 
 ## 05:00 to 07:30: slide 3, Your org chart is a fossil of coordination cost
+
+On screen:
+
+> Coase, 1937: coordination has a cost
+> Reprice the handoff before copying it
 
 Coase asked why firms exist when people could contract through the market. Using the market costs something; coordinating inside the firm costs something too. The boundary depends on that comparison.
 
@@ -36,6 +51,11 @@ Source: Ronald H. Coase (1937), [The Nature of the Firm](https://onlinelibrary.w
 
 ## 07:30 to 09:30: slide 4, The spectrum, and the two ways to lose
 
+On screen:
+
+> Committee at one end. Five people at the other.
+> The suffering arrives later than the speed does.
+
 At one end, thousands of employees and millions of customers. Change procedures, risk analysis, a prioritization rubric. At the other, five people around a laptop who can all hear the person making the decision.
 
 The small team can acquire research and feedback capacity it could never afford to staff. The large team can shorten a handoff. Both can also generate proposals faster than anyone understands them.
@@ -45,6 +65,12 @@ Automate the right things and keep the taste. Trade judgment for AI vibes and th
 Delivery: Take 30 seconds: where is your team on the spectrum, and what is its heaviest handoff? Keep the answers for slide 14.
 
 ## 09:30 to 12:00: slide 5, Draw the wires between agents
+
+On screen:
+
+> Research → sourced brief → product review
+> Feedback → cited clusters → product review
+> Review → accepted hypothesis → build
 
 The inverse Conway manoeuvre is the name people use for changing the organization to encourage the architecture they want. Here that means designing communication between agents and people, not putting a robot beside every job title.
 
@@ -56,6 +82,11 @@ Source: [Thoughtworks, Inverse Conway Maneuver](https://www.thoughtworks.com/en-
 
 ## 12:00 to 14:30: slide 6, Two directions of attention
 
+On screen:
+
+> Research looks out. Feedback looks in.
+> Keep the meeting where the evidence disagrees.
+
 The research agent watches competitors and people talking about your product. The feedback agent ingests support tickets, interviews, reviews, and in-app complaints. Both preserve the evidence behind their summaries.
 
 Now make them disagree. Research says onboarding lacks a feature. Feedback says users cannot find the feature we already have. A clustering agent might merge those into "onboarding problems" and confidently bury the distinction.
@@ -65,6 +96,11 @@ Keep the review where somebody opens the source material and argues about what b
 Story: A feedback cluster that merged different complaints and changed the wrong priority. Bring one original complaint that the summary obscured.
 
 ## 14:30 to 16:30: slide 7, Effort left the rubric. Argue with me.
+
+On screen:
+
+> My observation, not your sprint report
+> Who estimated a ticket last week?
 
 I have not heard an engineering team discuss level of effort on a ticket in months. That is the observation in my working notes. Let us test how badly it travels.
 
@@ -76,6 +112,11 @@ Delivery: Count the hands and say the count without inventing a denominator. Con
 
 ## 16:30 to 18:30: slide 8, Gap analysis, past engineering
 
+On screen:
+
+> Walk the build. Attach screenshots and reasons.
+> A candidate should be cheap to reject.
+
 Point an agent with a browser at a build. Ask it to walk onboarding as a new user, compare the result with the sourced brief, and propose changes to the information hierarchy. Each proposal carries the screenshot, the attempted task, and the reason the current page got in the way.
 
 Make one proposal wrong in review. The screenshot may show a feature hidden because the test account lacks permission. That is a setup defect, not evidence to redesign the product. The reviewer needs the account state to tell the difference.
@@ -83,6 +124,11 @@ Make one proposal wrong in review. The screenshot may show a feature hidden beca
 Analytics and warehouse queries can feed the same proposal queue. Marketing can draft an ad from an accepted idea. Those functions share provenance and owners; they do not all need write access to customer records.
 
 ## 18:30 to 21:00: slide 9, Targeted beta enrollment, and the deluge
+
+On screen:
+
+> Keep the customers behind the cluster
+> Invite an opt-in cohort. Keep the exit.
 
 This idea came from a cluster of customers. Preserve that provenance. Find people with the same task, then ask whether they want to try the change. Similar company size is not necessarily a similar problem.
 
@@ -94,6 +140,11 @@ Story: A beta invitation that selected users on the wrong axis, or feedback that
 
 ## 21:00 to 23:00: slide 10, Campbell's law arrives on schedule
 
+On screen:
+
+> Activation is the target
+> What behavior did we just pay for?
+
 Give the system a target and it will search for ways to improve it. So will a team. Campbell described the pressure that decision-making puts on quantitative indicators and on the activity they are supposed to measure.
 
 Our target is onboarding activation. The next screen has three candidates. Before we inspect anything else, choose the one you would investigate. Do not reverse-engineer the answer from the names; they are A, B, and C.
@@ -103,6 +154,12 @@ The interesting question is what the winning candidate did to earn the number. A
 Source: Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
 ## 23:00 to 28:00: slide 11, Demo: run it before you know the rule
+
+On screen:
+
+> A · 40% activation
+> B · 48% activation
+> C · 45% activation
 
 Which candidate gets your attention? B has the largest activation number. Now open the rest of its record.
 
@@ -116,6 +173,11 @@ Delivery: Five minutes in the 40/30 routes, 3:30 in the 15. Begin with only this
 
 ## 28:00 to 31:00: slide 12, Where guards go, including the two we forgot
 
+On screen:
+
+> Wider rollout · expensive runs · infrastructure changes
+> Customer messaging · customer data deletion
+
 The demo gave us a reason for the guard. Put it where the consequence changes, before the action happens.
 
 Widening a cohort spends more customer exposure. An expensive run spends money. Creating infrastructure adds ongoing obligations; tearing it down may remove somebody's recovery path. Name the budget, the owner, and the evidence needed at each crossing.
@@ -123,6 +185,11 @@ Widening a cohort spends more customer exposure. An expensive run spends money. 
 Then add the two missing from the old list. Sending a message to a real customer. Deleting their records. Those are consequences for another person, even when the API call costs a fraction of a cent. A person approves them. The system must enforce that permission, not merely mention it in the prompt.
 
 ## 31:00 to 34:00: slide 13, How many agents can one person own?
+
+On screen:
+
+> 6 × (32 + 5) = 222 possible relationships
+> Ownership costs attention. Budget it.
 
 Six agents, six owners. Somehow you own four of them and are on call for all six.
 
@@ -136,6 +203,11 @@ Delivery: Do 6 × (32 + 5) aloud. Ask who owns more automated jobs than they cou
 
 ## 34:00 to 37:00: slide 14, Every experiment reports its hypothesis
 
+On screen:
+
+> If we do X, we expect Y to move
+> Report success, failure, and surprise where the team looks
+
 Every beta, ad test, and feature flag gets a hypothesis. If we change this, we expect that to increase. State who it is for, what would make us stop, and when we will look.
 
 Generate the measurement with the change. A scheduled report is fine. It needs the exposure count, the intended outcome, the unwanted outcomes, and the owner who will act. The report goes where the team already looks. A dashboard is optional. Remembering to check it is a bad dependency.
@@ -147,6 +219,11 @@ Source: Microsoft ExP (2020), [Patterns of trustworthy experimentation: pre-expe
 Delivery: Give 45 seconds to write. Walk through one answer for the remaining discussion time.
 
 ## 37:00 to 40:00: slide 15, Break the mirror on purpose
+
+On screen:
+
+> Reprice the handoffs. Draw the interfaces.
+> Automate the right things. Keep the taste.
 
 Back to the org chart. Some of those boundaries exist because the work really is different. Some exist because the person with the spreadsheet sat in another department. We should know which before teaching agents to repeat them.
 

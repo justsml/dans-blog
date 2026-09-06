@@ -4,6 +4,11 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as 
 
 ## 00:00 to 02:30: slide 1, Your logs are a roadmap nobody reads
 
+On screen:
+
+> The pager trained you to ignore it
+> The next improvement is already in the scroll
+
 The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will eventually call urgent. Usually after somebody sends an angry email.
 
 This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery belongs to Adaptive, agentic apps.
@@ -18,6 +23,11 @@ Delivery: Scroll a sanitized export. Take a show of hands: who learned about a l
 
 ## 02:30 to 04:30: slide 2, Step one: hand an agent the logs
 
+On screen:
+
+> Already better than the nobody who was doing it before
+> Read access. One question. One saved answer.
+
 Give a coding agent a sanitized export. Ask what broke since yesterday. That is the first version. A file and a question.
 
 It may group unrelated failures together. It may miss the one line you care about. Inspect the answer against the input before you wire it to anything. But for the queue nobody was reading, we finally have a candidate reader. Already better than the nobody who was doing it before.
@@ -25,6 +35,11 @@ It may group unrelated failures together. It may miss the one line you care abou
 Save the answer with the input window. Tomorrow, you want to know whether it found something new or just described yesterday more confidently.
 
 ## 04:30 to 07:30: slide 3, Enrichment earns the next step
+
+On screen:
+
+> Logs → code → trace → reproduction → ticket
+> One failure class at a time
 
 A stack trace tells you where an exception surfaced. The code tells you which branch produced it. The trace shows what happened before it. A reproduction tells you whether your explanation survives a second attempt.
 
@@ -36,6 +51,11 @@ Delivery: Walk up the ladder using one timeout. Stop at the first rung that supp
 
 ## 07:30 to 10:30: slide 4, The out-of-band check
 
+On screen:
+
+> Schedule → bookmark → distill → artifact
+> Advance the bookmark after durable output
+
 Run outside the request path. A scheduled job reads the last completed bookmark, fetches a bounded window, strips secrets, and produces an artifact. Each family gets a count, first seen, last seen, and links to the evidence.
 
 Only advance the bookmark after the artifact is saved. If ticket creation fails, retry from that artifact using a stable incident key. Otherwise the failure-improvement system gets its own failure-improvement system, and we are all going home late.
@@ -46,6 +66,11 @@ Delivery: Open contracts.md and trace one interrupted run. Show which artifact s
 
 ## 10:30 to 13:00: slide 5, Distill, then classify
 
+On screen:
+
+> Count occurrences before guessing causes
+> Severity · evidence · owner · unknown
+
 Distillation removes repetition. Classification decides where the remaining work goes. Keep those outputs separate so a reviewer can inspect a group without accepting its diagnosis.
 
 Two matching strings are a family candidate. They are not a root cause. Keep the trace IDs and the counterexample that did not fit. A low-severity label needs a reason because a wrong low can leave a customer stranded without anyone looking.
@@ -53,6 +78,12 @@ Two matching strings are a family candidate. They are not a root cause. Keep the
 Give the classifier an unknown result and a queue that receives it. If every answer must be one of the happy categories, the prompt has already decided what the agent is allowed to notice.
 
 ## 13:00 to 16:00: slide 6, The retry that hid the auth failure
+
+On screen:
+
+> A retry hides an auth failure
+> A sleep hides a race
+> Successful workaround ≠ repaired system
 
 A request fails. The agent retries. It works. Score the loop on eventual success and the lesson is obvious: retry more.
 
@@ -68,6 +99,11 @@ Delivery: Take two short answers about fixes that hid a problem. Budget 45 secon
 
 ## 16:00 to 18:30: slide 7, From tags to tickets and PRs
 
+On screen:
+
+> Tickets are cheap. Review is not.
+> A proposed diagnosis travels with its evidence
+
 A useful ticket says what happened, how often, who was affected, and what remains unexplained. It links the evidence. It does not announce a root cause just because the model found a similar issue from last month.
 
 Opening a PR spends somebody else's attention. Require a reproduction, a bounded change, and a named reviewer before the agent adds to that queue. Deduplicate by the incident key. Cap new proposals per run. When the queue is full, hold the artifact and report the backlog.
@@ -75,6 +111,11 @@ Opening a PR spends somebody else's attention. Require a reproduction, a bounded
 Match ceremony to consequence. A documentation correction and a payment retry do not get the same permissions because they happen to arrive through the same agent.
 
 ## 18:30 to 24:00: slide 8, Demo: nothing leaves without evidence
+
+On screen:
+
+> Regression · holdout · scope · human
+> The useful result is permission denied
 
 The candidate removes the visible failure. That is the beginning of the demo, not the result.
 
@@ -90,6 +131,11 @@ Delivery: Use the live sequence in engineering/failure-improvement/demo.md. Full
 
 ## 24:00 to 27:00: slide 9, Who reviews the robot's PRs?
 
+On screen:
+
+> The easy cases disappear
+> The reviewer keeps the exceptions
+
 The robot opens good PRs for a month. What happens to the person reviewing them?
 
 Bainbridge's Ironies of Automation asks what remains for the human after automation takes the routine work. Monitoring and difficult interventions remain, while opportunities to practise shrink. That paper is from 1983. The problem did not wait for a chat interface.
@@ -102,6 +148,11 @@ Source: Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedi
 
 ## 27:00 to 30:00: slide 10, Compile what repeats
 
+On screen:
+
+> Nondeterminism finds the path. Determinism runs it.
+> Save the script, its tests, and its invalidation rule
+
 Let the agent explore a changed flow in a browser. Once it finds the login path, save that path as a script. Stop buying the same discovery on every run.
 
 The scheduled check is the same move. Memory and search over prior work help identify repetition. A skill describes when to turn a repeated task into a file. The output gets reviewed, tested, versioned, and scheduled. When the page or the log schema changes, invalidate it.
@@ -111,6 +162,11 @@ Selecting tests from a diff is another candidate. Compare it against the full su
 Story: The repeated agent task you turned into a script. Bring the file and a case where it needed invalidating. Use measured browser-test costs only with run records.
 
 ## 30:00 to 32:30: slide 11, Feedback is the same loop
+
+On screen:
+
+> Thumbs down + a sentence of rage = a useful input
+> Feedback → evidence → candidate → opt-in flag
 
 A thumbs-down tells you where to look. The sentence after it tells you why. Preserve the customer's wording and the session link before you ask the agent to summarize it.
 
@@ -122,6 +178,11 @@ Story: A complaint that became a change, including what the first proposed fix m
 
 ## 32:30 to 35:00: slide 12, Correlate, escalate, and the money gate
 
+On screen:
+
+> Session ID → linked trace → incident candidate
+> Detect. Recommend. Draft. A person presses the button.
+
 A customer reports lost data. Their session links to an error. Escalate with the trace attached. Do not wait for the model to invent a full causal story before a person investigates.
 
 Three address complaints and a shipping error suggest a shared incident. Check tenant, time window, and operation before merging the tickets. A matching word is not a matching outage.
@@ -129,6 +190,11 @@ Three address complaints and a shipping error suggest a shared incident. Check t
 Draft the notice before the fourth customer asks. A person approves the recipients and the message. The same rule covers credits and data deletion. Detect, recommend, draft. A person presses the button.
 
 ## 35:00 to 37:00: slide 13, The metrics that will lie to you
+
+On screen:
+
+> 100 tickets. 90 wrong. Ten worth reading.
+> Measure recurrence and wrong tickets, with denominators
 
 Suppose the agent files a hundred tickets and a reviewer closes ninety as wrong. Time-to-ticket looks terrific. Ten percent were worth reading. That is our arithmetic fixture, and it is the number I want next to the throughput chart.
 
@@ -140,6 +206,12 @@ Source: Marilyn Strathern (1997), [Improving ratings: audit in the British Unive
 
 ## 37:00 to 38:30: slide 14, Start Monday
 
+On screen:
+
+> One failure class
+> One integration
+> One place the loop must stop
+
 Write down one failure class you could hand this loop on Monday. Name the input and the person who would inspect its first output.
 
 Now name the one integration it needs next. Leave the rest blank. Last, write the condition under which it must stop and ask. That is enough for a first version.
@@ -147,6 +219,11 @@ Now name the one integration it needs next. Leave the rest blank. Last, write th
 Delivery: Give the room a full 60 seconds. Do not fill it with a recap.
 
 ## 38:30 to 40:00: slide 15, Fail to win
+
+On screen:
+
+> Alert fatigue · normalization of deviance
+> Jidoka · automation irony · Goodhart
 
 The scroll is still arriving. Now the loop leaves a smaller pile of inspectable work, and it knows where to stop.
 

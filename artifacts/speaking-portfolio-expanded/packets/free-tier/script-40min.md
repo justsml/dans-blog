@@ -4,6 +4,11 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as 
 
 ## 00:00 to 02:30: slide 1, Free electricity for a year
 
+On screen:
+
+> A startup gets free electricity for a year.
+> What does it build? What survives when the offer ends?
+
 A startup gets free electricity for a year. What does it build? Sit with that for five seconds, because the answer is not "the same thing, but cheaper." It builds a different company. Now: what survives when the offer ends?
 
 Swap electricity for inference and that is the whole talk. Here is my one disclaimer, and then I am done qualifying: nobody outside a provider knows its margins, I am not going to guess at one, and every dollar figure in my arithmetic is invented. What I do have is a hundred and fifty years of economists working on exactly this problem in coal, parking, highways and car factories, and they gave it names.
@@ -16,6 +21,11 @@ Delivery: Take the five seconds. Actually take them. The silence is the slide.
 
 ## 02:30 to 04:30: slide 2, Price, cost, and value are three different numbers
 
+On screen:
+
+> Price paid · Resources consumed · Cost allocated · Value delivered
+> The gap between the last two is why nobody is measuring
+
 Four boxes. The invoice is the first one. It tells you what you paid and nothing about utilization, depreciation, amortized training, or margin. The second box is what the machine actually burned. The third is how a provider chooses to allocate that internally, which you will never see. The fourth is what the customer got.
 
 The gap between what you pay and what you would have been willing to pay has a name: consumer surplus. Yours is enormous right now. That is the pleasant explanation for why nobody in your organization is measuring any of this. When something is dramatically cheaper than it is worth to you, measuring it is not worth the afternoon.
@@ -25,6 +35,11 @@ Which of these four does your system actually measure, and which does it assume?
 Delivery: Draw the four boxes with your hands. Ask for a show of hands on box two. Count them; it is usually a third of the room.
 
 ## 04:30 to 07:30: slide 3, Why would anyone sell below cost?
+
+On screen:
+
+> Penetration pricing · Loss leader in a bundle · Predation · It is genuinely cheap
+> The price cannot tell you which. What happens next can.
 
 There are four respectable explanations for a low price, and an engineer arguing about this in a meeting should be able to name all four.
 
@@ -37,6 +52,12 @@ Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (199
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
 ## 07:30 to 10:00: slide 4, Those enormous commitments are moves, not measurements
+
+On screen:
+
+> $250B incremental Azure services contracted by OpenAI · Microsoft, 28 Oct 2025
+> More than $100B AWS commitment over ten years · Amazon, 20 Apr 2026
+> Up to $200K AWS Activate credits · offer checked 5 Sep 2026
 
 Three numbers everyone quotes. Microsoft announced in October 2025 that OpenAI contracted to purchase an incremental two hundred and fifty billion dollars of Azure services. Amazon announced in April 2026 that Anthropic committed more than a hundred billion over ten years. AWS Activate offers eligible startups up to two hundred thousand in credits.
 
@@ -52,6 +73,12 @@ Delivery: Recheck all three items the week of the talk. If a number has moved, t
 
 ## 10:00 to 12:30: slide 5, Free parking was never free
 
+On screen:
+
+> The driver sees no meter, so demand looks infinite
+> The cost moves into rents, prices, and land
+> Word one: externality
+
 Donald Shoup spent a career on the least glamorous subject in urban economics and was right about all of it. Cities required developers to build minimum parking. Nobody paid at the meter, so the cost went somewhere else: into rents, into retail prices, into land that became asphalt. And because drivers saw no price, demand looked infinite, so the minimums grew to match.
 
 That is your first word: externality. A cost that is real, and paid, but not by the person making the decision. It does not vanish. It relocates, and it usually relocates somewhere you are not looking.
@@ -61,6 +88,12 @@ Then the environment reorganized around it. Buildings spread apart, so density f
 Source: Shoup (2005, updated 2011), The High Cost of Free Parking, American Planning Association. Also Shoup (2011), [Free parking or free markets](https://www.accessmagazine.org/spring-2011/free-parking-free-markets/), ACCESS Magazine.
 
 ## 12:30 to 15:00: slide 6, Jevons, coal, and the extra lane
+
+On screen:
+
+> 1865: better engines burned more coal, not less
+> Add a lane, get traffic. Elasticity near one.
+> Spend = price × jobs × calls per job × tokens per call
 
 In 1865 William Stanley Jevons noticed something that annoyed everyone. Steam engines had gotten dramatically more efficient, and Britain was burning far more coal than before, not less. Efficiency made coal useful for more things, so people used it for more things. That is the Jevons paradox, and it is word two.
 
@@ -76,6 +109,13 @@ Source: Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [LLM inferenc
 
 ## 15:00 to 18:00: slide 7, Now do it to software
 
+On screen:
+
+> Density: a frontier call where a lookup would do
+> Business mix: products viable only at today's rate
+> Bundled rent: unlimited usage promised in a contract
+> Small format: deterministic code loses the design review
+
 Walk the same chain through your stack. Density: a frontier call where a cache, a regex, or a dictionary lookup would have done, because the call looked free. Longer context, more retries, more competing branches, frontier by default. Business mix: products whose unit economics only work at promotional rates, crowding out products that would have worked at any price. Bundled rent: unlimited-usage promises to customers, baked into a contract, priced against an input you do not control. And the small format: boring deterministic code losing the design review to "just ask the model."
 
 I call it architectural obesity. It is not that any one of those calls is wrong. Redundancy is worth paying for, big context is worth paying for, three parallel attempts are sometimes exactly right. The failure is that nobody measured what the extra call bought, because at these prices nobody had to.
@@ -86,6 +126,12 @@ Delivery: Ask for one show of hands: who has shipped a frontier call where a loo
 
 ## 18:00 to 20:00: slide 8, The lots are already built
 
+On screen:
+
+> Repealing the parking minimum does not remove the asphalt
+> Word four: path dependence
+> The test: try to remove one model call and count the hours
+
 Here is the part that should worry you more than the price. Shoup won. Cities have been repealing parking minimums for a decade. The lots are still there. The businesses that could have opened on that land still did not open. The environment outlived the rule that produced it.
 
 That is path dependence, word four: where you can get to depends on how you got here, and reversal costs more than the original decision did. Paul David made the argument famous with QWERTY in 1985, and I want to be straight with you, because it matters for how you use this: economists have been fighting about that example ever since. Liebowitz and Margolis published a paper in 1990 called The Fable of the Keys arguing the evidence was thin. The concept survives. The canonical example is contested.
@@ -95,6 +141,12 @@ Which is instructive, because path dependence is very easy to assert and very ha
 Source: David (1985), Clio and the Economics of QWERTY, American Economic Review 75(2). Contested by Liebowitz and Margolis (1990), The Fable of the Keys, Journal of Law and Economics 33(1). Arthur (1989), Competing Technologies, Increasing Returns, and Lock-In by Historical Events, The Economic Journal 99(394).
 
 ## 20:00 to 22:00: slide 9, Whoever chooses is not whoever pays
+
+On screen:
+
+> Word five: moral hazard
+> The architecture is chosen in a design review. The bill arrives 60 days later, somewhere else.
+> Shoup's fix was never a ban. It was a meter.
 
 Word five, and this one is about your org chart, not your vendor. Moral hazard: when the person making a decision does not bear its cost, they make a different decision. Not a worse person. A different decision.
 
@@ -108,6 +160,12 @@ Delivery: Ask who can see a per-feature inference cost without filing a ticket. 
 
 ## 22:00 to 25:00: slide 10, Your acceptance rate is a price multiplier
 
+On screen:
+
+> Cost per accepted outcome = total spend ÷ accepted jobs
+> 75% accepted means you pay 1.33× sticker. 45% means 2.22×.
+> A 30-point acceptance drop costs exactly what doubling every token price costs.
+
 Before any dollar figure, define the denominator. An accepted outcome meets a rule you wrote down. An impressive answer that a human quietly repairs afterwards is not a success, it is a success plus a hidden salary. Count inference, tools, infrastructure and recovery. A blended token rate is not a unit economics model.
 
 The fixture, synthetic and deliberately small: a thousand attempts a month, two cents of inference and one cent of everything else per attempt, seventy-five percent accepted. Thirty dollars, seven hundred and fifty accepted outcomes, four cents each.
@@ -117,6 +175,11 @@ Now the part worth remembering. Divide by the acceptance rate and you get a mult
 Delivery: Do the division on stage. Thirty seconds: name your product's accepted outcome in one sentence. If that is hard, the economics conversation just found a product problem.
 
 ## 25:00 to 29:00: slide 11, Demo: change one assumption, watch the unit cost
+
+On screen:
+
+> Sensitivity, not prediction. Quality is held fixed, which is itself an assumption.
+> Multiply by your volume before you feel anything about it.
 
 Read the one-times row, then the ten-times row. Then move the acceptance rate and watch it beat the price change, which is the thing nobody expects.
 
@@ -133,6 +196,12 @@ Delivery: Runbook section 4. Two-minute compression: the 1× and 10× rows only.
 
 ## 29:00 to 32:00: slide 12, You are not shopping, you are contracting
 
+On screen:
+
+> Word six: asset specificity. Word seven: hold-up.
+> An investment worth a lot inside this relationship and little outside it
+> Your prompts, evals, fine-tunes, and that unlimited-usage clause
+
 This is the slide I would keep if you cut every other one. Oliver Williamson won a Nobel in 2009 for working out what happens when two parties make investments that only pay off inside their relationship. He called it asset specificity, and the trouble it produces is called hold-up.
 
 The shape is always the same. You make an investment that is worth a great deal here and very little anywhere else. That surplus, the part that exists only because you are locked in, is a prize, and at renewal your counterparty can reach for it. Nobody has to be a villain. It is simply what the structure permits, and rational parties do it.
@@ -142,6 +211,12 @@ Now inventory your specific assets. Prompts tuned against one model's quirks. An
 So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything on the next three slides is just a way of reducing specificity or pricing the exposure.
 
 ## 32:00 to 35:00: slide 13, Reversibility has a price and you can compute it
+
+On screen:
+
+> Word eight: real option
+> The option has value. It also has a premium: abstraction tax, eval upkeep, rehearsal time.
+> Same project, different answer, depending on which world you are in
 
 Everyone in this field says "keep it reversible" like it is a personality trait. It is not. It is an option, in the financial sense, and Dixit and Pindyck wrote the book on valuing exactly this kind of flexibility under uncertainty. The right to switch providers has a value that rises with how uncertain the price is and how exposed you are. It also has a premium you pay every month: the abstraction tax, a second eval suite, rehearsal time, and a generic wrapper that hides real differences between models and occasionally makes everything worse.
 
@@ -153,6 +228,12 @@ Source: Dixit and Pindyck (1994), Investment Under Uncertainty, Princeton Univer
 
 ## 35:00 to 38:00: slide 14, Three prices for the next design review
 
+On screen:
+
+> What we pay today · What we pay without the offer · What we can survive paying
+> Record gross usage separately from credits
+> Keep an acceptance suite · Rehearse one replacement · Price the portability
+
 Three numbers, and if you take nothing else, take these. The effective rate you pay today. The gross rate with no promotional treatment, which is your exposure if the offer ends. And the highest rate at which this product still makes sense, which is the number nobody has ever calculated and everybody should. Sweep downward too, so you can cancel the optimization project when efficiency makes it pointless.
 
 Four actions, and each one is one of the words. Record gross consumption separately from credits, so price and subsidy stop being the same number on your dashboard. Keep a small representative acceptance suite, because that is the strike test on your option. Rehearse one provider replacement before you need it, latency and recovery included, because that is how you reduce asset specificity from a slide into a fact. And put the estimated cost per accepted outcome in the design doc next to the latency budget, because that is the meter, and the meter is the fix for moral hazard.
@@ -160,6 +241,12 @@ Four actions, and each one is one of the words. Record gross consumption separat
 Delivery: 45 seconds in pairs on the third price. Most rooms have never computed it and the silence is useful.
 
 ## 38:00 to 40:00: slide 15, Cheap intelligence changes incentives first
+
+On screen:
+
+> Externality · Induced demand · Jevons paradox · Path dependence
+> Moral hazard · Credible commitment · Asset specificity · Real option
+> Build for more than one price.
 
 Back to the electricity. Use the cheap input. It is genuinely great and I am not asking anyone to be miserable about it. Just understand what it encouraged you to build, and keep the expensive decisions reversible while you find out.
 

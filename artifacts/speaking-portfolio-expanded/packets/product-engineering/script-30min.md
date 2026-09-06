@@ -4,6 +4,11 @@ Use slides 1, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15. Read the prose as the talk track
 
 ## 00:00 to 02:00: slide 1, The architecture you could read off the org chart
 
+On screen:
+
+> Conway, 1968: communication structures constrain designs
+> Which of those boundaries still earns its keep?
+
 Conway said organizations designing systems "are constrained to produce designs which are copies of the communication structures of these organizations." Constrained. Communication structures. The wires matter more than the boxes.
 
 This is a proposed operating model. The demo uses synthetic numbers to execute a policy, not measure customer benefit. My bet is that cheaper coordination makes some of our current boundaries obsolete. We should find those boundaries before we photocopy them onto agents.
@@ -18,6 +23,11 @@ Bridge: Colfer and Baldwin found mirroring prevalent, with documented ways to br
 
 ## 02:00 to 04:30: slide 3, Your org chart is a fossil of coordination cost
 
+On screen:
+
+> Coase, 1937: coordination has a cost
+> Reprice the handoff before copying it
+
 Coase asked why firms exist when people could contract through the market. Using the market costs something; coordinating inside the firm costs something too. The boundary depends on that comparison.
 
 Apply that question inside a product group. A weekly brief may have existed because collecting it took somebody two days. A separate triage meeting may have existed because linking a complaint to a trace required three people and a spreadsheet. If those costs change, the old boundary deserves another look.
@@ -27,6 +37,11 @@ That is the inversion. Do not start with one agent per box on the current org ch
 Source: Ronald H. Coase (1937), [The Nature of the Firm](https://onlinelibrary.wiley.com/doi/10.1111/j.1468-0335.1937.tb00002.x), Economica 4(16), 386–405. The agent-design application is the speaker’s argument.
 
 ## 04:30 to 06:30: slide 4, The spectrum, and the two ways to lose
+
+On screen:
+
+> Committee at one end. Five people at the other.
+> The suffering arrives later than the speed does.
 
 At one end, thousands of employees and millions of customers. Change procedures, risk analysis, a prioritization rubric. At the other, five people around a laptop who can all hear the person making the decision.
 
@@ -38,6 +53,12 @@ Delivery: Take 30 seconds: where is your team on the spectrum, and what is its h
 
 ## 06:30 to 09:00: slide 5, Draw the wires between agents
 
+On screen:
+
+> Research → sourced brief → product review
+> Feedback → cited clusters → product review
+> Review → accepted hypothesis → build
+
 The inverse Conway manoeuvre is the name people use for changing the organization to encourage the architecture they want. Here that means designing communication between agents and people, not putting a robot beside every job title.
 
 Research delivers a brief with source URLs and dates. Feedback delivers clusters with the original complaints attached. The product review resolves disagreement between them and writes the accepted hypothesis. A build agent consumes that artifact. It does not poll six chat histories and guess which decision won.
@@ -48,6 +69,11 @@ Source: [Thoughtworks, Inverse Conway Maneuver](https://www.thoughtworks.com/en-
 
 ## 09:00 to 11:30: slide 6, Two directions of attention
 
+On screen:
+
+> Research looks out. Feedback looks in.
+> Keep the meeting where the evidence disagrees.
+
 The research agent watches competitors and people talking about your product. The feedback agent ingests support tickets, interviews, reviews, and in-app complaints. Both preserve the evidence behind their summaries.
 
 Now make them disagree. Research says onboarding lacks a feature. Feedback says users cannot find the feature we already have. A clustering agent might merge those into "onboarding problems" and confidently bury the distinction.
@@ -57,6 +83,11 @@ Keep the review where somebody opens the source material and argues about what b
 Story: A feedback cluster that merged different complaints and changed the wrong priority. Bring one original complaint that the summary obscured.
 
 ## 11:30 to 13:00: slide 7, Effort left the rubric. Argue with me.
+
+On screen:
+
+> My observation, not your sprint report
+> Who estimated a ticket last week?
 
 I have not heard an engineering team discuss level of effort on a ticket in months. That is the observation in my working notes. Let us test how badly it travels.
 
@@ -70,6 +101,11 @@ Bridge: the build-walking agent adds screenshots and reasons to the same evidenc
 
 ## 13:00 to 15:00: slide 9, Targeted beta enrollment, and the deluge
 
+On screen:
+
+> Keep the customers behind the cluster
+> Invite an opt-in cohort. Keep the exit.
+
 This idea came from a cluster of customers. Preserve that provenance. Find people with the same task, then ask whether they want to try the change. Similar company size is not necessarily a similar problem.
 
 The invitation explains what changes, that it is a beta, and how to turn it off. A person approves the message and recipients. Acceptance enrolls the customer behind a flag. Narrow feedback tells us what to try next; it does not automatically establish a causal improvement.
@@ -80,6 +116,11 @@ Story: A beta invitation that selected users on the wrong axis, or feedback that
 
 ## 15:00 to 17:00: slide 10, Campbell's law arrives on schedule
 
+On screen:
+
+> Activation is the target
+> What behavior did we just pay for?
+
 Give the system a target and it will search for ways to improve it. So will a team. Campbell described the pressure that decision-making puts on quantitative indicators and on the activity they are supposed to measure.
 
 Our target is onboarding activation. The next screen has three candidates. Before we inspect anything else, choose the one you would investigate. Do not reverse-engineer the answer from the names; they are A, B, and C.
@@ -89,6 +130,12 @@ The interesting question is what the winning candidate did to earn the number. A
 Source: Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
 ## 17:00 to 22:00: slide 11, Demo: run it before you know the rule
+
+On screen:
+
+> A · 40% activation
+> B · 48% activation
+> C · 45% activation
 
 Which candidate gets your attention? B has the largest activation number. Now open the rest of its record.
 
@@ -102,6 +149,11 @@ Delivery: Five minutes in the 40/30 routes, 3:30 in the 15. Begin with only this
 
 ## 22:00 to 25:00: slide 12, Where guards go, including the two we forgot
 
+On screen:
+
+> Wider rollout · expensive runs · infrastructure changes
+> Customer messaging · customer data deletion
+
 The demo gave us a reason for the guard. Put it where the consequence changes, before the action happens.
 
 Widening a cohort spends more customer exposure. An expensive run spends money. Creating infrastructure adds ongoing obligations; tearing it down may remove somebody's recovery path. Name the budget, the owner, and the evidence needed at each crossing.
@@ -111,6 +163,11 @@ Then add the two missing from the old list. Sending a message to a real customer
 Bridge: Graicunas counted 222 possible relationships at six reports; this is a warning about interfaces, not a staffing ratio. Bainbridge asks who still gets recovery practice. Every experiment needs a hypothesis and a report.
 
 ## 25:00 to 30:00: slide 15, Break the mirror on purpose
+
+On screen:
+
+> Reprice the handoffs. Draw the interfaces.
+> Automate the right things. Keep the taste.
 
 Back to the org chart. Some of those boundaries exist because the work really is different. Some exist because the person with the spreadsheet sat in another department. We should know which before teaching agents to repeat them.
 

@@ -1,24 +1,22 @@
-# A Skeptic's Guide to Surviving AI in Education: 30-minute standard
+# A Skeptic's Guide to Surviving AI in Education: 30-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](skeptic-education-40min.md). No Q&A in the timings.
+Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14. Hide the others in presenter preparation. [Complete talk track](../packets/skeptic-education/script-30min.md).
 
-**Strategy.** Every slide survives; each loses about a quarter of its time. The demo drops to one switch plus narration, the pre-mortem to ninety seconds.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 02:00 | 1 | Assume access. Demand evidence. |
+| 02:00 to 04:00 | 2 | Skepticism is a method, not a mood |
+| 04:00 to 05:30 | 3 | The proxy is not the capability |
+| 05:30 to 08:00 | 4 | Delegate / Augment / Preserve |
+| 08:00 to 11:30 | 5 | Demo: same assistance, three verdicts |
+| 11:30 to 13:00 | 6 | Failure mode 1: the tutor that agrees with you |
+| 13:00 to 16:00 | 7 | Failure mode 2: gains that vanish, and when they don't |
+| 16:00 to 17:30 | 8 | Failure mode 3: the detector as judge |
+| 17:30 to 19:00 | 9 | Failure mode 4: unequal access |
+| 19:00 to 22:00 | 10 | Pre-mortem: it is week ten and the policy failed |
+| 22:00 to 24:00 | 11 | Handle it: a local eval set and proportional evidence |
+| 24:00 to 25:30 | 12 | Humans belong at consequential decisions |
+| 25:30 to 28:30 | 13 | Pilot one assignment; ask one better question |
+| 28:30 to 30:00 | 14 | Keep the reason students are here |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–2:00 | 1 | Assume access. Demand evidence. | |
-| 2:00–4:00 | 2 | Skepticism is a method | |
-| 4:00–5:30 | 3 | The proxy is not the capability | |
-| 5:30–8:00 | 4 | Delegate / Augment / Preserve | |
-| 8:00–11:30 | 5 | Demo | Two switches; narrate the third. |
-| 11:30–13:00 | 6 | The tutor that agrees with you | Drop the story. |
-| 13:00–16:00 | 7 | Gains that vanish, and when they don't | |
-| 16:00–17:30 | 8 | The detector as judge | |
-| 17:30–19:00 | 9 | Unequal access | |
-| 19:00–22:00 | 10 | Pre-mortem | Pairs, ninety seconds. |
-| 22:00–24:00 | 11 | Local eval set and proportional evidence | |
-| 24:00–25:30 | 12 | Humans at consequential decisions | |
-| 25:30–28:30 | 13 | Pilot one assignment; ask one better question | Drop the story. |
-| 28:30–30:00 | 14 | Keep the reason students are here | Shorten the write to twenty seconds. |
-
-**Close.** As written.
+Slide selections, timing and delivery instructions retained from the existing adaptation. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

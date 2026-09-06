@@ -2,7 +2,7 @@
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/free-tier.html)
 
-Outline: [40 min](../../outlines/free-tier-40min.md). The PPTX export in [decks](../../decks/) predates the 2026-09-06 rewrite.
+Outline: [40 min](../../outlines/free-tier-40min.md). Current screen and handout PowerPoints are linked from the [deck index](../../decks/README.md).
 
 ## Titles
 

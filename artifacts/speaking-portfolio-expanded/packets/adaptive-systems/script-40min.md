@@ -4,6 +4,12 @@ Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as 
 
 ## 00:00 to 02:00: slide 1, The vendor renamed a field
 
+On screen:
+
+> Yesterday: zip
+> Today: postal_code
+> Your ingest stops. The status page is green.
+
 The API still returns 200. Authentication works. The vendor's status page is green. Your ingest is broken because somebody renamed a field. If you work around B2B integrations, this is a very boring way to have a very expensive morning.
 
 Here is the promise of this talk. An application can notice that, investigate it, propose a fix, prove the fix, and keep the other ninety-eight percent of records flowing, all before you wake up. And it can do that without ever holding a permission you would be scared to give it.
@@ -16,6 +22,12 @@ Delivery: Hands up for a 200 response that carried a breaking change. Take one s
 
 ## 02:00 to 04:00: slide 2, The bar is: diff the schema and page a human
 
+On screen:
+
+> Baseline: alert, wait for a person, replay
+> Agent: investigate, propose, prove, continue
+> Win condition: faster recovery, zero new false repairs
+
 Before anyone gets excited about agents, name the boring alternative. A schema diff, an alert, and a human who replays the batch after coffee. It works. It costs a morning per surprise, and it does nothing for the unaffected records that are stuck behind the broken ones.
 
 The agent has to beat that. Not on vibes. On time to recover, on records kept moving, and on a number the baseline gets for free: false repairs. Alert-and-wait never turns a rename into plausible wrong data. If the adaptive version does, even once, it has made operations worse.
@@ -25,6 +37,12 @@ So every slide from here is about buying recovery speed without buying corruptio
 Delivery: Write the three metrics on the board and leave them there.
 
 ## 04:00 to 07:00: slide 3, Now imagine the assistant that has everything
+
+On screen:
+
+> All customer data
+> Tools that email, refund, delete, deploy
+> Accidents first. Then people who mean it.
 
 Zoom out from the ingest job. The thing we are all building toward is an assistant with access to every customer's data and a toolbox that can send email, issue refunds, delete records and ship code. Most of the damage it will ever do will be an accident: a confident mapping, a helpful cleanup, a tool called with the wrong ID.
 
@@ -37,6 +55,12 @@ Story: Your own near miss with an over-permissioned agent, or a tool call you we
 Delivery: Pause on the third line. Let the room feel that the accident case is the common one.
 
 ## 07:00 to 11:00: slide 4, Conjure the agent the job needs
+
+On screen:
+
+> Tailored prompt, minimum tools, hard budget
+> Tool search on request, policy decides, request logged
+> Orchestrator loops: done, more help, or stop
 
 Here is the shape. An orchestrator reads the failure and writes a job: goal, evidence it may read, actions it may take, deadline, spend, and the conditions that end it. Then it generates an agent for that job with a tailored prompt and only the tools it expects to need. A schema-diff agent gets read access to two samples and a contract. It does not get the database.
 
@@ -51,6 +75,12 @@ Story: What the prototype's first denied tool request was, and what it revealed.
 Delivery: Draw the three boxes: orchestrator, generated agent, tool catalog with policy gate. Show one request crossing the gate and being refused.
 
 ## 11:00 to 14:00: slide 5, Guard the tools that can hurt
+
+On screen:
+
+> High-risk classes: write, send, pay, delete, deploy, export
+> Read customer data and post to a vendor never share one agent
+> A signed URL is a credential
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
 
@@ -68,6 +98,11 @@ Delivery: Point at the filter between worker and planner. Ask what else crosses 
 
 ## 14:00 to 17:00: slide 6, Repair syntax; prove meaning
 
+On screen:
+
+> zip → postal_code: investigate
+> status: true → pending: stop
+
 Back to the ingest. A name resemblance is a hypothesis, not evidence. A postal code is not always a US ZIP. Keep the leading zero, keep the country, and remember ZIP+4 has a four-digit extension that somebody, somewhere, is joining on.
 
 A Boolean status becoming an enum is harder. Does true mean active, eligible, verified, or anything except cancelled? Pending cannot become true just because both are truthy in JavaScript.
@@ -78,6 +113,12 @@ Delivery: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}.
 
 ## 17:00 to 19:00: slide 7, The repair is a versioned artifact
 
+On screen:
+
+> Input fingerprint + mapping version
+> Evidence + fixtures + rollback
+> No silent mutation of the database
+
 The agent produces a mapping artifact, not a paragraph saying it fixed things. Parent version, input fingerprint, the transforms, the rejected cases, the evidence it read, and the fixture results.
 
 A narrow mapping change can pass a pre-authorized canary policy. A schema migration has a different blast radius and its own approval path. Keep the source records so you can replay; keep the old mapping so you can restore. Rollback changes future processing. It does not un-write yesterday's downstream rows; those need reconciliation.
@@ -85,6 +126,12 @@ A narrow mapping change can pass a pre-authorized canary policy. A schema migrat
 Delivery: Walk the mapping artifact in contracts.md. Point at parent version, activation scope, replay reference.
 
 ## 19:00 to 21:00: slide 8, The agent does not write its own exam
+
+On screen:
+
+> Held-out fixtures under separate control
+> Conflicting old and new fields
+> Watch the denominator
 
 Here is where we try to embarrass the repair before a customer does. The agent that proposed the mapping does not author the only tests that judge it. Regression fixtures and held-out cases live under separate control, and a generated fixture-writer agent adds to them without seeing the proposal.
 
@@ -94,6 +141,11 @@ Delivery: Keep the fixtures hidden. They are revealed in the walkthrough.
 
 ## 21:00 to 23:00: slide 9, A lost response leaves a question
 
+On screen:
+
+> Did it fail?
+> Or did the answer disappear?
+
 The same ingest calls an address-verification provider. Suppose the provider accepted the batch and charged for it, then the connection dropped. Resubmitting elsewhere recovers latency and doubles the bill.
 
 Record an operation identity before dispatch. Keep the provider's job ID. Reconcile before resubmitting, and when the provider offers no way to ask, stop with an unknown outcome and say so. A deadline ends new dispatch; it does not reverse a side effect already performed. The ledger has to hold that uncertainty, reserved money included, until the answer arrives.
@@ -101,6 +153,12 @@ Record an operation identity before dispatch. Keep the provider's job ID. Reconc
 Delivery: Mark the moment on the timeline where your process knows less than the provider does.
 
 ## 23:00 to 28:00: slide 10, Walkthrough: one ingest, three decisions
+
+On screen:
+
+> Rename → validated mapping, canary
+> Unknown status → quarantine, owner
+> Lost response → reconcile, hold the reservation
 
 Run the design. The rename has contract evidence. The conjured diff agent proposes copy-string; now reveal the fixtures one at a time and let the room reject the one that must not be repaired. Passing both, policy permits a canary of that mapping version and the job continues for matching records.
 
@@ -114,6 +172,12 @@ Delivery: Five minutes from demo.md. Reveal fixtures before expected results. As
 
 ## 28:00 to 31:00: slide 11, Scale becomes something the app asks for
 
+On screen:
+
+> Old: ops sizes the fleet for everyone
+> New: the job describes its shape and asks
+> Per-customer, per-job cost controls and pay-for-performance
+
 One more thing the orchestrator can conjure: compute. Today scaling is an infra decision made once for everyone. Replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
 
 So it asks. The request names shape, size, duration and a cost cap, and it is charged to this customer or this job rather than to a shared cluster. That is a new product surface: a customer can buy a faster turnaround, and a finance team can cap a single workflow instead of a whole environment.
@@ -125,6 +189,13 @@ Story: A job where per-customer compute would have changed the pricing conversat
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
 
 ## 31:00 to 33:00: slide 12, Show engineers what changed today
+
+On screen:
+
+> Promoted changes and scope
+> Quarantined records and reasons
+> Outstanding jobs, reserved spend, denied tool requests
+> Owner, evidence, next action
 
 The daily report should tell an engineer where to look. Unresolved semantic changes above routine retries. Records affected, mapping versions in use, evidence for each promotion, outstanding external operations, and every tool request the policy refused.
 
@@ -138,6 +209,12 @@ Delivery: Read the sample report in contracts.md. Find the one item that needs a
 
 ## 33:00 to 35:00: slide 13, Widen authority only from measured outcomes
 
+On screen:
+
+> Shadow: propose, apply nothing
+> Canary: one reversible change class
+> Expand: from correct recoveries, false repairs, cost, interventions
+
 Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
 Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute.
@@ -149,6 +226,13 @@ Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Pr
 Delivery: Thirty seconds on the recovery card in contracts.md. Take one answer and name the evidence needed to widen that authority.
 
 ## 35:00 to 38:00: slide 14, Start smaller: remember what happened
+
+On screen:
+
+> Before returning: check relevant memory and correct known mistakes
+> After execution: record checks, outcome, correction and frequency
+> Generated, executed and verified are different states
+> Memory is evidence, never permission
 
 You do not need the whole agent factory to start. Take one agent that writes SQL, builds reports, runs shell commands or generates scripted API actions. Give it working memory for this job: the goal, constraints, draft and unresolved checks. Give it observational memory across jobs: what it generated, what actually ran, what failed, and what the checks established. Now ask it to consult that history before it hands you the next answer.
 
@@ -163,6 +247,12 @@ As patterns repeat, turn the reliable ones into tested templates and adapters. T
 Delivery: Show the prompt in memory-pattern.md. Ask which observation proves the query ran and which proves it answered the right question. Use the tenant-filter example; no live execution is needed.
 
 ## 38:00 to 40:00: slide 15, The next surprise should cost less
+
+On screen:
+
+> Conjure exactly enough
+> Prove the repair
+> Remember the known case
 
 Return to the field that changed overnight. We did not predict its spelling. We did define what had to stay true, what evidence a repair needed, which tools this one job could have, and how far the app could go without us.
 

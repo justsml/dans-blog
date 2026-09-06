@@ -1,8 +1,20 @@
+<!-- BEGIN GENERATED EDITIONS -->
+# Synchronized editions
+
+Generated from [the current 40-minute outline](../../outlines/product-engineering-40min.md).
+
+| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
+| ---: | --- | --- | --- | --- |
+| 15 min | [Open](../../../reveal-talks/product-engineering-15min.html) | [Download](../../decks/product-engineering-15min-screen.pptx) | [Download](../../decks/product-engineering-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../reveal-talks/product-engineering-30min.html) | [Download](../../decks/product-engineering-30min-screen.pptx) | [Download](../../decks/product-engineering-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../reveal-talks/product-engineering-40min.html) | [Download](../../decks/product-engineering-40min-screen.pptx) | [Download](../../decks/product-engineering-40min-handout.pptx) | [Script](script-40min.md) |
+<!-- END GENERATED EDITIONS -->
+
 # Formats: The Future of Product Engineering
 
 [Browser deck](../../../reveal-talks/product-engineering.html) · [40-minute script](script-40min.md)
 
-One canonical outline generates every route. Retained PPTXs are historical exports.
+One canonical outline generates every route. Current PowerPoint editions are linked above.
 
 | Length | Source | Demo |
 | --- | --- | --- |

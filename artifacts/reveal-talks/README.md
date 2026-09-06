@@ -22,9 +22,9 @@ The full-length decks use `../speaking-portfolio-expanded/outlines/*-40min.md`. 
 
 The free-tier deck includes dated company announcements and an AWS credit offer checked September 5, 2026. Refresh these before presenting. Synthetic scores and costs remain illustrative, not measurements of current products.
 
-Edit canonical outlines for registered talks; never edit their generated HTML or scripts. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. Five portfolio talks also have a [PowerPoint export](../speaking-portfolio-expanded/decks/); those exports predate the September 6 rewrites and must be regenerated from the outlines.
+Edit canonical outlines for registered talks; never edit their generated HTML or scripts. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. Every full-length talk has synchronized 15-, 30-, and 40-minute browser and [PowerPoint editions](../speaking-portfolio-expanded/decks/README.md).
 
-The rewritten talks registered for generation are: adaptive-systems, dynamic-scaling, evidence-learning, free-tier, failure-improvement, product-engineering, judgment, benchmarks, and retrieval. These decks are generated from their outlines: edit `../speaking-portfolio-expanded/outlines/<talk>-40min.md`, then run `bun artifacts/speaking-portfolio-expanded/build-talk.ts <talk>`. The shared head lives in `templates/engineering-head.html`. Their PowerPoint exports predate the September 6 rewrite and must be regenerated.
+The registered talks are skeptic-education, adaptive-systems, dynamic-scaling, evidence-learning, free-tier, failure-improvement, product-engineering, judgment, benchmarks, and retrieval. After editing `../speaking-portfolio-expanded/outlines/<talk>-40min.md`, run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts <talk>` to synchronize its browser decks, scripts, adaptations, and PowerPoints. The shared head lives in `templates/engineering-head.html`.
 
 Implementation follows the official [initialization](https://revealjs.com/initialization/) and [speaker view](https://revealjs.com/speaker-view/) documentation.
 

@@ -1,19 +1,17 @@
-# A Skeptic's Guide to Surviving AI in Education: 15-minute lightning
+# A Skeptic's Guide to Surviving AI in Education: 15-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](skeptic-education-40min.md). No Q&A in the timings.
+Keep slides 1, 2, 4, 5, 7, 8, 10, 13, 14. Hide the others in presenter preparation. [Complete talk track](../packets/skeptic-education/script-15min.md).
 
-**Strategy.** Method, framework, one demo switch, two failure modes, a sixty-second solo pre-mortem, the pilot. The history example is stated once.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 01:30 | 1 | Assume access. Demand evidence. |
+| 01:30 to 02:30 | 2 | Skepticism is a method, not a mood |
+| 02:30 to 05:00 | 4 | Delegate / Augment / Preserve |
+| 05:00 to 07:30 | 5 | Demo: same assistance, three verdicts |
+| 07:30 to 09:30 | 7 | Failure mode 2: gains that vanish, and when they don't |
+| 09:30 to 11:00 | 8 | Failure mode 3: the detector as judge |
+| 11:00 to 12:30 | 10 | Pre-mortem: it is week ten and the policy failed |
+| 12:30 to 14:00 | 13 | Pilot one assignment; ask one better question |
+| 14:00 to 15:00 | 14 | Keep the reason students are here |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–1:30 | 1 | Assume access. Demand evidence. | Keep "hold one assignment"; drop the story. |
-| 1:30–2:30 | 2 | Skepticism is a method | Three questions only; skip the two-failures preview. |
-| 2:30–5:00 | 4 | Delegate / Augment / Preserve | Bridge in with slide 3's objective in one sentence: "a history essay that must weigh two conflicting sources." Keep the write. |
-| 5:00–7:30 | 5 | Demo, compressed | One switch; state the other two. |
-| 7:30–9:30 | 7 | Gains that vanish, and when they don't | Bridge in with slide 6 in one line: "the first failure is a tutor that agrees with a wrong answer." |
-| 9:30–11:00 | 8 | The detector as judge | |
-| 11:00–12:30 | 10 | Pre-mortem | Solo, sixty seconds, written. |
-| 12:30–14:00 | 13 | Pilot one assignment | Pilot steps only; skip the vendor questions and the story. |
-| 14:00–15:00 | 14 | Keep the reason students are here | Skip the write; deliver the closing line. |
-
-**Close.** Point to the long version for the local eval set and the procurement questions.
+Slide selections, timing and delivery instructions retained from the existing adaptation. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

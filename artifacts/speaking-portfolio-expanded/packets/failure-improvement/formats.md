@@ -1,3 +1,15 @@
+<!-- BEGIN GENERATED EDITIONS -->
+# Synchronized editions
+
+Generated from [the current 40-minute outline](../../outlines/failure-improvement-40min.md).
+
+| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
+| ---: | --- | --- | --- | --- |
+| 15 min | [Open](../../../reveal-talks/failure-improvement-15min.html) | [Download](../../decks/failure-improvement-15min-screen.pptx) | [Download](../../decks/failure-improvement-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../reveal-talks/failure-improvement-30min.html) | [Download](../../decks/failure-improvement-30min-screen.pptx) | [Download](../../decks/failure-improvement-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../reveal-talks/failure-improvement-40min.html) | [Download](../../decks/failure-improvement-40min-screen.pptx) | [Download](../../decks/failure-improvement-40min-handout.pptx) | [Script](script-40min.md) |
+<!-- END GENERATED EDITIONS -->
+
 # Formats: Automating Improvement From Failure
 
 [Browser deck](../../../reveal-talks/failure-improvement.html). The retained PPTX is historical; regenerate before use.
