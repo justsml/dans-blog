@@ -1,6 +1,6 @@
 # Talk packet: The Future of Product Engineering
 
-[PPTX](../../decks/product-engineering-15min.pptx) · [PPTX](../../decks/product-engineering-30min.pptx) · [PPTX](../../decks/product-engineering-40min.pptx)
+[Browser deck](../../../reveal-talks/product-engineering.html) · [Presenter script](script-40min.md)
 
 Outlines: [40 min Conway's law and the agent roster](../../outlines/product-engineering-40min.md) · [30 min the agent roster](../../outlines/product-engineering-30min.md) · [15 min big idea](../../outlines/product-engineering-15min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
@@ -76,3 +76,7 @@ You do not need a committee to ship, and you never will. What you can have now i
 ### Executive and general technology
 
 Your product mirrors your organization, and your organization is about to include agents. Left alone, they mirror your accidents. This talk describes a deliberate version: every function a product group performs, from watching competitors to enrolling beta users, becomes an agent with a named human owner. It explains where human review belongs, at the moments risk spikes rather than on every action, and why teams that trade judgment for AI output will pay later. It shows a change that "won" and would have made the product worse, and closes with the smallest roster any team can start next quarter.
+
+## September 6 revision
+
+The canonical argument is to reprice coordination before copying the org chart onto agents. The current outline specifies evidence contracts between research, feedback, product review, build, and experiment owners. The activation demo now precedes guards. Customer messaging and deletion are explicit human decisions. Use the generated routes in [formats.md](formats.md); historical PPTXs require regeneration.

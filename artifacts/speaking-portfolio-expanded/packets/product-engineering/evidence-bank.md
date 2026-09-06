@@ -64,3 +64,9 @@ Resume basis: Hotel Engine, continuous feedback rituals while scaling.
 | 30 min | 4 | A feedback cluster that changed what the team built that quarter |
 | 30 min | 7 | The customer who became a collaborator after one beta invitation |
 | 15 min | 1 | Thirty seconds: a system whose architecture you could read off the org chart |
+
+## Current claims and story map, checked 6 September 2026
+
+Slides 1, 6, and 9 request the org-chart handoff, the misleading feedback cluster, and the badly chosen beta cohort. These are prompts, not supplied personal evidence. Slide 7 preserves the existing first-person estimation observation and requires reconfirmation before delivery; the audience count must be taken live.
+
+Colfer and Baldwin reviewed 142 studies. Their industry/firm descriptive subset shows 70% strong, 22% partial, and 8% no support; do not describe the remaining 30% as mirror-breaking firms. Graicunas’s maximum-basis formula gives 6 × (32 + 5) = 222 possible relationships, not an observed agent interaction count or a span-of-control limit. Sources and engineering applications are distinguished in the [outline](../../outlines/product-engineering-40min.md). Microsoft’s pre-experiment article is dated July 31, 2020.

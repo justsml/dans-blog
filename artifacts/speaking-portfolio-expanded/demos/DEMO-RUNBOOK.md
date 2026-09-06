@@ -48,11 +48,13 @@ Ask what additional support or evidence would help. Offer a written alternative 
 
 ## 6. The Future of Product Engineering
 
-**Four minutes.** Select Pressure copy: activation rises from 40% to 48%, but support contacts rise from 3% to 9%, beyond the 5% ceiling. False urgency independently violates the selected product principle.
+**Five minutes in the 40/30 routes; 3:30 in the 15.** Begin on full-deck slide 11, which shows only A/B/C activation. Take the vote before opening the kit. Then map B to Pressure copy and C to Clearer first step. Select Pressure copy: activation rises from 40% to 48%, but support contacts rise from 3% to 9%, beyond the 5% ceiling. False urgency independently violates the selected product principle.
 
 Raise the support ceiling to 10% and show that the principle still rejects it. Permit false urgency to reveal what removing that constraint allows. Restore the constraints and select Clearer first step: activation 45%, support 4%, and no false urgency. The result says Eligible for human review, not Ship.
 
 **Expected outcome:** The objective function includes explicit constraints. These point estimates are synthetic; no sample size, significance test, causal claim, rollout, or live customer data is involved.
+
+Allow the final 45 seconds of the five-minute route for participants to write the rule they needed. See the [product stage sequence](../economics-product/demo.md).
 
 ## Rehearsal and recovery
 

@@ -62,6 +62,77 @@ const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
 const TALKS: Record<string, Talk> = {
+  "product-engineering": {
+  "slug": "product-engineering",
+  "title": "The Future of Product Engineering",
+  "description": "Reprice coordination, design agent interfaces, and budget human ownership.",
+  "deckFile": "product-engineering.html",
+  "eyebrow": "The Future of Product Engineering · Dan Levy",
+  "routes": {
+    "30": {
+      "minutes": 30.0,
+      "keep": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7,
+        9,
+        10,
+        11,
+        12,
+        15
+      ],
+      "times": [
+        2,
+        2.5,
+        2,
+        2.5,
+        2.5,
+        1.5,
+        2,
+        2,
+        5,
+        3,
+        5
+      ],
+      "bridges": {
+        "1": "Bridge: Colfer and Baldwin found mirroring prevalent, with documented ways to break it; prevalence is not destiny.",
+        "7": "Bridge: the build-walking agent adds screenshots and reasons to the same evidence queue.",
+        "12": "Bridge: Graicunas counted 222 possible relationships at six reports; this is a warning about interfaces, not a staffing ratio. Bainbridge asks who still gets recovery practice. Every experiment needs a hypothesis and a report."
+      },
+      "note": "The five-minute demo precedes guards. Use the longer closing allocation for the ownership bridge and a hypothesis example."
+    },
+    "15": {
+      "minutes": 15.0,
+      "keep": [
+        1,
+        3,
+        5,
+        10,
+        11,
+        12,
+        15
+      ],
+      "times": [
+        1.5,
+        2,
+        2,
+        1.5,
+        3.5,
+        2.5,
+        2
+      ],
+      "bridges": {
+        "1": "Bridge: mirroring has empirical support and documented exceptions. We can choose different communication structures.",
+        "5": "Bridge: research and feedback deliver evidence to a product review; accepted hypotheses feed build and opt-in beta proposals.",
+        "12": "Bridge: ownership consumes attention. Limit interfaces, reserve recovery practice, and attach a hypothesis and a report to each experiment."
+      },
+      "note": "The demo is 3:30. Show activation before opening the kit. Preserve the vote and the written rule."
+    }
+  }
+},
   "failure-improvement": {
   "slug": "failure-improvement",
   "title": "Automating Improvement From Failure",
