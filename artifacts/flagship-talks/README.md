@@ -1,39 +1,15 @@
-# Three flagship talks
+# Retrieval, Benchmarks, and Judgment
 
-Six editable PowerPoint decks in the Simple Dark Mode template, each with speaker notes and a matching timed outline. Dan Levy is the named presenter. Timings are rehearsal targets and exclude Q&A.
+The current talks use canonical structured outlines in the expanded portfolio. `build-talk.ts` derives the browser decks, 40/30/15 presenter scripts, and short-route timings. Files in this directory remain as compatibility pointers; retained PowerPoints are historical exports.
 
-| Talk | Audience | Lightning | Full talk |
-| --- | --- | --- | --- |
-| From RAGs to Retrievals: Learn the New Engineering Speak | Engineers and technical leaders moving into AI | [15 minutes / 9 slides](retrieval-15min.pptx) | [40 minutes / 18 slides](retrieval-40min.pptx) |
-| Stop Looking at My Benchmarks… Get Your Own! | AI and product engineering teams | [15 minutes / 9 slides](benchmarks-15min.pptx) | [40 minutes / 18 slides](benchmarks-40min.pptx) |
-| Code Is Cheap. Judgment Is Expensive. | Engineering leaders, CTOs and senior engineers | [15 minutes / 9 slides](judgment-15min.pptx) | [40 minutes / 18 slides](judgment-40min.pptx) |
+| Talk | Audience | Canonical outline | Browser deck | Short routes |
+| --- | --- | --- | --- | --- |
+| Your Eval Suite Has a Grandfather | Engineers building retrieval and RAG systems | [40 minutes, 15 slides](../speaking-portfolio-expanded/outlines/retrieval-40min.md) | [Deck](../reveal-talks/retrieval.html) | [15](../speaking-portfolio-expanded/outlines/retrieval-15min-adaptation.md) · [30](../speaking-portfolio-expanded/outlines/retrieval-30min-adaptation.md) |
+| Stop Looking at My Benchmarks… Get Your Own! | Engineers responsible for evaluation and release decisions | [40 minutes, 15 slides](../speaking-portfolio-expanded/outlines/benchmarks-40min.md) | [Deck](../reveal-talks/benchmarks.html) | [15](../speaking-portfolio-expanded/outlines/benchmarks-15min-adaptation.md) · [30](../speaking-portfolio-expanded/outlines/benchmarks-30min-adaptation.md) |
+| Code Is Cheap. Judgment Is Expensive. | Senior engineers and leaders who staff review | [40 minutes, 14 slides](../speaking-portfolio-expanded/outlines/judgment-40min.md) | [Deck](../reveal-talks/judgment.html) | [15](../speaking-portfolio-expanded/outlines/judgment-15min-adaptation.md) · [30](../speaking-portfolio-expanded/outlines/judgment-30min-adaptation.md) |
 
-## Outlines and rehearsal
+Run `bun artifacts/speaking-portfolio-expanded/build-talk.ts <slug>` after editing an outline. Never edit generated scripts or browser decks. Timings are rehearsal targets, with exercises included and Q&A excluded.
 
-Each deck has a companion file ending in `-outline.md` with slide timings, visible copy and speaker guidance. The PowerPoint notes contain the same delivery guidance. Notes are prompts for delivery, not word-for-word scripts.
+Retrieval owns the Cranfield/TREC history and pooling exercise. Benchmarks owns validity, reliability, and small-sample inference. Judgment owns the review queue, specifications, and reviewer control. Multi-candidate orchestration belongs to [Dynamic Scaling](../speaking-portfolio-expanded/outlines/dynamic-scaling-40min.md); cost per accepted outcome belongs to [Free Tier](../speaking-portfolio-expanded/outlines/free-tier-40min.md).
 
-The lightning versions introduce a focused argument and leave the detailed examples to the longer talk. For a 45-minute session, deliver the 40-minute version and reserve five minutes for questions. Rehearse once before accepting a hard cutoff.
-
-## 30-minute adaptations
-
-Use the 40-minute deck and hide the slides listed below. The remaining slide timings total 30 minutes. Bridge omitted examples verbally with the transition shown.
-
-| Talk | Hide these slides | Transition |
-| --- | --- | --- |
-| Retrievals | 2, 5, 10, 14, 17 | Introduce the vocabulary directly. Fold judge calibration into the eval spectrum, permission scope into MCP, and the genuinely new behavior into the closing. |
-| Benchmarks | 4, 5, 6, 16, 17 | Let the fictional comparison establish the limits of public benchmarks. Introduce the cancellation job directly and cover the regression loop when discussing system evaluation. |
-| Judgment | 2, 4, 10, 12, 14 | Move directly to the review queue. Discuss ownership and generated-test limitations during trustworthy review. |
-
-## What each talk offers
-
-**Retrievals:** A translation between familiar engineering concepts and AI terminology. The examples identify where the analogies help and where they fail, covering retrieval, evals, agents, tool interfaces and context.
-
-**Benchmarks:** A method for defining product-specific acceptance criteria, turning production failures into eval cases, calibrating judges, and choosing systems by workload quality and operating cost.
-
-**Judgment:** An organizational argument about review capacity, explicit specifications, validation infrastructure and ownership when teams can produce more candidate implementations.
-
-## Example data
-
-Benchmark scores, workload pass rates and costs are illustrative fictional data supplied with the talk concept. They do not compare current products. Agent budget examples are hypothetical. The talks make no measured productivity or cost-saving claims. Their technical arguments and speaker guidance develop the supplied talk concepts.
-
-[Dynamic Scaling of Agentic Workloads](../speaking-portfolio-expanded/packets/dynamic-scaling/packet.md), formerly Rethinking Parallelization, lives in the expanded portfolio with 15/30/40-minute scripts and a [browser deck](../reveal-talks/dynamic-scaling.html).
+Sources and claim boundaries live beside slides and in each packet’s evidence bank. Named Story prompts still require Dan’s own records. The synthetic fixtures do not establish customer outcomes or productivity gains.

@@ -32,3 +32,17 @@ Nothing in the talks was edited. These are proposals.
 ## Tooling gaps the reviews surfaced
 
 Product Engineering and the three flagship talks are not registered in [`build-talk.ts`](../build-talk.ts), so their short routes are hand-maintained rather than derived. Measured drift is already present in Product Engineering: the demo runs 5:00, 5:00, 3:30 and 4:00 depending on which file you read.
+
+## Implementation status, 6 September 2026
+
+The verdicts above describe the reviewed versions and remain as the historical spec. Five rewrites are now implemented and registered in `build-talk.ts`:
+
+| Review | Current source | Remaining delivery evidence |
+| --- | --- | --- |
+| Failure Improvement | [15-slide outline](../outlines/failure-improvement-40min.md) | Personal stories and live integration for recording |
+| Product Engineering | [Canonical outline](../outlines/product-engineering-40min.md) | Personal stories and reconfirmed estimation observation |
+| Judgment | [Queueing arc](../outlines/judgment-40min.md) | Personal review-delay story |
+| Benchmarks | [Instrument-validation arc](../outlines/benchmarks-40min.md) | Personal green-eval failure story |
+| Retrieval | [Your Eval Suite Has a Grandfather](../outlines/retrieval-40min.md) | Personal missing-judgment story |
+
+Skeptic’s editorial rewrite remains pending an explicit retirement/procurement choice. The new evidence banks record corrections to the review’s proposed statistics and history, including mirroring-study denominators, threshold-flip arithmetic, incomplete-pool limits, and the R1 publication year. No anecdote or production measurement was invented to fill a slot.

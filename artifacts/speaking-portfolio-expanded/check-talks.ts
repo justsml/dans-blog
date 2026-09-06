@@ -45,7 +45,7 @@ try {
 } finally { await browser.close(); }
 // Check every changed/untracked Markdown or HTML file in this shared tree.
 const paths = new Set([
-  ...execFileSync('git', ['diff', '--name-only', 'HEAD', '-z']).toString().split('\0'),
+  ...execFileSync('git', ['diff', '--name-only', process.env.TALKS_CHECK_BASE || 'HEAD', '-z']).toString().split('\0'),
   ...execFileSync('git', ['ls-files', '--others', '--exclude-standard', '-z']).toString().split('\0'),
 ]);
 let links = 0;

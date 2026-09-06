@@ -1,4 +1,4 @@
-# Speaking portfolio: seven concepts
+# Speaking portfolio
 
 Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evidence notes and an offline demo kit. These extend the earlier four-talk portfolio.
 
@@ -6,7 +6,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 **Deck sync.** Five talks have a single PPTX export in [decks](decks/). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads, Outsmart Your Lying, Cheating Students and Cry Me a Free Tier were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and the other rewritten talks’ PPTX exports still need regeneration. Adaptive now has refreshed [15-slide screen](decks/adaptive-systems-screen.pptx) and [22-page handout](decks/adaptive-systems-handout.pptx) editions, including the simpler [execution-memory pattern and prompt](packets/adaptive-systems/memory-pattern.md).
 
-**Critical reviews.** The six talks that have not been rewritten each have an independent [critical review](reviews/README.md) with a verdict, a proposed arc, and the missing discipline. Nothing in those talks has been edited; the reviews are proposals.
+**Critical reviews.** The [six reviews](reviews/README.md) preserve the pre-rewrite verdicts. Failure Improvement, Product Engineering, Judgment, Benchmarks, and Retrieval now follow their proposed arcs, with source corrections recorded in the evidence banks. Skeptic remains unchanged pending a retire-or-procurement decision.
 
 **Before each delivery.** Fill every `Story` line with a first-hand example. Recheck the dated commitments and credit offer on free-tier slide 4.
 
@@ -52,12 +52,16 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | Cry Me a Free Tier | [Lightning](outlines/free-tier-15min-adaptation.md) | [Standard](outlines/free-tier-30min-adaptation.md) |
 | Outsmart Your Lying, Cheating Students | [Lightning](outlines/evidence-learning-15min-adaptation.md) | [Standard](outlines/evidence-learning-30min-adaptation.md) |
 | Dynamic Scaling of Agentic Workloads | [Lightning](outlines/dynamic-scaling-15min-adaptation.md) | [Standard](outlines/dynamic-scaling-30min-adaptation.md) |
+| Product Engineering | [Lightning](outlines/product-engineering-15min-adaptation.md) | [Standard](outlines/product-engineering-30min-adaptation.md) |
+| Judgment | [Lightning](outlines/judgment-15min-adaptation.md) | [Standard](outlines/judgment-30min-adaptation.md) |
+| Benchmarks | [Lightning](outlines/benchmarks-15min-adaptation.md) | [Standard](outlines/benchmarks-30min-adaptation.md) |
+| Your Eval Suite Has a Grandfather | [Lightning](outlines/retrieval-15min-adaptation.md) | [Standard](outlines/retrieval-30min-adaptation.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Adaptive, Dynamic Scaling, Outsmart and Free Tier include generated presenter scripts; other outlines use speaker cues.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. The nine talks rewritten in this review cycle include generated 40/30/15 presenter scripts. Skeptic’s editorial decision is separate from this rewrite.
 
 ## Image prompts
 
-Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [dynamic-scaling visual inventory](packets/dynamic-scaling/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for dynamic scaling, and readable labels. Other outlines retain `<!-- image: ... -->` prompts for their illustrations.
+Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [dynamic-scaling visual inventory](packets/dynamic-scaling/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for dynamic scaling, and readable labels. Failure Improvement, Product Engineering, Judgment, Benchmarks, and Retrieval also have real SVGs and packet visual inventories. Some other outlines retain `<!-- image: ... -->` prompts.
 
 ## What makes the talks distinct
 
@@ -88,8 +92,20 @@ The offline kit uses scripted or deterministic fixtures. It makes no model calls
 
 Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or dynamic scaling when the audience wants to grow an agent's authority and change execution policy; failure improvement owns the offline loop and compile-what-repeats beat. Adaptive and Dynamic Scaling are companions: adaptive owns per-job agent generation and repair authority, dynamic scaling owns admission, ledgers and the compute substrate. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
-The six retrieval, benchmarks and judgment decks remain in the sibling `flagship-talks` directory. Adaptive and Dynamic Scaling use the browser decks linked above.
+Retrieval, Benchmarks, and Judgment now use canonical outlines here. The [former flagship directory](../flagship-talks/README.md) links to current sources and retains historical PowerPoints.
 
 ## Adaptive and Dynamic Scaling rewrite, September 6
 
 Both talks were rewritten around Dan's direction: the assistant-with-everything question and a per-job agent generator for adaptive; the infra inversion, agent-directed compute and the ephemeral vendor substrate for dynamic scaling (formerly Rethinking Parallelization). Each outline is the single source; `bun artifacts/speaking-portfolio-expanded/build-talk.ts <talk>` regenerates the 40/30/15 scripts, the two adaptations and the browser deck. Disclaimers are said once per talk. Story slots are listed in each evidence bank and must be filled before delivery. Timings are rehearsal targets, not recordings.
+
+## September 6 review rewrites
+
+Failure Improvement owns the offline loop and its reviewer. Product Engineering reprices coordination and defines interfaces. Judgment puts Kingman’s curve in the opening. Benchmarks validates the measuring instrument. Retrieval follows Cranfield, TREC pooling, and assessor disagreement. Each has a visual inventory and a generated browser deck. The failure-improvement live recording still needs verified stories and an executed integration; see the recording plan.
+
+| Rewritten talk | Canonical source | Full presenter script |
+| --- | --- | --- |
+| Failure Improvement | [Outline](outlines/failure-improvement-40min.md) | [Script](packets/failure-improvement/script-40min.md) |
+| Product Engineering | [Outline](outlines/product-engineering-40min.md) | [Script](packets/product-engineering/script-40min.md) |
+| Judgment | [Outline](outlines/judgment-40min.md) | [Script](packets/judgment/script-40min.md) |
+| Benchmarks | [Outline](outlines/benchmarks-40min.md) | [Script](packets/benchmarks/script-40min.md) |
+| Your Eval Suite Has a Grandfather | [Outline](outlines/retrieval-40min.md) | [Script](packets/retrieval/script-40min.md) |
