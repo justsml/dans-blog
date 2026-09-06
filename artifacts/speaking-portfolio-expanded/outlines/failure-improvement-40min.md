@@ -1,14 +1,16 @@
-# Automating Improvement From Failure
+# Automating Improvement From Failure: The Fail-to-Win Loop
 
-40 minutes · 16 slides
+40 minutes · 17 slides
 
-**Arc.** Warm open on one boring failure, steady through the destination hierarchy, build through hooks and fixtures, peak at the demo and the promotion gate, build again through search and optimizers, land on pruning and the exercise.
+**Arc.** Warm open on the logs nobody reads, steady through the foundation (an agent with log access) and the enrichment ladder, build through the scheduled out-of-band check, distill-and-classify, and tickets-and-PRs, peak at the guardrails, build again through agent-driven testing, compiling what repeats, and the customer feedback loop, land on proactive response, the roadmap, and the close.
 
-**Scope.** A proposed workflow with synthetic fixtures. The demo replays; it makes no model calls and edits nothing. Say that once on slide 1.
+**Thesis.** Step one is giving an agent your production logs. Every enrichment after that (codebase, observability, cloud platform, ticketing, browser) raises how much you can trust it to respond on its own. Grow the loop one failure class at a time. The double meaning of the title is the close: fail to win, or fail to win.
 
-**Demo.** [Runbook section 2](../demos/DEMO-RUNBOOK.md#2-automating-improvement-from-failure) · [Kit](../demos/index.html). Fallback: narrate the fixtures on slide 8 and the gates on slide 9.
+**Scope.** Patterns from real setups, described in general terms. No customer, vendor result, or measurement is claimed unless a `Story` line supplies one. The offline kit on slide 8 is a deterministic replay; say that once when you open it.
 
-**Before each delivery.** Fill the `Story` lines with incidents from your own work.
+**Demo.** [Runbook section 2](../demos/DEMO-RUNBOOK.md#2-automating-improvement-from-failure) · [Kit](../demos/index.html). It illustrates the guardrail slide only. Fallback: narrate the three gates from the slide.
+
+**Before each delivery.** Fill the `Story` lines from your own work. Verify the platform integration table on slide 3 against current vendor docs. Verify the model names you plan to say on slide 10; the outline leaves them blank on purpose.
 
 **Image style.** Dark slate background, one amber accent, flat vector, generous negative space, no text or logos. Each slide comment is a complete prompt.
 
@@ -16,243 +18,259 @@
 
 ---
 
-## 1. Yesterday's fix should survive today
+## 1. Your logs are a roadmap nobody reads
 
 0:00–2:00 · warm
 
-<!-- image: a terminal window showing a red error line, a hand reaching in from the side to press a single key, the same scene repeated three times smaller in the background, dark slate background, amber accent on the key, flat vector, no text -->
+<!-- image: a long paper scroll of log lines spilling out of a server and piling on the floor, one line near the top glowing, an empty office chair beside it, dark slate background, amber accent on the glowing line, flat vector, no text -->
 
-> Train the system, not just the model.
-> Fail → explain → retry → forget.
+> Every failure in production is a queued improvement.
+> Nobody is working the queue.
 
-An agent launches integration tests while the database is still starting. A person recognizes the error, waits, reruns, gets green. Tomorrow another session does the exact same thing. We do not need a more eloquent apology. We need yesterday's discovery to change tomorrow's execution.
+Your production logs already contain the next month of engineering work. Every stack trace, every 500, every retry storm, every thumbs-down is a ticket that was never filed. Teams pay for observability and then read it only when a pager goes off.
 
-Scope, once: proposed workflow, synthetic fixtures, a demo that replays rather than learns. I will not repeat that.
+The claim of this talk: an agent can work that queue. Start by handing it the logs. Every access you add after that raises how much of the loop it can close on its own. That is the fail-to-win loop, and the good kind.
 
-Story: [the correction you have personally made more than three times to the same agent or teammate, with the actual error text]
+Story: [a failure that sat in your logs for weeks before a customer reported it]
 
-Hands up if you typed the same fix into a chat window this week.
+Hands up if you read your error logs today without an alert making you.
 
-## 2. The human became the database
+## 2. Step one: hand your logs to an agent
 
-2:00–4:00 · warm
+2:00–4:30 · steady
 
-<!-- image: a person sitting inside a server rack in place of a hard drive, cables plugged into their shoulders, dark slate background, amber accent on the cables, flat vector, no text -->
+<!-- image: a single cable running from a server rack into a small robot sitting at a desk reading a printout, nothing else on the desk, dark slate background, amber accent on the cable, flat vector, no text -->
 
-> Then pay the human again.
-> The missing metric: recurrence after a known fix exists.
+> Coding agent + log access = the foundation
+> "What broke since yesterday?"
 
-Three sessions, each locally green, so the completion dashboard looks healthy while the interruption repeats invisibly. Capture the first error and the corrective action, not the final success. Count comparable episodes only: a missing service, bad credentials, and a migration failure share symptoms and need different fixes.
+This is the whole first step, and it is smaller than people expect. Point a coding agent at your logs. Claude Code, Codex, Hermes, a custom agent on any framework; the choice matters less than the access. Ask it what broke since yesterday. It reads, groups, and explains, and it is already better than the nobody who was doing it before.
 
-If a person keeps supplying the same prerequisite, the workflow has externalized state into that person. Learning starts by making that dependency visible.
+Once an agent can see system logs, traces, and failures, you are at step one of an automatic fail-to-win loop. Everything else in this talk is what to add next and in what order.
 
-## 3. Every lesson needs a destination
+Story: [the first time you pointed an agent at real logs and what it found in the first ten minutes]
 
-4:00–7:30 · steady
+## 3. Enrichment is leverage
 
-<!-- image: a tall ladder leaning against a wall with eight rungs, the top rungs solid steel and the bottom rungs turning to smoke, dark slate background, amber accent on the top rung, flat vector, no text -->
+4:30–7:30 · steady
 
-> 1 Eliminate · 2 Prevent · 3 Code, test, hook · 4 Tool
-> 5 Skill · 6 Retrievable knowledge · 7 Instruction · 8 Hope
+<!-- image: a small robot at a desk with five cables arriving from five directions, each cable thicker than the last, the robot's desk lamp growing brighter, dark slate background, amber accent on the lamp, flat vector, no text -->
 
-The spine of the talk, on one slide. Cheap, deterministic, narrow destinations at the top. Expensive, probabilistic, global ones at the bottom. Hope is where most teams currently store their lessons.
+> Logs → traces → codebase → cloud platform → tickets → browser
+> The more it can see, the more you can trust it to act
 
-Preferences, not laws. A rarely used workflow may deserve a scoped note instead of a subsystem. The question is always whether the correction can disappear from the agent's decision space. The next three slides show what each tier looks like in a real harness.
+The rule that makes the rest of the talk work. A log-only agent can describe. An agent with the codebase can locate. Add an observability MCP and it can pull the trace. Add a cloud platform MCP and it can check CloudWatch, the queue depth, the deploy that landed at 14:02. Add ticketing and it can file. Add a browser and it can reproduce.
 
-## 4. Eliminate, prevent, encode
+Every logging and observability platform now has some mix of MCP server, API, and CLI. Use any of them. Nobody is blocked on integration.
+
+| Source | Typical access | Verify before talk |
+| --- | --- | --- |
+| Datadog, New Relic, Honeycomb, Grafana | MCP server, API, CLI | Current MCP names and auth |
+| Sentry | MCP server, API, CLI | Scope of issue and trace tools |
+| AWS CloudWatch, GCP Logging, Azure Monitor | Vendor MCP, CLI | Which services the MCP covers |
+| Splunk, Elastic, Loki, Axiom | API, CLI, community MCP | Whether an official MCP exists |
+| GitHub, Linear, Jira | MCP server, API, CLI | Write permissions granted to the agent |
+
+Story: [the one integration that changed what your agent could do, and what it did with it]
+
+## 4. Do not wire everything on day one
 
 7:30–9:30 · steady
 
-<!-- image: a door with its doorknob removed and the wall painted over smooth where the door used to be, dark slate background, amber accent on the paint edge, flat vector, no text -->
+<!-- image: a single seedling in a pot on a windowsill, behind it a blueprint of a huge greenhouse leaning against the wall unrolled, dark slate background, amber accent on the seedling, flat vector, no text -->
 
-> Could the harness own startup and readiness?
-> If not: a readiness check in code
-> Then a tested entry point, then a tool
+> A raw log-reading agent gets overwhelmed.
+> One failure class at a time. Different agents for different failures is fine.
 
-Before writing another instruction, look at the architecture. If the test harness owns startup plus readiness as one operation, the caller's obligation to remember ordering disappears. If orchestration must stay separate, enforce readiness in code. Package it as a tested entry point before exposing it as a tool. Our case picks a harness precondition because the prerequisite is objective and applies to every run.
+The honest limit. An agent reading everything is limited in what it delivers and easy to drown. Ten thousand lines of noise and one real incident, and it will write you a summary of the noise.
 
-Story: [a fix you turned into a script or test so nobody has to remember it; name the file]
+Do not go implement every capture, every nuance, every automatic fix I mention today and then wire it all up on day one. These systems grow organically into a company. Pick one failure class. Give one agent the access that class needs. Get one output you trust. Then the next. It is fine, and often better, to have different agents for different failures.
 
-## 5. Skills, plugins, AGENTS.md
+## 5. The out-of-band check
 
-9:30–12:00 · steady
+9:30–12:00 · build
 
-<!-- image: three nested containers, a small labeled card inside a toolbox inside a filing cabinet drawer, dark slate background, amber accent on the small card, flat vector, no text -->
+<!-- image: a wall clock with a small robot standing beneath it holding a clipboard, a stack of paper on the floor with a bookmark marking where it stopped last time, dark slate background, amber accent on the bookmark, flat vector, no text -->
 
-> SKILL.md: a reusable workflow, loaded on demand
-> Plugin: skills + hooks + commands, versioned together
-> AGENTS.md: stable, broadly applicable rules only
+> Scheduled: GitHub Actions cron, a dev box, a server
+> "Everything since the last check" → distilled failures
 
-Some corrections cannot become a boolean. A migration investigation is a sequence of judgments across tools, so it belongs in a skill: a `SKILL.md` with a description that says when to load it, the steps, and the cases where it does not apply. Loaded when relevant, so it does not tax every session.
+The mechanism. A scheduled task, out of band from any deploy or session. GitHub Actions on a cron, a dev machine, a server somewhere. It runs against everything since the last check, so it never re-reads what it already processed, and it never has to be fast.
 
-A plugin bundles skills with hooks and commands, so the fix ships as one versioned unit across repos. `AGENTS.md` is the last durable stop: rules that are stable and apply almost everywhere. Every incident pasted into a global file raises ambiguity and context cost. In our example, the readiness rationale lives beside the harness docs and the global reminder goes away once code enforces it.
+Its only job is to extract and distill. Group the same failure under one heading, strip the noise, keep the trace, the environment, the count, and the first and last time seen. The output is a short list of distinct failures, not a summary of the log. Everything downstream consumes that list.
 
-Show a ten-line `SKILL.md` skeleton.
+Show the skeleton: a workflow file with a cron, one job, one agent invocation, one artifact.
 
-Sources: Anthropic, [Agent Skills overview](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) · [AGENTS.md](https://agents.md).
-
-## 6. Hooks: the deterministic edge of the harness
+## 6. Distill, then classify
 
 12:00–14:30 · build
 
-<!-- image: a conveyor belt with three mechanical gates along it, one gate closed and blocking a package, a stamp marking the next package, dark slate background, amber accent on the closed gate, flat vector, no text -->
+<!-- image: a conveyor belt carrying identical grey boxes into a sorting machine that stamps them and drops them into four labeled bins, one bin with a red warning stripe, dark slate background, amber accent on the stamp, flat vector, no text -->
 
-> Pre-tool: block the test command until readiness passes
-> Post-tool: normalize the error and write the case record
-> Stop: refuse to end with an unrecorded failure
+> Loop over the distilled list: pattern → severity → risk → security class
+> Tagging is what makes the next step possible
 
-Hooks run real code at fixed points in the agent loop, so the rule executes whether or not the model remembers it. A pre-tool hook runs the readiness check before any test command. A post-tool hook turns the failure into a case record: normalized error, service version, phase, observed readiness state, correction, expected outcome, source reference, secrets stripped. Capture stops being manual. Root cause stays a hypothesis until a reproduction supports it; the agent's story of what happened is evidence, not the event.
+Once failures are distilled, run loops over them. Identify patterns: is this new, or the same thing from last Tuesday with a different port? Estimate severity and risk. Flag anything that looks like a security issue, and be specific about the class: injection attempt, auth bypass, data exposure, denial of service.
 
-Source: Anthropic, [Claude Code hooks reference](https://docs.claude.com/en/docs/claude-code/hooks).
+The tags are the point. A failure with a severity, a class, an owner guess, and a link to the code region is something a system can route. A paragraph about it is not. Keep the tagging conservative; a wrong "low" is worse than a wrong "high."
 
-## 7. A correction is a candidate change
+Story: [a pattern the classifier surfaced that no human had connected]
 
-14:30–16:00 · build
+## 7. From tags to tickets and PRs
 
-<!-- image: a pull request card with a diff, held up to a light by a hand, a rubber stamp hovering but not yet pressed, dark slate background, amber accent on the stamp, flat vector, no text -->
+14:30–17:00 · build
 
-> Trace → label → candidate patch
-> Reproduce → compare → review
-> Promote only after the gate
+<!-- image: a sorting machine's output chute feeding two separate queues, one of ticket stubs and one of folded pull-request pages, a person at the end of one queue and a small robot at the end of the other, dark slate background, amber accent on the chute, flat vector, no text -->
 
-Discovering a lesson and granting it authority are different steps. Extraction can suggest startup readiness caused the failure and draft a preflight function. Neither silently rewrites repo rules. Owner, scope, supporting cases, rollback path. A sleep hides a race; a retry hides an authorization problem. A system can confidently learn the wrong lesson from a successful workaround.
+> Big enough team or system: push tickets, then PRs
+> Into a queue for human review or more agent testing and security audit
 
-Source: Anthropic (January 2026), [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents).
+Once classification is reliable, let the agent write. Tickets first: a ticket with the trace, the tags, and the suspected code region is cheap to create and cheap to close if wrong. Then PRs, into a queue. The queue can be a human reviewer, or another agent that runs the tests, or a security audit agent, or all three in sequence.
 
-## 8. The tiny fixture that catches the wrong lesson
+These are not involved systems. You just have to start somewhere and keep providing access to the details and traces the agent needs. Match the ceremony to the consequence: a log-level fix can flow; a migration or a payment path waits for a person.
 
-16:00–18:00 · build
+Story: [the first PR your loop opened, and whether it merged]
 
-<!-- image: four small glass jars in a row each holding a different colored traffic light state, green, green, red, and an hourglass, dark slate background, amber accent on the hourglass, flat vector, no text -->
+## 8. Guardrails before autonomy
 
-> Starting → wait, then run
-> Ready → run once
-> Denied → stop; do not retry
-> Deadline → stop; explain
+17:00–21:00 · peak
 
-Four fixtures. Which does a fixed sleep handle, and which does it merely postpone? Denied and deadline must stop honestly. A vague lesson becomes a behavioral contract here.
+<!-- image: three turnstiles in a row in front of a single open door, a folded pull-request page passing through the first turnstile, the other two still closed, dark slate background, amber accent on the open door, flat vector, no text -->
 
-Which of the four would your retry logic get wrong today?
+> Similarity is a candidate, not a diagnosis
+> Regression · holdout · scope · a human when money or data moves
 
-## 9. Demo: yesterday's failure becomes a test
+The peak, and the caution. A looping agent will happily learn the wrong lesson from a successful workaround. A retry hides an auth failure. A sleep hides a race. So a proposed fix passes gates before it gets authority: the regression case for this failure, the unrelated cases that must still pass, and a scope check that the environment and cause actually match the prior case.
 
-18:00–23:00 · peak
+Open the kit. Two connection-refused errors on different ports normalize to one family. Permission denied stays unknown. Evaluate with no gates, then one, then all three. The checkboxes stand for evidence; clicking runs nothing. Say that once.
 
-<!-- image: two identical error messages on cards being pulled together by a magnet, behind them three toggle switches in a row with only two flipped up, dark slate background, amber accent on the unflipped switch, flat vector, no text -->
-
-> Normalize two connection failures
-> Propose a scoped readiness check
-> Block promotion without holdout proof
-
-Follow [runbook section 2](../demos/DEMO-RUNBOOK.md#2-automating-improvement-from-failure). Two connection-refused errors on different ports normalize to one family. Switch ports; the prior case comes back. Permission denied stays unknown.
-
-Evaluate promotion with all gates off. Regression only. Holdout. Scope. Promotion only with all three. The checkboxes stand for evidence a real system must collect; clicking runs nothing. Flip holdout off and show the block.
-
-What is your equivalent of "scope matches"? Most teams have regression tests and no scope check.
+Add the human gate explicitly for anything that dispenses money, deletes data, or messages customers. Language models are notoriously easy to finagle into whatever the caller wants. Do not let the loop be the caller.
 
 Compression: at two minutes, skip the port switch, show the three-gate sequence.
 
-## 10. Owner and rollback
+## 9. The jumping-off point: let the agent drive
 
-23:00–24:30 · peak
+21:00–23:00 · build
 
-<!-- image: a large lever with a hand resting on it, a small name tag hanging from the handle, a reverse arrow painted on the floor, dark slate background, amber accent on the name tag, flat vector, no text -->
+<!-- image: a small robot holding a game controller in front of a large browser window, a cursor mid-click, a short list on a sticky note beside the keyboard, dark slate background, amber accent on the cursor, flat vector, no text -->
 
-> Propose separately from promote
-> Text in a trace is data, not policy
-> Match ceremony to consequence
+> Deterministic failures captured → now exercise the system on purpose
+> Chrome CDP or Playwright MCP + "focus on what this PR touched"
 
-A system that edits its own instructions is a new change channel. Give it what code gets: reviewable artifacts, scoped permissions, regression checks, deployment history, rollback. Text found in a trace does not become policy because the model called it a lesson. The readiness patch is a small diff and four assertions. A learned routing change gets a staged rollout.
+Once regular, deterministic system errors are flowing through the loop, you have a jumping-off point for the other kind of testing. Give the same agent a browser through Chrome DevTools Protocol or a Playwright MCP. Give it a starting script: how to load the app, initialize, log into the admin. Then tell it to use its judgment on the features affected by the current PR.
 
-## 11. Search the incident before inventing memory
+Instead of writing every Playwright script for every path, you write the entry and let the agent explore the delta. Do not tell it to test everything. The PR diff is the scope.
 
-24:30–28:00 · build
+Story: [a bug an exploratory agent session found that the scripted suite missed]
 
-<!-- image: a staircase of four steps rising left to right, a magnifying glass on the first step, a three-letter tile on the second, a branching tree on the third, a cloud of dots on the fourth, dark slate background, amber accent on the first step, flat vector, no text -->
+## 10. The E2E suite that runs in triplicate
 
-> Exact match → trigram → tree/AST → vector
-> Filter by service and version first
-> Return applicability and the replacement artifact, not just the fix
+23:00–25:30 · build
 
-Another session sees connection refused. Start cheap: an exact-error index. Then trigram similarity on the normalized error and the surrounding chat context. It survives changing ports and paths and is one Postgres extension away. Then structural matching on a parse tree or stack shape when wording varies but structure repeats. Vectors last, when measured misses justify them.
+<!-- image: sixteen identical treadmills running side by side with nobody on them, one small robot walking a single path on the floor beside them, dark slate background, amber accent on the robot's path, flat vector, no text -->
 
-Similar wording does not mean the same cause. Filter by applicability before fuzzy matching. Return the case's evidence and its replacement artifact with the fix. A skill can set this up: it knows how to query the store, what to filter on, and how to present a match for review. Boring search wins because its matches are easy to inspect.
+> Hours of E2E, split sixteen ways, run three times for flakiness
+> A cheap model driving a targeted session starts to look reasonable
 
-Story: [a "similar" error that led you to the wrong fix]
+The economics. Many teams run an end-to-end pipeline that takes hours, sharded sixteen ways to hide the wall time, and run in triplicate because half the failures are flakiness nobody can interpret. The load and the overhead are still there; the sharding just hides them.
 
-Source: PostgreSQL, [pg_trgm](https://www.postgresql.org/docs/current/pgtrgm.html).
+Against that, an LLM driving a short targeted session with its judgment does not look ridiculous. Short multi-step tool-call tasks run fine on the cheapest current tier of models, up to a point. I have seen remarkable results and some curious actions, and usually a cost saving on the giant suites.
 
-## 12. Prompt optimizers: GEPA and DSPy
+Name a few cheap models you have measured multi-step dynamic browser tasks with: `GPT-5.6-luna`, `GLM-5.3-flash`, `deepseek-v4-flash`, `gemini-3.7-flash`. We traded several-hour-long E2E test suite with an LLM based selection of the "3 individual tests most likely to be affected by the current change" for $0.36-$0.81. Roughly the same cost as a single run of the full suite, and now we have reduced flaky failures and a better chance of catching the real ones. The agent can even run the full suite on a schedule, and report only the failures that are new. There are additional ways to help the model associate & target the optimal test(s) when given a feature/PR's description & code changes, ask me later if you are curious about the advanced options here.
+
+## 11. Compile what repeats
+
+25:30–28:00 · build
+
+<!-- image: a cloud of scattered footprints across a floor converging into a single painted straight line with a small wind-up key at its start, dark slate background, amber accent on the key, flat vector, no text -->
+
+> Nondeterminism finds the path. Determinism runs it.
+> Memory + search over past threads + a skill that says when
+
+The E2E alternative on the last slide is one case of a general move: use an agent's judgment to discover a path, then compile the path into a script. The agent can do the noticing itself. Give it memory and a search mechanism over past chats or threads, and a skill that describes how and when to look. Its job on that skill: find tasks or actions it has performed more than a few times, and turn each into a script it can run as a cron job or another scheduled job.
+
+That log-distilling check on slide 5 is exactly this. So is the login script on slide 9. None of it requires fancy harness modifications, though hooks and plugins help once the pattern is proven. The output is a file you can diff and a schedule you can read.
+
+Story: [a task your agent repeated until you, or it, turned it into a script; name the file]
+
+## 12. Feedback is the same loop
 
 28:00–30:30 · build
 
-<!-- image: a sheet of paper being fed through a loop of arrows, each pass leaving the text slightly bolder, a small scale weighing two versions, dark slate background, amber accent on the scale, flat vector, no text -->
+<!-- image: a thumbs-down button on a phone screen with a speech bubble above it, a thin line running from the bubble into a folded pull-request page on a desk, dark slate background, amber accent on the thumbs-down, flat vector, no text -->
 
-> Failures become training signal for the prompt, not the weights
-> DSPy: declare the pipeline, compile the prompts
-> GEPA: reflect on traces, evolve the instruction
+> Thumbs down + a sentence of rage = gold
+> Feature request → PR → personal feature flag → similar users → guards → human
 
-Between hand-edited instructions and fine-tuning sits a middle tier. DSPy treats prompts as compiled artifacts: declare the module signature, supply examples and a metric, let the optimizer choose demonstrations and wording. GEPA reads execution traces, reflects in natural language on what failed, and proposes edited instructions kept only if the metric improves.
+The loop is not only for errors. Any feedback signal feeds it: thumbs up or down on the chat, the session, the order. When they thumb down, prompt for a sentence and capture the rage. Those moments are gold if they run through the same distill, classify, and PR pipeline.
 
-This is the lower-lift route when the recurring issue is judgment quality rather than a missing precondition. The fixtures from slide 8 become the eval set. The output is still text you can diff, review, and version, and the same gates apply. You need a metric that reflects the real failure, and optimized prompts overfit small sets. Keep the holdout.
+For a feature request, the dazzling version: the agent opens a PR, the change ships behind a feature flag scoped to that one user, and it tests. If it holds, expand to users with similar usage patterns or profiles using plain heuristics. Every step passes the agentic guards from slide 8, and a human looks at least once. There has never been a smoother way to show a client that asking for something can lead to having it.
 
-Sources: Khattab et al. (2023), [DSPy](https://arxiv.org/abs/2310.03714) · Agrawal et al. (2025), [GEPA: Reflective Prompt Evolution Can Outperform Reinforcement Learning](https://arxiv.org/abs/2507.19457).
+Story: [a piece of user feedback that became a shipped change, and how long it took]
 
-## 13. The managed stack
+## 13. Correlate, escalate, and be careful with money
 
-30:30–33:00 · steady
+30:30–32:30 · steady
 
-<!-- image: a glass-walled control room with three monitors showing traces, annotations, and a comparison chart, beside it a small wooden desk with a notebook and a five-dollar bill, dark slate background, amber accent on the bill, flat vector, no text -->
+<!-- image: a support ticket and a log line side by side connected by a single bright thread, a locked cash drawer beneath them with the key hanging on the wall out of reach, dark slate background, amber accent on the thread, flat vector, no text -->
 
-> LangSmith · Braintrust · Langfuse
-> Traces → annotation queues → datasets → experiments
-> Same evidence contract as the five-dollar loop
+> "I lost data" + this session ID matches an error → high priority, linked, escalated
+> A credit may be due. Detect it. Do not let the loop dispense it.
 
-The fully managed end. All three centralize traces, let humans annotate failures, turn annotated traces into datasets, and run comparison experiments. That is the case store, the fixture set, and the regression gate from this talk, hosted.
+Frustrated customers escalate themselves: "I'm telling everyone how bad this is," "I lost my data." The loop can intercept. If the customer's session ID correlates with an error in the logs, log it as high priority immediately, link it to the support ticket, create the ticket if there is none, and escalate. The support person opens a ticket that already contains the trace.
 
-A small team can start with sanitized structured records, a local replay command, and a pull request. Both ends need a definition of success and a promotion decision. Choose by volume, collaborators, access control, retention. Keep the evidence contract portable so the workflow survives a tooling change.
+The loop can even detect that a credit may be due and show off some smarts. Be very careful here. Anything that affects dispensing money gets the human gate, every time. Detect, recommend, draft the message. A person presses the button.
 
-Show one row per platform: trace capture, annotation, datasets, evals, self-host. Verify feature names before the talk.
+## 14. Proactive: three tickets before the fourth customer
 
-Sources: [LangSmith docs](https://docs.langchain.com/langsmith) · [Braintrust docs](https://www.braintrust.dev/docs) · [Langfuse docs](https://langfuse.com/docs).
+32:30–34:30 · steady
 
-## 14. Give each lesson an expiry, then prune
+<!-- image: a lighthouse beam sweeping across a row of small houses at night, three houses already lit, the beam reaching the fourth before its light turns on, dark slate background, amber accent on the beam, flat vector, no text -->
 
-33:00–35:30 · steady
+> Order error + three tickets about shipping addresses = an integration is down
+> Tell the affected customers before they tell you
 
-<!-- image: three identical sticky notes on a wall, two being peeled off by a hand and one remaining with a small date stamp, a shredder below, dark slate background, amber accent on the remaining note, flat vector, no text -->
+The step that earns trust. An error fires on an order. The loop notices three open tickets from other customers who could not get a shipping address to save. That is one incident, not four. Create the incident, link the tickets, and send a proactive notice: we are having issues with our shipping integration, bear with us, we will notify you when it is resolved.
 
-> Owner + scope + source + last verified + last triggered
-> Superseded by: the enforcing code
-> Prune on a reviewable diff, like any change
+For low-tech and mid-tech consumers to welcome this technology, it has to score wins they can feel. Curing diseases and stopping scams are on that list. So is a shop that tells you it broke before you noticed. This one is actionable today.
 
-At creation, record harness version and verifying cases. When a new harness owns readiness internally, point the record at the enforcing code and mark the reminder superseded. Keep the incident history; remove the text from active sessions.
+## 15. Where this goes
 
-The pruning provision. Three copies of the same reminder: a global instruction, a skill paragraph, an incident entry. Merge the explanation near the implementation, retire the redundant prompt material, and do it through a diff someone reviews. Trigger counts find unused material, but low frequency does not make a rare critical rule disposable. Memory without garbage collection is a leak.
+34:30–36:00 · steady
 
-## 15. Measure recurrence, then pick one
+<!-- image: one app icon splitting into many slightly different versions of itself fanning out toward many small houses, each version a different shade, dark slate background, amber accent on the original icon, flat vector, no text -->
 
-35:30–38:00 · land
+> Personalized software: say what should be different, get a mutated version
+> Local, inside an application platform, or at a provider
 
-<!-- image: a tally board with many chalk marks crossed out and a single mark circled, a small notebook open beneath with one line written, dark slate background, amber accent on the circle, flat vector, no text -->
+Speculation, labeled as such. It may not be a distant future where we get personalized versions of software. Tell it this should be different and receive a mutated version. Maybe that runs locally, maybe inside specialized application platforms, maybe at a provider. Who knows.
 
-> Repeat failures per comparable run · Human correction time
-> Regression escapes · Active instruction burden
+What is not speculation: the feedback-to-flag loop on slide 12 is the first rung of that ladder, and it works with today's tools.
 
-A system can generate hundreds of lessons without changing behavior. Track repeats among runs where a lesson should apply, time people spend correcting, regressions introduced, and the volume of active instruction text. Growth in that last number means deterministic work is still delegated to recall. Keep the denominator.
+## 16. Start Monday
 
-Write it down (60 s): one recurring correction, its tier on the ladder, and one nearby case where the fix would be wrong. The deliverable is one intervention with evidence, not a platform. If nothing generalizes safely, a scoped incident record is honest work.
+36:00–38:00 · land
 
-## 16. Manufacture cheap determinism
+<!-- image: a short checklist on a single index card pinned to a corkboard with one pin, the first box already ticked, dark slate background, amber accent on the tick, flat vector, no text -->
+
+> Pick one failure class · one agent · one output
+> Logs → schedule → distill → classify → ticket → guard → measure
+
+The roadmap, in order. Give an agent read access to logs. Put it on a schedule. Make it distill. Make it classify. Let it file a ticket. Add the gates before it opens a PR. Measure: time from failure to ticket, repeat failures after a fix, feedback items that became changes.
+
+A specialized agent for this, run from the CLI or as an internal service, pays huge dividends for a small build. Write down (60 s): the one failure class you will hand it first, and the one integration it needs to act on that class.
+
+## 17. Fail to win, or fail to win
 
 38:00–40:00 · land
 
-<!-- image: a glowing chaotic cloud of particles funneling down into a single small clean gear, dark slate background, amber accent on the gear, flat vector, no text -->
+<!-- image: the same long paper scroll of log lines from the first slide, now neatly cut into short strips, each strip clipped to a folded pull-request page, the office chair still empty, dark slate background, amber accent on the clips, flat vector, no text -->
 
-> Use expensive nondeterminism to manufacture cheap determinism.
+> Turning observed failures into wins is low lift and high leverage in almost every company.
+> The alternative is the other reading of the title.
 
-Replay the opening. The database is starting; the harness now checks readiness and either runs within contract or stops with an accurate explanation. The model did not grow a new memory in its weights. The system around it changed.
+Replay the opening. The logs are still spilling out. Now something reads them, and each strip becomes a ticket, a PR, a flag, or a message to a customer. The model did not get smarter. The system around it got a job.
 
-The output of a hard reasoning episode should be a small function, a test, a clearer interface, a narrower rule, or an optimized prompt you can diff. The standard: the discovery makes the next comparable task cheaper to run or easier to verify.
+With this much intelligence available, a system that does not automatically improve from its own failures, its customers' feedback, and its own incidents, possibly in real time, is leaving the cheapest high-leverage capability in the building unused. Fail to win: let the failures drive the wins. Or fail to win: watch someone else's system do it first.
 
-Where does your next recurring failure go?
+Which failure are you handing over on Monday?

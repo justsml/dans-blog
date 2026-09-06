@@ -14,11 +14,11 @@ Ask the audience to name evidence that would demonstrate the intended capability
 
 ## 2. Automating Improvement From Failure
 
-**Four minutes.** Start with the connection-refused error. Switch ports to show normalization retrieving the same prior case. Ask whether similarity establishes root cause. It does not.
+**Two to four minutes, guardrail slide only.** The talk's spine is a scheduled agent reading logs; this kit shows what happens once that loop proposes a fix. Start with the connection-refused error. Switch ports to show normalization retrieving the same prior case. Ask whether similarity establishes root cause. It does not.
 
 Click Evaluate proposed promotion with all gates unchecked. The fix stays in review. Check the regression test only, then the holdout. It still stays in review until scope matches. With all three checked, the scoped readiness check can be promoted. Switch to the permission error: it has no known resolution.
 
-**Expected outcome:** Similarity retrieves a candidate lesson. Separate verification gates control promotion. Checkboxes represent evidence a real system must collect; clicking them does not run tests or establish a causal diagnosis.
+**Expected outcome:** Similarity retrieves a candidate lesson. Separate verification gates control promotion. Say on stage that money, data deletion, and customer messaging get a fourth gate the kit does not show: a person. Checkboxes represent evidence a real system must collect; clicking them does not run tests or establish a causal diagnosis.
 
 ## 3. Building Adaptive & Dynamic AI Systems
 

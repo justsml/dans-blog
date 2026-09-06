@@ -2,17 +2,17 @@
 
 Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](failure-improvement-40min.md). No Q&A in the timings.
 
-**Strategy.** One incident, the whole ladder on one slide, one hook, the compressed demo, the search ladder, and the pruning rule. Name the optimizers and the managed platforms in one breath each.
+**Strategy.** The foundation, the enrichment rule, the scheduled distill-and-classify mechanism, the guardrails, one glimpse of the feedback loop, and the close. Say "one failure class at a time" once on slide 3 instead of giving slide 4 its own time. Name agent-driven testing and compile-what-repeats in one breath on the way to the feedback slide.
 
 | Time | Slide | Section | Bridge or cut |
 | --- | ---: | --- | --- |
-| 0:00–1:30 | 1 | Yesterday's fix should survive today | Drop the story. |
-| 1:30–3:00 | 2 | The human became the database | |
-| 3:00–5:30 | 3 | Every lesson needs a destination | Bridge out: "Top of the ladder is code and hooks, middle is skills and AGENTS.md, bottom is hope. Here is the top." |
-| 5:30–7:30 | 6 | Hooks | |
-| 7:30–10:00 | 9 | Demo, compressed | Bridge in: state the four fixtures from slide 8 in one sentence. Three-gate sequence only. |
-| 10:00–12:00 | 11 | Search before inventing memory | Add one sentence each for GEPA/DSPy and LangSmith/Braintrust/Langfuse: "the same case store, optimized or hosted." |
-| 12:00–13:30 | 14 | Expiry and pruning | Skip the three-copies example. |
-| 13:30–15:00 | 16 | Manufacture cheap determinism | |
+| 0:00–1:30 | 1 | Your logs are a roadmap nobody reads | Drop the story. Keep the hands-up. |
+| 1:30–3:00 | 2 | Step one: hand your logs to an agent | |
+| 3:00–5:00 | 3 | Enrichment is leverage | Skip the table; say "every platform has an MCP, an API, or a CLI." Bridge out with slide 4's line: "one failure class at a time, and different agents for different failures is fine." |
+| 5:00–7:00 | 5 | The out-of-band check | Bridge in: "the mechanism is a cron job." |
+| 7:00–8:30 | 6 | Distill, then classify | Bridge out: "with tags, it can file tickets and open PRs into a queue," which is slide 7 in one sentence. |
+| 8:30–11:00 | 8 | Guardrails before autonomy | Three-gate sequence only, no port switch. Say the money rule. |
+| 11:00–13:00 | 12 | Feedback is the same loop | Bridge in: "the same loop takes thumbs-downs, and the same agent can drive a browser through the PR diff and turn anything it repeats into a script." Covers slides 9, 10, and 11 in one sentence. |
+| 13:00–15:00 | 17 | Fail to win, or fail to win | Add slide 16's one line: "logs, schedule, distill, classify, ticket, guard, measure." Ask the Monday question. |
 
-**Close.** End on the question. Point to the long version for the promotion gate and the platform comparison.
+**Close.** End on the question. Point to the long version for the E2E economics, the correlation and escalation flow, and the proactive-notice example.

@@ -7,7 +7,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Talk ID: `failure-improvement`
 - Title: Automating Improvement From Failure
 - Audience: AI engineers, SREs, platform engineers, developer tooling builders, and engineering leads.
-- Thesis: Turn recurring failures into durable tests, checks, and workflow improvements through evidence, holdout evaluation, and controlled promotion.
+- Thesis: Hand an agent your production logs, then grow its access and authority one failure class at a time into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
 - Source material: [CFP or outline](../speaking-portfolio-expanded/engineering/failure-improvement/CFP.md)
 
@@ -26,7 +26,7 @@ Search AI engineering, reliability, testing, and observability event families. I
 
 ## Positioning and fit boundaries
 
-Distinguish retaining lessons from choosing an execution strategy. This is not uncontrolled self-modification or a claim of measured production improvement. Prioritize practical practitioner tracks over research-paper-only venues.
+Distinguish growing an agent's access and authority from choosing an execution strategy. This is not uncontrolled self-modification or a claim of measured production improvement; automatic PRs go into a review queue and money always has a human gate. Prioritize practical practitioner tracks over research-paper-only venues.
 
 ## Research assignment
 

@@ -1,20 +1,28 @@
 # Evidence and claim boundaries
 
-Verified 2026-09-04. Primary source brief: `/Users/dan/.codex/attachments/dfaf0bc7-3dea-43ff-8eb2-3abe4d1eedc4/pasted-text.txt`, section 2. The talk's hierarchy, pruning lifecycle, and proposed implementation are Dan's design positions developed from that brief. They are not attributed research results.
+Revised 2026-09-05 for the fail-to-win-loop arc. The loop's ordering (logs, enrichment, scheduled check, distill, classify, tickets, PRs, guardrails, testing, feedback, correlation, proactive notice) is Dan's design position drawn from practice. It is not an attributed research result.
 
 | Claim used | Evidence | Boundary |
-|---|---|---|
-| Agent evaluation can combine code, model, and human graders; observed outcomes differ from claims in a transcript. | [Anthropic, Demystifying evals for AI agents, January 9, 2026](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | Engineering guidance from a vendor, not a controlled universal comparison. |
-| Routing, evaluator-optimizer, and orchestrator-worker patterns are established implementation options. | [Anthropic, Building effective agents, December 19, 2024](https://www.anthropic.com/engineering/building-effective-agents) | Historical architecture reference; its live page warns some tooling has changed. No current SDK API claims used. |
+| --- | --- | --- |
+| Coding agents can be given tool access through MCP servers, APIs, and CLIs, including observability and cloud platforms. | [Model Context Protocol specification](https://modelcontextprotocol.io); vendor MCP documentation for the platforms named on slide 3 | The specific MCP servers, their tool coverage, and their auth models change; verify each named platform before delivery. Do not claim a platform has an official MCP without checking. |
+| Hooks and skills provide deterministic points and on-demand instructions in an agent loop. | [Claude Code hooks reference](https://docs.claude.com/en/docs/claude-code/hooks); [Agent Skills overview](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview) | Vendor documentation. The talk says harness modifications help but are not required; that is a design position. |
+| Scheduled workflows can run an agent out of band. | [GitHub Actions schedule trigger](https://docs.github.com/actions/using-workflows/events-that-trigger-workflows#schedule) | Any scheduler works; GitHub Actions is an example. |
+| Agent evaluation combines code, model, and human graders; a successful transcript is not proof of a correct fix. | [Anthropic, Demystifying evals for AI agents, January 9, 2026](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | Vendor engineering guidance, not a controlled comparison. |
 
-## Proposed engineering practices
+## Claims that need a Story line or get softened
 
-Failure records, the eliminate/prevent/code/tool/skill/memory/instruction hierarchy, promotion gates, and old-rule pruning are recommendations illustrated with synthetic cases. Neither cited article establishes this exact eight-step hierarchy. Adoption requires workload-specific testing and an owner. No claim that the model weights learn, no fine-tuning claim, no guarantee that every failure is preventable.
+- **E2E cost savings from agent-driven sessions.** The outline says "I have seen remarkable results and usually a cost saving." Keep it in the first person and anecdotal unless [evidence bank candidate 2](../../packets/failure-improvement/evidence-bank.md) is filled with a measured comparison.
+- **Cheap models handle short multi-step tool calls.** The outline leaves model names blank. Name only models you have run on this workload, and give the observed cost per session or none at all.
+- **Agent-opened PRs merging.** Say "into a review queue," not "merged automatically," unless candidate 1 or 4 supplies a merged example.
+- **Proactive notices and credits.** Described as what the loop can do. Do not imply a deployed system issued credits.
 
 ## Demo boundaries
 
-The local replay normalizes two connection errors, proposes a scoped readiness intervention, and requires regression, holdout, and scope checks before promotion. Permission-denied stays unknown. All cases are authored fixtures. They establish that the example policy follows its assertions, not production effectiveness, learned root cause, or reliable autonomous improvement.
+The offline kit normalizes two connection errors, proposes a scoped readiness check, and requires regression, holdout, and scope before promotion. Permission denied stays unknown. All cases are authored fixtures. The kit does not read logs, schedule anything, classify anything, or file anything.
 
 ## Claim hygiene
 
-Do not turn the five-dollar-loop nickname into a price quote. Do not claim lower support cost, better pass rate, or actual field experience without adding measured evidence. A retrievable memory is advisory data; never promote untrusted trace text directly into policy. Low trigger frequency alone is insufficient reason to delete a critical rule.
+- Language models are easy to steer by whoever supplies the input. Never let the loop be the caller for money, deletion, or customer messaging; a person presses the button. Say this on slides 8 and 13.
+- Untrusted log or feedback text is data, never instruction. A rage comment that says "refund me" is a classification input, not a command.
+- The personalized-software slide is speculation and is labeled as such on stage.
+- Do not turn "low lift" into a time or cost estimate for someone else's system.

@@ -141,6 +141,8 @@ A system that stops well is more useful than one that finishes badly. Partial ar
 
 Treat providers as a pool with per-call selection by cost, latency, capability, and data boundary. Data-boundary checks run before the call, in code. Local or self-hosted models take the cheap, private, or bursty parts. Coordination cost: you now own model-behavior differences, so an eval suite per provider is mandatory.
 
+Fallback is data, not a decision. Mastra takes a model array with per-entry retries on the agent, LangChain takes a fallback middleware, the AI SDK leaves it to the gateway's model list. None of them asks a model whether to fail over, and none of them should: a 503 is a wire failure, not a reasoning problem. Two traps. A chain of three models with three retries each is nine attempts on a request that has produced nothing, so the whole chain needs a run-level cap; per-model retries do not bound it. And only the gateway hands back the attempt trail; with the frameworks you write it to the span yourself or the trace cannot say why this request got that model.
+
 Allocation follows evidence: failed assertions, missing required evidence, novelty outside supported categories. Vertical scaling deepens one attempt; horizontal adds independent ones. Test-time compute research supports treating allocation as a variable, in its settings. Measure your own.
 
 Story: [a provider outage or rate limit that your fan-out did or did not survive]

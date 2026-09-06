@@ -4,7 +4,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and an image prompt in an HTML comment, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match. The three Product Engineering outlines were rewritten again on 2026-09-05 around Conway's law and the agent roster; the reveal.js HTML deck, packet, formats, CFP, and evidence notes follow them. The three Product Engineering PPTX files still predate the rewrite.
+**Deck sync.** The outlines were rewritten on 2026-09-05. Slide counts now follow the content instead of a fixed 18, every slide carries a pacing tag (warm, steady, build, peak, land) and an image prompt in an HTML comment, and the scope statement is said once per talk. The PPTX decks predate this and must be regenerated from the outlines; their slide counts no longer match. The three Product Engineering outlines were rewritten again on 2026-09-05 around Conway's law and the agent roster; the reveal.js HTML deck, packet, formats, CFP, and evidence notes follow them. The three Product Engineering PPTX files still predate the rewrite. The Improvement From Failure outline was rewritten on 2026-09-05 around the fail-to-win loop (logs to agent, enrichment, scheduled distill-and-classify, guarded tickets and PRs, feedback); the reveal.js deck, packet, formats, CFP, evidence notes, and demo notes follow it. Its PPTX and the slide images under `images/failure-improvement-40min/` still show the previous arc and must be regenerated from the outline's image prompts.
 
 **Before each delivery.** Fill every `Story` line with a first-hand example. The free-tier talk also needs current dated reporting on its slide 3.
 
@@ -29,7 +29,7 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | Talk | Outline | Slides | Deck | CFP package |
 | --- | --- | ---: | --- | --- |
 | A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [Regenerate](decks/skeptic-education-40min.pptx) | [Education](education/CFP.md) |
-| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 16 | [Regenerate](decks/failure-improvement-40min.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
+| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [Regenerate](decks/failure-improvement-40min.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
 | Building Adaptive & Dynamic AI Systems | [40 min](outlines/adaptive-systems-40min.md) | 17 | [Regenerate](decks/adaptive-systems-40min.pptx) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
 | Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Regenerate](decks/free-tier-40min.pptx) | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 15 | [Regenerate](decks/evidence-learning-40min.pptx) | [Education](education/CFP.md) |
@@ -64,7 +64,7 @@ Every slide has an `<!-- image: ... -->` comment with a complete one-shot prompt
 | Talk | Central audience decision | Worked example |
 | --- | --- | --- |
 | Skeptic's Guide | How do I adopt AI in a course with justified confidence, and what will fail first? | A history essay weighing two conflicting sources; four failure modes and a pre-mortem. |
-| Improvement From Failure | Where should a recurring lesson become durable behavior, from hooks and skills to GEPA and hosted eval platforms? | A local connection failure becomes a readiness check, with three promotion gates and a pruning rule. |
+| Improvement From Failure | What is the smallest step toward a system that fixes itself, and what access do you grant next? | An agent with log access grows into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback. |
 | Adaptive Systems | Which strategy deserves the available budget and authority, and how do new models earn their way in? | A known lookup, a routine task and a novel failure get different bounded strategies; a new model enters via mirrored traffic. |
 | Free Tier | Which of my assumptions depend on today's price, and what has free inference already shaped? | Free parking's second-order effects mapped onto software; one workload under 1× to 10× prices. |
 | Outsmart Your Lying, Cheating Students | What follow-up would distinguish understanding from a polished artifact? | The percentage-change reconstruction and transfer item, plus a scripted learner replay. |
@@ -86,6 +86,6 @@ The offline kit uses scripted or deterministic fixtures. It makes no model calls
 
 ## Reuse across the portfolio
 
-Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or parallelization when the audience wants to retain lessons and change execution policy; all three end on "compile the work you understand." Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
+Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or parallelization when the audience wants to grow an agent's authority and change execution policy; all three include a "compile what repeats" beat. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
 The original eight decks remain in the sibling `flagship-talks` directory.
