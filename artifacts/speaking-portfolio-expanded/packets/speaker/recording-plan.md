@@ -6,7 +6,9 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 
 **Pick:** Automating Improvement From Failure. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), it has a working offline demo, and it is the talk most engineering programs will ask to preview.
 
-**Cut:** Use the [30-minute adaptation](../../outlines/failure-improvement-30min-adaptation.md) and drop slides 13 and 14 (correlation and the proactive notice) to land at 25 minutes. Keep the guardrail demo at full length.
+**Cut:** Use the [30-minute adaptation](../../outlines/failure-improvement-30min-adaptation.md) and drop slides 10 and 12, each allocated 2:30 in that route, to land at 25 minutes. Keep slide 8 at 5:30 and keep 6, 9, and 13. After slide 9, bridge to feedback: "The same queue takes customer feedback; people still approve messages, money, and deletion." After slide 11: "The queue now needs a measure of whether its work was worth reading."
+
+**Readiness:** the deck is generated; the live integration and firsthand stories remain prerequisites. Fill at least three story prompts from records, including the opening. A checkbox replay does not clear the recording gate.
 
 **Production checklist**
 
@@ -30,7 +32,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 | 0:00–0:30 | The logs, live. A sanitized export with one real incident buried in noise. |
 | 0:30–1:30 | Run the scheduled check by hand. Show the distilled list: distinct failures with count, first and last seen, secrets stripped. |
 | 1:30–2:30 | The classify loop tags severity and a security class. The ticket appears in the tracker with the trace attached. |
-| 2:30–4:00 | The proposed PR and the three gates. Regression passes, holdout fails, held in review. Fix the holdout, promote. |
+| 2:30–4:00 | The proposed PR and the three gates. Regression passes, holdout fails, held in review. Fix the candidate to satisfy the unchanged holdout; rerun before promotion. |
 | 4:00–5:00 | Rerun the check. The failure is now a known case. One sentence on what changed and what did not, and what a person still has to approve. |
 
 **Build required before recording:** a scheduled agent invocation with a distill skill and a classify skill, a sanitized log export, write access to a ticket tracker, and the gate script. This is a small project, not a slide edit. The kit's `demo-logic.js` documents the intended gate behavior.

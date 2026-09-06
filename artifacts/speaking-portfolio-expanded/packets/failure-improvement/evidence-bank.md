@@ -2,7 +2,7 @@
 
 Firsthand examples the talk can draw on. Each entry needs every field filled from your own records before it is used on stage or in an application. Candidate contexts below come from the resume; the details, measurements, and permissions are yours to supply. Do not publish numbers you cannot reproduce.
 
-Practitioner events (SREcon, KubeCon, PlatformCon, GIDS) weigh this section heavily. The talk now makes claims about cost savings on E2E suites and about agent-opened PRs; those claims need at least one entry here or they get softened to "I have seen" on stage.
+Practitioner events (SREcon, KubeCon, PlatformCon, GIDS) weigh this section heavily. The talk now makes claims about cost savings on E2E suites and about agent-opened PRs; those claims need run records before use. A first-person hedge is not evidence. The rewritten outline makes no measured cost-saving claim.
 
 ## Entry template
 
@@ -62,9 +62,9 @@ Resume basis: Claude Code skills and hooks for evaluation; Mastra output-process
 - **What remains uncertain:** [ ]
 - **Organization may be named publicly:** [ ]
 
-## Models named on slide 10
+## Historical model and cost notes, not delivery evidence
 
-Verify the week you present; this list rots faster than anything else in the talk. As measured by Dan on multi-step dynamic browser tasks: `GPT-5.6-luna`, `GLM-5.3-flash`, `deepseek-v4-flash`, `gemini-3.7-flash`. The $0.36 to $0.81 per selective run is Dan's own figure on his own codebase over his own suite. It is not a benchmark, and it should never be presented as one.
+Verify the week you present; this list rots faster than anything else in the talk. The prior draft attributes these to Dan, but does not attach run records: `GPT-5.6-luna`, `GLM-5.3-flash`, `deepseek-v4-flash`, `gemini-3.7-flash`. The $0.36 to $0.81 per selective run is Dan's own figure on his own codebase over his own suite. It is not a benchmark, and it should never be presented as one.
 
 ## Already public, citable today
 
@@ -74,7 +74,7 @@ These need no permission and can go in an application as work samples.
 - [Auto-Tune Your LLM Judge](../../../../src/content/posts/2026-08-11--auto-tune-your-llm-judge/index.mdx): a measured evaluator-tuning loop with variance, accuracy, cost, and latency. Support for the holdout discipline on slide 8.
 - OSS ledger: Mastra streaming output-processor fix (`src/shared/ossData.ts`, lines 3–9). Link the exact PR before citing.
 
-## Story slots in the outline that these entries feed
+## Historical story map, before the September 6 rewrite
 
 | Slide | Slot |
 | --- | --- |
@@ -87,3 +87,13 @@ These need no permission and can go in an application as work samples.
 | 10 | Two cheap models you measured on multi-step tool calls, and the cost per session |
 | 11 | A task your agent repeated until it became a script |
 | 12 | A piece of user feedback that became a shipped change |
+
+## Current story map and recording gate
+
+Slides 1, 6, 10, and 11 request the missed log failure, the symptom-hiding workaround, the compiled task, and the misunderstood feedback. Fill at least three from records before recording, including slide 1. No personal story was fabricated during the rewrite.
+
+The memorable arithmetic on slide 13 is explicitly synthetic: 100 tickets minus 90 wrong tickets leaves 10 worth reading, a 10% useful-ticket rate. It is not a measured production result. Historical model and cost notes above are retained for verification, not spoken as evidence.
+
+## Research checked 6 September 2026
+
+Cvach 2012, Vaughan’s Challenger analysis, Toyota’s jidoka description, Bainbridge 1983, and Strathern 1997 are linked beside their claims in the canonical outline and generated scripts. Clinical and industrial findings motivate engineering design choices; they are not code-review effect-size measurements.

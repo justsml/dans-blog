@@ -31,7 +31,7 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | Talk | Outline | Slides | Deck | CFP package |
 | --- | --- | ---: | --- | --- |
 | A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [PPTX](decks/skeptic-education-40min.pptx) | [Education](education/CFP.md) |
-| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [PPTX](decks/failure-improvement-40min.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
+| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 15 | [Browser deck](../reveal-talks/failure-improvement.html) | [Failure improvement](engineering/failure-improvement/CFP.md) |
 | Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser deck](../reveal-talks/adaptive-systems.html) · PPTX stale, regenerate | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
 | Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser deck](../reveal-talks/free-tier.html) · PPTX stale, regenerate | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser deck](../reveal-talks/evidence-learning.html) · PPTX stale, regenerate | [Education](education/CFP.md) |
@@ -88,7 +88,7 @@ The offline kit uses scripted or deterministic fixtures. It makes no model calls
 
 ## Reuse across the portfolio
 
-Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or dynamic scaling when the audience wants to grow an agent's authority and change execution policy; all three include a "compile what repeats" beat. Adaptive and Dynamic Scaling are companions: adaptive owns per-job agent generation and repair authority, dynamic scaling owns admission, ledgers and the compute substrate. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
+Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or dynamic scaling when the audience wants to grow an agent's authority and change execution policy; failure improvement owns the offline loop and compile-what-repeats beat. Adaptive and Dynamic Scaling are companions: adaptive owns per-job agent generation and repair authority, dynamic scaling owns admission, ledgers and the compute substrate. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
 The six retrieval, benchmarks and judgment decks remain in the sibling `flagship-talks` directory. Adaptive and Dynamic Scaling use the browser decks linked above.
 

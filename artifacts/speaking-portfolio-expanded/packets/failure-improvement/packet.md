@@ -1,6 +1,6 @@
 # Talk packet: Automating Improvement From Failure
 
-[PPTX](../../decks/failure-improvement-40min.pptx)
+[Browser deck](../../../reveal-talks/failure-improvement.html) · [Presenter script](script-40min.md) · [Visuals](visuals.md)
 
 Outline: [40 min](../../outlines/failure-improvement-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
@@ -25,7 +25,7 @@ Every failure in production is a queued improvement, and most teams never work t
 
 Teams pay for observability and read it only when a pager goes off. Meanwhile the logs contain every stack trace, retry storm, and thumbs-down the product produced this week, each one a ticket nobody filed. This talk argues that an agent can work that queue, and that the first step is smaller than people expect: give a coding agent read access to production logs and ask what broke since yesterday.
 
-From there, the talk is an ordering. Every access you add raises how much of the loop the agent can close on its own: the codebase to locate, an observability MCP to pull the trace, a cloud platform MCP to check the queue depth and the deploy that landed at 14:02, ticketing to file, a browser to reproduce. Every logging and observability platform now offers an MCP server, an API, or a CLI, so nobody is blocked on integration. The mechanism is a scheduled out-of-band check that distills everything since the last run into a short list of distinct failures, then loops over that list to identify patterns, estimate severity, and flag security classes. With tags, the agent can file tickets, then open PRs into a queue for human review or further agent testing.
+From there, the talk is an ordering. Every access you add raises how much of the loop the agent can close on its own: the codebase to locate, an observability MCP to pull the trace, a cloud platform MCP to check the queue depth and the deploy that landed at 14:02, ticketing to file, a browser to reproduce. Use the available API, CLI, or sanitized export; verify access before choosing the integration. The mechanism is a scheduled out-of-band check that distills everything since the last run into a short list of distinct failures, then loops over that list to identify patterns, estimate severity, and flag security classes. With tags, the agent can file tickets, then open PRs into a queue for human review or further agent testing.
 
 The peak is the guardrails: similarity is a candidate, not a diagnosis; a proposed fix passes regression, holdout, and scope gates; and anything that moves money or data gets a human. The back half extends the loop to agent-driven exploratory testing against a PR's diff, compiling repeated work into scheduled scripts, customer feedback that becomes a flagged change for one user, complaint-to-error correlation, and proactive incident notices. It ends with a Monday checklist.
 
@@ -50,7 +50,7 @@ Engineers, SREs, and technical leads who own a production system with logs and a
 
 ## Not a product pitch
 
-The talk names Claude Code, Codex, Hermes, and observability platforms as examples of a category. The speaker has no commercial relationship with any of them to disclose beyond ordinary use. The offline kit is vendor-free and makes no network calls.
+The talk uses a coding agent and bounded integrations as its implementation pattern. The speaker has no commercial relationship with any of them to disclose beyond ordinary use. The offline kit is vendor-free and makes no network calls.
 
 ## References
 
@@ -77,3 +77,7 @@ Every learning platform logs failures that instructors experience as "the tool b
 ### Executive and general technology
 
 Most companies pay for detailed records of everything that goes wrong and then read them only during an outage. This talk explains, without code, how an agent given read access to those records starts turning failures into tickets, fixes, and customer messages, and why this is one of the lowest-lift, highest-leverage uses of AI available today. It covers the order to grow such a loop, the guardrails that keep it honest, the one category (money) where a person must always press the button, and the customer trust that comes from a system that reports its own problems before customers do.
+
+## Revised argument
+
+The offline loop redistributes work to a reviewer. Alert fatigue, normalization of deviance, jidoka, automation irony, and Goodhart explain why a fast queue can still be a bad system. The new peak requires a real failed holdout and an unknown result. Recording readiness is tracked in the [recording plan](../speaker/recording-plan.md).

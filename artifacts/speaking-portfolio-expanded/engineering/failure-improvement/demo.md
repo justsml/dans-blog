@@ -1,4 +1,20 @@
-# Guardrail demo: a proposed fix needs a gate
+# Live demo: nothing leaves without evidence
+
+The 40- and 30-minute routes allocate 5:30 to slide 8; the 15-minute route allocates 4:00. The live implementation is still required before recording.
+
+| Clock | Action | Evidence |
+| --- | --- | --- |
+| 0:00–1:15 | Read sanitized volume and run distillation | Input count, family counts, first/last seen, redaction |
+| 1:15–2:00 | Classify and route | Real ticket in an authorized test tracker with trace |
+| 2:00–3:45 | Execute regression and unchanged holdout | Regression passes, holdout fails, promotion held |
+| 3:45–4:45 | Run an unexplained permission failure | Unknown result held for a person |
+| 4:45–5:30 | Rerun collection | Stable incident key; known case; no duplicate ticket |
+
+For four minutes, show one family and the saved ticket, then execute both tests and the unknown case. A recording of a verified run is the fallback. Repair the candidate, never the holdout to force a pass.
+
+## Historical checkbox exercise
+
+The following kit remains available for workshops. It is not the flagship peak or proof of a working integration.
 
 This demo supports slide 8 only. The talk's spine is the scheduled log-reading loop; the kit illustrates what happens once that loop proposes a fix. Open [the offline stage kit](../../demos/index.html), select **Failure loop**, and reload before rehearsal. No server or account is required. Keep `demo-logic.js` next to the HTML file. All inputs are synthetic.
 

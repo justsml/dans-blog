@@ -62,6 +62,85 @@ const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
 const TALKS: Record<string, Talk> = {
+  "failure-improvement": {
+  "slug": "failure-improvement",
+  "title": "Automating Improvement From Failure",
+  "description": "The offline repair loop and the humans reviewing it.",
+  "deckFile": "failure-improvement.html",
+  "eyebrow": "Automating Improvement From Failure · Dan Levy",
+  "routes": {
+    "30": {
+      "minutes": 30.0,
+      "keep": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "times": [
+        1.5,
+        1,
+        2,
+        2,
+        1.5,
+        2,
+        1.5,
+        5.5,
+        2.5,
+        2.5,
+        1.5,
+        2.5,
+        1.5,
+        1.5,
+        1
+      ],
+      "bridges": {},
+      "note": "The demo stays at 5:30. The 25-minute recording drops 10 and 12; see recording-plan.md."
+    },
+    "15": {
+      "minutes": 15.0,
+      "keep": [
+        1,
+        2,
+        4,
+        6,
+        8,
+        9,
+        13,
+        15
+      ],
+      "times": [
+        1,
+        1,
+        1.5,
+        2,
+        4,
+        2,
+        2,
+        1.5
+      ],
+      "bridges": {
+        "2": "Bridge: add only the integration needed for one failure class; the check preserves counts and evidence.",
+        "4": "Bridge: distill before classifying, and give unexplained cases an unknown result.",
+        "6": "Bridge: tickets and PRs carry evidence into a bounded review queue.",
+        "9": "Bridge: compile repeated paths into tested scripts; feedback uses the same queue, and people approve money, messages, and deletion.",
+        "13": "Bridge: choose one failure class and one integration on Monday."
+      },
+      "note": "Demo compressed to four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration."
+    }
+  }
+},
   "adaptive-systems": {
     slug: "adaptive-systems",
     title: "Adaptive, agentic apps",
@@ -326,6 +405,7 @@ function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
 
 function deckFor(talk: Talk, slides: Slide[]) {
   const head = readFileSync(join(revealDir, "templates", "engineering-head.html"), "utf8")
+    .replace("<title>", '<link rel="icon" href="data:,"><title>')
     .replace("{{DESCRIPTION}}", esc(talk.description))
     .replace("{{TITLE}}", esc(talk.title))
     .replace('data-topic="adaptive-systems"', `data-topic="${talk.slug}"`)
