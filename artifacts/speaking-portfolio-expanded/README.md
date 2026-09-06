@@ -4,9 +4,9 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** Four talks have refreshed on-screen and handout PPTX editions from their current outlines ([download both editions](decks/README.md)). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads and Outsmart Your Lying, Cheating Students were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and their PPTX exports predate the rewrite and must be regenerated.
+**Deck sync.** Five talks have a single PPTX export in [decks](decks/). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads, Outsmart Your Lying, Cheating Students and Cry Me a Free Tier were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and their PPTX exports predate the rewrite and must be regenerated.
 
-**Before each delivery.** Fill every `Story` line with a first-hand example. Recheck the dated commitments and credit offer on free-tier slide 3.
+**Before each delivery.** Fill every `Story` line with a first-hand example. Recheck the dated commitments and credit offer on free-tier slide 4.
 
 ## Submission packets
 
@@ -28,15 +28,15 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 
 | Talk | Outline | Slides | Deck | CFP package |
 | --- | --- | ---: | --- | --- |
-| A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [Screen](decks/skeptic-education-40min-screen.pptx) · [Handout](decks/skeptic-education-40min-handout.pptx) | [Education](education/CFP.md) |
-| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [Screen](decks/failure-improvement-40min-screen.pptx) · [Handout](decks/failure-improvement-40min-handout.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
+| A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [PPTX](decks/skeptic-education-40min.pptx) | [Education](education/CFP.md) |
+| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [PPTX](decks/failure-improvement-40min.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
 | Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser deck](../reveal-talks/adaptive-systems.html) · PPTX stale, regenerate | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
-| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Screen](decks/free-tier-40min-screen.pptx) · [Handout](decks/free-tier-40min-handout.pptx) | [Economics](economics-product/CFP.md) |
+| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser deck](../reveal-talks/free-tier.html) · PPTX stale, regenerate | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser deck](../reveal-talks/evidence-learning.html) · PPTX stale, regenerate | [Education](education/CFP.md) |
 | Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser deck](../reveal-talks/dynamic-scaling.html) · PPTX stale, regenerate | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
-| The Future of Product Engineering: Big Idea | [15 min](outlines/product-engineering-15min.md) | 8 | [Screen](decks/product-engineering-15min-screen.pptx) · [Handout](decks/product-engineering-15min-handout.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: The Agent Roster | [30 min](outlines/product-engineering-30min.md) | 11 | [Screen](decks/product-engineering-30min-screen.pptx) · [Handout](decks/product-engineering-30min-handout.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: Conway's Law, Applied on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Screen](decks/product-engineering-40min-screen.pptx) · [Handout](decks/product-engineering-40min-handout.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: Big Idea | [15 min](outlines/product-engineering-15min.md) | 8 | [PPTX](decks/product-engineering-15min.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: The Agent Roster | [30 min](outlines/product-engineering-30min.md) | 11 | [PPTX](decks/product-engineering-30min.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: Conway's Law, Applied on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [PPTX](decks/product-engineering-40min.pptx) | [Product variants](economics-product/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 
@@ -53,7 +53,7 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | Outsmart Your Lying, Cheating Students | [Lightning](outlines/evidence-learning-15min-adaptation.md) | [Standard](outlines/evidence-learning-30min-adaptation.md) |
 | Dynamic Scaling of Agentic Workloads | [Lightning](outlines/dynamic-scaling-15min-adaptation.md) | [Standard](outlines/dynamic-scaling-30min-adaptation.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Adaptive, Dynamic Scaling and Outsmart include generated presenter scripts; other outlines use speaker cues.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Adaptive, Dynamic Scaling, Outsmart and Free Tier include generated presenter scripts; other outlines use speaker cues.
 
 ## Image prompts
 
@@ -66,7 +66,7 @@ Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines,
 | Skeptic's Guide | How do I adopt AI in a course with justified confidence, and what will fail first? | A history essay weighing two conflicting sources; four failure modes and a pre-mortem. |
 | Improvement From Failure | What is the smallest step toward a system that fixes itself, and what access do you grant next? | An agent with log access grows into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback. |
 | Adaptive, agentic apps | How do we give an assistant real access and manage the risk? Conjure a narrow agent per job, prove every repair, let the app ask for its own scale. | One address ingest: a rename, an ambiguous status and a lost provider response; a per-job agent generator with a logged tool gate. |
-| Free Tier | Which of my assumptions depend on today's price, and what has free inference already shaped? | Free parking's second-order effects mapped onto software; one workload under 1× to 10× prices. |
+| Free Tier | What kind of counterparty am I dealing with, and what have I posted as collateral? | Eight words from economics and game theory (externality to real option), Shoup's parking chain mapped onto architecture, and one workload swept from 1× to 10×. |
 | Outsmart Your Lying, Cheating Students | Once you stop trying to catch anyone, how do you out-design them? | Three moves (the smudged sheet, small-group speaking, AI time across 300 transcripts) around the percentage reconstruction, a rubric and a four-line record. |
 | Dynamic Scaling | Now that agents can direct their own compute, where do the limits live? | Four legitimate callers, forty image jobs; a $2 ledger; a reclaimed spot worker; compute as a request, catalog and lease; the ephemeral vendor substrate. |
 | Product Engineering | Which functions of my product group become agents, who owns each one, and where do the guards go? | An activation winner violates support and false-urgency constraints. |

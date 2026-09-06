@@ -34,6 +34,7 @@ type Slide = {
   stage?: string;
   imagePrompt?: string;
   sources: string[];
+  table?: string[][];
 };
 
 type Route = {
@@ -126,6 +127,41 @@ const TALKS: Record<string, Talk> = {
       },
     },
   },
+  "free-tier": {
+    slug: "free-tier",
+    title: "Cry Me a Free Tier",
+    description:
+      "Cry Me a Free Tier: what the cheap input taught your architecture to expect, in eight words from economics and game theory.",
+    deckFile: "free-tier.html",
+    eyebrow: "Cry Me a Free Tier · Dan Levy",
+    routes: {
+      30: {
+        minutes: 30,
+        keep: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15],
+        times: [2, 2, 3, 2, 2.5, 3, 2, 2.5, 4, 3, 2.5, 1.5],
+        bridges: {
+          3: "Bridge: the enormous compute commitments everyone quotes are credible commitments in Schelling's sense, moves in a war of attrition, not disclosures about cost.",
+          7: "Bridge: and the lots stay built. Repealing a parking minimum does not remove asphalt, which is path dependence; measure yours by trying to remove one model call and counting the hours.",
+          12: "Bridge: reversibility is a real option with a value and a premium, so price it against your exposure instead of arguing about it on vibes.",
+        },
+        trim: { 6: [0, 1, 2] },
+        note: "Slides 4, 8 and 13 are cut with bridges. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.",
+      },
+      15: {
+        minutes: 15,
+        keep: [1, 3, 5, 6, 7, 10, 12, 15],
+        times: [1.5, 2, 1.5, 2, 2.5, 2, 2, 1.5],
+        bridges: {
+          1: "Bridge: price, cost and value are three different numbers, and the gap between what you pay and what it is worth to you is why nobody is measuring.",
+          7: "Bridge: the lots stay built, and whoever chooses the architecture is not whoever pays the bill sixty days later.",
+          10: "Bridge: run the sweep at one, two, five and ten times price, then multiply by your own volume before you feel anything about it.",
+          12: "Bridge: so price reversibility as the option it is, and bring three prices to the design review: today, without the offer, and the most you could survive.",
+        },
+        trim: { 1: [0, 1], 3: [0, 2], 5: [0, 1], 6: [0, 1, 3], 7: [0, 1], 10: [0, 2], 12: [0, 1, 3] },
+        note: "Lightning route: the electricity question, the four explanations for a low price, parking, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words.",
+      },
+    },
+  },
   "dynamic-scaling": {
     slug: "dynamic-scaling",
     title: "Dynamic Scaling of Agentic Workloads",
@@ -207,6 +243,13 @@ function parseOutline(md: string): { title: string; front: string[]; slides: Sli
       cur.visible.push(line.replace(/^>\s?/, "").trim());
       continue;
     }
+    if (/^\|/.test(line) && cur) {
+      flush();
+      const cells = line.split("|").slice(1, -1).map((c) => c.trim());
+      if (cells.every((c) => /^:?-{2,}:?$/.test(c))) continue; // separator row
+      (cur.table ||= []).push(cells);
+      continue;
+    }
     if (line.trim() === "") {
       flush();
       continue;
@@ -247,6 +290,12 @@ function scriptFor(talk: Talk, slides: Slide[], keep: number[], times: number[],
     out.push("");
     const paras = trim?.[n] ? trim[n].map((k) => s.spoken[k]).filter(Boolean) : s.spoken;
     for (const p of paras) out.push(p, "");
+    if (s.table) {
+      out.push(`| ${s.table[0].join(" | ")} |`);
+      out.push(`| ${s.table[0].map(() => "---").join(" | ")} |`);
+      for (const row of s.table.slice(1)) out.push(`| ${row.join(" | ")} |`);
+      out.push("");
+    }
     for (const src of s.sources) out.push(`Source: ${src}`, "");
     if (s.story) out.push(`Story: ${s.story}`, "");
     if (s.stage) out.push(`Delivery: ${s.stage}`, "");
@@ -281,7 +330,7 @@ function deckFor(talk: Talk, slides: Slide[]) {
     .replace("{{TITLE}}", esc(talk.title))
     .replace('data-topic="adaptive-systems"', `data-topic="${talk.slug}"`)
     .replace('body[data-topic="adaptive-systems"] { --accent:#a4d2c4; --bg:#122323; }', `body[data-topic="adaptive-systems"] { --accent:#a4d2c4; --bg:#122323; }
-body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[data-topic="evidence-learning"] { --accent:#efb15b; --bg:#151e28; }`);
+body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[data-topic="evidence-learning"] { --accent:#efb15b; --bg:#151e28; }\nbody[data-topic="free-tier"] { --accent:#efb15b; --bg:#151e28; }`);
   const evidence = `../speaking-portfolio-expanded/packets/${talk.slug}/evidence-bank.md`;
   const sections = slides.map((s, i) => {
     const timing = toSec(s.end) - toSec(s.start);
@@ -303,8 +352,15 @@ body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[dat
       cls = ' class="visual-slide"';
       const src = s.image.src.replace(/^(\.\.\/)+reveal-talks\//, "");
       body = `<img class="talk-diagram" src="${src}" width="1280" height="500" alt="${esc(s.image.alt)}">`;
+    } else if (s.table) {
+      const [head, ...rows] = s.table;
+      body =
+        `<table><thead><tr>${head.map((c) => `<th>${esc(c)}</th>`).join("")}</tr></thead>` +
+        `<tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>` +
+        (s.visible.length ? `<p class="caption">${s.visible.map(esc).join("<br>")}</p>` : "");
     } else if (last) {
-      body = `<p class="display">${s.visible.map(esc).join("<br>")}</p>`;
+      const chars = s.visible.join(" ").length;
+      body = `<p class="display${chars > 90 ? " smaller" : ""}">${s.visible.map(esc).join("<br>")}</p>`;
     } else {
       body =
         `<div class="editorial-rows">` +

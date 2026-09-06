@@ -1,6 +1,6 @@
 # Formats: Automating Improvement From Failure
 
-[40min screen PPTX](../../decks/failure-improvement-40min-screen.pptx) · [handout PPTX](../../decks/failure-improvement-40min-handout.pptx)
+[PPTX](../../decks/failure-improvement-40min.pptx)
 
 | Length | Format | Source |
 | --- | --- | --- |

@@ -1,55 +1,56 @@
 # Talk packet: Cry Me a Free Tier
 
-[40min screen PPTX](../../decks/free-tier-40min-screen.pptx) · [handout PPTX](../../decks/free-tier-40min-handout.pptx)
+[Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/free-tier.html)
 
-Outline: [40 min](../../outlines/free-tier-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+Outline: [40 min](../../outlines/free-tier-40min.md). The PPTX export in [decks](../../decks/) predates the 2026-09-06 rewrite.
 
 ## Titles
 
 - **Primary:** Cry Me a Free Tier
+- Eight Words for the Budget Meeting
+- You Are Not Shopping, You Are Contracting
 - What Did the Cheap Input Teach Your Architecture to Expect?
-- Free Inference Is Free Parking
-- Three Prices Every Design Review Needs
 
 ## Abstracts
 
 ### 50 words
 
-Free parking was never free; the cost moved into rents, land use, and the businesses that never opened. Free and subsidized inference is doing the same to software. This talk maps the second- and third-order effects onto architecture and gives you three prices to bring to your next design review.
+Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have been describing your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
 
 ### 100 words
 
-LLM and cloud providers are reported to be pricing for growth, funded by capital that expects a return. Nobody outside knows the margins, and this talk does not guess. Instead it borrows Donald Shoup's argument about free parking: a hidden price makes one input look free, the environment reorganizes around it, and the reorganization is expensive to reverse. We walk the parking chain, from minimum requirements to retail density, business mix, and rents, then map each step onto AI architecture. A synthetic workload under 1× to 10× inference prices shows which assumptions matter. You leave with three prices and four actions.
+Engineers lose the cost argument in budget meetings because the strongest thing we can say is "it feels wasteful," and the invoice looks fine. Economics has precise names for what we are worried about. This talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option. Along the way it separates four legitimate reasons a price can be below cost and tells you which observation distinguishes them, reframes the enormous compute commitments as moves in a war of attrition rather than disclosures about margin, and runs a synthetic workload through a price sweep with the volume caveat attached.
 
 ### 250 words
 
-A startup gets free electricity for a year. What does it build? What survives when the offer ends? Swap electricity for inference and you have the question this talk is about.
+A startup gets free electricity for a year. What does it build, and what survives when the offer ends? Swap electricity for inference and that is the question.
 
-Reported losses at frontier labs, multi-year compute commitments, and credit programs measured in billions suggest prices set for growth rather than cost recovery. Nobody outside a provider knows its margins, so the talk never estimates one. It argues something narrower: cheap inputs shape what gets built, and the shaping can be measured.
+Nobody outside a provider knows its margins, and this talk never guesses one. It borrows instead from a century and a half of economists who worked on the same structure in coal, parking, highways and car factories, and it hands the room their vocabulary.
 
-The argument runs through Donald Shoup's work on free parking. Cities required developers to build minimum parking; the cost went into rents and prices, the land went to asphalt, and because drivers saw no meter, demand looked infinite. Second-order effects followed: retail density fell, business mix shifted to car-dependent formats, every apartment carried a bundled space, and small storefronts lost. Third order: once the environment was car-shaped, repealing the rule did not undo it.
+Four respectable explanations exist for a price below cost: penetration pricing, a loss leader inside a two-sided bundle, predation (which in US law requires a real probability of recoupment), and genuine efficiency. The price cannot tell you which. What happens at renewal can. The enormous compute commitments everyone quotes are not cost disclosures; they are credible commitments in Schelling's sense, moves in a war of attrition in which the customer is not a player but the terrain.
 
-Each step maps onto software. Density: a frontier call where a lookup would do. Business mix: products viable only at promotional rates. Rent: unlimited-usage promises baked into contracts. The small format: deterministic code losing the design review to "just ask the model."
+Then Shoup's parking argument supplies the mechanism: a hidden price makes demand look infinite, the environment reorganizes, and repealing the rule does not remove the asphalt. Jevons and induced demand explain why a falling unit price and a rising bill are the expected outcome rather than a paradox. Moral hazard explains why the engineer choosing the architecture never sees the meter.
 
-A live sweep runs a synthetic workload at 1× to 10× inference prices and shows cost per accepted outcome. The counterargument gets its own slide, with Epoch AI's price-decline data. The close is three prices: what you pay today, what you pay without the offer, and what you can survive paying.
+The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. The close prices reversibility as a real option and leaves three numbers for the next design review.
 
 ## Learning outcomes
 
 Attendees will be able to:
 
-1. Distinguish price paid, resources consumed, cost allocated, and value delivered, and identify which of the four their system measures.
-2. Compute cost per accepted outcome for a workload and run a price sensitivity sweep on it.
-3. Name the second-order effects a cheap input has already produced in their own architecture and commitments, using the parking mapping.
+1. Name the four explanations for a below-cost price and the observation that distinguishes them, instead of arguing about vendor margins.
+2. Compute cost per accepted outcome, convert an acceptance rate into a price multiplier, and state the volume at which an optimization is worth funding.
+3. Inventory their relationship-specific assets and price reversibility as an option against their measured exposure.
 
 ## Audience and prerequisites
 
-Engineering leaders, architects, and founders making build decisions on top of LLM APIs. Basic familiarity with token pricing and unit economics. No finance background needed.
+Engineering leaders, architects, and founders making build decisions on top of LLM APIs. Basic familiarity with token pricing. No economics background assumed; the talk defines every term it uses.
 
 ## Practical takeaways
 
-- The three-price worksheet: effective rate today, gross rate without the offer, the highest survivable rate.
-- The four actions: record gross usage separately from credits, keep a small acceptance suite, rehearse one provider replacement, price the cost of portability.
-- The sensitivity calculator from the demo kit, usable with your own numbers.
+- The eight-word glossary, each attached to a decision.
+- The acceptance-rate-as-price-multiplier arithmetic, checkable on the spot.
+- The three-price worksheet: effective rate today, gross rate without the offer, highest survivable rate.
+- The specific-asset inventory and the payback formula for an optimization.
 
 ## Not a product pitch
 
@@ -57,26 +58,32 @@ The talk names AWS credit terms and Epoch AI's public data as sources. It recomm
 
 ## References
 
-- Shoup, D. (2005, updated 2011). *The High Cost of Free Parking*. American Planning Association.
-- Shoup, D. (2011). [Free parking or free markets](https://www.accessmagazine.org/spring-2011/free-parking-free-markets/). ACCESS Magazine.
+- Shoup, D. (2005, updated 2011). *The High Cost of Free Parking*. American Planning Association. Also Shoup (2011), [Free parking or free markets](https://www.accessmagazine.org/spring-2011/free-parking-free-markets/), ACCESS Magazine.
+- Jevons, W. S. (1865). *The Coal Question*, chapter VII.
+- Duranton, G. and Turner, M. (2011). The Fundamental Law of Road Congestion: Evidence from US Cities. *American Economic Review* 101(6).
+- David, P. (1985). Clio and the Economics of QWERTY. *American Economic Review* 75(2). Contested by Liebowitz and Margolis (1990), The Fable of the Keys, *Journal of Law and Economics* 33(1). Arthur, W. B. (1989). Competing Technologies, Increasing Returns, and Lock-In by Historical Events. *The Economic Journal* 99(394).
+- Williamson, O. (1985). *The Economic Institutions of Capitalism*. Nobel Prize in Economic Sciences, 2009.
+- Schelling, T. (1960). *The Strategy of Conflict*. Harvard University Press. Nobel Prize, 2005.
+- Dixit, A. and Pindyck, R. (1994). *Investment Under Uncertainty*. Princeton University Press.
+- Rochet, J-C. and Tirole, J. (2003). Platform Competition in Two-Sided Markets. *Journal of the European Economic Association* 1(4).
+- Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (1993).
 - Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025). [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends).
 - Amazon Web Services. [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/).
-- Current reporting on provider losses, compute commitments, and credit programs: [insert three dated items before each submission].
 
 ## Audience-specific abstracts (100 words each)
 
 ### Engineering practitioner
 
-Your architecture has already learned what inference costs, and it learned from a promotional price. This session maps free parking's second-order effects onto software: frontier calls where a lookup would do, retries and branches nobody measured, deterministic code losing design reviews to "just ask the model." We define cost per accepted outcome, run a live sensitivity sweep at 1× to 10× prices, and show what halving consumption buys back. Then the counterargument, with Epoch's price-decline data. You leave with three prices for your next design review and a rehearsal plan for one provider replacement.
+Your architecture already learned what inference costs, and it learned from a promotional price. This session gives you the vocabulary to argue about that in a room where "it feels wasteful" loses. Externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, real option. Each attaches to a decision: measure your lock-in by trying to remove one model call and counting the hours; convert your acceptance rate into a multiplier on sticker price; compute the volume at which a caching layer pays back. Ends with three prices for the next design review and a rehearsal plan.
 
 ### Engineering leadership and product
 
-Reported losses, compute commitments, and billion-dollar credit programs suggest today's inference prices are set for growth. Nobody outside knows the margins, and this talk does not guess. It asks a narrower question: which of your product's commitments, unlimited-usage promises, pricing tiers, headcount plans, only work at today's rate? Using Shoup's free-parking argument, we trace second- and third-order effects onto business mix, supplier concentration, and customer expectations, then run a synthetic workload through a price sweep. The takeaway is a three-price worksheet and four reversible actions, not a forecast and not austerity.
+Nobody outside a provider knows its margins, and this talk does not guess. It asks a sharper question: what kind of counterparty are you dealing with, and what have you posted as collateral? Four legitimate explanations for a below-cost price, and the observation at renewal that distinguishes them. The enormous compute commitments as Schelling commitments rather than cost disclosures. Then Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem. The close prices reversibility as a real option against measured exposure and gives leaders three numbers to demand in any AI investment review.
 
 ### Education and instructional design
 
-Schools and edtech products are adopting AI tools priced at promotional rates. This session, adapted for education leaders, asks what happens to a curriculum, a procurement decision, or a student expectation built on a price that may not last. It uses the free-parking analogy to show how a hidden cost reshapes an environment, then walks through a simple cost-per-successful-outcome model any program office can run. No engineering background needed. You leave with three prices to ask a vendor for and a way to keep the choice reversible.
+Schools and edtech products are adopting AI tools priced at promotional rates. This adaptation asks what happens to a curriculum, a procurement decision, or a student expectation built on a price that may not hold. It supplies the mechanism without jargon: a hidden cost does not vanish, it relocates; cheaper access produces more usage rather than less; and an environment reorganized around a free input does not snap back when the price returns. Then a simple cost-per-successful-outcome model any program office can run. No engineering background needed. You leave with three prices to ask a vendor for, before signing.
 
 ### Executive and general technology
 
-Free parking was never free; its cost moved into rents, land use, and the businesses that never opened. Free and subsidized AI is doing the same thing to software companies, and the effects show up in architecture, contracts, and hiring plans before they show up on an invoice. This talk explains the mechanism without code or a price forecast, walks a synthetic workload through a price sweep, and gives leaders three numbers to demand in any AI investment review: what we pay today, what we pay without the offer, and what we can survive paying.
+Free parking was never free; its cost moved into rents, land, and the businesses that never opened. Something similar is happening in software, and it shows up in architecture, contracts and hiring plans long before it shows up on an invoice. This talk explains the mechanism without code and without a price forecast, distinguishes four legitimate reasons a price can sit below cost, and reframes the industry's headline compute commitments as strategic moves rather than accounting disclosures. Leaders leave with three numbers for any AI investment review: what we pay today, what we pay without the offer, and what we could survive paying.

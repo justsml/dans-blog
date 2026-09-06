@@ -1,19 +1,16 @@
-# Cry Me a Free Tier: 15-minute lightning
+# Cry Me a Free Tier: 15-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](free-tier-40min.md). No Q&A in the timings.
+Keep slides 1, 3, 5, 6, 7, 10, 12, 15. Hide the others in presenter preparation. [Complete talk track](../packets/free-tier/script-15min.md).
 
-**Strategy.** Reported figures, the parking mechanism, the software map, the 1× and 10× rows, the counterargument in one breath, three prices.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 01:30 | 1 | Free electricity for a year |
+| 01:30 to 03:30 | 3 | Why would anyone sell below cost? |
+| 03:30 to 05:00 | 5 | Free parking was never free |
+| 05:00 to 07:00 | 6 | Jevons, coal, and the extra lane |
+| 07:00 to 09:30 | 7 | Now do it to software |
+| 09:30 to 11:30 | 10 | Your acceptance rate is a price multiplier |
+| 11:30 to 13:30 | 12 | You are not shopping, you are contracting |
+| 13:30 to 15:00 | 15 | Cheap intelligence changes incentives first |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–1:30 | 1 | Free electricity for a year | Keep the pause; drop the story. |
-| 1:30–3:30 | 3 | What has been reported | Bridge in: "Invoices hide margins. Here is what leaked out anyway." Fold slide 4 to one line: "credits expire; that is the one documented fact." |
-| 3:30–5:30 | 5 | Free parking | |
-| 5:30–8:00 | 7 | Map it to free inference | Bridge in: two parking effects from slide 6 in one breath, density falls and rents carry the space. |
-| 8:00–9:30 | 9 | Cost per accepted outcome | Skip the ask. |
-| 9:30–11:30 | 10 | Demo, compressed | 1× and 10× rows. |
-| 11:30–13:00 | 12 | The counterargument | Add slide 13's line: "Epoch tracked steep, uneven declines through 2025." |
-| 13:00–14:00 | 14 | Three prices | Three numbers, no actions. |
-| 14:00–15:00 | 15 | Cheap intelligence changes incentives first | |
-
-**Close.** Signature line, stop. No table left up.
+Lightning route: the electricity question, the four explanations for a low price, parking, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

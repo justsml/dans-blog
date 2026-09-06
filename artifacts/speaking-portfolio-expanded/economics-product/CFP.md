@@ -4,33 +4,33 @@ Prepared 2026-09-04. Abstracts are exact 50- and 150-word versions by whitespace
 
 ## Cry Me a Free Tier
 
-**Subtitle:** What cheap intelligence teaches us to build
+**Subtitle:** Eight words for the budget meeting
 
-**Format:** 40 minutes; 18 slides. Economics and architecture talk.
+**Format:** 40 minutes; 15 slides. Economics, game theory, and architecture.
 
-**Audience:** Staff engineers, architects, founders, CTOs, platform and engineering leaders. Familiarity with operating a software product helps; no economics degree or model expertise is assumed.
+**Audience:** Staff engineers, architects, founders, CTOs, platform and engineering leaders. Familiarity with operating a software product helps; no economics background is assumed, and the talk defines every term it uses.
 
 ### 50-word abstract
 
-Free AI changes what software teams consider worth optimizing. But low prices can reflect both temporary offers and genuine efficiency. This talk separates price from cost, stress-tests a synthetic workload, and asks how to build businesses that survive either explanation without guessing a vendor's margins or predicting an inevitable crash.
+Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have been describing your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
 
 ### 150-word abstract
 
-Imagine building a company with free electricity, then discovering that its architecture learned to expect the offer forever. AI raises a similar question: what does cheap intelligence encourage us to build?
+A startup gets free electricity for a year. What does it build, and what survives when the offer ends? Swap electricity for inference and that is the question.
 
-This talk examines how free tiers, credits, and aggressive pricing can shape context size, retries, agent fan-out, product packaging, and supplier dependence. It separates what customers pay from what providers spend, avoiding invented subsidy figures and confident predictions about a price cliff. The counterargument matters: useful inference has become cheaper, and tomorrow's efficiency may justify today's prices.
+Engineers lose this argument in budget meetings because the strongest thing we can say is "it feels wasteful." Economics has precise names for it, and this talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option.
 
-A live, offline simulation changes inference prices while holding a fictional workload constant. We calculate cost per accepted outcome, test an assumed efficiency improvement, and expose the assumptions that still need evidence. Attendees leave with a practical price sensitivity review, a way to compare optimization effort with recurring savings, and a clearer answer to which architectural commitments they can afford to make.
+Along the way it separates four legitimate reasons a price can sit below cost and names the observation at renewal that distinguishes them, reframes the industry's enormous compute commitments as Schelling commitments rather than cost disclosures, and uses Shoup's parking argument for the mechanism. The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem rather than a shopping problem. A synthetic price sweep closes it, with the volume caveat attached.
 
 ### Three audience outcomes
 
-1. Calculate gross cost per accepted outcome, including failed attempts, and distinguish it from the net invoice.
-2. Run an inference price sensitivity review while stating which assumptions remain fixed.
-3. Choose reversible architecture investments without assuming either permanent subsidies or inevitable repricing.
+1. Name the four explanations for a below-cost price and the observation that distinguishes them, instead of arguing about a vendor's margins.
+2. Compute cost per accepted outcome, convert an acceptance rate into a multiplier on sticker price, and state the volume at which an optimization is worth funding.
+3. Inventory relationship-specific assets and price reversibility as a real option against measured exposure.
 
 ### Notes for reviewers
 
-The contrarian tension is conditional: cheap access creates real benefits, and genuine efficiency is a serious alternative to the subsidy story. This talk is not a claim about a named provider’s margins. Its parking analogy is brief and labelled. The distinctive artifact is a workload sensitivity calculation that works without forecasting industry economics. The four-minute demo is offline and synthetic. No proprietary results or personal case study is claimed.
+The talk makes no claim about any named provider's margins, alleges no predatory pricing, and forecasts no price cliff. Every economic concept is cited to its primary source and used as a frame rather than a measurement; where the canonical example is contested, as with QWERTY and path dependence, the talk says so on stage. The counterargument, that prices are falling because the engineering is genuinely improving, appears in the first ten minutes rather than as a late concession, with Epoch AI's public data. The four-minute demo is offline and synthetic, and the talk explicitly tells small-volume teams not to optimize.
 
 ## The Future of Product Engineering
 
