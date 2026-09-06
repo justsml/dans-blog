@@ -14,4 +14,4 @@ Keep slides 1, 3, 4, 8, 10, 11, 12, 13, 16. Hide the others. [Complete script an
 | 11:30 to 13:00 | 13 | Synthesis creates a new candidate |
 | 13:00 to 15:00 | 16 | Count the work below the tool call |
 
-The paper walkthrough is 2 minutes. Do not substitute the old generic caps fixture for restart recovery. Timings include stage directions, not Q&A.
+The paper walkthrough is 2 minutes. Do not substitute the resource-policy exercise for restart recovery. Timings include stage directions, not Q&A.

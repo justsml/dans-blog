@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Staff and principal engineers, distributed-systems practitioners, AI architects, platform teams, and engineering leaders.
 - Thesis: Expose hidden tool fan-out, enforce shared limits, recover durable jobs, and compare independent solution attempts against fixed requirements.
 - Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../flagship-talks/parallelization-40min-outline.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/outlines/parallelization-40min.md)
 
 ## Search focus
 

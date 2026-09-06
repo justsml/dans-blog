@@ -30,7 +30,7 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | --- | --- | ---: | --- | --- |
 | A Skeptic's Guide to Surviving AI in Education | [40 min](outlines/skeptic-education-40min.md) | 14 | [Regenerate](decks/skeptic-education-40min.pptx) | [Education](education/CFP.md) |
 | Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 17 | [Regenerate](decks/failure-improvement-40min.pptx) | [Failure improvement](engineering/failure-improvement/CFP.md) |
-| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 16 | [Superseded PPTX](decks/adaptive-systems-40min.pptx) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
+| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 16 | [Browser deck](../reveal-talks/adaptive-systems.html) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
 | Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Regenerate](decks/free-tier-40min.pptx) | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 16 | [Regenerate](decks/evidence-learning-40min.pptx) | [Education](education/CFP.md) |
 | Rethinking Parallelization in the Agentic Era | [40 min](outlines/parallelization-40min.md) | 16 | [Browser deck](../reveal-talks/parallelization.html) | [Parallelization](engineering/parallelization/CFP.md) |
@@ -53,7 +53,7 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | Outsmart Your Lying, Cheating Students | [Lightning](outlines/evidence-learning-15min-adaptation.md) | [Standard](outlines/evidence-learning-30min-adaptation.md) |
 | Rethinking Parallelization in the Agentic Era | [Lightning](outlines/parallelization-15min-adaptation.md) | [Standard](outlines/parallelization-30min-adaptation.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Notes are cues, not scripts.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. Adaptive and parallelization include presenter scripts; other outlines use speaker cues.
 
 ## Image prompts
 
@@ -82,14 +82,14 @@ The two education talks use different worked examples so they can be booked toge
 
 Each outline names its sources with author, year and linked title. The Bastani PNAS paper has a published correction whose full text was inaccessible during research; the talks avoid its numeric effect sizes. Sources added in this revision (DSPy, GEPA, hooks, skills, pg_trgm, the three eval platforms, Shoup) are cited in the outlines and not yet in the evidence notes.
 
-The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and parallelization refreshes use explicit synthetic paper walkthroughs. Their new recovery scenarios are not implemented in the older offline kit.
+The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and parallelization refreshes use explicit synthetic paper walkthroughs. Their recovery scenarios are documented in the packet walkthroughs; the offline resource-policy exercise demonstrates only strategy selection and caps.
 
 ## Reuse across the portfolio
 
 Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or parallelization when the audience wants to grow an agent's authority and change execution policy; all three include a "compile what repeats" beat. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
-The original eight decks remain in the sibling `flagship-talks` directory.
+The six retrieval, benchmarks and judgment decks remain in the sibling `flagship-talks` directory. Adaptive and parallelization use the browser decks linked above.
 
 ## Adaptive and parallelization refresh, September 5
 
-The two companion talks now have 16-slide browser decks, 15/30/40-minute outlines and presenter talk tracks, five-minute lightning scripts, 60/75-minute workshop plans, CFP copy, evidence notes, contracts and paper walkthroughs. Start with the [refresh guide](packets/adaptive-parallel-refresh.md). Timing targets include worked examples and audience interaction; they are not measured recordings. Old PPTX files and prior generated imagery are superseded for these talks. No new live AI demo or production controller is claimed.
+The two companion talks now have 16-slide browser decks, 15/30/40-minute outlines and presenter talk tracks, five-minute lightning scripts, 60/75-minute workshop plans, CFP copy, evidence notes, contracts and paper walkthroughs. Start with the [refresh guide](packets/adaptive-parallel-refresh.md). Timing targets include worked examples and audience interaction; they are not measured recordings. No new live AI demo or production controller is claimed.

@@ -1,0 +1,74 @@
+/* Art direction for the llm:// lightning-talk family (5 / 10 / 15 minute decks). */
+body[data-topic="llm-uri"]{--bg:#0d161e;--ink:#eef3f3;--accent:#7fe0c3;--muted:#9fadb5;--scheme:#c9a8ff;--host:#7fe0c3;--path:#ffd479;--query:#ff9d8a;--mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;background:var(--bg);color:var(--ink)}
+body[data-topic="llm-uri"] .reveal{color:var(--ink)}
+body[data-topic="llm-uri"] .reveal h1,body[data-topic="llm-uri"] .reveal h2{letter-spacing:-.045em;font-weight:750;line-height:1.05}
+body[data-topic="llm-uri"] .reveal h1{font-size:92px;margin:0 0 26px}
+body[data-topic="llm-uri"] .reveal h2{font-size:54px;margin:0 0 34px;max-width:1240px}
+body[data-topic="llm-uri"] .reveal h3{font-size:26px;letter-spacing:-.02em;margin:0 0 14px;color:var(--accent)}
+body[data-topic="llm-uri"] .reveal p{line-height:1.38}
+body[data-topic="llm-uri"] .reveal em{font-style:normal;color:var(--accent)}
+body[data-topic="llm-uri"] .reveal code,body[data-topic="llm-uri"] .reveal pre,body[data-topic="llm-uri"] .reveal kbd{font-family:var(--mono)}
+body[data-topic="llm-uri"] .reveal .eyebrow{margin-bottom:22px!important}
+body[data-topic="llm-uri"] .reveal .lede{font-size:34px!important;max-width:1100px}
+body[data-topic="llm-uri"] .reveal .quip{font-family:Raleway,sans-serif;font-weight:650;font-size:44px;letter-spacing:-.03em;line-height:1.15;max-width:1180px;margin:34px 0 0}
+body[data-topic="llm-uri"] .reveal .quip.small{font-size:36px}
+/* URI display */
+body[data-topic="llm-uri"] .reveal .uri{font-family:var(--mono);font-size:44px;line-height:1.3;margin:18px 0 26px;word-break:break-all;color:var(--ink)}
+body[data-topic="llm-uri"] .reveal .uri.hero{font-size:60px;margin:32px 0 44px}
+body[data-topic="llm-uri"] .reveal .uri.mid{font-size:38px}
+body[data-topic="llm-uri"] .reveal .uri.small{font-size:30px;margin:8px 0}
+body[data-topic="llm-uri"] .reveal .uri .s{color:var(--scheme)}
+body[data-topic="llm-uri"] .reveal .uri .h{color:var(--host)}
+body[data-topic="llm-uri"] .reveal .uri .p{color:var(--path)}
+body[data-topic="llm-uri"] .reveal .uri .q{color:var(--query)}
+body[data-topic="llm-uri"] .reveal .uri .dim{color:var(--muted)}
+body[data-topic="llm-uri"] .reveal .uri .gone{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--query);text-decoration-thickness:3px}
+/* Anatomy legend */
+body[data-topic="llm-uri"] .reveal .anatomy{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin:18px 0 36px}
+body[data-topic="llm-uri"] .reveal .anatomy>div{border-top:4px solid var(--c);padding-top:16px;font-size:24px;line-height:1.35;color:var(--muted)}
+body[data-topic="llm-uri"] .reveal .anatomy code{display:block;font-size:34px;color:var(--c);margin-bottom:10px;word-break:break-all}
+body[data-topic="llm-uri"] .reveal .anatomy b{color:var(--ink);font-weight:700}
+/* Env-var stacks and code panels */
+body[data-topic="llm-uri"] .reveal .panel{background:#ffffff08;border:1px solid #ffffff1c;border-radius:16px;padding:26px 30px}
+body[data-topic="llm-uri"] .reveal .panel .label{font:600 15px/1.3 Atkinson,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+body[data-topic="llm-uri"] .reveal pre{font-size:25px;line-height:1.5;margin:0;background:none;box-shadow:none;width:100%;color:var(--ink);white-space:pre-wrap}
+body[data-topic="llm-uri"] .reveal pre code{padding:0;background:none;max-height:none;white-space:pre-wrap}
+body[data-topic="llm-uri"] .reveal pre .k{color:var(--muted)}
+body[data-topic="llm-uri"] .reveal pre .v{color:var(--path)}
+body[data-topic="llm-uri"] .reveal pre .c{color:var(--muted);font-style:italic}
+body[data-topic="llm-uri"] .reveal pre .hl{color:var(--accent)}
+body[data-topic="llm-uri"] .reveal pre .bad{color:var(--query)}
+/* Layout helpers */
+body[data-topic="llm-uri"] .reveal .split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+body[data-topic="llm-uri"] .reveal .split.wide{grid-template-columns:3fr 2fr}
+body[data-topic="llm-uri"] .reveal .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin:14px 0 30px}
+body[data-topic="llm-uri"] .reveal .cards.four{grid-template-columns:repeat(4,1fr)}
+body[data-topic="llm-uri"] .reveal .cards>div{background:#ffffff08;border:1px solid #ffffff1c;border-radius:16px;padding:24px 26px}
+body[data-topic="llm-uri"] .reveal .cards h3{margin-bottom:10px}
+body[data-topic="llm-uri"] .reveal .cards p{font-size:24px;line-height:1.4;margin:0;color:var(--muted)}
+body[data-topic="llm-uri"] .reveal .cards p b{color:var(--ink);font-weight:700}
+body[data-topic="llm-uri"] .reveal .rows{margin:10px 0 30px}
+body[data-topic="llm-uri"] .reveal .rows>div{display:grid;grid-template-columns:300px 1fr;gap:40px;padding:20px 0;border-top:1px solid #ffffff2a;font-size:28px;line-height:1.35;align-items:baseline}
+body[data-topic="llm-uri"] .reveal .rows b{color:var(--accent);font-weight:650}
+body[data-topic="llm-uri"] .reveal .tags{display:flex;flex-wrap:wrap;gap:12px 14px;margin:10px 0 30px}
+body[data-topic="llm-uri"] .reveal .tags span{font-family:var(--mono);font-size:22px;padding:8px 16px;border:1px solid #ffffff30;border-radius:999px;color:var(--muted)}
+body[data-topic="llm-uri"] .reveal .tags span.on{color:var(--bg);background:var(--accent);border-color:var(--accent)}
+body[data-topic="llm-uri"] .reveal .stack{display:flex;flex-direction:column;gap:10px;margin:16px 0 26px}
+body[data-topic="llm-uri"] .reveal .stack .uri{margin:0}
+body[data-topic="llm-uri"] .reveal .arrow{display:inline-block;color:var(--muted);font-size:34px;margin:0 6px}
+body[data-topic="llm-uri"] .reveal .ledger{font-family:Raleway,sans-serif;font-weight:650;letter-spacing:-.03em;font-size:52px;line-height:1.2;margin:0 0 30px}
+body[data-topic="llm-uri"] .reveal .ledger span{display:block;color:var(--muted)}
+body[data-topic="llm-uri"] .reveal .ledger span.on{color:var(--ink)}
+body[data-topic="llm-uri"] .reveal .ledger span.on em{color:var(--accent)}
+body[data-topic="llm-uri"] .reveal .cover{display:flex!important;flex-direction:column;justify-content:center}
+body[data-topic="llm-uri"] .reveal .cover .big{font-family:var(--mono);font-size:150px;letter-spacing:-.04em;line-height:1;margin:0 0 30px}
+body[data-topic="llm-uri"] .reveal .cover .big .s{color:var(--scheme)}
+body[data-topic="llm-uri"] .reveal .closing{font-family:Raleway,sans-serif;font-weight:750;font-size:52px;letter-spacing:-.04em;line-height:1.12;max-width:1200px;margin:0 0 20px}
+body[data-topic="llm-uri"] .reveal .closing.muted{color:var(--muted);font-weight:600;font-size:36px}
+body[data-topic="llm-uri"] .reveal .byline{font-size:22px;color:var(--muted);margin-top:44px}
+body[data-topic="llm-uri"] .reveal .byline a{color:var(--accent)}
+body[data-topic="llm-uri"] .reveal .fragment.dim{opacity:.35;transition:opacity .25s}
+body[data-topic="llm-uri"] .reveal .fragment.dim.visible{opacity:1}
+body[data-topic="llm-uri"] .reveal .fragment.dim.current-fragment{opacity:1}
+body[data-topic="llm-uri"] .reveal .fragment.dim.visible:not(.current-fragment){opacity:1}
+@media print{body[data-topic="llm-uri"] .reveal .fragment.dim{opacity:1!important}}

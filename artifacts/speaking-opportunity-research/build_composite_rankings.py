@@ -44,7 +44,7 @@ TALK_NAMES = {
     "skeptic-education": "A Skeptic's Guide to Surviving AI in Education",
     "evidence-learning": "Outsmart Your Lying, Cheating Students",
     "failure-improvement": "Automating Improvement From Failure",
-    "adaptive-systems": "Building Adaptive & Dynamic AI Systems",
+    "adaptive-systems": "Adaptive, agentic apps",
     "free-tier": "Cry Me a Free Tier",
     "product-engineering": "The Future of Product Engineering",
     "retrieval": "From RAGs to Retrievals",

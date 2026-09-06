@@ -1,6 +1,6 @@
 # Formats: Rethinking parallelization in the agentic era
 
-The refreshed 16-slide [browser deck](../../../reveal-talks/parallelization.html) follows the [40-minute outline](../../outlines/parallelization-40min.md). Legacy PPTX files remain superseded reference exports; use the HTML deck for this revision.
+The refreshed 16-slide [browser deck](../../../reveal-talks/parallelization.html) follows the [40-minute outline](../../outlines/parallelization-40min.md). Use the HTML deck for presentation.
 
 | Slot | Preparation |
 | --- | --- |

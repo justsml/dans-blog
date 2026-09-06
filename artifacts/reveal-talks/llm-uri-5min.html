@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="llm:// connection strings for AI: one portable URI for provider, model, and runtime configuration. Five-minute lightning talk."><title>llm:// Connection Strings for AI (5 min) | Dan Levy</title><link rel="stylesheet" href="assets/reveal.css"><link rel="stylesheet" href="assets/deck.css"><link rel="stylesheet" href="assets/llm-uri.css"></head><body data-topic="llm-uri"><div class="reveal"><div class="slides">
+
+<section data-slide="1" data-timing="75" aria-label="Remember database configuration hell?">
+<p class="eyebrow">llm:// · 5 minute lightning talk</p>
+<h2>Remember database configuration hell?</h2>
+<div class="split">
+<div class="panel"><p class="label">.env, circa 2009</p><pre><code><span class="k">DB_HOST</span>=
+<span class="k">DB_PORT</span>=
+<span class="k">DB_USER</span>=      <span class="c"># or DB_USERNAME?</span>
+<span class="k">DB_PASSWORD</span>=  <span class="c"># or DB_PASS?</span>
+<span class="k">DB_NAME</span>=
+<span class="k">DB_SSL</span>=
+<span class="k">DB_TIMEOUT</span>=</code></pre>
+<p class="uri small fragment" data-fragment-index="1" style="margin-top:22px"><span class="s">postgres://</span><span class="dim">user:pass@</span><span class="h">host:5432</span><span class="p">/dbname</span></p></div>
+<div class="panel fragment" data-fragment-index="2"><p class="label">.env, today</p><pre><code><span class="bad">OPENAI_API_KEY</span>=
+<span class="bad">OPENAI_BASE_URL</span>=
+<span class="bad">ANTHROPIC_API_KEY</span>=
+<span class="bad">AZURE_OPENAI_ENDPOINT</span>=
+<span class="bad">AZURE_OPENAI_DEPLOYMENT</span>=
+<span class="bad">AZURE_OPENAI_API_VERSION</span>=
+<span class="bad">MODEL_NAME</span>=  <span class="c"># plus temperature in code</span></code></pre></div>
+</div>
+<p class="quip fragment" data-fragment-index="2">Apparently we decided to do the whole thing again.</p>
+<aside class="notes"><p>llm:// (5 min) | slide 1 | 75 seconds</p><p>Open on the left panel. Was it DB_USER or DB_USERNAME? DB_PASS or DB_PASSWORD? Every team had its own answer, and every deploy script had to know it.</p><p>First click: we collapsed all of that into one portable, parseable, language-independent string. Every language has a URL parser. Every ops tool can pass one string.</p><p>Second click: reveal the AI env file and the punchline. Pause for the laugh. Do not explain the joke.</p><p>Stage direction: keep this under 75 seconds. The goal is recognition, not analysis.</p></aside>
+</section>
+
+<section data-slide="2" data-timing="90" aria-label="Steal the database connection string">
+<p class="eyebrow">The proposal</p>
+<h2>Treat an LLM connection like a database connection.</h2>
+<p class="uri hero"><span class="s">llm://</span><span class="h">api.openai.com</span><span class="p">/gpt-5.2</span><span class="q">?reasoning_effort=none&amp;temp=0.7&amp;max_tokens=1500</span></p>
+<div class="anatomy">
+<div style="--c:var(--scheme)"><code>llm://</code><b>Scheme.</b> The resource type. This is a model, not a database.</div>
+<div style="--c:var(--host)"><code>api.openai.com</code><b>Host.</b> The provider or API endpoint. Cloud, proxy, or localhost.</div>
+<div style="--c:var(--path)"><code>/gpt-5.2</code><b>Path.</b> The model, or a deployment of one.</div>
+<div style="--c:var(--query)"><code>?temp=0.7</code><b>Query.</b> Runtime configuration. Temperature, tokens, effort.</div>
+</div>
+<p class="quip small">The exact syntax is not sacred. The abstraction is the point.</p>
+<aside class="notes"><p>llm:// (5 min) | slide 2 | 90 seconds</p><p>Here is the entire idea. Put the provider, the model, and the runtime configuration into one portable URI. Walk left to right across the colored segments: scheme, host, path, query.</p><p>Today that same information lives in three places: the environment, the SDK constructor, and the call site. It is one logical dependency smeared across three layers.</p><p>Say the bottom line out loud. Nobody needs to defend the ampersand. What matters is that LLM configuration gets a connection-string abstraction at all.</p></aside>
+</section>
+
+<section data-slide="3" data-timing="90" aria-label="Swapping models should be boring">
+<p class="eyebrow">Why it pays off immediately</p>
+<h2>Swapping models should be boring.</h2>
+<div class="split wide">
+<div class="panel"><p class="label">Zero application changes</p><pre><code><span class="k">export</span> LLM_URL=<span class="v">'llm://api.openai.com/gpt-5.2?temp=0'</span>
+my-agent
+
+<span class="k">export</span> LLM_URL=<span class="v">'llm://api.anthropic.com/claude-sonnet'</span>
+my-agent
+
+<span class="k">export</span> LLM_URL=<span class="v">'ollama://localhost:11434/qwen'</span>
+my-agent</code></pre></div>
+<div>
+<div class="rows">
+<div><b>Portable</b><span>Laptop, CI, Docker, serverless, another language.</span></div>
+<div><b>Parseable</b><span>Every language already ships a URL parser.</span></div>
+<div><b>Serializable</b><span>Store, pass, compare, override, redact.</span></div>
+<div><b>Standard envelope</b><span>Postgres and Redis differ too. The string still works.</span></div>
+</div>
+</div>
+</div>
+<p class="quip small">We don't need AI-specific YAML for something URLs have handled for thirty years.</p>
+<aside class="notes"><p>llm:// (5 min) | slide 3 | 90 seconds</p><p>Demo moment. Same binary, three exports, three completely different backends, including a local model. The application consumes one conceptual input: here is the model connection.</p><p>Run the right column quickly. Portable, parseable, serializable. These come free because it is a URL.</p><p>Pre-empt the obvious objection with the last row. Every provider has different options. So do databases. Connection strings standardize the envelope, not every capability. Common parameters normalize; vendor-specific ones stay namespaced or pass through.</p><p>If anyone asks about secrets: the URI can carry them, and a good implementation should prefer an indirection such as credential=env:OPENAI_API_KEY. Keep that answer to one sentence here.</p></aside>
+</section>
+
+<section data-slide="4" data-timing="45" aria-label="Models are becoming infrastructure" class="cover">
+<p class="ledger"><span class="on"><em>postgres://</em> Databases are infrastructure.</span><span class="on"><em>amqp://</em> Message queues are infrastructure.</span><span class="on"><em>s3://</em> Object storage is infrastructure.</span><span class="on fragment"><em>llm://</em> Models are becoming infrastructure too.</span></p>
+<p class="closing fragment">One string. Any model. Any provider.<br><span style="color:var(--muted)">Stop configuring models like it's 1999.</span></p>
+<p class="byline">The blog post that started this now has a companion Internet-Draft for an <code>llm://</code> URI scheme. It is at exactly the stage where syntax should be challenged. Come argue with me.</p>
+<aside class="notes"><p>llm:// (5 min) | slide 4 | 45 seconds</p><p>Read the ledger slowly, one line per beat. Click to add the fourth line.</p><p>Land the closer, then the byline. I wrote this because I was annoyed at my .env file. Apparently that is how standards begin. This is still the stage where edge cases should be challenged and libraries should experiment, so I want your objections.</p><p>Stage direction: stop talking after the last line. Do not add a new idea on the way out.</p></aside>
+</section>
+
+</div></div><script src="assets/reveal.js"></script><script src="assets/notes.js"></script><script src="assets/deck.js"></script><script>Reveal.configure({totalTime:300});</script></body></html>

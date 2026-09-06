@@ -1,6 +1,6 @@
 # Five-minute paper walkthrough: the ingest that changed
 
-Synthetic design exercise. No API calls, autonomous repair, production promotion or measured recovery rate. Use slide 10 and the handout. The older offline adaptive-systems kit demonstrates strategy selection and caps; it does not implement these schema-repair fixtures.
+Synthetic design exercise. No API calls, autonomous repair, production promotion or measured recovery rate. Use slide 10 and the handout. The separate offline resource-policy exercise demonstrates strategy selection and caps, not these schema-repair fixtures.
 
 | Time | Reveal | Ask | Expected transition |
 | --- | --- | --- | --- |

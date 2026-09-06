@@ -19,4 +19,4 @@ Keep slides 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16. Hide the others. [Co
 | 26:30 to 28:30 | 14 | Keep the procedure you discovered |
 | 28:30 to 30:00 | 16 | Count the work below the tool call |
 
-The paper walkthrough is 4 minutes. Do not substitute the old generic caps fixture for restart recovery. Timings include stage directions, not Q&A.
+The paper walkthrough is 4 minutes. Do not substitute the resource-policy exercise for restart recovery. Timings include stage directions, not Q&A.

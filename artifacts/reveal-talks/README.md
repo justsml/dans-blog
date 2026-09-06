@@ -22,6 +22,6 @@ The retrieval, benchmarks, and judgment decks use `../flagship-talks/*-40min-out
 
 The free-tier deck includes dated company announcements and an AWS credit offer checked September 5, 2026. Refresh these before presenting. Synthetic scores and costs remain illustrative, not measurements of current products.
 
-Edit the HTML directly. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes, dependencies, or existing PowerPoint decks were changed.
+Edit the HTML directly. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. Adaptive and parallelization use these HTML decks; their obsolete PowerPoint exports have been removed.
 
 Implementation follows the official [initialization](https://revealjs.com/initialization/) and [speaker view](https://revealjs.com/speaker-view/) documentation.

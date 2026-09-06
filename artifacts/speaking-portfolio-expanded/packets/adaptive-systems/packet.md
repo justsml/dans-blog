@@ -36,7 +36,7 @@ Application, platform and staff engineers building tool-using agents. Familiarit
 
 ## Reviewer notes
 
-16 slides; 15-, 30- and 40-minute routes; 60- or 75-minute workshop. Synthetic paper walkthroughs, no measured production gains or live agent demonstration claimed. Existing browser deck updated; old PPTX exports superseded. References support individual mechanisms, not a benchmark of the proposed architecture. No vendor pitch.
+16 slides; 15-, 30- and 40-minute routes; 60- or 75-minute workshop. Synthetic paper walkthroughs, no measured production gains or live agent demonstration claimed. The browser deck follows the current outline. References support individual mechanisms, not a benchmark of the proposed architecture. No vendor pitch.
 
 ## Audience adaptations
 

@@ -20,7 +20,9 @@ Click Evaluate proposed promotion with all gates unchecked. The fix stays in rev
 
 **Expected outcome:** Similarity retrieves a candidate lesson. Separate verification gates control promotion. Say on stage that money, data deletion, and customer messaging get a fourth gate the kit does not show: a person. Checkboxes represent evidence a real system must collect; clicking them does not run tests or establish a causal diagnosis.
 
-## 3. Building Adaptive & Dynamic AI Systems
+## 3. Resource-policy exercise
+
+This standalone exercise covers strategy selection and caps. For the current talks, use the [adaptive recovery walkthrough](../packets/adaptive-systems/demo.md) or [parallel job walkthrough](../packets/parallelization/demo.md).
 
 **Four minutes.** Show the known status lookup with no model agent. Select a routine task, then a novel intermittent failure. The selected organization changes. For the novel case, lower the budget to $0.10 or the deadline to five seconds. The system stops because the modeled strategy does not fit.
 

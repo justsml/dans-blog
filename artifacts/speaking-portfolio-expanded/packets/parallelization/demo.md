@@ -1,6 +1,6 @@
 # Five-minute paper walkthrough: forty jobs behind four calls
 
-Synthetic trace and design comparison. No model or provider calls, real billing or measured speedup. Display slide 10 and the ledger in contracts.md. The older generic caps demo cannot demonstrate atomic reservations or restart recovery.
+Synthetic trace and design comparison. No model or provider calls, real billing or measured speedup. Display slide 10 and the ledger in contracts.md. The separate resource-policy exercise does not demonstrate atomic reservations or restart recovery.
 
 | Time | Event | Audience decision | Expected behavior |
 | --- | --- | --- | --- |
