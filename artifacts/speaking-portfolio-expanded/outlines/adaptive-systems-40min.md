@@ -4,7 +4,7 @@ Give each job exactly enough agent. Prove every repair. Let the app ask for its 
 
 Rewritten 2026-09-06 from Dan's notes. 40 minutes, 15 slides, four audience moments, no Q&A. Add five minutes for a 45-minute booking. The design is Dan's; the incidents are composites of real integrations with the names filed off. Say that once, on slide 1, and never apologize for it again.
 
-[Presenter scripts](../packets/adaptive-systems/script-40min.md) · [Contracts](../packets/adaptive-systems/contracts.md) · [Walkthrough](../packets/adaptive-systems/demo.md) · [Evidence](../packets/adaptive-systems/evidence-bank.md)
+[Presenter scripts](../packets/adaptive-systems/script-40min.md) · [Contracts](../packets/adaptive-systems/contracts.md) · [Memory pattern and prompt](../packets/adaptive-systems/memory-pattern.md) · [Walkthrough](../packets/adaptive-systems/demo.md) · [Evidence](../packets/adaptive-systems/evidence-bank.md)
 
 Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts adaptive-systems`.
 
@@ -233,7 +233,7 @@ Stage direction: Read the sample report in contracts.md. Find the one item that 
 
 ## 13. Widen authority only from measured outcomes
 
-33:00 to 36:00 · land
+33:00 to 35:00 · land
 
 > Shadow: propose, apply nothing
 > Canary: one reversible change class
@@ -247,21 +247,28 @@ Watch for the failure Diane Vaughan documented at NASA before Challenger and nam
 
 Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Press, on normalization of deviance.
 
-Stage direction: Ninety seconds on the recovery card in contracts.md. Compare two answers for one minute.
+Stage direction: Thirty seconds on the recovery card in contracts.md. Take one answer and name the evidence needed to widen that authority.
 
-## 14. Let recurring discoveries become code
+## 14. Start smaller: remember what happened
 
-36:00 to 38:00 · steady
+35:00 to 38:00 · steady
 
-> Runtime: recover within current policy
-> Offline: evaluate a proposed policy change
-> Known case: run the tested adapter, conjure nothing
+> Before returning: check relevant memory and correct known mistakes
+> After execution: record checks, outcome, correction and frequency
+> Generated, executed and verified are different states
+> Memory is evidence, never permission
 
-Two loops. The runtime loop serves this job inside current limits. The improvement loop turns a repeated discovery into a tested adapter, a revised threshold, or a better investigation strategy, evaluated before promotion. Once zip and postal_code are understood, the next matching payload never opens an investigation.
+You do not need the whole agent factory to start. Take one agent that writes SQL, builds reports, runs shell commands or generates scripted API actions. Give it working memory for this job: the goal, constraints, draft and unresolved checks. Give it observational memory across jobs: what it generated, what actually ran, what failed, and what the checks established. Now ask it to consult that history before it hands you the next answer.
 
-New models qualify against the same incidents without inheriting new permissions. The full improvement loop is the failure-improvement talk; here the point is the boundary between a local recovery and a policy change.
+Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well; it reports the wrong population. An independent preflight check rejects it before dispatch. Record the draft, the failed check, the correction and the eventual result. Next time, retrieve that pattern while the agent is still drafting. Fix the omission before returning the SQL, then run the check again. That is adaptive behavior you can build with one agent and a small log.
 
-Stage direction: Name one repair that deserves a deterministic adapter and one that should stay a human decision.
+Count patterns, not just anecdotes. Keep attempts as well as successes, the environment and schema version, and the last time a check passed. A command that worked on yesterday's schema is a clue, not a warranty. The runner records failures even if the model forgets. A clean exit is execution evidence; a plausible report still needs a correctness check. A lost API response stays unknown.
+
+The instruction is simple: before returning generated work, retrieve relevant memory and correct applicable mistakes; after an authorized execution, record the observed outcome and update the pattern counts. If you cannot check something safely, say what remains unverified. Remembered output is untrusted data and grants no new permissions. The copyable prompt and a small record format are in the handout.
+
+As patterns repeat, turn the reliable ones into tested templates and adapters. The runtime agent learns which evidence to consult; the offline improvement loop evaluates changes to the reusable procedure. Once the known case is covered by code, it need not spend another model call rediscovering the rule.
+
+Stage direction: Show the prompt in memory-pattern.md. Ask which observation proves the query ran and which proves it answered the right question. Use the tenant-filter example; no live execution is needed.
 
 ## 15. The next surprise should cost less
 
@@ -275,6 +282,6 @@ Return to the field that changed overnight. We did not predict its spelling. We 
 
 And return to the assistant with everything. We never built it. We built a factory for small ones, each with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent you have to trust, but many you can afford to check.
 
-Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. That is enough to start.
+Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. That is enough to start.
 
 Stage direction: Land on the third line. Stop talking.

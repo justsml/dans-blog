@@ -4,7 +4,7 @@ The 15-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows
 
 | Slot | Preparation |
 | --- | --- |
-| 5 minutes | Lightning script below; slides 1, 3, 4, 15 |
+| 5 minutes | Lightning script below; slides 1, 3, 4, 14, 15 |
 | 10 minutes | Lightning script plus the walkthrough in demo.md |
 | 15 minutes | [Script](script-15min.md) and [route](../../outlines/adaptive-systems-15min-adaptation.md) |
 | 30 minutes | [Script](script-30min.md) and [route](../../outlines/adaptive-systems-30min-adaptation.md) |
@@ -19,9 +19,11 @@ The 15-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows
 
 1:00 to 2:00, slide 3. Zoom out. We are building toward an assistant with every customer's data and tools that email, refund, delete and deploy. Most of its damage will be accidents; some will be people who mean it, and a vendor payload is now untrusted input read by something that can act. Never build that one assistant. Conjure a small one per job.
 
-2:00 to 4:00, slide 4. An orchestrator reads the failure, writes a job with goal, evidence, tools, budget and stop conditions, and generates an agent with a tailored prompt and only the tools it needs. If it needs more, it asks through tool search; policy decides; the answer is logged either way. The orchestrator loops: done, another specialist, or stop. The known mapping runs as code and conjures nothing. The log of denied requests taught me more about my permissions than any audit.
+2:00 to 3:15, slide 4. An orchestrator reads the failure, writes a job with goal, evidence, tools, budget and stop conditions, and generates an agent with a tailored prompt and only the tools it needs. If it needs more, it asks through tool search; policy decides; the answer is logged either way. The orchestrator loops: done, another specialist, or stop. The known mapping runs as code and conjures nothing. The log of denied requests taught me more about my permissions than any audit.
 
-4:00 to 5:00, slide 15. We never built the assistant with everything. We built a factory for small ones with a short tool list, a hard budget, and a log of every time they asked for more. Pick one integration that costs your team mornings. Give it a conjured agent, a test it did not write, and a place to record what happened.
+3:15 to 4:15, slide 14. Start with one agent and an execution log. Before returning SQL, commands or reports, retrieve relevant successes and failures, check this draft and correct known mistakes. After authorized execution, record what actually happened and update the pattern counts. Keep generated, executed, verified and unknown separate. A query can run and still answer the wrong question. The [copyable prompt](memory-pattern.md) gives the agent this routine; independent checks still catch mistakes.
+
+4:15 to 5:00, slide 15. We never built the assistant with everything. We built a factory for small ones with a short tool list, a hard budget, and a log of every time they asked for more. Pick one integration that costs your team mornings. Give it a conjured agent, a test it did not write, and a place to record what happened.
 
 ## Sixty-minute workshop
 
@@ -30,7 +32,7 @@ The 15-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows
 | 0 to 8 | Opening problem and baseline | One recurring workload and its alert-and-wait cost |
 | 8 to 20 | Write the job contract and tool list using contracts.md | Goal, evidence, tools, risk class, budget, stop |
 | 20 to 35 | Walk the fixtures in demo.md | Annotated decisions: repair, quarantine, reconcile |
-| 35 to 47 | Pairs attack the design: a poisoned payload, an over-broad tool request, a restart | One rejected transition and one denied request |
+| 35 to 47 | Use memory-pattern.md to log a failed query, a correction and a stale success; attack the memory with an untrusted instruction | A scoped observation record and a rejected unsafe reuse |
 | 47 to 57 | Define validation, a narrow canary, and a compute request | Acceptance gates, rollback owner, cost cap |
 | 57 to 60 | Each participant picks a first change | One bounded experiment |
 

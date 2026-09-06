@@ -1,5 +1,7 @@
 # Talk packet: Adaptive, agentic apps
 
+[Smaller memory pattern: prompt, record and worked example](memory-pattern.md)
+
 [Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/adaptive-systems.html)
 
 ## Titles
@@ -29,6 +31,8 @@ Around that example: the baseline the agent must beat (diff the schema and page 
 1. Design an orchestrator that generates per-job agents with minimum tools, a hard budget, and a logged tool-request gate.
 2. Distinguish a reversible mapping repair from a change in meaning, and prove the repair with fixtures the agent did not write.
 3. Specify tool risk classes, cross-system boundaries, and per-job compute requests before widening automatic authority.
+
+4. Add working and observational memory to one agent, check generated work against prior outcomes, and distinguish successful execution from verified correctness.
 
 ## Audience and prerequisites
 

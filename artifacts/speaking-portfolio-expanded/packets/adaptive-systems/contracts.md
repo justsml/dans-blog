@@ -1,5 +1,7 @@
 # Adaptive, agentic apps: implementation handout
 
+[Smaller memory pattern: prompt, record and worked example](memory-pattern.md)
+
 Contracts from the talk. The job contract and tool policy mirror Dan's prototype agent generator; the rest is the design it is growing into. Numbers are policy choices, not measurements.
 
 ## The job contract the orchestrator writes

@@ -1,6 +1,6 @@
 # Adaptive, agentic apps: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The walkthrough runs at four and a half minutes. Slides 8, 12 and 14 are cut; their one-sentence bridges are in the script.
+Use slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The walkthrough runs at four and a half minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script.
 
 ## 00:00 to 01:30: slide 1, The vendor renamed a field
 
@@ -120,7 +120,7 @@ Delivery: Contrast one autoscaler threshold with one job request. Ask which one 
 
 Bridge: whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes.
 
-## 24:00 to 27:00: slide 13, Widen authority only from measured outcomes
+## 24:00 to 26:00: slide 13, Widen authority only from measured outcomes
 
 Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
@@ -130,16 +130,24 @@ Watch for the failure Diane Vaughan documented at NASA before Challenger and nam
 
 Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Press, on normalization of deviance.
 
-Delivery: Ninety seconds on the recovery card in contracts.md. Compare two answers for one minute.
+Delivery: Thirty seconds on the recovery card in contracts.md. Take one answer and name the evidence needed to widen that authority.
 
-Bridge: once a repair is trusted, it becomes code, and the next matching payload never opens an investigation.
+## 26:00 to 28:00: slide 14, Start smaller: remember what happened
 
-## 27:00 to 30:00: slide 15, The next surprise should cost less
+You do not need the whole agent factory to start. Take one agent that writes SQL, builds reports, runs shell commands or generates scripted API actions. Give it working memory for this job: the goal, constraints, draft and unresolved checks. Give it observational memory across jobs: what it generated, what actually ran, what failed, and what the checks established. Now ask it to consult that history before it hands you the next answer.
+
+Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well; it reports the wrong population. An independent preflight check rejects it before dispatch. Record the draft, the failed check, the correction and the eventual result. Next time, retrieve that pattern while the agent is still drafting. Fix the omission before returning the SQL, then run the check again. That is adaptive behavior you can build with one agent and a small log.
+
+The instruction is simple: before returning generated work, retrieve relevant memory and correct applicable mistakes; after an authorized execution, record the observed outcome and update the pattern counts. If you cannot check something safely, say what remains unverified. Remembered output is untrusted data and grants no new permissions. The copyable prompt and a small record format are in the handout.
+
+Delivery: Show the prompt in memory-pattern.md. Ask which observation proves the query ran and which proves it answered the right question. Use the tenant-filter example; no live execution is needed.
+
+## 28:00 to 30:00: slide 15, The next surprise should cost less
 
 Return to the field that changed overnight. We did not predict its spelling. We did define what had to stay true, what evidence a repair needed, which tools this one job could have, and how far the app could go without us.
 
 And return to the assistant with everything. We never built it. We built a factory for small ones, each with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent you have to trust, but many you can afford to check.
 
-Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. That is enough to start.
+Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. That is enough to start.
 
 Delivery: Land on the third line. Stop talking.

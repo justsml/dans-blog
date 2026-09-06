@@ -15,6 +15,8 @@ Matches the 15-slide outline. Diagrams are editable SVG in `reveal-talks/assets/
 | 9 | [A lost response leaves an unknown outcome](../../../reveal-talks/assets/adaptive-systems/09-a-lost-response-leaves-an-unknown-outcome.svg) |
 | 10 | [Three events require three decisions](../../../reveal-talks/assets/adaptive-systems/10-three-events-require-three-decisions.svg) |
 | 11 | [Scale becomes a capability](../../../reveal-talks/assets/adaptive-systems/11-scale-becomes-a-capability.svg) |
-| 12 to 15 | Typography |
+| 12 to 13 | Typography |
+| 14 | Typography: memory preflight, observed outcomes, frequency and evidence boundary; [copyable prompt](memory-pattern.md) |
+| 15 | Typography |
 
 The regional-recovery diagram was removed with its slide. File numbers on reused assets reflect their original slide positions.
