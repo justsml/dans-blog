@@ -1,77 +1,46 @@
-# Evidence bank: Rethinking Parallelization in the Agentic Era
+# Evidence and editorial boundaries: parallelization
 
-This talk depends on firsthand examples more than any other in the portfolio. Fill every field from your own records before use. Candidate contexts come from the resume and the consulting page; details, measurements, and permissions are yours to supply. Do not publish numbers you cannot reproduce.
+## Primary documentation checked 2026-09-05
 
-## Entry template
+- [AWS retry with backoff pattern](https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/retry-backoff.html): bounded retries for transient failures, overload risk and idempotency considerations. Supports the transport-failure discussion; the talk's combined controller is a proposed design.
 
-- **Problem and operating context:**
-- **What I personally built or changed:**
-- **What failed:**
-- **Before and after measurements:** (metric, baseline, after, period, how measured)
-- **Diagram or screenshot:** (path)
-- **What remains uncertain:**
-- **Organization may be named publicly:** yes / no / with approval from [ ]
+- [Cloudflare Workflows overview](https://developers.cloudflare.com/workflows/): persisted multi-step execution, retry support and event waits. Supports choosing durable orchestration for long waits; does not imply every external operation is idempotent.
+- [Durable Object lifecycle](https://developers.cloudflare.com/durable-objects/concepts/durable-object-lifecycle/): lifecycle transitions can discard in-memory state. Persist application recovery state; do not promise that an in-flight JavaScript promise survives hibernation.
+- [Anthropic, Building effective agents](https://www.anthropic.com/engineering/building-effective-agents): distinguishes workflows and agents, and describes parallelization and evaluator patterns. Supports the pattern vocabulary; does not establish a universal advantage for three personas or any particular judge.
+- [AWS S3 presigned URLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/using-presigned-url.html): presigned URLs grant time-limited access according to their signing authority and are bearer credentials. They are not opaque references that can safely be exposed to a planner while claiming it has no data access.
 
-## Candidate 1: the agent swarm that completed and tested tickets
+The proposed contracts, accounting arithmetic, failure fixtures and rollout decisions are design analysis, not results from these sources. Recheck platform limits and prices before implementation; this talk makes no current model, GPU or sandbox price claim.
 
-Site basis: the consulting page states "Our swarm of Agents completed & tested 183 tickets before lunch. Six regressions were caught and fixed." This is the strongest candidate.
+## Dan's supplied firsthand material
 
-- **Problem and operating context:** [which codebase, how many agents, what decomposition, what caps]
-- **What I personally built or changed:** [the orchestrator, the judge, the merge step]
-- **What failed:** [the six regressions: what caught them, what the merge missed]
-- **Before and after measurements:** [tickets, wall-clock, spend, regression count, how measured]
-- **Diagram or screenshot:** [ ]
-- **What remains uncertain:** [ ]
-- **Organization may be named publicly:** [ ]
+The September 5 dictation reports a client using local models for sensitive data analysis and a frontier orchestrator passing access references, plus Dan's practice of comparing two to five model or persona attempts before a more demanding review. These are speaker recollections, not independently verified case studies. No client name, hardware model, measured savings, success rate or deployment certification is supplied.
 
-## Candidate 2: ensemble development and cross-team free agents
+For the local-processing story, the spoken description appears to include signed URLs passing through orchestration. Do not retroactively claim that deployment kept all bearer credentials outside the frontier model. The stronger dispatcher boundary in the handout is a proposed design, clearly separate from the recollection. The accumulating anomaly queue can itself contain sensitive data and needs retention limits. Keep it in workshop discussion unless implementation details and permission to disclose are available.
 
-Resume basis: Hotel Engine, introduced ensemble development and cross-team free agents while scaling 6 to 60+.
+For the council-of-experts workflow, say that contrasting approaches can expose useful tradeoffs. Do not claim that different prompts produce statistically independent failures, that a cheaper model won a particular contest, or that the judge proves correctness without recorded evidence.
 
-- **Problem and operating context:** [human parallelism before agent parallelism; what transferred]
-- **What I personally built or changed:** [ ]
-- **What failed:** [ ]
-- **Before and after measurements:** [ ]
-- **Diagram or screenshot:** [ ]
-- **What remains uncertain:** [ ]
-- **Organization may be named publicly:** [ ]
+## Cuts and corrections
 
-## Candidate 3: a multi-agent run compiled into a script
-
-Any engagement. Feeds slide 12's story slot.
-
-- **Problem and operating context:** [ ]
-- **What I personally built or changed:** [the script, its gate, how often it runs now]
-- **What failed:** [ ]
-- **Before and after measurements:** [cost per run before and after]
-- **Diagram or screenshot:** [ ]
-- **What remains uncertain:** [ ]
-- **Organization may be named publicly:** [ ]
-
-## Candidate 4: a provider outage or rate limit
-
-Any engagement. Feeds slide 9's story slot.
-
-- **Problem and operating context:** [ ]
-- **What I personally built or changed:** [ ]
-- **What failed:** [ ]
-- **Before and after measurements:** [ ]
-- **Diagram or screenshot:** [ ]
-- **What remains uncertain:** [ ]
-- **Organization may be named publicly:** [ ]
-
-## Already public, citable today
-
-- [One Weird Trick to Speed Up Feature Teams](../../../../src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx) and the [Fact Service](https://github.com/justsml/fact-service) project: decomposition by service boundary. Support for slide 5.
-- [Production AI is Terrifying](../../../../src/content/posts/2026-01-03--mastra-security-guardrails/index.mdx): boundaries enforced in code. Support for slide 9's data-boundary filters.
-- [LLM Connection Strings](../../../../src/content/posts/2026-01-30--llm-connection-strings/index.mdx): provider addressing. Support for slide 9's provider pool.
-
-## Story slots in the outline that these entries feed
-
-| Slide | Slot |
+| Dictated idea | Editorial treatment |
 | --- | --- |
-| 1 | The first time you ran two agents at the same problem |
-| 3 | A cheaper model that beat the frontier model in a tournament |
-| 5 | A decomposition that collided anyway |
-| 9 | A provider outage or rate limit the fan-out did or did not survive |
-| 12 | A multi-agent run compiled into a forty-line script |
+| Adaptive systems acronym joke | Omitted from the main script; title follows the preferred “Adaptive, agentic apps” |
+| OCR maximization and paperclips | Kept as a concrete incomplete-objective example; distinguish proxy gaming from honest but costly optimization |
+| ZIP extension | Corrected to ZIP+4; preserve leading zeros and country meaning |
+| Debouncing failed API calls | Distinguish debouncing, retry backoff and circuit breaking |
+| Different IPs for blocked APIs | Restrict example to authorized regional recovery; access denial and account quota are separate failure classes |
+| Fifty sandboxes and provider catalog | Cut shopping list; retain execution versus waiting and approved placement |
+| Ryan Dahl open-source durable-object release | Omitted because the project identity was not established |
+| Specific model generations and cheap/instant claims | Removed unsupported version and latency assertions |
+| Wi-Fi scanning, batteries and solar | Parked for a separate defensive-automation talk |
+| Route optimization and consultants | Retain only as a workload classification example; no claim an LLM replaces optimization expertise |
+| Smarter model as a semaphore | Replace with shared admission enforced outside the model |
+| Hundreds of candidate outputs | Start with two or three bounded attempts and a declared review budget |
+| Synthesize the best parts | Keep, but require revalidation of the combined candidate |
+
+## Portfolio boundary
+
+Adaptive owns unfamiliar operational failures and repair authority. Parallelization owns aggregate work accounting, long-running job recovery and independent solution attempts. Both end with a tested reusable procedure. The broader scheduled improvement loop remains in [Automating improvement from failure](../failure-improvement/packet.md).
+
+## Before presenting
+
+Rehearse timings including audience participation. Use the synthetic examples as written if there is no verified personal story. For any added client story, confirm disclosure permission and exact architecture; for any claimed improvement, bring the baseline, workload slice, failure cases and total costs. The talk is complete without adding private anecdotes.

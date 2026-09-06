@@ -1,25 +1,22 @@
-# Building Adaptive & Dynamic AI Systems: 30-minute standard
+# Adaptive, agentic apps: 30-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](adaptive-systems-40min.md). No Q&A in the timings.
+Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16. Hide the others in presenter preparation. [Complete talk track](../packets/adaptive-systems/script-30min.md).
 
-**Strategy.** Keep the planner, both scaling axes, the agent-builder, caps, the full demo, dynamic A/B, mirrored traffic, and AGENTS.md. Cut scoring-by-failure-class and the second loop; one sentence each.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 01:30 | 1 | The vendor renamed a field |
+| 01:30 to 03:00 | 2 | Recovery needs a definition of success |
+| 03:00 to 05:00 | 3 | Give the planner a bounded job |
+| 05:00 to 08:00 | 4 | Repair syntax; prove meaning |
+| 08:00 to 10:00 | 5 | The repair is a versioned artifact |
+| 10:00 to 12:30 | 6 | Make a plausible repair fail a test |
+| 12:30 to 14:30 | 7 | Known failures should stay boring |
+| 14:30 to 16:30 | 8 | Regional recovery has a contract |
+| 16:30 to 18:30 | 9 | A timeout leaves a question |
+| 18:30 to 22:30 | 10 | Walkthrough: one ingest, three decisions |
+| 22:30 to 24:30 | 11 | Show engineers what changed today |
+| 24:30 to 26:30 | 12 | Measure recovery, including its mistakes |
+| 26:30 to 28:30 | 14 | Let recurring discoveries become code |
+| 28:30 to 30:00 | 16 | The next surprise should cost less |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–2:00 | 1 | Different work, different compute | |
-| 2:00–3:30 | 2 | A static architecture hides a policy | |
-| 3:30–5:00 | 3 | Choose a strategy | |
-| 5:00–7:30 | 4 | The work planner produces a contract | |
-| 7:30–9:00 | 5 | Vertical scaling | |
-| 9:00–10:30 | 6 | Horizontal scaling | |
-| 10:30–13:00 | 7 | The agent-builder | |
-| 13:00–15:00 | 8 | Elastic compute | |
-| 15:00–16:30 | 9 | Confidence must be earned | |
-| 16:30–20:30 | 10 | Demo | Full sequence. |
-| 20:30–22:00 | 11 | Why did this request get this architecture? | Add slide 12 in one line: "score whole strategies by failure class, not one leaderboard." |
-| 22:00–24:00 | 13 | Dynamic A/B of strategies | |
-| 24:00–26:30 | 14 | Mirrored traffic and the tuning loop | |
-| 26:30–28:30 | 16 | What your AGENTS.md should include | Under "Ongoing", add slide 15's line: "compile known cases into deterministic tools." |
-| 28:30–30:00 | 17 | Autoscaling, but for cognition | |
-
-**Close.** Keep the question and the two-request recap.
+Cut dependencies are supplied as bridge sentences in the script. The five-minute walkthrough is retained for 15 minutes; the 30-minute version uses four minutes. Use the paper trace if there is no live runtime. End with slide 16, not a compressed tour of omitted slides.

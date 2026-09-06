@@ -1,23 +1,17 @@
-# Building Adaptive & Dynamic AI Systems
+# Adaptive, agentic apps
 
-## 50-word abstract
+## Short abstract (50 words)
 
-Why does a routine lookup receive the same architecture as a novel incident? Build a planner that selects models, tools, evidence branches, and verification within explicit limits. This talk separates runtime flexibility from uncontrolled autonomy, with concrete policies for escalation, evaluation, budget enforcement, and turning familiar work into deterministic tools.
+A vendor renames a field. Your ingest breaks. Can an agent investigate the change, propose a mapping and keep the job moving? This talk designs bounded recovery around semantic checks, versioned artifacts, resource limits and explicit uncertainty, so engineers can delegate investigation without quietly delegating permission to corrupt production data.
 
-## 150-word abstract
+## Standard abstract (100 words)
 
-A password-reset lookup and an intermittent WebSocket incident should not receive the same model, context, tools, and agent count. Yet many AI systems encode those choices as application constants. This talk designs a bounded runtime planner that allocates effort according to the task. We compare deeper single-agent work with parallel evidence gathering, turn agent topology into a validated plan, and ask what would justify escalation. Agreement is not proof, and confidence must be checked against actual outcomes. A deterministic demo selects among illustrative strategies, rejects insufficient budgets and deadlines, and routes consequential uncertainty to a human. Then we extend the design across requests: score whole strategies, qualify model changes, promote policy updates through regression gates, and replace recurring reasoning with tested tools. Attendees leave with a planner contract and an adoption path that starts from a measured baseline, preserving authority boundaries while moving useful architectural decisions into runtime control loops.
+API changes, unavailable providers and incomplete responses are ordinary integration problems. Adaptive, agentic apps can investigate unfamiliar failures and propose recovery strategies, provided their authority stays bounded. Following one ingest job, this session distinguishes a field rename from a semantic change, turns repairs into versioned mapping artifacts, and tests them against conflicting and missing data. It covers bounded retries, approved regional fallback, uncertain external outcomes, and reports that help engineers see what changed. Attendees leave with a recovery contract, failure fixtures, and a rollout sequence that begins in shadow mode and expands only from evidence about correctness, cost and intervention.
 
-## Audience
+## Outcomes
 
-Staff and principal engineers, AI architects, platform teams, and engineering leaders responsible for agent orchestration.
+- Distinguish a reversible mapping repair from an ambiguous semantic change.
+- Specify evidence, authority, resource caps and stop conditions for a recovery job.
+- Design versioned promotion, reconciliation and reporting before expanding automatic action.
 
-## Three takeaways
-
-- Choose between vertical effort, horizontal investigation, and deterministic paths using task evidence.
-- Specify a validated planner contract with resource, authority, and termination limits.
-- Evaluate and promote complete strategies without mistaking consensus or self-reported confidence for correctness.
-
-## Reviewer notes
-
-40 minutes, 18 slides, four-minute offline fixture demo. Systems design depth; assumes familiarity with tool-using agents. Distinct from parallelization alone: it includes dynamic topology, resource governors, observability, qualification, and policy promotion. Numerical demo costs and timings are fictional inputs. No actual infrastructure, purchasing, or recurring monitoring is configured.
+Audience: application and platform engineers. 16 slides, 40 minutes including a five-minute paper walkthrough; 15 and 30 minute routes available. Proposed architecture and synthetic fixtures, no live model or measured improvement claim. [Full submission packet](../../packets/adaptive-systems/packet.md).

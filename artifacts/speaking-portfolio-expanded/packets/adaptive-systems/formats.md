@@ -1,45 +1,39 @@
-# Formats: Building Adaptive & Dynamic AI Systems
+# Formats: Adaptive, agentic apps
 
-| Length | Format | Source |
-| --- | --- | --- |
-| 5–10 min | Lightning or live demo | Below |
-| 15 min | Lightning talk | [15-minute adaptation](../../outlines/adaptive-systems-15min-adaptation.md) |
-| 25–30 min | Standard session | [30-minute adaptation](../../outlines/adaptive-systems-30min-adaptation.md); drop slide 13 for 25 |
-| 40–45 min | Conference talk | [40-minute outline](../../outlines/adaptive-systems-40min.md) plus five minutes of questions |
-| 60–75 min | Workshop | Below |
+The refreshed 16-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows the [40-minute outline](../../outlines/adaptive-systems-40min.md). Legacy PPTX files remain superseded reference exports; use the HTML deck for this revision.
 
-## 5–10 minute lightning talk (slides)
-
-Seven minutes, four slides: 1, 4, 10, 17.
-
-| Time | Beat |
+| Slot | Preparation |
 | --- | --- |
-| 0:00–1:00 | Two requests, one architecture. |
-| 1:00–2:30 | The contract: evidence, DAG, budget, deadline, scopes, escalation. The planner proposes; a validator decides. |
-| 2:30–5:30 | Demo compressed: novel case, one cap, human gate. |
-| 5:30–7:00 | Autoscaling, but for cognition. |
+| 5 minutes | Read the lightning script below; show slides 1, 4, 10, 16 |
+| 10 minutes | Lightning script plus the five-minute paper walkthrough in demo.md |
+| 15 minutes | [Script](script-15min.md) and [route](../../outlines/adaptive-systems-15min-adaptation.md) |
+| 30 minutes | [Script](script-30min.md) and [route](../../outlines/adaptive-systems-30min-adaptation.md) |
+| 40 minutes | [Script](script-40min.md) and [outline](../../outlines/adaptive-systems-40min.md) |
+| 45 minutes | 40-minute route plus five minutes of Q&A |
+| 60 minutes | Workshop below |
+| 75 minutes | Workshop plus 15-minute peer review |
 
-## 5–10 minute live demo (AI Tinkerers format)
+## Five-minute lightning script
 
-The offline kit replays fixtures and does not qualify. A qualifying demo runs a real planner against two live requests: show the contract it emits, the validator rejecting an over-budget plan, the controller reserving spend, and a deadline cancelling a branch mid-flight with the trace explaining why. Five minutes, one terminal, one trace viewer. Requires a working planner and controller; the kit's `demo-logic.js` documents the intended policy.
+0:00 to 1:00, slide 1. The API still returns 200. Authentication works. The vendor's status page is green. Your ingest is broken because somebody renamed a field. If you work around B2B integrations, this is a very boring way to have a very expensive morning.
 
-## 60–75 minute workshop
+1:00 to 2:00, slide 4. A name resemblance is a hypothesis. It is not evidence that two fields mean the same thing. A postal code is not always a US ZIP code. Preserve leading zeros and country context. ZIP+4 has a four-digit extension, and throwing it away is a policy decision.
 
-Participants bring one workflow that currently uses a fixed architecture and leave with a contract, a strategy set, and a governor list for it.
+2:00 to 4:00, slide 10. Let us run the design against three events. The rename has contract evidence and passes both positive and negative fixtures. Our policy permits a canary of that mapping version. The job continues for matching records. The status change lacks semantic evidence. The job isolates affected records, reports what remains incomplete, and gives an owner the samples and the question they need to answer. The provider timeout has an uncertain external outcome. The controller queries the saved job ID instead of submitting another extraction. Where it cannot establish status, it retains the unresolved operation. All three are valid outcomes. If your dashboard only has success and failure, it will hide the most interesting operational state.
 
-**Prerequisites sent in advance:** a laptop, one workflow description with two contrasting request examples (one routine, one hard), and current per-request cost and latency if known.
+4:00 to 5:00, slide 16. Return to the field that changed overnight. We did not predict its spelling. We did define what had to remain true, what evidence a repair needed, and how far the application could go without us. That is the promise I care about. The next surprise costs less attention because the application can do the investigation, preserve the evidence, and either recover within policy or hand us a useful unresolved question. Choose one recurring integration failure. Give an agent a bounded way to investigate it, a test that can reject its proposal, and a place to record what happened. That is enough to start.
 
-| Time | Block | What happens |
+Pause on the failure states and point to the corresponding diagram. Rehearse once with a timer; these are target slots, not measured delivery times.
+
+## Sixty-minute workshop
+
+| Minutes | Activity | Output |
 | --- | --- | --- |
-| 0:00–0:10 | Opening | Slides 1–2. Each participant writes their two requests on cards and the architecture both currently receive. |
-| 0:10–0:25 | Strategy, not model | Slide 3. For each request card, participants name the full strategy: model, tools, topology, verification, stop condition. Pairs compare. |
-| 0:25–0:45 | The contract | Slide 4. Participants fill the twelve-line contract for the hard request. Facilitator reviews three on the board for missing evidence requirements or unbounded scopes. |
-| 0:45–0:55 | Scaling axes | Slides 5–7 compressed. Which request needs a deeper attempt, which needs independent branches, and which needs neither? |
-| 0:55–1:05 | Governors | Slide 8. Participants list every cap their controller must enforce, then mark which currently live only in a prompt. |
-| 1:05–1:15 | Demo | Slide 10 at full length. Participants map their contract onto the three fixture strategies. |
-| 1:15–1:25 | AGENTS.md | Slide 16. Draft the three horizons for the workflow. Facilitator checks each "future" item has an owner and activation condition. |
-| 1:25–1:35 | Share-out and close | Three participants present their contract and the cap that surprised them. Slide 17. |
+| 0 to 8 | Opening problem and baseline | One recurring workload |
+| 8 to 20 | Write the contract using contracts.md | Goal, evidence, budget, authority, stop |
+| 20 to 35 | Walk the failure fixtures in demo.md | Annotated state transitions |
+| 35 to 47 | Pairs attack the design with a restart or ambiguous outcome | One rejected unsafe transition |
+| 47 to 57 | Define validation and a narrow rollout | Acceptance gates and rollback owner |
+| 57 to 60 | Each participant chooses a first change | One bounded experiment |
 
-**Facilitation notes.** The governors block usually reveals that budgets exist only as prompt text. Let that discussion run. Skip dynamic A/B and mirrored traffic in the workshop; hand out the slides.
-
-**Artifacts participants leave with:** the contract schema, the strategy card, the governor checklist, the AGENTS.md skeleton.
+For 75 minutes, insert a 15-minute peer review before the final three-minute close. Bring a workload description with sensitive data removed. No paid accounts or live model access required. The 10-minute format is a narrated design demonstration; venues requiring a functioning live AI demo need a separately built and validated implementation.

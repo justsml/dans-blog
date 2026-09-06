@@ -1,19 +1,15 @@
-# Building Adaptive & Dynamic AI Systems: 15-minute lightning
+# Adaptive, agentic apps: 15-minute adaptation
 
-Full deck, unlisted slides hidden. Slide numbers refer to [the full notes](adaptive-systems-40min.md). No Q&A in the timings.
+Keep slides 1, 2, 3, 4, 6, 10, 16. Hide the others in presenter preparation. [Complete talk track](../packets/adaptive-systems/script-15min.md).
 
-**Strategy.** Strategy over model, the contract, the agent-builder, caps, a compressed demo, mirrored traffic, AGENTS.md horizons. Vertical and horizontal scaling become one sentence.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 01:00 | 1 | The vendor renamed a field |
+| 01:00 to 02:00 | 2 | Recovery needs a definition of success |
+| 02:00 to 03:30 | 3 | Give the planner a bounded job |
+| 03:30 to 06:00 | 4 | Repair syntax; prove meaning |
+| 06:00 to 08:00 | 6 | Make a plausible repair fail a test |
+| 08:00 to 13:00 | 10 | Walkthrough: one ingest, three decisions |
+| 13:00 to 15:00 | 16 | The next surprise should cost less |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–1:30 | 1 | Different work, different compute | Drop the story. |
-| 1:30–3:00 | 3 | Choose a strategy, not merely a model | |
-| 3:00–5:00 | 4 | The work planner produces a contract | |
-| 5:00–7:00 | 7 | The agent-builder | Bridge in: "Deepen one attempt or add independent ones; slides 5 and 6 say when. Here is who assembles the team." |
-| 7:00–8:30 | 8 | Elastic compute | |
-| 8:30–11:00 | 10 | Demo, compressed | Novel case, one cap, human gate. |
-| 11:00–12:30 | 14 | Mirrored traffic | Bridge in: "Every run is traced and scored; that trace is what a new model is measured against." |
-| 12:30–14:00 | 16 | What your AGENTS.md should include | Three horizons; skip the excerpt. |
-| 14:00–15:00 | 17 | Autoscaling, but for cognition | |
-
-**Close.** The closing question; skip the two-request recap.
+Cut dependencies are supplied as bridge sentences in the script. The five-minute walkthrough is retained for 15 minutes; the 30-minute version uses four minutes. Use the paper trace if there is no live runtime. End with slide 16, not a compressed tour of omitted slides.

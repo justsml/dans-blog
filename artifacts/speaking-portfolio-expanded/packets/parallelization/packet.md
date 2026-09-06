@@ -1,75 +1,48 @@
-# Talk packet: Rethinking Parallelization in the Agentic Era
+# Talk packet: Rethinking parallelization in the agentic era
 
-Outline: [40 min](../../outlines/parallelization-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+[Formats](formats.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/parallelization.html)
 
 ## Titles
 
-- **Primary:** Rethinking Parallelization in the Agentic Era
-- Compete, Decompose, Constrain, Distribute, Compile
-- Parallel Used to Mean Cores
-- Rent Reasoning, Own the Result
+- Rethinking parallelization in the agentic era
+- Four tool calls, forty jobs
+- Count the work below the tool call
 
-## Abstracts
+## Short abstract (50 words)
 
-### 50 words
+Four tool calls can launch forty image jobs. Local limits all pass while the customer budget disappears. This talk follows hidden fan-out through shared admission, durable state and restart recovery, then applies the same discipline to competing agent solutions: bounded attempts, independent checks, explicit synthesis and measured cost per outcome.
 
-Parallelism used to mean one job across many cores. With agents the unit is a whole attempt, and the constraints are dollars and minutes. This talk covers five new axes: competing solutions, structured decomposition, hard caps, fan-out across clouds, and compiling the winning path into fast, dumb, deterministic code.
+## Standard abstract (101 words)
 
-### 100 words
+Agent parallelism can hide expensive work below a harmless-looking tool call. A batch of ten images multiplied by four concurrent callers creates forty provider jobs, even when every local limit works. This session separates tool slots, provider concurrency, rate limits, entitlements and spend, then follows a batch through lost responses, restarts and notification failures. It also explores parallel attempts at one engineering problem using contrasting priorities, a fixed rubric and verification after synthesis. Attendees leave with an admission protocol, durable job state machine and candidate-review contract, plus a way to compare parallel execution against one competent attempt without ignoring coordination costs.
 
-For thirty years parallelization meant one job, many cores, shared memory, and locks. Agents change the unit: the thing you run in parallel is now a whole attempt at the problem, and the constraints are dollars and minutes. This talk lays out five axes. Compete: many solutions across models or agent profiles, judged by a rubric the judge did not write. Decompose: workers with one question, one artifact, one exit. Constrain: caps on time and money as inputs, with honest stopping. Distribute: providers as a pool inside data boundaries. Compile: turn the discovered path into a script. Each with its coordination tax.
+## Extended abstract (209 words)
 
-### 250 words
+Agent parallelism can hide expensive work below a harmless-looking tool call. A batch of ten images multiplied by four concurrent callers creates forty provider jobs, even when every local limit works. This session separates tool slots, provider concurrency, rate limits, entitlements and spend, then follows a batch through lost responses, restarts and notification failures. It also explores parallel attempts at one engineering problem using contrasting priorities, a fixed rubric and verification after synthesis. Attendees leave with an admission protocol, durable job state machine and candidate-review contract, plus a way to compare parallel execution against one competent attempt without ignoring coordination costs.
 
-Parallelization used to mean one job split across many cores, with shared memory and a great deal of care about locks. Agents change the unit. The thing you run in parallel is now a whole attempt at the problem: a different model, a different persona, a different decomposition. The constraints change too, from cores and memory to dollars and minutes.
+The first worked example exposes the multiplication beneath a batch tool. We reserve capacity before dispatch, distinguish logical items from attempts, and keep remote jobs outstanding when a local worker disappears. A second failure shows why notification retries must never regenerate expensive outputs.
 
-This talk organizes the new space into five axes. Compete: run the same task across three models or three agent profiles, minimal-diff, idiomatic, performance, and score the results with a rubric a human wrote or a deterministic check. Diversity across models catches errors that samples from one model share. Decompose: split by evidence source or module ownership, give each worker one question, one artifact, and one exit condition, and treat shared files as the locking problem in a new costume. Constrain: make time and money inputs to the planner, reserve spend before fan-out, cancel on deadline, and stop honestly. This is the capability business people dreamed about: a problem and a budget in, a solution or an honest stop out. Distribute: providers as a pool, data boundaries as hard filters, local models for the cheap and private parts. Compile: when a parallel investigation finds a reproducible cause, encode it as a script, a test, or a tool, and stop paying for the reasoning.
-
-A capped three-way tournament on a flaky test shows two eligible attempts and one honest stop. Every axis carries its coordination tax. Start with caps.
+The back half changes the unit of work from image tasks to complete design attempts. A minimalist, a maintainer and a security/performance reviewer work from common requirements. Executable gates reject invalid candidates before judgment. Combining useful ideas produces a new candidate that must be tested again. The talk closes with total cost per accepted result, critical-path latency and a procedure worth turning into deterministic code.
 
 ## Learning outcomes
 
-Attendees will be able to:
-
-1. Choose between competing attempts and decomposition for a given task by reasoning about correlated failure modes and merge cost.
-2. Specify budget, deadline, and concurrency caps as planner inputs, with reservation before fan-out and honest stopping behavior.
-3. Identify a recurring agent workflow and compile its discovered path into a deterministic artifact with a promotion gate.
+1. Locate hidden fan-out and enforce aggregate limits at dispatch.
+2. Specify durable job and notification state with honest uncertain outcomes.
+3. Compare independent designs using fixed acceptance gates and revalidate any synthesis.
 
 ## Audience and prerequisites
 
-Staff and principal engineers, distributed-systems practitioners, AI architects, and platform teams. Familiarity with agent orchestration and with at least one CI or test harness. Firsthand stories carry this talk; it is a practice talk.
+Application, platform and staff engineers building tool-using agents. Familiarity with APIs, asynchronous jobs and production failure handling helps. No specific model, framework or cloud account required.
 
-## Practical takeaways
+## Reviewer notes
 
-- The five-axis map with the coordination tax for each.
-- A tournament template: task, three profiles, cap, judge, result columns.
-- The "caps first, then one competitor, then compile" adoption order.
+16 slides; 15-, 30- and 40-minute routes; 60- or 75-minute workshop. Synthetic paper walkthroughs, no measured production gains or live agent demonstration claimed. Existing browser deck updated; old PPTX exports superseded. References support individual mechanisms, not a benchmark of the proposed architecture. No vendor pitch.
 
-## Not a product pitch
+## Audience adaptations
 
-The talk cites Anthropic's research-system report and test-time compute research. It names no orchestration product or cloud. There is no deck or demo yet; the tournament numbers are illustrative.
-
-## References
-
-- Anthropic (June 2025). [How we built our multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system).
-- Snell, Lee, Xu, Kumar (2024). [Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters](https://arxiv.org/abs/2408.03314).
-- Anthropic (2024). [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents).
-- Anthropic (January 2026). [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents).
-
-## Audience-specific abstracts (100 words each)
-
-### Engineering practitioner
-
-The thing you run in parallel is now a whole attempt at the problem, and the constraints are dollars and minutes. This session covers five axes with code-level detail: competing attempts across models and agent profiles with a human-written judge; decomposition with one question, one artifact, one exit per worker; caps as planner inputs with atomic spend reservation and deadline cancellation; provider pools inside data boundaries; and compiling the winning path into a script with a promotion gate. A capped three-way tournament on a flaky test shows two eligible attempts and one honest stop. Every axis comes with its coordination tax.
-
-### Engineering leadership and product
-
-"Solve it for under five dollars in under three minutes" is now a valid specification, and most teams cannot state the maximum an agent run is allowed to cost. This talk gives leaders the five ways agent work parallelizes and the tax each one charges: tokens, merge effort, per-provider evals, human attention. It explains why caps come first, why competing attempts beat decomposition on uncertain problems, and how the payoff arrives when a solved problem becomes a script nobody pays to reason about again. The adoption order is concrete: caps, one competitor, compile.
-
-### Education and instructional design
-
-Adapted for education technologists: when an AI system tackles a hard question for a learner, it can try several approaches at once, compare them, and stop when a budget runs out. This session explains those mechanics in plain terms, why comparing attempts catches errors one attempt misses, why time and cost limits belong in the design rather than the bill, and how a solved case becomes a fast deterministic check the next student benefits from. No code. The goal is a vocabulary for asking vendors how their systems allocate effort and what happens when they run out of it.
-
-### Executive and general technology
-
-Parallel computing used to mean faster hardware. With AI agents it means running several complete attempts at a problem, under a budget you set, and keeping the one that passes. This talk explains the five ways that works, the cost each one carries, and the one that pays for the rest: turning a solved problem into ordinary code so the expensive reasoning never runs again. It closes with the question most organizations cannot yet answer, the maximum an AI task is allowed to cost, and the order to fix it in.
+| Audience | Lead with | Retain |
+| --- | --- | --- |
+| Practitioners | The failure trace | Contracts and negative tests |
+| Engineering leadership | Cost of accepted outcomes and intervention | Ownership and rollout limits |
+| Education technologists | An ingest or media-generation workflow | Data meaning and review |
+| General technology | What happens after an unexpected failure | One concrete example and an honest stop |

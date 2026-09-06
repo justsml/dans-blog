@@ -1,19 +1,17 @@
-# Rethinking Parallelization in the Agentic Era: 15-minute lightning
+# Rethinking parallelization in the agentic era: 15-minute adaptation
 
-Outline only; no deck yet. Slide numbers refer to [the full notes](parallelization-40min.md). No Q&A in the timings.
+Keep slides 1, 3, 4, 8, 10, 11, 12, 13, 16. Hide the others. [Complete script and bridges](../packets/parallelization/script-15min.md). Both execution parallelism and independent candidate review remain in this route.
 
-**Strategy.** The five axes, one slide each for compete, decompose, and constrain, the tournament table, compile. Distribute becomes one sentence.
+| Time | Slide | Beat |
+| --- | --- | --- |
+| 00:00 to 01:00 | 1 | Four calls. Forty images. |
+| 01:00 to 02:00 | 3 | Tool slots hide downstream work |
+| 02:00 to 04:00 | 4 | Put admission below every caller |
+| 04:00 to 05:30 | 8 | A durable job survives the conversation |
+| 05:30 to 07:30 | 10 | Walkthrough: restart the batch |
+| 07:30 to 09:30 | 11 | Parallel attempts explore different answers |
+| 09:30 to 11:30 | 12 | Make the judge earn its vote |
+| 11:30 to 13:00 | 13 | Synthesis creates a new candidate |
+| 13:00 to 15:00 | 16 | Count the work below the tool call |
 
-| Time | Slide | Section | Bridge or cut |
-| --- | ---: | --- | --- |
-| 0:00–1:30 | 1 | Parallel used to mean cores | Keep the story; it is the hook. |
-| 1:30–3:00 | 2 | Five new axes | |
-| 3:00–5:00 | 3 | Compete across models | Add slide 4 in one line: "profiles are a cheaper way to get diversity than models." |
-| 5:00–6:30 | 5 | Decompose | Drop the story. |
-| 6:30–8:30 | 7 | Constrain: time and money are inputs | Keep the show of hands. Add slide 9 in one line: "and fan out across providers inside data boundaries." |
-| 8:30–11:00 | 10 | Tournament, table only | |
-| 11:00–13:00 | 12 | Compile | Keep the story. |
-| 13:00–14:00 | 15 | Start with one axis | Skip the write; say "caps first." |
-| 14:00–15:00 | 16 | Rent reasoning; own the result | |
-
-**Close.** The closing question.
+The paper walkthrough is 2 minutes. Do not substitute the old generic caps fixture for restart recovery. Timings include stage directions, not Q&A.

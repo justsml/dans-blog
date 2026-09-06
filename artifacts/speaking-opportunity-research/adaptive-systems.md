@@ -1,13 +1,13 @@
-# Deep research prompt: Building Adaptive & Dynamic AI Systems
+# Deep research prompt: Adaptive, agentic apps
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `adaptive-systems`
-- Title: Building Adaptive & Dynamic AI Systems
+- Title: Adaptive, agentic apps
 - Audience: Staff engineers, AI architects, platform teams, and developers building agent orchestration.
-- Thesis: Choose bounded strategies according to uncertainty, task type, budget, and authority; escalate using evidence instead of treating agent confidence as a guarantee.
+- Thesis: Investigate unfamiliar integration failures, validate versioned repairs, and recover within externally enforced authority, cost and data boundaries.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
 - Source material: [CFP or outline](../speaking-portfolio-expanded/engineering/adaptive-systems/CFP.md)
 
@@ -26,7 +26,7 @@ Search architecture conferences and AI engineering programs. Inspect schedules f
 
 ## Positioning and fit boundaries
 
-Separate this talk from parallelization: its focus is policy for selecting and changing strategy. No need for a research novelty claim or a live paid model demo. Look for tracks receptive to explicit limits and operational detail.
+Separate this talk from parallelization: its focus is fault tolerance, semantic repair and operational recovery. No need for a research novelty claim or a live paid model demo. Look for tracks receptive to explicit limits and operational detail.
 
 ## Research assignment
 

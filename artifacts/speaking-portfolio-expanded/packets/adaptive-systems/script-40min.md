@@ -1,22 +1,8 @@
-# Adaptive, agentic apps
+# Adaptive, agentic apps: 40-minute presenter script
 
-Recover from unexpected failures without inventing new permissions.
+Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16. Rehearsal target includes pauses, worked examples and interaction. Read the prose as the talk track; perform the stage directions instead of reading them aloud. Short versions compress examples, not delivery speed. No Q&A included.
 
-Updated 2026-09-05 from Dan's dictated notes. 40 minutes, 16 slides, no Q&A. Add five minutes for a 45-minute booking. Timings include the specified walkthroughs and audience exercises. Speaker text is a rehearsal talk track, not a claim of 40 minutes of continuous scripted speech.
-
-[Presenter scripts](../packets/adaptive-systems/script-40min.md) · [Contracts](../packets/adaptive-systems/contracts.md) · [Walkthrough](../packets/adaptive-systems/demo.md) · [Evidence](../packets/adaptive-systems/evidence-bank.md)
-
-Scope: proposed architecture; synthetic walkthroughs and illustrative costs; no measured reliability or speedup claim. Say this once at the opening.
-
-## 1. The vendor renamed a field
-
-00:00 to 02:00 · warm
-
-<!-- image: Editorial flat vector illustration of the vendor renamed a field, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Yesterday: zip
-> Today: postal_code
-> Your ingest stops.
+## 00:00 to 02:00: slide 1, The vendor renamed a field
 
 The API still returns 200. Authentication works. The vendor's status page is green. Your ingest is broken because somebody renamed a field. If you work around B2B integrations, this is a very boring way to have a very expensive morning.
 
@@ -24,17 +10,9 @@ I want to talk about adaptive, agentic apps: applications that can investigate a
 
 This is a proposed design with synthetic examples, not a claim that an agent can repair arbitrary APIs. We will follow one ingest job through a rename, a semantic change, and a provider failure.
 
-Stage direction: Ask who has seen a successful HTTP response carry a breaking change. Take one brief example; return to the ingest job.
+Delivery: Ask who has seen a successful HTTP response carry a breaking change. Take one brief example; return to the ingest job.
 
-## 2. Recovery needs a definition of success
-
-02:00 to 04:00 · warm
-
-<!-- image: Editorial flat vector illustration of recovery needs a definition of success, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Preserve meaning
-> Bound spend and time
-> Keep uncertain records visible
+## 02:00 to 04:00: slide 2, Recovery needs a definition of success
 
 Imagine telling an OCR agent: get the highest quality extraction, prefer our cheap provider, make it so. What happens when a slightly better result costs a hundred times more? What happens when the score improves if the system quietly drops difficult pages?
 
@@ -42,16 +20,9 @@ Neither behavior needs a science-fiction motive. We supplied an incomplete objec
 
 Define acceptable field accuracy on representative labeled documents, retain page coverage, and set resource ceilings. If no approved route meets the quality floor inside those ceilings, return an explicit incomplete result. The agent cannot lower the floor or conceal rejected records to declare victory.
 
-Stage direction: Write an OCR objective with a quality floor, coverage requirement, spend ceiling and incomplete outcome. Explain which is a hard constraint.
+Delivery: Write an OCR objective with a quality floor, coverage requirement, spend ceiling and incomplete outcome. Explain which is a hard constraint.
 
-## 3. Give the planner a bounded job
-
-04:00 to 06:00 · steady
-
-<!-- image: Editorial flat vector illustration of give the planner a bounded job, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Observe → propose → validate
-> Execute → verify → record
+## 04:00 to 06:00: slide 3, Give the planner a bounded job
 
 The model gets room to investigate. It can inspect approved samples, compare a contract, consult a vendor changelog, and propose a mapping. A controller checks that proposal before anything changes.
 
@@ -59,16 +30,9 @@ The contract names the goal, available evidence, permitted actions, deadline, bu
 
 Keep the ordinary path simple. A known mapping runs as code. An unexpected mismatch opens a bounded investigation. We do not need to rent a committee every time a CSV arrives.
 
-Stage direction: Draw the boundary between planner and controller. Place schema reads inside; place deployment credentials outside.
+Delivery: Draw the boundary between planner and controller. Place schema reads inside; place deployment credentials outside.
 
-## 4. Repair syntax; prove meaning
-
-06:00 to 09:00 · build
-
-<!-- image: Editorial flat vector illustration of repair syntax; prove meaning, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> zip → postal_code: investigate
-> status: true → pending: stop
+## 06:00 to 09:00: slide 4, Repair syntax; prove meaning
 
 A name resemblance is a hypothesis. It is not evidence that two fields mean the same thing. A postal code is not always a US ZIP code. Preserve leading zeros and country context. ZIP+4 has a four-digit extension, and throwing it away is a policy decision.
 
@@ -76,17 +40,9 @@ A Boolean status becoming an enum is harder. Does true mean active, eligible, ve
 
 Let the system propose a reversible field mapping when evidence supports semantic equivalence. Quarantine ambiguous records. An unexplained business-state transition goes to an owner. Automatic recovery is useful precisely because it has somewhere honest to stop.
 
-Stage direction: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each case.
+Delivery: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each case.
 
-## 5. The repair is a versioned artifact
-
-09:00 to 11:00 · steady
-
-<!-- image: Editorial flat vector illustration of the repair is a versioned artifact, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Input fingerprint + mapping version
-> Evidence + tests + rollback
-> No silent mutation of the database
+## 09:00 to 11:00: slide 5, The repair is a versioned artifact
 
 Have the agent produce a mapping artifact, not a paragraph saying it fixed things. Tie it to the observed input contract and a parent version. Include the field transformations, rejected cases, evidence references and validation results.
 
@@ -94,18 +50,9 @@ A narrow mapping adjustment can pass a preauthorized promotion policy. A databas
 
 Keep the source records so you can replay them. Keep the old mapping so you can restore it. Rollback changes future processing; it does not magically undo records already written downstream. Those need reconciliation.
 
-Stage direction: Walk the mapping contract in contracts.md. Point to the parent version, activation scope and replay identifier.
+Delivery: Walk the mapping contract in contracts.md. Point to the parent version, activation scope and replay identifier.
 
-## 6. Make a plausible repair fail a test
-
-11:00 to 14:00 · build
-
-<!-- image: Editorial flat vector illustration of make a plausible repair fail a test, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Leading zeros
-> Missing country
-> Conflicting old and new fields
-> Unknown business state
+## 11:00 to 14:00: slide 6, Make a plausible repair fail a test
 
 Here is where we try to embarrass the repair before a customer does. Test the renamed field, but also send both names with conflicting values. Send a missing field, a null, a leading zero, and a value from another country.
 
@@ -113,17 +60,9 @@ The agent should not author the only examples that judge its own work. Keep regr
 
 Release to a narrow approved slice, compare accepted and quarantined records, and watch downstream invariants. A high success count is worthless if the denominator quietly shrank.
 
-Stage direction: Run the four paper fixtures in demo.md. Ask the audience to reject the conflicting-field fixture before revealing its expected outcome.
+Delivery: Run the four paper fixtures in demo.md. Ask the audience to reject the conflicting-field fixture before revealing its expected outcome.
 
-## 7. Known failures should stay boring
-
-14:00 to 16:00 · steady
-
-<!-- image: Editorial flat vector illustration of known failures should stay boring, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> 429: respect limits
-> 503: bounded retry or approved fallback
-> 401 / 403: investigate authority
+## 14:00 to 16:00: slide 7, Known failures should stay boring
 
 A familiar transient error usually belongs in ordinary retry code. Use bounded backoff with jitter, respect applicable retry guidance, and give the entire operation one retry budget. Three nested layers each retrying independently can multiply traffic during an outage.
 
@@ -131,17 +70,9 @@ Debouncing combines bursts of events. Backoff spaces retries. A circuit breaker 
 
 The agent becomes useful when the failure does not match an approved playbook, or when it must assemble evidence to choose among permitted recovery routes. It can recommend lowering concurrency. The scheduler performs the change. An access denial is not permission to hunt for an IP address that gets through.
 
-Stage direction: Classify 429, 503 and 403. Explain why retrying an operation with side effects requires an idempotency or reconciliation plan.
+Delivery: Classify 429, 503 and 403. Explain why retrying an operation with side effects requires an idempotency or reconciliation plan.
 
-## 8. Regional recovery has a contract
-
-16:00 to 19:00 · build
-
-<!-- image: Editorial flat vector illustration of regional recovery has a contract, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Approved regions only
-> Dependency health + workload probes
-> Residency, capacity and deadline checks
+## 16:00 to 19:00: slide 8, Regional recovery has a contract
 
 A regional failure might justify moving work. A status page is one input. Probe the dependency from an approved alternative and check whether the whole path works, including storage, credentials and callbacks.
 
@@ -149,16 +80,9 @@ The next region with the lowest latency is only a candidate. Data residency, acc
 
 Give the planner a catalog of permitted destinations and operations. Let it choose within that catalog. Provisioning tools enforce instance classes, leases and teardown. Otherwise a recovery experiment can become an infrastructure bill with a very creative explanation.
 
-Stage direction: Compare an approved nearby region with an unapproved faster region. Have the audience choose and justify the allowed action.
+Delivery: Compare an approved nearby region with an unapproved faster region. Have the audience choose and justify the allowed action.
 
-## 9. A timeout leaves a question
-
-19:00 to 21:00 · steady
-
-<!-- image: Editorial flat vector illustration of a timeout leaves a question, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Did it fail?
-> Or did the response disappear?
+## 19:00 to 21:00: slide 9, A timeout leaves a question
 
 Suppose the provider accepted our OCR job and charged for it, then the connection broke. Launching the same job elsewhere might recover latency and duplicate both the work and the charge.
 
@@ -166,17 +90,9 @@ Record an operation identity before dispatch. Retain provider job IDs. Use provi
 
 A deadline stops further dispatch. It can request cancellation where cancellation exists. It does not reverse a side effect already performed. The job ledger needs to preserve that uncertainty, including outstanding financial reservations, until we know what happened.
 
-Stage direction: Walk a lost-response timeline. Mark the point at which the local process knows less than the provider.
+Delivery: Walk a lost-response timeline. Mark the point at which the local process knows less than the provider.
 
-## 10. Walkthrough: one ingest, three decisions
-
-21:00 to 26:00 · peak
-
-<!-- image: Editorial flat vector illustration of walkthrough: one ingest, three decisions, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Rename → validated mapping
-> Unknown status → quarantine
-> Lost response → reconcile
+## 21:00 to 26:00: slide 10, Walkthrough: one ingest, three decisions
 
 Let us run the design against three events. The rename has contract evidence and passes both positive and negative fixtures. Our policy permits a canary of that mapping version. The job continues for matching records.
 
@@ -186,18 +102,9 @@ The provider timeout has an uncertain external outcome. The controller queries t
 
 All three are valid outcomes. If your dashboard only has success and failure, it will hide the most interesting operational state.
 
-Stage direction: Use demo.md as a five-minute paper walkthrough. Allocate one minute to each event and two minutes to decisions and questions. No live agent claim.
+Delivery: Use demo.md as a five-minute paper walkthrough. Allocate one minute to each event and two minutes to decisions and questions. No live agent claim.
 
-## 11. Show engineers what changed today
-
-26:00 to 28:00 · steady
-
-<!-- image: Editorial flat vector illustration of show engineers what changed today, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Promoted changes and scope
-> Quarantined records and reasons
-> Outstanding jobs and reserved spend
-> Owner, evidence and next action
+## 26:00 to 28:00: slide 11, Show engineers what changed today
 
 The daily report should help an engineer decide where to look. Rank unresolved semantic changes above routine retries. Show the number of records affected, the mapping versions in use, the evidence for each promotion and the outstanding external operations.
 
@@ -205,17 +112,9 @@ Log observable decisions and artifacts. We need the inputs to a policy decision,
 
 Urgent problems should page through existing thresholds. A daily digest is for accumulated observations and lower-priority drift. Avoid making an agent the sole judge of whether its own failure deserves attention.
 
-Stage direction: Read the sample report in contracts.md. Identify the one item that needs an owner today.
+Delivery: Read the sample report in contracts.md. Identify the one item that needs an owner today.
 
-## 12. Measure recovery, including its mistakes
-
-28:00 to 30:00 · build
-
-<!-- image: Editorial flat vector illustration of measure recovery, including its mistakes, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Correct recovery rate
-> Silent corruption and false repair
-> Time, cost and human intervention
+## 28:00 to 30:00: slide 12, Measure recovery, including its mistakes
 
 Compare this design with the existing static mapping and retry policy on the same recorded incidents. Measure recovery, but also false repairs, missing records, cost, elapsed time and human corrections.
 
@@ -223,17 +122,9 @@ A system that turns obvious failures into plausible wrong data has made operatio
 
 Start in shadow mode with authorized data: propose artifacts without applying them. Then permit a narrow reversible change class. Expand authority only when the evidence supports that class of action.
 
-Stage direction: Ask what metric would expose a system that silently drops ten percent of input. Add it to the scorecard.
+Delivery: Ask what metric would expose a system that silently drops ten percent of input. Add it to the scorecard.
 
-## 13. Keep private data out of the planner
-
-30:00 to 32:00 · build
-
-<!-- image: Editorial flat vector illustration of keep private data out of the planner, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Opaque job reference
-> Trusted worker resolves access
-> Allowlisted status returns
+## 30:00 to 32:00: slide 13, Keep private data out of the planner
 
 An optional architecture for sensitive processing separates orchestration from payload access. The frontier planner requests a job using an opaque reference. A trusted dispatcher checks the request and grants the local worker scoped access. The worker processes the data and stores the result in approved storage.
 
@@ -241,17 +132,9 @@ Return only an allowlisted status or summary to the planner. Prompts, tool resul
 
 A signed download URL is a credential. Giving it to a model while asking the model not to use it does not isolate the data. Keep those capabilities outside its context when payload separation is the requirement.
 
-Stage direction: Optional: use Dan's client account only as an unverified, anonymized recollection. Draw the proposed strengthened boundary from contracts.md; do not present it as the client's audited implementation.
+Delivery: Optional: use Dan's client account only as an unverified, anonymized recollection. Draw the proposed strengthened boundary from contracts.md; do not present it as the client's audited implementation.
 
-## 14. Let recurring discoveries become code
-
-32:00 to 34:00 · steady
-
-<!-- image: Editorial flat vector illustration of let recurring discoveries become code, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Runtime: recover within current policy
-> Offline: evaluate a proposed policy change
-> Known case: run the tested adapter
+## 32:00 to 34:00: slide 14, Let recurring discoveries become code
 
 There are two loops. The runtime loop serves this job inside current limits. The improvement loop proposes a reusable adapter, a revised threshold, or a better investigation strategy, then evaluates it before promotion.
 
@@ -259,18 +142,9 @@ This is where the system becomes less expensive to operate. Once a mapping is un
 
 New models can be qualified against the same incidents and held-out cases without inheriting new permissions. Keep old strategy versions for rollback. The detailed improvement loop belongs in the companion failure-improvement talk; here we need the boundary between a local recovery and a policy change.
 
-Stage direction: Name one observed repair that deserves a deterministic adapter and one that should remain a human decision.
+Delivery: Name one observed repair that deserves a deterministic adapter and one that should remain a human decision.
 
-## 15. Start with one reversible failure class
-
-34:00 to 38:00 · land
-
-<!-- image: Editorial flat vector illustration of start with one reversible failure class, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Observe first
-> Propose in shadow
-> Permit a narrow canary
-> Expand from measured outcomes
+## 34:00 to 38:00: slide 15, Start with one reversible failure class
 
 Pick one integration that already costs your team time. Write down the invariant you refuse to violate, the evidence that would justify a repair, the allowed action, and the stop condition.
 
@@ -278,17 +152,9 @@ Run historical incidents through it. Include the failures where the correct answ
 
 The practical question is how much investigation we can delegate while preserving the meaning of our data. That is a much more useful engineering question than whether the system feels autonomous.
 
-Stage direction: Give attendees 90 seconds to fill the recovery card in contracts.md, then compare two answers for one minute.
+Delivery: Give attendees 90 seconds to fill the recovery card in contracts.md, then compare two answers for one minute.
 
-## 16. The next surprise should cost less
-
-38:00 to 40:00 · land
-
-<!-- image: Editorial flat vector illustration of the next surprise should cost less, dark slate background, one amber accent, generous negative space, no text, no logos. -->
-
-> Investigate the unfamiliar
-> Verify the repair
-> Remember the known case
+## 38:00 to 40:00: slide 16, The next surprise should cost less
 
 Return to the field that changed overnight. We did not predict its spelling. We did define what had to remain true, what evidence a repair needed, and how far the application could go without us.
 
@@ -296,4 +162,4 @@ That is the promise I care about. The next surprise costs less attention because
 
 Choose one recurring integration failure. Give an agent a bounded way to investigate it, a test that can reject its proposal, and a place to record what happened. That is enough to start.
 
-Stage direction: Pause on the recovery card. Close with the final paragraph; do not reopen the provider catalog.
+Delivery: Pause on the recovery card. Close with the final paragraph; do not reopen the provider catalog.
