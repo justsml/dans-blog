@@ -4,7 +4,7 @@ Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evid
 
 [Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** Five talks have a single PPTX export in [decks](decks/). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads, Outsmart Your Lying, Cheating Students and Cry Me a Free Tier were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and their PPTX exports predate the rewrite and must be regenerated.
+**Deck sync.** Five talks have a single PPTX export in [decks](decks/). Adaptive, agentic apps, Dynamic Scaling of Agentic Workloads, Outsmart Your Lying, Cheating Students and Cry Me a Free Tier were rewritten on 2026-09-06; their browser decks, scripts and short routes are generated from the outlines by `build-talk.ts`, and the other rewritten talks’ PPTX exports still need regeneration. Adaptive now has refreshed [15-slide screen](decks/adaptive-systems-screen.pptx) and [22-page handout](decks/adaptive-systems-handout.pptx) editions, including the simpler [execution-memory pattern and prompt](packets/adaptive-systems/memory-pattern.md).
 
 **Critical reviews.** The six talks that have not been rewritten each have an independent [critical review](reviews/README.md) with a verdict, a proposed arc, and the missing discipline. Nothing in those talks has been edited; the reviews are proposals.
 
@@ -36,9 +36,7 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser deck](../reveal-talks/free-tier.html) · PPTX stale, regenerate | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser deck](../reveal-talks/evidence-learning.html) · PPTX stale, regenerate | [Education](education/CFP.md) |
 | Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser deck](../reveal-talks/dynamic-scaling.html) · PPTX stale, regenerate | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
-| The Future of Product Engineering: Big Idea | [15 min](outlines/product-engineering-15min.md) | 8 | [PPTX](decks/product-engineering-15min.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: The Agent Roster | [30 min](outlines/product-engineering-30min.md) | 11 | [PPTX](decks/product-engineering-30min.pptx) | [Product variants](economics-product/CFP.md) |
-| The Future of Product Engineering: Conway's Law, Applied on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [PPTX](decks/product-engineering-40min.pptx) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Browser deck](../reveal-talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 

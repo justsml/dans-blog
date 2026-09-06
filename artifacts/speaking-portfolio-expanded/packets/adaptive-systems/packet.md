@@ -1,5 +1,7 @@
 # Talk packet: Adaptive, agentic apps
 
+[On-screen PPTX](../../decks/adaptive-systems-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-handout.pptx)
+
 [Smaller memory pattern: prompt, record and worked example](memory-pattern.md)
 
 [Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/adaptive-systems.html)
@@ -25,6 +27,10 @@ We are building toward assistants with access to every customer record and tools
 The worked example follows one address ingest through three events. A documented rename becomes a candidate adapter, proven against fixtures the proposing agent did not write and promoted as a versioned artifact with a rollback. A status field with unknown business meaning stays quarantined and goes to an owner with samples and the exact question. A lost provider response stays unresolved, reservation held, until the outcome can be checked.
 
 Around that example: the baseline the agent must beat (diff the schema and page a human), tool risk classes and the cross-system boundary where data actually leaks, an optional architecture that keeps signed URLs and payloads out of the planner, and compute as something the orchestrator requests per job inside a per-customer cost cap. It closes with the rollout sequence: shadow, one reversible change class, then wider authority only from measured recoveries, false repairs and interventions.
+
+## A smaller starting point
+
+A single agent can consult working and observational memory before returning generated SQL, reports, commands or API scripts. It records execution evidence, corrections and recurring patterns, then checks new output against that history. The [copyable prompt and tenant-filter example](memory-pattern.md) show the pattern without requiring an orchestrator or specialist fleet.
 
 ## Learning outcomes
 

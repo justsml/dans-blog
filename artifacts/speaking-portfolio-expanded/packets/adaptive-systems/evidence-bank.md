@@ -33,6 +33,10 @@
 - "Least privilege for free" (slide 11) means short lifetime plus narrow egress plus one scoped credential; it is not a compliance statement.
 - The daily report, ledger arithmetic and fixtures are design fixtures, not observations.
 
+## Memory pattern
+
+The working-memory / observational-memory split on slide 14 is a proposed application pattern, not a claim about a particular product. The tenant-filter example in [memory-pattern.md](memory-pattern.md) is synthetic. Its runner records execution events independently of the model; correctness requires named checks beyond a clean exit. The suggested comparison tests repeated mistakes, stale successes and unknown outcomes. No measured improvement is claimed.
+
 ## Cuts
 
 | Idea from the notes | Treatment |
@@ -44,4 +48,4 @@
 
 ## Portfolio boundary
 
-Adaptive owns per-job agent generation, repair authority, tool risk classes and the data boundary. Dynamic Scaling owns admission, ledgers, durable jobs, the compute substrate and parallel attempts. Improvement From Failure owns the scheduled improvement loop.
+Adaptive owns per-job agent generation, repair authority, tool risk classes, the data boundary and the smaller execution-memory pattern. Dynamic Scaling owns admission, ledgers, durable jobs, the compute substrate and parallel attempts. Improvement From Failure owns the scheduled improvement loop.
