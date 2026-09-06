@@ -62,6 +62,82 @@ const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
 const TALKS: Record<string, Talk> = {
+  "retrieval": {
+  "slug": "retrieval",
+  "title": "Your Eval Suite Has a Grandfather",
+  "description": "The IR evaluation history missing from your golden dataset.",
+  "deckFile": "retrieval.html",
+  "eyebrow": "Your Eval Suite Has a Grandfather · Dan Levy",
+  "routes": {
+    "30": {
+      "minutes": 30,
+      "keep": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        15
+      ],
+      "times": [
+        2.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        1.5,
+        3,
+        2.5,
+        4,
+        2.5,
+        2.5,
+        2,
+        2
+      ],
+      "bridges": {
+        "13": "Bridge: name the owner who updates the corpus and invalidates stale knowledge; the R1 maintenance comparison is in the long route."
+      },
+      "note": "Keeps the opening and every IR term. Drops the expert-system aside; the pool exercise retains four minutes."
+    },
+    "15": {
+      "minutes": 15.0,
+      "keep": [
+        1,
+        2,
+        8,
+        9,
+        10,
+        11,
+        12,
+        15
+      ],
+      "times": [
+        1.5,
+        1,
+        2.5,
+        1.5,
+        3,
+        2,
+        2,
+        1.5
+      ],
+      "bridges": {
+        "2": "Bridge: term specificity, vectors, vocabulary mismatch, and passage retrieval explain how we obtain candidates. Now judge the evidence they returned.",
+        "12": "Bridge: retrieved text supplies evidence, never tool authority. Name a corpus owner and an update path."
+      },
+      "note": "Pairs get 45 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives."
+    }
+  }
+},
   "benchmarks": {
   "slug": "benchmarks",
   "title": "Stop Looking at My Benchmarks… Get Your Own!",
