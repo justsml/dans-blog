@@ -4,13 +4,13 @@ Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Hide the others i
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:30 | 1 | Your logs are a roadmap nobody reads |
+| 00:00 to 01:30 | 1 | Nobody reads the scroll |
 | 01:30 to 02:30 | 2 | Step one: hand an agent the logs |
 | 02:30 to 04:30 | 3 | Enrichment earns the next step |
 | 04:30 to 06:30 | 4 | The out-of-band check |
 | 06:30 to 08:00 | 5 | Distill, then classify |
 | 08:00 to 10:00 | 6 | The retry that hid the auth failure |
-| 10:00 to 11:30 | 7 | From tags to tickets and PRs |
+| 10:00 to 11:30 | 7 | Tickets are cheap. Review is not. |
 | 11:30 to 17:00 | 8 | Demo: nothing leaves without evidence |
 | 17:00 to 19:30 | 9 | Who reviews the robot's PRs? |
 | 19:30 to 22:00 | 10 | Compile what repeats |

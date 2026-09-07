@@ -31,11 +31,11 @@ It can feel like you've lost. The proctoring tools fail readily. What still work
 
 Pummeling them with gotcha quizzes proves what you already knew: Johnny ain't learning too good. Block the chatbot on the network and they share a VPN from a phone. Life finds a way. Students are the original adversarial actors.
 
-The detector is the same trap in software. Liang and colleagues found the detectors they tested flagged non-native English writers at alarming rates. And even if a detector were perfect, it answers the wrong question. Who typed the sentence is not whether the kid can do the thing.
+The detector is the same trap in software. Liang and colleagues found the detectors they tested flagged non-native English writers at alarming rates. And even if a detector were perfect, it answers the wrong question. Who typed the sentence is not whether the kid can do the thing. And if your assessment depends on knowing who typed a paragraph, the detector has become part of your curriculum.
 
 Source: Liang et al. (2023), [GPT detectors are biased against non-native English writers](https://doi.org/10.1016/j.patter.2023.100779), Patterns.
 
-## 05:00 to 07:00: slide 3, Write down where the foundations happen
+## 05:00 to 07:00: slide 3, Pencil first. Then the tool
 
 On screen:
 
@@ -48,6 +48,8 @@ Then, in the same document, tell students you're going to teach them the tool. O
 
 This tension is older than the panic and it has a name. Koedinger and Aleven called it the assistance dilemma in 2007: give too much help and the learner never has to generate anything, give too little and they stall out. Nobody has solved it. Say that out loud, because a vendor whose tutor has the help level exactly right is selling you a solved version of an open problem.
 
+Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264.
+
 ## 07:00 to 09:00: slide 4, The polished answer with a hole in it
 
 On screen:
@@ -58,8 +60,6 @@ On screen:
 Here's the fixture for the rest of the talk. A shop raises a $100 price by 20%, then discounts the new price by 20%. The student writes: equal and opposite, so the final price is $100. Clean sentence. Confident. Wrong base.
 
 The capability we're after is narrow enough for the room to inspect: explain why a percentage acts on a base, and how the base changes across a sequence. Now imagine the correct number with this faulty explanation hiding behind it. What would a final-answer assessment have caught? Nothing.
-
-Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264. Cited on slide 3.
 
 Delivery: Ask the room what the final answer alone would have told you. One answer, then move.
 
@@ -79,7 +79,7 @@ Privacy rides along for free. If you share Lake Tahoe, maybe not the photo of yo
 
 Delivery: Thirty seconds: what would the smudge be in your subject? Take two.
 
-## 12:00 to 14:00: slide 6, Ask for an attempt, then ration the help
+## 12:00 to 14:00: slide 6, Ration the help
 
 On screen:
 
@@ -90,22 +90,20 @@ Two scripted turns. The diagnostic question finds where the base got lost. The t
 
 Then the ladder. Clarification: the second change acts on the new price. Conceptual hint: find the current base. Missing step: the intermediate $120. Partial example: multiply a different amount by 0.8. Full explanation, then a fresh reconstruction later. Write down which rung you gave, because supported and independent performance are different evidence. Never as a moral failure.
 
-## 14:00 to 19:00: slide 7, Demo: the four-minute reconstruction
+## 14:00 to 19:00: slide 7, Demo: four minutes inside a five-minute slide
 
 On screen:
 
 > $100 → $120 → $96. Why does the second base change?
 > Now: $80 → +25% → −20%
 
-Run the two scripted learners from the runbook, then go live. Reveal the wrong argument. Let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it.
+Run the scripted tutor turns — from the kit or read off the card — then go live. Reveal the wrong argument. Let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it.
 
 Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.25 times 0.8 is 1. That breaks the shortcut the room just formed, "opposite changes never cancel," and that's the point. A transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example.
 
-If the room is quiet, present the prepared learner response. Never pressure an individual into a public assessment.
+Delivery: Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
 
-Delivery: Runbook section 5 for the scripted turns. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
-
-## 19:00 to 22:30: slide 8, Score the reasoning, then write down what you saw
+## 19:00 to 22:30: slide 8, Score the reasoning. Write it down
 
 On screen:
 
@@ -113,7 +111,7 @@ On screen:
 > Record: concept · what they said · what help they got · next check
 > Never "weak at reasoning." Never "likely cheated."
 
-Zero: the wrong base persists. One: the right number, no explanation. Two: the learner explains the current amount. Help goes in its own column so a human can read it, and asking a question costs nothing. Try the rubric on sample work before it touches a grade.
+Zero: the wrong base persists. One: the right number, no explanation. Two: the learner explains the current amount. Help goes in its own column so a human can read it, and asking a question costs nothing.
 
 The record is four lines. Concept: changing percentage base. Observed: used the original amount for the second change. Support: conceptual hint. Next check: a new item after practice. Keep what the learner said separate from what a model inferred. Follow-ups come from a blueprint, not chatbot curiosity: "does reversing the multipliers change the result?" probes structure; a harder question is not a fair comparison.
 
@@ -121,7 +119,7 @@ Bastani and colleagues found supported performance and later unaided performance
 
 And that finding is not news, which is the useful part. Soderstrom and Bjork reviewed fifty years of it in 2015: how well someone performs while being helped and how much they actually learned come apart routinely, and the conditions that flatter practice frequently damage retention. A tutor is a machine for removing difficulty. Some of that difficulty was the part where they learned. None of this convicts anyone; your integrity process stays where it is. This is the last time I'll say that.
 
-Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check it before quoting figures.
+Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. The [correction](https://doi.org/10.1073/pnas.2518204122) (August 2025) fixes an author affiliation; no result changed.
 
 Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
@@ -133,13 +131,13 @@ On screen:
 > Small groups, speaking: the incentives reset
 > Voice is biometric. Offline. Zero retention. Age-appropriate. Written alternative.
 
-Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely, never to convict.
+Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely.
 
 Small groups, speaking, in class: that resets the table. It adds social pressure against cheating and hands you knobs on an incentive structure that today is a magical cheating genie. Not foolproof. A student can build an agent told to seem dumb at first and then learn. Fine. We're changing incentives, not buying certainty.
 
 Now the care, and it's real. A student's voice identifies them and can be cloned. Fingerprinting voices is plausible technology; that's a reason for caution, not a feature. Newer offline models claim to detect frustration and distress in speech, and offline is what lets them meet zero-retention, no-sharing district rules on modest hardware. Any student-facing voice tool gets maximum privacy, a written alternative, age-appropriate use only, and a retention rule written before the first recording. A replay is context, never proof.
 
-## 25:30 to 28:00: slide 10, Outsmart move three: count AI time, then read all 300 transcripts
+## 25:30 to 28:00: slide 10, Outsmart move three: read all 300 transcripts
 
 On screen:
 
@@ -151,7 +149,7 @@ You already count who's talking, how much silence there is, whose engagement it 
 
 Then the view you have never had. Every transcript from a class of 30 or a course of 300, and a qualitative pass run by the model. Show me the five students who opened a line of inquiry I didn't teach. Show me the one who reached the answer by a path worth putting on the board tomorrow. The same pass surfaces the kid who typed exactly the right terms, or pasted a big block from somewhere. Before you conclude anything: a big block also looks like voice-to-text. Look first.
 
-And know what you are up against when you read the model's summary instead of the transcript. Skitka and colleagues measured it in 1999: people given a highly but imperfectly reliable aid did worse than people given no aid at all, because it is right often enough that you stop checking. The summary is a place to start looking, never a place to stop.
+And know what you are up against when you read the model's summary instead of the transcript. Skitka and colleagues measured it in 1999: people given a highly but imperfectly reliable aid did worse than people with no aid at all on the trials where the aid was wrong, because it is right often enough that you stop checking. The summary is a place to start looking, never a place to stop.
 
 Source: Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 

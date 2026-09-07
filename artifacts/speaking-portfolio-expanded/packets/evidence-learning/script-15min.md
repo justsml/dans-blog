@@ -46,8 +46,6 @@ Here's the fixture for the rest of the talk. A shop raises a $100 price by 20%, 
 
 The capability we're after is narrow enough for the room to inspect: explain why a percentage acts on a base, and how the base changes across a sequence. Now imagine the correct number with this faulty explanation hiding behind it. What would a final-answer assessment have caught? Nothing.
 
-Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264. Cited on slide 3.
-
 Delivery: Ask the room what the final answer alone would have told you. One answer, then move.
 
 ## 04:00 to 06:00: slide 5, Outsmart move one: make verification feel like cheating
@@ -68,20 +66,20 @@ Delivery: Thirty seconds: what would the smudge be in your subject? Take two.
 
 Bridge: ask for an attempt first, then ration help rung by rung, and write down which rung you gave.
 
-## 06:00 to 09:30: slide 7, Demo: the four-minute reconstruction
+## 06:00 to 09:30: slide 7, Demo: four minutes inside a five-minute slide
 
 On screen:
 
 > $100 → $120 → $96. Why does the second base change?
 > Now: $80 → +25% → −20%
 
-Run the two scripted learners from the runbook, then go live. Reveal the wrong argument. Let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it.
+Run the scripted tutor turns — from the kit or read off the card — then go live. Reveal the wrong argument. Let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it.
 
 Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.25 times 0.8 is 1. That breaks the shortcut the room just formed, "opposite changes never cancel," and that's the point. A transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example.
 
-Delivery: Runbook section 5 for the scripted turns. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
+Delivery: Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
 
-## 09:30 to 11:30: slide 8, Score the reasoning, then write down what you saw
+## 09:30 to 11:30: slide 8, Score the reasoning. Write it down
 
 On screen:
 
@@ -89,11 +87,11 @@ On screen:
 > Record: concept · what they said · what help they got · next check
 > Never "weak at reasoning." Never "likely cheated."
 
-Zero: the wrong base persists. One: the right number, no explanation. Two: the learner explains the current amount. Help goes in its own column so a human can read it, and asking a question costs nothing. Try the rubric on sample work before it touches a grade.
+Zero: the wrong base persists. One: the right number, no explanation. Two: the learner explains the current amount. Help goes in its own column so a human can read it, and asking a question costs nothing.
 
 The record is four lines. Concept: changing percentage base. Observed: used the original amount for the second change. Support: conceptual hint. Next check: a new item after practice. Keep what the learner said separate from what a model inferred. Follow-ups come from a blueprint, not chatbot curiosity: "does reversing the multipliers change the result?" probes structure; a harder question is not a fair comparison.
 
-Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check it before quoting figures.
+Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. The [correction](https://doi.org/10.1073/pnas.2518204122) (August 2025) fixes an author affiliation; no result changed.
 
 Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
@@ -105,7 +103,7 @@ On screen:
 > Small groups, speaking: the incentives reset
 > Voice is biometric. Offline. Zero retention. Age-appropriate. Written alternative.
 
-Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely, never to convict.
+Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely.
 
 Small groups, speaking, in class: that resets the table. It adds social pressure against cheating and hands you knobs on an incentive structure that today is a magical cheating genie. Not foolproof. A student can build an agent told to seem dumb at first and then learn. Fine. We're changing incentives, not buying certainty.
 

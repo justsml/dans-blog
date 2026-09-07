@@ -4,7 +4,7 @@ Keep slides 1, 2, 4, 6, 8, 9, 13, 15. Hide the others in presenter preparation. 
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:00 | 1 | Your logs are a roadmap nobody reads |
+| 00:00 to 01:00 | 1 | Nobody reads the scroll |
 | 01:00 to 02:00 | 2 | Step one: hand an agent the logs |
 | 02:00 to 03:30 | 4 | The out-of-band check |
 | 03:30 to 05:30 | 6 | The retry that hid the auth failure |

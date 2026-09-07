@@ -2,7 +2,7 @@
 
 Use slides 1, 2, 4, 6, 8, 9, 13, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Demo compressed to four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration.
 
-## 00:00 to 01:00: slide 1, Your logs are a roadmap nobody reads
+## 00:00 to 01:00: slide 1, Nobody reads the scroll
 
 On screen:
 
@@ -11,9 +11,9 @@ On screen:
 
 The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will eventually call urgent. Usually after somebody sends an angry email.
 
-This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery belongs to Adaptive, agentic apps.
+This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery, and how much authority a running agent earns for itself, belongs to Adaptive, agentic apps.
 
-There is a name for training people to ignore the channel that is supposed to warn them. Alert fatigue. Cvach reviewed it in clinical monitoring. I am borrowing the mechanism, not claiming a hospital study measured your on-call rotation. If our new agent creates a ticket for every log line, we have automated the thing that made the logs unreadable.
+There is a name for training people to ignore the channel that is supposed to warn them. Alert fatigue. Cvach measured it on hospital monitors. Your pager is the same instrument. If our new agent creates a ticket for every log line, we have automated the thing that made the logs unreadable.
 
 Source: Maria Cvach (2012), [Monitor alarm fatigue: an integrative review](https://pubmed.ncbi.nlm.nih.gov/22839984/), Biomedical Instrumentation & Technology 46(4), 268–277.
 
@@ -65,7 +65,7 @@ A request fails. The agent retries. It works. Score the loop on eventual success
 
 Now make the failure an authorization error. A second credential works, but the first request was forbidden for a reason. The green result hid the boundary violation. A sleep that hides a race teaches the same lesson more slowly.
 
-Diane Vaughan called the organizational pattern normalization of deviance. Her Challenger analysis shows how repeated acceptance of anomalies made them ordinary. Our application is narrower: a repair loop needs evidence that the defect is gone, because successful workarounds are very persuasive evidence of the wrong thing.
+Diane Vaughan called the organizational pattern normalization of deviance. Her Challenger analysis shows how repeated acceptance of anomalies made them ordinary. A repair loop needs evidence that the defect is gone. Successful workarounds are very persuasive evidence of the wrong thing.
 
 Source: Diane Vaughan, [The Challenger Launch Decision](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html), University of Chicago Press, original 1996; linked enlarged edition 2016.
 
@@ -143,4 +143,4 @@ Alert fatigue explains the unread channel. Normalization of deviance explains th
 
 The model did not get smarter. The system around it got a job.
 
-Delivery: Replay the opening scroll beside the distilled artifact. End there.
+Delivery: Replay the opening scroll beside the distilled artifact. End there. Stop talking.
