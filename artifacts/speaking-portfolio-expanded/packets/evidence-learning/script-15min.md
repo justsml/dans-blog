@@ -1,8 +1,8 @@
 # Outsmart Your Lying, Cheating Students: 15-minute presenter script
 
-Use slides 1, 2, 4, 5, 7, 8, 9, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close.
+Use slides 1, 2, 4, 5, 7, 8, 9, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close. Slide 9 keeps the consent and identifiability paragraph — never cut that one for time in front of educators.
 
-## 00:00 to 01:30: slide 1, The cat is out of the bag
+## 00:00 to 01:00: slide 1, The cat is out of the bag
 
 On screen:
 
@@ -13,13 +13,11 @@ The historical parallels have been beaten to death, so one and done: the calcula
 
 Confession: I may have used one or two on an assessment. But we're not here for that. What I did was wholesome. These kids are phoning it in. Not even trying. Infuriating, right?
 
-Our calculator-clutching ancestors had to write a real trajectory into the curriculum. So do we. Everything today is authored fixtures, a rubric I'm proposing, and one exercise that shows evidence being collected. Here's the plan: what we stop doing, what we protect, what we teach, and three ways to actually outsmart them.
-
 Story: The submission that made you realize the grade and the understanding had come apart.
 
 Delivery: Let the confession land before the pivot. The laugh is the title doing its job; do not explain the joke.
 
-## 01:30 to 03:00: slide 2, The doom loop
+## 01:00 to 03:00: slide 2, The doom loop
 
 On screen:
 
@@ -35,7 +33,7 @@ Source: Liang et al. (2023), [GPT detectors are biased against non-native Englis
 
 Bridge: write down where pencil, whiteboard and peers live, and in the same document promise to teach the tool.
 
-## 03:00 to 04:00: slide 4, The polished answer with a hole in it
+## 03:00 to 04:15: slide 4, The polished answer with a hole in it
 
 On screen:
 
@@ -48,7 +46,7 @@ The capability we're after is narrow enough for the room to inspect: explain why
 
 Delivery: Ask the room what the final answer alone would have told you. One answer, then move.
 
-## 04:00 to 06:00: slide 5, Outsmart move one: make verification feel like cheating
+## 04:15 to 06:15: slide 5, Outsmart move one: make verification feel like cheating
 
 On screen:
 
@@ -60,13 +58,11 @@ The highest-leverage assignment I know lets students feel like they're cheating.
 
 That one experience beats every ban, filter and lockdown. Hand the prompt out like a worksheet: "paste these instructions as your first message." Expect a recorded screen or an exported session. Older students get to experiment as the objective itself: the writing challenge, the rhyming challenge, whatever riddles the English teachers love. The constraint that keeps it honest is personalization. Narrate it from summer camp. Reference this week's unit. Meet a criterion the model can't know.
 
-Privacy rides along for free. If you share Lake Tahoe, maybe not the photo of your grandparents' place on the water that any model can geolocate. Nobody is teaching students how these systems actually work. This assignment does.
-
 Delivery: Thirty seconds: what would the smudge be in your subject? Take two.
 
 Bridge: ask for an attempt first, then ration help rung by rung, and write down which rung you gave.
 
-## 06:00 to 09:00: slide 7, Demo: four minutes inside a five-minute slide
+## 06:15 to 09:15: slide 7, Demo: four minutes inside a five-minute slide
 
 On screen:
 
@@ -79,7 +75,7 @@ Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.
 
 Delivery: Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
 
-## 09:00 to 11:00: slide 8, Score the reasoning. Write it down
+## 09:15 to 10:45: slide 8, Score the reasoning. Write it down
 
 On screen:
 
@@ -95,7 +91,7 @@ Source: Bastani et al. (2025), [Generative AI without guardrails can harm learni
 
 Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
-## 11:00 to 13:30: slide 9, Outsmart move two: make them say it out loud
+## 10:45 to 13:15: slide 9, Outsmart move two: make them say it out loud
 
 On screen:
 
@@ -105,13 +101,11 @@ On screen:
 
 Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely.
 
-Small groups, speaking, in class: that resets the table. It adds social pressure against cheating and hands you knobs on an incentive structure that today is a magical cheating genie. Not foolproof. A student can build an agent told to seem dumb at first and then learn. Fine. We're changing incentives, not buying certainty.
-
 Now the care, and it's real. A student's voice identifies them and can be cloned. Fingerprinting voices is plausible technology; that's a reason for caution, not a feature. Newer offline models claim to detect frustration and distress in speech, and offline is what lets them meet zero-retention, no-sharing district rules on modest hardware. Any student-facing voice tool gets maximum privacy, a written alternative, age-appropriate use only, and a retention rule written before the first recording. A replay is context, never proof.
 
 Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout. And one more student: a friend of mine turned out to be a talented sculptor who never touched the clay in class, because there was no car at home and you do not carry a brick of clay on the bus.
 
-## 13:30 to 15:00: slide 14, A purpose-built machine
+## 13:15 to 15:00: slide 14, A purpose-built machine
 
 On screen:
 

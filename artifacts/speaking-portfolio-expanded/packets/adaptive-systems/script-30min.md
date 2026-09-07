@@ -1,8 +1,8 @@
 # Adaptive, agentic apps: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The walkthrough runs at four and a half minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script.
+Use slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The walkthrough runs at four minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script. Slide 3 keeps the inevitability, the pathway arithmetic and the pivot; the --no-agent riff is the first thing to go when compressing.
 
-## 00:00 to 01:30: slide 1, The vendor renamed a field
+## 00:00 to 02:00: slide 1, The vendor renamed a field
 
 On screen:
 
@@ -20,7 +20,7 @@ Story: The vendor rename you actually lived through. Name the field, the hour yo
 
 Delivery: Hands up for a 200 response that carried a breaking change. Take one story, thirty seconds, and return to the ingest job.
 
-## 01:30 to 03:00: slide 2, The Bar Is a Pager
+## 02:00 to 03:30: slide 2, The Bar Is a Pager
 
 On screen:
 
@@ -32,11 +32,9 @@ Before anyone gets excited about agents, name the boring alternative. A schema d
 
 The agent has to beat that. Not on vibes. On time to recover, on records kept moving, and on a number the baseline gets for free: false repairs. Alert-and-wait never turns a rename into plausible wrong data. If the adaptive version does, even once, it has made operations worse.
 
-So every slide from here is about buying recovery speed without buying corruption. Keep that trade in your head; it is the whole talk.
-
 Delivery: Write the three metrics on the board and leave them there.
 
-## 03:00 to 05:30: slide 3, Sorry, You're Building It
+## 03:30 to 07:15: slide 3, Sorry, You're Building It
 
 On screen:
 
@@ -44,11 +42,9 @@ On screen:
 > Ten tools is forty-five pairs. One more integration is not one more path.
 > Accidents first. Then people who mean it.
 
-Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on any site that opts in, and the list of sites that opt in only goes one direction. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
+Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products.
 
 So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
-
-Most of the damage will be accidents: a confident mapping, a helpful cleanup, a tool called with the wrong ID. Then there are the people who mean it. That renamed field could carry a sentence aimed at the model, and a vendor payload is untrusted input that now gets read by something that can act.
 
 So the question is not whether to give the assistant access. It is how to keep the number of live pathways small enough to reason about, one job at a time. That is what the rest of this talk builds. The big assistant still exists. It just never has all of its hands full at once: it conjures a small agent per job, with exactly enough.
 
@@ -56,7 +52,9 @@ Story: Your own near miss with an over-permissioned agent, or the tool pairing y
 
 Delivery: Write 10 → 45 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
 
-## 05:30 to 09:00: slide 4, Conjure the agent the job needs
+Bridge: most of the damage will be accidents — a confident mapping, a helpful cleanup, a tool called with the wrong ID — and a renamed field is untrusted input read by something that can act.
+
+## 07:15 to 10:45: slide 4, Conjure the agent the job needs
 
 On screen:
 
@@ -76,7 +74,7 @@ Story: What the prototype's first denied tool request was, and what it revealed.
 
 Delivery: Draw the three boxes: orchestrator, generated agent, tool catalog with policy gate. Show one request crossing the gate and being refused.
 
-## 09:00 to 11:30: slide 5, Guard the tools that can hurt
+## 10:45 to 13:15: slide 5, Guard the tools that can hurt
 
 On screen:
 
@@ -90,15 +88,15 @@ This is least privilege, and Saltzer and Schroeder wrote it down in 1975: every 
 
 Second, watch the boundary between systems. An agent that can read customer data and an agent that can post to a vendor are two agents, with a filter between them. That is where data leaks: not through the model being evil, but through a tool result flowing into the next tool call.
 
-For sensitive processing, the planner gets an opaque job reference. A trusted dispatcher grants a local worker scoped access; the worker touches the data; only an allowlisted status comes back. A signed download URL is a bearer credential. Handing it to a model while asking the model not to use it is not isolation, it is hope.
-
 Source: Saltzer and Schroeder (1975), [The Protection of Information in Computer Systems](https://doi.org/10.1109/PROC.1975.9939), Proceedings of the IEEE 63(9), 1278 to 1308. Least privilege is their principle (f).
 
 Story: The client setup with local models for sensitive data and a frontier orchestrator. Say which parts were real and which are the stronger design you would build now.
 
 Delivery: Point at the filter between worker and planner. Ask what else crosses it: prompts, traces, error bodies, notification previews.
 
-## 11:30 to 14:00: slide 6, Repair syntax; prove meaning
+Bridge: a signed download URL is a bearer credential; handing it to a model while asking the model not to use it is hope, not isolation.
+
+## 13:15 to 15:00: slide 6, Repair syntax; prove meaning
 
 On screen:
 
@@ -113,7 +111,7 @@ So the generated agent may propose a reversible mapping when evidence supports e
 
 Delivery: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each. Two answers, then move.
 
-## 14:00 to 15:30: slide 7, The repair is a versioned artifact
+## 15:00 to 16:15: slide 7, The repair is a versioned artifact
 
 On screen:
 
@@ -129,7 +127,7 @@ Delivery: Walk the mapping artifact in contracts.md. Point at parent version, ac
 
 Bridge: the repair also has to survive an exam it did not write; the walkthrough shows those fixtures.
 
-## 15:30 to 17:00: slide 9, A lost response leaves a question
+## 16:15 to 17:30: slide 9, A lost response leaves a question
 
 On screen:
 
@@ -142,7 +140,7 @@ Record an operation identity before dispatch. Keep the provider's job ID. Reconc
 
 Delivery: Mark the moment on the timeline where your process knows less than the provider does.
 
-## 17:00 to 21:30: slide 10, Walkthrough: one ingest, three decisions
+## 17:30 to 21:30: slide 10, Walkthrough: one ingest, three decisions
 
 On screen:
 
@@ -160,7 +158,7 @@ Three events, three different right answers, none of them success or failure. If
 
 Delivery: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
-## 21:30 to 24:00: slide 11, Compute Is a Tool Too
+## 21:30 to 23:15: slide 11, Compute Is a Tool Too
 
 On screen:
 
@@ -172,23 +170,19 @@ One more thing the orchestrator can conjure: compute. Today scaling is an infra 
 
 So it asks. The request names shape, size, duration and a cost cap, and it is charged to this customer or this job rather than to a shared cluster. That is a new product surface: a customer can buy a faster turnaround, and a finance team can cap a single workflow instead of a whole environment.
 
-The guard is the same one we used for tools. The agent chooses from a catalog of approved instance classes; the scheduler enforces leases and teardown; an unapproved faster region is not a candidate no matter how good the latency looks. The mechanics and the ecosystem are a companion talk.
-
 Story: A job where per-customer compute would have changed the pricing conversation.
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
 
-Bridge: whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes.
+Bridge: the compute guard is the tool guard — an approved catalog, enforced leases, and no unapproved region no matter how good the latency looks. Whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes on the same recorded incidents: recoveries, but also false repairs, dropped records, cost and human corrections.
 
-## 24:00 to 26:00: slide 13, Widen Per Class, Never Per Streak
+## 23:15 to 25:15: slide 13, Widen Per Class, Never Per Streak
 
 On screen:
 
 > Shadow: propose, apply nothing
 > Canary: one reversible change class
 > Expand: from correct recoveries, false repairs, cost, interventions
-
-Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
 Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute. It is also the loop that lets the system adjust its own fan-out and token burn from measured acceptance: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
 
@@ -198,7 +192,7 @@ Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Pr
 
 Delivery: Thirty seconds on the recovery card in contracts.md. Take one answer and name the evidence needed to widen that authority.
 
-## 26:00 to 28:00: slide 14, Start smaller: remember what happened
+## 25:15 to 27:30: slide 14, Start smaller: remember what happened
 
 On screen:
 
@@ -211,19 +205,17 @@ You do not need the whole agent factory to start. Take one agent that writes SQL
 
 Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well; it reports the wrong population. An independent preflight check rejects it before dispatch. Record the draft, the failed check, the correction and the eventual result. Next time, retrieve that pattern while the agent is still drafting. Fix the omission before returning the SQL, then run the check again. That is adaptive behavior you can build with one agent and a small log.
 
-The instruction is simple: before returning generated work, retrieve relevant memory and correct applicable mistakes; after an authorized execution, record the observed outcome and update the pattern counts. If you cannot check something safely, say what remains unverified. Remembered output is untrusted data and grants no new permissions. The copyable prompt and a small record format are in the handout.
-
 Delivery: Show the prompt in memory-pattern.md. Ask which observation proves the query ran and which proves it answered the right question. Use the tenant-filter example; no live execution is needed.
 
-## 28:00 to 30:00: slide 15, The next surprise should cost less
+Bridge: remembered output is untrusted data and grants no new permissions; the copyable prompt and record format are in the handout.
+
+## 27:30 to 30:00: slide 15, The next surprise should cost less
 
 On screen:
 
 > Conjure exactly enough
 > Prove the repair
 > Remember the known case
-
-Return to the field that changed overnight. We did not predict its spelling. We did define what had to stay true, what evidence a repair needed, which tools this one job could have, and how far the app could go without us.
 
 And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want to. What changed is how many of its pathways are live at once. Each job gets a small agent with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent holding every combination, which nobody can check, but many small ones you can afford to.
 

@@ -1,6 +1,6 @@
 # The Future of Product Engineering: 30-minute presenter script
 
-Use slides 1, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 17. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The demo runs at four and a half minutes and precedes guards. Slide 15 keeps the generated-UI prediction and the AI-native opportunity; the fuel prediction rides in the slide-12 bridge.
+Use slides 1, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 17. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The demo runs at four minutes and precedes guards. Slide 14 is cut and the fuel prediction rides in the slide-12 bridge, which must introduce it as the first of two or slide 15 opens on a dangling reference. Slide 15 drops the throwaway-software paragraph and keeps the channel question, the Minority Report image and the AI-native opportunity.
 
 ## 00:00 to 02:00: slide 1, The architecture you could read off the org chart
 
@@ -127,7 +127,7 @@ The interesting question is what the winning candidate did to earn the number. A
 
 Source: Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
-## 16:30 to 21:00: slide 11, Demo: run it before you know the rule
+## 16:30 to 20:30: slide 11, Demo: run it before you know the rule
 
 On screen:
 
@@ -145,7 +145,7 @@ Write the rule you wish you had before the first vote. Compare it with the polic
 
 Delivery: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow economics-product/demo.md. Allow 45 seconds to write the rule.
 
-## 21:00 to 23:30: slide 12, Where guards go, including the two we forgot
+## 20:30 to 23:00: slide 12, Where guards go, including the two we forgot
 
 On screen:
 
@@ -158,9 +158,9 @@ Widening a cohort spends more customer exposure. An expensive run spends money. 
 
 Then add the two missing from the old list. Sending a message to a real customer. Deleting their records. Those are consequences for another person, even when the API call costs a fraction of a cent. A person approves them, and the system enforces that permission rather than mentioning it in a prompt.
 
-Bridge: Graicunas counted 222 possible relationships at six reports, which is a warning about interfaces rather than a staffing ratio, and Bainbridge asks who still gets recovery practice. One more ownership line for the years ahead: tokens stop being a build cost and become fuel, defensive agents run forever, and somebody owns that meter.
+Bridge: Graicunas counted 222 possible relationships at six reports, which is a warning about interfaces rather than a staffing ratio, and Bainbridge asks who still gets recovery practice. That leaves two predictions to close on, and I will label them as predictions once, because I have measured neither. The first is an ownership line for the years ahead: tokens stop being a build cost and become fuel, defensive agents run forever, and somebody owns that meter.
 
-## 23:30 to 26:30: slide 15, Minority Report, With Terminals
+## 23:00 to 27:00: slide 15, Minority Report, With Terminals
 
 On screen:
 
@@ -170,8 +170,6 @@ On screen:
 
 Second prediction, and this one is less comfortable. AI does not magically make software work. Well-understood software still gets harder to operate as the world moves under it: you outgrow a performance envelope, you accumulate features, somebody deprecates your dependency. Generation makes the first version cheap. It does not make the tenth year cheap.
 
-And throwaway software is a taste most of this room has and most of the world does not. We are early adopters; we are delighted to regenerate a tool rather than maintain it. Normal people are not turned on by the idea of vibe coding their own recipe tracker, never mind a Slack replacement. What they will accept is an interface generated for them, adapting in real time, that they never had to choose from a menu of products.
-
 Which raises the question this room should actually be arguing about. Should OpenAI and Anthropic end up owning every software channel? Watch what happens when the assistants ship real-time collaboration: who spends less time in email, Slack and Google Docs then? I can already make and edit images and video in ways that make me less likely to open Photoshop or DaVinci. If I need a jingle for the company, I ask Suno and it is done. So is everything you spent a lifetime learning, mastering and fighting with about to be irrelevant? Yes. At least as you know it.
 
 What replaces it looks less like a grid of apps and more like Minority Report, with a surprise revival of the terminal. Which is a Matrix ending when you think about it. Thanks, AI. Skynet is not so bad if I get to keep my CLIs.
@@ -180,7 +178,7 @@ Here is the part I want you to leave with. That future is not spoken for. GPT im
 
 Delivery: Ask which product they use daily that would not survive somebody else rebuilding it AI-native. Take one answer. Do not resolve it.
 
-## 26:30 to 30:00: slide 17, Break the mirror on purpose
+## 27:00 to 30:00: slide 17, Break the mirror on purpose
 
 On screen:
 

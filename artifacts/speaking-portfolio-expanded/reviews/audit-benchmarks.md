@@ -10,7 +10,7 @@ Ready after small fixes. Nothing on stage is wrong: timings sum, routes validate
 
 | file:line | quoted text | problem | concrete fix |
 | --- | --- | --- | --- |
-| `artifacts/speaking-portfolio-expanded/outlines/benchmarks-40min.md:111` | `Dan Levy, [Auto-Tune Your LLM Judge](…), supplied article.` | "supplied article" is a leftover from the writing session; it is read aloud from the script and printed in the deck notes | Replace with `danlevy.net, 11 August 2026.` |
+| `artifacts/speaking-portfolio-expanded/outlines/benchmarks-40min.md:111` | `Dan Levy, Auto-Tune Your LLM Judge` linked to a placeholder URL, `supplied article.` | "supplied article" is a leftover from the writing session; it is read aloud from the script and printed in the deck notes | Replace with `danlevy.net, 11 August 2026.` |
 | `artifacts/speaking-portfolio-expanded/outlines/benchmarks-40min.md:42,48` | `Goodhart described statistical regularities breaking under pressure from their use in control.` … `Source: Campbell (1979)… Strathern (1997)…` | The slide paraphrases Goodhart 1975 but the Source line cites only Campbell and Strathern; an economics-literate questioner will ask | Add `Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981)` to the slide 3 Source line |
 
 Neither breaks the build; both are what a back-row question would land on.

@@ -197,7 +197,7 @@ Stage direction: The trace in demo.md; compress rows 1 and 2 on the short routes
 
 30:00 to 35:00 · build
 
-![Different priorities expose tradeoffs. Common requirements and checks apply to every candidate.](../../reveal-talks/assets/dynamic-scaling/11-independent-attempts-share-requirements.svg)
+![Cheap parallel generation produces candidates; shared gates reject before preference; cheap multi-model judges report disagreement rather than an average score.](../../reveal-talks/assets/dynamic-scaling/12-monkeys-then-guards.svg)
 
 > Barrel of monkeys: lead with cheap parallel generation, on purpose
 > Council of Guards: judges read a thousand tokens and write fifty; measure the disagreement

@@ -1,32 +1,34 @@
 # Education CFP package
 
-Prepared 4 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
+Prepared 4 September 2026; revised 6 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
 
-## A Skeptic's Guide to Surviving AI in Education
+The education portfolio is **one 40-minute talk and one 15-minute route**, not two talks. Submit Outsmart for teaching audiences and Show Me the Misconception for procurement, curriculum-committee and administrator audiences. They pair as a double-header: one is for the people who teach, the other for the people who sign.
+
+## Show Me the Misconception
+
+**Format:** 15 minutes, 6 sections, no demo kit. A route under Outsmart; the full text is in [procurement-route.md](../packets/evidence-learning/procurement-route.md).
 
 ### 50-word abstract
 
-AI education debates keep choosing between miracle tutors and cheating machines. This talk offers a more useful skepticism: name the human capability, decide what to delegate, augment, or preserve, and collect evidence of learning. Leave with an assessment redesign, a tutor evaluation checklist, and questions that puncture the sales pitch.
+Two sales pitches arrive with every AI tool and neither is a plan. This route hands a buying committee a method instead: write the claim so it could fail, build a four-card local eval set before any pilot, and ask the vendor to walk one learner misconception end to end.
 
-### 150-word abstract
+### 100-word abstract
 
-AI will give every student a brilliant tutor. AI will destroy learning. Educators are being asked to choose between two sales pitches when they need a defensible plan for Monday. This talk starts elsewhere: what human capability was this assignment supposed to develop, and what evidence would show that it did? We will use Delegate, Augment, and Preserve as contextual decisions, not permanent lists of permitted activities. A history essay weighing two conflicting primary sources shows why a polished artifact, a corrected explanation, and an independent transfer task support different conclusions. Research on tutoring and detector limitations provides boundaries rather than universal verdicts. Participants will practice interrogating a plausible answer, sketch a redesign of one assignment, and identify the outcomes an educational AI pilot should measure. The session closes with practical choices about staff workload, access, and human accountability. Bring one assignment you teach or support; no coding, tools, or enthusiasm for AI required.
+Educators are asked to choose between miracle tutors and cheating machines when they need a defensible purchasing decision. This route starts elsewhere. Skepticism is a method, not a mood: what is the claim, what would count as evidence, who benefits if we believe it? Bastani and Kestin are used to make the room curious about instructional design rather than eager to pick a winner, and Soderstrom and Bjork explain why supported and unaided performance must be recorded separately. A four-card local eval set costs nothing and no benchmark can replace it. It closes on four questions for the next vendor demo.
 
 ### Audience
 
-Faculty, instructional designers, education leaders, EdTech evaluators, workforce learning teams. Suitable positioning for ISTE, EDUCAUSE, ASU+GSV, and faculty development programs; this is a proposed fit, not an acceptance claim.
+Procurement committees, academic leadership, curriculum committees, EdTech evaluators, workforce learning buyers. Suitable positioning for EDUCAUSE, ASU+GSV, and district or provost-level programs; this is a proposed fit, not an acceptance claim.
 
-### Three learning outcomes
+### Three outcomes
 
-1. Classify assistance as Delegate, Augment, or Preserve for a stated learning objective and learner stage.
-2. Redesign an artifact-only assignment to elicit explanation and transfer.
-3. Distinguish tutor usage and assisted scores from independent learning outcomes when evaluating a pilot.
+1. Write a vendor claim in a form that could fail, and name the observation that would decide it.
+2. Build a four-case local eval set for one course before running a pilot.
+3. Distinguish tutor usage and assisted scores from independent learning outcomes, and know that a detector score is not a learning measurement.
 
 ### Reviewer notes
 
-Strategic education talk, with one practical exercise. It is distinct from Evidence of Learning: the central decision is what human capability to develop and where AI assistance belongs. Conditional tutoring evidence; no universal claim that AI helps or harms. The framework is the speaker’s proposed organizing device, not a validated taxonomy.
-
-**Format:** 40 minutes, 14 slides, including a three-minute assistance exercise and a two-minute pre-mortem in pairs. 15- and 30-minute routes are prepared.
+Retired as a standalone 40-minute talk ("A Skeptic's Guide to Surviving AI in Education") on 6 September 2026 and rebuilt as this route, because its remaining material overlapped Outsmart at six beats. Conditional tutoring evidence; no universal claim that AI helps or harms. Research stays attached to its setting, the eval cases are authored, and the rubric is proposed. Do not book this and Outsmart as independent talks without saying so — the percentage fixture belongs to Outsmart and should not run twice in one booking.
 
 ## Outsmart Your Lying, Cheating Students
 
@@ -50,6 +52,6 @@ Faculty, assessment leads, instructional designers, learning-platform builders, 
 
 ### Reviewer notes
 
-The title is self-aware: the speaker confesses to the calculator watch in the first minute, and the target is a brittle measurement strategy, not students. For educator-heavy committees, use "Stop Trying to Catch Students Using AI." Distinct from the strategic Skeptic talk, which allocates assistance; this one designs the assessment and the classroom moves. No live learner data, no detector stunt, no automated misconduct judgment. The stage exercise is scripted and mathematically checkable; the fixtures are authored and the rubric is proposed.
+The title is self-aware: the speaker confesses to the calculator watch in the first minute, and the target is a brittle measurement strategy, not students. For educator-heavy committees, use "Stop Trying to Catch Students Using AI." Distinct from Show Me the Misconception, which is the buying decision; this one designs the assessment and the classroom moves. No live learner data, no detector stunt, no automated misconduct judgment. The stage exercise is scripted and mathematically checkable; the fixtures are authored and the rubric is proposed.
 
 **Format:** 40 minutes, 14 slides, including a five-minute live reconstruction and a four-minute pairs worksheet. 15- and 30-minute routes and a 60-minute workshop are prepared.

@@ -1,8 +1,8 @@
 # Buy Me a Free Tier: 15-minute presenter script
 
-Use slides 1, 3, 5, 6, 7, 10, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the electricity question, the four explanations for a low price, parking, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words.
+Use slides 1, 3, 6, 7, 10, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the electricity question, the four explanations for a low price and the terrain line that names the talk, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words. Slide 5 is cut; Shoup and path dependence ride in the slide-3 bridge.
 
-## 00:00 to 01:45: slide 1, Free electricity for a year
+## 00:00 to 02:30: slide 1, Free electricity for a year
 
 On screen:
 
@@ -21,7 +21,7 @@ Delivery: Take the five seconds. Actually take them. The silence is the slide.
 
 Bridge: four boxes on one invoice - price paid, resources consumed, cost allocated, value delivered - and the gap between the last two is why nobody is measuring.
 
-## 01:45 to 03:45: slide 3, Why would anyone sell below cost?
+## 02:30 to 05:15: slide 3, Why would anyone sell below cost?
 
 On screen:
 
@@ -36,19 +36,7 @@ Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (199
 
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-## 03:45 to 05:15: slide 5, Free parking was never free
-
-On screen:
-
-> The driver sees no meter, so demand looks infinite
-> The cost moves into rents, prices, and land
-> Word one: externality
-
-Donald Shoup spent a career on the least glamorous subject in urban economics and was right about all of it. Cities required developers to build minimum parking. Nobody paid at the meter, so the cost went somewhere else: into rents, into retail prices, into land that became asphalt. And because drivers saw no price, demand looked infinite, so the minimums grew to match.
-
-That is your first word: externality. A cost that is real, and paid, but not by the person making the decision. It does not vanish. It relocates, and it usually relocates somewhere you are not looking.
-
-Source: Shoup (2005, updated 2011), The High Cost of Free Parking, American Planning Association. Also Shoup (2011), [Free parking or free markets](https://www.accessmagazine.org/spring-2011/free-parking-free-markets/), ACCESS Magazine.
+Bridge: those commitments are credible commitments in Schelling's sense, moves in a war of attrition. Note who is not a player. Somebody is buying your free tier, and it is not you. You are not a combatant, you are the terrain. And the terrain keeps its asphalt: repealing a parking minimum does not remove a lot, which is path dependence.
 
 ## 05:15 to 07:15: slide 6, Jevons, coal, and the extra lane
 
@@ -62,11 +50,11 @@ In 1865 William Stanley Jevons noticed something that annoyed everyone. Steam en
 
 The transport version is word three, induced demand. Add a lane to a congested highway and you get more traffic. Duranton and Turner measured it across US cities in 2011 and found the elasticity of driving with respect to lane-kilometres is roughly one. Build ten percent more road, get ten percent more driving. The congestion comes back.
 
-So: your per-token price has fallen off a cliff over the last few years, and your bill went up. Everyone in this room has had that conversation with a CFO and lost it. You are not being gouged and you did not do anything wrong. Spend is price times consumption, and consumption is jobs times calls per job times tokens per call. Cheapness moved every term on the right. Epoch's data through 2025 shows the price of a fixed capability falling fast and very unevenly by task, which is real and worth knowing, and is also exactly the condition under which total spend rises.
-
 Source: Jevons (1865), The Coal Question, chapter VII. Duranton and Turner (2011), The Fundamental Law of Road Congestion, American Economic Review 101(6).
 
 Source: Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends). Check for a newer edition before each delivery.
+
+Bridge: your per-token price fell off a cliff and your bill went up, because spend is price times jobs times calls times tokens and cheapness moved every term on the right.
 
 ## 07:15 to 09:30: slide 7, Now do it to software
 
@@ -103,7 +91,7 @@ Delivery: Do the division on stage. Thirty seconds: name your product's accepted
 
 Bridge: run the sweep at one, two, five and ten times price, then multiply by your own volume before you feel anything about it.
 
-## 11:30 to 13:30: slide 12, You are not shopping, you are contracting
+## 11:30 to 13:15: slide 12, You are not shopping, you are contracting
 
 On screen:
 
@@ -113,13 +101,11 @@ On screen:
 
 This is the slide I would keep if you cut every other one. Oliver Williamson won a Nobel in 2009 for working out what happens when two parties make investments that only pay off inside their relationship. He called it asset specificity, and the trouble it produces is called hold-up.
 
-The shape is always the same. You make an investment that is worth a great deal here and very little anywhere else. That surplus, the part that exists only because you are locked in, is a prize, and at renewal your counterparty can reach for it. Nobody has to be a villain. It is simply what the structure permits, and rational parties do it.
-
 So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything after this is just a way of reducing specificity or pricing the exposure.
 
 Bridge: so price reversibility as the option it is, and bring three prices to the design review: today, without the offer, and the most you could survive.
 
-## 13:30 to 15:00: slide 15, Cheap intelligence changes incentives first
+## 13:15 to 15:00: slide 15, Cheap intelligence changes incentives first
 
 On screen:
 
@@ -130,8 +116,6 @@ On screen:
 Back to the electricity. Use the cheap input. It is genuinely great and I am not asking anyone to be miserable about it. Just understand what it encouraged you to build, and keep the expensive decisions reversible while you find out.
 
 There are your eight words. Externality, because the cost moved rather than vanished. Induced demand and Jevons, because cheaper made you use more, not less. Path dependence, because the lots stay built. Moral hazard, because whoever chooses is not whoever pays. Credible commitment, because those contracts are moves in a game and not disclosures about it. Asset specificity, because your architecture is worth more here than anywhere else. And real option, because reversibility is something you buy, not something you feel.
-
-Some low prices are temporary. Some are a preview of genuinely cheaper production. You do not have to know which. You have to measure outcomes and keep the big choices reversible either way.
 
 Cheap intelligence changes incentives before it changes organizations.
 

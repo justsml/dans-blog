@@ -205,6 +205,8 @@ Source: V. A. Graicunas, [Relationship in Organization](https://nickols.us/relat
 
 30:00 to 32:30 · build
 
+![Prediction: tokens stop being a build cost and become a running cost. A shipped product with no new features still burns tokens to stay current and to defend itself, and somebody owns that meter.](../../reveal-talks/assets/product-engineering/fuel.svg)
+
 > Tokens stop being a build cost and become a running cost
 > Sentry bots hunting your own vulnerabilities, 24/7, forever
 > Be careful firing the security bots. They know who you are.
@@ -224,6 +226,8 @@ Stage direction: Ask who has a security agent running right now with credentials
 ## 15. Minority Report, With Terminals
 
 32:30 to 35:30 · land
+
+![Prediction: a grid of chosen apps gives way to one generated surface, adapting per person, with a revived terminal beside it. Who owns that channel is still open, and non-frontier builders can rethink any app as AI-native.](../../reveal-talks/assets/product-engineering/channel.svg)
 
 > Generated UI, adapting in real time, per person
 > Yes, the software you mastered is going away. As you know it.

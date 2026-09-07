@@ -1,6 +1,6 @@
 # Outsmart Your Lying, Cheating Students: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The sculptor (slide 12) is cut; its bookend line survives in the close. Reconstruction runs at four and a half minutes with the kit.
+Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The sculptor (slide 12) is cut; its bookend line survives in the close. Reconstruction runs at four minutes with the kit. Slide 11 needs three minutes: both of its paragraphs are long.
 
 ## 00:00 to 02:00: slide 1, The cat is out of the bag
 
@@ -46,9 +46,9 @@ Write the trajectory down. Where does handwriting live, and why: the spatial and
 
 Then, in the same document, tell students you're going to teach them the tool. On purpose. Independent competence and competent tool use both belong in a course. They need different evidence, and every checkpoint should say which one it's measuring.
 
-This tension is older than the panic and it has a name. Koedinger and Aleven called it the assistance dilemma in 2007: give too much help and the learner never has to generate anything, give too little and they stall out. Nobody has solved it. Say that out loud, because a vendor whose tutor has the help level exactly right is selling you a solved version of an open problem.
-
 Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264.
+
+Bridge: Koedinger and Aleven called this the assistance dilemma in 2007 - too much help and they coast, too little and they flounder - and nobody has closed it.
 
 ## 05:30 to 07:00: slide 4, The polished answer with a hole in it
 
@@ -90,7 +90,7 @@ Two scripted turns. The diagnostic question finds where the base got lost. The t
 
 Then the ladder. Clarification: the second change acts on the new price. Conceptual hint: find the current base. Missing step: the intermediate $120. Partial example: multiply a different amount by 0.8. Full explanation, then a fresh reconstruction later. Write down which rung you gave, because supported and independent performance are different evidence. Never as a moral failure.
 
-## 11:00 to 15:30: slide 7, Demo: four minutes inside a five-minute slide
+## 11:00 to 15:00: slide 7, Demo: four minutes inside a five-minute slide
 
 On screen:
 
@@ -103,7 +103,7 @@ Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.
 
 Delivery: Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
 
-## 15:30 to 18:00: slide 8, Score the reasoning. Write it down
+## 15:00 to 17:30: slide 8, Score the reasoning. Write it down
 
 On screen:
 
@@ -117,13 +117,13 @@ The record is four lines. Concept: changing percentage base. Observed: used the 
 
 Bastani and colleagues found supported performance and later unaided performance can diverge, and the safeguards that matter come from teachers. So record the conditions, and include an independent check when independence is the objective. A mismatch needs a human to interpret it.
 
-And that finding is not news, which is the useful part. Soderstrom and Bjork reviewed fifty years of it in 2015: how well someone performs while being helped and how much they actually learned come apart routinely, and the conditions that flatter practice frequently damage retention. A tutor is a machine for removing difficulty. Some of that difficulty was the part where they learned. None of this convicts anyone; your integrity process stays where it is. This is the last time I'll say that.
-
 Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. The [correction](https://doi.org/10.1073/pnas.2518204122) (August 2025) fixes an author affiliation; no result changed.
 
 Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
-## 18:00 to 20:30: slide 9, Outsmart move two: make them say it out loud
+Bridge: Soderstrom and Bjork reviewed fifty years of evidence that performance during practice and learning that lasts come apart routinely; supported and unaided go in separate columns.
+
+## 17:30 to 20:00: slide 9, Outsmart move two: make them say it out loud
 
 On screen:
 
@@ -137,7 +137,7 @@ Small groups, speaking, in class: that resets the table. It adds social pressure
 
 Now the care, and it's real. A student's voice identifies them and can be cloned. Fingerprinting voices is plausible technology; that's a reason for caution, not a feature. Newer offline models claim to detect frustration and distress in speech, and offline is what lets them meet zero-retention, no-sharing district rules on modest hardware. Any student-facing voice tool gets maximum privacy, a written alternative, age-appropriate use only, and a retention rule written before the first recording. A replay is context, never proof.
 
-## 20:30 to 22:30: slide 10, Outsmart move three: read all 300 transcripts
+## 20:00 to 22:00: slide 10, Outsmart move three: read all 300 transcripts
 
 On screen:
 
@@ -149,13 +149,13 @@ You already count who's talking, how much silence there is, whose engagement it 
 
 Then the view you have never had. Every transcript from a class of 30 or a course of 300, and a qualitative pass run by the model. Show me the five students who opened a line of inquiry I didn't teach. Show me the one who reached the answer by a path worth putting on the board tomorrow. The same pass surfaces the kid who typed exactly the right terms, or pasted a big block from somewhere. Before you conclude anything: a big block also looks like voice-to-text. Look first.
 
-And know what you are up against when you read the model's summary instead of the transcript. Skitka and colleagues measured it in 1999: people given a highly but imperfectly reliable aid did worse than people with no aid at all on the trials where the aid was wrong, because it is right often enough that you stop checking. The summary is a place to start looking, never a place to stop.
-
 Source: Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 
 Story: A transcript that showed you a path to the answer you would not have taught.
 
-## 22:30 to 24:30: slide 11, Write the objective to the agent
+Bridge: know what you are up against when you read a model's summary instead of the transcripts.
+
+## 22:00 to 25:00: slide 11, Write the objective to the agent
 
 On screen:
 
@@ -171,7 +171,7 @@ Story: The student who told the tutor not to give answers.
 
 Bridge: the same tool that lets a kid phone it in is the one that hands a sculptor the clay; that story is in the long version.
 
-## 24:30 to 28:00: slide 13, Redesign one checkpoint this week
+## 25:00 to 28:00: slide 13, Redesign one checkpoint this week
 
 On screen:
 

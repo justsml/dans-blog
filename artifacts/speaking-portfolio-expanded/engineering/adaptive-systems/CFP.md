@@ -6,10 +6,11 @@ A vendor renames a field at 2 a.m. Can your app investigate, propose a fix, prov
 
 ## Standard abstract (100 words)
 
-We are building toward assistants with access to every customer record and tools that can email, refund, delete and deploy. Most of the damage they will do is accidental. This talk is a strategy for giving them that access anyway: an orchestrator that generates a narrowly scoped agent per job, with a tailored prompt, the minimum tools, a hard budget, and a logged path to ask for more. Following one address ingest through a rename, a change in meaning and a lost provider response, we cover semantic proof, versioned repairs, guarded tool classes, and per-customer compute that the app requests rather than ops pre-provisions.
+The assistant with every customer record and tools that can email, refund, delete and deploy is not a design we get to decline; it arrives one integration at a time. The hazard is not the tool count, it is the pathways between them. Ten tools is forty-five pairs before you count chains, nobody reviews the combinations, and the dangerous pairing is never on the roadmap — it gets discovered. This talk is a strategy for granting that access anyway: an orchestrator that generates a narrowly scoped agent per job, so the assistant still exists but never has all of its hands full at once.
 
 ## Outcomes
 
+- Count the live pathways in an agentic system rather than its tools, and keep that number small enough to reason about one job at a time.
 - Design an orchestrator that generates per-job agents with minimum tools, a hard budget, and a logged tool-request gate.
 - Distinguish a reversible mapping repair from a change in meaning, and prove it with fixtures the agent did not write.
 - Specify tool risk classes, cross-system boundaries, and per-job compute requests before widening automatic authority.

@@ -4,9 +4,11 @@ Open `index.html` in a browser. Keep `demo-logic.js` beside it. No server, API k
 
 These are **interactive deterministic demonstrations with synthetic inputs**, not a live agent, tutor, model benchmark or field experiment. The learner dialogue is a scripted replay. They demonstrate a decision and its boundaries while keeping the mechanics inspectable.
 
-## 1. A Skeptic's Guide to Surviving AI in Education
+## 1. Learning-goals exercise
 
-**Four and a half minutes**, matching slide 5 of the outline; compress to two by running one switch and stating the other two. Begin with “Spelling without assistance.” The result says Preserve. Switch to “Strength of an argument” and then “Scientific explanation.” The same general assistance changes category as the capability under assessment changes.
+**Not booked to a current talk.** A Skeptic's Guide was retired on 6 September 2026 and its replacement, [Show Me the Misconception](../packets/evidence-learning/procurement-route.md), runs without a demo kit — if that room wants a live moment, use the four index cards from its section 4 instead. Keep this panel as a standalone exercise for workshops and office hours, in the same spirit as the resource-policy panel below.
+
+**Four and a half minutes**; compress to two by running one switch and stating the other two. Begin with “Spelling without assistance.” The result says Preserve. Switch to “Strength of an argument” and then “Scientific explanation.” The same general assistance changes category as the capability under assessment changes.
 
 Ask the audience to name evidence that would demonstrate the intended capability. Explain that formatting can be incidental while source interpretation remains central. The categories apply to a learning objective and a stage of learning. They are not permanent labels attached to a task.
 

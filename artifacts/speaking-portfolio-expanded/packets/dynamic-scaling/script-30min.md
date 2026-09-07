@@ -1,6 +1,6 @@
 # Dynamic Scaling of Agentic Workloads: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 6 and 9 are cut with bridges. Keep the spot-interruption event in the walkthrough.
+Use slides 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 6 and 9 are cut with bridges. Keep the spot-interruption event in the walkthrough. Slide 12 needs the full five minutes: it carries Knight and Leveson cited-to-set-aside, both named techniques, the env-var hedge and the axiom-breaking close. Drop its opening setup sentence, never the hedge.
 
 ## 00:00 to 01:30: slide 1, Four callers, forty images, one customer
 
@@ -78,7 +78,7 @@ Delivery: Use the $2 ledger in contracts.md. Show settled plus reserved never pa
 
 Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt.
 
-## 09:30 to 12:30: slide 7, Infra Is a Tool Call
+## 09:30 to 12:00: slide 7, Infra Is a Tool Call
 
 On screen:
 
@@ -96,7 +96,7 @@ Story: The moment an agent-sized request would have replaced a capacity-planning
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
 
-## 12:30 to 15:00: slide 8, Torn Down by Default
+## 12:00 to 14:30: slide 8, Torn Down by Default
 
 On screen:
 
@@ -115,7 +115,7 @@ Delivery: Ask who runs agent code on something with a lifetime under an hour. Th
 
 Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU.
 
-## 15:00 to 17:30: slide 10, A durable job survives the caller
+## 14:30 to 17:00: slide 10, A durable job survives the caller
 
 On screen:
 
@@ -129,7 +129,7 @@ Callbacks arrive twice and out of order; authenticate, deduplicate, apply only v
 
 Delivery: Draw the state machine in contracts.md. Crash after submission and before the provider ID is saved. Discuss unresolved.
 
-## 17:30 to 21:00: slide 11, Walkthrough: restart the batch
+## 17:00 to 20:00: slide 11, Walkthrough: restart the batch
 
 On screen:
 
@@ -145,7 +145,7 @@ One job, a recoverable lifecycle, honest accounting, and a compute substrate tha
 
 Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
-## 21:00 to 25:00: slide 12, Monkeys, Then Guards
+## 20:00 to 25:00: slide 12, Monkeys, Then Guards
 
 On screen:
 
@@ -153,11 +153,11 @@ On screen:
 > Council of Guards: judges read a thousand tokens and write fifty; measure the disagreement
 > Gates before preferences; the judge may reject everyone
 
-Change the unit of work from images to whole designs. One brief, three generated agents: minimalist, maintainer, security and performance reviewer. Separate first drafts. The contrast is the product.
-
 Somebody is going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven programmers, one specification, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. Not this. I am not voting three models toward the truth.
 
 The generation side has a name I am not sorry about: the barrel-of-monkeys maneuver. Lead with cheap parallel generation on purpose — monkeys at a hundredth of the frontier's price — and hand the barrel to the next stage. Four reasons. Race: take the first draft that passes the gate. Synthesize: a frontier model reads them all, input tokens being the cheap ones, and writes one coherent output. Rank: more candidates for the judges, so the best whole answer goes downstream. Catch: in law or medicine, where the rules are extensive and specific, the mistake you fear shows up in one output out of ten, and the only way to see it is to have ten.
+
+Speculative optimization in a lab coat? Possibly. Ship it with an env var that sets fan-out to one, and ideally let the system tune that knob itself. Right? Right. That is the companion talk.
 
 The cheap half is judging. A judge reads a thousand tokens and writes fifty, and output is what costs, so five judges from different models on every candidate is affordable. Not the average score. The disagreement. Judges that split, or whose reasons barely overlap, have found territory nobody understands; that candidate does not ship on autopilot. I call this the Council of Guards: it reads everything, writes almost nothing, and costs a fraction of what it guards.
 

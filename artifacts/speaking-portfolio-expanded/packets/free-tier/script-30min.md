@@ -1,6 +1,6 @@
 # Buy Me a Free Tier: 30-minute presenter script
 
-Use slides 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 4, 8 and 13 are cut with bridges. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.
+Use slides 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 4, 8 and 13 are cut with bridges. The slide-3 bridge carries the title: slide 4 owns 'you are the terrain' and no shorter route keeps slide 4. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.
 
 ## 00:00 to 02:00: slide 1, Free electricity for a year
 
@@ -51,7 +51,7 @@ Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (199
 
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-Bridge: the enormous compute commitments everyone quotes are credible commitments in Schelling's sense, moves in a war of attrition, not disclosures about cost.
+Bridge: the enormous compute commitments everyone quotes are credible commitments in Schelling's sense, moves in a war of attrition, not disclosures about cost. And note who is not a player in that game. Somebody is buying your free tier, and it is not you. You are not a combatant. You are the terrain.
 
 ## 07:00 to 09:00: slide 5, Free parking was never free
 
@@ -81,13 +81,13 @@ In 1865 William Stanley Jevons noticed something that annoyed everyone. Steam en
 
 The transport version is word three, induced demand. Add a lane to a congested highway and you get more traffic. Duranton and Turner measured it across US cities in 2011 and found the elasticity of driving with respect to lane-kilometres is roughly one. Build ten percent more road, get ten percent more driving. The congestion comes back.
 
-So: your per-token price has fallen off a cliff over the last few years, and your bill went up. Everyone in this room has had that conversation with a CFO and lost it. You are not being gouged and you did not do anything wrong. Spend is price times consumption, and consumption is jobs times calls per job times tokens per call. Cheapness moved every term on the right. Epoch's data through 2025 shows the price of a fixed capability falling fast and very unevenly by task, which is real and worth knowing, and is also exactly the condition under which total spend rises.
+Both things can be fine. A falling price and a growing bill coexist comfortably as long as customer value grows faster. That is the relationship to measure, and almost nobody measures it.
 
 Source: Jevons (1865), The Coal Question, chapter VII. Duranton and Turner (2011), The Fundamental Law of Road Congestion, American Economic Review 101(6).
 
 Source: Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends). Check for a newer edition before each delivery.
 
-## 11:30 to 14:30: slide 7, Now do it to software
+## 11:30 to 14:00: slide 7, Now do it to software
 
 On screen:
 
@@ -106,7 +106,7 @@ Delivery: Ask for one show of hands: who has shipped a frontier call where a loo
 
 Bridge: and the lots stay built. Repealing a parking minimum does not remove asphalt, which is path dependence; measure yours by trying to remove one model call and counting the hours.
 
-## 14:30 to 16:30: slide 9, Whoever chooses is not whoever pays
+## 14:00 to 16:30: slide 9, Whoever chooses is not whoever pays
 
 On screen:
 
@@ -140,7 +140,7 @@ Now the part worth remembering. Divide by the acceptance rate and you get a mult
 
 Delivery: Do the division on stage. Thirty seconds: name your product's accepted outcome in one sentence. If that is hard, the economics conversation just found a product problem.
 
-## 19:00 to 23:00: slide 11, Turn the dial
+## 19:00 to 22:00: slide 11, Turn the dial
 
 On screen:
 
@@ -160,7 +160,7 @@ Then multiply by your own volume, because the table is meaningless without it. A
 
 Delivery: Runbook section 4. Two-minute compression: the 1× and 10× rows only. Ask for 45 seconds: which assumption would you attack first before funding an optimization project?
 
-## 23:00 to 26:00: slide 12, You are not shopping, you are contracting
+## 22:00 to 25:00: slide 12, You are not shopping, you are contracting
 
 On screen:
 
@@ -170,15 +170,13 @@ On screen:
 
 This is the slide I would keep if you cut every other one. Oliver Williamson won a Nobel in 2009 for working out what happens when two parties make investments that only pay off inside their relationship. He called it asset specificity, and the trouble it produces is called hold-up.
 
-The shape is always the same. You make an investment that is worth a great deal here and very little anywhere else. That surplus, the part that exists only because you are locked in, is a prize, and at renewal your counterparty can reach for it. Nobody has to be a villain. It is simply what the structure permits, and rational parties do it.
-
 Now inventory your specific assets. Prompts tuned against one model's quirks. An eval suite that only means anything against one provider's outputs. A fine-tune. A latency budget that assumes one serving stack. And the sharpest one, an unlimited-usage promise you made to your customers, priced against an input you do not control and cannot cap. Every one of those is worth more inside the relationship than outside it.
 
 So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything after this is just a way of reducing specificity or pricing the exposure.
 
 Bridge: reversibility is a real option with a value and a premium, so price it against your exposure instead of arguing about it on vibes.
 
-## 26:00 to 28:30: slide 14, Three prices for the next design review
+## 25:00 to 27:30: slide 14, Three prices for the next design review
 
 On screen:
 
@@ -192,7 +190,7 @@ Four actions, and each one is one of the words. Record gross consumption separat
 
 Delivery: 45 seconds in pairs on the third price. Most rooms have never computed it and the silence is useful.
 
-## 28:30 to 30:00: slide 15, Cheap intelligence changes incentives first
+## 27:30 to 30:00: slide 15, Cheap intelligence changes incentives first
 
 On screen:
 
@@ -203,8 +201,6 @@ On screen:
 Back to the electricity. Use the cheap input. It is genuinely great and I am not asking anyone to be miserable about it. Just understand what it encouraged you to build, and keep the expensive decisions reversible while you find out.
 
 There are your eight words. Externality, because the cost moved rather than vanished. Induced demand and Jevons, because cheaper made you use more, not less. Path dependence, because the lots stay built. Moral hazard, because whoever chooses is not whoever pays. Credible commitment, because those contracts are moves in a game and not disclosures about it. Asset specificity, because your architecture is worth more here than anywhere else. And real option, because reversibility is something you buy, not something you feel.
-
-Some low prices are temporary. Some are a preview of genuinely cheaper production. You do not have to know which. You have to measure outcomes and keep the big choices reversible either way.
 
 Cheap intelligence changes incentives before it changes organizations.
 

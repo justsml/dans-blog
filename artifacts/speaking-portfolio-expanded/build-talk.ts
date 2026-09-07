@@ -297,26 +297,27 @@ export const TALKS: Record<string, Talk> = {
     "30": {
       "minutes": 30.0,
       "keep": [1, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 17],
-      "times": [2, 2.5, 2, 2.5, 2, 1.5, 2, 2, 4.5, 2.5, 3, 3.5],
+      "times": [2, 2.5, 2, 2.5, 2, 1.5, 2, 2, 4, 2.5, 4, 3],
       "bridges": {
         "1": "Bridge: Colfer and Baldwin found mirroring prevalent, with documented ways to break it; prevalence is not destiny.",
         "7": "Bridge: the build-walking agent adds screenshots and reasons to the same evidence queue.",
-        "12": "Bridge: Graicunas counted 222 possible relationships at six reports, which is a warning about interfaces rather than a staffing ratio, and Bainbridge asks who still gets recovery practice. One more ownership line for the years ahead: tokens stop being a build cost and become fuel, defensive agents run forever, and somebody owns that meter."
+        "12": "Bridge: Graicunas counted 222 possible relationships at six reports, which is a warning about interfaces rather than a staffing ratio, and Bainbridge asks who still gets recovery practice. That leaves two predictions to close on, and I will label them as predictions once, because I have measured neither. The first is an ownership line for the years ahead: tokens stop being a build cost and become fuel, defensive agents run forever, and somebody owns that meter."
       },
-      "note": "The demo runs at four and a half minutes and precedes guards. Slide 15 keeps the generated-UI prediction and the AI-native opportunity; the fuel prediction rides in the slide-12 bridge."
+      "trim": { "15": [0, 2, 3, 4] },
+      "note": "The demo runs at four minutes and precedes guards. Slide 14 is cut and the fuel prediction rides in the slide-12 bridge, which must introduce it as the first of two or slide 15 opens on a dangling reference. Slide 15 drops the throwaway-software paragraph and keeps the channel question, the Minority Report image and the AI-native opportunity."
     },
     "15": {
       "minutes": 15.0,
       "keep": [1, 3, 5, 10, 11, 12, 15, 17],
-      "times": [1.5, 1.5, 2, 1.5, 3.5, 1.5, 2, 1.5],
+      "times": [1.75, 1.25, 1.5, 1.25, 3, 2, 2.75, 1.5],
       "bridges": {
         "1": "Bridge: mirroring has empirical support and documented exceptions. We can choose different communication structures.",
         "5": "Bridge: research and feedback deliver evidence to a product review; accepted hypotheses feed build and opt-in beta proposals.",
-        "12": "Bridge: ownership consumes attention, and it is about to consume fuel; limit interfaces, reserve recovery practice, and put the ongoing token burn beside the latency budget.",
+        "12": "Bridge: ownership consumes attention, and it is about to consume fuel. Two predictions close this talk and I will label them as predictions once, because I have measured neither. The first: tokens stop being a build cost and become a running cost, defensive agents run forever, and the ongoing burn belongs in the design doc beside the latency budget, with an owner who is not whoever wrote the prompt.",
         "15": "Bridge: every experiment still reports its hypothesis, its exposure count and its owner."
       },
-      "trim": { "15": [2, 3, 4] },
-      "note": "The demo is 3:30. Show activation before opening the kit. Preserve the vote and the written rule. Slide 15 keeps the channel question, the Minority Report image and the AI-native opportunity."
+      "trim": { "3": [0, 2], "5": [0, 1], "10": [0, 1], "15": [0, 3, 4], "17": [1, 3] },
+      "note": "The demo is 3:00. Show activation before opening the kit. Preserve the vote and the written rule. Slide 14 is cut; its fuel prediction and slide 15's channel question both ride in the slide-12 bridge, so slide 15 opens on the Minority Report image and lands on the AI-native opportunity."
     }
   }
 },
@@ -410,25 +411,30 @@ export const TALKS: Record<string, Talk> = {
       30: {
         minutes: 30,
         keep: [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15],
-        times: [1.5, 1.5, 2.5, 3.5, 2.5, 2.5, 1.5, 1.5, 4.5, 2.5, 2, 2, 2],
+        times: [2, 1.5, 3.75, 3.5, 2.5, 1.75, 1.25, 1.25, 4, 1.75, 2, 2.25, 2.5],
         bridges: {
+          3: "Bridge: most of the damage will be accidents — a confident mapping, a helpful cleanup, a tool called with the wrong ID — and a renamed field is untrusted input read by something that can act.",
+          5: "Bridge: a signed download URL is a bearer credential; handing it to a model while asking the model not to use it is hope, not isolation.",
           7: "Bridge: the repair also has to survive an exam it did not write; the walkthrough shows those fixtures.",
-          11: "Bridge: whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes.",
+          11: "Bridge: the compute guard is the tool guard — an approved catalog, enforced leases, and no unapproved region no matter how good the latency looks. Whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes on the same recorded incidents: recoveries, but also false repairs, dropped records, cost and human corrections.",
+          14: "Bridge: remembered output is untrusted data and grants no new permissions; the copyable prompt and record format are in the handout.",
         },
-        trim: { 14: [0, 1, 3] },
-        note: "The walkthrough runs at four and a half minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script.",
+        trim: { 2: [0, 1], 3: [0, 2, 4], 5: [0, 1, 2], 11: [0, 1], 13: [1, 2], 14: [0, 1], 15: [1, 2] },
+        note: "The walkthrough runs at four minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script. Slide 3 keeps the inevitability, the pathway arithmetic and the pivot; the --no-agent riff is the first thing to go when compressing.",
       },
       15: {
         minutes: 15,
-        keep: [1, 3, 4, 5, 6, 10, 14, 15],
-        times: [1, 1.5, 3, 1.5, 1.5, 3, 2.5, 1],
+        keep: [1, 3, 4, 5, 6, 10, 15],
+        times: [1.75, 3.5, 1.75, 1.5, 1.25, 3, 2.25],
         bridges: {
           1: "Bridge: the baseline is diff the schema and page a human; the agent has to beat that on time to recover without adding false repairs.",
-          6: "Bridge: a repair ships as a versioned artifact with a rollback, and it has to pass fixtures it did not write.",
+          3: "Bridge: most of the damage will be accidents before anyone means it, and a renamed field is untrusted input read by something that can act.",
+          5: "Bridge: this is least privilege, written down by Saltzer and Schroeder in 1975; a per-job agent is the first design where complying is easier than not.",
+          6: "Bridge: a Boolean status becoming an enum is the hard case — pending does not become true because both are truthy. A repair ships as a versioned artifact with a rollback, and it has to pass fixtures it did not write.",
           10: "Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is slide 11 in the long version, and the mechanics are a companion talk.",
         },
-        trim: { 3: [0, 1, 3], 4: [0, 1, 3], 10: [0, 1, 2, 3], 14: [0, 1, 3, 4] },
-        note: "Lightning route: the assistant with everything and its pathway explosion, the conjured agent, the guarded tools, then the semantic test a compressed walkthrough, and one agent with an execution memory.",
+        trim: { 3: [0, 2, 4], 4: [0, 1], 5: [0, 2], 6: [0, 2], 15: [1, 2] },
+        note: "Lightning route: the assistant with everything and its pathway explosion, the conjured agent, the guarded tools, the semantic test, a compressed walkthrough, and the close. Slide 14 is cut; the execution-memory on-ramp survives as the last line of the close.",
       },
     },
   },
@@ -443,24 +449,27 @@ export const TALKS: Record<string, Talk> = {
       30: {
         minutes: 30,
         keep: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14],
-        times: [2, 2, 1.5, 1.5, 2.5, 1.5, 4.5, 2.5, 2.5, 2, 2, 3.5, 2],
+        times: [2, 2, 1.5, 1.5, 2.5, 1.5, 4, 2.5, 2.5, 2, 3, 3, 2],
         bridges: {
+          3: "Bridge: Koedinger and Aleven called this the assistance dilemma in 2007 - too much help and they coast, too little and they flounder - and nobody has closed it.",
+          8: "Bridge: Soderstrom and Bjork reviewed fifty years of evidence that performance during practice and learning that lasts come apart routinely; supported and unaided go in separate columns.",
+          10: "Bridge: know what you are up against when you read a model's summary instead of the transcripts.",
           11: "Bridge: the same tool that lets a kid phone it in is the one that hands a sculptor the clay; that story is in the long version.",
         },
-        trim: { 11: [0, 1] },
-        note: "The sculptor (slide 12) is cut; its bookend line survives in the close. Reconstruction runs at four and a half minutes with the kit.",
+        trim: { 3: [0, 1], 8: [0, 1, 2], 10: [0, 1], 11: [0, 1] },
+        note: "The sculptor (slide 12) is cut; its bookend line survives in the close. Reconstruction runs at four minutes with the kit. Slide 11 needs three minutes: both of its paragraphs are long.",
       },
       15: {
         minutes: 15,
         keep: [1, 2, 4, 5, 7, 8, 9, 14],
-        times: [1.5, 1.5, 1, 2, 3, 2, 2.5, 1.5],
+        times: [1, 2, 1.25, 2, 3, 1.5, 2.5, 1.75],
         bridges: {
           2: "Bridge: write down where pencil, whiteboard and peers live, and in the same document promise to teach the tool.",
           5: "Bridge: ask for an attempt first, then ration help rung by rung, and write down which rung you gave.",
           9: "Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout. And one more student: a friend of mine turned out to be a talented sculptor who never touched the clay in class, because there was no car at home and you do not carry a brick of clay on the bus.",
         },
-        trim: { 1: [0, 1, 2], 2: [0, 1], 7: [0, 1], 8: [0, 1], 9: [0, 1, 2], 14: [0, 2] },
-        note: "Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close.",
+        trim: { 1: [0, 1], 2: [0, 1], 5: [0, 1], 7: [0, 1], 8: [0, 1], 9: [0, 2], 14: [0, 2] },
+        note: "Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close. Slide 9 keeps the consent and identifiability paragraph — never cut that one for time in front of educators.",
       },
     },
   },
@@ -475,27 +484,29 @@ export const TALKS: Record<string, Talk> = {
       30: {
         minutes: 30,
         keep: [1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15],
-        times: [2, 2, 3, 2, 2.5, 3, 2, 2.5, 4, 3, 2.5, 1.5],
+        times: [2, 2, 3, 2, 2.5, 2.5, 2.5, 2.5, 3, 3, 2.5, 2.5],
         bridges: {
-          3: "Bridge: the enormous compute commitments everyone quotes are credible commitments in Schelling's sense, moves in a war of attrition, not disclosures about cost.",
+          3: "Bridge: the enormous compute commitments everyone quotes are credible commitments in Schelling's sense, moves in a war of attrition, not disclosures about cost. And note who is not a player in that game. Somebody is buying your free tier, and it is not you. You are not a combatant. You are the terrain.",
           7: "Bridge: and the lots stay built. Repealing a parking minimum does not remove asphalt, which is path dependence; measure yours by trying to remove one model call and counting the hours.",
           12: "Bridge: reversibility is a real option with a value and a premium, so price it against your exposure instead of arguing about it on vibes.",
         },
-        trim: { 6: [0, 1, 2] },
-        note: "Slides 4, 8 and 13 are cut with bridges. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.",
+        trim: { 6: [0, 1, 3], 12: [0, 2, 3], 15: [0, 1, 3] },
+        note: "Slides 4, 8 and 13 are cut with bridges. The slide-3 bridge carries the title: slide 4 owns 'you are the terrain' and no shorter route keeps slide 4. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.",
       },
       15: {
         minutes: 15,
-        keep: [1, 3, 5, 6, 7, 10, 12, 15],
-        times: [1.75, 2, 1.5, 2, 2.25, 2, 2, 1.5],
+        keep: [1, 3, 6, 7, 10, 12, 15],
+        times: [2.5, 2.75, 2, 2.25, 2, 1.75, 1.75],
         bridges: {
           1: "Bridge: four boxes on one invoice - price paid, resources consumed, cost allocated, value delivered - and the gap between the last two is why nobody is measuring.",
+          3: "Bridge: those commitments are credible commitments in Schelling's sense, moves in a war of attrition. Note who is not a player. Somebody is buying your free tier, and it is not you. You are not a combatant, you are the terrain. And the terrain keeps its asphalt: repealing a parking minimum does not remove a lot, which is path dependence.",
+          6: "Bridge: your per-token price fell off a cliff and your bill went up, because spend is price times jobs times calls times tokens and cheapness moved every term on the right.",
           7: "Bridge: the lots stay built, and whoever chooses the architecture is not whoever pays the bill sixty days later.",
           10: "Bridge: run the sweep at one, two, five and ten times price, then multiply by your own volume before you feel anything about it.",
           12: "Bridge: so price reversibility as the option it is, and bring three prices to the design review: today, without the offer, and the most you could survive.",
         },
-        trim: { 1: [0, 1, 2], 3: [1, 2], 5: [0, 1], 6: [0, 1, 2], 7: [0, 1], 10: [0, 2], 12: [0, 1, 3] },
-        note: "Lightning route: the electricity question, the four explanations for a low price, parking, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words.",
+        trim: { 1: [0, 1, 2], 3: [1, 2], 6: [0, 1], 7: [0, 1], 10: [0, 2], 12: [0, 3], 15: [0, 1, 3] },
+        note: "Lightning route: the electricity question, the four explanations for a low price and the terrain line that names the talk, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words. Slide 5 is cut; Shoup and path dependence ride in the slide-3 bridge.",
       },
     },
   },
@@ -510,13 +521,13 @@ export const TALKS: Record<string, Talk> = {
       30: {
         minutes: 30,
         keep: [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14],
-        times: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 2.5, 2.5, 3.5, 4, 2.5, 2.5],
-        trim: { 12: [0, 1, 2, 4, 5, 6] },
+        times: [1.5, 2.5, 1.5, 2.5, 1.5, 2.5, 2.5, 2.5, 3, 5, 2.5, 2.5],
+        trim: { 12: [1, 2, 3, 4, 5, 6] },
         bridges: {
           5: "Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt.",
           8: "Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU.",
         },
-        note: "Slides 6 and 9 are cut with bridges. Keep the spot-interruption event in the walkthrough.",
+        note: "Slides 6 and 9 are cut with bridges. Keep the spot-interruption event in the walkthrough. Slide 12 needs the full five minutes: it carries Knight and Leveson cited-to-set-aside, both named techniques, the env-var hedge and the axiom-breaking close. Drop its opening setup sentence, never the hedge.",
       },
       15: {
         minutes: 15,
