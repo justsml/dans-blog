@@ -105,7 +105,7 @@ One job, a recoverable lifecycle, honest accounting, and a compute substrate tha
 
 Delivery: Five minutes from demo.md. Ask the room for each next transition before revealing it.
 
-Bridge: attempts are a scaling axis too; bound them, gate them, and treat any synthesis as a new candidate.
+Bridge: attempts are a scaling axis and so is judging; a council of cheap judges from different models tells you where they disagree, and that is the candidate that gets a human. Bound the attempts, gate them, and treat any synthesis as a new candidate.
 
 ## 13:30 to 15:00: slide 14, Put the limit where the work begins
 

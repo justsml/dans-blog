@@ -13,7 +13,7 @@ Keep slides 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14. Hide the others in presente
 | 12:30 to 15:30 | 8 | The ecosystem is already ephemeral by default |
 | 15:30 to 18:00 | 10 | A durable job survives the caller |
 | 18:00 to 22:00 | 11 | Walkthrough: restart the batch |
-| 22:00 to 25:30 | 12 | Attempts are a scaling axis too |
+| 22:00 to 25:30 | 12 | Attempts are a scaling axis. So is judging. |
 | 25:30 to 27:30 | 13 | Measure the accepted outcome |
 | 27:30 to 30:00 | 14 | Put the limit where the work begins |
 

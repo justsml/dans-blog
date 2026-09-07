@@ -23,3 +23,5 @@ Invented candidates with stipulated findings. Every candidate fails at least one
 Synthesis: small interface, persisted per-item state, shared admission, deadline re-checked before every external attempt, per-item recovery, separate delivery worker. It is a new candidate. It still needs executable checks for simultaneous callers, lost acceptance responses, stale workers, reclaimed instances and duplicate callbacks.
 
 There is no automatic winner from a persona label, and the judge may reject the room.
+
+Council split (stipulated, for the reveal after the gates): three judges from different models score each candidate. Minimalist: all three name the lost provider IDs, near-total overlap. Security/performance: all three name the duplicate replay. Maintainer: one judge catches the deadline gap, one flags the outbox ordering, one passes it. Low overlap is the signal; the maintainer candidate is the one that gets the human's afternoon, not because it scored worst but because the council could not agree on why.

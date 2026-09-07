@@ -65,6 +65,10 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 
 A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All ten talks include generated 40/30/15 presenter scripts.
 
+## Shorts
+
+[shorts/](shorts/README.md) holds 28 standalone cuts, 1 to 10 minutes each: one idea, one number or picture, one landing line. Each names its parent talk and slide so the fixtures and evidence travel with it. Twenty-one are sized for video (1 to 5 minutes); seven are lightning slots (5 to 10). Hand-written, not generated from the outlines.
+
 ## Image prompts
 
 Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [dynamic-scaling visual inventory](packets/dynamic-scaling/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for dynamic scaling, and readable labels. Failure Improvement, Product Engineering, Judgment, Benchmarks, and Retrieval also have real SVGs and packet visual inventories. Some other outlines retain `<!-- image: ... -->` prompts.

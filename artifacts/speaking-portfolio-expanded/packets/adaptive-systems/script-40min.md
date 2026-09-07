@@ -36,23 +36,25 @@ So every slide from here is about buying recovery speed without buying corruptio
 
 Delivery: Write the three metrics on the board and leave them there.
 
-## 04:00 to 07:00: slide 3, Now imagine the assistant that has everything
+## 04:00 to 07:00: slide 3, The assistant with everything is coming, one integration at a time
 
 On screen:
 
-> All customer data
-> Tools that email, refund, delete, deploy
+> Browsers, CLIs, every SaaS: an agent layer you opt out of with --no-agent
+> Ten tools is forty-five pairs. One more integration is not one more path.
 > Accidents first. Then people who mean it.
 
-Zoom out from the ingest job. The thing we are all building toward is an assistant with access to every customer's data and a toolbox that can send email, issue refunds, delete records and ship code. Most of the damage it will ever do will be an accident: a confident mapping, a helpful cleanup, a tool called with the wrong ID.
+Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on whatever site you have open. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
 
-Then there are the people who mean it. That renamed field could carry a sentence aimed at the model. A vendor payload is untrusted input that now gets read by something that can act.
+So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
 
-So the question for the next few years is not whether to give the assistant access. It is which strategies let us give it access and manage the risk. My answer, and what I have been building, is: never build the one assistant that has everything. Conjure a small one for each job, with exactly enough.
+Most of the damage will be accidents: a confident mapping, a helpful cleanup, a tool called with the wrong ID. Then there are the people who mean it. That renamed field could carry a sentence aimed at the model, and a vendor payload is untrusted input that now gets read by something that can act.
 
-Story: Your own near miss with an over-permissioned agent, or a tool call you were glad had a dry-run flag.
+So the question is not whether to give the assistant access. It is how to keep the number of live pathways small enough to reason about, one job at a time. That is what the rest of this talk builds. The big assistant still exists. It just never has all of its hands full at once: it conjures a small agent per job, with exactly enough.
 
-Delivery: Pause on the third line. Let the room feel that the accident case is the common one.
+Story: Your own near miss with an over-permissioned agent, or the tool pairing you only noticed after it fired.
+
+Delivery: Write 10 → 45 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
 
 ## 07:00 to 11:00: slide 4, Conjure the agent the job needs
 
@@ -256,7 +258,7 @@ On screen:
 
 Return to the field that changed overnight. We did not predict its spelling. We did define what had to stay true, what evidence a repair needed, which tools this one job could have, and how far the app could go without us.
 
-And return to the assistant with everything. We never built it. We built a factory for small ones, each with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent you have to trust, but many you can afford to check.
+And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want to. What changed is how many of its pathways are live at once. Each job gets a small agent with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent holding every combination, which nobody can check, but many small ones you can afford to.
 
 Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. That is enough to start.
 

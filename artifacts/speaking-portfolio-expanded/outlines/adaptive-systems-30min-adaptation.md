@@ -6,7 +6,7 @@ Keep slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Hide the others in prese
 | --- | --- | --- |
 | 00:00 to 01:30 | 1 | The vendor renamed a field |
 | 01:30 to 03:00 | 2 | The bar is: diff the schema and page a human |
-| 03:00 to 05:30 | 3 | Now imagine the assistant that has everything |
+| 03:00 to 05:30 | 3 | The assistant with everything is coming, one integration at a time |
 | 05:30 to 09:00 | 4 | Conjure the agent the job needs |
 | 09:00 to 11:30 | 5 | Guard the tools that can hurt |
 | 11:30 to 14:00 | 6 | Repair syntax; prove meaning |
