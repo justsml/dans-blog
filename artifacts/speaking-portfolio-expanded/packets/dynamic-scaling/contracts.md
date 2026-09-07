@@ -79,7 +79,7 @@ Assume $0.10 per attempt, ten items, two attempts each. Infrastructure cost is e
 
 Invariant: settled plus reserved never exceeds $2.
 
-**Reservation tightness.** This ledger reserves pessimistically, so caller B waited behind $0.90 that was never spent. The alternative reserves one attempt per item and grants retries lazily from the remaining balance; it admits more real work and can overshoot when many retries land at once. Pick one, name it in the policy, and show the queued caller why it is waiting.
+**Reservation tightness.** This ledger reserves pessimistically, so caller B waited behind money that was never spent ($0.90 released at row four, $1.00 by the end of the run). The alternative reserves one attempt per item and grants retries lazily from the remaining balance; it admits more real work and can overshoot when many retries land at once. Pick one, name it in the policy, and show the queued caller why it is waiting.
 
 ## Durable state and notification
 

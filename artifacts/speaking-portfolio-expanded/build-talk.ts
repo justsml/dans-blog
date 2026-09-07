@@ -134,7 +134,7 @@ export const TALKS: Record<string, Talk> = {
         "2": "Bridge: term specificity, vectors, vocabulary mismatch, and passage retrieval explain how we obtain candidates. Now judge the evidence they returned.",
         "12": "Bridge: retrieved text supplies evidence, never tool authority. Name a corpus owner and an update path."
       },
-      "note": "Pairs get 45 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives."
+      "note": "Pairs get 60 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives."
     }
   }
 },
@@ -207,7 +207,7 @@ export const TALKS: Record<string, Talk> = {
       ],
       "bridges": {
         "1": "Bridge: our cancellation workload reverses the fictional leaderboard. The scoring question changed.",
-        "9": "Bridge: separate held-out evidence, report slices and counts, version the scorer, and set the rejection rule before viewing the candidate."
+        "9": "Bridge: separate held-out evidence, report slices and counts, version the scorer, set the rejection rule before viewing the candidate, and use code for state and schema, graders for language, people for disputed policy."
       },
       "note": "The number and its sampling assumptions stay together. Calibration uses the always-pass confusion matrix."
     }
@@ -278,10 +278,11 @@ export const TALKS: Record<string, Talk> = {
       ],
       "bridges": {
         "1": "Bridge: distinguish hands-on review from waiting to start it.",
-        "3": "Bridge: improve the process producing the queue. Start with the request before the code exists.",
+        "3": "Bridge: improve the process producing the queue. Start with the request before the code exists. Thirty seconds in pairs: what does the ticket leave unanswered?",
         "7": "Bridge: review also teaches the system; a green test cannot replace understanding.",
         "9": "Bridge: give the reviewer authority to stop work, enough context, and time to recover it."
       },
+      "trim": { "6": [0, 2, 3] },
       "note": "Introduce the permission request before its criteria. Pairs get 30 seconds; the demo gets 3:30."
     }
   }
@@ -295,65 +296,27 @@ export const TALKS: Record<string, Talk> = {
   "routes": {
     "30": {
       "minutes": 30.0,
-      "keep": [
-        1,
-        3,
-        4,
-        5,
-        6,
-        7,
-        9,
-        10,
-        11,
-        12,
-        15
-      ],
-      "times": [
-        2,
-        2.5,
-        2,
-        2.5,
-        2.5,
-        1.5,
-        2,
-        2,
-        5,
-        3,
-        5
-      ],
+      "keep": [1, 3, 4, 5, 6, 7, 9, 10, 11, 12, 15, 17],
+      "times": [2, 2.5, 2, 2.5, 2, 1.5, 2, 2, 4.5, 2.5, 3, 3.5],
       "bridges": {
         "1": "Bridge: Colfer and Baldwin found mirroring prevalent, with documented ways to break it; prevalence is not destiny.",
         "7": "Bridge: the build-walking agent adds screenshots and reasons to the same evidence queue.",
-        "12": "Bridge: Graicunas counted 222 possible relationships at six reports; this is a warning about interfaces, not a staffing ratio. Bainbridge asks who still gets recovery practice. Every experiment needs a hypothesis and a report."
+        "12": "Bridge: Graicunas counted 222 possible relationships at six reports, which is a warning about interfaces rather than a staffing ratio, and Bainbridge asks who still gets recovery practice. One more ownership line for the years ahead: tokens stop being a build cost and become fuel, defensive agents run forever, and somebody owns that meter."
       },
-      "note": "The five-minute demo precedes guards. Use the longer closing allocation for the ownership bridge and a hypothesis example."
+      "note": "The demo runs at four and a half minutes and precedes guards. Slide 15 keeps the generated-UI prediction and the AI-native opportunity; the fuel prediction rides in the slide-12 bridge."
     },
     "15": {
       "minutes": 15.0,
-      "keep": [
-        1,
-        3,
-        5,
-        10,
-        11,
-        12,
-        15
-      ],
-      "times": [
-        1.5,
-        2,
-        2,
-        1.5,
-        3.5,
-        2.5,
-        2
-      ],
+      "keep": [1, 3, 5, 10, 11, 12, 15, 17],
+      "times": [1.5, 1.5, 2, 1.5, 3.5, 1.5, 2, 1.5],
       "bridges": {
         "1": "Bridge: mirroring has empirical support and documented exceptions. We can choose different communication structures.",
         "5": "Bridge: research and feedback deliver evidence to a product review; accepted hypotheses feed build and opt-in beta proposals.",
-        "12": "Bridge: ownership consumes attention. Limit interfaces, reserve recovery practice, and attach a hypothesis and a report to each experiment."
+        "12": "Bridge: ownership consumes attention, and it is about to consume fuel; limit interfaces, reserve recovery practice, and put the ongoing token burn beside the latency budget.",
+        "15": "Bridge: every experiment still reports its hypothesis, its exposure count and its owner."
       },
-      "note": "The demo is 3:30. Show activation before opening the kit. Preserve the vote and the written rule."
+      "trim": { "15": [2, 3, 4] },
+      "note": "The demo is 3:30. Show activation before opening the kit. Preserve the vote and the written rule. Slide 15 keeps the channel question, the Minority Report image and the AI-native opportunity."
     }
   }
 },
@@ -462,9 +425,9 @@ export const TALKS: Record<string, Talk> = {
         bridges: {
           1: "Bridge: the baseline is diff the schema and page a human; the agent has to beat that on time to recover without adding false repairs.",
           6: "Bridge: a repair ships as a versioned artifact with a rollback, and it has to pass fixtures it did not write.",
-          10: "Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is a companion talk.",
+          10: "Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is slide 11 in the long version, and the mechanics are a companion talk.",
         },
-        trim: { 3: [0, 1, 3], 4: [0, 1, 3], 10: [0, 1, 2], 14: [0, 1, 3, 4] },
+        trim: { 3: [0, 1, 3], 4: [0, 1, 3], 10: [0, 1, 2, 3], 14: [0, 1, 3, 4] },
         note: "Lightning route: the assistant with everything and its pathway explosion, the conjured agent, the guarded tools, then the semantic test a compressed walkthrough, and one agent with an execution memory.",
       },
     },
@@ -503,11 +466,11 @@ export const TALKS: Record<string, Talk> = {
   },
   "free-tier": {
     slug: "free-tier",
-    title: "Cry Me a Free Tier",
+    title: "Buy Me a Free Tier",
     description:
-      "Cry Me a Free Tier: what the cheap input taught your architecture to expect, in eight words from economics and game theory.",
+      "Buy Me a Free Tier: what the cheap input taught your architecture to expect, in eight words from economics and game theory.",
     deckFile: "free-tier.html",
-    eyebrow: "Cry Me a Free Tier · Dan Levy",
+    eyebrow: "Buy Me a Free Tier · Dan Levy",
     routes: {
       30: {
         minutes: 30,
@@ -524,14 +487,14 @@ export const TALKS: Record<string, Talk> = {
       15: {
         minutes: 15,
         keep: [1, 3, 5, 6, 7, 10, 12, 15],
-        times: [1.5, 2, 1.5, 2, 2.5, 2, 2, 1.5],
+        times: [1.75, 2, 1.5, 2, 2.25, 2, 2, 1.5],
         bridges: {
-          1: "Bridge: price, cost and value are three different numbers, and the gap between what you pay and what it is worth to you is why nobody is measuring.",
+          1: "Bridge: four boxes on one invoice - price paid, resources consumed, cost allocated, value delivered - and the gap between the last two is why nobody is measuring.",
           7: "Bridge: the lots stay built, and whoever chooses the architecture is not whoever pays the bill sixty days later.",
           10: "Bridge: run the sweep at one, two, five and ten times price, then multiply by your own volume before you feel anything about it.",
           12: "Bridge: so price reversibility as the option it is, and bring three prices to the design review: today, without the offer, and the most you could survive.",
         },
-        trim: { 1: [0, 1], 3: [0, 2], 5: [0, 1], 6: [0, 1, 3], 7: [0, 1], 10: [0, 2], 12: [0, 1, 3] },
+        trim: { 1: [0, 1, 2], 3: [1, 2], 5: [0, 1], 6: [0, 1, 2], 7: [0, 1], 10: [0, 2], 12: [0, 1, 3] },
         note: "Lightning route: the electricity question, the four explanations for a low price, parking, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words.",
       },
     },
@@ -547,7 +510,8 @@ export const TALKS: Record<string, Talk> = {
       30: {
         minutes: 30,
         keep: [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14],
-        times: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 2.5, 2.5, 4, 4.5, 1.5, 2.5],
+        times: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 2.5, 2.5, 3.5, 4, 2.5, 2.5],
+        trim: { 12: [0, 1, 2, 4, 5, 6] },
         bridges: {
           5: "Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt.",
           8: "Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU.",
@@ -562,9 +526,9 @@ export const TALKS: Record<string, Talk> = {
           2: "Bridge: count logical items and provider attempts separately; a retry is not a new entitlement.",
           4: "Bridge: money, concurrency and rate are three different limits; a run can satisfy one and blow the other two.",
           8: "Bridge: a job survives the caller when its intent, provider IDs and reservations are persisted before dispatch.",
-          11: "Bridge: attempts are a scaling axis and so is judging; a council of cheap judges from different models tells you where they disagree, and that is the candidate that gets a human. Bound the attempts, gate them, and treat any synthesis as a new candidate.",
+          11: "Bridge: two more scaling axes have names. The barrel-of-monkeys maneuver leads with cheap parallel generation on purpose and hands the barrel to the next stage. The Council of Guards is cheap judges from different models, and the number you want back is the disagreement. Gate every candidate; a synthesis is a new candidate.",
         },
-        trim: { 2: [0, 1], 7: [0, 1, 2], 8: [0, 1, 2], 11: [0, 1, 2] },
+        trim: { 2: [0, 1] },
         note: "Lightning route: the multiplication, the inversion, the ecosystem, then a compressed restart walkthrough.",
       },
     },

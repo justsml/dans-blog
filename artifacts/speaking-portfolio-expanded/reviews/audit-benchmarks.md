@@ -109,3 +109,47 @@ Also: line 111 `supplied article` (Blocking). Line 233 landing (`The suite is an
 11. `artifacts/flagship-talks/` — delete `benchmarks-40min-outline.md`, `benchmarks-15min-outline.md`, `benchmarks-40min.pptx`, `benchmarks-15min.pptx`; keep the README row.
 12. `decks/README.md` and `decks/sync-inputs.json` — regenerate via `sync-talks.ts benchmarks` (or fix the generator) so the Benchmarks PowerPoints are indexed.
 13. After 1–7: run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts benchmarks`, then `bun artifacts/speaking-portfolio-expanded/packets/benchmarks/arithmetic.ts` to reconfirm, then update the four benchmark shorts if any retitled heading is quoted in them (none currently is).
+
+## Fixes applied 2026-09-06
+
+### 1. Changes
+
+- `outlines/benchmarks-40min.md:111` — Source line now reads `danlevy.net, 11 August 2026`; the "supplied article" leftover is gone.
+- `outlines/benchmarks-40min.md:48` — slide 3 Source line now opens with `Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981)`, and the closing sentence absorbs the paraphrase boundary ("attributed paraphrases, not claims that every optimized benchmark has stopped measuring anything").
+- `outlines/benchmarks-40min.md` — eight headings retitled per §6: 1 *Tuxedo of Benchmarks*; 4 *Your Eval Suite Needs Therapy* (short #5's approved title, replacing the "Your X Is a Y" form the voice skill rejects); 7 *Run the Judges*; 8 *Twenty for Twenty, One in Seven* (the image `alt` follows the heading); 9 *Agreeable to a Fault (κ = 0)* (short #8's approved title, the second "Your X Is a Y"); 11 *holdout.json Is Not Held Out*; 13 *The Cheapest Honest No*; 14 *Write the Rejection Rule First*. Slides 5, 15 and the rest keep their headings. Slide numbers, timings and route keeps are untouched: 15 slides, contiguous, sum 40:00.
+- `outlines/benchmarks-40min.md:233` — landing ends on `The suite is an instrument. Test the instrument.` plus `Stage direction: Stop talking.`
+- `outlines/benchmarks-40min.md:149` — arXiv cites now carry author-year: Shi et al. (2024) for 2406.07791, Wataoka et al. (2024) for 2410.21819.
+- `shorts/run-your-judge-five-times.md:3` — parent pointer now `slides 7 and 9`.
+- `shorts/nice-paragraph-buys-a-refund.md:3` — parent pointer now `slides 2, 3, 5, 6, 12, 13`.
+- `packets/benchmarks/evidence-bank.md` — the "the review requested" sentence is gone; the substance survives as a plain claim-boundary statement naming Goodhart/Campbell/Strathern.
+- `packets/benchmarks/packet.md` — the editions table duplicated from `formats.md` is replaced by a pointer to `formats.md` (which `sync-talks.ts` regenerates) plus an index of the hand-written packet files. `packet.md` is only written when absent, so its copy of the table was the one that could silently drift.
+- `arithmetic.ts` re-run after the edits: `majorityDisagreement: 0.4`, `zeroFailuresUpper95Exact: 0.13910834…`, `ruleOfThree: 0.15`, `kappa: 0`. Unchanged, still matches slides 7, 8, 9 and `bound.svg`.
+
+### 2. Skipped
+
+- Edit 10 (15-min bridge clause) — requires `build-talk.ts`; written as an instruction below instead.
+- Edit 11 (`artifacts/flagship-talks/` deletions) — the directory was deleted portfolio-wide earlier today. Nothing to do.
+- Edit 12 (`decks/README.md`, `decks/sync-inputs.json`) — out of bounds for a per-talk pass and portfolio-wide in nature; leaving it to the central sync. Flagged again here so it is not lost.
+- Edit 13 (`sync-talks.ts` run) — the caller runs one full sync.
+- Filling `formats.md` with hand-written format notes (§7 MERGE row's premise) — the row claims other talks carry 50–66 lines of notes; `judgment` and `retrieval` are generated-only at 12 lines, exactly like `benchmarks`, so this is a portfolio gap, not a benchmarks defect. Writing a lightning script and workshop plan is new authoring, not a fix.
+- **Skitka 1999 qualification** — requested by the caller, but Skitka, Mosier and Burdick (1999) is not cited anywhere in this talk. It appears in `adaptive-systems`, `evidence-learning`, `judgment` and the shorts `what-happened-to-sarah.md` / `test-that-loves-the-bug.md`. Editing those is out of bounds here; the fix belongs to those talks' passes. For the record, the characterization to qualify is "people given a highly but imperfectly reliable aid did worse than people given no aid at all" — that holds for the trials in which the automated aid was wrong (errors of omission and commission on the non-normal events), not across the whole task, and it was measured in a flight simulator. `packets/adaptive-systems/evidence-bank.md:27` and `packets/evidence-learning/evidence-bank.md:63` already carry the simulator caveat but not the wrong-aid-trials scoping.
+
+### 3. Route config changes for the caller
+
+```
+slug: benchmarks
+route: 15
+field: bridges["9"]
+old: "Bridge: separate held-out evidence, report slices and counts, version the scorer, and set the rejection rule before viewing the candidate."
+new: "Bridge: separate held-out evidence, report slices and counts, version the scorer, set the rejection rule before viewing the candidate, and use code for state and schema, graders for language, people for disputed policy."
+reason: the 15-min bridge covered cut slides 11, 12 and 14 but not the check ladder (13).
+times: unchanged. 15-min keep [1,3,4,5,6,7,8,9,15] at [1,1,1,1.5,1.5,2,3,2.5,1.5] = 15.0. 30-min keep [1,2,3,4,5,6,7,8,9,12,14,15] at [2,1.5,2.5,2.5,2.5,2,3,3.5,3.5,2,2.5,2.5] = 30.0.
+```
+
+### 4. Morning review (`reviews/benchmarks-review.md`)
+
+Verified rather than assumed. Its §4 arc is adopted slide-for-slide: 15 slides, identical minute allocation (2.5/2/2.5/2.5/2.5/3/3/3.5/3.5/2.5/3/2.5/2/2.5/2.5), the same merges and cuts, the 30-minute route hiding 10/11/13. Its §2 roast items are all closed — real arithmetic now carries the fixture (a), the "scope, not moral failure" apology and the shortlist concession are gone (b), the orphaned compressed-specification note is gone (c), "One number is a comforting fiction" is the slide 5 heading (d), four audience moments exist at slides 1, 6/7, 8 and 14 (e), the peak is slides 8–9 (f), cost-per-success and routing are handed off (g), notes are spoken text (h), one disclaimer on slide 1 (i), the 30-minute route is rebuilt (j), and the "three times" error is corrected to 40% majority disagreement with one adjacent transition (k). §6's checks are all reflected on the slides (IID assumption stated, kappa prevalence flagged, Strathern credited).
+
+Adopted from it today: the one genuinely open item, the Goodhart (1975) citation from §3 and §6 — the paraphrase was on the slide with no source entry behind it.
+
+Skipped, and why: Recht et al. 2019 (§3, and §6 says verify the figures first — no room and no verified numbers); Dynabench/Kiela saturation (§3; §6 downgrades it to an illustration, and the contamination slide already carries the load); Krippendorff's alpha (a second coefficient on a slide that already argues against threshold worship); Zobel 1998 and the pooling material (owned by Retrieval by design); the replication-crisis analogy (§3 itself calls it glib-prone); verbatim Goodhart/Campbell quotations (attributed paraphrase is the deliberate choice, now recorded in the evidence bank). None of these contradicts tonight's direction; they are simply not improvements at this length.

@@ -1,6 +1,6 @@
 # Five-minute paper walkthrough: restart the batch
 
-Slide 11. Paper trace, no provider calls. Ask the room for each transition before revealing it. Arithmetic comes from the $2 ledger in contracts.md.
+Slide 11. Paper trace, no provider calls. Five minutes on the 40-minute route; on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the spot reclaim. Ask the room for each transition before revealing it. Arithmetic comes from the $2 ledger in contracts.md.
 
 | Time | Event | Ask | Expected behavior |
 | --- | --- | --- | --- |

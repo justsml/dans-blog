@@ -12,14 +12,15 @@ Generated from [the current 40-minute outline](../../outlines/evidence-learning-
 
 # Formats: Outsmart Your Lying, Cheating Students
 
-The 14-slide [browser deck](../../../reveal-talks/evidence-learning.html) follows the [40-minute outline](../../outlines/evidence-learning-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild. The PPTX exports predate the 2026-09-06 rewrite.
+The 14-slide [browser deck](../../../reveal-talks/evidence-learning.html) follows the [40-minute outline](../../outlines/evidence-learning-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |
 | 5 to 7 minutes | Lightning script below; slides 1, 4, 5, 7, 14 |
 | 5 to 10 minute live demo | AI Tinkerers format, below |
 | 15 minutes | [Script](script-15min.md) and [route](../../outlines/evidence-learning-15min-adaptation.md) |
-| 25 minutes | 30-minute route with slides 10 and 11 dropped |
+| 15 minutes, procurement or administrator room | [Show Me the Misconception](procurement-route.md), hand-written; no kit |
+| 26 minutes | 30-minute route with slides 10 and 11 dropped |
 | 30 minutes | [Script](script-30min.md) and [route](../../outlines/evidence-learning-30min-adaptation.md) |
 | 40 minutes | [Script](script-40min.md) and [outline](../../outlines/evidence-learning-40min.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |

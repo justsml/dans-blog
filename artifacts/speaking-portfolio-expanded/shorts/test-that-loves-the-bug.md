@@ -9,17 +9,17 @@ Two confident artifacts, identically wrong, and a green check between them.
 Here's the implementation. Here's its test. Would you approve it?
 
 ```ts
-canEdit(user) = user.roles.includes("admin")
+canEdit(user, resourceTenant) = user.roles.includes("admin")
 // test: admin user → allowed → PASS
 ```
 
 ## Beat: the case nobody asked
 
-The admin belongs to tenant A. The resource belongs to tenant B. The function says yes. The test never asked. It was accurate about the behavior it checked, and the behavior was incomplete in exactly the same way as the code, because the same model wrote both from the same missing sentence in the ticket.
+The resource tenant is right there in the signature. Nothing reads it. The admin belongs to tenant A, the resource belongs to tenant B, the function says yes, and the test never asked. It was accurate about the behavior it checked, and the behavior was incomplete in exactly the same way as the code, because the same model wrote both from the same missing sentence in the ticket.
 
 ## Beat: why the green wins
 
-Bainbridge asked what automation leaves the human doing. Automation-bias experiments show people defer to the aid even against other evidence. In a review queue the green check gets the attention; the missing case didn't get a check at all. It couldn't. Nobody wrote it.
+Bainbridge asked what automation leaves the human doing. Skitka and colleagues ran a flight simulator with an automated monitoring aid and scored the trials where the aid was wrong: people missed what it failed to flag and acted on prompts the other instruments contradicted. In a review queue the green check gets the attention; the missing case didn't get a check at all. It couldn't. Nobody wrote it.
 
 ## Landing
 
@@ -31,7 +31,7 @@ The three lines above, then `admin@tenantA edits resource@tenantB → allowed`. 
 
 ## Source
 
-Bainbridge (1983), Ironies of automation. Mosier and Skitka (1999), Automation Use and Automation Bias.
+Bainbridge (1983), Ironies of automation, Automatica 19(6). Skitka, Mosier and Burdick (1999), Does automation bias decision-making?, IJHCS 51(5), 991–1006 — a flight-simulation task, not a code-review trial.
 
 ## Demo
 

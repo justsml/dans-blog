@@ -2,7 +2,7 @@
 
 40 minutes. Timings include the exercises and delivery pauses, without Q&A. Sources checked 6 September 2026. Story prompts belong in speaker notes and require Dan’s own records before delivery.
 
-## 1. A leaderboard, and the question it isn't answering
+## 1. Tuxedo of Benchmarks
 
 00:00 to 02:30 · warm
 
@@ -30,7 +30,7 @@ Now the same models attempt our cancellation workflow. C has the best pass rate 
 
 We still need to know what pass meant. Did the system cancel the right account, or did it write a reassuring answer? Did it perform an authorized action, or did it merely mention policy? If the scorer only reads the chat, a polite failure can beat a terse success.
 
-Prices can help choose among acceptable systems. They cannot tell us which systems are acceptable. The cost-per-success arithmetic belongs to Cry Me a Free Tier. Today the question is whether this score means anything.
+Prices can help choose among acceptable systems. They cannot tell us which systems are acceptable. The cost-per-success arithmetic belongs to Buy Me a Free Tier. Today the question is whether this score means anything.
 
 ## 3. Goodhart, Campbell, and the target
 
@@ -45,9 +45,9 @@ The practical question is the same. What behavior improves the number without im
 
 Write that loophole down before optimizing. Then add a case that exploits it. If your evaluator applauds the exploit, you found work worth doing.
 
-Source: Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are paraphrases.
+Source: Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981). Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are attributed paraphrases, not claims that every optimized benchmark has stopped measuring anything.
 
-## 4. Your eval suite is a measuring instrument
+## 4. Your Eval Suite Needs Therapy
 
 07:00 to 09:30 · build
 
@@ -92,7 +92,7 @@ A trace becomes a test when it answers a specific question. A transcript without
 
 Stage direction: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
 
-## 7. Run it five times
+## 7. Run the Judges
 
 15:00 to 18:00 · build
 
@@ -108,13 +108,13 @@ In Auto-Tune Your LLM Judge I call majority disagreement the decision flip rate.
 
 Stage direction: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
 
-Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-llm-judge/), supplied article. The sequence is reused as a teaching fixture, not a fresh measurement.
+Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-llm-judge/), danlevy.net, 11 August 2026. The sequence is reused as a teaching fixture, not a fresh measurement.
 
-## 8. Twenty green cases. About one in seven.
+## 8. Twenty for Twenty, One in Seven
 
 18:00 to 21:30 · build
 
-![Twenty green cases. About one in seven.](../../reveal-talks/assets/benchmarks/bound.svg)
+![Twenty for Twenty, One in Seven](../../reveal-talks/assets/benchmarks/bound.svg)
 
 > Zero failures in 20 independent representative trials
 > 95% upper bound: 3 / 20 ≈ 15%; exact 13.9%
@@ -131,7 +131,7 @@ Stage direction: Spend one minute on (1 − p)^20 = 0.05. Ask what sample select
 
 Source: James A. Hanley and Abby Lippman-Hand (1983), [If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators](https://www.medicine.mcgill.ca/epidemiology/hanley/c607/ch08/zero_numerator.pdf), JAMA 249(13), 1743–1745. Card et al. (2020), [With Little Power Comes Great Responsibility](https://aclanthology.org/2020.emnlp-main.745/).
 
-## 9. Your grader is an instrument too
+## 9. Agreeable to a Fault (κ = 0)
 
 21:30 to 25:00 · build
 
@@ -146,7 +146,7 @@ Blind model identity. Swap A/B answer order. Position bias and self-preference h
 
 Stage direction: Write the 90/10 confusion matrix. Compute (0.9 − 0.9)/(1 − 0.9). Allow 45 seconds to inspect the ten missed failures.
 
-Source: Cohen (1960), [A Coefficient of Agreement for Nominal Scales](https://journals.sagepub.com/doi/abs/10.1177/001316446002000104). Feinstein and Cicchetti (1990), [High agreement but low kappa](https://pubmed.ncbi.nlm.nih.gov/2348207/). [Position bias study](https://arxiv.org/abs/2406.07791); [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819).
+Source: Cohen (1960), [A Coefficient of Agreement for Nominal Scales](https://journals.sagepub.com/doi/abs/10.1177/001316446002000104). Feinstein and Cicchetti (1990), [High agreement but low kappa](https://pubmed.ncbi.nlm.nih.gov/2348207/). Shi et al. (2024), [Judging the Judges: position bias in pairwise LLM comparisons](https://arxiv.org/abs/2406.07791). Wataoka et al. (2024), [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819).
 
 ## 10. Cranfield had a test collection
 
@@ -163,7 +163,7 @@ The Retrieval talk follows that history and its pooling problem. The point here 
 
 Source: Cleverdon, Mills, and Keen (1966), [Cranfield report front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf). [NIST TREC overview](https://trec.nist.gov/overview.html). Voorhees (2000), [Variations in Relevance Judgments](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness).
 
-## 11. Contamination and the reusable holdout
+## 11. holdout.json Is Not Held Out
 
 27:30 to 30:30 · build
 
@@ -191,7 +191,7 @@ Report cancellation by account type, authorization state, language, and tool out
 
 Track critical violations separately. Nine friendly answers do not compensate for deleting the wrong account. Keep the denominator visible when the corpus changes so a new score does not quietly answer a new question.
 
-## 13. Use the cheapest check that can honestly fail
+## 13. The Cheapest Honest No
 
 33:00 to 35:00 · build
 
@@ -204,7 +204,7 @@ Use a model grader where the criterion requires language judgment, and validate 
 
 The ladder is a division of questions. It is not a contest to see how many things we can put behind an LLM call.
 
-## 14. Make it a release gate
+## 14. Write the Rejection Rule First
 
 35:00 to 37:30 · land
 
@@ -230,4 +230,6 @@ Start with twenty cases tomorrow. Attach the acceptance criterion, the source, a
 
 Validity asks what inference the score supports. Reliability asks whether the measurement is repeatable enough for its use. Agreement asks where graders differ. Power asks whether the experiment can detect the difference we care about. Contamination asks what the system has already seen. Goodhart asks what optimizing the score will break.
 
-The suite is an instrument. Test the instrument. Then use it to make a decision.
+The suite is an instrument. Test the instrument.
+
+Stage direction: Stop talking.

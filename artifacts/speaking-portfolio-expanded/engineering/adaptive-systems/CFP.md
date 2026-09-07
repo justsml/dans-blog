@@ -13,5 +13,6 @@ We are building toward assistants with access to every customer record and tools
 - Design an orchestrator that generates per-job agents with minimum tools, a hard budget, and a logged tool-request gate.
 - Distinguish a reversible mapping repair from a change in meaning, and prove it with fixtures the agent did not write.
 - Specify tool risk classes, cross-system boundaries, and per-job compute requests before widening automatic authority.
+- Add working and observational memory to one agent, check generated work against prior outcomes, and distinguish successful execution from verified correctness.
 
 Audience: application and platform engineers. 15 slides, 40 minutes including a five-minute paper walkthrough; 15 and 30 minute routes available. The agent generator is the speaker's working prototype. [Full submission packet](../../packets/adaptive-systems/packet.md).

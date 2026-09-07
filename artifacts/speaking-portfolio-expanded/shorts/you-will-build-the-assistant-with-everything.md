@@ -30,7 +30,7 @@ The big assistant still exists. It just never has all of its hands full at the s
 
 ## On screen
 
-`10 tools → 45 pairs`. Then one integration plugged in, pair count exploding. Then a single small box: *this job: 3 tools, 6 minutes, $2.*
+`10 tools → 45 pairs`. Then one integration plugged in, pair count exploding. Then a single small box: *this job: 3 tools, 2 minutes, $2.*
 
 ## Source
 

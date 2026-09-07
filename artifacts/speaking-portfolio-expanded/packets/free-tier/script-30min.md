@@ -1,4 +1,4 @@
-# Cry Me a Free Tier: 30-minute presenter script
+# Buy Me a Free Tier: 30-minute presenter script
 
 Use slides 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 4, 8 and 13 are cut with bridges. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.
 
@@ -19,7 +19,7 @@ Story: The first time a bill, a quota, or a rate change broke an assumption in s
 
 Delivery: Take the five seconds. Actually take them. The silence is the slide.
 
-## 02:00 to 04:00: slide 2, Price, cost, and value are three different numbers
+## 02:00 to 04:00: slide 2, Four boxes, one invoice
 
 On screen:
 
@@ -124,7 +124,7 @@ Source: Holmstrom (1979), Moral Hazard and Observability, Bell Journal of Econom
 
 Delivery: Ask who can see a per-feature inference cost without filing a ticket. Very few hands. That is the slide.
 
-## 16:30 to 19:00: slide 10, Your acceptance rate is a price multiplier
+## 16:30 to 19:00: slide 10, Doubling on a Tuesday
 
 On screen:
 
@@ -140,11 +140,11 @@ Now the part worth remembering. Divide by the acceptance rate and you get a mult
 
 Delivery: Do the division on stage. Thirty seconds: name your product's accepted outcome in one sentence. If that is hard, the economics conversation just found a product problem.
 
-## 19:00 to 23:00: slide 11, Demo: change one assumption, watch the unit cost
+## 19:00 to 23:00: slide 11, Turn the dial
 
 On screen:
 
-> Sensitivity, not prediction. Quality is held fixed, which is itself an assumption.
+> Sensitivity, not prediction.
 > Multiply by your volume before you feel anything about it.
 
 Read the one-times row, then the ten-times row. Then move the acceptance rate and watch it beat the price change, which is the thing nobody expects.
@@ -174,7 +174,7 @@ The shape is always the same. You make an investment that is worth a great deal 
 
 Now inventory your specific assets. Prompts tuned against one model's quirks. An eval suite that only means anything against one provider's outputs. A fine-tune. A latency budget that assumes one serving stack. And the sharpest one, an unlimited-usage promise you made to your customers, priced against an input you do not control and cannot cap. Every one of those is worth more inside the relationship than outside it.
 
-So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything on the next three slides is just a way of reducing specificity or pricing the exposure.
+So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything after this is just a way of reducing specificity or pricing the exposure.
 
 Bridge: reversibility is a real option with a value and a premium, so price it against your exposure instead of arguing about it on vibes.
 
@@ -206,6 +206,6 @@ There are your eight words. Externality, because the cost moved rather than vani
 
 Some low prices are temporary. Some are a preview of genuinely cheaper production. You do not have to know which. You have to measure outcomes and keep the big choices reversible either way.
 
-Cheap intelligence changes incentives before it changes organizations. Leave the table up.
+Cheap intelligence changes incentives before it changes organizations.
 
-Delivery: Say the last line slowly. Leave the sweep table on screen for questions.
+Delivery: Say the last line slowly, then stop talking. For questions, jump back to the sweep table if this route kept slide 11.

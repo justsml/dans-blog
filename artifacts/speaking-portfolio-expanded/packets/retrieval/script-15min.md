@@ -1,6 +1,6 @@
 # Three Search Methods in a Fundable Trenchcoat: 15-minute presenter script
 
-Use slides 1, 2, 8, 9, 10, 11, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Pairs get 45 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives.
+Use slides 1, 2, 8, 9, 10, 11, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Pairs get 60 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives.
 
 ## 00:00 to 01:30: slide 1, The sentence
 
@@ -67,7 +67,7 @@ Your golden dataset is a test collection with a flattering filename. Write down 
 
 Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
-## 06:30 to 09:30: slide 10, Demo: the hole in the golden set
+## 06:30 to 09:30: slide 10, Fool's Golden Dataset
 
 On screen:
 
@@ -79,7 +79,7 @@ The old retrievers contributed A through E to the judgment pool. Our new retriev
 
 Our naive scorer treats unjudged as nonrelevant. Old top two, B and A: two judged relevant, precision at two equals one. New top two, B and F: only B gets credit, precision at two equals point five. Judge F under the same rubric and the new run returns to one. We changed no retrieval output. We fixed the instrument.
 
-TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. In a 2022 recheck, Voorhees, Soboroff, and Lin expanded TREC-8 judgments and found system-rank correlations above point nine nine. Deep, diverse pools had held up.
+TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. In a 2022 recheck, Voorhees, Soboroff, and Lin added judgments to TREC-8 and compared how the systems ranked before and after. The ordering barely moved. Deep, diverse pools had held up.
 
 That is the lesson we missed. They tested whether the shortcut damaged the comparison. We called our first results golden.
 
@@ -102,7 +102,7 @@ Keep disagreement as data. Was the case ambiguous? Did the rubric ask two questi
 
 Source: Ellen M. Voorhees (2000), [Variations in Relevance Judgments and the Measurement of Retrieval Effectiveness](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness), Information Processing & Management 36(5), 697–716.
 
-## 11:30 to 13:30: slide 12, What changed: the next reader is a generator
+## 11:30 to 13:30: slide 12, The Reader Stopped Being a Person
 
 On screen:
 
@@ -113,7 +113,7 @@ A person inspecting a ranked list can notice that the signed addendum refers to 
 
 We can build abstention and verification into that system. We cannot infer that it will use them from a good retrieval score. The retrieved material must be applicable, sufficiently complete, and represented with the qualifiers the answer needs.
 
-Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model. IR also studied machine consumers before modern RAG; the change here is this particular generative handoff and its failure modes.
+Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model.
 
 Bridge: retrieved text supplies evidence, never tool authority. Name a corpus owner and an update path.
 
@@ -121,13 +121,13 @@ Bridge: retrieved text supplies evidence, never tool authority. Name a corpus ow
 
 On screen:
 
-> Three search methods in a fundable trenchcoat.
+> Three search methods. One instrument nobody checked.
 > Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
 
 Those words tell us why rare identifiers matter, why synonyms are hard, why a passage needs its exception, and why the score depends on who judged which documents. They are tools for investigating a failure, not a history quiz.
 
-Sixty years since the Cranfield report. The field did not just build evaluations. It investigated when they could be trusted. Go find the documents your eval set never judged.
+Three search methods in a fundable trenchcoat. That is a fair joke about the retriever, and the coat is not the problem. Lexical, dense, hybrid: we inherited all three. What we left behind was the sixty years of checking whether the score underneath was telling the truth. Go find the documents your eval set never judged.
 
-Delivery: Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.
+Delivery: Say the title line once, flat, then drop to the instruction. Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.

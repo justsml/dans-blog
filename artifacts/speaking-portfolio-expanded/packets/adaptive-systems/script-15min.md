@@ -22,7 +22,7 @@ Delivery: Hands up for a 200 response that carried a breaking change. Take one s
 
 Bridge: the baseline is diff the schema and page a human; the agent has to beat that on time to recover without adding false repairs.
 
-## 01:00 to 02:30: slide 3, The assistant with everything is coming, one integration at a time
+## 01:00 to 02:30: slide 3, Sorry, You're Building It
 
 On screen:
 
@@ -30,7 +30,7 @@ On screen:
 > Ten tools is forty-five pairs. One more integration is not one more path.
 > Accidents first. Then people who mean it.
 
-Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on whatever site you have open. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
+Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on any site that opts in, and the list of sites that opt in only goes one direction. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
 
 So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
 
@@ -63,7 +63,7 @@ Delivery: Draw the three boxes: orchestrator, generated agent, tool catalog with
 On screen:
 
 > High-risk classes: write, send, pay, delete, deploy, export
-> Read customer data and post to a vendor never share one agent
+> Reads customer data? Then it never posts to a vendor.
 > A signed URL is a credential
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
@@ -111,9 +111,11 @@ The status change has no semantic evidence. The job isolates affected records, r
 
 The provider timeout has an uncertain outcome. The controller queries the saved job ID instead of submitting again, and where it cannot, it holds the unresolved operation and its reservation.
 
+Three events, three different right answers, none of them success or failure. If your dashboard only has two states, it is hiding the most interesting one.
+
 Delivery: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
-Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is a companion talk.
+Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is slide 11 in the long version, and the mechanics are a companion talk.
 
 ## 11:30 to 14:00: slide 14, Start smaller: remember what happened
 

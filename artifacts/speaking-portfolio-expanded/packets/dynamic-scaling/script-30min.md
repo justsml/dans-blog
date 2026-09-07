@@ -28,9 +28,9 @@ On screen:
 > Vertical: bigger box, decided by ops
 > Self-directed: the job describes its shape and asks
 
-For twenty years scaling was an infra question answered once for everyone. Add replicas or buy a bigger box, then let an autoscaler watch CPU and guess. The workload never got a vote.
+For twenty years scaling was an infra question answered once for everyone. Add replicas or buy a bigger box, then let an autoscaler watch CPU and guess. The workload never got a say.
 
-Agentic workloads can vote. The orchestrator knows this batch is mostly waiting on a provider, that this one needs a GPU for ninety seconds, that this one is untrusted code and wants a sandbox. It can say so, per job, at the moment the job starts.
+Agentic workloads do. The orchestrator knows this batch is mostly waiting on a provider, that this one needs a GPU for ninety seconds, that this one is untrusted code and wants a sandbox. It can say so, per job, at the moment the job starts.
 
 Three decisions stay separate. Tasks: split the work. Attempts: try several complete answers. Placement: choose where it runs. A model can propose all three cheaply now; it does not repeal the dependency graph, and it does not get to repeal the budget.
 
@@ -78,7 +78,7 @@ Delivery: Use the $2 ledger in contracts.md. Show settled plus reserved never pa
 
 Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt.
 
-## 09:30 to 12:30: slide 7, The inversion: infra as an agent capability
+## 09:30 to 12:30: slide 7, Infra Is a Tool Call
 
 On screen:
 
@@ -96,7 +96,7 @@ Story: The moment an agent-sized request would have replaced a capacity-planning
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
 
-## 12:30 to 15:00: slide 8, The ecosystem is already ephemeral by default
+## 12:30 to 15:00: slide 8, Torn Down by Default
 
 On screen:
 
@@ -105,7 +105,7 @@ On screen:
 > Durable edge state: Cloudflare Workers, Durable Objects, Workflows
 > Interruptible capacity: AWS EC2 Spot
 
-The pieces exist, and they are shaped for this. Fly.io Sprites are hardware-isolated VMs that create in a second or two, checkpoint and restore, and take an egress policy from outside so the agent inside cannot loosen it. Depot sandboxes bill per second for exactly this: run agent-generated code, stream output, throw it away.
+The pieces exist, and they are shaped for this. Fly.io Sprites are microVMs whose stated creation target is under a second, checkpoint and restore, and take an egress policy from outside so the agent inside cannot loosen it. Depot sandboxes bill by the second for exactly this: run agent-generated code, throw it away.
 
 Modal gives you functions and GPUs that scale to zero; Vast.ai is a marketplace where a spare GPU is cheap and short-lived. Cloudflare Workers with Durable Objects and Workflows hold the coordination state that survives everything else being torn down. EC2 Spot is the old version of the same idea: capacity that can vanish, so the job had better be restartable.
 
@@ -119,7 +119,7 @@ Bridge: match the execution class to the work; waiting on a provider needs a dur
 
 On screen:
 
-> accepted → submitted → waiting → completed / failed / unresolved
+> queued → submitted → waiting → completed / failed / unresolved
 > Callbacks: authenticate, deduplicate, valid transitions only
 > Notification is its own job
 
@@ -129,7 +129,7 @@ Callbacks arrive twice and out of order; authenticate, deduplicate, apply only v
 
 Delivery: Draw the state machine in contracts.md. Crash after submission and before the provider ID is saved. Discuss unresolved.
 
-## 17:30 to 21:30: slide 11, Walkthrough: restart the batch
+## 17:30 to 21:00: slide 11, Walkthrough: restart the batch
 
 On screen:
 
@@ -143,35 +143,33 @@ A new worker reloads the job, checks provider status for every submitted item, a
 
 One job, a recoverable lifecycle, honest accounting, and a compute substrate that was allowed to disappear under it. That is the abstraction the batch tool owed us.
 
-Delivery: Five minutes from demo.md. Ask the room for each next transition before revealing it.
+Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
-## 21:30 to 26:00: slide 12, Attempts are a scaling axis. So is judging.
+## 21:00 to 25:00: slide 12, Monkeys, Then Guards
 
 On screen:
 
 > Barrel of monkeys: lead with cheap parallel generation, on purpose
-> Council of guards: judges read a thousand tokens and write fifty; measure the disagreement
+> Council of Guards: judges read a thousand tokens and write fifty; measure the disagreement
 > Gates before preferences; the judge may reject everyone
 
-Change the unit of work from images to whole designs. Give the batch-job problem to three generated agents with the same requirements and different priorities: a minimalist, a maintainer, a security and performance reviewer. Keep first drafts separate so they do not converge on the first plausible answer. The contrast is the product.
+Change the unit of work from images to whole designs. One brief, three generated agents: minimalist, maintainer, security and performance reviewer. Separate first drafts. The contrast is the product.
 
-Somebody is going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven teams, one specification, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. That is not what this is. I am not voting three models toward the truth, and I am not going to tell you the ensemble is right because it agreed with itself. If that is the pitch you heard, it is not mine.
+Somebody is going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven programmers, one specification, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. Not this. I am not voting three models toward the truth.
 
-Here is what parallel attempts actually buy. Understanding of the models you depend on: run one brief through two of them and you learn what each reaches for and what each forgets. A migration harness: same brief, new model, diff the behavior before you switch, instead of after the incident. Better output: a synthesis of compatible ideas is often better than any single draft. And the cheap one, which is the one I care about: judging. A judge reads a thousand tokens and writes fifty. Output is what costs, so you can afford three or five judges from different models on every candidate, and the number you want back is not the average score. It is the disagreement. When the judges split or their reasons barely overlap, that candidate is sitting in territory nobody understands, and that is the one you do not ship on autopilot. I call this the Council of Guards. It picks between one and three alternatives to generate, and it costs a fraction of the generation it is guarding.
+The generation side has a name I am not sorry about: the barrel-of-monkeys maneuver. Lead with cheap parallel generation on purpose — monkeys at a hundredth of the frontier's price — and hand the barrel to the next stage. Four reasons. Race: take the first draft that passes the gate. Synthesize: a frontier model reads them all, input tokens being the cheap ones, and writes one coherent output. Rank: more candidates for the judges, so the best whole answer goes downstream. Catch: in law or medicine, where the rules are extensive and specific, the mistake you fear shows up in one output out of ten, and the only way to see it is to have ten.
 
-The generation side has a name too, and I am not sorry about it: the barrel-of-monkeys maneuver. Lead with parallel generation on purpose. You are adding a controlled section of chaos that the next stage has to handle: a revision loop, a router, the council, or your users in an A/B test. Why you would want the chaos varies. Sometimes you want the fastest answer, so you race. Sometimes you want the best parts of several, so a frontier model, whose input tokens are the cheap ones, reads all of them and writes one coherent output. Sometimes you just want more candidates for the judges to rank so the best whole answer goes downstream. In law or medicine, where the rules are extensive and specific, that is how you catch the one errant mistake that shows up in one output out of ten. And the monkeys can be cheap: models at a hundredth or a thousandth the price of the frontier, generating alternatives in a loop. Some of them need a tool-calling agent with files, search and git, which means a sandbox and somebody's cloud; others single-shot it fine. That is an architecture question about how much effort you want in a system that keeps improving versus one you can retune at runtime. Fan-out is a tool you encapsulate at points in the graph: default model most of the time, n alternatives for a sample of requests. Your needs and your opportunities decide why, where and how often.
+The cheap half is judging. A judge reads a thousand tokens and writes fifty, and output is what costs, so five judges from different models on every candidate is affordable. Not the average score. The disagreement. Judges that split, or whose reasons barely overlap, have found territory nobody understands; that candidate does not ship on autopilot. I call this the Council of Guards: it reads everything, writes almost nothing, and costs a fraction of what it guards.
 
-Does this border on speculative optimization dressed up as learning? Yes, possibly. Probably sometimes. We will find out. So do not build any of it without env vars to turn it down, and ideally build the system that adjusts its own fan-out and token burn from what it measures. Right? Right. That system is the companion talk.
+Write the gates before you read the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. Every candidate fails one, including the careful one; the council is allowed to reject the room. A synthesis is a new candidate. Stop at the review budget.
 
-Write the gates before reading the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. Run executable checks first. In the exercise every candidate fails a gate, including the careful one, which is the point: the council is allowed to reject the room. Then combine compatible ideas into a new candidate with one coherent set of assumptions and run the gates again. Passing parts do not make a passing whole. Stop at the review budget; an endless debate is an expensive way to not ship.
-
-None of this looks like the engineering we were raised on. Do not do the work twice. Do not spend compute speculatively. One right answer per ticket. Those were axioms when the expensive thing was the engineer. When the expensive thing is being wrong, and a second draft costs cents, doing it three times and reading what disagrees is the frugal move. I am not a shill for Big Token. I am telling you that cheaper, safer and faster now sometimes come from spending exactly where yesterday's wisdom told you not to.
+None of this looks like the engineering we were raised on. Do not do the work twice. Do not spend compute speculatively. One right answer per ticket. Those were axioms when the expensive thing was the engineer. When the expensive thing is being wrong and a second draft costs cents, doing it three times and reading what disagrees is the frugal move. I am not a shill for Big Token. Cheaper, safer and faster now sometimes come from spending exactly where yesterday's wisdom told you not to.
 
 Source: Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109. Cited to set aside: it is a result about redundancy as a correctness strategy, which this slide does not claim.
 
 Delivery: Score the three candidates in demo.md. Have the room find each candidate's failed gate before revealing it. Then show the council split per candidate: high agreement on the minimalist's failure, low overlap on the maintainer's, and ask which one deserves the human's afternoon.
 
-## 26:00 to 27:30: slide 13, Measure the accepted outcome
+## 25:00 to 27:30: slide 13, Measure the accepted outcome
 
 On screen:
 

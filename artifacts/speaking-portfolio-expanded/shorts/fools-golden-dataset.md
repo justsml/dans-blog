@@ -14,7 +14,7 @@ It returns B and F. F is the signed Schedule R, the one B refers to, the one tha
 
 ## Beat: the field already checked this
 
-Cranfield, 1966: fixed corpus, fixed queries, relevance judgments, compare systems. TREC used pooling because judging everything was impractical, and then investigated whether the shortcut damaged comparisons. Zobel in 1998. Voorhees, Soboroff and Lin in 2022 re-judged TREC-8 against modern neural retrievers and found rank correlations above 0.99. Deep, diverse pools held. They tested the ruler. We called our first results golden.
+Cranfield, 1966: fixed corpus, fixed queries, relevance judgments, compare systems. TREC used pooling because judging everything was impractical, and then investigated whether the shortcut damaged comparisons. Zobel in 1998. Voorhees, Soboroff and Lin in 2022 re-judged TREC-8 against modern neural retrievers and found the system ordering barely moved. Deep, diverse pools held. They tested the ruler. We called our first results golden.
 
 ## Landing
 

@@ -5,7 +5,7 @@ Keep slides 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14. Hide the others in presenter
 | Time | Slide | Beat |
 | --- | --- | --- |
 | 00:00 to 03:00 | 1 | The morning four good implementations arrive |
-| 03:00 to 05:00 | 2 | Where does the work actually wait? |
+| 03:00 to 05:00 | 2 | Point at the queue |
 | 05:00 to 08:00 | 3 | A queue does not care how you feel about it |
 | 08:00 to 10:00 | 5 | You cannot inspect quality in |
 | 10:00 to 12:00 | 6 | "Add enterprise permissions" |

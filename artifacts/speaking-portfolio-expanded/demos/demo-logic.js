@@ -20,11 +20,14 @@
   if(![requests,inference,other,pass,multiplier].every(Number.isFinite)||requests<0||inference<0||other<0||pass<=0||pass>1||multiplier<0)throw Error('Enter nonnegative costs and a pass rate between 0 and 100%.');
   const total=requests*(inference*multiplier+other);return{total,successful:requests*pass,costPerSuccess:(inference*multiplier+other)/pass};
  }
+ /* Slide 7 reconstruction. Fixture: a $100 price rises 20%, then the new price falls 20%.
+    The submitted claim is "equal and opposite, so the final price is $100." Clean prose, wrong base. */
  const studentReplay=[
-  {prompt:'Both learners submitted the same polished explanation. What can we infer?',a:'The artifact is correct.',b:'The artifact is correct.',evidence:'Artifact quality alone does not distinguish these scripted learners.'},
-  {prompt:'What assumption does the argument require?',a:'That the two groups were comparable before the intervention.',b:'It is correct because the answer sounds scientific.',evidence:'A states a relevant assumption. B supplies confidence without a reason.'},
-  {prompt:'What evidence could change your conclusion?',a:'A baseline imbalance or a confounding change could explain the result.',b:'I would need to look that up.',evidence:'Probe B further. One weak answer is not a misconduct finding or a final grade.'},
-  {prompt:'How will you demonstrate understanding next?',a:'I will compare the baseline data and explain a counterexample.',b:'Give me a smaller example. I will identify the groups and try again.',evidence:'Plan the next learning step. Offer an accessible written alternative to oral defense.'}
+  {rung:'Diagnostic question',tutor:'Which price does the discount use?',learner:'The original $100.',evidence:'Identifies a specific mistaken base. The final number alone would not have shown this.'},
+  {rung:'Conceptual hint',tutor:'What is the price after the increase? Apply the discount to that current price.',learner:'$120.',evidence:'Support given is visible and recorded. Asking a question costs the learner nothing.'},
+  {rung:'Supported correction',tutor:'So what is the final price, and why?',learner:'$120 times 0.8 is $96. I used the wrong starting amount for the discount.',evidence:'Supported correction with an explanation. Score the reasoning, not the number.'},
+  {rung:'Transfer item',tutor:'Now start at $80, increase 25%, then decrease 20%. Explain why this one returns to its start.',learner:'It reaches $100, then $80. 1.25 times 0.8 equals 1.',evidence:'Immediate transfer under known conditions. Same invariant, different numbers; it breaks the shortcut "opposite changes never cancel."'},
+  {rung:'The record',tutor:'What would you record, and what remains unknown?',learner:'Concept: sequential percentage bases. Observed: used the original amount for the second change. Support: conceptual hint. Next check: a new independent item after practice.',evidence:'Retention and unaided performance remain unknown. A record is context for the next teaching decision, never a label.'}
  ];
  const experiments=[{name:'Control',activation:.40,support:.03,pattern:'neutral'}, {name:'Pressure copy',activation:.48,support:.09,pattern:'false urgency'}, {name:'Clearer first step',activation:.45,support:.04,pattern:'neutral'}];
  function decideExperiment({index,maxSupport,allowFalseUrgency}){const e=experiments[index];if(!e)throw Error('Unknown experiment');const reasons=[];if(e.support>maxSupport)reasons.push('Support burden exceeds guardrail');if(e.pattern==='false urgency'&&!allowFalseUrgency)reasons.push('False urgency violates product principles');return{...e,reasons,status:reasons.length?'Reject candidate':'Eligible for human review',uplift:e.activation-experiments[0].activation};}

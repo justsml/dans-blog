@@ -5,16 +5,16 @@ Keep slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Hide the others in prese
 | Time | Slide | Beat |
 | --- | --- | --- |
 | 00:00 to 01:30 | 1 | The vendor renamed a field |
-| 01:30 to 03:00 | 2 | The bar is: diff the schema and page a human |
-| 03:00 to 05:30 | 3 | The assistant with everything is coming, one integration at a time |
+| 01:30 to 03:00 | 2 | The Bar Is a Pager |
+| 03:00 to 05:30 | 3 | Sorry, You're Building It |
 | 05:30 to 09:00 | 4 | Conjure the agent the job needs |
 | 09:00 to 11:30 | 5 | Guard the tools that can hurt |
 | 11:30 to 14:00 | 6 | Repair syntax; prove meaning |
 | 14:00 to 15:30 | 7 | The repair is a versioned artifact |
 | 15:30 to 17:00 | 9 | A lost response leaves a question |
 | 17:00 to 21:30 | 10 | Walkthrough: one ingest, three decisions |
-| 21:30 to 24:00 | 11 | Scale becomes something the app asks for |
-| 24:00 to 26:00 | 13 | Widen authority only from measured outcomes |
+| 21:30 to 24:00 | 11 | Compute Is a Tool Too |
+| 24:00 to 26:00 | 13 | Widen Per Class, Never Per Streak |
 | 26:00 to 28:00 | 14 | Start smaller: remember what happened |
 | 28:00 to 30:00 | 15 | The next surprise should cost less |
 

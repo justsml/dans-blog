@@ -10,7 +10,7 @@ Give one design brief to three generated agents with different priorities: a min
 
 ## Beat: get the objection out of the way (0:45)
 
-Somebody's going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven teams, one spec, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. That is not what this is. I'm not voting three models toward the truth, and I'm not going to tell you the ensemble is right because it agreed with itself.
+Somebody's going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven programmers, one spec, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. That is not what this is. I'm not voting three models toward the truth, and I'm not going to tell you the ensemble is right because it agreed with itself.
 
 ## Beat: what parallel attempts actually buy (1:45)
 
@@ -18,11 +18,11 @@ Understanding of the models you depend on: same brief through two of them and yo
 
 ## Beat: the arithmetic of judging (3:00)
 
-A judge reads a thousand tokens and writes fifty. Output is what costs. So you can afford three or five judges from different models on every candidate, and the number you want back is not the average score. It's the disagreement. When the judges split, or their reasons barely overlap, that candidate is sitting in territory nobody understands, and that's the one you don't ship on autopilot. The council picks between one and three alternatives to generate, and costs a fraction of the generation it's guarding.
+A judge reads a thousand tokens and writes fifty. Output is what costs. So you can afford three or five judges from different models on every candidate, and the number you want back is not the average score. It's the disagreement. When the judges split, or their reasons barely overlap, that candidate is sitting in territory nobody understands, and that's the one you don't ship on autopilot. The council reads everything, writes almost nothing, and costs a fraction of the generation it's guarding.
 
 ## Beat: gates before preferences (4:15)
 
-Write the gates before reading candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry. Run executable checks first. In the exercise every candidate fails a gate, including the careful one. The council is allowed to reject the room. A synthesis is a new candidate and runs the gates again. Stop at the review budget.
+Write the gates before reading candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. Run executable checks first. In the exercise every candidate fails a gate, including the careful one. The council is allowed to reject the room. A synthesis is a new candidate and runs the gates again. Stop at the review budget.
 
 ## Beat: this isn't the engineering we were raised on (5:30)
 

@@ -112,3 +112,119 @@ Ready after fixes. One arithmetic slip on slide 13 ($10 vs $100), one heading th
 14. `demos/DEMO-RUNBOOK.md` §4 add the acceptance beat from `economics-product/demo.md:28-37`: "Set acceptance to 45% at 1×: $0.0667, the same as the 2× row."
 15. `decks/free-tier-40min.pptx` delete.
 16. Run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts` for every registered slug so `decks/README.md` lists all talks again, then rebuild free-tier scripts, adaptations and decks.
+
+## Fixes applied 2026-09-06
+
+### Retitle: Cry Me a Free Tier → Buy Me a Free Tier
+
+Applied across every file this agent owns. `build-talk.ts` already carried the new title (`:469-473`), so the outline and the hand-written packet now match it.
+
+- `outlines/free-tier-40min.md:1` H1; `:5` header note records the former title.
+- `packets/free-tier/packet.md:1,9`, `packets/free-tier/formats.md:13`, `packets/free-tier/evidence-bank.md:1`.
+- `economics-product/CFP.md` section heading and the portfolio-fit line ("Buy Me a Free Tier owns cost per accepted outcome"); `economics-product/evidence.md` section heading; `economics-product/demo.md` §1 heading.
+- `demos/DEMO-RUNBOOK.md` §4 heading.
+- Parent lines in all five shorts: `acceptance-rate-is-a-price-multiplier.md`, `cheaper-coal-more-coal.md`, `free-parking-cost-you-a-city.md`, `the-third-price.md`, `you-are-getting-married.md`. No filenames changed.
+
+Joke check, per the rename instruction. No text anywhere in the talk, packet, shorts or demo files played on "cry me a river" — the old pun lived entirely in the title, so nothing was orphaned. Slide 1's "Swap electricity for inference and that is the whole talk" and slide 15's "Back to the electricity" callback are built on the electricity premise, not on the title, and both still read cleanly. To let the new joke land where the argument already makes it, one sentence was added to slide 4 (`outline:78`), between "Note who is not a player in that game" and the existing landing: **"Somebody is buying your free tier, and it is not you."** It sits on the war-of-attrition beat, which is exactly the slide that earns the title, and it leaves "You are not a combatant. You are the terrain." as the closer.
+
+Voice note for the record: `dans-voice/SKILL.md:16` still lists *Cry Me a Free Tier* as an approved title example. Someone should update that line centrally, since the skill now cites a title the portfolio no longer uses.
+
+### 1. Changes
+
+**`outlines/free-tier-40min.md`**
+
+- `:253` **arithmetic (Blocking).** Verified the whole paragraph independently before rewriting. The halving inference saves $0.01/attempt at 1× ($0.02 → $0.01) and $0.10/attempt at 10× ($0.20 → $0.10). 1,000,000 × $0.10 = $100,000/month — the existing figure is right. 1,000 × $0.10 = **$100**, not $10; $10 is the 1× figure. Rewritten to "At a thousand attempts a month it is a hundred dollars, ten at today's price, and you should never do it." Both the 10× and the 1× figures are now on stage, which is what makes the "identical project, two worlds" line land.
+- `:32` heading "Price, cost, and value are three different numbers" → **"Four boxes, one invoice"**. The spoken text opens "Four boxes." and the visible line lists four.
+- `:181` heading "Your acceptance rate is a price multiplier" → **"Doubling on a Tuesday"** (short #12's approved title; the old one was the exact "Your X Is a Y" shape the voice skill rejects).
+- Three further headings from §6 of this audit, same reasoning, cheap to take: `:66` "Those enormous commitments are moves, not measurements" → **"Burn the boats"** (the spoken text already says it); `:199` "Demo: change one assumption, watch the unit cost" → **"Turn the dial"**; `:239` "Reversibility has a price and you can compute it" → **"Reversible is a line item"**.
+- **Hedges (two beyond the slide-1 allowance), both removed from the script and relocated to the evidence bank.** `:205` visible line trimmed to "Sensitivity, not prediction." (dropped "Quality is held fixed, which is itself an assumption."). `:253` dropped "And preserved acceptance is an assumption until an eval says otherwise;" while keeping the concrete half, "A router that costs more to run than it saves is not better engineering." Slide 10's "synthetic and deliberately small" is left alone — it carries information about the fixture rather than apologising for it.
+- `:237` "everything on the next three slides" → "everything after this". True in all three routes; this was also the only thing making the 15-min trim of slide 12 read wrong.
+- `:84` slide-4 stage direction now names the specific recheck risk: Anthropic's IPO prospectus is expected late September 2026 and may disclose contract detail behind the $100B AWS commitment, and the adjacent Microsoft/OpenAI restructuring figures must not be misquoted into this slide.
+- `:289` dropped "Leave the table up." from the closing spoken line, so slide 15 lands on "Cheap intelligence changes incentives before it changes organizations." and stops. `:291` stage direction now reads "Say the last line slowly, then stop talking. For questions, jump back to the sweep table if this route kept slide 11." Deliberately route-conditional: stage directions are emitted for every route (`build-talk.ts:642`) and are not trimmable, and slide 11 is cut from the 15-minute route — so a flat "jump back to slide 11" would have been wrong there. This removes the `script-15min.md:134,136` orphan at the source rather than by adding a trim.
+- Timings untouched. Re-verified monotonic, non-overlapping, and summing to 40:00 (2.5+2+3+2.5+2.5+2.5+3+2+2+3+4+3+3+3+2).
+
+**`packets/free-tier/evidence-bank.md`**
+
+- "Arithmetic in the talk" now carries the two relocated caveats (slide 11 sweep: sensitivity not prediction, quality held fixed; slide 13 payback: acceptance assumed preserved), flagged as answers to a challenge from the floor rather than script lines.
+- Added the slide-13 payback arithmetic in full ($0.01 and $0.10 per attempt; $100,000 vs $100 vs $10) so the corrected figure is checkable off-stage.
+- "Credits expire" row now leads with the `aws.amazon.com/startups/credits/` offer URL that slide 4 actually shows, keeping the promotional-terms URL beside it.
+- "Before presenting" carries a dated live-recheck note on the $100B AWS figure and the late-September IPO prospectus.
+
+**`packets/free-tier/packet.md`**
+
+- Dropped the question-form alternate title "What Did the Cheap Input Teach Your Architecture to Expect?" (fails the title rules).
+- 100-word abstract was 106; now exactly 100 by `wc -w`. The 50-word abstract was 51; now exactly 50.
+- `:57` sources sentence now names the dated Microsoft and Amazon announcements alongside AWS credit terms and Epoch AI.
+- References gained the AWS Activate offer URL and the two dated announcement URLs.
+
+**`economics-product/CFP.md`** — prepared line now reads "Prepared 2026-09-04; Free Tier copy revised 2026-09-06". The 150-word abstract was 153; now exactly 150. The 50-word abstract was 51; now exactly 50 (same edit as the packet, so the two copies stay identical).
+
+**`economics-product/evidence.md`** — header date updated; the nine-row table that duplicated `evidence-bank.md:9-22` deleted in favour of a pointer that names the evidence bank as authoritative and says what else is there. The counterargument paragraph is kept.
+
+**`economics-product/demo.md`** — "slide 9" → "slide 11" at `:7` and in the fallback. Stage sequence gains the acceptance beat the slide leads with (new 1:45–2:15 row: restore 1×, drop acceptance to 45%, land $0.0667 = the 2× row), and the 2:30–3:15 row now says "Restore 75%" first so the two moves do not compound.
+
+**`demos/DEMO-RUNBOOK.md` §4** — retitled; now names slide 11; "success" wording replaced with "accepted"; and the acceptance beat added with its number ($0.0667 at 45%/1×, identical to the 2× row, no price change). This is the beat slide 11 opens with and the runbook previously only gestured at.
+
+**`demos/index.html`** (economics panel only) — "Price sensitivity per successful outcome" → "per accepted outcome", "Successful attempts (%)" → "Accepted attempts (%)", "Cost / success" → "Cost / accepted outcome". `demo-logic.js` is untouched: `costPerSuccess` is a code identifier asserted by `demo.test.js:14`. `bun test demo.test.js` still passes 15/15.
+
+### 2. Deliberately skipped
+
+- **Edit 8, `README.md:97`** (delete the stale Shoup sentence). The finding is correct, but the portfolio-root README is on this pass's never-edit list. Handing it to the caller below.
+- **Edit 7, the 15-minute trim in `build-talk.ts:497`.** Route config; reported below instead of edited, as instructed.
+- **Edit 15/16, `decks/free-tier-40min.pptx` and the `decks/README.md` regeneration.** Already done centrally before this pass started.
+- **Adding `15: [0, 1, 2]` to the 15-min trim** (audit §3, to suppress the "leave the table up" orphan). Not needed: the orphan is gone from the outline itself, so no route needs a trim to hide it. Adding one would have cut a paragraph from the closing slide for no reason.
+- **`outline:193` "synthetic and deliberately small"** left in place — §6 rated it mild and it carries information about the fixture.
+- **Slide-10 15-min trim `10: [0, 2]`**, which drops the fixture paragraph. Considered and left alone: slide 10's visible lines carry the $0.040 and the two multipliers, so the kept paragraph still stands up. Flagging it only so the next audit knows it was looked at.
+
+### 3. Route config changes for the caller
+
+```
+build-talk.ts, talk "free-tier", route 15 (currently line 497):
+
+  field: trim
+  old:   { 1: [0, 1], 3: [0, 2], 5: [0, 1], 6: [0, 1, 3], 7: [0, 1], 10: [0, 2], 12: [0, 1, 3] }
+  new:   { 1: [0, 1, 2], 3: [1, 2], 5: [0, 1], 6: [0, 1, 2], 7: [0, 1], 10: [0, 2], 12: [0, 1, 3] }
+
+  why:
+    1: adds the "Eight words." paragraph. Without it slide 15's "There are your
+       eight words" has no setup in the 15-minute route.
+    3: [0,2] drops the paragraph that NAMES the four explanations, while the route
+       note promises them and the Brooke Group / Rochet-Tirole sources stay attached.
+       [1,2] keeps the naming and the "what happens next" turn.
+    6: [0,1,3] drops the paragraph containing "Spend is price times consumption",
+       leaving the visible line "Spend = price x jobs x calls per job x tokens per
+       call" unspoken and making the kept "Both things can be fine" open with no
+       antecedent. [0,1,2] speaks the equation.
+
+  field: times  (rebalance for the added slide-1 paragraph, ~20 s)
+  old:   [1.5, 2, 1.5, 2, 2.5, 2, 2, 1.5]     (keep: [1, 3, 5, 6, 7, 10, 12, 15])
+  new:   [1.75, 2, 1.5, 2, 2.25, 2, 2, 1.5]
+  check: 1.75 + 2 + 1.5 + 2 + 2.25 + 2 + 2 + 1.5 = 15.0  (slide 7 keeps both of its
+         two paragraphs at 2.25; it was the most generously timed slide in the route)
+
+  field: bridges, key 1
+  old:   "Bridge: price, cost and value are three different numbers, and the gap
+          between what you pay and what it is worth to you is why nobody is measuring."
+  new:   "Bridge: four boxes on one invoice - price paid, resources consumed, cost
+          allocated, value delivered - and the gap between the last two is why nobody
+          is measuring."
+  why:   the bridge quotes slide 2's old heading, which this pass changed to
+         "Four boxes, one invoice".
+
+Also outside this agent's scope:
+  README.md (portfolio root), line 97: delete the sentence "Sources added in this
+  revision (... Shoup) are cited in the outlines and not yet in the evidence notes."
+  Shoup is in packets/free-tier/evidence-bank.md:11 and economics-product/evidence.md.
+
+  .claude/skills/dans-voice/SKILL.md:16 lists "Cry Me a Free Tier" as an approved
+  title example. Update it to "Buy Me a Free Tier" so the skill does not cite a
+  retired title.
+
+Then rebuild: bun artifacts/speaking-portfolio-expanded/build-talk.ts free-tier
+(the arithmetic fix propagates to script-40min.md:225, and every heading change
+propagates to the scripts, adaptations and reveal-talks/free-tier*.html).
+```
+
+### 4. Morning-review proposals
+
+There is no `reviews/free-tier-review.md`. This talk was the grading standard the other morning reviews were written against, so there is nothing to reconcile and nothing was adopted or skipped from that source.

@@ -10,7 +10,7 @@ Generated from [the current 40-minute outline](../../outlines/free-tier-40min.md
 | 40 min | [Open](../../../reveal-talks/free-tier-40min.html) | [Download](../../decks/free-tier-40min-screen.pptx) | [Download](../../decks/free-tier-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
-# Formats: Cry Me a Free Tier
+# Formats: Buy Me a Free Tier
 
 The 15-slide [browser deck](../../../reveal-talks/free-tier.html) follows the [40-minute outline](../../outlines/free-tier-40min.md). Scripts, adaptations, browser decks, and PowerPoints are generated from the outline by `sync-talks.ts`; edit the outline, then rebuild.
 

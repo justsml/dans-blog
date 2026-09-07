@@ -1,4 +1,4 @@
-# Cry Me a Free Tier: 40-minute presenter script
+# Buy Me a Free Tier: 40-minute presenter script
 
 Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
 
@@ -19,7 +19,7 @@ Story: The first time a bill, a quota, or a rate change broke an assumption in s
 
 Delivery: Take the five seconds. Actually take them. The silence is the slide.
 
-## 02:30 to 04:30: slide 2, Price, cost, and value are three different numbers
+## 02:30 to 04:30: slide 2, Four boxes, one invoice
 
 On screen:
 
@@ -51,7 +51,7 @@ Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (199
 
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-## 07:30 to 10:00: slide 4, Those enormous commitments are moves, not measurements
+## 07:30 to 10:00: slide 4, Burn the boats
 
 On screen:
 
@@ -63,13 +63,13 @@ Three numbers everyone quotes. Microsoft announced in October 2025 that OpenAI c
 
 Everyone reads these as evidence about cost. They are not. They are evidence about strategy, and Thomas Schelling gave us the word in 1960: a credible commitment. You deliberately destroy your own ability to back out, precisely so everyone else updates. Burn the boats. A ten-year contract you cannot walk away from is not a disclosure of your margins. It is a signal that you intend to still be here, aimed at competitors and at customers who are nervous about picking you.
 
-Which tells you something about the game underneath. Two well-funded players racing to acquire the same customers, both burning capital, neither able to stop first, is a war of attrition. In that model the price stays low for as long as both sides can pay to keep it there. Note who is not a player in that game. You are not a combatant. You are the terrain.
+Which tells you something about the game underneath. Two well-funded players racing to acquire the same customers, both burning capital, neither able to stop first, is a war of attrition. In that model the price stays low for as long as both sides can pay to keep it there. Note who is not a player in that game. Somebody is buying your free tier, and it is not you. You are not a combatant. You are the terrain.
 
 Source: [Microsoft, 28 Oct 2025](https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/) · [Amazon, Apr 2026](https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai) · [AWS Activate, accessed 5 Sep 2026](https://aws.amazon.com/startups/credits/).
 
 Source: Schelling (1960), The Strategy of Conflict, Harvard University Press. Nobel 2005.
 
-Delivery: Recheck all three items the week of the talk. If a number has moved, the frame still works; say the new number.
+Delivery: Recheck all three items the week of the talk. If a number has moved, the frame still works; say the new number. Specifically: Anthropic's IPO prospectus is expected late September 2026 and may disclose contract detail behind the $100B AWS commitment, so that figure or its framing can move. Do not confuse it with the adjacent Microsoft/OpenAI restructuring figures.
 
 ## 10:00 to 12:30: slide 5, Free parking was never free
 
@@ -158,7 +158,7 @@ Source: Holmstrom (1979), Moral Hazard and Observability, Bell Journal of Econom
 
 Delivery: Ask who can see a per-feature inference cost without filing a ticket. Very few hands. That is the slide.
 
-## 22:00 to 25:00: slide 10, Your acceptance rate is a price multiplier
+## 22:00 to 25:00: slide 10, Doubling on a Tuesday
 
 On screen:
 
@@ -174,11 +174,11 @@ Now the part worth remembering. Divide by the acceptance rate and you get a mult
 
 Delivery: Do the division on stage. Thirty seconds: name your product's accepted outcome in one sentence. If that is hard, the economics conversation just found a product problem.
 
-## 25:00 to 29:00: slide 11, Demo: change one assumption, watch the unit cost
+## 25:00 to 29:00: slide 11, Turn the dial
 
 On screen:
 
-> Sensitivity, not prediction. Quality is held fixed, which is itself an assumption.
+> Sensitivity, not prediction.
 > Multiply by your volume before you feel anything about it.
 
 Read the one-times row, then the ten-times row. Then move the acceptance rate and watch it beat the price change, which is the thing nobody expects.
@@ -208,9 +208,9 @@ The shape is always the same. You make an investment that is worth a great deal 
 
 Now inventory your specific assets. Prompts tuned against one model's quirks. An eval suite that only means anything against one provider's outputs. A fine-tune. A latency budget that assumes one serving stack. And the sharpest one, an unlimited-usage promise you made to your customers, priced against an input you do not control and cannot cap. Every one of those is worth more inside the relationship than outside it.
 
-So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything on the next three slides is just a way of reducing specificity or pricing the exposure.
+So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything after this is just a way of reducing specificity or pricing the exposure.
 
-## 32:00 to 35:00: slide 13, Reversibility has a price and you can compute it
+## 32:00 to 35:00: slide 13, Reversible is a line item
 
 On screen:
 
@@ -222,7 +222,7 @@ Everyone in this field says "keep it reversible" like it is a personality trait.
 
 So do not argue about portability on vibes. Price it. Your exposure is the three prices on the next slide times your volume. Your premium is the engineering you would spend. Compare the two numbers.
 
-Same for optimization. Take a cache or a router that halves inference per attempt at the same acceptance rate. In our fixture it saves one cent per attempt at one-times pricing and ten cents at ten-times. Divide your build cost by that, divide by monthly attempts, and you have payback in months. At a million attempts a month, ten cents each is a hundred thousand dollars a month and you should have started yesterday. At a thousand attempts a month it is ten dollars and you should never do it. Identical project. The sweep is what tells you which world you are living in. And preserved acceptance is an assumption until an eval says otherwise; a router that costs more to run than it saves is not better engineering.
+Same for optimization. Take a cache or a router that halves inference per attempt at the same acceptance rate. In our fixture it saves one cent per attempt at one-times pricing and ten cents at ten-times. Divide your build cost by that, divide by monthly attempts, and you have payback in months. At a million attempts a month, ten cents each is a hundred thousand dollars a month and you should have started yesterday. At a thousand attempts a month it is a hundred dollars, ten at today's price, and you should never do it. Identical project. The sweep is what tells you which world you are living in. A router that costs more to run than it saves is not better engineering.
 
 Source: Dixit and Pindyck (1994), Investment Under Uncertainty, Princeton University Press.
 
@@ -254,6 +254,6 @@ There are your eight words. Externality, because the cost moved rather than vani
 
 Some low prices are temporary. Some are a preview of genuinely cheaper production. You do not have to know which. You have to measure outcomes and keep the big choices reversible either way.
 
-Cheap intelligence changes incentives before it changes organizations. Leave the table up.
+Cheap intelligence changes incentives before it changes organizations.
 
-Delivery: Say the last line slowly. Leave the sweep table on screen for questions.
+Delivery: Say the last line slowly, then stop talking. For questions, jump back to the sweep table if this route kept slide 11.

@@ -1,4 +1,4 @@
-# Talk packet: Cry Me a Free Tier
+# Talk packet: Buy Me a Free Tier
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/free-tier.html)
 
@@ -6,20 +6,19 @@ Outline: [40 min](../../outlines/free-tier-40min.md). Current screen and handout
 
 ## Titles
 
-- **Primary:** Cry Me a Free Tier
+- **Primary:** Buy Me a Free Tier
 - Eight Words for the Budget Meeting
 - You Are Not Shopping, You Are Contracting
-- What Did the Cheap Input Teach Your Architecture to Expect?
 
 ## Abstracts
 
 ### 50 words
 
-Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have been describing your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
+Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have described your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
 
 ### 100 words
 
-Engineers lose the cost argument in budget meetings because the strongest thing we can say is "it feels wasteful," and the invoice looks fine. Economics has precise names for what we are worried about. This talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option. Along the way it separates four legitimate reasons a price can be below cost and tells you which observation distinguishes them, reframes the enormous compute commitments as moves in a war of attrition rather than disclosures about margin, and runs a synthetic workload through a price sweep with the volume caveat attached.
+Engineers lose the cost argument in budget meetings because the strongest thing we can say is "it feels wasteful," and the invoice looks fine. Economics has precise names for it. This talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option. Along the way it separates four legitimate reasons a price can sit below cost and the observation that distinguishes them, reframes enormous compute commitments as moves in a war of attrition rather than disclosures about margin, and runs a synthetic workload through a price sweep with the volume caveat attached.
 
 ### 250 words
 
@@ -54,7 +53,7 @@ Engineering leaders, architects, and founders making build decisions on top of L
 
 ## Not a product pitch
 
-The talk names AWS credit terms and Epoch AI's public data as sources. It recommends no provider, no cost tool, and no consulting service. The calculator is offline and vendor-free.
+The talk names AWS credit terms, Epoch AI's public data, and dated Microsoft and Amazon announcements as sources. It recommends no provider, no cost tool, and no consulting service. The calculator is offline and vendor-free.
 
 ## References
 
@@ -68,7 +67,8 @@ The talk names AWS credit terms and Epoch AI's public data as sources. It recomm
 - Rochet, J-C. and Tirole, J. (2003). Platform Competition in Two-Sided Markets. *Journal of the European Economic Association* 1(4).
 - Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (1993).
 - Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025). [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends).
-- Amazon Web Services. [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/).
+- Amazon Web Services. [AWS Activate credits](https://aws.amazon.com/startups/credits/) (the offer shown on slide 4) and [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/).
+- Microsoft, [The next chapter of the Microsoft–OpenAI partnership](https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/), 28 October 2025. Amazon, [Amazon invests an additional $5 billion in Anthropic](https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai), April 2026.
 
 ## Audience-specific abstracts (100 words each)
 

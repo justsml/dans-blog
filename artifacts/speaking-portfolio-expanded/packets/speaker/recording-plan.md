@@ -4,7 +4,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 
 ## Recording 1: the 25-minute talk
 
-**Pick:** Automating Improvement From Failure. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), it has a working offline demo, and it is the talk most engineering programs will ask to preview.
+**Pick:** Automating Improvement From Failure. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), its live demo is specified in [demo.md](../../engineering/failure-improvement/demo.md) and not yet built, and it is the talk most engineering programs will ask to preview.
 
 **Cut:** Use the [30-minute adaptation](../../outlines/failure-improvement-30min-adaptation.md) and drop slides 10 and 12, each allocated 2:30 in that route, to land at 25 minutes. Keep slide 8 at 5:30 and keep 6, 9, and 13. After slide 9, bridge to feedback: "The same queue takes customer feedback; people still approve messages, money, and deletion." After slide 11: "The queue now needs a measure of whether its work was worth reading."
 

@@ -1,6 +1,6 @@
 # Jevons Ate My Invoice
 
-3 min · video · parent: [Cry Me a Free Tier](../outlines/free-tier-40min.md), slide 6
+3 min · video · parent: [Buy Me a Free Tier](../outlines/free-tier-40min.md), slide 6
 
 Token prices fell off a cliff. Your invoice climbed one. You're not being gouged; you're being efficient, in the way that ends with more smokestacks.
 

@@ -112,3 +112,55 @@ Ready after fixes. The canonical outline, generated scripts, adaptations, route 
 17. `outlines/adaptive-systems-40min.md:271` — name the handoff: "…the offline improvement loop, which is the Improvement From Failure talk, evaluates changes to the reusable procedure" (adaptive owner's file; coordinate).
 18. `README.md:37` — "Browser deck" → "Browser and PowerPoint" once `decks/README.md` and `decks/exports.json` index failure-improvement again (currently only dynamic-scaling is listed in the staged versions).
 19. After edits 10–12, merge `engineering/failure-improvement/evidence.md` into `packets/failure-improvement/evidence-bank.md` and delete it; update `README.md:93` link.
+
+## Fixes applied 2026-09-06
+
+### 1. Changes
+
+- `outlines/failure-improvement-40min.md`
+  - Slide 1 heading "Your logs are a roadmap nobody reads" → **"Nobody reads the scroll"** (kills the "Your X Is a Y" formula; reuses the talk's own closing image).
+  - Slide 7 heading "From tags to tickets and PRs" → **"Tickets are cheap. Review is not."** (promotes the slide's own visible line).
+  - Slide 1 hedge replaced: "I am borrowing the mechanism, not claiming a hospital study measured your on-call rotation" → "Cvach measured it on hospital monitors. Your pager is the same instrument."
+  - Slide 1 deferral now names the split with adaptive-systems slide 13: "Runtime recovery, **and how much authority a running agent earns for itself**, belongs to Adaptive, agentic apps."
+  - Slide 3: added the per-job stance in one clause — "The assistant with access to everything is coming anyway, and I am not arguing against it. This loop is one job with a countable tool list." (direction (a)).
+  - Slide 6: dropped "Our application is narrower:"; the two sentences now stand on their own.
+  - Slide 10: added the mutual pointer — adaptive-systems hands the compiled procedure back here, and the offline loop is what evaluates a change to it (adaptive 14's implicit handback made explicit from this side, without editing adaptive's file).
+  - Slide 10 Story: removed the "Use measured browser-test costs only with run records" caveat (it lives in the evidence bank).
+  - Slide 15 stage direction now ends "Stop talking."
+  - Timings untouched; still 2.5+2+3+3+2.5+3+2.5+5.5+3+3+2.5+2.5+2+1.5+1.5 = 40:00.
+- `packets/failure-improvement/packet.md` — 50/100/250-word abstracts rewritten from the 15-slide outline (alert fatigue, individual grants, bookmark and artifact, the failed holdout on the 403, the reviewer, compile-what-repeats, the money gate, 100/90/10, Monday). Learning outcomes rewritten and a fourth added for the review side. Practical takeaways rewritten (no more "GitHub Actions skeleton", no "three gates"). All four audience abstracts rewritten to the current arc. "Your Logs Are a Roadmap Nobody Reads" removed from the title list. Reference line "each platform named on slide 3" generalised. The appended "Revised argument" section replaced by a two-line "Recording readiness" note.
+- `engineering/failure-improvement/CFP.md:9` — 150-word abstract rewritten to the 15-slide arc; "three evidence gates" → "Regression, holdout, scope, and a person".
+- `packets/speaker/recording-plan.md:7` — the one stale clause only: "it has a working offline demo" → "its live demo is specified in demo.md and not yet built". Nothing else in that shared file was touched.
+- `packets/failure-improvement/formats.md` — lightning beats 2–4 rewritten (enrichment rule → individual grants; "three gates" → regression/holdout/scope/person plus the failed authorization case; final beat is now slide 15's word list). Workshop classify fields → "severity, evidence, owner, and an unknown result"; workshop guardrail row de-"three gates"-ed; "E2E economics and" removed from the facilitation note. Dropped "The retained PPTX is historical; regenerate before use."
+- `packets/failure-improvement/evidence-bank.md` — intro paragraph de-contradicted; "Historical model and cost notes" section and the pre-rewrite story map deleted; the surviving story map de-"Current"-ed; a short model-and-cost hygiene rule folded into the recording-gate paragraph.
+- `engineering/failure-improvement/evidence.md` — "slides 8 and 13" → "slides 8 and 12"; the personalized-software speculation bullet deleted; the two claim bullets that quoted removed outline sentences rewritten against the current slide 10; header ordering and date refreshed.
+
+### 2. Skipped from the edit list
+
+- **19 (merge evidence.md into evidence-bank.md and delete it)** — deleting it requires updating the portfolio-root `README.md:93` link, which is out of bounds for me. Fixed its stale lines in place instead.
+- **18 (`README.md:37` "Browser deck" → "Browser and PowerPoint")** — portfolio-root README, out of bounds. Still open for the sync owner.
+- **17 (`outlines/adaptive-systems-40min.md:271`)** — another talk's file. Handled from this side on slide 10 instead; adaptive's owner can still name the talk if they want the pointer in both files.
+- **6 (delete `decks/failure-improvement-40min.pptx`)** and the `decks/README.md` regeneration — already done before I started.
+- **11, partially (make *The Fail-to-Win Loop* the primary title)** — I dropped the offending alternate but left the primary alone: "Automating Improvement From Failure" is the talk name in `build-talk.ts`, the deck files, the shorts' parent lines and adaptive-systems' deference. Swapping it is a portfolio-wide rename, not a packet edit. Recommend it as a separate deliberate change.
+- `packets/speaker/recording-plan.md:35` still says "the three gates" in the demo-reel script. That file is shared and I was scoped to the one clause; the line is also defensible (the reel shows the three automated gates before the human one). Left for the file's owner.
+- `packet.md:15` "The retained PPTX is historical" — no such line in packet.md; it existed only in formats.md, where it is now gone.
+
+### 3. Route config changes for the caller
+
+```
+none
+```
+
+No slide was added, removed or re-timed, so routes 15/30/40 in `build-talk.ts` are unaffected. Slide 1 and slide 7 headings changed, so the generated scripts, adaptations, deck HTML and PPTX need the usual re-sync:
+`bun artifacts/speaking-portfolio-expanded/sync-talks.ts failure-improvement`
+
+### 4. Morning review (`reviews/failure-improvement-review.md`)
+
+Verified rather than assumed: §4's arc, §5's Bainbridge slide, §6's fact fixes (fabricated model names, $0.36–$0.81, "half the failures", "every/nobody", "Hermes", the ROI claim, the "never" superlative) and §7 blockers 2–6 are all implemented in the current 15-slide outline. Blocker 1 (unfilled story slots) and the live demo remain open by design.
+
+**Adopted, still-unimplemented:**
+- §7.5 "Decide the boundary out loud" — it was one-directional. Slide 1 now names authority-widening as adaptive's, and slide 10 names the handback explicitly.
+- §6.2/6.3 residue in the packet layer — the outline was clean, but `evidence.md` and `evidence-bank.md` still carried the model names, the $0.36–$0.81 figure and the "I have seen remarkable results" quote as live guidance. Now gone or reframed as hygiene rules.
+- §2 (self-implicating register) partially: the slide 1 hedge is now a flat claim rather than an apology. The story slot itself stays unfilled; that is Dan's to supply.
+
+**Skipped:** §3's extra sources (Endsley & Kiris, Sarter/Woods, Allspaw/Dekker, Cook, Ashby, SRE ch. 5) — the talk already carries five named disciplines and one more citation per slide would cost the jokes. §2's demand that story slots be filled — I will not invent an anecdote. §4's proposal to make the deck's alternate title primary — see skip note above.

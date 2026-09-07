@@ -1,12 +1,12 @@
 # `--no-agent`
 
-2 min · video · parent: [Adaptive, agentic apps](../outlines/adaptive-systems-40min.md), slide 3 · also the cold open for [You Will Build the Assistant That Has Everything](you-will-build-the-assistant-with-everything.md)
+2 min · video · parent: [Adaptive, agentic apps](../outlines/adaptive-systems-40min.md), slide 3 · also the cold open for [Sorry, You're Building It](you-will-build-the-assistant-with-everything.md)
 
 The intermediary intelligence layer is going to wrap everything. Opting out becomes a flag.
 
 ## Hook
 
-Your browser ships a chat that drives the page. WebMCP lets an agent act on whatever site you have open. The next generation of CLIs will take natural language by default, and you'll pass `--no-agent` to get the old behavior back. Not a prediction. A trend line with a flag name.
+Your browser ships a chat that drives the page. WebMCP lets an agent act on any site that opts in, and that list only goes one direction. The next generation of CLIs will take natural language by default, and you'll pass `--no-agent` to get the old behavior back. Not a prediction. A trend line with a flag name.
 
 ## Beat: who to blame
 

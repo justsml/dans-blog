@@ -1,26 +1,12 @@
 # Education stage exercises
 
-All fixtures are authored examples. Read the role cards or use a prepared replay; do not present them as a live model evaluation. No student account, internet, paid model, or personal data is required. The percentage fixture belongs to Outsmart Your Lying, Cheating Students, which uses it for reconstruction and transfer. The Skeptic capability audit below is written against the same numbers only so a presenter delivering both can reuse one worked example; when the talks are booked separately, run the Skeptic version against its own history-essay fixture (two primary sources disagreeing about the same event) so the two do not repeat.
+All fixtures are authored examples. Read the role cards or use a prepared replay; do not present them as a live model evaluation. No student account, internet, paid model, or personal data is required.
 
-## A Skeptic's Guide: four-minute capability audit
-
-**Goal:** distinguish a polished artifact from evidence that a learner understands changing percentage bases.
-
-**Exact fixture:** “A shop raises a $100 price by 20%, then reduces the new price by 20%. Because the changes are equal and opposite, the final price is $100.”
-
-**Expected sequence:**
-
-1. **0:00–0:30:** Display the fixture, labelled “Deliberately flawed example.” Ask: “What capability are we trying to teach?” Target: explaining the base used for sequential percentages.
-2. **0:30–1:15:** Ask: “Which price does the discount apply to?” Expected: the current $120, not the original $100. Give people quiet thinking time; a volunteer is optional.
-3. **1:15–2:00:** Reveal `$100 × 1.20 = $120; $120 × 0.80 = $96`. Ask: “What did the explanation reveal that a final number would not?” Expected: whether the learner identifies the changed base.
-4. **2:00–3:00:** Ask what to Delegate, Augment, Preserve. Suggested for this objective: delegate table formatting; augment practice with a conceptual hint; preserve an independent explanation at the checkpoint. A calculator need not be prohibited when arithmetic fluency is not the objective.
-5. **3:00–4:00:** Transfer fixture: “Start at $80, increase by 25%, then decrease the new price by 20%. Does it return to $80? Explain.” Expected: `$80 × 1.25 = $100; $100 × 0.80 = $80`. Opposite percentages can cancel when their multipliers multiply to one. State that this quick answer does not demonstrate retention or prove the exercise taught anything.
-
-**Optional stagekit alignment:** Show the same grammar-correction tool in three contexts. Preserve the independent correction when spelling is the assessment objective; Augment revision when argument quality is the objective; Delegate formatting when scientific explanation is the objective. These are contextual examples, not a permanent tool policy.
+Two exercises live here. The **percentage replay** below is slide 7 of Outsmart Your Lying, Cheating Students, and it is also what the [stage kit](../demos/DEMO-RUNBOOK.md) section 5 runs. The **history-essay cards** are the alternate for [Show Me the Misconception](../packets/evidence-learning/procurement-route.md), the 15-minute procurement route. A booking that runs both gets one fixture each: the percentage example never runs twice in one program.
 
 ## Outsmart Your Lying, Cheating Students: four-minute evidence replay
 
-Use the same shop fixture, now as a scripted tutor/learner interaction. No accusation is made and no actual learner is graded.
+**Exact fixture**, shown on slide 4: “A shop raises a $100 price by 20%, then reduces the new price by 20%. Because the changes are equal and opposite, the final price is $100.” Clean prose, wrong base. Below it runs as a scripted tutor/learner interaction. No accusation is made and no actual learner is graded.
 
 | Time | Exact prompt or response | Evidence added |
 |---|---|---|
@@ -48,9 +34,20 @@ Use the same shop fixture, now as a scripted tutor/learner interaction. No accus
 
 Score each dimension 0–2: current base identified, calculation justified, transfer explained. Zero means absent or incorrect, one means partial or unexplained, two means correct with relevant explanation. Refine these anchors with sample work before consequential use. Record assistance separately. A correct number without the reasoning does not earn full explanation credit. The demonstration does not assign a real grade.
 
-### Optional stagekit replay
+## Show Me the Misconception: the four index cards
 
-Two fictional learners submit the same polished scientific answer. Probe: “What assumption matters?” Learner A identifies comparable groups and a baseline; Learner B says it sounds scientific. Probe: “What would falsify it?” A names baseline imbalance or a confound; B needs help locating evidence. Both receive a supported next step. These observations inform follow-up only; neither response establishes misconduct or a final grade. Use the written cards as an accessible alternative to voice.
+The procurement route has no kit. Its live moment is four index cards, written for a history seminar so the room is not asked to do arithmetic. Fixture: two primary sources disagree about the same event — a participant's diary written that week, and a newspaper account published a month later.
+
+| Card | The learner move the tutor must handle | What a good teaching response looks like |
+|---|---|---|
+| A confident wrong answer | “The diary is more reliable because it is older.” | Does not affirm it. Asks what the diarist could and could not see. |
+| A right answer with faulty reasoning | “The newspaper is better because it is published.” | Separates the verdict from the reason and probes the reason. |
+| A request for the solution | “Just tell me which one to trust.” | Offers the next rung, not the paragraph. |
+| A learner the tutor misunderstands | “I meant bias in the printing, not the writer.” | Recovers and asks, rather than answering the question it assumed. |
+
+Two educators score the teaching moves, with factual errors counted separately from pacing and tone. Ask the room to write the confident wrong answer for their own subject; that card is the whole exercise. Add one question that improves the inference — “which source did you trust more, and what would change your mind?” — and collect enough to support a decision, not enough to reconstruct a student's life.
+
+These are authored cards, not a benchmark. A score on four cases certifies nothing; it tells you what a demo is hiding.
 
 ## Honest limits and delivery fallback
 

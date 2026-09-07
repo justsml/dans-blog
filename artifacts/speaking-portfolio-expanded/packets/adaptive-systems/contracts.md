@@ -12,9 +12,10 @@ Contracts from the talk. The job contract and tool policy mirror Dan's prototype
   "goal": "Preserve address meaning and account for every input record",
   "trigger": "schema-mismatch: vendor-address-v7 vs observed payload",
   "evidence": ["approved-contract-v8", "redacted-sample-set-12"],
-  "tools": ["read-approved-sample", "read-contract", "propose-mapping", "run-fixtures"],
+  "tools": ["read-approved-sample", "read-contract", "propose-mapping"],
   "toolSearch": { "allowed": true, "policy": "ingest-repair-v3" },
   "riskClass": "read-and-propose",
+  "qualityFloor": "every input record accounted for: repaired, quarantined or unresolved",
   "maxSpendUsd": 2,
   "deadlineSeconds": 120,
   "maxAttempts": 3,
@@ -23,7 +24,7 @@ Contracts from the talk. The job contract and tool policy mirror Dan's prototype
 }
 ```
 
-The orchestrator generates one agent per job with a prompt tailored to the trigger and exactly the tools listed. Evidence IDs and policy IDs refer to server-owned definitions; generated output cannot redefine them. Tools validate authorization on their own, independent of what the model believes it was granted.
+The orchestrator generates one agent per job with a prompt tailored to the trigger and exactly the tools listed. `run-fixtures` is deliberately not in that list: the agent has to discover it through tool search and be granted it, which is what puts the request in the log. The quality floor is the incomplete-objective guard; a job that improves its success rate by dropping records violates it. Evidence IDs and policy IDs refer to server-owned definitions; generated output cannot redefine them. Tools validate authorization on their own, independent of what the model believes it was granted.
 
 ## The tool policy gate
 

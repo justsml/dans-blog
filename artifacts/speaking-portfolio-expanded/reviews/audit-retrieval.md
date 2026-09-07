@@ -105,3 +105,54 @@ Hedge count beyond the slide-2 disclaimer: slide 3 (1), slide 4 (1), slide 7 (2 
 10. `outlines/retrieval-40min.md:1,231`, `build-talk.ts:155,158`, `README.md:28,43,64,121`, `reviews/README.md:46`, `packets/retrieval/evidence-bank.md:1`, `packets/retrieval/packet.md:1`, `flagship-talks/README.md:7`, `flagship-talks/retrieval-{40,15}min-outline.md:3`, `reveal-talks/index.html:4`: apply the new title, then `bun artifacts/speaking-portfolio-expanded/sync-talks.ts retrieval` to regenerate scripts, adaptations, four HTML decks, six PPTX and the two flagship aliases.
 11. `decks/README.md`: regenerate so it lists all ten talks (portfolio-wide; retrieval's README row links to it).
 12. If the new title is *Fool's Golden Dataset*, retitle `shorts/fools-golden-dataset.md` (filename stays) so the short and the parent do not share a name.
+
+## Fixes applied 2026-09-06
+
+### 1. Changed
+
+- `outlines/retrieval-40min.md:231` — closing visible line was a bare repeat of the new title. Now `> Three search methods. One instrument nobody checked.` It carries the argument (callback to slide 10's "We fixed the instrument") instead of re-reading the eyebrow, and sets up the unchanged instruction line beneath it. The title joke moved into the spoken close, where it is said once, flat, and then handed off: "Three search methods in a fundable trenchcoat. That is a fair joke about the retriever, and the coat is not the problem. Lexical, dense, hybrid: we inherited all three. What we left behind was the sixty years of checking whether the score underneath was telling the truth. Go find the documents your eval set never judged." Stage direction updated to match.
+- `outlines/retrieval-40min.md:161`, `packets/retrieval/contracts.md:23`, `shorts/fools-golden-dataset.md:17`, `reveal-talks/assets/retrieval/history.svg:19` — the unverified Kendall's τ figure for Voorhees, Soboroff, and Lin (2022) is gone from everything that reaches a stage. Replaced with the qualitative finding ("the ordering barely moved" / SVG row now reads "Expanded TREC-8 labels; ranking barely moved"). `contracts.md` now carries the explicit instruction not to quote a τ until it has been read off arXiv 2201.11086 and confirmed to describe the TREC-8 ad hoc runs. Edit-list item 9 is closed by removal, not by verification.
+- `packets/retrieval/evidence-bank.md:17` — deleted the false claim that glossary prose "remains in ... the retained historical PowerPoints" (those files are gone). Now: "Earlier glossary prose survives only in Git history; every exported deck and alias now carries the current talk."
+- `packets/retrieval/evidence-bank.md` — new "Held back from the slides" section absorbs the τ caveat, the deliberate slide-2 disclaimer placement (edit-list item 7, resolved as "accept slide 2, note it"), the R1 non-fable note, and the machine-consumers note, so the outline stops carrying them.
+- `outlines/retrieval-40min.md:46` — cut "The point is not that every rare word is relevant. A typo can be rare." (item 4).
+- `outlines/retrieval-40min.md:195` — cut the trailing "IR also studied machine consumers..." sentence (item 5).
+- `outlines/retrieval-40min.md:219,225` — cut "not a cautionary fable about people foolish enough to use rules" and the McDermott source-note hedge (item 6). Kept L223 including "We do not need a grand theory of why expert systems declined to ask who updates Schedule R" — that is a punchline, not a hedge.
+- `outlines/retrieval-40min.md:39,42,50` — settled on "Spärck Jones", matching the shorts (item 3).
+- `outlines/retrieval-40min.md` slide headings (item 8): 4 → "Vector Database, 1975"; 10 → "Fool's Golden Dataset"; 12 → "The Reader Stopped Being a Person".
+- Timings untouched: still monotonic and summing to 40:00 (2.5+2+3+2.5+2.5+2+2+3.5+3+4+3+3+2.5+2.5+2).
+
+### 2. Skipped
+
+- Item 7 as written (move the disclaimer into slide 1): slide 1 is a cold open — jargon sentence, straight face, pause. A disclaimer there kills it. Took the audit's alternative: keep it on slide 2 and record the choice in `evidence-bank.md`.
+- Items 10, 11, 12 and the whole rename inventory: done in the earlier title pass, or portfolio-level (`decks/README.md`) and outside this talk's files. The short keeps its name; the parent now shares it deliberately, per the skill's "use the name everywhere".
+- Item 2 is a `build-talk.ts` route change; instruction below, not edited.
+
+### 3. Route config changes for the caller
+
+```
+slug:      retrieval
+route:     15
+field:     note
+old:       "Pairs get 45 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives."
+new:       "Pairs get 60 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives."
+location:  build-talk.ts:137
+why:       slide 8 says "Work in pairs for sixty seconds" and its stage direction says 60; the route note is the only "45" and it propagates into script-15min.md:3 and retrieval-15min-adaptation.md:16, both generated. Changing the note fixes all three. No `times` change: the 15-min route keeps 1,2,8,9,10,11,12,15 with times summing to 15.0 and slide 8 already holds 2.5 minutes, which covers a 60-second exercise.
+```
+
+### 4. Morning review, reconsidered against the new title
+
+Adopted (both are payoffs the sharper title now demands):
+
+- **The chunk-size laugh line** (`retrieval-review.md:85`), on slide 6: "Chunk size was an open research question in 1993 and a forum thread in 2024. One of those had a control group." Slide 6 was the only build slide with no joke, and the review's own roast item 7 flagged the talk's jokelessness. Used "forum thread" rather than "Reddit thread" — the citation-versus-thread contrast is the joke; the brand name is not.
+- **Naming the three methods out loud** (review row 7's "lexical, hybrid, reranking" beat, retargeted), on slide 7: "Lexical, dense, hybrid. Those are the three search methods in the trenchcoat, and the pitch usually names one of them." The title now advertises a count, and until this line the three existed only as a visible bullet. This is the mid-talk payoff that makes the slide 15 callback land.
+
+Skipped, and why:
+
+- **Callan 1994** — slide 6 already has one dated passage-retrieval citation doing the work; a second adds a page range I would be quoting from memory.
+- **Järvelin & Kekäläinen / nDCG** — the talk's metric is a two-document precision the audience computes in their heads. Introducing graded relevance buys a metric the arc never uses.
+- **Spolsky, "leaky abstractions"** — the abstraction-translation arc it belonged to was the glossary talk. It has nothing to attach to now, and the review itself flags it as a blog post.
+- **"The semantic gap"** — the review said discard it; still right.
+- **XCON "nobody could tell when it was wrong"** and **McDermott 1980** — both contradict `evidence-bank.md:13` (wrong year, and a decline narrative the talk deliberately refuses).
+- **"Scored irrelevant forever"** — contradicted by the 2022 recheck the talk now leans on.
+- **Alternate title "We Reinvented Search and Forgot to Read the Manual"** — nine words; moot.
+- **The confused-deputy companion talk** — a separate talk, not a fix to this one.

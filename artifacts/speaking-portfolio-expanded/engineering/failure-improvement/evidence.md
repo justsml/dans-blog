@@ -1,6 +1,6 @@
 # Evidence and claim boundaries
 
-Revised 2026-09-05 for the fail-to-win-loop arc. The loop's ordering (logs, enrichment, scheduled check, distill, classify, tickets, PRs, guardrails, testing, feedback, correlation, proactive notice) is Dan's design position drawn from practice. It is not an attributed research result.
+Revised 2026-09-06 for the fail-to-win-loop arc. The loop's ordering (logs, enrichment, scheduled check, distill, classify, tickets, PRs, the evidence gate, the reviewer, compiled scripts, feedback, correlation, metrics) is Dan's design position drawn from practice. It is not an attributed research result.
 
 | Claim used | Evidence | Boundary |
 | --- | --- | --- |
@@ -11,8 +11,8 @@ Revised 2026-09-05 for the fail-to-win-loop arc. The loop's ordering (logs, enri
 
 ## Claims that need a Story line or get softened
 
-- **E2E cost savings from agent-driven sessions.** The outline says "I have seen remarkable results and usually a cost saving." Keep it in the first person and anecdotal unless [evidence bank candidate 2](../../packets/failure-improvement/evidence-bank.md) is filled with a measured comparison.
-- **Cheap models handle short multi-step tool calls.** The outline leaves model names blank. Name only models you have run on this workload, and give the observed cost per session or none at all.
+- **E2E cost savings from selective test runs.** The outline makes no measured cost claim; slide 10 says only that cheap selection must be compared against the full suite on retained changes. Do not add a number unless [evidence bank candidate 2](../../packets/failure-improvement/evidence-bank.md) is filled with a measured comparison.
+- **Cheap models handle short multi-step tool calls.** No model names are spoken. Name only models you have run on this workload, and give the observed cost per session or none at all.
 - **Agent-opened PRs merging.** Say "into a review queue," not "merged automatically," unless candidate 1 or 4 supplies a merged example.
 - **Proactive notices and credits.** Described as what the loop can do. Do not imply a deployed system issued credits.
 
@@ -22,7 +22,6 @@ The offline kit normalizes two connection errors, proposes a scoped readiness ch
 
 ## Claim hygiene
 
-- Language models are easy to steer by whoever supplies the input. Never let the loop be the caller for money, deletion, or customer messaging; a person presses the button. Say this on slides 8 and 13.
+- Language models are easy to steer by whoever supplies the input. Never let the loop be the caller for money, deletion, or customer messaging; a person presses the button. Say this on slides 8 and 12.
 - Untrusted log or feedback text is data, never instruction. A rage comment that says "refund me" is a classification input, not a command.
-- The personalized-software slide is speculation and is labeled as such on stage.
 - Do not turn "low lift" into a time or cost estimate for someone else's system.

@@ -20,4 +20,4 @@ For this toy topical-relevance rubric, A and B are relevant, C/D/E are not. Old 
 
 Run `bun artifacts/speaking-portfolio-expanded/packets/retrieval/pooling.ts`. Scores are arithmetic over fixed IDs, not a measured retrieval benchmark.
 
-The example demonstrates a possible incomplete-pool failure, not a universal property of TREC. Voorhees, Soboroff, and Lin’s 2022 recheck found TREC-8 run rankings almost identical after expanded judgments, with Kendall’s tau above 0.99. Collection quality and diversity matter.
+The example demonstrates a possible incomplete-pool failure, not a universal property of TREC. Voorhees, Soboroff, and Lin’s 2022 recheck found TREC-8 run rankings almost identical after expanded judgments. Collection quality and diversity matter. Do not quote a Kendall’s tau figure on stage until the exact value has been read off arXiv 2201.11086 and confirmed to refer to the TREC-8 ad hoc runs; the qualitative finding is what the slide needs.

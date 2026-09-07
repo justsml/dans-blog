@@ -104,3 +104,52 @@ Hedge count beyond the slide-1 disclaimer: slide 4 has one real admission ("I do
 17. `outlines/adaptive-systems-40min.md:47,31,98,217,236` — apply the heading and visible-line rewrites from the Voice section.
 18. `build-talk.ts:735` — replace the greedy link regex with `/\[([^\]]+)\]\((https?:\/\/\S+?)\)(?=[\s,.;:]|$)/g`, then run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts adaptive-systems` (and the other nine talks, since the bug is shared).
 19. `decks/README.md` — regenerate or extend the index so it lists the adaptive editions, or drop the "all 60 editions" claim in `README.md:7`.
+
+## Fixes applied 2026-09-06
+
+### Changed
+
+- `outlines/adaptive-systems-40min.md` — headings: 2 → "The Bar Is a Pager"; 3 → "Sorry, You're Building It"; 11 → "Compute Is a Tool Too"; 12 → "Ironies of Automation"; 13 → "Widen Per Class, Never Per Streak".
+- `outlines/adaptive-systems-40min.md` slide 5 visible line → "Reads customer data? Then it never posts to a vendor."
+- `outlines/adaptive-systems-40min.md` slide 3 — WebMCP softened to "act on any site that opts in, and the list of sites that opt in only goes one direction."
+- `outlines/adaptive-systems-40min.md` slide 12 — Skitka sentence now reads "on the events the aid got wrong, people given a highly but imperfectly reliable aid did worse…".
+- `outlines/adaptive-systems-40min.md` slide 13 — added the sentence that closes the deferral from `dynamic-scaling-40min.md:214` and `shorts/barrel-of-monkeys.md:29`: the same loop adjusts the system's own fan-out and token burn from measured acceptance (acceptance up, false repairs flat → more parallel attempts and a bigger budget; false repairs up → both come down). No slide durations changed; timings still sum to 40:00.
+- `packets/adaptive-systems/evidence-bank.md` — "Council of attempts" renamed and restated as Council of Guards (judges measuring disagreement, not a vote) plus the barrel-of-monkeys maneuver; slide-3 story slot updated to "the tool pairing you only noticed after it fired"; Fly.io line retargeted to slides 5 and 11; "least privilege for free (slide 11)" replaced with a leased-sandbox blast-radius claim; "ledger arithmetic" dropped; portfolio boundary now names both techniques.
+- `packets/adaptive-systems/contracts.md` — `run-fixtures` removed from the job contract's `tools` (it is now only reachable through tool search, matching `demo.md:7` and outline slide 4); added `"qualityFloor"` and a sentence explaining it as the incomplete-objective guard, so `evidence-bank.md` cut row is accurate.
+- `packets/adaptive-systems/formats.md:26` — 45-minute row aligned with the outline (no Q&A).
+- `packets/adaptive-systems/packet.md` — titles now lead with "Sorry, You're Building It" / "Conjure Exactly Enough" / "200 OK (Nothing Is)", with "Adaptive, agentic apps" kept as the descriptor; outcome 4 joined to the list.
+- `engineering/adaptive-systems/CFP.md` — fourth (memory-pattern) outcome added.
+- `shorts/you-will-build-the-assistant-with-everything.md:33` — on-screen "6 minutes" → "2 minutes" (matches `deadlineSeconds: 120`; the 3-tool count now matches the contract too).
+- `shorts/no-agent.md` — WebMCP line mirrored; stale link text "You Will Build the Assistant That Has Everything" → "Sorry, You're Building It".
+- Deleted `artifacts/reveal-talks/assets/adaptive-systems/03-proposal-and-authority-are-separate.svg` (orphan). `visuals.md:22` is now correct as written.
+
+### Skipped
+
+- Item 18 (greedy link regex in `build-talk.ts:735`) — already fixed centrally today.
+- Item 19 (`decks/README.md`) and the deletion of `decks/adaptive-systems-screen.pptx` / `-handout.pptx` — out of scope for a talk agent (`decks/**` and root `README.md` are off-limits). Both unsuffixed files are now referenced by nothing; see the block below.
+- Items 12–13 (`build-talk.ts` route config) — cannot edit; instructions below.
+- Voice note about promoting "A model saying ninety percent confident settles nothing." to the visible third line on slide 13 — kept as prose; the "Expand:" line is the only place the widening criteria appear on screen, and the sentence lands better spoken.
+- `packet.md`/`formats.md` PPTX links already point at the `-40min-` files; nothing to change there.
+
+### Route config changes for the caller
+
+```
+build-talk.ts, talk "adaptive-systems", route 15:
+  field: bridges[10]
+  old: "Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is a companion talk."
+  new: "Bridge: the same orchestrator can ask for its own scale inside a per-customer budget; that is slide 11 in the long version, and the mechanics are a companion talk."
+
+  field: trim[10]
+  old: [0, 1, 2]
+  new: [0, 1, 2, 3]
+  reason: [0,1,2] drops the walkthrough's landing line ("Three events, three different right answers…"). Slide 10 has 3:00 in this route; four paragraphs fit.
+
+  NOT recommended without a time rebalance: trim[3] and trim[4] stay [0,1,3]. Slide 3 has 1:30 and slide 4 has 3:00 here; restoring their second paragraphs needs ~40 s the 15-minute route does not have. The dropped visible lines stay on screen unspoken.
+
+Route times unchanged: 15-min 1+1.5+3+1.5+1.5+3+2.5+1 = 15:00; 30-min sums to 30:00; outline sums to 40:00.
+Also unowned by this agent: delete decks/adaptive-systems-screen.pptx and decks/adaptive-systems-handout.pptx (unsuffixed legacy duplicates, now referenced nowhere), and add the adaptive rows to decks/README.md or drop the "all 60 editions" claim in README.md:7.
+```
+
+### Morning-review proposals
+
+No `reviews/adaptive-systems-review.md` exists (the talk was rewritten before that round), so there were none to adopt or skip.

@@ -110,3 +110,74 @@ Ready after fixes. Structure, arithmetic, citations and stance alignment are sou
 21. outlines/adaptive-systems-40min.md:236–248 (slide 13): add one sentence claiming fan-out and token budget as authority widened from measured outcomes, so this talk's :214 deferral and barrel-of-monkeys.md:29 point at something.
 22. Delete engineering/dynamic-scaling/demo.md and engineering/dynamic-scaling/evidence.md.
 23. Run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts dynamic-scaling` after 19–20 so scripts, adaptations, decks and PPTX regenerate; confirm exports.json sha changes.
+
+## Fixes applied 2026-09-06
+
+### 1. What changed
+
+- `outlines/dynamic-scaling-40min.md` slide 12 rewritten: **450 spoken words** (was 806) across 7 paragraphs = 90 wpm over the 5:00 slot, leaving ~1.5 min for the scoring exercise. Kept, in the order the screen uses: setup → Knight & Leveson set-aside (`twenty-seven programmers`, "Not this. I am not voting three models toward the truth") → barrel-of-monkeys maneuver with all four reasons (race / synthesize / rank / catch the one-in-ten in law or medicine) → the "speculative optimization in a lab coat / Right? Right." aside with the env-var line and companion-talk deferral → the judge arithmetic and the Council of Guards name ("reads everything, writes almost nothing, costs a fraction of what it guards") → gates (all four) → the "yesterday's axioms / not a shill for Big Token" landing.
+- `outlines/dynamic-scaling-40min.md` heading 12 → `Monkeys, Then Guards`; 7 → `Infra Is a Tool Call`; 8 → `Torn Down by Default`; 9 → `Fifty Containers Don't Render Faster`. Visible line now says `Council of Guards`.
+- `outlines/dynamic-scaling-40min.md:142`: Depot sentence → `bill by the second for exactly this: run agent-generated code, throw it away` (dropped the unsupported "stream output"). Fly sentence → `microVMs whose stated creation target is under a second` (the page states a goal, not a measurement).
+- `outlines/dynamic-scaling-40min.md`: `accepted →` → `queued →`; slide 2 `never got a vote / can vote` → `never got a say / Agentic workloads do` (removes the echo of the rejected sense two slides before the set-aside); slide 11 stage direction is now route-neutral.
+- `packets/dynamic-scaling/evidence-bank.md`: new **"Cut from slide 12 for time"** section holding the displaced detail — model characterization, migration harness, tool-calling-agent-vs-single-shot sandboxing, and "encapsulate fan-out at graph nodes" — each pointing at the short where it already appears verbatim (`shorts/council-of-guards.md`, `shorts/barrel-of-monkeys.md`). Also: "Council of attempts" split into the barrel (generation) and council (judging) claims; Depot and Fly rows corrected; Cuts row 5 reworded; token/price ratios and "one in ten" labelled illustrative.
+- `artifacts/reveal-talks/assets/dynamic-scaling/11-independent-attempts-share-requirements.svg`: three `Independent artifact` labels → `Separate first draft`; `<title>` → "Separate drafts share requirements". Filename kept (renaming would churn the outline for no content gain). `packets/dynamic-scaling/visuals.md:18` link text updated to match.
+- `artifacts/reveal-talks/assets/dynamic-scaling/05-…svg`: dropped the repeated fixture caption. `08-the-ephemeral-ecosystem.svg`: caption reduced to `Checked 2026-09-06`; Fly cell → `microVM, sub-second target`.
+- `packets/dynamic-scaling/contracts.md`: `behind $0.90 that was never spent` → `behind money that was never spent ($0.90 released at row four, $1.00 by the end of the run)`.
+- `packets/dynamic-scaling/formats.md:47`: workshop row now includes the council-split reveal and "which candidate gets the human".
+- `packets/dynamic-scaling/demo.md:3`: added the route compression note (five minutes on the 40 route; compress rows 1 and 2 on 15/30).
+- `shorts/council-of-guards.md`: `twenty-seven teams` → `twenty-seven programmers`; fourth gate `no dispatch after deadline` added; the muddy "picks between one and three alternatives to generate" replaced with the reads-everything/writes-almost-nothing line.
+- `shorts/the-job-asks-for-its-own-compute.md:33`: `cap: $2` → `cap: $1.50` to agree with `contracts.md:34`.
+- Cruft: `engineering/dynamic-scaling/demo.md` and `evidence.md` were already gone; only `CFP.md` remains.
+
+### 2. Deliberately skipped
+
+- **Edit 21 (adaptive slide 13 sentence).** Another talk's outline; out of this talk's remit. `fix-adaptive` should add it — see the route block. This talk's deferral line now says "let the system tune that knob itself… that is the companion talk", which is true with or without it.
+- **Renaming the slide-12 SVG file.** Optional in the audit; the label fix removes the drift and a rename churns outline + visuals for nothing.
+- **Retitling the talk** (`Four Callers, Forty Images`). Not blocking, and the descriptive title is what the CFP fields use; left for Dan.
+- **Deleting the slide-13 synthesis SVG / the 08-numbered asset.** Audit says KEEP; agreed.
+- **The `stream output` sentence in `packets/dynamic-scaling/script-*.md`.** Generated; regenerates from the outline.
+
+### 3. Route config changes for the caller
+
+```
+build-talk.ts, talk "dynamic-scaling":
+
+1. routes.30.times
+   old: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 2.5, 2.5, 4, 4.5, 1.5, 2.5]
+   new: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 2.5, 2.5, 3.5, 4, 2.5, 2.5]
+   (keep = [1,2,3,4,5,7,8,10,11,12,13,14]; sums to 30.0)
+   Slide 11 walkthrough 4 -> 3.5 (demo.md now authorises compressing rows 1 and 2 on short
+   routes); slide 12 4.5 -> 4; slide 13 1.5 -> 2.5 so its 90-second exercise plus Amdahl fits.
+
+2. routes.30: add
+   trim: { 12: [0, 1, 2, 4, 5, 6] }
+   Slide 12 now has 7 spoken paragraphs, indexes:
+     0 setup, 1 Knight & Leveson, 2 barrel of monkeys, 3 speculative-optimization aside,
+     4 Council of Guards, 5 gates, 6 axioms landing.
+   Dropping index 3 leaves 416 words in 4:00 = 104 wpm.
+
+3. routes.15.bridges[11]
+   old: "Bridge: attempts are a scaling axis and so is judging; a council of cheap judges from
+         different models tells you where they disagree, and that is the candidate that gets a
+         human. Bound the attempts, gate them, and treat any synthesis as a new candidate."
+   new: "Bridge: two more scaling axes have names. The barrel-of-monkeys maneuver leads with
+         cheap parallel generation on purpose and hands the barrel to the next stage. The
+         Council of Guards is cheap judges from different models, and the number you want back
+         is the disagreement. Gate every candidate; a synthesis is a new candidate."
+
+4. routes.15.trim
+   old: { 2: [0, 1], 7: [0, 1, 2], 8: [0, 1, 2], 11: [0, 1, 2] }
+   new: { 2: [0, 1] }
+   (slides 7, 8 and 11 have exactly three spoken paragraphs; those entries are no-ops)
+
+5. Not mine to edit, for whoever owns the adaptive talk:
+   outlines/adaptive-systems-40min.md slide 13 — add one sentence claiming fan-out and token
+   budget as authority widened from measured outcomes, so this talk's companion-talk deferral
+   and shorts/barrel-of-monkeys.md:29 point at something concrete.
+
+Then: bun artifacts/speaking-portfolio-expanded/sync-talks.ts dynamic-scaling
+```
+
+### 4. Morning-review proposals
+
+`reviews/dynamic-scaling-review.md` does not exist; this talk had no September 6 morning critique. Nothing to reconcile.

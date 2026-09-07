@@ -30,21 +30,37 @@ Toggle the consequential-action gate. It routes to a human decision rather than 
 
 **Expected outcome:** A deterministic policy chooses between modeled strategies and enforces caps. Prices, timings and capabilities are synthetic. A production implementation needs evidence that each eligible strategy satisfies the workload.
 
-## 4. Cry Me a Free Tier
+## 4. Buy Me a Free Tier
 
-**Four minutes.** Defaults: 1,000 monthly attempts, $0.02 inference and $0.01 other costs per attempt, 75% success. Read the 1× row, then the 10× row. Total monthly costs are $30 and $210. Costs per successful outcome are $0.040 and $0.280.
+**Four minutes**, on slide 11 of the 40-minute route. Defaults: 1,000 monthly attempts, $0.02 inference and $0.01 other costs per attempt, 75% accepted. Read the 1× row, then the 10× row. Total monthly costs are $30 and $210. Costs per accepted outcome are $0.040 and $0.280.
 
-Increase the success rate or change the inference component to expose which assumption matters. Ask whether current retail prices are an acquisition subsidy, an indicator of declining costs, or a mix. The calculator cannot answer that question.
+Then do the beat the slide leads with. Restore 1× and move acceptance from 75% to 45%: cost per accepted outcome goes to $0.0667, the same number as the 2× row, with no price change at all. A thirty-point acceptance drop costs exactly what doubling every token price costs; one of those is on the front page and the other is a Tuesday. Restore 75% before moving on.
+
+Change the inference component to expose which assumption matters. Ask whether current retail prices are an acquisition subsidy, an indicator of declining costs, or a mix. The calculator cannot answer that question.
 
 **Expected outcome:** A sensitivity scenario, not a forecast. Quality stays fixed as price changes. The model omits capacity limits, customer demand changes and any labor not entered under other costs.
 
 ## 5. Outsmart Your Lying, Cheating Students
 
-**Four minutes.** Reveal the two identical artifacts, then click through the follow-up questions. Learner A identifies assumptions and possible confounders. Learner B initially offers confidence without evidence, then asks for a smaller example.
+**Four minutes inside the five-minute slide 7**; compress to two by skipping the kit, running only the $100 sequence and stating the $80 item aloud.
 
-Ask what additional support or evidence would help. Offer a written alternative to speaking. Avoid inferring misconduct, a disability, or a final grade from the scripted responses. The point is to collect richer evidence and choose the next teaching step.
+Fixture, already on slide 4: a shop raises a $100 price by 20%, then discounts the new price by 20%, and the learner writes "equal and opposite, so the final price is $100." Clean sentence, wrong base. Reveal that argument first and let the room find the base before you open the kit.
 
-**Expected outcome:** The same artifact can lead to different follow-up questions. A scripted conversation does not validate automated assessment or establish learning gains.
+Five scripted turns, one click each:
+
+| Turn | Tutor | Learner | What it adds |
+| --- | --- | --- | --- |
+| Diagnostic question | "Which price does the discount use?" | "The original $100." | A specific mistaken base, which the final number alone would not show. |
+| Conceptual hint | "What is the price after the increase? Apply the discount to that current price." | "$120." | Support given is visible and recorded. |
+| Supported correction | "So what is the final price, and why?" | "$120 times 0.8 is $96. I used the wrong starting amount." | Supported correction with an explanation. |
+| Transfer item | "Now start at $80, increase 25%, then decrease 20%. Explain why this one returns to its start." | "It reaches $100, then $80. 1.25 times 0.8 equals 1." | Immediate transfer, and it breaks the shortcut the room just formed. |
+| The record | "What would you record, and what remains unknown?" | Concept, observation, support, next check. | Retention and unaided performance stay unknown. |
+
+Reveal $120 only after the diagnostic question. Ask the room for $96 and one sentence explaining it. Then change the numbers to $80, up 25%, down 20%, and let the return to $80 break "opposite changes never cancel" — a transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment.
+
+The rubric and the four-line record are on slide 8; the written turns are also in the [education walkthrough](../education/demo.md) if you would rather read from a card than open the browser.
+
+**Expected outcome:** Assistance and the corrected explanation are recorded separately, and the transfer item is answered under known conditions. A scripted conversation does not validate automated assessment, assign a real grade, or establish learning gains.
 
 ## 6. The Future of Product Engineering
 

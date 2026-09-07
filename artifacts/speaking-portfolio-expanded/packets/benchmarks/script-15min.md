@@ -2,7 +2,7 @@
 
 Use slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The number and its sampling assumptions stay together. Calibration uses the always-pass confusion matrix.
 
-## 00:00 to 01:00: slide 1, A leaderboard, and the question it isn't answering
+## 00:00 to 01:00: slide 1, Tuxedo of Benchmarks
 
 On screen:
 
@@ -33,9 +33,9 @@ The practical question is the same. What behavior improves the number without im
 
 Write that loophole down before optimizing. Then add a case that exploits it. If your evaluator applauds the exploit, you found work worth doing.
 
-Source: Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are paraphrases.
+Source: Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981). Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are attributed paraphrases, not claims that every optimized benchmark has stopped measuring anything.
 
-## 02:00 to 03:00: slide 4, Your eval suite is a measuring instrument
+## 02:00 to 03:00: slide 4, Your Eval Suite Needs Therapy
 
 On screen:
 
@@ -80,7 +80,7 @@ A trace becomes a test when it answers a specific question. A transcript without
 
 Delivery: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
 
-## 06:00 to 08:00: slide 7, Run it five times
+## 06:00 to 08:00: slide 7, Run the Judges
 
 On screen:
 
@@ -94,11 +94,11 @@ A narrower spread can still change a decision. Use seventy-eight, seventy-nine, 
 
 In Auto-Tune Your LLM Judge I call majority disagreement the decision flip rate. Keep the definition beside the result. An always-pass judge has zero flips. A stable liar is still a liar, so check correctness against independent labels too.
 
-Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-llm-judge/), supplied article. The sequence is reused as a teaching fixture, not a fresh measurement.
+Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-llm-judge/), danlevy.net, 11 August 2026. The sequence is reused as a teaching fixture, not a fresh measurement.
 
 Delivery: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
 
-## 08:00 to 11:00: slide 8, Twenty green cases. About one in seven.
+## 08:00 to 11:00: slide 8, Twenty for Twenty, One in Seven
 
 On screen:
 
@@ -117,7 +117,7 @@ Source: James A. Hanley and Abby Lippman-Hand (1983), [If Nothing Goes Wrong, Is
 
 Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection would make the bound inapplicable. Run arithmetic.ts if a calculator helps.
 
-## 11:00 to 13:30: slide 9, Your grader is an instrument too
+## 11:00 to 13:30: slide 9, Agreeable to a Fault (κ = 0)
 
 On screen:
 
@@ -130,11 +130,11 @@ Cohen's kappa compares observed agreement with agreement expected from the margi
 
 Blind model identity. Swap A/B answer order. Position bias and self-preference have published evidence behind them. Repeat these checks on the judge you actually use. When experts disagree, inspect the rubric and case before blaming the model for failing to find a truth you never agreed on.
 
-Source: Cohen (1960), [A Coefficient of Agreement for Nominal Scales](https://journals.sagepub.com/doi/abs/10.1177/001316446002000104). Feinstein and Cicchetti (1990), [High agreement but low kappa](https://pubmed.ncbi.nlm.nih.gov/2348207/). [Position bias study](https://arxiv.org/abs/2406.07791); [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819).
+Source: Cohen (1960), [A Coefficient of Agreement for Nominal Scales](https://journals.sagepub.com/doi/abs/10.1177/001316446002000104). Feinstein and Cicchetti (1990), [High agreement but low kappa](https://pubmed.ncbi.nlm.nih.gov/2348207/). Shi et al. (2024), [Judging the Judges: position bias in pairwise LLM comparisons](https://arxiv.org/abs/2406.07791). Wataoka et al. (2024), [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819).
 
 Delivery: Write the 90/10 confusion matrix. Compute (0.9 − 0.9)/(1 − 0.9). Allow 45 seconds to inspect the ten missed failures.
 
-Bridge: separate held-out evidence, report slices and counts, version the scorer, and set the rejection rule before viewing the candidate.
+Bridge: separate held-out evidence, report slices and counts, version the scorer, set the rejection rule before viewing the candidate, and use code for state and schema, graders for language, people for disputed policy.
 
 ## 13:30 to 15:00: slide 15, What does good mean here?
 
@@ -147,4 +147,6 @@ Start with twenty cases tomorrow. Attach the acceptance criterion, the source, a
 
 Validity asks what inference the score supports. Reliability asks whether the measurement is repeatable enough for its use. Agreement asks where graders differ. Power asks whether the experiment can detect the difference we care about. Contamination asks what the system has already seen. Goodhart asks what optimizing the score will break.
 
-The suite is an instrument. Test the instrument. Then use it to make a decision.
+The suite is an instrument. Test the instrument.
+
+Delivery: Stop talking.

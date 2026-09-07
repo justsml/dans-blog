@@ -8,4 +8,4 @@ Twenty independent representative trials with zero failures give an exact one-si
 
 Story: the green eval followed by a production failure. Supply the original case, scorer version, score, production observation, and permission to name the system. No personal incident was invented.
 
-The review requested full historical Goodhart/Campbell quotations. The outline uses attributed paraphrases instead, keeps the target-pressure argument, and avoids claiming every optimized benchmark has ceased to measure anything.
+Goodhart (1975), Campbell (1979) and Strathern (1997) appear as attributed paraphrases rather than quotations, with Strathern credited for the familiar wording. The argument is about pressure on a target; it does not claim that every optimized benchmark has ceased to measure anything.

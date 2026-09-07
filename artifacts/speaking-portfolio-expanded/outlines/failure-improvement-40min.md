@@ -2,7 +2,7 @@
 
 40 minutes. Timings include the exercises and delivery pauses, without Q&A. Sources checked 6 September 2026. Story prompts belong in speaker notes and require Dan’s own records before delivery.
 
-## 1. Your logs are a roadmap nobody reads
+## 1. Nobody reads the scroll
 
 00:00 to 02:30 · warm
 
@@ -11,9 +11,9 @@
 
 The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will eventually call urgent. Usually after somebody sends an angry email.
 
-This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery belongs to Adaptive, agentic apps.
+This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery, and how much authority a running agent earns for itself, belongs to Adaptive, agentic apps.
 
-There is a name for training people to ignore the channel that is supposed to warn them. Alert fatigue. Cvach reviewed it in clinical monitoring. I am borrowing the mechanism, not claiming a hospital study measured your on-call rotation. If our new agent creates a ticket for every log line, we have automated the thing that made the logs unreadable.
+There is a name for training people to ignore the channel that is supposed to warn them. Alert fatigue. Cvach measured it on hospital monitors. Your pager is the same instrument. If our new agent creates a ticket for every log line, we have automated the thing that made the logs unreadable.
 
 Story: The failure that sat in your logs until a customer reported it. Bring the first log timestamp, the report, and what you missed.
 
@@ -47,7 +47,7 @@ A stack trace tells you where an exception surfaced. The code tells you which br
 
 Add the integration that answers the next question. Read access to code does not require write access to production. Looking at queue depth does not require permission to resize the cluster. Access is a set of individual grants, not a graduation ceremony.
 
-An agent reading everything writes you a summary of the noise. Pick one failure class. If the class turns out to contain three different mechanisms, split it. That discovery is useful work.
+The assistant with access to everything is coming anyway, and I am not arguing against it. This loop is one job with a countable tool list. An agent reading everything writes you a summary of the noise. Pick one failure class. If the class turns out to contain three different mechanisms, split it. That discovery is useful work.
 
 Stage direction: Walk up the ladder using one timeout. Stop at the first rung that supports an action. Use the contracts handout for the integration table.
 
@@ -93,7 +93,7 @@ A request fails. The agent retries. It works. Score the loop on eventual success
 
 Now make the failure an authorization error. A second credential works, but the first request was forbidden for a reason. The green result hid the boundary violation. A sleep that hides a race teaches the same lesson more slowly.
 
-Diane Vaughan called the organizational pattern normalization of deviance. Her Challenger analysis shows how repeated acceptance of anomalies made them ordinary. Our application is narrower: a repair loop needs evidence that the defect is gone, because successful workarounds are very persuasive evidence of the wrong thing.
+Diane Vaughan called the organizational pattern normalization of deviance. Her Challenger analysis shows how repeated acceptance of anomalies made them ordinary. A repair loop needs evidence that the defect is gone. Successful workarounds are very persuasive evidence of the wrong thing.
 
 Story: A workaround you left running after it stopped the symptom. Name the underlying defect and the test that eventually exposed it.
 
@@ -101,7 +101,7 @@ Stage direction: Take two short answers about fixes that hid a problem. Budget 4
 
 Source: Diane Vaughan, [The Challenger Launch Decision](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html), University of Chicago Press, original 1996; linked enlarged edition 2016.
 
-## 7. From tags to tickets and PRs
+## 7. Tickets are cheap. Review is not.
 
 16:00 to 18:30 · build
 
@@ -161,9 +161,11 @@ Let the agent explore a changed flow in a browser. Once it finds the login path,
 
 The scheduled check is the same move. Memory and search over prior work help identify repetition. A skill describes when to turn a repeated task into a file. The output gets reviewed, tested, versioned, and scheduled. When the page or the log schema changes, invalidate it.
 
+This is where Adaptive, agentic apps hands work back. A runtime agent earns its own authority there; the compiled procedure it keeps reusing gets evaluated here, offline, like any other change.
+
 Selecting tests from a diff is another candidate. Compare it against the full suite on retained changes before trusting the selection. Count missed regressions as well as runtime. Keep the full suite on a schedule. Cheap selection that skips the failing test has excellent unit economics right up to the incident.
 
-Story: The repeated agent task you turned into a script. Bring the file and a case where it needed invalidating. Use measured browser-test costs only with run records.
+Story: The repeated agent task you turned into a script. Bring the file and a case where it needed invalidating.
 
 ## 11. Feedback is the same loop
 
@@ -235,4 +237,4 @@ Alert fatigue explains the unread channel. Normalization of deviance explains th
 
 The model did not get smarter. The system around it got a job.
 
-Stage direction: Replay the opening scroll beside the distilled artifact. End there.
+Stage direction: Replay the opening scroll beside the distilled artifact. End there. Stop talking.

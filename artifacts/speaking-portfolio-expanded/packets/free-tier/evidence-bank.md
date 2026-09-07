@@ -1,4 +1,4 @@
-# Evidence bank: Cry Me a Free Tier
+# Evidence bank: Buy Me a Free Tier
 
 Firsthand examples and claim boundaries. Fill every field from your own records before use. Do not publish numbers you cannot reproduce.
 
@@ -19,11 +19,15 @@ Every concept in this talk is a named, published idea used as a **frame**, not a
 | Asset specificity, hold-up | Williamson (1985), *The Economic Institutions of Capitalism*; Nobel 2009 | Relationship-specific investments create a surplus a counterparty can reach for at renewal | Do not claim any provider has done this. It is a structural exposure to inventory, not an accusation |
 | Real option | Dixit and Pindyck (1994), *Investment Under Uncertainty* | Flexibility has a computable value and a recurring premium | The talk gives a payback formula, not a valuation model |
 | Price declines | Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [inference price trends](https://epoch.ai/data-insights/llm-inference-price-trends) | Prices for fixed benchmark milestones fell fast and unevenly by task | Benchmarks are not a production workload; offered prices are not provider cost. Check for a newer edition each delivery |
-| Credits expire | [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/) | One documented example of temporary customer pricing | Do not generalize the terms to other providers or treat promotional treatment as proof of a loss |
+| Credits expire | [AWS Activate credit offer](https://aws.amazon.com/startups/credits/) (the URL slide 4 shows); [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/) | One documented example of temporary customer pricing | Do not generalize the terms to other providers or treat promotional treatment as proof of a loss |
 
 ## Arithmetic in the talk
 
 All synthetic. One thousand attempts a month, two cents inference plus one cent other cost per attempt, seventy-five percent accepted. Thirty dollars, seven hundred fifty accepted, four cents each. The acceptance multiplier is 1 ÷ 0.75 = 1.33 and 1 ÷ 0.45 = 2.22. The equivalence on slide 10 is exact: 3¢ ÷ 0.45 = 6.67¢, and doubling inference gives (4 + 1)¢ ÷ 0.75 = 6.67¢. Check it live if a room challenges it.
+
+Two caveats belong here rather than on a slide. **Slide 11 sweep:** it is sensitivity, not prediction, and quality is held fixed across every row, which is itself an assumption; only an eval can tell you whether a cheaper configuration held acceptance. **Slide 13 payback:** the halved-inference example assumes acceptance is preserved, which is the same unproven assumption. Say either one out loud only if a room asks; the script no longer carries them.
+
+Slide 13 payback arithmetic, checkable on stage. A cache or router that halves inference per attempt saves 1¢ per attempt at 1× ($0.02 → $0.01) and 10¢ per attempt at 10× ($0.20 → $0.10). At 1,000,000 attempts a month that 10¢ saving is $100,000 a month. At 1,000 attempts a month it is $100 — and $10 at today's 1× price. Identical project, two different answers.
 
 ## Story slots in the outline
 
@@ -73,4 +77,6 @@ Consulting catalogue basis (`src/data/consultingServices.ts`). Strong firsthand 
 
 ## Before presenting
 
-Recheck the three dated items on slide 4 and the Epoch edition on slide 6. If a figure has moved, say the new figure; the argument on slide 4 is about what a commitment signals, so it survives a number change. Do not add a provider-specific margin estimate, a price forecast, or a date when subsidies end.
+Recheck the three dated items on slide 4 and the Epoch edition on slide 6. If a figure has moved, say the new figure; the argument on slide 4 is about what a commitment signals, so it survives a number change.
+
+**Live recheck as of 2026-09-06:** Anthropic's IPO prospectus is expected late September 2026 and coverage suggests it may disclose contract detail behind the "more than $100B over ten years" AWS commitment. Treat that figure as the most likely of the three to move, and re-read the Amazon announcement page before any delivery after the filing. Keep it separate from the adjacent Microsoft/OpenAI restructuring figures, which are easy to misquote into this slide. Do not add a provider-specific margin estimate, a price forecast, or a date when subsidies end.

@@ -17,12 +17,12 @@ Here is the scope once: the queue and permission examples are teaching models, n
 
 Story: The change that waited longer for review than it took to write. Bring arrival, first-review, and acceptance timestamps.
 
-## 02:30 to 05:00: slide 2, Where does the work actually wait?
+## 02:30 to 05:00: slide 2, Point at the queue
 
 On screen:
 
 > Idea → specification → code → review → release
-> Point at the queue before buying more throughput
+> Not where it takes skill. Where it sits untouched.
 
 Where does your work wait? Not where does it take skill. Where does it sit untouched?
 
@@ -43,13 +43,13 @@ Kingman's single-server approximation separates three things: variability, utili
 
 Fifteen percentage points of utilization bought nearly five times the wait. That is the price of the last bit of headroom. The multiplier is waiting time divided by hands-on review time. It does not include the review itself.
 
-Little's law gives a separate accounting identity for a stable system: average work in progress equals throughput times average time in the system. Neither result says your team is literally one server. They tell us what to measure before claiming the reviewer just needs to try harder.
+Little's law gives a separate accounting identity for a stable system: average work in progress equals throughput times average time in the system. They tell us what to measure before claiming the reviewer just needs to try harder.
 
 Source: J. F. C. Kingman (1961), [The single server queue in heavy traffic](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/abs/single-server-queue-in-heavy-traffic/81C55BC00A68FE6D5385638AA0B0AF37), 57(4), 902–904. John D. C. Little (1961), [A Proof for the Queuing Formula: L = λW](https://pubsonline.informs.org/doi/abs/10.1287/opre.9.3.383), Operations Research 9(3), 383–387.
 
 Delivery: Trace the curve and do both divisions. Ask what happens if variability doubles; show that it multiplies the wait too.
 
-## 08:00 to 10:30: slide 4, Your ceiling is the stage you did not speed up
+## 08:00 to 10:30: slide 4, The stage you didn't speed up
 
 On screen:
 
@@ -77,7 +77,7 @@ Keep review. Change what it receives. An unasked-for abstraction, an unexplained
 
 Hiring can increase capacity. It is still worth fixing arrivals first. Otherwise the new reviewer inherits the same variance, interruptions, and missing context, with a longer onboarding document.
 
-Source: W. Edwards Deming’s Point 3, discussed by the [Deming Institute on software code reviews](https://deming.org/software-code-reviews-from-a-deming-perspective/).
+Source: W. Edwards Deming (1986), Out of the Crisis, MIT Center for Advanced Engineering Study; Point 3 of the Fourteen Points. Applied to review by the [Deming Institute](https://deming.org/software-code-reviews-from-a-deming-perspective/).
 
 ## 13:00 to 16:00: slide 6, "Add enterprise permissions"
 
@@ -95,7 +95,7 @@ Who can grant a role? Does it apply to one tenant or every tenant? What happens 
 
 We made code cheap and left the question expensive. Writing down the answer is part of implementation. It just happens before the diff.
 
-Delivery: Read the request once. Give pairs a full 60 seconds, collect two answers, then introduce the tenant and revocation questions.
+Delivery: Read the request once. Give pairs sixty seconds here, thirty in the 15-minute cut. Collect two answers, then introduce the tenant and revocation questions.
 
 ## 16:00 to 19:00: slide 7, A spec reduces variance
 
@@ -109,7 +109,7 @@ For this example, an administrator can grant a role only inside the tenant they 
 
 Those statements produce cases. An admin in tenant A requests a change in A: allow. The same admin requests a change in B: deny. Revoke the role, repeat the A request: deny. Check the resulting state, not just the status message.
 
-Tie this back to the curve. Clear boundaries reduce the number of interpretations arriving at review. Bounded diffs reduce the amount of code a reviewer has to reconstruct at once. That is an attempt to reduce service-time variance, not a claim that a document automatically changes a coefficient.
+Tie this back to the curve. Clear boundaries reduce the number of interpretations arriving at review. Bounded diffs reduce the amount of code a reviewer has to reconstruct at once. That is the variance term. On purpose.
 
 Delivery: Write the three cases beside the request. Keep the cross-tenant case visible in the handout, not beside the later demo’s initial code.
 
@@ -134,19 +134,21 @@ Delivery: Spend 45 seconds on how a junior engineer would learn the permission b
 
 On screen:
 
-> canEdit(user) = user.roles.includes("admin")
+> canEdit(user, resourceTenant) = user.roles.includes("admin")
 > Test: admin user → allowed
 > PASS
 
 Here is the implementation. Here is its test. The user has the admin role. The function allows the edit. The test passes.
 
+The resource tenant is right there in the signature. Nothing reads it. And you already heard the cross-tenant case, back on the spec slide. Watch the vote anyway.
+
 Would you approve it? Now run the case where that administrator belongs to tenant A and the resource belongs to tenant B. The test was accurate about the behavior it checked. The behavior was incomplete in exactly the same way as the implementation.
 
 The model wrote the test that agrees with the bug. Both of them are very confident.
 
-Bainbridge asks what automation leaves the operator doing. Automation-bias experiments ask what happens when people defer to a decision aid despite other evidence. Those experiments were not code-review trials. This fixture is how the concern shows up in our queue: the green signal gets attention that the missing case did not.
+Bainbridge asks what automation leaves the operator doing. Skitka and colleagues put people in a flight simulator with an automated monitoring aid and counted the trials where the aid was wrong. On those trials people missed events the aid did not flag, and acted on prompts the other instruments contradicted. That is the whole finding, and it is about the trials where the aid was wrong. This fixture is how the same concern shows up in our queue: the green signal gets attention that the missing case did not.
 
-Source: Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468). Mosier and Skitka (1999), [Automation Use and Automation Bias](https://journals.sagepub.com/doi/10.1177/154193129904300346).
+Source: Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468), Automatica 19(6), 775–779. Linda J. Skitka, Kathleen L. Mosier and Mark Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991–1006. A flight-simulation task with a monitoring aid, not a code-review trial.
 
 Delivery: Open contracts.md only after the vote. Run `bun artifacts/speaking-portfolio-expanded/packets/judgment/demo.ts` for PASS, then add `--holdout` for the actual failing assertion. Do not assume the room approves; if someone catches it, ask which evidence caught their attention.
 
@@ -157,7 +159,7 @@ On screen:
 > Responsibility must come with control
 > Who accepts, recovers, and maintains?
 
-Elish calls the human who absorbs blame without enough control a moral crumple zone. Put an engineer at the end of an automated pipeline, give them two minutes to approve a diff, and announce that responsibility stayed human. The org chart looks excellent.
+Elish calls the human who absorbs blame without enough control a moral crumple zone. Put an engineer at the end of an automated pipeline, give them two minutes to approve a diff, and announce that responsibility stayed human. The org chart looks excellent. We did not remove the bottleneck. We moved it onto one person and gave them a keyboard shortcut for approving things.
 
 Can that person stop arrivals? Can they demand another test? Can they reject the change without missing a throughput target? Do they own the rollback and have time to understand it? Those are controls. Their name in the approval log is a record.
 
@@ -172,7 +174,7 @@ On screen:
 > Generating a branch is cheap
 > Choosing the permission boundary is still work
 
-Brooks distinguished the essential conceptual work of software from the accidental difficulty of expressing it in a machine. Use that distinction here without turning his old forecast into a timeless speed limit.
+Brooks distinguished the essential conceptual work of software from the accidental difficulty of expressing it in a machine. His forecast expired in 1996. The distinction did not.
 
 The syntax of the role check is the easy part. Deciding what a tenant boundary means is the product and security decision. Faster code generation gives us more ways to express a decision we still have to make.
 
@@ -188,7 +190,7 @@ On screen:
 > Variance: bounded diffs and explicit behavior
 > Utilization: reserve actual review capacity
 
-Fewer arrivals means deciding which changes should exist. It includes declining a second implementation after the first already met the need. Comparing fleets of candidate agents belongs to Dynamic Scaling. Here we are protecting the person who accepts the resulting work.
+Fewer arrivals means deciding which changes should exist, including declining a second implementation after the first already met the need. That is a rule about review load, not about generation: generate ten parallel attempts if you like, as long as a gate collapses them to one candidate before a human reads any of them. Judging the ten is Dynamic Scaling's talk, and its Council of Guards eats nine. This one protects the person who accepts the one that got through.
 
 Smaller variance means reducing surprises at review. Keep one purpose per diff, include the behavioral cases, and separate mechanical changes from policy changes. Small in line count is useful only when it is also small in meaning.
 
@@ -219,7 +221,7 @@ On screen:
 
 Back to the curve. The reviewer did not get slower. We filled the space that let them absorb uneven work.
 
-Ninety-five percent gives a nineteen-times wait in our model. We can argue about the model by measuring arrivals, service time, and variability. We cannot argue the queue away by pointing at how quickly the code appeared.
+Ninety-five percent utilization is not efficiency. It is a nineteen-times wait with good posture. Argue with the model by measuring arrivals, service time, and variability. You cannot argue the queue away by pointing at how quickly the code appeared.
 
 Sometimes the right result is a smaller change. Sometimes it is no change. Cheap code makes both decisions more valuable.
 

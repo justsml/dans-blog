@@ -1,8 +1,8 @@
 # Conference submission package
 
-Prepared 2026-09-04. Abstracts are exact 50- and 150-word versions by whitespace count; titles and labels are excluded. Submit one Product Engineering variant per event unless the organizer explicitly requests a series.
+Prepared 2026-09-04; Free Tier copy revised 2026-09-06. Abstracts are exact 50- and 150-word versions by whitespace count; titles and labels are excluded. Submit one Product Engineering variant per event unless the organizer explicitly requests a series.
 
-## Cry Me a Free Tier
+## Buy Me a Free Tier
 
 **Subtitle:** Eight words for the budget meeting
 
@@ -12,7 +12,7 @@ Prepared 2026-09-04. Abstracts are exact 50- and 150-word versions by whitespace
 
 ### 50-word abstract
 
-Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have been describing your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
+Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have described your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
 
 ### 150-word abstract
 
@@ -20,7 +20,7 @@ A startup gets free electricity for a year. What does it build, and what survive
 
 Engineers lose this argument in budget meetings because the strongest thing we can say is "it feels wasteful." Economics has precise names for it, and this talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option.
 
-Along the way it separates four legitimate reasons a price can sit below cost and names the observation at renewal that distinguishes them, reframes the industry's enormous compute commitments as Schelling commitments rather than cost disclosures, and uses Shoup's parking argument for the mechanism. The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem rather than a shopping problem. A synthetic price sweep closes it, with the volume caveat attached.
+Along the way it separates four legitimate reasons a price can sit below cost and the observation at renewal that distinguishes them, reframes the industry's enormous compute commitments as Schelling commitments rather than cost disclosures, and uses Shoup's parking argument for the mechanism. The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. A synthetic price sweep closes it, with the volume caveat.
 
 ### Three audience outcomes
 
@@ -56,7 +56,7 @@ The operating model is proposed. The fixed demo executes policy; it is not a mea
 
 ## Portfolio fit
 
-Free Tier owns cost per accepted outcome. Product Engineering owns coordination and human ownership. Judgment owns review queues. Do not book the three lengths of Product Engineering as independent talks.
+Buy Me a Free Tier owns cost per accepted outcome. Product Engineering owns coordination and human ownership. Judgment owns review queues. Do not book the three lengths of Product Engineering as independent talks.
 
 ## Submission integrity
 

@@ -28,7 +28,7 @@ Story: The vendor rename you actually lived through. Name the field, the hour yo
 
 Stage direction: Hands up for a 200 response that carried a breaking change. Take one story, thirty seconds, and return to the ingest job.
 
-## 2. The bar is: diff the schema and page a human
+## 2. The Bar Is a Pager
 
 02:00 to 04:00 · warm
 
@@ -44,7 +44,7 @@ So every slide from here is about buying recovery speed without buying corruptio
 
 Stage direction: Write the three metrics on the board and leave them there.
 
-## 3. The assistant with everything is coming, one integration at a time
+## 3. Sorry, You're Building It
 
 04:00 to 07:00 · build
 
@@ -54,7 +54,7 @@ Stage direction: Write the three metrics on the board and leave them there.
 > Ten tools is forty-five pairs. One more integration is not one more path.
 > Accidents first. Then people who mean it.
 
-Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on whatever site you have open. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
+Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on any site that opts in, and the list of sites that opt in only goes one direction. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
 
 So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
 
@@ -95,7 +95,7 @@ Stage direction: Draw the three boxes: orchestrator, generated agent, tool catal
 ![Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.](../../reveal-talks/assets/adaptive-systems/13-keep-access-capabilities-out-of-the-planner.svg)
 
 > High-risk classes: write, send, pay, delete, deploy, export
-> Read customer data and post to a vendor never share one agent
+> Reads customer data? Then it never posts to a vendor.
 > A signed URL is a credential
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
@@ -194,7 +194,7 @@ Three events, three different right answers, none of them success or failure. If
 
 Stage direction: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
-## 11. Scale becomes something the app asks for
+## 11. Compute Is a Tool Too
 
 28:00 to 31:00 · build
 
@@ -214,7 +214,7 @@ Story: A job where per-customer compute would have changed the pricing conversat
 
 Stage direction: Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
 
-## 12. Show engineers what changed today
+## 12. Ironies of Automation
 
 31:00 to 33:00 · steady
 
@@ -227,13 +227,13 @@ The daily report should tell an engineer where to look. Unresolved semantic chan
 
 Log decisions and artifacts, not private reasoning. The inputs to the policy decision, the validator result, and the executed action are enough to reconstruct an incident. Urgent problems page through existing thresholds; the digest is for drift. Never make an agent the sole judge of whether its own failure deserves attention.
 
-One warning about that report, and it is the warning for this whole talk. In 1983 Lisanne Bainbridge published a paper called Ironies of Automation. The irony is that automating the routine cases does not remove the human, it promotes them to monitoring a system that is almost always right, and people are measurably bad at that job. Skitka and colleagues put numbers on it in 1999: people given a highly but imperfectly reliable aid did worse than people given no aid at all. So keep the report short, ranked, and usually almost empty. A digest nobody can finish is a digest nobody reads, and then the guard post is decorative.
+One warning about that report, and it is the warning for this whole talk. In 1983 Lisanne Bainbridge published a paper called Ironies of Automation. The irony is that automating the routine cases does not remove the human, it promotes them to monitoring a system that is almost always right, and people are measurably bad at that job. Skitka and colleagues put numbers on it in 1999: on the events the aid got wrong, people given a highly but imperfectly reliable aid did worse than people given no aid at all. So keep the report short, ranked, and usually almost empty. A digest nobody can finish is a digest nobody reads, and then the guard post is decorative.
 
 Source: Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6), 775 to 779. Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 
 Stage direction: Read the sample report in contracts.md. Find the one item that needs an owner today.
 
-## 13. Widen authority only from measured outcomes
+## 13. Widen Per Class, Never Per Streak
 
 33:00 to 35:00 · land
 
@@ -243,7 +243,7 @@ Stage direction: Read the sample report in contracts.md. Find the one item that 
 
 Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
-Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute.
+Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute. It is also the loop that lets the system adjust its own fan-out and token burn from measured acceptance: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
 
 Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance. Every widening is locally reasonable. Each one cites the last one as precedent. Nobody ever decides to be reckless. That is exactly why authority expands per class and from measured outcomes for that class, and never from how the last six went.
 

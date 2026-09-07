@@ -30,7 +30,7 @@ Contrast one autoscaler threshold with one job request. Ask which one you could 
 
 ## On screen
 
-Left: `replicas: 12` set in a YAML file in 2023. Right: `{ shape: sandbox, n: 8, ttl: 6m, cap: $2 }` at job start. Caption: *which one is a product?*
+Left: `replicas: 12` set in a YAML file in 2023. Right: `{ shape: sandbox, n: 8, ttl: 6m, cap: $1.50 }` at job start. Caption: *which one is a product?*
 
 ## Scope
 

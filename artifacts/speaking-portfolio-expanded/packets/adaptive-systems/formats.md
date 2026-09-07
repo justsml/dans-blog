@@ -23,7 +23,7 @@ The 15-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows
 | 15 minutes | [Script](script-15min.md) and [route](../../outlines/adaptive-systems-15min-adaptation.md) |
 | 30 minutes | [Script](script-30min.md) and [route](../../outlines/adaptive-systems-30min-adaptation.md) |
 | 40 minutes | [Script](script-40min.md) and [outline](../../outlines/adaptive-systems-40min.md) |
-| 45 minutes | 40-minute route plus five minutes of Q&A |
+| 45 minutes | 40-minute route plus five minutes; the talk carries no Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |
 

@@ -34,10 +34,10 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 | --- | --- | ---: | --- | --- |
 | Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 15 | [Browser deck](../reveal-talks/failure-improvement.html) | [Failure improvement](engineering/failure-improvement/CFP.md) |
 | Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
-| Cry Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Economics](economics-product/CFP.md) |
+| Buy Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Education](education/CFP.md) |
 | Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
-| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 15 | [Browser deck](../reveal-talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
+| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 17 | [Browser deck](../reveal-talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
 | Three Search Methods in a Fundable Trenchcoat | [40 min](outlines/retrieval-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | — |
 | Stop Looking at My Benchmarks… Get Your Own! | [40 min](outlines/benchmarks-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | — |
 | Code Is Cheap. Judgment Is Expensive. | [40 min](outlines/judgment-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | — |
@@ -52,7 +52,7 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | --- | --- | --- |
 | Automating Improvement From Failure | [Lightning](outlines/failure-improvement-15min-adaptation.md) | [Standard](outlines/failure-improvement-30min-adaptation.md) |
 | Adaptive, agentic apps | [Lightning](outlines/adaptive-systems-15min-adaptation.md) | [Standard](outlines/adaptive-systems-30min-adaptation.md) |
-| Cry Me a Free Tier | [Lightning](outlines/free-tier-15min-adaptation.md) | [Standard](outlines/free-tier-30min-adaptation.md) |
+| Buy Me a Free Tier | [Lightning](outlines/free-tier-15min-adaptation.md) | [Standard](outlines/free-tier-30min-adaptation.md) |
 | Outsmart Your Lying, Cheating Students | [Lightning](outlines/evidence-learning-15min-adaptation.md) | [Standard](outlines/evidence-learning-30min-adaptation.md) |
 | Dynamic Scaling of Agentic Workloads | [Lightning](outlines/dynamic-scaling-15min-adaptation.md) | [Standard](outlines/dynamic-scaling-30min-adaptation.md) |
 | Product Engineering | [Lightning](outlines/product-engineering-15min-adaptation.md) | [Standard](outlines/product-engineering-30min-adaptation.md) |
@@ -64,7 +64,7 @@ A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings a
 
 ## Shorts
 
-[shorts/](shorts/README.md) holds 29 standalone cuts, 1 to 10 minutes each: one idea, one number or picture, one landing line. Each names its parent talk and slide so the fixtures and evidence travel with it. Twenty-one are sized for video (1 to 5 minutes); eight are lightning slots (5 to 10). Hand-written, not generated from the outlines.
+[shorts/](shorts/README.md) holds 31 standalone cuts, 1 to 10 minutes each: one idea, one number or picture, one landing line. Each names its parent talk and slide so the fixtures and evidence travel with it. Twenty-three are sized for video (1 to 5 minutes); eight are lightning slots (5 to 10). Hand-written, not generated from the outlines.
 
 ## Image prompts
 
@@ -76,7 +76,6 @@ Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines,
 | --- | --- | --- |
 | Improvement From Failure | What is the smallest step toward a system that fixes itself, and what access do you grant next? | An agent with log access grows into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback. |
 | Adaptive, agentic apps | How do we give an assistant real access and manage the risk? Conjure a narrow agent per job, prove every repair, let the app ask for its own scale. | One address ingest: a rename, an ambiguous status and a lost provider response; a per-job agent generator with a logged tool gate. |
-| Free Tier | What kind of counterparty am I dealing with, and what have I posted as collateral? | Eight words from economics and game theory (externality to real option), Shoup's parking chain mapped onto architecture, and one workload swept from 1× to 10×. |
 | Outsmart Your Lying, Cheating Students | Once you stop trying to catch anyone, how do you out-design them? | Three moves (the smudged sheet, small-group speaking, AI time across 300 transcripts) around the percentage reconstruction, a rubric and a four-line record. |
 | Dynamic Scaling | Now that agents can direct their own compute, where do the limits live? | Four legitimate callers, forty image jobs; a $2 ledger; a reclaimed spot worker; compute as a request, catalog and lease; the ephemeral vendor substrate. |
 | Product Engineering | Which functions of my product group become agents, who owns each one, and where do the guards go? | An activation winner violates support and false-urgency constraints. |
@@ -90,7 +89,6 @@ The two education talks use different worked examples so they can be booked toge
 - [Adaptive-systems evidence](engineering/adaptive-systems/evidence.md) and [stage sequence](engineering/adaptive-systems/demo.md).
 - [Economics and experimentation evidence](economics-product/evidence.md) and [stage sequences](economics-product/demo.md).
 
-Each outline names its sources with author, year and linked title. The Bastani PNAS paper has a published correction whose full text was inaccessible during research; the talks avoid its numeric effect sizes. Sources added in this revision (DSPy, GEPA, hooks, skills, pg_trgm, the three eval platforms, Shoup) are cited in the outlines and not yet in the evidence notes.
 
 The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and dynamic-scaling talks use paper walkthroughs with fixtures. Their recovery scenarios are documented in the packet walkthroughs; the offline resource-policy exercise demonstrates only strategy selection and caps.
 

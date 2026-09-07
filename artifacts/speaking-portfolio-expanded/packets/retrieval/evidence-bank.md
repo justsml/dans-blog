@@ -14,4 +14,14 @@ McDermott’s Artificial Intelligence 19(1), 39–88 paper is from 1982, not 198
 
 Story: supply a query whose new relevant result was absent from your expected set. Retain the original labels and the rejudgment. No personal incident was invented.
 
-The replacement keeps the retrieval slug and deck URL. Earlier glossary prose remains in Git history and the retained historical PowerPoints. Agent orchestration, retry budgets, and MCP permissions are outside this talk’s new arc.
+The replacement keeps the retrieval slug and deck URL. Earlier glossary prose survives only in Git history; every exported deck and alias now carries the current talk. Agent orchestration, retry budgets, and MCP permissions are outside this talk’s new arc.
+
+## Held back from the slides
+
+No Kendall’s tau figure is quoted for Voorhees, Soboroff, and Lin (2022). The qualitative finding — expanded TREC-8 judgments left the system ordering essentially unchanged — is what slides 10 and the history SVG assert. Read the exact correlation off arXiv 2201.11086, and confirm which run set it describes, before putting a number on a stage.
+
+The scope disclaimer sits on slide 2, the bet slide, rather than slide 1. Slide 1 is a cold open: the jargon sentence read straight, then the pause. One disclaimer, said once, two minutes in. Do not add a second one to slide 1.
+
+R1 is not a cautionary fable, and this talk offers no theory of why expert systems declined. That is why slide 14 asks only who maintains the corpus.
+
+IR studied automated downstream consumers long before RAG. Slide 12’s claim is narrower: this particular retrieval-to-generation handoff and its failure modes.

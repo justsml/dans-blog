@@ -1,8 +1,8 @@
-# Cry Me a Free Tier: 15-minute presenter script
+# Buy Me a Free Tier: 15-minute presenter script
 
 Use slides 1, 3, 5, 6, 7, 10, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the electricity question, the four explanations for a low price, parking, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words.
 
-## 00:00 to 01:30: slide 1, Free electricity for a year
+## 00:00 to 01:45: slide 1, Free electricity for a year
 
 On screen:
 
@@ -13,20 +13,22 @@ A startup gets free electricity for a year. What does it build? Sit with that fo
 
 Swap electricity for inference and that is the whole talk. Here is my one disclaimer, and then I am done qualifying: nobody outside a provider knows its margins, I am not going to guess at one, and every dollar figure in my arithmetic is invented. What I do have is a hundred and fifty years of economists working on exactly this problem in coal, parking, highways and car factories, and they gave it names.
 
+That is what you are getting today. Eight words. Engineers lose this argument in budget meetings because the best we can say is "it feels wasteful," and finance says "the bill looks fine." These eight words are how you say it so it lands.
+
 Story: The first time a bill, a quota, or a rate change broke an assumption in something you built.
 
 Delivery: Take the five seconds. Actually take them. The silence is the slide.
 
-Bridge: price, cost and value are three different numbers, and the gap between what you pay and what it is worth to you is why nobody is measuring.
+Bridge: four boxes on one invoice - price paid, resources consumed, cost allocated, value delivered - and the gap between the last two is why nobody is measuring.
 
-## 01:30 to 03:30: slide 3, Why would anyone sell below cost?
+## 01:45 to 03:45: slide 3, Why would anyone sell below cost?
 
 On screen:
 
 > Penetration pricing · Loss leader in a bundle · Predation · It is genuinely cheap
 > The price cannot tell you which. What happens next can.
 
-There are four respectable explanations for a low price, and an engineer arguing about this in a meeting should be able to name all four.
+Penetration pricing: buy the market now, raise later. Standard, legal, taught in every business school. Loss leader in a bundle: the cheap thing funds the expensive thing next to it, which is what a two-sided market does for a living. Predation: below cost specifically to remove rivals. In US law that is not a vibe, it is a test. Brooke Group, 1993: you need below-cost pricing and a dangerous probability of recoupment. And the fourth explanation, the one that keeps me honest: it is genuinely cheap, and getting cheaper, because the engineering is real.
 
 Here is the useful part. You cannot distinguish these from the price. You can distinguish them from what happens next. Penetration predicts prices rise at renewal, after switching gets hard. Predation predicts a rival disappears and then prices rise. Genuine efficiency predicts prices keep falling without anyone tightening the terms. So watch renewal terms, watch rate limits, watch what happens to the free tier, and stop trying to read a margin off a token rate.
 
@@ -34,7 +36,7 @@ Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (199
 
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-## 03:30 to 05:00: slide 5, Free parking was never free
+## 03:45 to 05:15: slide 5, Free parking was never free
 
 On screen:
 
@@ -48,7 +50,7 @@ That is your first word: externality. A cost that is real, and paid, but not by 
 
 Source: Shoup (2005, updated 2011), The High Cost of Free Parking, American Planning Association. Also Shoup (2011), [Free parking or free markets](https://www.accessmagazine.org/spring-2011/free-parking-free-markets/), ACCESS Magazine.
 
-## 05:00 to 07:00: slide 6, Jevons, coal, and the extra lane
+## 05:15 to 07:15: slide 6, Jevons, coal, and the extra lane
 
 On screen:
 
@@ -60,13 +62,13 @@ In 1865 William Stanley Jevons noticed something that annoyed everyone. Steam en
 
 The transport version is word three, induced demand. Add a lane to a congested highway and you get more traffic. Duranton and Turner measured it across US cities in 2011 and found the elasticity of driving with respect to lane-kilometres is roughly one. Build ten percent more road, get ten percent more driving. The congestion comes back.
 
-Both things can be fine. A falling price and a growing bill coexist comfortably as long as customer value grows faster. That is the relationship to measure, and almost nobody measures it.
+So: your per-token price has fallen off a cliff over the last few years, and your bill went up. Everyone in this room has had that conversation with a CFO and lost it. You are not being gouged and you did not do anything wrong. Spend is price times consumption, and consumption is jobs times calls per job times tokens per call. Cheapness moved every term on the right. Epoch's data through 2025 shows the price of a fixed capability falling fast and very unevenly by task, which is real and worth knowing, and is also exactly the condition under which total spend rises.
 
 Source: Jevons (1865), The Coal Question, chapter VII. Duranton and Turner (2011), The Fundamental Law of Road Congestion, American Economic Review 101(6).
 
 Source: Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends). Check for a newer edition before each delivery.
 
-## 07:00 to 09:30: slide 7, Now do it to software
+## 07:15 to 09:30: slide 7, Now do it to software
 
 On screen:
 
@@ -85,7 +87,7 @@ Delivery: Ask for one show of hands: who has shipped a frontier call where a loo
 
 Bridge: the lots stay built, and whoever chooses the architecture is not whoever pays the bill sixty days later.
 
-## 09:30 to 11:30: slide 10, Your acceptance rate is a price multiplier
+## 09:30 to 11:30: slide 10, Doubling on a Tuesday
 
 On screen:
 
@@ -113,7 +115,7 @@ This is the slide I would keep if you cut every other one. Oliver Williamson won
 
 The shape is always the same. You make an investment that is worth a great deal here and very little anywhere else. That surplus, the part that exists only because you are locked in, is a prize, and at renewal your counterparty can reach for it. Nobody has to be a villain. It is simply what the structure permits, and rational parties do it.
 
-So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything on the next three slides is just a way of reducing specificity or pricing the exposure.
+So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything after this is just a way of reducing specificity or pricing the exposure.
 
 Bridge: so price reversibility as the option it is, and bring three prices to the design review: today, without the offer, and the most you could survive.
 
@@ -131,6 +133,6 @@ There are your eight words. Externality, because the cost moved rather than vani
 
 Some low prices are temporary. Some are a preview of genuinely cheaper production. You do not have to know which. You have to measure outcomes and keep the big choices reversible either way.
 
-Cheap intelligence changes incentives before it changes organizations. Leave the table up.
+Cheap intelligence changes incentives before it changes organizations.
 
-Delivery: Say the last line slowly. Leave the sweep table on screen for questions.
+Delivery: Say the last line slowly, then stop talking. For questions, jump back to the sweep table if this route kept slide 11.

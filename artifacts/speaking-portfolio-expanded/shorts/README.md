@@ -30,25 +30,27 @@ Each file has the same shape: length and format, parent, one-line pitch, hook, t
 | 18 | [Guilty Until Rewritten](detector-is-a-biased-coin.md) | Education | 2 min |
 | 19 | [Up 20, Down 20, Out Four Bucks](up-20-down-20.md) | Education | 2 min |
 | 20 | [The Robot Took the Easy Ones](what-happened-to-sarah.md) | Failure improvement | 3 min |
-| 21 | [`--no-agent`](no-agent.md) | Adaptive apps | 2 min |
+| 21 | [Software Runs on Petrol Now](software-runs-on-petrol.md) | Product engineering | 3 min |
+| 22 | [Minority Report, With Terminals](minority-report-with-terminals.md) | Product engineering | 4 min |
+| 23 | [`--no-agent`](no-agent.md) | Adaptive apps | 2 min |
 
 ## 5 to 10 minutes
 
 | # | Short | Parent | Length |
 | --: | --- | --- | --- |
-| 22 | [Sorry, You're Building It](you-will-build-the-assistant-with-everything.md) | Adaptive apps | 6 min |
-| 23 | [Compute, Please (and a Receipt)](the-job-asks-for-its-own-compute.md) | Dynamic scaling | 6 min |
-| 24 | [Name Your Price (No, the Other One)](the-third-price.md) | Free tier | 5 min |
-| 25 | [Till Renewal Do Us Part](you-are-getting-married.md) | Free tier | 6 min |
-| 26 | [The Council of Guards](council-of-guards.md) | Dynamic scaling | 7 min |
-| 27 | [The Barrel-of-Monkeys Maneuver](barrel-of-monkeys.md) | Dynamic scaling | 7 min |
-| 28 | [Charm Is Not a Currency](nice-paragraph-buys-a-refund.md) | Benchmarks | 5 min |
-| 29 | [Human Crumple Zone](human-crumple-zone.md) | Judgment | 5 min |
+| 24 | [Sorry, You're Building It](you-will-build-the-assistant-with-everything.md) | Adaptive apps | 6 min |
+| 25 | [Compute, Please (and a Receipt)](the-job-asks-for-its-own-compute.md) | Dynamic scaling | 6 min |
+| 26 | [Name Your Price (No, the Other One)](the-third-price.md) | Free tier | 5 min |
+| 27 | [Till Renewal Do Us Part](you-are-getting-married.md) | Free tier | 6 min |
+| 28 | [The Council of Guards](council-of-guards.md) | Dynamic scaling | 7 min |
+| 29 | [The Barrel-of-Monkeys Maneuver](barrel-of-monkeys.md) | Dynamic scaling | 7 min |
+| 30 | [Charm Is Not a Currency](nice-paragraph-buys-a-refund.md) | Benchmarks | 5 min |
+| 31 | [Human Crumple Zone](human-crumple-zone.md) | Judgment | 5 min |
 
 ## Starter sets
 
-YouTube first six: 2, 3, 4, 6, 12, 17. Mixed-room lightning: 10, 20, 17. Play 21 (`--no-agent`) as the cold open for 22. Book 27 then 26 for a 15-minute slot: generate the barrel, then guard it.
+YouTube first six: 2, 3, 4, 6, 12, 17. Mixed-room lightning: 10, 20, 17. Play 23 (`--no-agent`) as the cold open for 24. Book 29 then 28 for a 15-minute slot: generate the barrel, then guard it.
 
 ## Pairings with the long talks
 
-Shorts 22, 26 and 27 carry the September 6 corrections verbatim (the everything-assistant is inevitable; Knight and Leveson is set aside; council and barrel are two halves of one design). If a long talk changes on those points, change the short the same day.
+Shorts 24, 28 and 29 carry the September 6 corrections verbatim (the everything-assistant is inevitable; Knight and Leveson is set aside; council and barrel are two halves of one design). If a long talk changes on those points, change the short the same day.

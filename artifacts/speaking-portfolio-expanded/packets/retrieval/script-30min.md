@@ -36,20 +36,20 @@ Story: The retrieval improvement your eval rejected because it found evidence ou
 
 On screen:
 
-> Karen Sparck Jones · term specificity
+> Karen Spärck Jones · term specificity
 > 1972 → 2026 = 54 years
 
-Karen Sparck Jones published a statistical interpretation of term specificity in 1972. A word that appears in almost every document tells you less about which document you want than a rare term does.
+Karen Spärck Jones published a statistical interpretation of term specificity in 1972. A word that appears in almost every document tells you less about which document you want than a rare term does.
 
 Think of an error code in a support query. The words "application error" occur everywhere. The exact identifier narrows the search. That is a concrete reason to keep lexical evidence in a retrieval system that also understands paraphrases.
 
-Fifty-four years. We have had time to put her name on the slide. The point is not that every rare word is relevant. A typo can be rare. The point is that corpus frequency supplies evidence, and the evidence has a history and assumptions you can inspect.
+Fifty-four years. We have had time to put her name on the slide. The point is that corpus frequency supplies evidence, and the evidence has a history and assumptions you can inspect.
 
-Source: Karen Sparck Jones (1972), A statistical interpretation of term specificity and its application in retrieval, Journal of Documentation 28(1), 11–21. [Author’s publication archive](https://www.cl.cam.ac.uk/archive/ksj21/ksjdigipapers/ksjbib3.html).
+Source: Karen Spärck Jones (1972), A statistical interpretation of term specificity and its application in retrieval, Journal of Documentation 28(1), 11–21. [Author’s publication archive](https://www.cl.cam.ac.uk/archive/ksj21/ksjdigipapers/ksjbib3.html).
 
 Delivery: Compare a generic support phrase with an exact error identifier. Ask the room which term it would retain in a hybrid query.
 
-## 05:30 to 07:00: slide 4, 1975 and 1990: the vector was already there
+## 05:30 to 07:00: slide 4, Vector Database, 1975
 
 On screen:
 
@@ -88,7 +88,7 @@ On screen:
 > Salton, Allan, Buckley · 1993
 > The useful passage may cross your boundary
 
-Passage retrieval was being studied before our chunk-size arguments acquired a token budget. Salton, Allan, and Buckley compared approaches in 1993.
+Passage retrieval was being studied before our chunk-size arguments acquired a token budget. Salton, Allan, and Buckley compared approaches in 1993. Chunk size was an open research question in 1993 and a forum thread in 2024. One of those had a control group.
 
 Take a policy paragraph that says cancellation is allowed, followed by an exception for annual contracts. Split between those paragraphs and the first chunk becomes a very persuasive wrong answer. Make the chunk enormous and the exception competes with a page of irrelevant material.
 
@@ -107,7 +107,7 @@ BEIR's 2021 experiments found BM25 a robust baseline across heterogeneous retrie
 
 That is a dated experimental result, not a claim that BM25 wins in 2026. It is a reason to include a cheap lexical baseline when measuring a new retriever. Exact identifiers and unfamiliar domain language are places where a semantic-looking system can disappoint you.
 
-Run the comparison on the same corpus, queries, and judgments. Otherwise you have compared two demonstrations and called the difference a model improvement.
+Lexical, dense, hybrid. Those are the three search methods in the trenchcoat, and the pitch usually names one of them. Run the comparison on the same corpus, queries, and judgments. Otherwise you have compared two demonstrations and called the difference a model improvement.
 
 Source: Thakur et al. (2021), [BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://openreview.net/pdf?id=wCu6T5xFjeJ), NeurIPS Datasets and Benchmarks. This slide reports the 2021 experiment.
 
@@ -144,7 +144,7 @@ Your golden dataset is a test collection with a flattering filename. Write down 
 
 Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
-## 17:00 to 21:00: slide 10, Demo: the hole in the golden set
+## 17:00 to 21:00: slide 10, Fool's Golden Dataset
 
 On screen:
 
@@ -156,7 +156,7 @@ The old retrievers contributed A through E to the judgment pool. Our new retriev
 
 Our naive scorer treats unjudged as nonrelevant. Old top two, B and A: two judged relevant, precision at two equals one. New top two, B and F: only B gets credit, precision at two equals point five. Judge F under the same rubric and the new run returns to one. We changed no retrieval output. We fixed the instrument.
 
-TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. In a 2022 recheck, Voorhees, Soboroff, and Lin expanded TREC-8 judgments and found system-rank correlations above point nine nine. Deep, diverse pools had held up.
+TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. In a 2022 recheck, Voorhees, Soboroff, and Lin added judgments to TREC-8 and compared how the systems ranked before and after. The ordering barely moved. Deep, diverse pools had held up.
 
 That is the lesson we missed. They tested whether the shortcut damaged the comparison. We called our first results golden.
 
@@ -179,7 +179,7 @@ Keep disagreement as data. Was the case ambiguous? Did the rubric ask two questi
 
 Source: Ellen M. Voorhees (2000), [Variations in Relevance Judgments and the Measurement of Retrieval Effectiveness](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness), Information Processing & Management 36(5), 697–716.
 
-## 23:30 to 26:00: slide 12, What changed: the next reader is a generator
+## 23:30 to 26:00: slide 12, The Reader Stopped Being a Person
 
 On screen:
 
@@ -190,7 +190,7 @@ A person inspecting a ranked list can notice that the signed addendum refers to 
 
 We can build abstention and verification into that system. We cannot infer that it will use them from a good retrieval score. The retrieved material must be applicable, sufficiently complete, and represented with the qualifiers the answer needs.
 
-Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model. IR also studied machine consumers before modern RAG; the change here is this particular generative handoff and its failure modes.
+Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model.
 
 ## 26:00 to 28:00: slide 13, Retrieved text now sits beside instructions
 
@@ -213,13 +213,13 @@ Bridge: name the owner who updates the corpus and invalidates stale knowledge; t
 
 On screen:
 
-> Three search methods in a fundable trenchcoat.
+> Three search methods. One instrument nobody checked.
 > Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
 
 Those words tell us why rare identifiers matter, why synonyms are hard, why a passage needs its exception, and why the score depends on who judged which documents. They are tools for investigating a failure, not a history quiz.
 
-Sixty years since the Cranfield report. The field did not just build evaluations. It investigated when they could be trusted. Go find the documents your eval set never judged.
+Three search methods in a fundable trenchcoat. That is a fair joke about the retriever, and the coat is not the problem. Lexical, dense, hybrid: we inherited all three. What we left behind was the sixty years of checking whether the score underneath was telling the truth. Go find the documents your eval set never judged.
 
-Delivery: Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.
+Delivery: Say the title line once, flat, then drop to the instruction. Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.

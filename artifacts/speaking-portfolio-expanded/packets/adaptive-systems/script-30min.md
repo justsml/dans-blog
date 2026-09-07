@@ -20,7 +20,7 @@ Story: The vendor rename you actually lived through. Name the field, the hour yo
 
 Delivery: Hands up for a 200 response that carried a breaking change. Take one story, thirty seconds, and return to the ingest job.
 
-## 01:30 to 03:00: slide 2, The bar is: diff the schema and page a human
+## 01:30 to 03:00: slide 2, The Bar Is a Pager
 
 On screen:
 
@@ -36,7 +36,7 @@ So every slide from here is about buying recovery speed without buying corruptio
 
 Delivery: Write the three metrics on the board and leave them there.
 
-## 03:00 to 05:30: slide 3, The assistant with everything is coming, one integration at a time
+## 03:00 to 05:30: slide 3, Sorry, You're Building It
 
 On screen:
 
@@ -44,7 +44,7 @@ On screen:
 > Ten tools is forty-five pairs. One more integration is not one more path.
 > Accidents first. Then people who mean it.
 
-Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on whatever site you have open. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
+Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products. Browsers now ship a chat that drives the page. WebMCP lets an agent act on any site that opts in, and the list of sites that opt in only goes one direction. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
 
 So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
 
@@ -81,7 +81,7 @@ Delivery: Draw the three boxes: orchestrator, generated agent, tool catalog with
 On screen:
 
 > High-risk classes: write, send, pay, delete, deploy, export
-> Read customer data and post to a vendor never share one agent
+> Reads customer data? Then it never posts to a vendor.
 > A signed URL is a credential
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
@@ -160,7 +160,7 @@ Three events, three different right answers, none of them success or failure. If
 
 Delivery: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
-## 21:30 to 24:00: slide 11, Scale becomes something the app asks for
+## 21:30 to 24:00: slide 11, Compute Is a Tool Too
 
 On screen:
 
@@ -180,7 +180,7 @@ Delivery: Contrast one autoscaler threshold with one job request. Ask which one 
 
 Bridge: whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes.
 
-## 24:00 to 26:00: slide 13, Widen authority only from measured outcomes
+## 24:00 to 26:00: slide 13, Widen Per Class, Never Per Streak
 
 On screen:
 
@@ -190,7 +190,7 @@ On screen:
 
 Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
-Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute.
+Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute. It is also the loop that lets the system adjust its own fan-out and token burn from measured acceptance: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
 
 Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance. Every widening is locally reasonable. Each one cites the last one as precedent. Nobody ever decides to be reckless. That is exactly why authority expands per class and from measured outcomes for that class, and never from how the last six went.
 

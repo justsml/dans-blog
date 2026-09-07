@@ -15,7 +15,7 @@ Matches the 14-slide outline. Diagrams are editable SVG in `reveal-talks/assets/
 | 9 | Typography: execution classes |
 | 10 | [A job survives the caller](../../../reveal-talks/assets/dynamic-scaling/08-a-job-survives-the-caller.svg) |
 | 11 | Typography: walkthrough beats |
-| 12 | [Independent attempts share requirements](../../../reveal-talks/assets/dynamic-scaling/11-independent-attempts-share-requirements.svg) |
+| 12 | [Separate drafts share requirements](../../../reveal-talks/assets/dynamic-scaling/11-independent-attempts-share-requirements.svg) |
 | 13 to 14 | Typography |
 
 The synthesis diagram (13-synthesis-must-pass-the-gates-again.svg) is retained in assets for the workshop but no longer has a slide. File numbers on reused assets reflect their original positions.

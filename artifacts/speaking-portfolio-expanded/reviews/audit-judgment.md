@@ -86,3 +86,61 @@ No slide heading reads as a compliance deck. Jokes retained: `:14` genie, `:147`
 9. `outlines/judgment-40min.md:20,54`: retitle slides 2 and 4 per Voice 5–6; optionally add the two seed lines (Voice 7–8); regenerate.
 10. `sync-talks.ts:77`: merge manifest rows across slugs instead of overwriting, then run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts judgment` so `decks/README.md` lists Judgment again and the PPTX exports pick up items 2–9.
 11. `artifacts/flagship-talks/`: delete the two judgment stubs and two judgment PPTX files; move the ownership paragraph from its README into `speaking-portfolio-expanded/README.md:113` and fix `README.md:105` to stop pointing at the flagship directory.
+
+## Fixes applied 2026-09-06
+
+### 1. Changes
+
+- `outlines/judgment-40min.md:20-25` — slide 2 retitled "Point at the queue"; second visible line now "Not where it takes skill. Where it sits untouched." (was a question title whose question was not the joke, plus a heading/visible-line duplicate).
+- `outlines/judgment-40min.md:54` — slide 4 retitled "The stage you didn't speed up" (six words; drops the "Your X is a Y" shape).
+- `outlines/judgment-40min.md:39,219` — both image alts set to the SVG's own `<title>`, "Kingman: queue wait vs reviewer utilization, variability factor one".
+- `outlines/judgment-40min.md:48,114,177` — Voice hedges 1, 2 and 4 removed ("Neither result says your team is literally one server", "not a claim that a document automatically changes a coefficient" → "That is the variance term. On purpose.", "without turning his old forecast into a timeless speed limit" → "His forecast expired in 1996. The distinction did not."). All three are carried by `evidence-bank.md`.
+- `outlines/judgment-40min.md:100` — slide 6 stage direction now reads "Give pairs sixty seconds here, thirty in the 15-minute cut", so the delivery note is correct in every route instead of contradicting the 15-minute header. Pairs with the route trim below.
+- `outlines/judgment-40min.md:139` — visible line is now `canEdit(user, resourceTenant) = user.roles.includes("admin")`, matching `contracts.md:6` and the arity Bun prints on the held-out failure. The ignored parameter is now the visible tell.
+- `outlines/judgment-40min.md:145` — slide 9 gains "The resource tenant is right there in the signature. Nothing reads it. And you already heard the cross-tenant case, back on the spec slide. Watch the vote anyway." Keeps `:112`'s B case and makes the vote the automation-bias demonstration (audit §3, item 7, second option). Worded without a slide number so it survives the 30 and 15 cuts, where slide 7 is also kept.
+- `outlines/judgment-40min.md:149,153` — Skitka characterization qualified and the citation swapped. Now: a flight-simulation task with an automated monitoring aid, and the omission/commission errors are scored **on the trials where the aid was wrong**. Source is Skitka, Mosier & Burdick (1999), IJHCS 51(5), 991–1006, DOI 10.1006/ijhc.1999.0252, replacing the HFES proceedings abstract; Bainbridge gains Automatica 19(6), 775–779. The hedge "Those experiments were not code-review trials" moves into the source line as a fact rather than a retraction.
+- `outlines/judgment-40min.md:82` — Deming cited to *Out of the Crisis* (1986), Point 3, with the Deming Institute post demoted to "applied to review by".
+- `outlines/judgment-40min.md:162` — morning-review seed line added after "The org chart looks excellent.": "We did not remove the bottleneck. We moved it onto one person and gave them a keyboard shortcut for approving things."
+- `outlines/judgment-40min.md:193` — **slide 12 reconciled with Dynamic Scaling slide 12.** "fleets of candidate agents" is gone (Dynamic Scaling's "fleet" means warm infrastructure). New text: declining a second implementation is "a rule about review load, not about generation: generate ten parallel attempts if you like, as long as a gate collapses them to one candidate before a human reads any of them. Judging the ten is Dynamic Scaling's talk, and its Council of Guards eats nine." Uses attempts / candidates / gate / Council of Guards, so the two talks read as one position.
+- `outlines/judgment-40min.md:226` — morning-review seed line lands slide 14: "Ninety-five percent utilization is not efficiency. It is a nineteen-times wait with good posture." Also drops the mild "in our model" hedge ("Argue with the model by measuring…").
+- `packets/judgment/evidence-bank.md` — Skitka entry rewritten to the flight-simulator/aid-was-wrong scope; boundary paragraph now states explicitly that this talk does not argue against parallel attempts, the Council of Guards or the barrel-of-monkeys maneuver, and that slide 12 declines redundant review load only.
+- `packets/judgment/packet.md` — duplicated edition table replaced with a link to the generated `formats.md`, plus a hand-written-companions index.
+- `shorts/test-that-loves-the-bug.md` — snippet updated to the two-argument signature, "the resource tenant is right there in the signature" beat added, automation-bias beat and source line requalified to Skitka/Mosier/Burdick 1999 and the flight simulator. Other two shorts need no change (slide numbers and claims unmoved).
+
+Verified after editing: 14 slides, timings monotonic and contiguous, sum 40:00. Slide 6 spoken paragraph indices confirmed 0–3 with the sixty-second instruction at index 1 (parsed with `parseOutline`; no generator run, nothing written).
+
+### 2. Skipped
+
+- Edit-list item 10 (`sync-talks.ts:77` manifest merge) and item 11 (`artifacts/flagship-talks/`) — out of scope by rules of engagement; `flagship-talks/` is already deleted per tonight's direction. `decks/README.md` will list Judgment again after the caller's full sync.
+- Renaming `demo.ts`'s `_resourceTenant` parameter to match the slide exactly — the underscore is what keeps `noUnusedParameters` quiet, and the slide now agrees with `contracts.md` and with the arity. If Bun's printed source line bothers Dan on the projector, that is the one remaining cosmetic gap.
+
+### 3. Route config changes for the caller
+
+```
+build-talk.ts → TALKS["judgment"].routes["15"]
+
+  field: trim        old: (absent)
+                     new: { 6: [0, 2, 3] }
+    Drops slide 6 spoken paragraph 1 ("Spend sixty seconds with the person next to you…").
+    Paragraphs 0, 2, 3 are kept in order. Verified against the edited outline.
+
+  field: bridges["3"]
+    old: "Bridge: improve the process producing the queue. Start with the request before the code exists."
+    new: "Bridge: improve the process producing the queue. Start with the request before the code exists. Thirty seconds in pairs: what does the ticket leave unanswered?"
+
+  field: note        unchanged ("… Pairs get 30 seconds; the demo gets 3:30.") — now true.
+
+No `keep`, `times` or `minutes` change. 15-minute route still sums:
+1.5 + 2.5 + 1.5 + 1.5 + 3.5 + 2.5 + 2 = 15.0
+30-minute and 40-minute routes untouched.
+```
+
+### 4. Morning review (`reviews/judgment-review.md`)
+
+Adopted — both remaining §4 seed lines, which were the only unimplemented items left:
+- "Ninety-five percent utilization is not efficiency. It is a nineteen-times wait with good posture." → slide 14. Earns its place: slide 14 already stated the 19× flatly and the seed line states it with contempt, which is the register the closing slide was missing.
+- "We did not remove the bottleneck. We moved it onto one person and gave them a keyboard shortcut for approving things." → slide 10, immediately after "The org chart looks excellent." It converts an Elish citation into an accusation, and it is the closest this talk gets to a quotable line outside the demo.
+
+Also adopted from §6: the review's preferred automation-bias citation (Skitka, Mosier & Burdick 1999, IJHCS) over the HFES abstract, and its instruction to state the transfer explicitly — now done in the outline text, the source line, the evidence bank and the short.
+
+Skipped — everything else in the review is already implemented (all 14 §4 slide slots, the §6 checklist) or settled: the "10,000 lines / 1,000" figure stays dropped in favour of the Kingman arithmetic; Fagan, Rigby & Bird, Reinertsen, Goldratt, Woods & Hollnagel, Davies, Jensen & Meckling and Ostrom stay out, since the review's own §2.1 diagnosis was too many frames and the talk now runs on three (queue, inspection, accountability); the SmartBear LOC figures stay unused.

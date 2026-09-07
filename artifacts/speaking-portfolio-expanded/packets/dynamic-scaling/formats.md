@@ -44,7 +44,7 @@ The 14-slide [browser deck](../../../reveal-talks/dynamic-scaling.html) follows 
 | 0 to 8 | Opening problem and baseline | One recurring workload and its current scaling rule |
 | 8 to 20 | Write the batch contract and compute request using contracts.md | Limits, catalog class, cap, lease |
 | 20 to 32 | Walk the restart trace in demo.md, including the reclaimed worker | Annotated state transitions |
-| 32 to 45 | Score the three candidates against the gates | Each candidate's failed gate |
+| 32 to 45 | Score the three candidates against the gates, then reveal the council split | Each candidate's failed gate, and which candidate gets the human |
 | 45 to 57 | Combine compatible ideas, then attack the synthesis with a spot reclaim | Revalidation plan and one rejected transition |
 | 57 to 60 | Each participant chooses a first change | One bounded experiment |
 

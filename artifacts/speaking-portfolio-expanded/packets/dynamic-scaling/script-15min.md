@@ -28,9 +28,9 @@ On screen:
 > Vertical: bigger box, decided by ops
 > Self-directed: the job describes its shape and asks
 
-For twenty years scaling was an infra question answered once for everyone. Add replicas or buy a bigger box, then let an autoscaler watch CPU and guess. The workload never got a vote.
+For twenty years scaling was an infra question answered once for everyone. Add replicas or buy a bigger box, then let an autoscaler watch CPU and guess. The workload never got a say.
 
-Agentic workloads can vote. The orchestrator knows this batch is mostly waiting on a provider, that this one needs a GPU for ninety seconds, that this one is untrusted code and wants a sandbox. It can say so, per job, at the moment the job starts.
+Agentic workloads do. The orchestrator knows this batch is mostly waiting on a provider, that this one needs a GPU for ninety seconds, that this one is untrusted code and wants a sandbox. It can say so, per job, at the moment the job starts.
 
 Delivery: Classify an image batch, a route-optimization run, three competing designs and a region move. Note that an LLM can schedule a solver without doing the arithmetic.
 
@@ -52,7 +52,7 @@ Delivery: Walk two simultaneous callers in contracts.md. Read-balance-then-write
 
 Bridge: money, concurrency and rate are three different limits; a run can satisfy one and blow the other two.
 
-## 05:30 to 08:00: slide 7, The inversion: infra as an agent capability
+## 05:30 to 08:00: slide 7, Infra Is a Tool Call
 
 On screen:
 
@@ -70,7 +70,7 @@ Story: The moment an agent-sized request would have replaced a capacity-planning
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
 
-## 08:00 to 10:30: slide 8, The ecosystem is already ephemeral by default
+## 08:00 to 10:30: slide 8, Torn Down by Default
 
 On screen:
 
@@ -79,7 +79,7 @@ On screen:
 > Durable edge state: Cloudflare Workers, Durable Objects, Workflows
 > Interruptible capacity: AWS EC2 Spot
 
-The pieces exist, and they are shaped for this. Fly.io Sprites are hardware-isolated VMs that create in a second or two, checkpoint and restore, and take an egress policy from outside so the agent inside cannot loosen it. Depot sandboxes bill per second for exactly this: run agent-generated code, stream output, throw it away.
+The pieces exist, and they are shaped for this. Fly.io Sprites are microVMs whose stated creation target is under a second, checkpoint and restore, and take an egress policy from outside so the agent inside cannot loosen it. Depot sandboxes bill by the second for exactly this: run agent-generated code, throw it away.
 
 Modal gives you functions and GPUs that scale to zero; Vast.ai is a marketplace where a spare GPU is cheap and short-lived. Cloudflare Workers with Durable Objects and Workflows hold the coordination state that survives everything else being torn down. EC2 Spot is the old version of the same idea: capacity that can vanish, so the job had better be restartable.
 
@@ -103,9 +103,9 @@ A new worker reloads the job, checks provider status for every submitted item, a
 
 One job, a recoverable lifecycle, honest accounting, and a compute substrate that was allowed to disappear under it. That is the abstraction the batch tool owed us.
 
-Delivery: Five minutes from demo.md. Ask the room for each next transition before revealing it.
+Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
-Bridge: attempts are a scaling axis and so is judging; a council of cheap judges from different models tells you where they disagree, and that is the candidate that gets a human. Bound the attempts, gate them, and treat any synthesis as a new candidate.
+Bridge: two more scaling axes have names. The barrel-of-monkeys maneuver leads with cheap parallel generation on purpose and hands the barrel to the next stage. The Council of Guards is cheap judges from different models, and the number you want back is the disagreement. Gate every candidate; a synthesis is a new candidate.
 
 ## 13:30 to 15:00: slide 14, Put the limit where the work begins
 

@@ -89,8 +89,12 @@ for(const talk of records){
 const manifest=mergeBySlug(priorExports,JSON.parse(readFileSync(join(root,'decks','exports.json'),'utf8')),(e:any)=>e.file);
 writeFileSync(join(root,'decks','exports.json'),JSON.stringify(manifest,null,2)+'\n');
 const rowFor=(slug:string,title:string,slides:number)=>`| ${title} | ${slides} | ${[15,30,40].map(m=>`[${m} screen](${slug}-${m}min-screen.pptx) · [${m} handout](${slug}-${m}min-handout.pptx)`).join('<br>')} | [Outline](../outlines/${slug}-40min.md) |`;
-const slideCount=(slug:string)=>records.find(r=>r.slug===slug)?.slides.length
- ?? Math.max(0,...manifest.filter((e:any)=>e.slug===slug&&e.minutes===40).map((e:any)=>e.slides));
+/** Source slides, not exported PPTX slides: count the outline's `## N.` headings for talks not in this run. */
+const slideCount=(slug:string)=>{
+ const fresh=records.find(r=>r.slug===slug); if(fresh)return fresh.slides.length;
+ const outline=join(root,'outlines',`${slug}-40min.md`);
+ return existsSync(outline)?(readFileSync(outline,'utf8').match(/^## \d+\. /gm)||[]).length:0;
+};
 const deckRows=Object.keys(TALKS).filter(slug=>manifest.some((e:any)=>e.slug===slug))
  .map(slug=>rowFor(slug,TALKS[slug].title,slideCount(slug))).join('\n');
 write(join(root,'decks','README.md'),`# Current PowerPoint editions\n\nThese ${manifest.length} PowerPoint files are generated from the current canonical outlines. Screen editions contain succinct projected slides with full source notes. Handout editions retain the source wording in a reading layout.\n\n| Talk | Source slides | Downloads | Canonical source |\n| --- | ---: | --- | --- |\n${deckRows}\n\nRegenerate all sibling formats with \`bun artifacts/speaking-portfolio-expanded/sync-talks.ts\`. The source hashes used for the last export are recorded in [sync-inputs.json](sync-inputs.json).\n`);
