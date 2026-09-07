@@ -1,4 +1,4 @@
-# Evidence: Your Eval Suite Has a Grandfather
+# Evidence: Three Search Methods in a Fundable Trenchcoat
 
 Sources checked 6 September 2026 appear beside the slides. ACM title, author order, year, and page records for the 1975 vector-space paper, 1987 vocabulary paper, 1993 passage paper, and Zobel 1998 were verified against Crossref’s publisher-deposited DOI metadata. The original LSA paper confirms Deerwester, Dumais, Furnas, Landauer, Harshman in that order.
 

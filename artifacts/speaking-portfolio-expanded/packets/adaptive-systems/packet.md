@@ -1,6 +1,6 @@
 # Talk packet: Adaptive, agentic apps
 
-[On-screen PPTX](../../decks/adaptive-systems-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-handout.pptx)
+[On-screen PPTX](../../decks/adaptive-systems-40min-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-40min-handout.pptx)
 
 [Smaller memory pattern: prompt, record and worked example](memory-pattern.md)
 

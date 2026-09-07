@@ -12,7 +12,7 @@ Generated from [the current 40-minute outline](../../outlines/adaptive-systems-4
 
 # Formats: Adaptive, agentic apps
 
-[On-screen PPTX](../../decks/adaptive-systems-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-handout.pptx)
+[On-screen PPTX](../../decks/adaptive-systems-40min-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-40min-handout.pptx)
 
 The 15-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows the [40-minute outline](../../outlines/adaptive-systems-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 

@@ -62,100 +62,12 @@ const root = dirname(new URL(import.meta.url).pathname);
 const revealDir = join(root, "..", "reveal-talks");
 
 export const TALKS: Record<string, Talk> = {
-  "skeptic-education": {
-  "slug": "skeptic-education",
-  "title": "A Skeptic's Guide to Surviving AI in Education",
-  "description": "A Skeptic's Guide to Surviving AI in Education",
-  "deckFile": "skeptic-education.html",
-  "eyebrow": "A Skeptic's Guide to Surviving AI in Education · Dan Levy",
-  "routes": {
-    "15": {
-      "minutes": 15,
-      "keep": [
-        1,
-        2,
-        4,
-        5,
-        7,
-        8,
-        10,
-        13,
-        14
-      ],
-      "times": [
-        1.5,
-        1.0,
-        2.5,
-        2.5,
-        2.0,
-        1.5,
-        1.5,
-        1.5,
-        1.0
-      ],
-      "bridges": {
-        "1": "Keep \"hold one assignment\"; drop the story.",
-        "2": "Three questions only; skip the two-failures preview.",
-        "4": "Bridge in with slide 3's objective in one sentence: \"a history essay that must weigh two conflicting sources.\" Keep the write.",
-        "5": "One switch; state the other two.",
-        "7": "Bridge in with slide 6 in one line: \"the first failure is a tutor that agrees with a wrong answer.\"",
-        "10": "Solo, sixty seconds, written.",
-        "13": "Pilot steps only; skip the vendor questions and the story.",
-        "14": "Skip the write; deliver the closing line."
-      },
-      "note": "Slide selections, timing and delivery instructions retained from the existing adaptation."
-    },
-    "30": {
-      "minutes": 30,
-      "keep": [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        11,
-        12,
-        13,
-        14
-      ],
-      "times": [
-        2.0,
-        2.0,
-        1.5,
-        2.5,
-        3.5,
-        1.5,
-        3.0,
-        1.5,
-        1.5,
-        3.0,
-        2.0,
-        1.5,
-        3.0,
-        1.5
-      ],
-      "bridges": {
-        "5": "Two switches; narrate the third.",
-        "6": "Drop the story.",
-        "10": "Pairs, ninety seconds.",
-        "13": "Drop the story.",
-        "14": "Shorten the write to twenty seconds."
-      },
-      "note": "Slide selections, timing and delivery instructions retained from the existing adaptation."
-    }
-  }
-},
   "retrieval": {
   "slug": "retrieval",
-  "title": "Your Eval Suite Has a Grandfather",
+  "title": "Three Search Methods in a Fundable Trenchcoat",
   "description": "The IR evaluation history missing from your golden dataset.",
   "deckFile": "retrieval.html",
-  "eyebrow": "Your Eval Suite Has a Grandfather · Dan Levy",
+  "eyebrow": "Three Search Methods in a Fundable Trenchcoat · Dan Levy",
   "routes": {
     "30": {
       "minutes": 30,
@@ -732,7 +644,7 @@ export const fmt = (min: number) => {
 };
 const minutesLabel = (min: number) => (Number.isInteger(min) ? `${min} minutes` : `${min} minutes`);
 const mdLinks = (s: string) =>
-  esc(s).replace(/\[([^\]]+)\]\((https?:\/\/.+)\)/g, (_m, t, u) => `<a href="${u}">${t}</a>`);
+  esc(s).replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_m, t, u) => `<a href="${u}">${t}</a>`);
 const forScript = (s: string) => s.replace(/\]\(\.\.\//g, "](../../");
 const forDeck = (s: string) => s.replace(/\]\(\.\.\//g, "](../speaking-portfolio-expanded/");
 const esc = (s: string) =>

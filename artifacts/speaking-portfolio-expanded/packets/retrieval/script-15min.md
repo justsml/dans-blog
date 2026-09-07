@@ -1,4 +1,4 @@
-# Your Eval Suite Has a Grandfather: 15-minute presenter script
+# Three Search Methods in a Fundable Trenchcoat: 15-minute presenter script
 
 Use slides 1, 2, 8, 9, 10, 11, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Pairs get 45 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives.
 
@@ -121,7 +121,7 @@ Bridge: retrieved text supplies evidence, never tool authority. Name a corpus ow
 
 On screen:
 
-> Your eval suite has a grandfather.
+> Three search methods in a fundable trenchcoat.
 > Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.

@@ -1,4 +1,4 @@
-# Your Eval Suite Has a Grandfather: 30-minute adaptation
+# Three Search Methods in a Fundable Trenchcoat: 30-minute adaptation
 
 Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15. Hide the others in presenter preparation. [Complete talk track](../packets/retrieval/script-30min.md).
 

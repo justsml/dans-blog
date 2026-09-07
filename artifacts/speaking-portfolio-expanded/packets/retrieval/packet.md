@@ -1,4 +1,4 @@
-# Your Eval Suite Has a Grandfather
+# Three Search Methods in a Fundable Trenchcoat
 
 This packet indexes the current source-preserving editions. The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](../../outlines/retrieval-40min.md).
 

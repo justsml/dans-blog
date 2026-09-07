@@ -1,5 +1,13 @@
 # Talk packet: A Skeptic's Guide to Surviving AI in Education
 
+> **Retired 6 September 2026.** This talk is no longer in the portfolio and nothing is generated from it.
+> Its three surviving beats — skepticism as a method, the four-case local eval set, and the vendor questions —
+> live on as [Show Me the Misconception](../packets/evidence-learning/procurement-route.md), a 15-minute
+> procurement route under [Outsmart Your Lying, Cheating Students](evidence-learning-40min.md).
+> Reason: the [audit](../reviews/audit-skeptic-education.md) found the transplant plan was never executed while
+> Outsmart independently absorbed the three citations a Skeptic rewrite would have needed, leaving six colliding beats.
+> Kept for reference only. Do not book, do not rebuild.
+
 [PPTX](../../decks/skeptic-education-40min.pptx)
 
 Outline: [40 min](../../outlines/skeptic-education-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)

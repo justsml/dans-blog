@@ -1,4 +1,4 @@
-# Your Eval Suite Has a Grandfather
+# Three Search Methods in a Fundable Trenchcoat
 
 40 minutes. Timings include the exercises and delivery pauses, without Q&A. Sources checked 6 September 2026. Story prompts belong in speaker notes and require Dan’s own records before delivery.
 
@@ -228,7 +228,7 @@ Source: John McDermott (1982), [R1: A rule-based configurer of computer systems]
 
 38:00 to 40:00 · land
 
-> Your eval suite has a grandfather.
+> Three search methods in a fundable trenchcoat.
 > Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.

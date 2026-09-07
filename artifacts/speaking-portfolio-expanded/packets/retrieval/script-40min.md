@@ -1,4 +1,4 @@
-# Your Eval Suite Has a Grandfather: 40-minute presenter script
+# Three Search Methods in a Fundable Trenchcoat: 40-minute presenter script
 
 Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
 
@@ -226,7 +226,7 @@ Source: John McDermott (1982), [R1: A rule-based configurer of computer systems]
 
 On screen:
 
-> Your eval suite has a grandfather.
+> Three search methods in a fundable trenchcoat.
 > Find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
