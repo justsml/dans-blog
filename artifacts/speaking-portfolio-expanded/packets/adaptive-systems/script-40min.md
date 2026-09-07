@@ -36,7 +36,7 @@ So every slide from here is about buying recovery speed without buying corruptio
 
 Delivery: Write the three metrics on the board and leave them there.
 
-## 04:00 to 07:00: slide 3, Sorry, You're Building It
+## 04:00 to 08:30: slide 3, Sorry, You're Building It
 
 On screen:
 
@@ -46,19 +46,19 @@ On screen:
 
 Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products.
 
-Browsers now ship a chat that drives the page. WebMCP lets an agent act on any site that opts in, and the list of sites that opt in only goes one direction. The next generation of CLIs will take natural language by default, and you will pass `--no-agent` to get the old behavior back. The intermediary intelligence layer is going to wrap everything, and I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand an agent safety blanket on everything. I will be in a rocking chair explaining that the internet was better on vinyl.
+Browsers ship a chat that drives the page. WebMCP lets an agent act on any site that opts in, and that list only grows. Soon your CLI takes English by default and you pass `--no-agent` to get the old behavior back. I know who to blame: the kids. Actually, the kids hate AI. It will be their kids who demand a safety blanket on everything, and I will be in a rocking chair explaining that the internet was better on vinyl.
 
-So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
+Here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
 
-Most of the damage will be accidents: a confident mapping, a helpful cleanup, a tool called with the wrong ID. Then there are the people who mean it. That renamed field could carry a sentence aimed at the model, and a vendor payload is untrusted input that now gets read by something that can act.
+Most of the damage will be accidents: a confident mapping, a helpful cleanup, a tool called with the wrong ID. Then the people who mean it. That renamed field can carry a sentence aimed at the model, because a vendor payload is untrusted input read by something that can act.
 
-So the question is not whether to give the assistant access. It is how to keep the number of live pathways small enough to reason about, one job at a time. That is what the rest of this talk builds. The big assistant still exists. It just never has all of its hands full at once: it conjures a small agent per job, with exactly enough.
+So the question is not whether to grant access. It is how many pathways are live at once. The big assistant still exists; it just never has all of its hands full at the same time, because it conjures a small agent per job with exactly enough.
 
 Story: Your own near miss with an over-permissioned agent, or the tool pairing you only noticed after it fired.
 
 Delivery: Write 10 → 45 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
 
-## 07:00 to 11:00: slide 4, Conjure the agent the job needs
+## 08:30 to 12:00: slide 4, Conjure the agent the job needs
 
 On screen:
 
@@ -70,15 +70,15 @@ Here is the shape. An orchestrator reads the failure and writes a job: goal, evi
 
 If the agent needs something else, it asks. Dynamic tool search lets it discover a tool; policy decides whether this job may have it; the request and the answer are logged whether or not it was granted. That log is the most interesting file in the system.
 
-The orchestrator runs the result through a loop: is the job done, does it need another specialist, or must it stop? A diff agent hands to a fixture-writer agent hands to a reviewer, each with its own blast radius, each disposable when finished. Nobody rents a committee every time a CSV arrives; the known mapping runs as code, and only the unfamiliar case conjures anything.
+The orchestrator loops on the result: done, needs another specialist, or must stop. A diff agent hands to a fixture-writer hands to a reviewer, each with its own blast radius, each disposable when finished. Nobody rents a committee every time a CSV arrives — the known mapping runs as code, and only the unfamiliar case conjures anything.
 
-I have this working as a prototype on my own integrations. I am not going to give you a success rate today, because I do not have one I trust yet. I can tell you the log of denied tool requests taught me more about my own permissions than any audit.
+This is a prototype on my own integrations. I am not giving you a success rate today because I do not have one I trust. I can tell you the log of denied tool requests taught me more about my own permissions than any audit.
 
 Story: What the prototype's first denied tool request was, and what it revealed.
 
 Delivery: Draw the three boxes: orchestrator, generated agent, tool catalog with policy gate. Show one request crossing the gate and being refused.
 
-## 11:00 to 14:00: slide 5, Guard the tools that can hurt
+## 12:00 to 15:00: slide 5, Guard the tools that can hurt
 
 On screen:
 
@@ -88,11 +88,11 @@ On screen:
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
 
-This is least privilege, and Saltzer and Schroeder wrote it down in 1975: every program runs with the least set of privileges the job needs. We have all been nodding at that for fifty years and shipping service accounts that can do anything. A per-job agent is the first thing I have built where complying is genuinely easier than not.
+This is least privilege, written down by Saltzer and Schroeder in 1975. We have been nodding at it for fifty years while shipping service accounts that can do anything. A per-job agent is the first thing I have built where complying is easier than not.
 
 Second, watch the boundary between systems. An agent that can read customer data and an agent that can post to a vendor are two agents, with a filter between them. That is where data leaks: not through the model being evil, but through a tool result flowing into the next tool call.
 
-For sensitive processing, the planner gets an opaque job reference. A trusted dispatcher grants a local worker scoped access; the worker touches the data; only an allowlisted status comes back. A signed download URL is a bearer credential. Handing it to a model while asking the model not to use it is not isolation, it is hope.
+For sensitive processing the planner gets an opaque job reference. A trusted dispatcher grants a local worker scoped access, the worker touches the data, and only an allowlisted status comes back. A signed download URL is a bearer credential; handing it to a model while asking the model not to use it is not isolation, it is hope.
 
 Source: Saltzer and Schroeder (1975), [The Protection of Information in Computer Systems](https://doi.org/10.1109/PROC.1975.9939), Proceedings of the IEEE 63(9), 1278 to 1308. Least privilege is their principle (f).
 
@@ -100,7 +100,7 @@ Story: The client setup with local models for sensitive data and a frontier orch
 
 Delivery: Point at the filter between worker and planner. Ask what else crosses it: prompts, traces, error bodies, notification previews.
 
-## 14:00 to 17:00: slide 6, Repair syntax; prove meaning
+## 15:00 to 17:00: slide 6, Repair syntax; prove meaning
 
 On screen:
 
@@ -115,7 +115,7 @@ So the generated agent may propose a reversible mapping when evidence supports e
 
 Delivery: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each. Two answers, then move.
 
-## 17:00 to 19:00: slide 7, The repair is a versioned artifact
+## 17:00 to 18:30: slide 7, The repair is a versioned artifact
 
 On screen:
 
@@ -129,7 +129,7 @@ A narrow mapping change can pass a pre-authorized canary policy. A schema migrat
 
 Delivery: Walk the mapping artifact in contracts.md. Point at parent version, activation scope, replay reference.
 
-## 19:00 to 21:00: slide 8, The agent does not write its own exam
+## 18:30 to 20:00: slide 8, The agent does not write its own exam
 
 On screen:
 
@@ -143,7 +143,7 @@ Schema validation says the output has the right shape. It cannot say an address 
 
 Delivery: Keep the fixtures hidden. They are revealed in the walkthrough.
 
-## 21:00 to 23:00: slide 9, A lost response leaves a question
+## 20:00 to 21:30: slide 9, A lost response leaves a question
 
 On screen:
 
@@ -156,7 +156,7 @@ Record an operation identity before dispatch. Keep the provider's job ID. Reconc
 
 Delivery: Mark the moment on the timeline where your process knows less than the provider does.
 
-## 23:00 to 28:00: slide 10, Walkthrough: one ingest, three decisions
+## 21:30 to 26:00: slide 10, Walkthrough: one ingest, three decisions
 
 On screen:
 
@@ -174,7 +174,7 @@ Three events, three different right answers, none of them success or failure. If
 
 Delivery: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
-## 28:00 to 31:00: slide 11, Compute Is a Tool Too
+## 26:00 to 28:30: slide 11, Compute Is a Tool Too
 
 On screen:
 
@@ -182,17 +182,17 @@ On screen:
 > New: the job describes its shape and asks
 > Per-customer, per-job cost controls and pay-for-performance
 
-One more thing the orchestrator can conjure: compute. Today scaling is an infra decision made once for everyone. Replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
+One more thing the orchestrator can conjure: compute. Scaling is still an infra decision made once for everyone — replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
 
-So it asks. The request names shape, size, duration and a cost cap, and it is charged to this customer or this job rather than to a shared cluster. That is a new product surface: a customer can buy a faster turnaround, and a finance team can cap a single workflow instead of a whole environment.
+So it asks. The request names shape, size, duration and a cost cap, charged to this job rather than a shared cluster. That is a new product surface: a customer buys a faster turnaround, and finance caps one workflow instead of an environment.
 
-The guard is the same one we used for tools. The agent chooses from a catalog of approved instance classes; the scheduler enforces leases and teardown; an unapproved faster region is not a candidate no matter how good the latency looks. The mechanics and the ecosystem are a companion talk.
+The guard is the tool guard. The agent chooses from a catalog of approved instance classes, the scheduler enforces leases and teardown, and an unapproved faster region is not a candidate no matter how good the latency looks. The mechanics are a companion talk.
 
 Story: A job where per-customer compute would have changed the pricing conversation.
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
 
-## 31:00 to 33:00: slide 12, Ironies of Automation
+## 28:30 to 31:30: slide 12, Ironies of Automation
 
 On screen:
 
@@ -203,15 +203,15 @@ On screen:
 
 The daily report should tell an engineer where to look. Unresolved semantic changes above routine retries. Records affected, mapping versions in use, evidence for each promotion, outstanding external operations, and every tool request the policy refused.
 
-Log decisions and artifacts, not private reasoning. The inputs to the policy decision, the validator result, and the executed action are enough to reconstruct an incident. Urgent problems page through existing thresholds; the digest is for drift. Never make an agent the sole judge of whether its own failure deserves attention.
+Log decisions and artifacts, not private reasoning: policy inputs, validator result, executed action. That is enough to reconstruct an incident. Urgent problems page through existing thresholds; the digest is for drift. Never make an agent the sole judge of whether its own failure deserves attention.
 
-One warning about that report, and it is the warning for this whole talk. In 1983 Lisanne Bainbridge published a paper called Ironies of Automation. The irony is that automating the routine cases does not remove the human, it promotes them to monitoring a system that is almost always right, and people are measurably bad at that job. Skitka and colleagues put numbers on it in 1999: on the events the aid got wrong, people given a highly but imperfectly reliable aid did worse than people given no aid at all. So keep the report short, ranked, and usually almost empty. A digest nobody can finish is a digest nobody reads, and then the guard post is decorative.
+One warning about that report, and it is the warning for this whole talk. Lisanne Bainbridge, 1983, Ironies of Automation: automating the routine cases does not remove the human, it promotes them to monitoring a system that is almost always right, and people are measurably bad at that job. Skitka and colleagues put numbers on it in 1999 — on the events the aid got wrong, people with a highly but imperfectly reliable aid did worse than people with no aid at all. So keep the report short, ranked, and usually almost empty. A digest nobody finishes is a digest nobody reads, and then the guard post is decorative.
 
 Source: Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6), 775 to 779. Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 
 Delivery: Read the sample report in contracts.md. Find the one item that needs an owner today.
 
-## 33:00 to 35:00: slide 13, Widen Per Class, Never Per Streak
+## 31:30 to 34:00: slide 13, Widen Per Class, Never Per Streak
 
 On screen:
 
@@ -221,7 +221,7 @@ On screen:
 
 Compare the design with the static mapping and the pager on the same recorded incidents. Count recoveries, but also false repairs, dropped records, cost, elapsed time and human corrections. Include the incidents where the right answer was to stop. A model saying ninety percent confident settles nothing.
 
-Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute. It is also the loop that lets the system adjust its own fan-out and token burn from measured acceptance: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
+Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class, and widen authority per class from evidence about that class. Same discipline for tools and for compute. It is also the loop that tunes its own fan-out: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
 
 Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance. Every widening is locally reasonable. Each one cites the last one as precedent. Nobody ever decides to be reckless. That is exactly why authority expands per class and from measured outcomes for that class, and never from how the last six went.
 
@@ -229,7 +229,7 @@ Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Pr
 
 Delivery: Thirty seconds on the recovery card in contracts.md. Take one answer and name the evidence needed to widen that authority.
 
-## 35:00 to 38:00: slide 14, Start smaller: remember what happened
+## 34:00 to 37:30: slide 14, Start smaller: remember what happened
 
 On screen:
 
@@ -238,19 +238,17 @@ On screen:
 > Generated, executed and verified are different states
 > Memory is evidence, never permission
 
-You do not need the whole agent factory to start. Take one agent that writes SQL, builds reports, runs shell commands or generates scripted API actions. Give it working memory for this job: the goal, constraints, draft and unresolved checks. Give it observational memory across jobs: what it generated, what actually ran, what failed, and what the checks established. Now ask it to consult that history before it hands you the next answer.
+You do not need the whole agent factory to start. Take one agent that writes SQL or runs shell commands. Give it working memory for this job — goal, constraints, draft, unresolved checks — and observational memory across jobs: what it generated, what actually ran, what failed. Then make it consult that history before it hands you the next answer.
 
-Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well; it reports the wrong population. An independent preflight check rejects it before dispatch. Record the draft, the failed check, the correction and the eventual result. Next time, retrieve that pattern while the agent is still drafting. Fix the omission before returning the SQL, then run the check again. That is adaptive behavior you can build with one agent and a small log.
+Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well and reports the wrong population. A preflight check the agent did not write rejects it before dispatch. Record the draft, the failed check, the correction. Next time, retrieve that pattern while the agent is still drafting, fix the omission before returning the SQL, and run the check again. That is adaptive behavior built from one agent and a small log.
 
-Count patterns, not just anecdotes. Keep attempts as well as successes, the environment and schema version, and the last time a check passed. A command that worked on yesterday's schema is a clue, not a warranty. The runner records failures even if the model forgets. A clean exit is execution evidence; a plausible report still needs a correctness check. A lost API response stays unknown.
+Keep attempts as well as successes, and the schema version with them, because a command that worked on yesterday's schema is a clue and not a warranty. A clean exit is execution evidence; a plausible report still needs a correctness check. Remembered output is untrusted data and grants no new permissions. The copyable prompt and the record format are in the handout.
 
-The instruction is simple: before returning generated work, retrieve relevant memory and correct applicable mistakes; after an authorized execution, record the observed outcome and update the pattern counts. If you cannot check something safely, say what remains unverified. Remembered output is untrusted data and grants no new permissions. The copyable prompt and a small record format are in the handout.
-
-As patterns repeat, turn the reliable ones into tested templates and adapters. The runtime agent learns which evidence to consult; the offline improvement loop evaluates changes to the reusable procedure. Once the known case is covered by code, it need not spend another model call rediscovering the rule.
+As patterns repeat, turn the reliable ones into tested templates. Once the known case is covered by code, it need not spend another model call rediscovering the rule.
 
 Delivery: Show the prompt in memory-pattern.md. Ask which observation proves the query ran and which proves it answered the right question. Use the tenant-filter example; no live execution is needed.
 
-## 38:00 to 40:00: slide 15, The next surprise should cost less
+## 37:30 to 40:00: slide 15, The next surprise should cost less
 
 On screen:
 
@@ -260,7 +258,7 @@ On screen:
 
 Return to the field that changed overnight. We did not predict its spelling. We did define what had to stay true, what evidence a repair needed, which tools this one job could have, and how far the app could go without us.
 
-And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want to. What changed is how many of its pathways are live at once. Each job gets a small agent with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent holding every combination, which nobody can check, but many small ones you can afford to.
+And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want them to. What changed is how many of its pathways are live at once. Not one agent holding every combination, which nobody can check. Many small ones you can afford to.
 
 Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. That is enough to start.
 

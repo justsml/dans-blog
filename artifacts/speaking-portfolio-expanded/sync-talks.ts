@@ -50,7 +50,7 @@ for(const slug of slugs){
    elapsed+=route.times[i];return result;
   });
   if(Math.abs(elapsed-minutes)>.001)throw Error(`${slug} route totals ${elapsed}`);
-  write(join(root,'../reveal-talks',`${slug}-${minutes}min.html`),deckFor({...talk,description:talk.description+` (${minutes}-minute route)`},chosen));
+  write(join(repo,'public/talks',`${slug}-${minutes}min.html`),deckFor({...talk,description:talk.description+` (${minutes}-minute route)`},chosen));
   variants.push({minutes,slides:chosen,route});
  }
  const appendices=[];
@@ -79,7 +79,7 @@ const syncInputs={
  inputs:{...(priorInputs.inputs||{}),...Object.fromEntries(Object.entries(protectedInputs).map(([p,h])=>[p.replace(repo+'/',''),h]))},
 };
 writeFileSync(join(root,'decks','sync-inputs.json'),JSON.stringify(syncInputs,null,2)+'\n');
-const editions=(slug:string)=>`| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |\n| ---: | --- | --- | --- | --- |\n${[15,30,40].map(m=>`| ${m} min | [Open](../../../reveal-talks/${slug}-${m}min.html) | [Download](../../decks/${slug}-${m}min-screen.pptx) | [Download](../../decks/${slug}-${m}min-handout.pptx) | [Script](script-${m}min.md) |`).join('\n')}`;
+const editions=(slug:string)=>`| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |\n| ---: | --- | --- | --- | --- |\n${[15,30,40].map(m=>`| ${m} min | [Open](../../../../public/talks/${slug}-${m}min.html) | [Download](../../decks/${slug}-${m}min-screen.pptx) | [Download](../../decks/${slug}-${m}min-handout.pptx) | [Script](script-${m}min.md) |`).join('\n')}`;
 for(const talk of records){
  const dir=join(root,'packets',talk.slug);
  syncBlock(join(dir,'formats.md'),`# Synchronized editions\n\nGenerated from [the current 40-minute outline](../../outlines/${talk.slug}-40min.md).\n\n${editions(talk.slug)}`);

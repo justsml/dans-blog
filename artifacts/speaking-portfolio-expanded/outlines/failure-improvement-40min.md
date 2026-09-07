@@ -38,7 +38,7 @@ Save the answer with the input window. Tomorrow, you want to know whether it fou
 
 04:30 to 07:30 · build
 
-![Enrichment earns the next step](../../reveal-talks/assets/failure-improvement/enrichment.svg)
+![Enrichment earns the next step](../../../public/talks/assets/failure-improvement/enrichment.svg)
 
 > Logs → code → trace → reproduction → ticket
 > One failure class at a time
@@ -55,7 +55,7 @@ Stage direction: Walk up the ladder using one timeout. Stop at the first rung th
 
 07:30 to 10:30 · build
 
-![The out-of-band check](../../reveal-talks/assets/failure-improvement/check.svg)
+![The out-of-band check](../../../public/talks/assets/failure-improvement/check.svg)
 
 > Schedule → bookmark → distill → artifact
 > Advance the bookmark after durable output

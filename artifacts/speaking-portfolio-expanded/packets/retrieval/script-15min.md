@@ -17,7 +17,7 @@ We spent years calling it search. Then we called it a vector database and raised
 
 Delivery: Read the opening sentence quickly and straight-faced. Pause after it. Keep this hook in every route.
 
-## 01:30 to 02:30: slide 2, The bet, and the eight words
+## 01:30 to 03:15: slide 2, The bet, and the eight words
 
 On screen:
 
@@ -34,7 +34,7 @@ Story: The retrieval improvement your eval rejected because it found evidence ou
 
 Bridge: term specificity, vectors, vocabulary mismatch, and passage retrieval explain how we obtain candidates. Now judge the evidence they returned.
 
-## 02:30 to 05:00: slide 8, Judge these five documents
+## 03:15 to 05:15: slide 8, Judge these five documents
 
 On screen:
 
@@ -52,7 +52,7 @@ Now compare answers. You just made relevance judgments. Relevant to the topic, a
 
 Delivery: Give 60 seconds in pairs and collect two judgments with reasons. Do not reveal the missing schedule until slide 10. Use contracts.md for the full synthetic fixture.
 
-## 05:00 to 06:30: slide 9, Cranfield, Bedfordshire, 1966
+## 05:15 to 06:45: slide 9, Cranfield, Bedfordshire, 1966
 
 On screen:
 
@@ -67,7 +67,7 @@ Your golden dataset is a test collection with a flattering filename. Write down 
 
 Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
-## 06:30 to 09:30: slide 10, Fool's Golden Dataset
+## 06:45 to 09:45: slide 10, Fool's Golden Dataset
 
 On screen:
 
@@ -87,7 +87,7 @@ Source: Justin Zobel (1998), [How reliable are the results of large-scale inform
 
 Delivery: Run `bun artifacts/speaking-portfolio-expanded/packets/retrieval/pooling.ts` after revealing F. Walk through 2/2, 1/2, then 2/2. Explain that the metric measures topical relevance, not sufficiency or permission.
 
-## 09:30 to 11:30: slide 11, Assessors disagree. Rankings can survive.
+## 09:45 to 11:30: slide 11, Assessors disagree. Rankings can survive.
 
 On screen:
 

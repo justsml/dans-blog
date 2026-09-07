@@ -44,9 +44,9 @@ On screen:
 
 Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products.
 
-So here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the number of pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
+Here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
 
-So the question is not whether to give the assistant access. It is how to keep the number of live pathways small enough to reason about, one job at a time. That is what the rest of this talk builds. The big assistant still exists. It just never has all of its hands full at once: it conjures a small agent per job, with exactly enough.
+So the question is not whether to grant access. It is how many pathways are live at once. The big assistant still exists; it just never has all of its hands full at the same time, because it conjures a small agent per job with exactly enough.
 
 Story: Your own near miss with an over-permissioned agent, or the tool pairing you only noticed after it fired.
 
@@ -66,9 +66,9 @@ Here is the shape. An orchestrator reads the failure and writes a job: goal, evi
 
 If the agent needs something else, it asks. Dynamic tool search lets it discover a tool; policy decides whether this job may have it; the request and the answer are logged whether or not it was granted. That log is the most interesting file in the system.
 
-The orchestrator runs the result through a loop: is the job done, does it need another specialist, or must it stop? A diff agent hands to a fixture-writer agent hands to a reviewer, each with its own blast radius, each disposable when finished. Nobody rents a committee every time a CSV arrives; the known mapping runs as code, and only the unfamiliar case conjures anything.
+The orchestrator loops on the result: done, needs another specialist, or must stop. A diff agent hands to a fixture-writer hands to a reviewer, each with its own blast radius, each disposable when finished. Nobody rents a committee every time a CSV arrives — the known mapping runs as code, and only the unfamiliar case conjures anything.
 
-I have this working as a prototype on my own integrations. I am not going to give you a success rate today, because I do not have one I trust yet. I can tell you the log of denied tool requests taught me more about my own permissions than any audit.
+This is a prototype on my own integrations. I am not giving you a success rate today because I do not have one I trust. I can tell you the log of denied tool requests taught me more about my own permissions than any audit.
 
 Story: What the prototype's first denied tool request was, and what it revealed.
 
@@ -84,7 +84,7 @@ On screen:
 
 Two guards do most of the work. First, tools come in risk classes. Read is cheap to grant. Write, send, pay, delete, deploy and export each need their own approval path, and a generated agent gets at most one of them per job. Do not smuggle a destructive migration through a tool called repair mapping.
 
-This is least privilege, and Saltzer and Schroeder wrote it down in 1975: every program runs with the least set of privileges the job needs. We have all been nodding at that for fifty years and shipping service accounts that can do anything. A per-job agent is the first thing I have built where complying is genuinely easier than not.
+This is least privilege, written down by Saltzer and Schroeder in 1975. We have been nodding at it for fifty years while shipping service accounts that can do anything. A per-job agent is the first thing I have built where complying is easier than not.
 
 Second, watch the boundary between systems. An agent that can read customer data and an agent that can post to a vendor are two agents, with a filter between them. That is where data leaks: not through the model being evil, but through a tool result flowing into the next tool call.
 
@@ -166,9 +166,9 @@ On screen:
 > New: the job describes its shape and asks
 > Per-customer, per-job cost controls and pay-for-performance
 
-One more thing the orchestrator can conjure: compute. Today scaling is an infra decision made once for everyone. Replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
+One more thing the orchestrator can conjure: compute. Scaling is still an infra decision made once for everyone — replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
 
-So it asks. The request names shape, size, duration and a cost cap, and it is charged to this customer or this job rather than to a shared cluster. That is a new product surface: a customer can buy a faster turnaround, and a finance team can cap a single workflow instead of a whole environment.
+So it asks. The request names shape, size, duration and a cost cap, charged to this job rather than a shared cluster. That is a new product surface: a customer buys a faster turnaround, and finance caps one workflow instead of an environment.
 
 Story: A job where per-customer compute would have changed the pricing conversation.
 
@@ -184,7 +184,7 @@ On screen:
 > Canary: one reversible change class
 > Expand: from correct recoveries, false repairs, cost, interventions
 
-Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class. Widen authority per class, from evidence about that class. This is the same discipline for tools and for compute. It is also the loop that lets the system adjust its own fan-out and token burn from measured acceptance: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
+Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class, and widen authority per class from evidence about that class. Same discipline for tools and for compute. It is also the loop that tunes its own fan-out: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
 
 Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance. Every widening is locally reasonable. Each one cites the last one as precedent. Nobody ever decides to be reckless. That is exactly why authority expands per class and from measured outcomes for that class, and never from how the last six went.
 
@@ -201,9 +201,9 @@ On screen:
 > Generated, executed and verified are different states
 > Memory is evidence, never permission
 
-You do not need the whole agent factory to start. Take one agent that writes SQL, builds reports, runs shell commands or generates scripted API actions. Give it working memory for this job: the goal, constraints, draft and unresolved checks. Give it observational memory across jobs: what it generated, what actually ran, what failed, and what the checks established. Now ask it to consult that history before it hands you the next answer.
+You do not need the whole agent factory to start. Take one agent that writes SQL or runs shell commands. Give it working memory for this job — goal, constraints, draft, unresolved checks — and observational memory across jobs: what it generated, what actually ran, what failed. Then make it consult that history before it hands you the next answer.
 
-Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well; it reports the wrong population. An independent preflight check rejects it before dispatch. Record the draft, the failed check, the correction and the eventual result. Next time, retrieve that pattern while the agent is still drafting. Fix the omission before returning the SQL, then run the check again. That is adaptive behavior you can build with one agent and a small log.
+Suppose a reporting query keeps forgetting the tenant filter. It runs perfectly well and reports the wrong population. A preflight check the agent did not write rejects it before dispatch. Record the draft, the failed check, the correction. Next time, retrieve that pattern while the agent is still drafting, fix the omission before returning the SQL, and run the check again. That is adaptive behavior built from one agent and a small log.
 
 Delivery: Show the prompt in memory-pattern.md. Ask which observation proves the query ran and which proves it answered the right question. Use the tenant-filter example; no live execution is needed.
 
@@ -217,7 +217,7 @@ On screen:
 > Prove the repair
 > Remember the known case
 
-And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want to. What changed is how many of its pathways are live at once. Each job gets a small agent with a tailored prompt, a short tool list, a hard budget, and a log of every time it asked for more. That is the strategy I believe in for the next few years: not one agent holding every combination, which nobody can check, but many small ones you can afford to.
+And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want them to. What changed is how many of its pathways are live at once. Not one agent holding every combination, which nobody can check. Many small ones you can afford to.
 
 Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. That is enough to start.
 

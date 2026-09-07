@@ -16,7 +16,7 @@
 
 **Scope.** Planning assumption: AI access will remain available enough that curriculum cannot depend on preventing it. Research stays attached to its setting. The framework exercise and the demo are design tools. Say it once on slide 1.
 
-**Demo.** [Runbook section 1](../demos/DEMO-RUNBOOK.md#1-a-skeptics-guide-to-surviving-ai-in-education) · [Kit](../demos/index.html). Fallback: narrate the three cases on slide 5.
+**Demo.** [Runbook section 1](../demos/DEMO-RUNBOOK.md#1-a-skeptics-guide-to-surviving-ai-in-education) · [Kit](../../../public/talks/demos/index.html). Fallback: narrate the three cases on slide 5.
 
 **Worked example.** A history essay weighing two conflicting primary sources. The percentage-change fixture belongs to the assessment-design talk, so the two can be booked together.
 

@@ -36,7 +36,7 @@ Stage direction: Budget 45 seconds for hands on each stage. Take one answer abou
 
 05:00 to 08:00 · build
 
-![Kingman: queue wait vs reviewer utilization, variability factor one](../../reveal-talks/assets/judgment/queue.svg)
+![Kingman: queue wait vs reviewer utilization, variability factor one](../../../public/talks/assets/judgment/queue.svg)
 
 > Wq ≈ ((ca² + cs²) / 2) × ρ / (1 − ρ) × E[S]
 > V = 1: 80% → 4×; 90% → 9×; 95% → 19×
@@ -218,7 +218,7 @@ Stage direction: Give 45 seconds. Invite one estimate and ask what counted as av
 
 38:00 to 40:00 · land
 
-![Kingman: queue wait vs reviewer utilization, variability factor one](../../reveal-talks/assets/judgment/queue.svg)
+![Kingman: queue wait vs reviewer utilization, variability factor one](../../../public/talks/assets/judgment/queue.svg)
 
 > What should exist? Does it work?
 > Is it worth maintaining?

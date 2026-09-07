@@ -2,7 +2,7 @@
 
 Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
 
-## 00:00 to 02:30: slide 1, Free electricity for a year
+## 00:00 to 02:15: slide 1, Free electricity for a year
 
 On screen:
 
@@ -19,7 +19,7 @@ Story: The first time a bill, a quota, or a rate change broke an assumption in s
 
 Delivery: Take the five seconds. Actually take them. The silence is the slide.
 
-## 02:30 to 04:30: slide 2, Four boxes, one invoice
+## 02:15 to 04:00: slide 2, Four boxes, one invoice
 
 On screen:
 
@@ -34,7 +34,7 @@ Which of these four does your system actually measure, and which does it assume?
 
 Delivery: Draw the four boxes with your hands. Ask for a show of hands on box two. Count them; it is usually a third of the room.
 
-## 04:30 to 07:30: slide 3, Why would anyone sell below cost?
+## 04:00 to 06:45: slide 3, Why would anyone sell below cost?
 
 On screen:
 
@@ -51,7 +51,7 @@ Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (199
 
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-## 07:30 to 10:00: slide 4, Burn the boats
+## 06:45 to 09:30: slide 4, Burn the boats
 
 On screen:
 
@@ -61,7 +61,7 @@ On screen:
 
 Three numbers everyone quotes. Microsoft announced in October 2025 that OpenAI contracted to purchase an incremental two hundred and fifty billion dollars of Azure services. Amazon announced in April 2026 that Anthropic committed more than a hundred billion over ten years. AWS Activate offers eligible startups up to two hundred thousand in credits.
 
-Everyone reads these as evidence about cost. They are not. They are evidence about strategy, and Thomas Schelling gave us the word in 1960: a credible commitment. You deliberately destroy your own ability to back out, precisely so everyone else updates. Burn the boats. A ten-year contract you cannot walk away from is not a disclosure of your margins. It is a signal that you intend to still be here, aimed at competitors and at customers who are nervous about picking you.
+Everyone reads these as evidence about cost. They are evidence about strategy, and Thomas Schelling gave us the word in 1960: a credible commitment. You deliberately destroy your own ability to back out, precisely so everyone else updates. Burn the boats. A ten-year contract you cannot walk away from discloses nothing about your margins. It signals that you intend to still be here, aimed at competitors and at nervous customers.
 
 Which tells you something about the game underneath. Two well-funded players racing to acquire the same customers, both burning capital, neither able to stop first, is a war of attrition. In that model the price stays low for as long as both sides can pay to keep it there. Note who is not a player in that game. Somebody is buying your free tier, and it is not you. You are not a combatant. You are the terrain.
 
@@ -71,7 +71,7 @@ Source: Schelling (1960), The Strategy of Conflict, Harvard University Press. No
 
 Delivery: Recheck all three items the week of the talk. If a number has moved, the frame still works; say the new number. Specifically: Anthropic's IPO prospectus is expected late September 2026 and may disclose contract detail behind the $100B AWS commitment, so that figure or its framing can move. Do not confuse it with the adjacent Microsoft/OpenAI restructuring figures.
 
-## 10:00 to 12:30: slide 5, Free parking was never free
+## 09:30 to 11:45: slide 5, Free parking was never free
 
 On screen:
 
@@ -87,7 +87,7 @@ Then the environment reorganized around it. Buildings spread apart, so density f
 
 Source: Shoup (2005, updated 2011), The High Cost of Free Parking, American Planning Association. Also Shoup (2011), [Free parking or free markets](https://www.accessmagazine.org/spring-2011/free-parking-free-markets/), ACCESS Magazine.
 
-## 12:30 to 15:00: slide 6, Jevons, coal, and the extra lane
+## 11:45 to 15:00: slide 6, Jevons, coal, and the extra lane
 
 On screen:
 
@@ -99,7 +99,7 @@ In 1865 William Stanley Jevons noticed something that annoyed everyone. Steam en
 
 The transport version is word three, induced demand. Add a lane to a congested highway and you get more traffic. Duranton and Turner measured it across US cities in 2011 and found the elasticity of driving with respect to lane-kilometres is roughly one. Build ten percent more road, get ten percent more driving. The congestion comes back.
 
-So: your per-token price has fallen off a cliff over the last few years, and your bill went up. Everyone in this room has had that conversation with a CFO and lost it. You are not being gouged and you did not do anything wrong. Spend is price times consumption, and consumption is jobs times calls per job times tokens per call. Cheapness moved every term on the right. Epoch's data through 2025 shows the price of a fixed capability falling fast and very unevenly by task, which is real and worth knowing, and is also exactly the condition under which total spend rises.
+So: your per-token price fell off a cliff and your bill went up. Everyone here has had that conversation with a CFO and lost it. You are not being gouged and you did nothing wrong. Spend is price times jobs times calls per job times tokens per call, and cheapness moved every term on the right. Epoch's data through 2025 shows the price of a fixed capability falling fast and very unevenly by task — which is real, and is also exactly the condition under which total spend rises.
 
 Both things can be fine. A falling price and a growing bill coexist comfortably as long as customer value grows faster. That is the relationship to measure, and almost nobody measures it.
 
@@ -107,7 +107,7 @@ Source: Jevons (1865), The Coal Question, chapter VII. Duranton and Turner (2011
 
 Source: Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends). Check for a newer edition before each delivery.
 
-## 15:00 to 18:00: slide 7, Now do it to software
+## 15:00 to 17:00: slide 7, Now do it to software
 
 On screen:
 
@@ -124,7 +124,7 @@ Story: A design review where "inference is basically free" ended the discussion.
 
 Delivery: Ask for one show of hands: who has shipped a frontier call where a lookup would do? Then admit you have too.
 
-## 18:00 to 20:00: slide 8, The lots are already built
+## 17:00 to 19:45: slide 8, The lots are already built
 
 On screen:
 
@@ -134,13 +134,13 @@ On screen:
 
 Here is the part that should worry you more than the price. Shoup won. Cities have been repealing parking minimums for a decade. The lots are still there. The businesses that could have opened on that land still did not open. The environment outlived the rule that produced it.
 
-That is path dependence, word four: where you can get to depends on how you got here, and reversal costs more than the original decision did. Paul David made the argument famous with QWERTY in 1985, and I want to be straight with you, because it matters for how you use this: economists have been fighting about that example ever since. Liebowitz and Margolis published a paper in 1990 called The Fable of the Keys arguing the evidence was thin. The concept survives. The canonical example is contested.
+That is path dependence, word four: where you can get to depends on how you got here, and reversal costs more than the original decision did. Paul David made it famous with QWERTY in 1985, and I will be straight with you because it matters for how you use this — economists have fought about that example ever since, and Liebowitz and Margolis argued in 1990 that the evidence was thin. The concept survives. The canonical example is contested.
 
 Which is instructive, because path dependence is very easy to assert and very hard to prove, including about your own codebase. So do not assert it. Measure it. Pick one model call in your product and try to remove it. Count the hours. That number is your lock-in, and it is the only version of this argument that will survive contact with your staff engineer.
 
 Source: David (1985), Clio and the Economics of QWERTY, American Economic Review 75(2). Contested by Liebowitz and Margolis (1990), The Fable of the Keys, Journal of Law and Economics 33(1). Arthur (1989), Competing Technologies, Increasing Returns, and Lock-In by Historical Events, The Economic Journal 99(394).
 
-## 20:00 to 22:00: slide 9, Whoever chooses is not whoever pays
+## 19:45 to 22:15: slide 9, Whoever chooses is not whoever pays
 
 On screen:
 
@@ -152,13 +152,13 @@ Word five, and this one is about your org chart, not your vendor. Moral hazard: 
 
 An engineer picks the architecture in a design review on a Tuesday. Finance sees the consequence in an aggregated line item sixty days later, in a different building, attributed to nothing in particular. Nobody in that loop is behaving badly. The meter is invisible at the moment of choice, so consumption is not a moral failure, it is the equilibrium. This is the same structure as the parking lot, running inside your company.
 
-And notice what Shoup actually recommended, because everyone gets this wrong. He never said ban parking. He said charge the right price for it, and give the money back to the neighborhood. Same here. The fix is not austerity and it is not a policy forbidding the model. It is putting the number in front of the person making the choice, at the moment they make it. Estimated cost per accepted outcome, in the design doc, next to the latency budget.
+And notice what Shoup actually recommended, because everyone gets this wrong. He never said ban parking. He said charge the right price and give the money back to the neighborhood. Same here. The fix is not austerity or a policy forbidding the model. It is putting the number in front of the person choosing, at the moment they choose: estimated cost per accepted outcome, in the design doc, next to the latency budget.
 
 Source: Holmstrom (1979), Moral Hazard and Observability, Bell Journal of Economics 10(1), 74 to 91. Nobel 2016.
 
 Delivery: Ask who can see a per-feature inference cost without filing a ticket. Very few hands. That is the slide.
 
-## 22:00 to 25:00: slide 10, Doubling on a Tuesday
+## 22:15 to 24:45: slide 10, Doubling on a Tuesday
 
 On screen:
 
@@ -174,7 +174,7 @@ Now the part worth remembering. Divide by the acceptance rate and you get a mult
 
 Delivery: Do the division on stage. Thirty seconds: name your product's accepted outcome in one sentence. If that is hard, the economics conversation just found a product problem.
 
-## 25:00 to 29:00: slide 11, Turn the dial
+## 24:45 to 28:45: slide 11, Turn the dial
 
 On screen:
 
@@ -194,7 +194,7 @@ Then multiply by your own volume, because the table is meaningless without it. A
 
 Delivery: Runbook section 4. Two-minute compression: the 1× and 10× rows only. Ask for 45 seconds: which assumption would you attack first before funding an optimization project?
 
-## 29:00 to 32:00: slide 12, You are not shopping, you are contracting
+## 28:45 to 32:00: slide 12, You are not shopping, you are contracting
 
 On screen:
 
@@ -218,15 +218,15 @@ On screen:
 > The option has value. It also has a premium: abstraction tax, eval upkeep, rehearsal time.
 > Same project, different answer, depending on which world you are in
 
-Everyone in this field says "keep it reversible" like it is a personality trait. It is not. It is an option, in the financial sense, and Dixit and Pindyck wrote the book on valuing exactly this kind of flexibility under uncertainty. The right to switch providers has a value that rises with how uncertain the price is and how exposed you are. It also has a premium you pay every month: the abstraction tax, a second eval suite, rehearsal time, and a generic wrapper that hides real differences between models and occasionally makes everything worse.
+Everyone says "keep it reversible" like it is a personality trait. It is not, it is an option in the financial sense, and Dixit and Pindyck wrote the book on valuing flexibility under uncertainty. The right to switch providers gains value as the price gets less certain and your exposure grows. It also has a monthly premium: the abstraction tax, a second eval suite, rehearsal time, and a generic wrapper that hides real differences between models.
 
-So do not argue about portability on vibes. Price it. Your exposure is the three prices on the next slide times your volume. Your premium is the engineering you would spend. Compare the two numbers.
+So do not argue about portability on vibes. Price it. Exposure is the three prices on the next slide times your volume; the premium is the engineering you would spend. Compare the two numbers.
 
-Same for optimization. Take a cache or a router that halves inference per attempt at the same acceptance rate. In our fixture it saves one cent per attempt at one-times pricing and ten cents at ten-times. Divide your build cost by that, divide by monthly attempts, and you have payback in months. At a million attempts a month, ten cents each is a hundred thousand dollars a month and you should have started yesterday. At a thousand attempts a month it is a hundred dollars, ten at today's price, and you should never do it. Identical project. The sweep is what tells you which world you are living in. A router that costs more to run than it saves is not better engineering.
+Same for optimization. Take a router that halves inference per attempt at the same acceptance rate: in our fixture it saves a cent per attempt at sticker price and ten cents at ten times. At a million attempts a month, ten cents each is a hundred thousand dollars and you should have started yesterday. At a thousand attempts it is a hundred dollars — ten at today's price — and you should never do it. Identical project. The sweep tells you which world you live in, and a router that costs more to run than it saves is not better engineering.
 
 Source: Dixit and Pindyck (1994), Investment Under Uncertainty, Princeton University Press.
 
-## 35:00 to 38:00: slide 14, Three prices for the next design review
+## 35:00 to 37:15: slide 14, Three prices for the next design review
 
 On screen:
 
@@ -240,7 +240,7 @@ Four actions, and each one is one of the words. Record gross consumption separat
 
 Delivery: 45 seconds in pairs on the third price. Most rooms have never computed it and the silence is useful.
 
-## 38:00 to 40:00: slide 15, Cheap intelligence changes incentives first
+## 37:15 to 40:00: slide 15, Cheap intelligence changes incentives first
 
 On screen:
 

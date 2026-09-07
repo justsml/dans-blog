@@ -5,16 +5,16 @@ Generated from [the current 40-minute outline](../../outlines/adaptive-systems-4
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../reveal-talks/adaptive-systems-15min.html) | [Download](../../decks/adaptive-systems-15min-screen.pptx) | [Download](../../decks/adaptive-systems-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../reveal-talks/adaptive-systems-30min.html) | [Download](../../decks/adaptive-systems-30min-screen.pptx) | [Download](../../decks/adaptive-systems-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../reveal-talks/adaptive-systems-40min.html) | [Download](../../decks/adaptive-systems-40min-screen.pptx) | [Download](../../decks/adaptive-systems-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/adaptive-systems-15min.html) | [Download](../../decks/adaptive-systems-15min-screen.pptx) | [Download](../../decks/adaptive-systems-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/adaptive-systems-30min.html) | [Download](../../decks/adaptive-systems-30min-screen.pptx) | [Download](../../decks/adaptive-systems-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/adaptive-systems-40min.html) | [Download](../../decks/adaptive-systems-40min-screen.pptx) | [Download](../../decks/adaptive-systems-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: Adaptive, agentic apps
 
 [On-screen PPTX](../../decks/adaptive-systems-40min-screen.pptx) · [Reading handout PPTX](../../decks/adaptive-systems-40min-handout.pptx)
 
-The 15-slide [browser deck](../../../reveal-talks/adaptive-systems.html) follows the [40-minute outline](../../outlines/adaptive-systems-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
+The 15-slide [browser deck](../../../../public/talks/adaptive-systems.html) follows the [40-minute outline](../../outlines/adaptive-systems-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |

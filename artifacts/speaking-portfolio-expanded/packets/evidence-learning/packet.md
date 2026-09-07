@@ -1,6 +1,6 @@
 # Talk packet: Outsmart Your Lying, Cheating Students
 
-[Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Working notes](notes-2026-09-05.md) · [Deck](../../../reveal-talks/evidence-learning.html)
+[Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Working notes](notes-2026-09-05.md) · [Deck](../../../../public/talks/evidence-learning.html)
 
 Outline: [40 min](../../outlines/evidence-learning-40min.md). The PPTX export in [decks](../../decks/) predates the 2026-09-06 rewrite.
 

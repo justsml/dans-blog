@@ -12,7 +12,7 @@
  *   ...front matter paragraphs...
  *   ## N. Slide heading
  *   MM:SS to MM:SS · pacing
- *   ![alt](../../reveal-talks/assets/<topic>/file.svg)   optional diagram
+ *   ![alt](../../../public/talks/assets/<topic>/file.svg)   optional diagram
  *   > visible line                                        one or more
  *   spoken paragraphs
  *   Story: prompt for a first-hand example                optional
@@ -59,7 +59,8 @@ type Talk = {
 };
 
 const root = dirname(new URL(import.meta.url).pathname);
-const revealDir = join(root, "..", "reveal-talks");
+const revealDir = join(root, "../../public/talks");
+const templateDir = join(root, "../reveal-talks/templates");
 
 export const TALKS: Record<string, Talk> = {
   "retrieval": {
@@ -120,16 +121,7 @@ export const TALKS: Record<string, Talk> = {
         12,
         15
       ],
-      "times": [
-        1.5,
-        1,
-        2.5,
-        1.5,
-        3,
-        2,
-        2,
-        1.5
-      ],
+      "times": [1.5, 1.75, 2, 1.5, 3, 1.75, 2, 1.5],
       "bridges": {
         "2": "Bridge: term specificity, vectors, vocabulary mismatch, and passage retrieval explain how we obtain candidates. Now judge the evidence they returned.",
         "12": "Bridge: retrieved text supplies evidence, never tool authority. Name a corpus owner and an update path."
@@ -194,17 +186,7 @@ export const TALKS: Record<string, Talk> = {
         9,
         15
       ],
-      "times": [
-        1,
-        1,
-        1,
-        1.5,
-        1.5,
-        2,
-        3,
-        2.5,
-        1.5
-      ],
+      "times": [1.5, 1.5, 1.25, 1.5, 1.5, 1.75, 2.5, 2.25, 1.25],
       "bridges": {
         "1": "Bridge: our cancellation workload reverses the fictional leaderboard. The scoring question changed.",
         "9": "Bridge: separate held-out evidence, report slices and counts, version the scorer, set the rejection rule before viewing the candidate, and use code for state and schema, graders for language, people for disputed policy."
@@ -379,16 +361,7 @@ export const TALKS: Record<string, Talk> = {
         13,
         15
       ],
-      "times": [
-        1,
-        1,
-        1.5,
-        2,
-        4,
-        2,
-        2,
-        1.5
-      ],
+      "times": [1.75, 1.5, 1.5, 1.5, 3.5, 2.25, 1.75, 1.25],
       "bridges": {
         "2": "Bridge: add only the integration needed for one failure class; the check preserves counts and evidence.",
         "4": "Bridge: distill before classifying, and give unexplained cases an unknown result.",
@@ -677,14 +650,14 @@ export function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
 }
 
 export function deckFor(talk: Talk, slides: Slide[]) {
-  const head = readFileSync(join(revealDir, "templates", "engineering-head.html"), "utf8")
+  const head = readFileSync(join(templateDir, "engineering-head.html"), "utf8")
     .replace("<title>", '<link rel="icon" href="data:,"><title>')
     .replace("{{DESCRIPTION}}", esc(talk.description))
     .replace("{{TITLE}}", esc(talk.title))
     .replace('data-topic="adaptive-systems"', `data-topic="${talk.slug}"`)
     .replace('body[data-topic="adaptive-systems"] { --accent:#a4d2c4; --bg:#122323; }', `body[data-topic="adaptive-systems"] { --accent:#a4d2c4; --bg:#122323; }
 body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[data-topic="evidence-learning"] { --accent:#efb15b; --bg:#151e28; }\nbody[data-topic="free-tier"] { --accent:#efb15b; --bg:#151e28; }`);
-  const evidence = `../speaking-portfolio-expanded/packets/${talk.slug}/evidence-bank.md`;
+  const evidence = `https://github.com/justsml/dans-blog/blob/main/artifacts/speaking-portfolio-expanded/packets/${talk.slug}/evidence-bank.md`;
   const sections = slides.map((s, i) => {
     const timing = toSec(s.end) - toSec(s.start);
     const mins = timing / 60;
@@ -703,7 +676,7 @@ body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[dat
     let cls = "";
     if (s.image) {
       cls = ' class="visual-slide"';
-      const src = s.image.src.replace(/^(\.\.\/)+reveal-talks\//, "");
+      const src = s.image.src.replace(/^(\.\.\/)+public\/talks\//, "");
       body = `<img class="talk-diagram" src="${src}" width="1280" height="500" alt="${esc(s.image.alt)}">`;
     } else if (s.table) {
       const [head, ...rows] = s.table;

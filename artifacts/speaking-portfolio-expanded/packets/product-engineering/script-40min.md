@@ -2,7 +2,7 @@
 
 Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
 
-## 00:00 to 02:30: slide 1, The architecture you could read off the org chart
+## 00:00 to 02:00: slide 1, The architecture you could read off the org chart
 
 On screen:
 
@@ -19,7 +19,7 @@ Source: Melvin E. Conway (1968), [How Do Committees Invent?](https://melconway.c
 
 Story: A system whose API boundaries reproduced the team handoffs, and the change that got stuck between them.
 
-## 02:30 to 05:00: slide 2, Mirroring is measured. It is not destiny.
+## 02:00 to 04:15: slide 2, Mirroring is measured. It is not destiny.
 
 On screen:
 
@@ -34,7 +34,7 @@ So the org chart is evidence about why the software looks like this. It is not a
 
 Source: Colfer and Baldwin (2016), [The mirroring hypothesis: theory, evidence, and exceptions](https://doi.org/10.1093/icc/dtw027), Industrial and Corporate Change 25(5), 709–738. MacCormack, Rusnak, and Baldwin (2012), [Exploring the duality between product and organizational architectures](https://www.hbs.edu/ris/Publication%20Files/Research%20Policy%2041%20%282012%29%201309%E2%80%93%201324_c5c2350e-013c-4065-a2f9-d95eb32177d5.pdf), Research Policy 41(8), 1309–1324.
 
-## 05:00 to 07:30: slide 3, Your org chart is a fossil of coordination cost
+## 04:15 to 06:30: slide 3, Your org chart is a fossil of coordination cost
 
 On screen:
 
@@ -49,7 +49,7 @@ That is the inversion. Do not start with one agent per box on the current org ch
 
 Source: Ronald H. Coase (1937), [The Nature of the Firm](https://onlinelibrary.wiley.com/doi/10.1111/j.1468-0335.1937.tb00002.x), Economica 4(16), 386–405. The agent-design application is the speaker’s argument.
 
-## 07:30 to 09:30: slide 4, The spectrum, and the two ways to lose
+## 06:30 to 08:00: slide 4, The spectrum, and the two ways to lose
 
 On screen:
 
@@ -64,7 +64,7 @@ Automate the right things and keep the taste. Trade judgment for AI vibes and th
 
 Delivery: Take 30 seconds: where is your team on the spectrum, and what is its heaviest handoff? Keep the answers for the close.
 
-## 09:30 to 12:00: slide 5, Draw the wires between agents
+## 08:00 to 10:00: slide 5, Draw the wires between agents
 
 On screen:
 
@@ -80,7 +80,7 @@ Team Topologies distinguishes collaboration, service consumption, and facilitati
 
 Source: [Thoughtworks, Inverse Conway Maneuver](https://www.thoughtworks.com/en-br/radar/techniques/inverse-conway-maneuver), 2014/2015. Skelton and Pais, [Team Topologies interaction modes](https://teamtopologies.com/key-concepts).
 
-## 12:00 to 14:00: slide 6, Two directions of attention
+## 10:00 to 11:30: slide 6, Two directions of attention
 
 On screen:
 
@@ -95,7 +95,7 @@ Keep the review where somebody opens the source material and argues about what b
 
 Story: A feedback cluster that merged different complaints and changed the wrong priority. Bring one original complaint that the summary obscured.
 
-## 14:00 to 15:00: slide 7, Effort left the rubric. Argue with me.
+## 11:30 to 12:45: slide 7, Effort left the rubric. Argue with me.
 
 On screen:
 
@@ -108,7 +108,7 @@ We still have to choose what to ship. Even when the first implementation is chea
 
 Delivery: Ask who estimated a ticket last week, take the show of hands, and say the count without inventing a denominator. Confirm the first-person observation with Dan before delivery; if it no longer holds, open with the question instead.
 
-## 15:00 to 16:30: slide 8, Gap analysis, past engineering
+## 12:45 to 14:30: slide 8, Gap analysis, past engineering
 
 On screen:
 
@@ -121,7 +121,7 @@ Make one proposal wrong in review. The screenshot may show a feature hidden beca
 
 Analytics, warehouse queries and marketing drafts feed the same queue. They share provenance and owners, and none of them needs write access to customer records.
 
-## 16:30 to 18:30: slide 9, Targeted beta enrollment, and the deluge
+## 14:30 to 16:30: slide 9, Targeted beta enrollment, and the deluge
 
 On screen:
 
@@ -136,7 +136,7 @@ Prepare the intake before inviting people. If customers answer and nobody follow
 
 Story: A beta invitation that selected users on the wrong axis, or feedback that arrived faster than the team could act on it.
 
-## 18:30 to 20:30: slide 10, Campbell's law arrives on schedule
+## 16:30 to 18:00: slide 10, Campbell's law arrives on schedule
 
 On screen:
 
@@ -151,7 +151,7 @@ The interesting question is what the winning candidate did to earn the number. A
 
 Source: Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
-## 20:30 to 25:00: slide 11, Demo: run it before you know the rule
+## 18:00 to 22:30: slide 11, Demo: run it before you know the rule
 
 On screen:
 
@@ -169,7 +169,7 @@ Write the rule you wish you had before the first vote. Compare it with the polic
 
 Delivery: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow economics-product/demo.md. Allow 45 seconds to write the rule.
 
-## 25:00 to 27:30: slide 12, Where guards go, including the two we forgot
+## 22:30 to 24:30: slide 12, Where guards go, including the two we forgot
 
 On screen:
 
@@ -182,7 +182,7 @@ Widening a cohort spends more customer exposure. An expensive run spends money. 
 
 Then add the two missing from the old list. Sending a message to a real customer. Deleting their records. Those are consequences for another person, even when the API call costs a fraction of a cent. A person approves them, and the system enforces that permission rather than mentioning it in a prompt.
 
-## 27:30 to 30:00: slide 13, How many agents can one person own?
+## 24:30 to 26:30: slide 13, How many agents can one person own?
 
 On screen:
 
@@ -199,7 +199,7 @@ Source: V. A. Graicunas, [Relationship in Organization](https://nickols.us/relat
 
 Delivery: Do 6 × (32 + 5) aloud. Ask who owns more automated jobs than they could inspect in one afternoon. Take 20 seconds.
 
-## 30:00 to 32:30: slide 14, Software Runs on Petrol Now
+## 26:30 to 30:30: slide 14, Software Runs on Petrol Now
 
 On screen:
 
@@ -207,19 +207,19 @@ On screen:
 > Sentry bots hunting your own vulnerabilities, 24/7, forever
 > Be careful firing the security bots. They know who you are.
 
-Two predictions to close on, and I will label them as predictions once: this is where I think the operating model goes, not something I have measured. Here is the first. Today you buy tokens to build software. Before long most software will need a steady stream of them just to keep running: to stay current with its dependencies, to re-derive the integration a vendor renamed last night, to keep its own documentation true. Steady for some systems, bursty for others. Either way it stops being a build cost and becomes fuel, and you will meter it the way you meter electricity, which is to say you will only notice it when it moves.
+Two predictions to close on, and I will label them as predictions once: this is where I think the operating model goes, not something I have measured. Here is the first. Today you buy tokens to build software. Before long most software will need a steady stream of them just to keep running — to stay current with its dependencies, to re-derive the integration a vendor renamed last night, to keep its own documentation true. It stops being a build cost and becomes fuel, metered like electricity, which is to say you only notice it when it moves.
 
-And some of that burn is not features at all. It is defense. If an attacker can point a tireless agent at your surface, the only symmetric answer is a tireless agent of your own: self-hacking around the clock, finding and mitigating faster than the countless people trying to get in. That is a permanent line item on a product that is otherwise finished. It never completes.
+And some of that burn is not features at all. It is defense. If an attacker can point a tireless agent at your surface, the only symmetric answer is a tireless agent of your own, self-hacking around the clock. That is a permanent line item on a product that is otherwise finished. It never completes.
 
-Be careful when you fire the security sentry bots, incidentally. They know who you are. They know where the keys are. They have read all of your commits. Underneath the joke is the question from slide 12: an agent whose account you revoked while its credential is still live is the boring version of this, and it happens today.
+Be careful when you fire the security sentry bots, incidentally. They know who you are. They know where the keys are. They have read all of your commits. Underneath the joke is slide 12's question: an agent whose account you revoked while its credential is still live is the boring version, and it happens today.
 
-So price it now. When you draw the wires between agents, one of those wires is a fuel line. The ongoing burn of a function belongs in the design doc beside its latency budget, and somebody owns that meter. It is not the person who wrote the prompt. Buy Me a Free Tier owns the arithmetic; what belongs on this org chart is the owner.
+So price it now. When you draw the wires between agents, one of them is a fuel line. The ongoing burn belongs in the design doc beside the latency budget, and somebody owns that meter. Not the person who wrote the prompt. Buy Me a Free Tier owns the arithmetic; this org chart owns the owner.
 
 Story: The first time an always-on agent showed up as a recurring cost nobody had budgeted.
 
 Delivery: Ask who has a security agent running right now with credentials nobody has rotated. Do not take an answer.
 
-## 32:30 to 35:30: slide 15, Minority Report, With Terminals
+## 30:30 to 35:00: slide 15, Minority Report, With Terminals
 
 On screen:
 
@@ -229,17 +229,17 @@ On screen:
 
 Second prediction, and this one is less comfortable. AI does not magically make software work. Well-understood software still gets harder to operate as the world moves under it: you outgrow a performance envelope, you accumulate features, somebody deprecates your dependency. Generation makes the first version cheap. It does not make the tenth year cheap.
 
-And throwaway software is a taste most of this room has and most of the world does not. We are early adopters; we are delighted to regenerate a tool rather than maintain it. Normal people are not turned on by the idea of vibe coding their own recipe tracker, never mind a Slack replacement. What they will accept is an interface generated for them, adapting in real time, that they never had to choose from a menu of products.
+And throwaway software is a taste this room has and the world does not. We are early adopters, delighted to regenerate a tool rather than maintain it. Normal people are not turned on by vibe coding their own recipe tracker, never mind a Slack replacement. What they will accept is an interface generated for them, adapting in real time, that they never had to choose off a shelf.
 
-Which raises the question this room should actually be arguing about. Should OpenAI and Anthropic end up owning every software channel? Watch what happens when the assistants ship real-time collaboration: who spends less time in email, Slack and Google Docs then? I can already make and edit images and video in ways that make me less likely to open Photoshop or DaVinci. If I need a jingle for the company, I ask Suno and it is done. So is everything you spent a lifetime learning, mastering and fighting with about to be irrelevant? Yes. At least as you know it.
+Which raises the question this room should be arguing about. Should OpenAI and Anthropic end up owning every software channel? Watch what happens when the assistants ship real-time collaboration: who spends less time in email, Slack and Docs then? I can already edit images and video in ways that make me less likely to open Photoshop or DaVinci, and if I need a jingle I ask Suno and it is done. So is everything you spent a lifetime mastering about to be irrelevant? Yes. At least as you know it.
 
 What replaces it looks less like a grid of apps and more like Minority Report, with a surprise revival of the terminal. Which is a Matrix ending when you think about it. Thanks, AI. Skynet is not so bad if I get to keep my CLIs.
 
-Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean the story of image creation belongs to the big players, and the same is true in whichever industry you work in. Those of us who do not work at a frontier lab, the organic agents in the room, get to rethink any and every app as an AI-native system from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
+Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean image creation belongs to the big players, and the same holds in whichever industry you work in. Those of us who do not work at a frontier lab — the organic agents in the room — get to rethink any and every app as an AI-native system, from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
 
 Delivery: Ask which product they use daily that would not survive somebody else rebuilding it AI-native. Take one answer. Do not resolve it.
 
-## 35:30 to 37:30: slide 16, Every experiment reports its hypothesis
+## 35:00 to 37:00: slide 16, Every experiment reports its hypothesis
 
 On screen:
 
@@ -256,7 +256,7 @@ Source: Microsoft ExP (2020), [Patterns of trustworthy experimentation: pre-expe
 
 Delivery: Give 45 seconds to write. Walk through one answer for the remaining discussion time.
 
-## 37:30 to 40:00: slide 17, Break the mirror on purpose
+## 37:00 to 40:00: slide 17, Break the mirror on purpose
 
 On screen:
 

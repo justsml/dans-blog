@@ -15,7 +15,7 @@ try {
     page.on('console', m => { if (m.type() === 'error') failures.push(`${slug}: ${m.text()}`); });
     page.on('requestfailed', r => failures.push(`${slug}: ${r.url()} ${r.failure()?.errorText}`));
     page.on('response', r => { if (r.status() >= 400) failures.push(`${slug}: HTTP ${r.status()} ${r.url()}`); });
-    await page.goto(`${base}/reveal-talks/${slug}.html`);
+    await page.goto(`${base}/talks/${slug}.html`);
     await page.waitForFunction(() => (window as any).Reveal?.isReady());
     const count = await page.locator('.slides > section').count();
     for (let i = 0; i < count; i++) {

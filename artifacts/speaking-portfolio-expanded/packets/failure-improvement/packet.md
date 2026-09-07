@@ -1,6 +1,6 @@
 # Talk packet: Automating Improvement From Failure
 
-[Browser deck](../../../reveal-talks/failure-improvement.html) · [Presenter script](script-40min.md) · [Visuals](visuals.md)
+[Browser deck](../../../../public/talks/failure-improvement.html) · [Presenter script](script-40min.md) · [Visuals](visuals.md)
 
 Outline: [40 min](../../outlines/failure-improvement-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 

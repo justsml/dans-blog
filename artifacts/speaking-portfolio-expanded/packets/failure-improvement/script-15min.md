@@ -2,7 +2,7 @@
 
 Use slides 1, 2, 4, 6, 8, 9, 13, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Demo compressed to four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration.
 
-## 00:00 to 01:00: slide 1, Nobody reads the scroll
+## 00:00 to 01:45: slide 1, Nobody reads the scroll
 
 On screen:
 
@@ -21,7 +21,7 @@ Story: The failure that sat in your logs until a customer reported it. Bring the
 
 Delivery: Scroll a sanitized export. Take a show of hands: who learned about a logged failure from a customer? Allow 30 seconds.
 
-## 01:00 to 02:00: slide 2, Step one: hand an agent the logs
+## 01:45 to 03:15: slide 2, Step one: hand an agent the logs
 
 On screen:
 
@@ -36,7 +36,7 @@ Save the answer with the input window. Tomorrow, you want to know whether it fou
 
 Bridge: add only the integration needed for one failure class; the check preserves counts and evidence.
 
-## 02:00 to 03:30: slide 4, The out-of-band check
+## 03:15 to 04:45: slide 4, The out-of-band check
 
 On screen:
 
@@ -53,7 +53,7 @@ Delivery: Open contracts.md and trace one interrupted run. Show which artifact s
 
 Bridge: distill before classifying, and give unexplained cases an unknown result.
 
-## 03:30 to 05:30: slide 6, The retry that hid the auth failure
+## 04:45 to 06:15: slide 6, The retry that hid the auth failure
 
 On screen:
 
@@ -75,7 +75,7 @@ Delivery: Take two short answers about fixes that hid a problem. Budget 45 secon
 
 Bridge: tickets and PRs carry evidence into a bounded review queue.
 
-## 05:30 to 09:30: slide 8, Demo: nothing leaves without evidence
+## 06:15 to 09:45: slide 8, Demo: nothing leaves without evidence
 
 On screen:
 
@@ -94,7 +94,7 @@ Source: Toyota, [Toyota Production System](https://global.toyota/en/company/visi
 
 Delivery: Use the live sequence in engineering/failure-improvement/demo.md. Full slot 5:30. Run real tests; never substitute the checkbox kit for execution. Recording remains blocked until a sanitized production export, working tracker integration, and captured gate run exist.
 
-## 09:30 to 11:30: slide 9, Who reviews the robot's PRs?
+## 09:45 to 12:00: slide 9, Who reviews the robot's PRs?
 
 On screen:
 
@@ -113,7 +113,7 @@ Source: Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedi
 
 Bridge: compile repeated paths into tested scripts; feedback uses the same queue, and people approve money, messages, and deletion.
 
-## 11:30 to 13:30: slide 13, The metrics that will lie to you
+## 12:00 to 13:45: slide 13, The metrics that will lie to you
 
 On screen:
 
@@ -130,7 +130,7 @@ Source: Marilyn Strathern (1997), [Improving ratings: audit in the British Unive
 
 Bridge: choose one failure class and one integration on Monday.
 
-## 13:30 to 15:00: slide 15, Fail to win
+## 13:45 to 15:00: slide 15, Fail to win
 
 On screen:
 

@@ -2,7 +2,7 @@
 
 Use slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The number and its sampling assumptions stay together. Calibration uses the always-pass confusion matrix.
 
-## 00:00 to 01:00: slide 1, Tuxedo of Benchmarks
+## 00:00 to 01:30: slide 1, Tuxedo of Benchmarks
 
 On screen:
 
@@ -20,7 +20,7 @@ Delivery: Take one show of hands. Do not ask the room to vote again on the next 
 
 Bridge: our cancellation workload reverses the fictional leaderboard. The scoring question changed.
 
-## 01:00 to 02:00: slide 3, Goodhart, Campbell, and the target
+## 01:30 to 03:00: slide 3, Goodhart, Campbell, and the target
 
 On screen:
 
@@ -35,7 +35,7 @@ Write that loophole down before optimizing. Then add a case that exploits it. If
 
 Source: Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981). Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are attributed paraphrases, not claims that every optimized benchmark has stopped measuring anything.
 
-## 02:00 to 03:00: slide 4, Your Eval Suite Needs Therapy
+## 03:00 to 04:15: slide 4, Your Eval Suite Needs Therapy
 
 On screen:
 
@@ -50,7 +50,7 @@ Nobody needs another dashboard to discover that the grader rewards tone. We need
 
 Story: The green eval run followed by a production failure. Bring the case, the score, the observed state, and the assumption the scorer missed.
 
-## 03:00 to 04:30: slide 5, One number is a comforting fiction
+## 04:15 to 05:45: slide 5, One number is a comforting fiction
 
 On screen:
 
@@ -65,7 +65,7 @@ For cancellation, separate constraints from preferences. The correct account and
 
 Source: Cronbach and Meehl (1955), [Construct validity in psychological tests](https://psychclassics.yorku.ca/Cronbach/construct.htm). Messick (1990), [Validity of Test Interpretation and Use](https://www.ets.org/research/policy_research_reports/publications/report/1990/ihmy.html). Raji et al. (2021), [AI and the Everything in the Whole Wide World Benchmark](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/084b6fbb10729ed4da8c3d3f5a3ae7c9-Abstract-round2.html).
 
-## 04:30 to 06:00: slide 6, "Cancel my account."
+## 05:45 to 07:15: slide 6, "Cancel my account."
 
 On screen:
 
@@ -80,7 +80,7 @@ A trace becomes a test when it answers a specific question. A transcript without
 
 Delivery: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
 
-## 06:00 to 08:00: slide 7, Run the Judges
+## 07:15 to 09:00: slide 7, Run the Judges
 
 On screen:
 
@@ -98,7 +98,7 @@ Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-
 
 Delivery: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
 
-## 08:00 to 11:00: slide 8, Twenty for Twenty, One in Seven
+## 09:00 to 11:30: slide 8, Twenty for Twenty, One in Seven
 
 On screen:
 
@@ -117,7 +117,7 @@ Source: James A. Hanley and Abby Lippman-Hand (1983), [If Nothing Goes Wrong, Is
 
 Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection would make the bound inapplicable. Run arithmetic.ts if a calculator helps.
 
-## 11:00 to 13:30: slide 9, Agreeable to a Fault (κ = 0)
+## 11:30 to 13:45: slide 9, Agreeable to a Fault (κ = 0)
 
 On screen:
 
@@ -136,7 +136,7 @@ Delivery: Write the 90/10 confusion matrix. Compute (0.9 − 0.9)/(1 − 0.9). A
 
 Bridge: separate held-out evidence, report slices and counts, version the scorer, set the rejection rule before viewing the candidate, and use code for state and schema, graders for language, people for disputed policy.
 
-## 13:30 to 15:00: slide 15, What does good mean here?
+## 13:45 to 15:00: slide 15, What does good mean here?
 
 On screen:
 

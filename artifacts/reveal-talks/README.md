@@ -1,6 +1,6 @@
 # Reveal.js talk collection
 
-Ten full-length HTML decks, based on the latest available 40-minute outlines. Open [the collection](index.html) to choose a talk.
+Ten full-length HTML decks, based on the latest available 40-minute outlines. Open [the collection](../../public/talks/index.html) to choose a talk.
 
 ## Present
 
@@ -10,7 +10,7 @@ From the repository root:
 bun artifacts/reveal-talks/serve.ts
 ```
 
-Visit http://localhost:4343/reveal-talks/index.html. Set `TALKS_PORT` to choose another port. The server binds to localhost and serves the artifacts directory so the existing demo kit and source outlines remain reachable.
+Visit http://localhost:4343/talks/. Set `TALKS_PORT` to choose another port. The server binds to localhost and serves Astro's `public/` directory. Slides are at `/talks/` and the demo kit is at `/talks/demos/`. Source-note links point to the repository.
 
 Arrow keys navigate, Escape opens overview, F enters fullscreen, and S opens speaker view with notes and a timer. Speaker view requires a local server and permission for its popup. Add `?print-pdf` before the URL hash, then print from Chromium for PDF output.
 
@@ -22,7 +22,7 @@ The full-length decks use `../speaking-portfolio-expanded/outlines/*-40min.md`. 
 
 The free-tier deck includes dated company announcements and an AWS credit offer checked September 5, 2026. Refresh these before presenting. Synthetic scores and costs remain illustrative, not measurements of current products.
 
-Edit canonical outlines for registered talks; never edit their generated HTML or scripts. Shared typography and behavior live in `assets/deck.css` and `assets/deck.js`; each deck also has its own art direction. No Astro routes or dependencies are involved. Every full-length talk has synchronized 15-, 30-, and 40-minute browser and [PowerPoint editions](../speaking-portfolio-expanded/decks/README.md).
+Edit canonical outlines for registered talks; never edit their generated HTML or scripts. Shared typography and behavior live in `public/talks/assets/deck.css` and `public/talks/assets/deck.js`; each deck also has its own art direction. Astro serves these files directly from `public/talks/`; no page component is needed. Every full-length talk has synchronized 15-, 30-, and 40-minute browser and [PowerPoint editions](../speaking-portfolio-expanded/decks/README.md).
 
 The registered talks are skeptic-education, adaptive-systems, dynamic-scaling, evidence-learning, free-tier, failure-improvement, product-engineering, judgment, benchmarks, and retrieval. After editing `../speaking-portfolio-expanded/outlines/<talk>-40min.md`, run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts <talk>` to synchronize its browser decks, scripts, adaptations, and PowerPoints. The shared head lives in `templates/engineering-head.html`.
 
@@ -35,3 +35,5 @@ Three cuts of the same talk, sized for lightning and short-session slots: `llm-u
 ## Render and link check
 
 With the local server running, use `bun artifacts/speaking-portfolio-expanded/check-talks.ts failure-improvement product-engineering judgment benchmarks retrieval`. It uses installed Chrome, visits every slide, reveals all fragments, and checks viewport overflow, console/network errors, and local Markdown links in changed files. Set `TALKS_CHECK_BASE` to a Git revision to include already-committed changes in the link check.
+
+The authoring template and preview server stay here. Generated HTML, diagrams, fonts and browser scripts live in `public/talks/`. The generators write there directly.

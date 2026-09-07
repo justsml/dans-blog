@@ -1,6 +1,6 @@
 # Talk packet: Dynamic Scaling of Agentic Workloads
 
-[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/dynamic-scaling.html)
+[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../../public/talks/dynamic-scaling.html)
 
 ## Titles
 

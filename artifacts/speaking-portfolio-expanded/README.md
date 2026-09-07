@@ -2,7 +2,7 @@
 
 Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evidence notes and an offline demo kit. These extend the earlier four-talk portfolio.
 
-[Open the offline demos](demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
+[Open the offline demos](../../public/talks/demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
 **Deck sync.** All nine talks have synchronized 15-, 30-, and 40-minute browser decks, presenter scripts, screen PowerPoints, and handout PowerPoints. The [PowerPoint download index](decks/README.md) links all 54 editions. Adaptive includes the [execution-memory pattern and prompt](packets/adaptive-systems/memory-pattern.md) in its current outline and 40-minute handout.
 
@@ -32,15 +32,15 @@ The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from 
 
 | Talk | Outline | Slides | Editions | CFP package |
 | --- | --- | ---: | --- | --- |
-| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 15 | [Browser deck](../reveal-talks/failure-improvement.html) | [Failure improvement](engineering/failure-improvement/CFP.md) |
+| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 15 | [Browser deck](../../public/talks/failure-improvement.html) | [Failure improvement](engineering/failure-improvement/CFP.md) |
 | Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
 | Buy Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Economics](economics-product/CFP.md) |
 | Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Education](education/CFP.md) |
 | Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
-| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 17 | [Browser deck](../reveal-talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
-| Three Search Methods in a Fundable Trenchcoat | [40 min](outlines/retrieval-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | — |
-| Stop Looking at My Benchmarks… Get Your Own! | [40 min](outlines/benchmarks-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | — |
-| Code Is Cheap. Judgment Is Expensive. | [40 min](outlines/judgment-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | — |
+| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 17 | [Browser deck](../../public/talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
+| Three Search Methods in a Fundable Trenchcoat | [40 min](outlines/retrieval-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Retrieval](engineering/retrieval/CFP.md) |
+| Stop Looking at My Benchmarks… Get Your Own! | [40 min](outlines/benchmarks-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Benchmarks](engineering/benchmarks/CFP.md) |
+| Code Is Cheap. Judgment Is Expensive. | [40 min](outlines/judgment-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Judgment](engineering/judgment/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 

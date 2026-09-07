@@ -1,5 +1,5 @@
 import {test,expect} from 'bun:test';
-import './demo-logic.js';
+import '../../../public/talks/demos/demo-logic.js';
 const d=globalThis.PortfolioDemo;
 test('learning objective changes whether correction is delegated',()=>{expect(d.cases.spelling.decision).toBe('Preserve');expect(d.cases.argument.decision).toBe('Augment')});
 test('normalization reuses resolution across local ports',()=>{expect(d.matchFailure('connect ECONNREFUSED 127.0.0.1:5433').known).toBe(true);expect(d.matchFailure('connect ECONNREFUSED localhost:5444').known).toBe(true)});

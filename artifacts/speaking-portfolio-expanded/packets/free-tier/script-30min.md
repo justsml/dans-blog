@@ -118,7 +118,7 @@ Word five, and this one is about your org chart, not your vendor. Moral hazard: 
 
 An engineer picks the architecture in a design review on a Tuesday. Finance sees the consequence in an aggregated line item sixty days later, in a different building, attributed to nothing in particular. Nobody in that loop is behaving badly. The meter is invisible at the moment of choice, so consumption is not a moral failure, it is the equilibrium. This is the same structure as the parking lot, running inside your company.
 
-And notice what Shoup actually recommended, because everyone gets this wrong. He never said ban parking. He said charge the right price for it, and give the money back to the neighborhood. Same here. The fix is not austerity and it is not a policy forbidding the model. It is putting the number in front of the person making the choice, at the moment they make it. Estimated cost per accepted outcome, in the design doc, next to the latency budget.
+And notice what Shoup actually recommended, because everyone gets this wrong. He never said ban parking. He said charge the right price and give the money back to the neighborhood. Same here. The fix is not austerity or a policy forbidding the model. It is putting the number in front of the person choosing, at the moment they choose: estimated cost per accepted outcome, in the design doc, next to the latency budget.
 
 Source: Holmstrom (1979), Moral Hazard and Observability, Bell Journal of Economics 10(1), 74 to 91. Nobel 2016.
 

@@ -4,7 +4,7 @@
 
 [Smaller memory pattern: prompt, record and worked example](memory-pattern.md)
 
-[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../reveal-talks/adaptive-systems.html)
+[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Evidence](evidence-bank.md) · [Deck](../../../../public/talks/adaptive-systems.html)
 
 ## Titles
 

@@ -108,7 +108,7 @@ Second prediction, and this one is less comfortable. AI does not magically make 
 
 What replaces it looks less like a grid of apps and more like Minority Report, with a surprise revival of the terminal. Which is a Matrix ending when you think about it. Thanks, AI. Skynet is not so bad if I get to keep my CLIs.
 
-Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean the story of image creation belongs to the big players, and the same is true in whichever industry you work in. Those of us who do not work at a frontier lab, the organic agents in the room, get to rethink any and every app as an AI-native system from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
+Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean image creation belongs to the big players, and the same holds in whichever industry you work in. Those of us who do not work at a frontier lab — the organic agents in the room — get to rethink any and every app as an AI-native system, from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
 
 Delivery: Ask which product they use daily that would not survive somebody else rebuilding it AI-native. Take one answer. Do not resolve it.
 

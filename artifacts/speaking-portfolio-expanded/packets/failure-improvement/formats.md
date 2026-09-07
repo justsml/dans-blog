@@ -5,14 +5,14 @@ Generated from [the current 40-minute outline](../../outlines/failure-improvemen
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../reveal-talks/failure-improvement-15min.html) | [Download](../../decks/failure-improvement-15min-screen.pptx) | [Download](../../decks/failure-improvement-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../reveal-talks/failure-improvement-30min.html) | [Download](../../decks/failure-improvement-30min-screen.pptx) | [Download](../../decks/failure-improvement-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../reveal-talks/failure-improvement-40min.html) | [Download](../../decks/failure-improvement-40min-screen.pptx) | [Download](../../decks/failure-improvement-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/failure-improvement-15min.html) | [Download](../../decks/failure-improvement-15min-screen.pptx) | [Download](../../decks/failure-improvement-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/failure-improvement-30min.html) | [Download](../../decks/failure-improvement-30min-screen.pptx) | [Download](../../decks/failure-improvement-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/failure-improvement-40min.html) | [Download](../../decks/failure-improvement-40min-screen.pptx) | [Download](../../decks/failure-improvement-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: Automating Improvement From Failure
 
-[Browser deck](../../../reveal-talks/failure-improvement.html).
+[Browser deck](../../../../public/talks/failure-improvement.html).
 
 | Length | Format | Source |
 | --- | --- | --- |

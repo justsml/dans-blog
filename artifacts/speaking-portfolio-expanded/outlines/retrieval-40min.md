@@ -133,7 +133,7 @@ Stage direction: Give 60 seconds in pairs and collect two judgments with reasons
 
 20:00 to 23:00 · build
 
-![Cranfield, Bedfordshire, 1966](../../reveal-talks/assets/retrieval/history.svg)
+![Cranfield, Bedfordshire, 1966](../../../public/talks/assets/retrieval/history.svg)
 
 > Corpus + queries + relevance judgments
 > 1966 → 2026 = 60 years

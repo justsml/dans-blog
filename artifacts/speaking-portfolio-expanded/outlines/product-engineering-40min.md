@@ -4,7 +4,7 @@
 
 ## 1. The architecture you could read off the org chart
 
-00:00 to 02:30 · warm
+00:00 to 02:00 · warm
 
 > Conway, 1968: communication structures constrain designs
 > Which of those boundaries still earns its keep?
@@ -21,7 +21,7 @@ Source: Melvin E. Conway (1968), [How Do Committees Invent?](https://melconway.c
 
 ## 2. Mirroring is measured. It is not destiny.
 
-02:30 to 05:00 · warm
+02:00 to 04:15 · warm
 
 > 142 studies reviewed
 > Mostly supported, with a documented minority that was not
@@ -36,7 +36,7 @@ Source: Colfer and Baldwin (2016), [The mirroring hypothesis: theory, evidence, 
 
 ## 3. Your org chart is a fossil of coordination cost
 
-05:00 to 07:30 · build
+04:15 to 06:30 · build
 
 > Coase, 1937: coordination has a cost
 > Reprice the handoff before copying it
@@ -51,7 +51,7 @@ Source: Ronald H. Coase (1937), [The Nature of the Firm](https://onlinelibrary.w
 
 ## 4. The spectrum, and the two ways to lose
 
-07:30 to 09:30 · build
+06:30 to 08:00 · build
 
 > Committee at one end. Five people at the other.
 > The suffering arrives later than the speed does.
@@ -66,9 +66,9 @@ Stage direction: Take 30 seconds: where is your team on the spectrum, and what i
 
 ## 5. Draw the wires between agents
 
-09:30 to 12:00 · build
+08:00 to 10:00 · build
 
-![Draw the wires between agents](../../reveal-talks/assets/product-engineering/interfaces.svg)
+![Draw the wires between agents](../../../public/talks/assets/product-engineering/interfaces.svg)
 
 > Research → sourced brief → product review
 > Feedback → cited clusters → product review
@@ -84,7 +84,7 @@ Source: [Thoughtworks, Inverse Conway Maneuver](https://www.thoughtworks.com/en-
 
 ## 6. Two directions of attention
 
-12:00 to 14:00 · build
+10:00 to 11:30 · build
 
 > Research looks out. Feedback looks in.
 > Keep the meeting where the evidence disagrees.
@@ -99,7 +99,7 @@ Story: A feedback cluster that merged different complaints and changed the wrong
 
 ## 7. Effort left the rubric. Argue with me.
 
-14:00 to 15:00 · build
+11:30 to 12:45 · build
 
 > My observation, not your sprint report
 > Who estimated a ticket last week?
@@ -112,7 +112,7 @@ Stage direction: Ask who estimated a ticket last week, take the show of hands, a
 
 ## 8. Gap analysis, past engineering
 
-15:00 to 16:30 · build
+12:45 to 14:30 · build
 
 > Walk the build. Attach screenshots and reasons.
 > A candidate should be cheap to reject.
@@ -125,7 +125,7 @@ Analytics, warehouse queries and marketing drafts feed the same queue. They shar
 
 ## 9. Targeted beta enrollment, and the deluge
 
-16:30 to 18:30 · build
+14:30 to 16:30 · build
 
 > Keep the customers behind the cluster
 > Invite an opt-in cohort. Keep the exit.
@@ -140,7 +140,7 @@ Story: A beta invitation that selected users on the wrong axis, or feedback that
 
 ## 10. Campbell's law arrives on schedule
 
-18:30 to 20:30 · build
+16:30 to 18:00 · build
 
 > Activation is the target
 > What behavior did we just pay for?
@@ -155,7 +155,7 @@ Source: Donald T. Campbell (1979), [Assessing the impact of planned social chang
 
 ## 11. Demo: run it before you know the rule
 
-20:30 to 25:00 · peak
+18:00 to 22:30 · peak
 
 > A · 40% activation
 > B · 48% activation
@@ -173,7 +173,7 @@ Stage direction: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Be
 
 ## 12. Where guards go, including the two we forgot
 
-25:00 to 27:30 · build
+22:30 to 24:30 · build
 
 > Wider rollout · expensive runs · infrastructure changes
 > Customer messaging · customer data deletion
@@ -186,7 +186,7 @@ Then add the two missing from the old list. Sending a message to a real customer
 
 ## 13. How many agents can one person own?
 
-27:30 to 30:00 · build
+24:30 to 26:30 · build
 
 > 6 × (32 + 5) = 222 possible relationships
 > Ownership costs attention. Budget it.
@@ -203,21 +203,21 @@ Source: V. A. Graicunas, [Relationship in Organization](https://nickols.us/relat
 
 ## 14. Software Runs on Petrol Now
 
-30:00 to 32:30 · build
+26:30 to 30:30 · build
 
-![Prediction: tokens stop being a build cost and become a running cost. A shipped product with no new features still burns tokens to stay current and to defend itself, and somebody owns that meter.](../../reveal-talks/assets/product-engineering/fuel.svg)
+![Prediction: tokens stop being a build cost and become a running cost. A shipped product with no new features still burns tokens to stay current and to defend itself, and somebody owns that meter.](../../../public/talks/assets/product-engineering/fuel.svg)
 
 > Tokens stop being a build cost and become a running cost
 > Sentry bots hunting your own vulnerabilities, 24/7, forever
 > Be careful firing the security bots. They know who you are.
 
-Two predictions to close on, and I will label them as predictions once: this is where I think the operating model goes, not something I have measured. Here is the first. Today you buy tokens to build software. Before long most software will need a steady stream of them just to keep running: to stay current with its dependencies, to re-derive the integration a vendor renamed last night, to keep its own documentation true. Steady for some systems, bursty for others. Either way it stops being a build cost and becomes fuel, and you will meter it the way you meter electricity, which is to say you will only notice it when it moves.
+Two predictions to close on, and I will label them as predictions once: this is where I think the operating model goes, not something I have measured. Here is the first. Today you buy tokens to build software. Before long most software will need a steady stream of them just to keep running — to stay current with its dependencies, to re-derive the integration a vendor renamed last night, to keep its own documentation true. It stops being a build cost and becomes fuel, metered like electricity, which is to say you only notice it when it moves.
 
-And some of that burn is not features at all. It is defense. If an attacker can point a tireless agent at your surface, the only symmetric answer is a tireless agent of your own: self-hacking around the clock, finding and mitigating faster than the countless people trying to get in. That is a permanent line item on a product that is otherwise finished. It never completes.
+And some of that burn is not features at all. It is defense. If an attacker can point a tireless agent at your surface, the only symmetric answer is a tireless agent of your own, self-hacking around the clock. That is a permanent line item on a product that is otherwise finished. It never completes.
 
-Be careful when you fire the security sentry bots, incidentally. They know who you are. They know where the keys are. They have read all of your commits. Underneath the joke is the question from slide 12: an agent whose account you revoked while its credential is still live is the boring version of this, and it happens today.
+Be careful when you fire the security sentry bots, incidentally. They know who you are. They know where the keys are. They have read all of your commits. Underneath the joke is slide 12's question: an agent whose account you revoked while its credential is still live is the boring version, and it happens today.
 
-So price it now. When you draw the wires between agents, one of those wires is a fuel line. The ongoing burn of a function belongs in the design doc beside its latency budget, and somebody owns that meter. It is not the person who wrote the prompt. Buy Me a Free Tier owns the arithmetic; what belongs on this org chart is the owner.
+So price it now. When you draw the wires between agents, one of them is a fuel line. The ongoing burn belongs in the design doc beside the latency budget, and somebody owns that meter. Not the person who wrote the prompt. Buy Me a Free Tier owns the arithmetic; this org chart owns the owner.
 
 Story: The first time an always-on agent showed up as a recurring cost nobody had budgeted.
 
@@ -225,9 +225,9 @@ Stage direction: Ask who has a security agent running right now with credentials
 
 ## 15. Minority Report, With Terminals
 
-32:30 to 35:30 · land
+30:30 to 35:00 · land
 
-![Prediction: a grid of chosen apps gives way to one generated surface, adapting per person, with a revived terminal beside it. Who owns that channel is still open, and non-frontier builders can rethink any app as AI-native.](../../reveal-talks/assets/product-engineering/channel.svg)
+![Prediction: a grid of chosen apps gives way to one generated surface, adapting per person, with a revived terminal beside it. Who owns that channel is still open, and non-frontier builders can rethink any app as AI-native.](../../../public/talks/assets/product-engineering/channel.svg)
 
 > Generated UI, adapting in real time, per person
 > Yes, the software you mastered is going away. As you know it.
@@ -235,19 +235,19 @@ Stage direction: Ask who has a security agent running right now with credentials
 
 Second prediction, and this one is less comfortable. AI does not magically make software work. Well-understood software still gets harder to operate as the world moves under it: you outgrow a performance envelope, you accumulate features, somebody deprecates your dependency. Generation makes the first version cheap. It does not make the tenth year cheap.
 
-And throwaway software is a taste most of this room has and most of the world does not. We are early adopters; we are delighted to regenerate a tool rather than maintain it. Normal people are not turned on by the idea of vibe coding their own recipe tracker, never mind a Slack replacement. What they will accept is an interface generated for them, adapting in real time, that they never had to choose from a menu of products.
+And throwaway software is a taste this room has and the world does not. We are early adopters, delighted to regenerate a tool rather than maintain it. Normal people are not turned on by vibe coding their own recipe tracker, never mind a Slack replacement. What they will accept is an interface generated for them, adapting in real time, that they never had to choose off a shelf.
 
-Which raises the question this room should actually be arguing about. Should OpenAI and Anthropic end up owning every software channel? Watch what happens when the assistants ship real-time collaboration: who spends less time in email, Slack and Google Docs then? I can already make and edit images and video in ways that make me less likely to open Photoshop or DaVinci. If I need a jingle for the company, I ask Suno and it is done. So is everything you spent a lifetime learning, mastering and fighting with about to be irrelevant? Yes. At least as you know it.
+Which raises the question this room should be arguing about. Should OpenAI and Anthropic end up owning every software channel? Watch what happens when the assistants ship real-time collaboration: who spends less time in email, Slack and Docs then? I can already edit images and video in ways that make me less likely to open Photoshop or DaVinci, and if I need a jingle I ask Suno and it is done. So is everything you spent a lifetime mastering about to be irrelevant? Yes. At least as you know it.
 
 What replaces it looks less like a grid of apps and more like Minority Report, with a surprise revival of the terminal. Which is a Matrix ending when you think about it. Thanks, AI. Skynet is not so bad if I get to keep my CLIs.
 
-Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean the story of image creation belongs to the big players, and the same is true in whichever industry you work in. Those of us who do not work at a frontier lab, the organic agents in the room, get to rethink any and every app as an AI-native system from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
+Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean image creation belongs to the big players, and the same holds in whichever industry you work in. Those of us who do not work at a frontier lab — the organic agents in the room — get to rethink any and every app as an AI-native system, from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
 
 Stage direction: Ask which product they use daily that would not survive somebody else rebuilding it AI-native. Take one answer. Do not resolve it.
 
 ## 16. Every experiment reports its hypothesis
 
-35:30 to 37:30 · land
+35:00 to 37:00 · land
 
 > If we do X, we expect Y to move
 > Report success, failure, and surprise where the team looks
@@ -264,7 +264,7 @@ Source: Microsoft ExP (2020), [Patterns of trustworthy experimentation: pre-expe
 
 ## 17. Break the mirror on purpose
 
-37:30 to 40:00 · land
+37:00 to 40:00 · land
 
 > Reprice the handoffs. Draw the interfaces.
 > Automate the right things. Keep the taste.
