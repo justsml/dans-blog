@@ -86,7 +86,7 @@ The two education talks use different worked examples so they can be booked toge
 
 - [Education research and claim boundaries](education/evidence.md) and [worked assessment exercises](education/demo.md).
 - [Failure-improvement evidence](engineering/failure-improvement/evidence.md) and [stage sequence](engineering/failure-improvement/demo.md).
-- [Adaptive-systems evidence](engineering/adaptive-systems/evidence.md) and [stage sequence](engineering/adaptive-systems/demo.md).
+- Adaptive-systems evidence and stage sequence.
 - [Economics and experimentation evidence](economics-product/evidence.md) and [stage sequences](economics-product/demo.md).
 
 

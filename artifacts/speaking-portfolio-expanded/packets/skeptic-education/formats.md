@@ -1,33 +1,21 @@
+
+# Formats: A Skeptic's Guide to Surviving AI in Education
 > **Retired 6 September 2026.** This talk is no longer in the portfolio and nothing is generated from it.
 > Its three surviving beats — skepticism as a method, the four-case local eval set, and the vendor questions —
-> live on as [Show Me the Misconception](../packets/evidence-learning/procurement-route.md), a 15-minute
-> procurement route under [Outsmart Your Lying, Cheating Students](evidence-learning-40min.md).
-> Reason: the [audit](../reviews/audit-skeptic-education.md) found the transplant plan was never executed while
+> live on as [Show Me the Misconception](../evidence-learning/procurement-route.md), a 15-minute
+> procurement route under [Outsmart Your Lying, Cheating Students](../../outlines/evidence-learning-40min.md).
+> Reason: the [audit](../../reviews/audit-skeptic-education.md) found the transplant plan was never executed while
 > Outsmart independently absorbed the three citations a Skeptic rewrite would have needed, leaving six colliding beats.
 > Kept for reference only. Do not book, do not rebuild.
 
-<!-- BEGIN GENERATED EDITIONS -->
-# Synchronized editions
 
-Generated from [the current 40-minute outline](../../outlines/skeptic-education-40min.md).
-
-| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
-| ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../reveal-talks/skeptic-education-15min.html) | [Download](../../decks/skeptic-education-15min-screen.pptx) | [Download](../../decks/skeptic-education-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../reveal-talks/skeptic-education-30min.html) | [Download](../../decks/skeptic-education-30min-screen.pptx) | [Download](../../decks/skeptic-education-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../reveal-talks/skeptic-education-40min.html) | [Download](../../decks/skeptic-education-40min-screen.pptx) | [Download](../../decks/skeptic-education-40min-handout.pptx) | [Script](script-40min.md) |
-<!-- END GENERATED EDITIONS -->
-
-# Formats: A Skeptic's Guide to Surviving AI in Education
-
-[PPTX](../../decks/skeptic-education-40min.pptx)
+PPTX (deleted)
 
 | Length | Format | Source |
 | --- | --- | --- |
 | 5–10 min | Lightning or live demo | Below |
-| 15 min | Lightning talk | [15-minute adaptation](../../outlines/skeptic-education-15min-adaptation.md) |
-| 25–30 min | Standard session | [30-minute adaptation](../../outlines/skeptic-education-30min-adaptation.md); drop slide 9 for 25 |
-| 40–45 min | Conference talk | [40-minute outline](../../outlines/skeptic-education-40min.md) plus five minutes of questions |
+| 25–30 min | Standard session | 30-minute adaptation (deleted); drop slide 9 for 25 |
+| 40–45 min | Conference talk | 40-minute outline (deleted) plus five minutes of questions |
 | 60–75 min | Workshop | Below |
 
 ## 5–10 minute lightning talk (slides)
