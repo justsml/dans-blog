@@ -453,13 +453,13 @@ export const TALKS: Record<string, Talk> = {
       15: {
         minutes: 15,
         keep: [1, 2, 4, 5, 7, 8, 9, 14],
-        times: [1.5, 1.5, 1, 2, 3.5, 2, 2, 1.5],
+        times: [1.5, 1.5, 1, 2, 3, 2, 2.5, 1.5],
         bridges: {
           2: "Bridge: write down where pencil, whiteboard and peers live, and in the same document promise to teach the tool.",
           5: "Bridge: ask for an attempt first, then ration help rung by rung, and write down which rung you gave.",
-          9: "Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout.",
+          9: "Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout. And one more student: a friend of mine turned out to be a talented sculptor who never touched the clay in class, because there was no car at home and you do not carry a brick of clay on the bus.",
         },
-        trim: { 1: [0, 1, 2], 2: [0, 1], 7: [0, 1], 8: [0, 1], 9: [0, 1] },
+        trim: { 1: [0, 1, 2], 2: [0, 1], 7: [0, 1], 8: [0, 1], 9: [0, 1, 2], 14: [0, 2] },
         note: "Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close.",
       },
     },

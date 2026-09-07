@@ -66,7 +66,7 @@ Delivery: Thirty seconds: what would the smudge be in your subject? Take two.
 
 Bridge: ask for an attempt first, then ration help rung by rung, and write down which rung you gave.
 
-## 06:00 to 09:30: slide 7, Demo: four minutes inside a five-minute slide
+## 06:00 to 09:00: slide 7, Demo: four minutes inside a five-minute slide
 
 On screen:
 
@@ -79,7 +79,7 @@ Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.
 
 Delivery: Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
 
-## 09:30 to 11:30: slide 8, Score the reasoning. Write it down
+## 09:00 to 11:00: slide 8, Score the reasoning. Write it down
 
 On screen:
 
@@ -95,7 +95,7 @@ Source: Bastani et al. (2025), [Generative AI without guardrails can harm learni
 
 Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
 
-## 11:30 to 13:30: slide 9, Outsmart move two: make them say it out loud
+## 11:00 to 13:30: slide 9, Outsmart move two: make them say it out loud
 
 On screen:
 
@@ -107,7 +107,9 @@ Answering from memory and reading a model's output aloud produce different mista
 
 Small groups, speaking, in class: that resets the table. It adds social pressure against cheating and hands you knobs on an incentive structure that today is a magical cheating genie. Not foolproof. A student can build an agent told to seem dumb at first and then learn. Fine. We're changing incentives, not buying certainty.
 
-Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout.
+Now the care, and it's real. A student's voice identifies them and can be cloned. Fingerprinting voices is plausible technology; that's a reason for caution, not a feature. Newer offline models claim to detect frustration and distress in speech, and offline is what lets them meet zero-retention, no-sharing district rules on modest hardware. Any student-facing voice tool gets maximum privacy, a written alternative, age-appropriate use only, and a retention rule written before the first recording. A replay is context, never proof.
+
+Bridge: count AI time like talk time, write the objective on the board to the agent, and redesign one checkpoint; the worksheet is a handout. And one more student: a friend of mine turned out to be a talented sculptor who never touched the clay in class, because there was no car at home and you do not carry a brick of clay on the bus.
 
 ## 13:30 to 15:00: slide 14, A purpose-built machine
 
@@ -117,8 +119,6 @@ On screen:
 > Too much power to hold casually. Prove the value constantly.
 
 Stop trying to prove who typed the sentence. Ask whether the student can explain it, challenge it, change it, apply it, and defend it. That means teaching changes: how we put agents in the room, how we model using them, how we design group work around them.
-
-The kid next to the Casio owner didn't need a watch. The kid with no car never touched the clay. The same tool that lets Johnny phone it in is the one that can hand a sculptor the clay. Which one happens is a design decision, and it's ours.
 
 This is a great deal of data and a great deal of power. Too much to hold casually. The value has to be proven, constantly, for educators and students, or the data should not exist. No ambling through conversations dispensing answers. A purpose-built machine. There are technical ways to build one; come find me after.
 

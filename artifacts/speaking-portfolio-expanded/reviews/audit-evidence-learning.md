@@ -105,3 +105,18 @@ Disclaimer count beyond the slide-1 line and the slide-8 "last time I'll say tha
 14. Fold `education/evidence.md` and the three open items of `packets/evidence-learning/notes-2026-09-05.md` into `packets/evidence-learning/evidence-bank.md`, delete both files, and remove their links from `outlines/evidence-learning-40min.md:7`, `packets/evidence-learning/packet.md:3`, and `README.md:92`.
 15. Add evidence-learning rows to `artifacts/speaking-portfolio-expanded/decks/README.md` and fix its file count.
 16. Decide Skeptic (retire or narrow) so the slide-13 worksheet, Liang and Bastani stop appearing in two talks; until then, no change on the Outsmart side.
+
+## Fixes applied 2026-09-06
+
+The assigned agent was terminated mid-pass by an account spend limit; the remaining items were completed by the caller. Everything below is in place and verified by a rebuild (14 slides, 40:00, both routes sum).
+
+- **Blocking 1, the demo plumbing (fixed).** `demos/DEMO-RUNBOOK.md` §5 and `demos/demo-logic.js` (`studentReplay`) now run the $100 → $120 → $96 tutor turns from the ladder, not the retired "polished scientific explanation" Learner A/B fixture. The runbook carries the $80 / +25% / −20% transfer item and the "never pressure an individual" instruction. `demos/index.html` tab label updated.
+- **Blocking 2, the sculptor (fixed via route).** The 15-minute route cut slide 12 and then landed on "The kid with no car never touched the clay" with the story untold. Bridge 9 now carries the sculptor in one sentence.
+- **Blocking 3, the orphaned privacy line (fixed via route).** `trim` for slide 9 was `[0, 1]`, which dropped the only paragraph supporting the on-screen line "Voice is biometric. Offline. Zero retention." It is now `[0, 1, 2]`, paid for by 0.5 min from slide 7. Slide 14 gains `trim: [0, 2]` so the close still lands.
+- **Slide 9 duplicate caveat** removed: paragraph 1 ends "sort likely from unlikely"; "never to convict" survives once, as "A replay is context, never proof."
+- **Slide 10** retitled ("read all 300 transcripts") and the **Skitka 1999** claim qualified to "on the trials where the aid was wrong".
+- **Skeptic retirement absorbed.** The slide-13 worksheet collision is resolved by Skeptic's retirement rather than by editing this talk; Outsmart is now the sole owner of that beat. `education/demo.md` no longer runs the retired Skeptic audit on this talk's percentage fixture.
+
+Route config applied to `build-talk.ts` (15-minute route): `times` `[1.5, 1.5, 1, 2, 3.5, 2, 2, 1.5]` → `[1.5, 1.5, 1, 2, 3, 2, 2.5, 1.5]` (= 15.0); `trim` gains `9: [0, 1, 2]` and `14: [0, 2]`; bridge 9 extended with the sculptor sentence.
+
+Still open by design: every `Story:` slot, and the history-essay fixture referenced by the procurement route is written only there, not in this outline.
