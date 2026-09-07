@@ -1,4 +1,4 @@
-# Up 20%, Down 20%, and a Very Confident Wrong Answer
+# Up 20, Down 20, Out Four Bucks
 
 2 min · video · parent: [Outsmart Your Lying, Cheating Students](../outlines/evidence-learning-40min.md), slides 4 and 7
 

@@ -1,4 +1,4 @@
-# Your AI Detector Is a Coin That Hates Second-Language Writers
+# Guilty Until Rewritten
 
 2 min · video · parent: [Outsmart](../outlines/evidence-learning-40min.md) slide 2 · [Skeptic's Guide](../outlines/skeptic-education-40min.md) slide 8
 

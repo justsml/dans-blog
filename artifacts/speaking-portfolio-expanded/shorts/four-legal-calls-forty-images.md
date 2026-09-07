@@ -1,4 +1,4 @@
-# Four Perfectly Legal Calls and Forty Very Expensive Images
+# Buy Ten, Get Forty
 
 2 min · video · parent: [Dynamic Scaling of Agentic Workloads](../outlines/dynamic-scaling-40min.md), slides 1, 3, 4
 

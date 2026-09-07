@@ -1,4 +1,4 @@
-# Your Eval Suite Is a Psychology Test Somebody Committed to Git
+# Your Eval Suite Needs Therapy
 
 3 min · video · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slides 4 and 5
 

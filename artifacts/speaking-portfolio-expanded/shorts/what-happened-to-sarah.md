@@ -1,4 +1,4 @@
-# The Robot Opened Good PRs for a Month. Then What Happened to Sarah?
+# The Robot Took the Easy Ones
 
 3 min · video / lightning · parent: [Automating Improvement From Failure](../outlines/failure-improvement-40min.md), slide 9
 

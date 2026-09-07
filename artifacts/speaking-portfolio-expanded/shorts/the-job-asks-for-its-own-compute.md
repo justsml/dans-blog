@@ -1,4 +1,4 @@
-# The Job Should Ask for Its Own Compute
+# Compute, Please (and a Receipt)
 
 6 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../outlines/dynamic-scaling-40min.md), slides 2, 7, 8
 

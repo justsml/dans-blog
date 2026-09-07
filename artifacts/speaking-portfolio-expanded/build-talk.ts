@@ -635,7 +635,7 @@ export const TALKS: Record<string, Talk> = {
       30: {
         minutes: 30,
         keep: [1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14],
-        times: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 3, 2.5, 4, 3.5, 2, 2.5],
+        times: [1.5, 2.5, 1.5, 2.5, 1.5, 3, 2.5, 2.5, 4, 4.5, 1.5, 2.5],
         bridges: {
           5: "Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt.",
           8: "Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU.",

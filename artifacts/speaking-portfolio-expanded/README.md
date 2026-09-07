@@ -67,7 +67,7 @@ A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings a
 
 ## Shorts
 
-[shorts/](shorts/README.md) holds 28 standalone cuts, 1 to 10 minutes each: one idea, one number or picture, one landing line. Each names its parent talk and slide so the fixtures and evidence travel with it. Twenty-one are sized for video (1 to 5 minutes); seven are lightning slots (5 to 10). Hand-written, not generated from the outlines.
+[shorts/](shorts/README.md) holds 29 standalone cuts, 1 to 10 minutes each: one idea, one number or picture, one landing line. Each names its parent talk and slide so the fixtures and evidence travel with it. Twenty-one are sized for video (1 to 5 minutes); eight are lightning slots (5 to 10). Hand-written, not generated from the outlines.
 
 ## Image prompts
 

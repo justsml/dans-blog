@@ -1,4 +1,4 @@
-# The Third Price Nobody Has Ever Calculated
+# Name Your Price (No, the Other One)
 
 5 min · lightning · parent: [Cry Me a Free Tier](../outlines/free-tier-40min.md), slides 9, 10, 14
 

@@ -1,4 +1,4 @@
-# Cheaper Coal Meant More Coal, Which Should Explain Your Bill
+# Jevons Ate My Invoice
 
 3 min · video · parent: [Cry Me a Free Tier](../outlines/free-tier-40min.md), slide 6
 

@@ -1,4 +1,4 @@
-# A Nice Paragraph Should Not Be Able to Buy an Unauthorized Refund
+# Charm Is Not a Currency
 
 5 min · lightning · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slides 3, 5, 6, 13
 

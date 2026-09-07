@@ -1,4 +1,4 @@
-# Stop Billing ≠ Terminate Renewal ≠ Cancel the Meeting
+# Cancel Means Cancel*
 
 2 min · video · parent: [Retrieval](../outlines/retrieval-40min.md), slide 5
 

@@ -1,4 +1,4 @@
-# Stop Appointing a Human Crumple Zone
+# Human Crumple Zone
 
 5 min · lightning · parent: [Code Is Cheap. Judgment Is Expensive.](../outlines/judgment-40min.md), slides 5, 8, 10
 

@@ -1,4 +1,4 @@
-# Run Your LLM Judge Five Times. Then Feel Something.
+# Run the Judges
 
 3 min · video · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slide 7
 

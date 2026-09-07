@@ -1,4 +1,4 @@
-# Free Parking Cost You a City
+# Free Parking Isn't
 
 3 min · video / lightning cold open · parent: [Cry Me a Free Tier](../outlines/free-tier-40min.md), slide 5
 

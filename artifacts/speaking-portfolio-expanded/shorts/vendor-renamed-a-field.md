@@ -1,4 +1,4 @@
-# Your Vendor Renamed a Field and Nobody Told the Status Page
+# 200 OK (Nothing Is)
 
 2 min · video · parent: [Adaptive, agentic apps](../outlines/adaptive-systems-40min.md), slide 1
 

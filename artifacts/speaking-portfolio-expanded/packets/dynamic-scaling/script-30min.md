@@ -96,7 +96,7 @@ Story: The moment an agent-sized request would have replaced a capacity-planning
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
 
-## 12:30 to 15:30: slide 8, The ecosystem is already ephemeral by default
+## 12:30 to 15:00: slide 8, The ecosystem is already ephemeral by default
 
 On screen:
 
@@ -115,7 +115,7 @@ Delivery: Ask who runs agent code on something with a lifetime under an hour. Th
 
 Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU.
 
-## 15:30 to 18:00: slide 10, A durable job survives the caller
+## 15:00 to 17:30: slide 10, A durable job survives the caller
 
 On screen:
 
@@ -129,7 +129,7 @@ Callbacks arrive twice and out of order; authenticate, deduplicate, apply only v
 
 Delivery: Draw the state machine in contracts.md. Crash after submission and before the provider ID is saved. Discuss unresolved.
 
-## 18:00 to 22:00: slide 11, Walkthrough: restart the batch
+## 17:30 to 21:30: slide 11, Walkthrough: restart the batch
 
 On screen:
 
@@ -145,12 +145,12 @@ One job, a recoverable lifecycle, honest accounting, and a compute substrate tha
 
 Delivery: Five minutes from demo.md. Ask the room for each next transition before revealing it.
 
-## 22:00 to 25:30: slide 12, Attempts are a scaling axis. So is judging.
+## 21:30 to 26:00: slide 12, Attempts are a scaling axis. So is judging.
 
 On screen:
 
-> Same brief, contrasting priorities, separate first drafts
-> A judge reads a thousand tokens and writes fifty. Run a council. Measure the disagreement.
+> Barrel of monkeys: lead with cheap parallel generation, on purpose
+> Council of guards: judges read a thousand tokens and write fifty; measure the disagreement
 > Gates before preferences; the judge may reject everyone
 
 Change the unit of work from images to whole designs. Give the batch-job problem to three generated agents with the same requirements and different priorities: a minimalist, a maintainer, a security and performance reviewer. Keep first drafts separate so they do not converge on the first plausible answer. The contrast is the product.
@@ -158,6 +158,10 @@ Change the unit of work from images to whole designs. Give the batch-job problem
 Somebody is going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven teams, one specification, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. That is not what this is. I am not voting three models toward the truth, and I am not going to tell you the ensemble is right because it agreed with itself. If that is the pitch you heard, it is not mine.
 
 Here is what parallel attempts actually buy. Understanding of the models you depend on: run one brief through two of them and you learn what each reaches for and what each forgets. A migration harness: same brief, new model, diff the behavior before you switch, instead of after the incident. Better output: a synthesis of compatible ideas is often better than any single draft. And the cheap one, which is the one I care about: judging. A judge reads a thousand tokens and writes fifty. Output is what costs, so you can afford three or five judges from different models on every candidate, and the number you want back is not the average score. It is the disagreement. When the judges split or their reasons barely overlap, that candidate is sitting in territory nobody understands, and that is the one you do not ship on autopilot. I call this the Council of Guards. It picks between one and three alternatives to generate, and it costs a fraction of the generation it is guarding.
+
+The generation side has a name too, and I am not sorry about it: the barrel-of-monkeys maneuver. Lead with parallel generation on purpose. You are adding a controlled section of chaos that the next stage has to handle: a revision loop, a router, the council, or your users in an A/B test. Why you would want the chaos varies. Sometimes you want the fastest answer, so you race. Sometimes you want the best parts of several, so a frontier model, whose input tokens are the cheap ones, reads all of them and writes one coherent output. Sometimes you just want more candidates for the judges to rank so the best whole answer goes downstream. In law or medicine, where the rules are extensive and specific, that is how you catch the one errant mistake that shows up in one output out of ten. And the monkeys can be cheap: models at a hundredth or a thousandth the price of the frontier, generating alternatives in a loop. Some of them need a tool-calling agent with files, search and git, which means a sandbox and somebody's cloud; others single-shot it fine. That is an architecture question about how much effort you want in a system that keeps improving versus one you can retune at runtime. Fan-out is a tool you encapsulate at points in the graph: default model most of the time, n alternatives for a sample of requests. Your needs and your opportunities decide why, where and how often.
+
+Does this border on speculative optimization dressed up as learning? Yes, possibly. Probably sometimes. We will find out. So do not build any of it without env vars to turn it down, and ideally build the system that adjusts its own fan-out and token burn from what it measures. Right? Right. That system is the companion talk.
 
 Write the gates before reading the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. Run executable checks first. In the exercise every candidate fails a gate, including the careful one, which is the point: the council is allowed to reject the room. Then combine compatible ideas into a new candidate with one coherent set of assumptions and run the gates again. Passing parts do not make a passing whole. Stop at the review budget; an endless debate is an expensive way to not ship.
 
@@ -167,7 +171,7 @@ Source: Knight and Leveson (1986), [An Experimental Evaluation of the Assumption
 
 Delivery: Score the three candidates in demo.md. Have the room find each candidate's failed gate before revealing it. Then show the council split per candidate: high agreement on the minimalist's failure, low overlap on the maintainer's, and ask which one deserves the human's afternoon.
 
-## 25:30 to 27:30: slide 13, Measure the accepted outcome
+## 26:00 to 27:30: slide 13, Measure the accepted outcome
 
 On screen:
 

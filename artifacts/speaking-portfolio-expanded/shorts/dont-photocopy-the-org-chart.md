@@ -1,4 +1,4 @@
-# Don't Photocopy the Org Chart Onto the Robots
+# Conway's Photocopier
 
 3 min · video / lightning · parent: [Break the Mirror on Purpose](../outlines/product-engineering-40min.md), slides 1, 3, 5
 

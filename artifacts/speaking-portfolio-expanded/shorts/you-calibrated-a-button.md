@@ -1,4 +1,4 @@
-# Congratulations, You Calibrated a Button
+# Agreeable to a Fault (κ = 0)
 
 2 min · video · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slide 9
 

@@ -1,4 +1,4 @@
-# You Will Build the Assistant That Has Everything. Sorry.
+# Sorry, You're Building It
 
 6 min · lightning · parent: [Adaptive, agentic apps](../outlines/adaptive-systems-40min.md), slides 3, 4, 5
 

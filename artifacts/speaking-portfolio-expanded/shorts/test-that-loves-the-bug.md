@@ -1,4 +1,4 @@
-# The Model Wrote the Bug, Then Wrote the Test That Loves the Bug
+# The Test Who Loved Me
 
 2 min · video · parent: [Code Is Cheap. Judgment Is Expensive.](../outlines/judgment-40min.md), slide 9
 

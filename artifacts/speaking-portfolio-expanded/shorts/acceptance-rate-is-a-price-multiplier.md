@@ -1,4 +1,4 @@
-# A 30-Point Acceptance Drop Is a Price Doubling Nobody Emails You About
+# Doubling on a Tuesday
 
 3 min · video · parent: [Cry Me a Free Tier](../outlines/free-tier-40min.md), slide 10
 

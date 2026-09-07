@@ -1,4 +1,4 @@
-# Your Reviewer Isn't Slow. You Ate Their Slack.
+# Who Ate My Slack?
 
 3 min · video · parent: [Code Is Cheap. Judgment Is Expensive.](../outlines/judgment-40min.md), slides 1 and 3
 

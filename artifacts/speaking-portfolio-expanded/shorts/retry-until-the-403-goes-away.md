@@ -1,4 +1,4 @@
-# Retry Until the 403 Goes Away
+# Retry Hard
 
 2 min · video · parent: [Automating Improvement From Failure](../outlines/failure-improvement-40min.md), slide 6
 

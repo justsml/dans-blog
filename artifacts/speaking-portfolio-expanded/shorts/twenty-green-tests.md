@@ -1,4 +1,4 @@
-# Twenty Green Tests and a One-in-Seven Chance You're Wrong
+# Twenty for Twenty, One in Seven
 
 3 min · video · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slide 8
 
