@@ -2,7 +2,7 @@
 
 The IR evaluation history missing from your golden dataset.
 
-Generated from [the 40-minute outline](../retrieval-40min.md) by `bun artifacts/speaking-portfolio-expanded/bullets.ts`. Edit the outline, not this file. 15 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](../retrieval-15min-adaptation.md) · [30](../retrieval-30min-adaptation.md).
+Generated from [the 40-minute outline](outline-40min.md) by `bun artifacts/speaking-portfolio-expanded/bullets.ts`. Edit the outline, not this file. 15 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
 ## Spine
 
@@ -150,7 +150,7 @@ Generated from [the 40-minute outline](../retrieval-40min.md) by `bun artifacts/
 - Our naive scorer treats unjudged as nonrelevant.
 - TREC used pooling because judging every document for every query was impractical.
 - That is the lesson we missed. They tested whether the shortcut damaged the comparison.
-- Do — Run `bun artifacts/speaking-portfolio-expanded/packets/retrieval/pooling.ts` after revealing F. Walk through 2/2, 1/2, then 2/2. Explain that the metric measures topical relevance, not sufficiency or permission.
+- Do — Run `bun artifacts/speaking-portfolio-expanded/talks/retrieval/pooling.ts` after revealing F. Walk through 2/2, 1/2, then 2/2. Explain that the metric measures topical relevance, not sufficiency or permission.
 - Source — Justin Zobel (1998), [How reliable are the results of large-scale information retrieval experiments?](https://doi.org/10.1145/290941.291014), SIGIR, 307–314. Voorhees, Soboroff, and Lin (2022), [Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?](https://arxiv.org/abs/2201.11086). [NIST TREC overview](https://trec.nist.gov/overview.html), started 1992.
 
 ### 11. Assessors disagree. Rankings can survive.

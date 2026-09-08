@@ -1,6 +1,6 @@
 # `--no-agent`
 
-2 min · video · parent: [Adaptive, agentic apps](../outlines/adaptive-systems-40min.md), slide 3 · also the cold open for [Sorry, You're Building It](you-will-build-the-assistant-with-everything.md)
+2 min · video · parent: [Adaptive, agentic apps](../talks/adaptive-systems/outline-40min.md), slide 3 · also the cold open for [Sorry, You're Building It](you-will-build-the-assistant-with-everything.md)
 
 The intermediary intelligence layer is going to wrap everything. Opting out becomes a flag.
 

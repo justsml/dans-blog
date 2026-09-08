@@ -2,7 +2,7 @@
 
 [Browser deck](../../../../public/talks/failure-improvement.html) · [Presenter script](script-40min.md) · [Visuals](visuals.md)
 
-Outline: [40 min](../../outlines/failure-improvement-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+Outline: [40 min](outline-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles
 
@@ -82,4 +82,4 @@ Most companies pay for detailed records of everything that goes wrong and then r
 
 ## Recording readiness
 
-The peak requires a real failed holdout and a real unknown result; the historical checkbox kit does not qualify. Outstanding evidence is tracked in the [recording plan](../speaker/recording-plan.md).
+The peak requires a real failed holdout and a real unknown result; the historical checkbox kit does not qualify. Outstanding evidence is tracked in the [recording plan](../../speaker/recording-plan.md).

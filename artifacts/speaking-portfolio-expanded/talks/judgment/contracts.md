@@ -1,13 +1,26 @@
-# Rubber-stamp fixture
+# Plan-space fixture
 
-The demo contains a deliberately incomplete authorization predicate. It is synthetic, offline, and makes no model calls.
+The demo is arithmetic, not a simulation. It is offline, deterministic, and makes no model calls. Every constant is visible at the top of the file and is meant to be changed on stage if the room supplies better ones.
 
 ```ts
-const canEdit = (user, resourceTenant) => user.roles.includes("admin");
+const FEATURES = 6, COHORTS = 3;
+const WEEKLY_ACTIVE = 12_000, WEEKS = 4;
+const BASELINE = 0.08, LIFT = 0.02;
 ```
 
-The first assertion allows an admin in A to edit A. The held-out assertion denies that same admin an edit in B. The implementation ignores the resource tenant, so the first assertion passes and the second genuinely fails.
+Run `bun artifacts/speaking-portfolio-expanded/talks/judgment/demo.ts` for the plan count:
 
-Run `bun artifacts/speaking-portfolio-expanded/packets/judgment/demo.ts`, take the vote, then run it with `--holdout`. Exit 1 is the intended failed gate. Do not display the second case before the vote. If someone spots the bug, have them identify the missing invariant rather than pretending the room approved it.
+- 6! = 720 orderings
+- 3⁶ = 729 cohort assignments
+- 720 × 729 = 524,880 distinct plans, before batching and before dates
 
-A repaired predicate must check tenant-scoped authority. This fixture does not implement role revocation, audited writes, or a complete authorization system.
+Then run it with `--evidence`:
+
+- 12,000 × 4 = 48,000 exposures in the window
+- 16 × 0.08 × 0.92 ÷ 0.02² = 2,944 per arm
+- ⌊48,000 ÷ 2,944⌋ = 16 arms
+- 524,880 ÷ 16 = 32,805 plans per arm of evidence
+
+The per-arm figure uses the standard two-proportion rule of thumb, n ≈ 16·p(1−p)/δ², which approximates 80% power at α = 0.05. It is a sizing heuristic, not a derivation; Benchmarks owns instrument validation and small-sample inference, and this talk does not re-teach either.
+
+Nothing here measures a real team, a real product, or a real release. The numbers establish one thing: the plan space is enormous relative to the evidence any single window can buy, so most of the decision is made without data.

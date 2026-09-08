@@ -1,26 +1,26 @@
 <!-- BEGIN GENERATED EDITIONS -->
 # Synchronized editions
 
-Generated from [the current 40-minute outline](../../outlines/dynamic-scaling-40min.md).
+Generated from [the current 40-minute outline](outline-40min.md).
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/dynamic-scaling-15min.html) | [Download](../../decks/dynamic-scaling-15min-screen.pptx) | [Download](../../decks/dynamic-scaling-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/dynamic-scaling-30min.html) | [Download](../../decks/dynamic-scaling-30min-screen.pptx) | [Download](../../decks/dynamic-scaling-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/dynamic-scaling-40min.html) | [Download](../../decks/dynamic-scaling-40min-screen.pptx) | [Download](../../decks/dynamic-scaling-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/dynamic-scaling-15min.html) | [Download](dynamic-scaling-15min-screen.pptx) | [Download](dynamic-scaling-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/dynamic-scaling-30min.html) | [Download](dynamic-scaling-30min-screen.pptx) | [Download](dynamic-scaling-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/dynamic-scaling-40min.html) | [Download](dynamic-scaling-40min-screen.pptx) | [Download](dynamic-scaling-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: Dynamic Scaling of Agentic Workloads
 
-The 14-slide [browser deck](../../../../public/talks/dynamic-scaling.html) follows the [40-minute outline](../../outlines/dynamic-scaling-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
+The 14-slide [browser deck](../../../../public/talks/dynamic-scaling.html) follows the [40-minute outline](outline-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |
 | 5 minutes | Lightning script below; slides 1, 4, 7, 8, 14 |
 | 10 minutes | Lightning script plus the walkthrough in demo.md |
-| 15 minutes | [Script](script-15min.md) and [route](../../outlines/dynamic-scaling-15min-adaptation.md) |
-| 30 minutes | [Script](script-30min.md) and [route](../../outlines/dynamic-scaling-30min-adaptation.md) |
-| 40 minutes | [Script](script-40min.md) and [outline](../../outlines/dynamic-scaling-40min.md) |
+| 15 minutes | [Script](script-15min.md) and [route](adaptation-15min.md) |
+| 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
+| 40 minutes | [Script](script-40min.md) and [outline](outline-40min.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |

@@ -1,6 +1,6 @@
 # Minority Report, With Terminals
 
-4 min · video / lightning · parent: [The Future of Product Engineering](../outlines/product-engineering-40min.md), slide 15
+4 min · video / lightning · parent: [The Future of Product Engineering](../talks/product-engineering/outline-40min.md), slide 15
 
 Yes, the software you mastered is going away. No, that does not mean the frontier labs get to own what replaces it.
 

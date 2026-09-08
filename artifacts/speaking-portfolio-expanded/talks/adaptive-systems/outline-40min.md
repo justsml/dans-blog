@@ -4,7 +4,7 @@ Give each job exactly enough agent. Prove every repair. Let the app ask for its 
 
 Rewritten 2026-09-06 from Dan's notes. 40 minutes, 15 slides, four audience moments, no Q&A. Add five minutes for a 45-minute booking. The design is Dan's; the incidents are composites of real integrations with the names filed off. Say that once, on slide 1, and never apologize for it again.
 
-[Presenter scripts](../packets/adaptive-systems/script-40min.md) · [Contracts](../packets/adaptive-systems/contracts.md) · [Memory pattern and prompt](../packets/adaptive-systems/memory-pattern.md) · [Walkthrough](../packets/adaptive-systems/demo.md) · [Evidence](../packets/adaptive-systems/evidence-bank.md)
+[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Memory pattern and prompt](memory-pattern.md) · [Walkthrough](demo.md) · [Evidence](evidence-bank.md)
 
 Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts adaptive-systems`.
 
@@ -12,7 +12,7 @@ Regenerate scripts, adaptations and the browser deck with `bun artifacts/speakin
 
 00:00 to 02:00 · warm
 
-![HTTP success does not establish that the payload still matches your contract.](../../../public/talks/assets/adaptive-systems/01-a-successful-response-can-break-ingest.svg)
+![HTTP success does not establish that the payload still matches your contract.](../../../../public/talks/assets/adaptive-systems/01-a-successful-response-can-break-ingest.svg)
 
 > Yesterday: zip
 > Today: postal_code
@@ -48,7 +48,7 @@ Stage direction: Write the three metrics on the board and leave them there.
 
 04:00 to 08:30 · build
 
-![Every integration multiplies the pathways from something the agent can read to something it can do; nobody reviews the combinations.](../../../public/talks/assets/adaptive-systems/03-the-assistant-with-everything.svg)
+![Every integration multiplies the pathways from something the agent can read to something it can do; nobody reviews the combinations.](../../../../public/talks/assets/adaptive-systems/03-the-assistant-with-everything.svg)
 
 > Browsers, CLIs, every SaaS: an agent layer you opt out of with --no-agent
 > Ten tools is forty-five pairs. One more integration is not one more path.
@@ -72,7 +72,7 @@ Stage direction: Write 10 → 45 on the board. Ask who could list every read-to-
 
 08:30 to 12:00 · peak
 
-![The orchestrator writes a tailored prompt, selects the minimum tools from a catalog, and loops until the job is done or must stop.](../../../public/talks/assets/adaptive-systems/04-conjure-the-agent-the-job-needs.svg)
+![The orchestrator writes a tailored prompt, selects the minimum tools from a catalog, and loops until the job is done or must stop.](../../../../public/talks/assets/adaptive-systems/04-conjure-the-agent-the-job-needs.svg)
 
 > Tailored prompt, minimum tools, hard budget
 > Tool search on request, policy decides, request logged
@@ -94,7 +94,7 @@ Stage direction: Draw the three boxes: orchestrator, generated agent, tool catal
 
 12:00 to 15:00 · build
 
-![Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.](../../../public/talks/assets/adaptive-systems/13-keep-access-capabilities-out-of-the-planner.svg)
+![Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.](../../../../public/talks/assets/adaptive-systems/13-keep-access-capabilities-out-of-the-planner.svg)
 
 > High-risk classes: write, send, pay, delete, deploy, export
 > Reads customer data? Then it never posts to a vendor.
@@ -118,7 +118,7 @@ Stage direction: Point at the filter between worker and planner. Ask what else c
 
 15:00 to 17:00 · build
 
-![A documented rename can preserve meaning; an undefined business state needs an owner.](../../../public/talks/assets/adaptive-systems/04-a-rename-is-not-a-new-meaning.svg)
+![A documented rename can preserve meaning; an undefined business state needs an owner.](../../../../public/talks/assets/adaptive-systems/04-a-rename-is-not-a-new-meaning.svg)
 
 > zip → postal_code: investigate
 > status: true → pending: stop
@@ -135,7 +135,7 @@ Stage direction: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pen
 
 17:00 to 18:30 · steady
 
-![Promote a tested mapping within its allowed scope; reconcile writes if you roll back.](../../../public/talks/assets/adaptive-systems/05-a-repair-has-a-version-and-a-scope.svg)
+![Promote a tested mapping within its allowed scope; reconcile writes if you roll back.](../../../../public/talks/assets/adaptive-systems/05-a-repair-has-a-version-and-a-scope.svg)
 
 > Input fingerprint + mapping version
 > Evidence + fixtures + rollback
@@ -165,7 +165,7 @@ Stage direction: Keep the fixtures hidden. They are revealed in the walkthrough.
 
 20:00 to 21:30 · steady
 
-![Reconcile the operation identity before another submission; retain unresolved reservations.](../../../public/talks/assets/adaptive-systems/09-a-lost-response-leaves-an-unknown-outcome.svg)
+![Reconcile the operation identity before another submission; retain unresolved reservations.](../../../../public/talks/assets/adaptive-systems/09-a-lost-response-leaves-an-unknown-outcome.svg)
 
 > Did it fail?
 > Or did the answer disappear?
@@ -180,7 +180,7 @@ Stage direction: Mark the moment on the timeline where your process knows less t
 
 21:30 to 26:00 · peak
 
-![Recovery, quarantine and reconciliation are all legitimate outcomes of the same ingest job.](../../../public/talks/assets/adaptive-systems/10-three-events-require-three-decisions.svg)
+![Recovery, quarantine and reconciliation are all legitimate outcomes of the same ingest job.](../../../../public/talks/assets/adaptive-systems/10-three-events-require-three-decisions.svg)
 
 > Rename → validated mapping, canary
 > Unknown status → quarantine, owner
@@ -200,7 +200,7 @@ Stage direction: Five minutes from demo.md. Reveal fixtures before expected resu
 
 26:00 to 28:30 · build
 
-![The orchestrator requests shape, size and duration inside a per-customer ceiling; the scheduler resolves it against a catalog and issues a lease.](../../../public/talks/assets/adaptive-systems/11-scale-becomes-a-capability.svg)
+![The orchestrator requests shape, size and duration inside a per-customer ceiling; the scheduler resolves it against a catalog and issues a lease.](../../../../public/talks/assets/adaptive-systems/11-scale-becomes-a-capability.svg)
 
 > Old: ops sizes the fleet for everyone
 > New: the job describes its shape and asks

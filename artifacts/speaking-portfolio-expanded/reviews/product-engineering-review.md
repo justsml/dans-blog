@@ -1,7 +1,7 @@
 # Review: The Future of Product Engineering
 
-Reviewed 2026-09-06 against the bar set by [free-tier-40min.md](../outlines/free-tier-40min.md).
-Material read: the 15/30/40 outlines, [packet.md](../packets/product-engineering/packet.md), [formats.md](../packets/product-engineering/formats.md), [evidence-bank.md](../packets/product-engineering/evidence-bank.md), [CFP.md](../economics-product/CFP.md), [evidence.md](../economics-product/evidence.md), [demo.md](../economics-product/demo.md), [DEMO-RUNBOOK.md §6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering), and the rendered deck at [reveal-talks/product-engineering.html](../../../public/talks/product-engineering.html).
+Reviewed 2026-09-06 against the bar set by [free-tier-40min.md](../talks/free-tier/outline-40min.md).
+Material read: the 15/30/40 outlines, [packet.md](../talks/product-engineering/packet.md), [formats.md](../talks/product-engineering/formats.md), [evidence-bank.md](../talks/product-engineering/evidence-bank.md), [CFP.md](../talks/product-engineering/CFP.md), [evidence.md](../talks/product-engineering/evidence.md), [demo.md](../talks/product-engineering/demo.md), [DEMO-RUNBOOK.md §6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering), and the rendered deck at [reveal-talks/product-engineering.html](../../../public/talks/product-engineering.html).
 
 ---
 
@@ -52,7 +52,7 @@ And you already know this. [DEMO-RUNBOOK.md §2](../demos/DEMO-RUNBOOK.md#2-auto
 30, slide 5: *"I have not heard an engineering team discuss level of effort on a ticket in months. Effort is leaving the rubric."*
 15, slide 4: *"Effort estimation has already left the rubric; nobody t-shirt sizes anymore."*
 
-The 15 has quietly converted a first-person observation into an industry fact. [evidence.md](../economics-product/evidence.md) explicitly forbids exactly this: *"**Speaker's firsthand observation** ... Do not present as an industry measurement. Invite the room to disagree."* Two of the three outlines fail that instruction and the third only half-passes, because none of them contains the invitation to disagree that the evidence ledger requires.
+The 15 has quietly converted a first-person observation into an industry fact. [evidence.md](../talks/product-engineering/evidence.md) explicitly forbids exactly this: *"**Speaker's firsthand observation** ... Do not present as an industry measurement. Invite the room to disagree."* Two of the three outlines fail that instruction and the third only half-passes, because none of them contains the invitation to disagree that the evidence ledger requires.
 
 This matters beyond compliance. A meaningful fraction of any engineering room estimated something last week. When you tell them a thing they do every sprint no longer happens, you lose them for the next ten minutes and they stop believing the rest. The fix is free and it is more interesting than the assertion: state it as your observation, ask for hands, and *use the count*. A room that splits down the middle is a better slide than a room being told what is true.
 
@@ -68,11 +68,11 @@ Slide 9 (40): *"Connect agents to website analytics and engagement metrics, conn
 
 Ecommerce platforms, warehouses, and ad creative are a growth-operations talk. The surrounding fourteen slides are an organizational-design talk. CFP.md promises reviewers *"an organizational design talk built on Conway's law, not a tooling lecture"* — and slide 9 is a tooling lecture with the tool names filed off, which is why it needs the apology *"Tool names here are placeholders. The ownership pattern is the point."* If the ownership pattern is the point, the slide can be one sentence inside another slide.
 
-Your own [formats.md](../packets/product-engineering/formats.md) line 11 confirms this: *"drop slide 6 for 25"* — slide 6 of the 30 is exactly this material. You already treat it as the first thing to cut. Cut it in the 40 too.
+Your own [formats.md](../talks/product-engineering/formats.md) line 11 confirms this: *"drop slide 6 for 25"* — slide 6 of the 30 is exactly this material. You already treat it as the first thing to cut. Cut it in the 40 too.
 
 ### 2.8 Three outlines: they are not purpose-built, they are hand-copied, and the copy has already drifted.
 
-[formats.md](../packets/product-engineering/formats.md): *"This talk has three purpose-built lengths rather than one deck with adaptations."*
+[formats.md](../talks/product-engineering/formats.md): *"This talk has three purpose-built lengths rather than one deck with adaptations."*
 
 Measured against the text: 32% of the 30-minute outline's sentences are **byte-identical** to the 40's, and reading the remainder, essentially all of it is paraphrase of the same beats in the same order, not different argument. The 15 is the same again. These are adaptations. They are simply adaptations maintained by hand, which is the worst available arrangement: you pay the maintenance cost of three documents and get none of the guarantees of derivation.
 

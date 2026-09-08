@@ -1,6 +1,6 @@
 # Free Parking Isn't
 
-3 min · video / lightning cold open · parent: [Buy Me a Free Tier](../outlines/free-tier-40min.md), slide 5
+3 min · video / lightning cold open · parent: [Buy Me a Free Tier](../talks/free-tier/outline-40min.md), slide 5
 
 The least glamorous subject in urban economics, and it's your inference bill.
 

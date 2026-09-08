@@ -2,7 +2,7 @@
 
 [Browser deck](../../../../public/talks/product-engineering.html) · [Presenter script](script-40min.md)
 
-Outlines: [40 min Conway's law and the agent roster](../../outlines/product-engineering-40min.md) · [30 min the agent roster](../../outlines/product-engineering-30min.md) · [15 min big idea](../../outlines/product-engineering-15min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+Outlines: [40 min, canonical](outline-40min.md) · [30 min](adaptation-30min.md) · [15 min](adaptation-15min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles
 

@@ -1,8 +1,8 @@
 # Show Me the Misconception
 
-15 minutes · procurement and administrator audiences · a route under [Outsmart Your Lying, Cheating Students](../../outlines/evidence-learning-40min.md)
+15 minutes · procurement and administrator audiences · a route under [Outsmart Your Lying, Cheating Students](outline-40min.md)
 
-The Skeptic's Guide was retired on 6 September 2026. Its three load-bearing beats — skepticism as a method, a local eval set, and the questions to ask a vendor — survive here as a separate route for the room that buys the tool rather than teaches with it. The retired outline stays at [outlines/skeptic-education-40min.md](../../outlines/skeptic-education-40min.md) for reference; nothing generates from it.
+The Skeptic's Guide was retired on 6 September 2026. Its three load-bearing beats — skepticism as a method, a local eval set, and the questions to ask a vendor — survive here as a separate route for the room that buys the tool rather than teaches with it. The retired outline stays at [retired/skeptic-education/outline-40min.md](../../retired/skeptic-education/outline-40min.md) for reference; nothing generates from it.
 
 Scope, once, at the top: research stays attached to its setting, the eval cases are authored, and the rubric is proposed. Then stop qualifying.
 
@@ -81,6 +81,6 @@ Story: a pilot you ran or watched — what surprised you, what you kept.
 
 ## Delivery notes
 
-Runs standalone for a procurement, curriculum-committee or administrator audience. Pairs with the [Outsmart](../../outlines/evidence-learning-40min.md) 40-minute talk for a conference double-header: Outsmart is for the people who teach, this is for the people who sign. The history-essay example is available as an alternate to the percentage fixture when the room is not quantitative; the percentage fixture belongs to Outsmart and should not be run twice in one booking.
+Runs standalone for a procurement, curriculum-committee or administrator audience. Pairs with the [Outsmart](outline-40min.md) 40-minute talk for a conference double-header: Outsmart is for the people who teach, this is for the people who sign. The history-essay example is available as an alternate to the percentage fixture when the room is not quantitative; the percentage fixture belongs to Outsmart and should not be run twice in one booking.
 
 No demo kit. If the room wants a live moment, use the four index cards and have them write the confident wrong answer for their own subject.

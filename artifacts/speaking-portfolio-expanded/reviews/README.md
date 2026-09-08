@@ -1,8 +1,11 @@
 # Critical reviews, September 6 2026
 
+
+> **Paths in these files predate 7 September 2026.** The portfolio was reorganized that day into one directory per talk under `talks/<slug>/`. Bare path mentions such as `outlines/<slug>-40min.md`, `packets/<slug>/…`, `decks/…`, `engineering/…`, `education/…` and `economics-product/…` refer to the layout as audited; Markdown links were repointed. Judgment was also retitled that day — see the portfolio README.
+
 **Evening audit.** After the rewrites, all ten talks were audited for consistency, correctness and alignment with the day's corrections. Roll-up and decision request: [AUDIT-2026-09-06.md](AUDIT-2026-09-06.md). Per-talk: `audit-<slug>.md`. The morning reviews below are the historical spec those rewrites were built from.
 
-Independent reviews of the six talks that had not been through the rewrite. Each was reviewed against the same standard: the rewritten [Buy Me a Free Tier](../outlines/free-tier-40min.md), which fixed its scope disclaimer at one, named its story slots, imported vocabulary from a real discipline with primary sources, and carried a memorable checkable number.
+Independent reviews of the six talks that had not been through the rewrite. Each was reviewed against the same standard: the rewritten [Buy Me a Free Tier](../talks/free-tier/outline-40min.md), which fixed its scope disclaimer at one, named its story slots, imported vocabulary from a real discipline with primary sources, and carried a memorable checkable number.
 
 Each review contains a verdict, a roast citing slide numbers and quoting the text, a missing-discipline section with primary sources, a proposed slide-by-slide arc whose minutes sum, one highest-value change, and a list of claims to verify or soften.
 
@@ -41,10 +44,10 @@ The verdicts above describe the reviewed versions and remain as the historical s
 
 | Review | Current source | Remaining delivery evidence |
 | --- | --- | --- |
-| Failure Improvement | [15-slide outline](../outlines/failure-improvement-40min.md) | Personal stories and live integration for recording |
-| Product Engineering | [Canonical outline](../outlines/product-engineering-40min.md) | Personal stories and reconfirmed estimation observation |
-| Judgment | [Queueing arc](../outlines/judgment-40min.md) | Personal review-delay story |
-| Benchmarks | [Instrument-validation arc](../outlines/benchmarks-40min.md) | Personal green-eval failure story |
-| Retrieval | [Three Search Methods in a Fundable Trenchcoat](../outlines/retrieval-40min.md) | Personal missing-judgment story |
+| Failure Improvement | [15-slide outline](../talks/failure-improvement/outline-40min.md) | Personal stories and live integration for recording |
+| Product Engineering | [Canonical outline](../talks/product-engineering/outline-40min.md) | Personal stories and reconfirmed estimation observation |
+| Judgment | [Queueing arc](../talks/judgment/outline-40min.md) | Personal review-delay story |
+| Benchmarks | [Instrument-validation arc](../talks/benchmarks/outline-40min.md) | Personal green-eval failure story |
+| Retrieval | [Three Search Methods in a Fundable Trenchcoat](../talks/retrieval/outline-40min.md) | Personal missing-judgment story |
 
 Skeptic’s editorial rewrite remains pending an explicit retirement/procurement choice. The new evidence banks record corrections to the review’s proposed statistics and history, including mirroring-study denominators, threshold-flip arithmetic, incomplete-pool limits, and the R1 publication year. No anecdote or production measurement was invented to fill a slot.

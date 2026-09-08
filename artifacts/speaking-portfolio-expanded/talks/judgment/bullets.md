@@ -1,204 +1,207 @@
-# Code Is Cheap. Judgment Is Expensive: bullet outline
+# Turn Your Thinkin' Tokens Up to 11: bullet outline
 
-Protect review capacity by changing arrivals, variance, and utilization.
+What to ship, to whom, and when, now that building it is the cheap part.
 
-Generated from [the 40-minute outline](../judgment-40min.md) by `bun artifacts/speaking-portfolio-expanded/bullets.ts`. Edit the outline, not this file. 14 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](../judgment-15min-adaptation.md) · [30](../judgment-30min-adaptation.md).
+Generated from [the 40-minute outline](outline-40min.md) by `bun artifacts/speaking-portfolio-expanded/bullets.ts`. Edit the outline, not this file. 14 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
 ## Spine
 
-1. **The morning four good implementations arrive** — 00:00 · warm · 02:30
-2. **Point at the queue** — 02:30 · warm · 02:30
-3. **A queue does not care how you feel about it** — 05:00 · build · 03:00
-4. **The stage you didn't speed up** — 08:00 · build · 02:30
-5. **You cannot inspect quality in** — 10:30 · build · 02:30
-6. **"Add enterprise permissions"** — 13:00 · build · 03:00
-7. **A spec reduces variance** — 16:00 · build · 03:00
-8. **What review actually catches** — 19:00 · build · 03:00
-9. **Demo: the rubber stamp** — 22:00 · peak · 04:00
-10. **Do not appoint a crumple zone** — 26:00 · build · 03:00
-11. **Essence and accident** — 29:00 · build · 03:00
-12. **Three levers on the queue** — 32:00 · build · 03:00
-13. **Measure the wait, not the output** — 35:00 · land · 03:00
-14. **Knowing when to stop** — 38:00 · land · 02:00
+1. **These go to eleven** — 00:00 · warm · 02:30
+2. **What got cheap, and what didn't** — 02:30 · warm · 02:30
+3. **Nobody lives in your app** — 05:00 · build · 03:00
+4. **Feature fatigue is a measured effect** — 08:00 · build · 03:00
+5. **A change is a loss before it is a gain** — 11:00 · build · 02:30
+6. **"Ship it Tuesday"** — 13:30 · build · 03:00
+7. **Five axes, one of them a date** — 16:30 · build · 03:00
+8. **Turn the tokens up** — 19:30 · peak · 04:00
+9. **What the machine is actually for** — 23:30 · build · 02:30
+10. **Prediction: the version picker** — 26:00 · build · 03:30
+11. **What that costs to build** — 29:30 · build · 02:30
+12. **Prediction: the app your neighbor configured** — 32:00 · build · 03:00
+13. **Everyone runs a different app now** — 35:00 · build · 03:00
+14. **Knowing what not to ship** — 38:00 · land · 02:00
 
 ## Slides
 
-### 1. The morning four good implementations arrive
+### 1. These go to eleven
 
 00:00–02:30 · warm · 02:30
 
-> 95% utilized → 19× waiting
-> Four plausible implementations. One reviewer.
+> Code is free. Features are free.
+> Attention is the budget.
 
-- Four good implementations arrive before lunch.
-- If your organization uses AI to build an infinite feature machine, you have tragically missed the potential of the magic AI genie.
-- Here is the scope once: the queue and permission examples are teaching models, not measurements of your team.
-- Story — The change that waited longer for review than it took to write. Bring arrival, first-review, and acceptance timestamps.
+- Four features shipped before lunch. All four work.
+- Here is the line this talk has to earn. Don't count what the feature cost you to build, count what it costs them to relearn.
+- The title is a Spinal Tap joke and it is load-bearing.
+- Scope, once. The arithmetic later is counting, not a measurement of your team, and the two futures at the end are labeled predictions I have not measured.
+- Story — The feature you were proudest of that a long-absent customer experienced as a broken workflow. Bring the ticket, the gap between their sessions, and what they actually said.
 
-### 2. Point at the queue
+### 2. What got cheap, and what didn't
 
 02:30–05:00 · warm · 02:30
 
-> Idea → specification → code → review → release
-> Not where it takes skill. Where it sits untouched.
+> Someone has to want it · build it · learn it
+> We only automated the middle one
 
-- Where does your work wait? Not where does it take skill.
-- A team can have an implementation bottleneck on Monday and a review bottleneck on Friday.
-- Draw a boundary around the review system.
-- Do — Budget 45 seconds for hands on each stage. Take one answer about where work waits and use it for the diagram.
+- Three things used to gate a feature. Someone had to want it, someone had to build it, and someone had to learn it.
+- Build cost is now close enough to zero that it stops being the selection mechanism, and that is the part nobody plans for.
+- So the interesting question stopped being what can we build.
 
-### 3. A queue does not care how you feel about it
+### 3. Nobody lives in your app
 
 05:00–08:00 · build · 03:00
 
-> Wq ≈ ((ca² + cs²) / 2) × ρ / (1 − ρ) × E[S]
-> V = 1: 80% → 4×; 90% → 9×; 95% → 19×
+> 90 days · 46 releases · 4 sessions
+> Between visits two and three: 21 changes, at once
 
-- Kingman's single-server approximation separates three things: variability, utilization, and mean service time.
-- Fifteen percentage points of utilization bought nearly five times the wait.
-- Little's law gives a separate accounting identity for a stable system: average work in progress equals throughput times average time in the system.
-- Diagram — Kingman: queue wait vs reviewer utilization, variability factor one
-- Do — Trace the curve and do both divisions. Ask what happens if variability doubles; show that it multiplies the wait too.
-- Source — J. F. C. Kingman (1961), [The single server queue in heavy traffic](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/abs/single-server-queue-in-heavy-traffic/81C55BC00A68FE6D5385638AA0B0AF37), 57(4), 902–904. John D. C. Little (1961), [A Proof for the Queuing Formula: L = λW](https://pubsonline.informs.org/doi/abs/10.1287/opre.9.3.383), Operations Research 9(3), 383–387.
+- Here is ninety days. The top track is your deploys: forty-six of them, roughly every other day, which any DORA-literate team would call healthy.
+- Between her second visit and her third you shipped twenty-one changes.
+- DORA's four keys measure delivery capability: deployment frequency, lead time, change failure rate, time to restore.
+- Diagram — Ninety days of releases against one user's four sessions
+- Do — Ask for a show of hands on median return interval before revealing the bottom track. Most rooms have never measured it; say so and move on.
+- Source — Nicole Forsgren, Jez Humble and Gene Kim (2018), [Accelerate: The Science of Lean Software and DevOps](https://itrevolution.com/product/accelerate/), IT Revolution. The four key metrics describe delivery performance, not user absorption; the tracks in this diagram are an illustration, not measured telemetry.
 
-### 4. The stage you didn't speed up
+### 4. Feature fatigue is a measured effect
 
-08:00–10:30 · build · 02:30
+08:00–11:00 · build · 03:00
 
-> Fixed-work example: review is 30% of service time
-> Infinite generation speed → 1 / 0.30 = 3.33×
+> Before use: capability wins
+> After use: usability wins
+> Delighters decay into expectations
 
-- Take a fixed job. Seventy percent of its service time is producing the implementation, thirty percent is review.
-- This is Amdahl's argument applied to a sequence of work.
-- If you want more than that ceiling, change the remaining work.
-- Source — Gene M. Amdahl (1967), [Validity of the single processor approach to achieving large scale computing capabilities](https://doi.org/10.1145/1465482.1465560), AFIPS Spring Joint Computer Conference, 483–485.
+- Thompson, Hamilton and Rust ran this in 2005 and named it feature fatigue.
+- That is not a quirk, it is a structural problem.
+- Kano's model from 1984 splits attributes into must-be, one-dimensional and attractive.
+- Source — Debora Viana Thompson, Rebecca W. Hamilton and Roland T. Rust (2005), [Feature Fatigue: When Product Capabilities Become Too Much of a Good Thing](https://doi.org/10.1509/jmkr.2005.42.4.431), Journal of Marketing Research 42(4), 431–442. Noriaki Kano, Nobuhiko Seraku, Fumio Takahashi and Shinichi Tsuji (1984), Attractive Quality and Must-Be Quality, Journal of the Japanese Society for Quality Control 14(2), 39–48.
 
-### 5. You cannot inspect quality in
+### 5. A change is a loss before it is a gain
 
-10:30–13:00 · build · 02:30
+11:00–13:30 · build · 02:30
 
-> Fewer arrivals. Smaller surprises.
-> Fix the process producing the queue.
+> Status quo bias · endowment effect
+> Recognition, not recall
+> The gain is yours. The loss is theirs, today.
 
-- Deming's third point says to stop depending on inspection to achieve quality and build quality into the process.
-- Keep review. Change what it receives. An unasked-for abstraction, an unexplained permission change, and a speculative feature all consume the same person's attention.
-- Hiring can increase capacity. It is still worth fixing arrivals first.
-- Source — W. Edwards Deming (1986), Out of the Crisis, MIT Center for Advanced Engineering Study; Point 3 of the Fourteen Points. Applied to review by the [Deming Institute](https://deming.org/software-code-reviews-from-a-deming-perspective/).
+- Samuelson and Zeckhauser named status quo bias in 1988: across lab and field decisions, people over-select the option they already hold.
+- Nielsen's heuristic says recognition rather than recall.
+- The gain from a redesign is real, and it arrives later, spread thin.
+- Source — William Samuelson and Richard Zeckhauser (1988), [Status Quo Bias in Decision Making](https://doi.org/10.1007/BF00055564), Journal of Risk and Uncertainty 1(1), 7–59. Daniel Kahneman, Jack L. Knetsch and Richard H. Thaler (1990), [Experimental Tests of the Endowment Effect and the Coase Theorem](https://doi.org/10.1086/261737), Journal of Political Economy 98(6), 1325–1348. Jakob Nielsen (1994), [Ten Usability Heuristics for User Interface Design](https://www.nngroup.com/articles/ten-usability-heuristics/).
 
-### 6. "Add enterprise permissions"
+### 6. "Ship it Tuesday"
 
-13:00–16:00 · build · 03:00
+13:30–16:30 · build · 03:00
 
-> Who can do what, in which tenant?
-> What happens when access changes?
-> What must never happen?
+> "Ship it Tuesday."
+> That is the whole request.
 
-- Add enterprise permissions. That is the entire request.
-- Spend sixty seconds with the person next to you.
-- Who can grant a role? Does it apply to one tenant or every tenant?
-- We made code cheap and left the question expensive.
-- Do — Read the request once. Give pairs sixty seconds here, thirty in the 15-minute cut. Collect two answers, then introduce the tenant and revocation questions.
+- Ship it Tuesday. That is the entire request, somebody senior said it, and everyone in the room nodded.
+- Sixty seconds with the person next to you.
+- Which customers get it Tuesday? Do they get it with the other three things in the branch, or on its own?
+- None of those are engineering questions and all of them are release questions.
+- Do — Read the request once, exactly as written. Give pairs sixty seconds here, thirty in the 15-minute cut. Collect two answers, then add the renewal date and the support roster yourself.
 
-### 7. A spec reduces variance
+### 7. Five axes, one of them a date
 
-16:00–19:00 · build · 03:00
+16:30–19:30 · build · 03:00
 
-> Actor + tenant + action + resource
-> Revocation changes the next decision
-> Denied actions leave state unchanged
+> What · who · when · shape · reversibility
+> Every axis commits somebody who is not in this room
 
-- For this example, an administrator can grant a role only inside the tenant they administer.
-- Those statements produce cases. An admin in tenant A requests a change in A: allow.
-- Tie this back to the curve. Clear boundaries reduce the number of interpretations arriving at review.
-- Do — Write the three cases beside the request. Keep the cross-tenant case visible in the handout, not beside the later demo’s initial code.
+- Five axes, not one. Most roadmap tools model exactly one of them, the date, which is why the date is the only one that ever gets argued about.
+- Read the right-hand column. Every one of these commits a person who is not in this room: support staffing, a documentation rewrite, an account executive who already promised it, a renewal conversation on Thursday.
+- You also have to keep all of it flexible, because a competitor ships something on a Wednesday and now you want to pull a feature forward.
+- Table — Axis · Question · Commits, 5 rows
+- Story — The release you pulled forward to answer a competitor. Bring what slipped, what support absorbed, and whether it worked.
 
-### 8. What review actually catches
+### 8. Turn the tokens up
 
-19:00–22:00 · build · 03:00
+19:30–23:30 · peak · 04:00
 
-> Understanding is work
-> Defect finding · knowledge transfer · alternative designs
+> 6 features · 3 cohorts → 524,880 plans
+> 12,000 weekly actives · 4 weeks → 16 arms
+> 32,805 plans per arm of evidence
 
-- Bacchelli and Bird studied modern code review at Microsoft.
-- That gives the review queue more than one job.
-- Keep junior engineers in the reasoning. Let them write the acceptance case, explain a rejection, and follow a change through its consequences.
-- Do — Spend 45 seconds on how a junior engineer would learn the permission boundary from this change.
-- Source — Alberto Bacchelli and Christian Bird (2013), [Expectations, Outcomes, and Challenges of Modern Code Review](https://www.cabird.com/pubs/bacchelli2013eoc.pdf), ICSE 2013.
+- Six features. Order them: seven hundred and twenty sequences.
+- Now the evidence you can buy. Twelve thousand weekly actives, a four-week window, forty-eight thousand exposures.
+- So turn the thinkin' tokens up. Chollet's 2019 definition treats intelligence as skill acquisition over novel tasks, and a system that has already seen the situation is not demonstrating that.
+- There is a paper about exactly this: the Apple group's Illusion of Thinking, 2025, reporting that reasoning models collapse past a complexity threshold and spend fewer tokens as problems get harder.
+- My claim is weaker and safer. The model has not met your users.
+- Do — Run `bun artifacts/speaking-portfolio-expanded/talks/judgment/demo.ts` for the plan count, then add `--evidence` for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
+- Source — François Chollet (2019), [On the Measure of Intelligence](https://arxiv.org/abs/1911.01547), arXiv:1911.01547. Parshin Shojaee and colleagues (2025), [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking), Apple Machine Learning Research; and the rebuttal, [The Illusion of the Illusion of Thinking](https://arxiv.org/abs/2506.09250), arXiv:2506.09250. Present as a contested exchange, not a settled result.
 
-### 9. Demo: the rubber stamp
+### 9. What the machine is actually for
 
-22:00–26:00 · peak · 04:00
+23:30–26:00 · build · 02:30
 
-> canEdit(user, resourceTenant) = user.roles.includes("admin")
-> Test: admin user → allowed
-> PASS
+> Cluster 4,000 support threads → yes
+> Choose the order → no
+> It proposes. You sequence.
 
-- Here is the implementation. Here is its test.
-- The resource tenant is right there in the signature.
-- Would you approve it? Now run the case where that administrator belongs to tenant A and the resource belongs to tenant B.
-- The model wrote the test that agrees with the bug.
-- Bainbridge asks what automation leaves the operator doing.
-- Do — Open contracts.md only after the vote. Run `bun artifacts/speaking-portfolio-expanded/packets/judgment/demo.ts` for PASS, then add `--holdout` for the actual failing assertion. Do not assume the room approves; if someone catches it, ask which evidence caught their attention.
-- Source — Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468), Automatica 19(6), 775–779. Linda J. Skitka, Kathleen L. Mosier and Mark Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991–1006. A flight-simulation task with a monitoring aid, not a code-review trial.
+- This is not an anti-AI slide, and the useful list is long.
+- Better, have it hunt the conflict you would have missed.
+- What it cannot do is care which one your users will love, because it has never met them and because the answer does not exist yet.
 
-### 10. Do not appoint a crumple zone
+### 10. Prediction: the version picker
 
-26:00–29:00 · build · 03:00
+26:00–29:30 · build · 03:30
 
-> Responsibility must come with control
-> Who accepts, recovers, and maintains?
+> Theme · Language · Version
+> "You're on 4.2. It's 43 days old. Update, or turn on auto-update."
 
-- Elish calls the human who absorbs blame without enough control a moral crumple zone.
-- Can that person stop arrivals? Can they demand another test?
-- For the permissions change, name who accepts the behavior, who receives the incident, and who maintains the policy next year.
-- Source — Madeleine Clare Elish (2019), [Moral Crumple Zones: Cautionary Tales in Human-Robot Interaction](https://estsjournal.org/index.php/ests/article/download/260/177/), Engaging Science, Technology, and Society 5, 40–60.
+- First prediction, labeled once as a prediction.
+- A returning user lands on the version she left.
+- The web spent twenty years removing this control and calling it a feature.
+- The picker also makes the cost visible to you.
+- Diagram — A settings panel where version sits beside theme and language
 
-### 11. Essence and accident
+### 11. What that costs to build
 
-29:00–32:00 · build · 03:00
+29:30–32:00 · build · 02:30
 
-> Generating a branch is cheap
-> Choosing the permission boundary is still work
+> Versioned runtime + a sandbox per user
+> Privacy: better. Patching: worse.
+> Every live version is a live contract
 
-- Brooks distinguished the essential conceptual work of software from the accidental difficulty of expressing it in a machine.
-- The syntax of the role check is the easy part.
-- So invest the saved time in the model of the problem.
-- Source — Frederick P. Brooks Jr., [No Silver Bullet: Essence and Accidents of Software Engineering](https://www.cs.unc.edu/techreports/86-020.pdf), UNC technical report, 1986; published in Computer 20(4), 1987, 10–19.
+- Now the engineering bill, because the prediction is easy and the architecture is not.
+- That buys something real on privacy. Data that never leaves a user's sandbox is data you cannot leak in bulk, and a breach costs you one tenant instead of one table.
+- Every live version is also a live contract.
+- Source — Hyrum Wright, [Hyrum's Law](https://www.hyrumslaw.com/). Stated as an observation about interface consumers, not a measured result.
 
-### 12. Three levers on the queue
+### 12. Prediction: the app your neighbor configured
 
 32:00–35:00 · build · 03:00
 
-> Arrivals: decline work before generating it
-> Variance: bounded diffs and explicit behavior
-> Utilization: reserve actual review capacity
+> "Turn on what people like me have on"
+> Shareable configuration profiles
+> Developers have done this for thirty years
 
-- Fewer arrivals means deciding which changes should exist, including declining a second implementation after the first already met the need.
-- Smaller variance means reducing surprises at review.
-- Protect slack by reserving review time and limiting work in progress.
+- Second prediction. Feature flags stop being your deployment tool and become the user's preference surface.
+- This is not new, it is unevenly distributed.
+- Von Hippel's lead-user work found users at the leading edge of a market inventing what the rest will want, and his toolkit work in 2002 is about shipping them the means to do it.
+- Source — Eric von Hippel (1986), [Lead Users: A Source of Novel Product Concepts](https://doi.org/10.1287/mnsc.32.7.791), Management Science 32(7), 791–805. Eric von Hippel and Ralph Katz (2002), [Shifting Innovation to Users via Toolkits](https://doi.org/10.1287/mnsc.48.7.821.2817), Management Science 48(7), 821–833. Everett M. Rogers (2003), Diffusion of Innovations, 5th edition, Free Press.
 
-### 13. Measure the wait, not the output
+### 13. Everyone runs a different app now
 
-35:00–38:00 · land · 03:00
+35:00–38:00 · build · 03:00
 
-> Ready → first review → accepted
-> Hands-on review time ÷ available review time
-> Queue age and escaped defects beside throughput
+> Support: "which app do you have?"
+> Screenshots · A/B baselines · accessibility defaults
+> Same as it ever was: defaults still win
 
-- Start with timestamps. When was the change ready, when did somebody first inspect it, and when was it accepted?
-- Estimate review utilization against time actually available for review, after meetings and incident duty.
-- Take forty-five seconds. Estimate yours, or write down the missing measurement.
-- Do — Give 45 seconds. Invite one estimate and ask what counted as available time. Do not prescribe a universal utilization threshold.
+- Support opens with a new first question: which app do you have.
+- A user can also configure themselves into a corner and never meet the thing that would have helped.
+- Choice overload is the obvious objection and I will raise it myself: Iyengar and Lepper's jam study, 2000.
+- It is that nobody is curating them. Somebody owns the default profile, somebody decides which shared setups get promoted, and somebody decides what a new user gets before they have a neighbor.
+- Source — Sheena S. Iyengar and Mark R. Lepper (2000), [When Choice is Demotivating](https://doi.org/10.1037/0022-3514.79.6.995), Journal of Personality and Social Psychology 79(6), 995–1006. Benjamin Scheibehenne, Rainer Greifeneder and Peter M. Todd (2010), [Can There Ever Be Too Many Options?](https://doi.org/10.1086/651235), Journal of Consumer Research 37(3), 409–425. Cited to set aside.
 
-### 14. Knowing when to stop
+### 14. Knowing what not to ship
 
 38:00–40:00 · land · 02:00
 
-> What should exist? Does it work?
-> Is it worth maintaining?
+> Don't count what it cost you to build.
+> Count what it costs them to relearn.
 
-- Back to the curve. The reviewer did not get slower.
-- Ninety-five percent utilization is not efficiency.
-- Sometimes the right result is a smaller change.
-- Diagram — Kingman: queue wait vs reviewer utilization, variability factor one
-- Do — Leave the utilization curve up for questions.
+- Back to the two tracks. Forty-six releases, four sessions.
+- Turn the reasoning up as far as it goes.
+- Sometimes the right release is a smaller one.
+- Do — Step back to slide 3 for the two tracks, then return here. Stop talking.

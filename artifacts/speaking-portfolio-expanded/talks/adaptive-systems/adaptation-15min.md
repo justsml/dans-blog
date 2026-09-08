@@ -1,6 +1,6 @@
 # Adaptive, agentic apps: 15-minute adaptation
 
-Keep slides 1, 3, 4, 5, 6, 10, 15. Hide the others in presenter preparation. [Complete talk track](../packets/adaptive-systems/script-15min.md).
+Keep slides 1, 3, 4, 5, 6, 10, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

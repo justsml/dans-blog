@@ -1,6 +1,6 @@
 # Run the Judges
 
-3 min · video · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slides 7 and 9
+3 min · video · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/outline-40min.md), slides 7 and 9
 
 Same case, five verdicts. That's not a judge, that's a mood ring.
 

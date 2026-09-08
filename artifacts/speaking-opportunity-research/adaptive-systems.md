@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Staff engineers, AI architects, platform teams, and developers building agent orchestration.
 - Thesis: Investigate unfamiliar integration failures, validate versioned repairs, and recover within externally enforced authority, cost and data boundaries.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/engineering/adaptive-systems/CFP.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/adaptive-systems/CFP.md)
 
 ## Search focus
 

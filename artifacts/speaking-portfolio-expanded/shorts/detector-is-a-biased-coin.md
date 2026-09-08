@@ -1,6 +1,6 @@
 # Guilty Until Rewritten
 
-2 min · video · parent: [Outsmart](../outlines/evidence-learning-40min.md) slide 2 · also serves [Show Me the Misconception](../packets/evidence-learning/procurement-route.md) section 5
+2 min · video · parent: [Outsmart](../talks/evidence-learning/outline-40min.md) slide 2 · also serves [Show Me the Misconception](../talks/evidence-learning/procurement-route.md) section 5
 
 It flags the ESL kid, misses the one with a VPN, and even when it's right it's answering the wrong question.
 

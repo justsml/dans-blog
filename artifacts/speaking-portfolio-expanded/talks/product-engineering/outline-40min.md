@@ -68,7 +68,7 @@ Stage direction: Take 30 seconds: where is your team on the spectrum, and what i
 
 08:00 to 10:00 · build
 
-![Draw the wires between agents](../../../public/talks/assets/product-engineering/interfaces.svg)
+![Draw the wires between agents](../../../../public/talks/assets/product-engineering/interfaces.svg)
 
 > Research → sourced brief → product review
 > Feedback → cited clusters → product review
@@ -169,7 +169,7 @@ C has forty-five percent activation, four percent support, and no fabricated urg
 
 Write the rule you wish you had before the first vote. Compare it with the policy we saved before opening the scorecard. The gap is what this exercise was for.
 
-Stage direction: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow economics-product/demo.md. Allow 45 seconds to write the rule.
+Stage direction: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow demo.md. Allow 45 seconds to write the rule.
 
 ## 12. Where guards go, including the two we forgot
 
@@ -205,7 +205,7 @@ Source: V. A. Graicunas, [Relationship in Organization](https://nickols.us/relat
 
 26:30 to 30:30 · build
 
-![Prediction: tokens stop being a build cost and become a running cost. A shipped product with no new features still burns tokens to stay current and to defend itself, and somebody owns that meter.](../../../public/talks/assets/product-engineering/fuel.svg)
+![Prediction: tokens stop being a build cost and become a running cost. A shipped product with no new features still burns tokens to stay current and to defend itself, and somebody owns that meter.](../../../../public/talks/assets/product-engineering/fuel.svg)
 
 > Tokens stop being a build cost and become a running cost
 > Sentry bots hunting your own vulnerabilities, 24/7, forever
@@ -227,7 +227,7 @@ Stage direction: Ask who has a security agent running right now with credentials
 
 30:30 to 35:00 · land
 
-![Prediction: a grid of chosen apps gives way to one generated surface, adapting per person, with a revived terminal beside it. Who owns that channel is still open, and non-frontier builders can rethink any app as AI-native.](../../../public/talks/assets/product-engineering/channel.svg)
+![Prediction: a grid of chosen apps gives way to one generated surface, adapting per person, with a revived terminal beside it. Who owns that channel is still open, and non-frontier builders can rethink any app as AI-native.](../../../../public/talks/assets/product-engineering/channel.svg)
 
 > Generated UI, adapting in real time, per person
 > Yes, the software you mastered is going away. As you know it.

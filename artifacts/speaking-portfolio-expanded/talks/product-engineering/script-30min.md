@@ -143,7 +143,7 @@ C has forty-five percent activation, four percent support, and no fabricated urg
 
 Write the rule you wish you had before the first vote. Compare it with the policy we saved before opening the scorecard. The gap is what this exercise was for.
 
-Delivery: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow economics-product/demo.md. Allow 45 seconds to write the rule.
+Delivery: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow demo.md. Allow 45 seconds to write the rule.
 
 ## 20:30 to 23:00: slide 12, Where guards go, including the two we forgot
 

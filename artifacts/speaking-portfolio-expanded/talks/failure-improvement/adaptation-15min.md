@@ -1,6 +1,6 @@
 # Automating Improvement From Failure: 15-minute adaptation
 
-Keep slides 1, 2, 4, 6, 8, 9, 13, 15. Hide the others in presenter preparation. [Complete talk track](../packets/failure-improvement/script-15min.md).
+Keep slides 1, 2, 4, 6, 8, 9, 13, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

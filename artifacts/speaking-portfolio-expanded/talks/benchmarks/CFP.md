@@ -26,4 +26,4 @@ AI engineers, ML and platform engineers, QA and DevEx teams, and technical leade
 
 Not a leaderboard talk and not a benchmark review; no public benchmark is ranked and no model is recommended. Every statistical claim is derived on stage from stated assumptions, and the fixture arithmetic is synthetic and labelled as such. Goodhart is cited to his 1975 paper rather than the aphorism, and Campbell is distinguished from him rather than merged. The contamination section reports what detection methods can and cannot establish. Companion to *Three Search Methods in a Fundable Trenchcoat*, which owns retrieval evaluation and the IR history; cost per accepted outcome belongs to *Buy Me a Free Tier*. This talk defers both explicitly on stage.
 
-**Format:** 40 minutes, 15 slides, including a judge-agreement exercise. 15- and 30-minute routes are prepared. [Full submission packet](../../packets/benchmarks/packet.md).
+**Format:** 40 minutes, 15 slides, including a judge-agreement exercise. 15- and 30-minute routes are prepared. [Full submission packet](packet.md).

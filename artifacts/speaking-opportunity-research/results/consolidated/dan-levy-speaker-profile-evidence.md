@@ -10,7 +10,7 @@ His earlier roles combine hands-on engineering, organizational leadership, and t
 
 Dan also writes and contributes in public. Repository sources link his `llm://` URI-scheme Internet-Draft and implementation, Functional Promises, and contributions to projects including Mastra, Pagefind, PostGIS, React Router, Docker/Moby, Node.js, Angular, Lodash, MDN examples, Gatsby, and others. His blog contains practical material on AI evaluation, model routing, retrieval, databases, software architecture, security, instructional design, and education in the age of AI.
 
-Sources: [engineering-leader resume](../../../../public/docs/Resume_Dan_Levy_AI_Engineering_Leader_2026.pdf), [principal-engineer resume](../../../../public/docs/Resume_Dan_Levy_Principal_AI_Engineer_2026.pdf), [existing speaker kit](../../../speaking-portfolio-expanded/packets/speaker/bio.md#L20-L34), [site biography](../../../../src/shared/uiTranslations.ts#L191-L201).
+Sources: [engineering-leader resume](../../../../public/docs/Resume_Dan_Levy_AI_Engineering_Leader_2026.pdf), [principal-engineer resume](../../../../public/docs/Resume_Dan_Levy_Principal_AI_Engineer_2026.pdf), [existing speaker kit](../../../speaking-portfolio-expanded/speaker/bio.md#L20-L34), [site biography](../../../../src/shared/uiTranslations.ts#L191-L201).
 
 ## Explicit identity and positioning
 
@@ -214,7 +214,7 @@ The strongest documented speaker credentials are adjacent evidence rather than a
 - The open-source ledger says Dan helped at local meetups as a Docker Mentor: [`src/shared/ossData.ts`, lines 41–46](../../../../src/shared/ossData.ts#L41-L46).
 - A large public body of technical writing, tutorials, quizzes, diagrams, and code examples can support subject-matter credibility and proposal samples.
 
-The existing speaker packet correctly notes that no public list of prior appearances exists in the repository: [`artifacts/speaking-portfolio-expanded/packets/speaker/bio.md`, lines 36–45](../../../speaking-portfolio-expanded/packets/speaker/bio.md#L36-L45). No event names, talk titles, dates, audience sizes, video URLs, or slide links should be invented.
+The existing speaker packet correctly notes that no public list of prior appearances exists in the repository: [`artifacts/speaking-portfolio-expanded/packets/speaker/bio.md`, lines 36–45](../../../speaking-portfolio-expanded/speaker/bio.md#L36-L45). No event names, talk titles, dates, audience sizes, video URLs, or slide links should be invented.
 
 ## Education
 
@@ -239,7 +239,7 @@ Source: engineering-leader resume, page 3; principal-engineer resume, page 2.
 2. **Engineer-teaching total:** the leadership resume headline says 4,000+ engineers taught, while its prose says a 2,500-student division was directed and 1,800+ engineers were taught elsewhere. Directing students is not automatically equivalent to personally teaching them. Use "led education programs serving 2,500+ students and taught 1,800+ engineers" until Dan confirms the 4,000+ formulation.
 3. **Internet-Draft status:** remove the resumes' parenthetical "RFC 7595." RFC 7595 is a URI-scheme registration-process reference, not the status or RFC number of Dan's draft. Say "author of an IETF Internet-Draft proposing the `llm://` URI scheme."
 4. **Speaking history:** collect named graduations, internal leadership presentations, meetups, webinars, podcasts, workshops, conference sessions, videos, and slides.
-5. **Public recording:** the repository has a recording plan but no completed, stable speaker-reel or talk URL: [`recording-plan.md`](../../../speaking-portfolio-expanded/packets/speaker/recording-plan.md).
+5. **Public recording:** the repository has a recording plan but no completed, stable speaker-reel or talk URL: [`recording-plan.md`](../../../speaking-portfolio-expanded/speaker/recording-plan.md).
 6. **"Five unicorn ascents":** the principal resume displays this number but provides no company list, definition, dates, role attribution, or evidence. Do not use it without clarification.
 7. **MagicSchool.ai superlative:** "largest and fastest-growing education technology company ever" appears in the leadership resume summary without evidence. Omit or source it independently.
 8. **Internal results:** Hotel Engine's number-one productivity/happiness ranking and the 430% Lambda enrollment-growth attribution need supporting definitions and records for high-scrutiny applications.

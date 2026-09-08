@@ -1,6 +1,6 @@
 # Twenty for Twenty, One in Seven
 
-3 min · video · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slide 8
+3 min · video · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/outline-40min.md), slide 8
 
 Twenty for twenty feels like a wrap party. Do the arithmetic and it bought you less than you think, and only if you sampled honestly, which you didn't.
 

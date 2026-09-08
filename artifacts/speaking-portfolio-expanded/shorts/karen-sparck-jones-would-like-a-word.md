@@ -1,6 +1,6 @@
 # Karen Spärck Jones Would Like a Word
 
-2 min · video · parent: [Retrieval](../outlines/retrieval-40min.md), slides 3 and 7
+2 min · video · parent: [Retrieval](../talks/retrieval/outline-40min.md), slides 3 and 7
 
 Hybrid search: invented last quarter, published in 1972.
 

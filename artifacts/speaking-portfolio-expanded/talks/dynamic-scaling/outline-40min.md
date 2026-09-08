@@ -4,7 +4,7 @@ Agents now direct their own compute. Put the limits where the work begins.
 
 Rewritten 2026-09-06 from Dan's notes. 40 minutes, 14 slides, four audience moments, no Q&A. Add five minutes for a 45-minute booking. Job counts and prices are fixtures; the vendors on slide 8 are real and were checked on the date above. Say the scope once, on slide 1.
 
-[Presenter scripts](../packets/dynamic-scaling/script-40min.md) · [Contracts](../packets/dynamic-scaling/contracts.md) · [Walkthrough](../packets/dynamic-scaling/demo.md) · [Evidence](../packets/dynamic-scaling/evidence-bank.md)
+[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Walkthrough](demo.md) · [Evidence](evidence-bank.md)
 
 Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts dynamic-scaling`.
 
@@ -12,7 +12,7 @@ Regenerate scripts, adaptations and the browser deck with `bun artifacts/speakin
 
 00:00 to 02:00 · warm
 
-![Each of four batch-tool calls starts ten jobs: 4 × 10 = 40, before retries.](../../../public/talks/assets/dynamic-scaling/01-four-calls-hide-forty-provider-jobs.svg)
+![Each of four batch-tool calls starts ten jobs: 4 × 10 = 40, before retries.](../../../../public/talks/assets/dynamic-scaling/01-four-calls-hide-forty-provider-jobs.svg)
 
 > A chat turn, a retry, a cron job, a second tab
 > Each legal. Each ten images.
@@ -32,7 +32,7 @@ Stage direction: Let the room multiply before you show forty. Then ask which com
 
 02:00 to 05:00 · warm
 
-![Ops sized the fleet for everyone; an autoscaler reacts to CPU; an agentic job describes its own shape and asks.](../../../public/talks/assets/dynamic-scaling/02-horizontal-vertical-self-directed.svg)
+![Ops sized the fleet for everyone; an autoscaler reacts to CPU; an agentic job describes its own shape and asks.](../../../../public/talks/assets/dynamic-scaling/02-horizontal-vertical-self-directed.svg)
 
 > Horizontal: more boxes, decided by ops
 > Vertical: bigger box, decided by ops
@@ -50,7 +50,7 @@ Stage direction: Classify an image batch, a route-optimization run, three compet
 
 05:00 to 07:00 · steady
 
-![One retry per item can turn 40 logical items into 80 provider attempts.](../../../public/talks/assets/dynamic-scaling/03-count-items-and-attempts-separately.svg)
+![One retry per item can turn 40 logical items into 80 provider attempts.](../../../../public/talks/assets/dynamic-scaling/03-count-items-and-attempts-separately.svg)
 
 > Agent slots ≠ tool batch size ≠ provider attempts ≠ entitlement
 
@@ -64,7 +64,7 @@ Stage direction: Draw four callers, ten children, one retry layer. Count to eigh
 
 07:00 to 10:00 · build
 
-![One coordinated reservation protects tenant spend and entitlement across all callers.](../../../public/talks/assets/dynamic-scaling/04-every-caller-crosses-shared-admission.svg)
+![One coordinated reservation protects tenant spend and entitlement across all callers.](../../../../public/talks/assets/dynamic-scaling/04-every-caller-crosses-shared-admission.svg)
 
 > Reserve before dispatch
 > Share tenant and provider limits
@@ -80,7 +80,7 @@ Stage direction: Walk two simultaneous callers in contracts.md. Read-balance-the
 
 10:00 to 12:00 · steady
 
-![Illustrative $2 run cap: settled + reserved ≤ $2. Prices here are invented fixture values.](../../../public/talks/assets/dynamic-scaling/05-reservations-and-charges-share-one-ceiling.svg)
+![Illustrative $2 run cap: settled + reserved ≤ $2. Prices here are invented fixture values.](../../../../public/talks/assets/dynamic-scaling/05-reservations-and-charges-share-one-ceiling.svg)
 
 > Concurrency ≠ requests per minute ≠ dollars
 > Reserved ≠ charged. Cancelled ≠ refunded.
@@ -96,7 +96,7 @@ Stage direction: Use the $2 ledger in contracts.md. Show settled plus reserved n
 
 12:00 to 14:00 · steady
 
-![The scheduler reduces admission after throttling; every increase remains inside the approved maximum.](../../../public/talks/assets/dynamic-scaling/06-adapt-pressure-within-a-fixed-limit.svg)
+![The scheduler reduces admission after throttling; every increase remains inside the approved maximum.](../../../../public/talks/assets/dynamic-scaling/06-adapt-pressure-within-a-fixed-limit.svg)
 
 > Throttled → wait and reduce
 > Healthy window → cautious increase
@@ -112,7 +112,7 @@ Stage direction: Walk ten to five, then a cautious recovery that never exceeds t
 
 14:00 to 17:00 · peak
 
-![The job requests shape, size, duration and a cost cap; the scheduler resolves it against a catalog and tenant budget and returns a lease.](../../../public/talks/assets/dynamic-scaling/07-infra-as-an-agent-capability.svg)
+![The job requests shape, size, duration and a cost cap; the scheduler resolves it against a catalog and tenant budget and returns a lease.](../../../../public/talks/assets/dynamic-scaling/07-infra-as-an-agent-capability.svg)
 
 > Request: shape, size, duration, region, cost cap
 > Resolve: catalog, tenant budget, lease
@@ -132,7 +132,7 @@ Stage direction: Contrast one autoscaler threshold with one job request. Ask whi
 
 17:00 to 20:00 · steady
 
-![Sandboxes, serverless GPUs, durable edge state and spot capacity, all created in seconds and torn down by default.](../../../public/talks/assets/dynamic-scaling/08-the-ephemeral-ecosystem.svg)
+![Sandboxes, serverless GPUs, durable edge state and spot capacity, all created in seconds and torn down by default.](../../../../public/talks/assets/dynamic-scaling/08-the-ephemeral-ecosystem.svg)
 
 > Sandboxes: Fly.io Sprites, Depot
 > Serverless compute and GPUs: Modal, Vast.ai
@@ -165,7 +165,7 @@ Stage direction: Place a local graph solver, a remote image request and an agent
 
 22:00 to 25:00 · build
 
-![Persist intent and provider identity; uncertain acceptance goes to reconciliation, not blind replay.](../../../public/talks/assets/dynamic-scaling/08-a-job-survives-the-caller.svg)
+![Persist intent and provider identity; uncertain acceptance goes to reconciliation, not blind replay.](../../../../public/talks/assets/dynamic-scaling/08-a-job-survives-the-caller.svg)
 
 > queued → submitted → waiting → completed / failed / unresolved
 > Callbacks: authenticate, deduplicate, valid transitions only
@@ -197,7 +197,7 @@ Stage direction: The trace in demo.md; compress rows 1 and 2 on the short routes
 
 30:00 to 35:00 · build
 
-![Cheap parallel generation produces candidates; shared gates reject before preference; cheap multi-model judges report disagreement rather than an average score.](../../../public/talks/assets/dynamic-scaling/12-monkeys-then-guards.svg)
+![Cheap parallel generation produces candidates; shared gates reject before preference; cheap multi-model judges report disagreement rather than an average score.](../../../../public/talks/assets/dynamic-scaling/12-monkeys-then-guards.svg)
 
 > Barrel of monkeys: lead with cheap parallel generation, on purpose
 > Council of Guards: judges read a thousand tokens and write fifty; measure the disagreement

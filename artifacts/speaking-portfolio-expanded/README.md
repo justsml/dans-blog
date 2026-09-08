@@ -2,45 +2,63 @@
 
 Talk outlines with speaker cues, timed slides, image prompts, CFP packages, evidence notes and an offline demo kit. These extend the earlier four-talk portfolio.
 
+## Layout
+
+One directory per talk under [talks/](talks/README.md). Everything for a talk lives directly in its folder:
+
+```
+talks/<slug>/
+  outline-40min.md            canonical source; edit this one
+  adaptation-{15,30}min.md    generated route plans
+  script-{15,30,40}min.md     generated presenter scripts
+  bullets.md                  generated rehearsal sheet
+  packet.md  formats.md       submission index and edition table
+  CFP.md  evidence-bank.md    submission copy and claim boundaries
+  visuals.md  contracts.md    hand-written companions, fixtures, demos
+  <slug>-{15,30,40}min-{screen,handout}.pptx
+```
+
+Shared material stays at this level: [shorts/](shorts/README.md), [reviews/](reviews/README.md), [demos/](demos/DEMO-RUNBOOK.md), [speaker/](speaker/bio.md), [alternate-angles/](alternate-angles/README.md), [tools/](tools), and the three build scripts. Retired talks live in [retired/](retired). Consolidated on 7 September 2026 from the former `outlines/`, `packets/`, `decks/`, `engineering/`, `education/` and `economics-product/` directories.
+
 [Open the offline demos](../../public/talks/demos/index.html) · [Demo runbook](demos/DEMO-RUNBOOK.md)
 
-**Deck sync.** All nine talks have synchronized 15-, 30-, and 40-minute browser decks, presenter scripts, screen PowerPoints, and handout PowerPoints. The [PowerPoint download index](decks/README.md) links all 54 editions. Adaptive includes the [execution-memory pattern and prompt](packets/adaptive-systems/memory-pattern.md) in its current outline and 40-minute handout.
+**Deck sync.** All nine talks have synchronized 15-, 30-, and 40-minute browser decks, presenter scripts, screen PowerPoints, and handout PowerPoints. The [PowerPoint download index](talks/README.md) links all 54 editions. Adaptive includes the [execution-memory pattern and prompt](talks/adaptive-systems/memory-pattern.md) in its current outline and 40-minute handout.
 
-**Critical reviews and audit.** The [reviews directory](reviews/README.md) holds the pre-rewrite verdicts and the [6 September evening audit](reviews/AUDIT-2026-09-06.md) of all ten talks. A Skeptic's Guide was retired that evening; its procurement material survives as [Show Me the Misconception](packets/evidence-learning/procurement-route.md) under Outsmart.
+**Critical reviews and audit.** The [reviews directory](reviews/README.md) holds the pre-rewrite verdicts and the [6 September evening audit](reviews/AUDIT-2026-09-06.md) of all ten talks. A Skeptic's Guide was retired that evening; its procurement material survives as [Show Me the Misconception](talks/evidence-learning/procurement-route.md) under Outsmart.
 
 **Before each delivery.** Fill every `Story` line with a first-hand example. Recheck the dated commitments and credit offer on free-tier slide 4.
 
 ## Submission packets
 
-Each talk has a packet directory under [packets/](packets/). Its `formats.md` indexes the synchronized editions while retaining any authored lightning, live-demo, and workshop material already present. Existing packet, evidence, contract, walkthrough, and visual-reference content remains in place.
+Each talk's `packet.md` and `formats.md` sit in its own directory. `formats.md` indexes the synchronized editions while retaining any authored lightning, live-demo, and workshop material already present. Existing packet, evidence, contract, walkthrough, and visual-reference content remains in place.
 
-The [speaker kit](packets/speaker/bio.md) holds 50/100/200-word bios built from the resume, links, location, and a past-speaking template. The [recording plan](packets/speaker/recording-plan.md) specifies the 25-minute talk to record first and the five-minute live demo that AI Tinkerers routes require.
+The [speaker kit](speaker/bio.md) holds 50/100/200-word bios built from the resume, links, location, and a past-speaking template. The [recording plan](speaker/recording-plan.md) specifies the 25-minute talk to record first and the five-minute live demo that AI Tinkerers routes require.
 
 | Talk | Packet | Formats | Evidence bank |
 | --- | --- | --- | --- |
-| Improvement From Failure | [packet](packets/failure-improvement/packet.md) | [formats](packets/failure-improvement/formats.md) | [evidence](packets/failure-improvement/evidence-bank.md) |
-| Adaptive, agentic apps | [packet](packets/adaptive-systems/packet.md) | [formats](packets/adaptive-systems/formats.md) | [evidence](packets/adaptive-systems/evidence-bank.md) |
-| Free Tier | [packet](packets/free-tier/packet.md) | [formats](packets/free-tier/formats.md) | [evidence](packets/free-tier/evidence-bank.md) |
-| Outsmart Your Students | [packet](packets/evidence-learning/packet.md) | [formats](packets/evidence-learning/formats.md) | [evidence](packets/evidence-learning/evidence-bank.md) |
-| Dynamic Scaling | [packet](packets/dynamic-scaling/packet.md) | [formats](packets/dynamic-scaling/formats.md) | [evidence](packets/dynamic-scaling/evidence-bank.md) |
-| Product Engineering | [packet](packets/product-engineering/packet.md) | [formats](packets/product-engineering/formats.md) | [evidence](packets/product-engineering/evidence-bank.md) |
-| Three Search Methods in a Fundable Trenchcoat | [packet](packets/retrieval/packet.md) | [formats](packets/retrieval/formats.md) | [evidence](packets/retrieval/evidence-bank.md) |
-| Benchmarks | [packet](packets/benchmarks/packet.md) | [formats](packets/benchmarks/formats.md) | [evidence](packets/benchmarks/evidence-bank.md) |
-| Judgment | [packet](packets/judgment/packet.md) | [formats](packets/judgment/formats.md) | [evidence](packets/judgment/evidence-bank.md) |
+| Improvement From Failure | [packet](talks/failure-improvement/packet.md) | [formats](talks/failure-improvement/formats.md) | [evidence](talks/failure-improvement/evidence-bank.md) |
+| Adaptive, agentic apps | [packet](talks/adaptive-systems/packet.md) | [formats](talks/adaptive-systems/formats.md) | [evidence](talks/adaptive-systems/evidence-bank.md) |
+| Free Tier | [packet](talks/free-tier/packet.md) | [formats](talks/free-tier/formats.md) | [evidence](talks/free-tier/evidence-bank.md) |
+| Outsmart Your Students | [packet](talks/evidence-learning/packet.md) | [formats](talks/evidence-learning/formats.md) | [evidence](talks/evidence-learning/evidence-bank.md) |
+| Dynamic Scaling | [packet](talks/dynamic-scaling/packet.md) | [formats](talks/dynamic-scaling/formats.md) | [evidence](talks/dynamic-scaling/evidence-bank.md) |
+| Product Engineering | [packet](talks/product-engineering/packet.md) | [formats](talks/product-engineering/formats.md) | [evidence](talks/product-engineering/evidence-bank.md) |
+| Three Search Methods in a Fundable Trenchcoat | [packet](talks/retrieval/packet.md) | [formats](talks/retrieval/formats.md) | [evidence](talks/retrieval/evidence-bank.md) |
+| Benchmarks | [packet](talks/benchmarks/packet.md) | [formats](talks/benchmarks/formats.md) | [evidence](talks/benchmarks/evidence-bank.md) |
+| Turn Your Thinkin' Tokens Up to 11 | [packet](talks/judgment/packet.md) | [formats](talks/judgment/formats.md) | [evidence](talks/judgment/evidence-bank.md) |
 
 ## Decks and submission copy
 
 | Talk | Outline | Slides | Editions | CFP package |
 | --- | --- | ---: | --- | --- |
-| Automating Improvement From Failure | [40 min](outlines/failure-improvement-40min.md) | 15 | [Browser deck](../../public/talks/failure-improvement.html) | [Failure improvement](engineering/failure-improvement/CFP.md) |
-| Adaptive, agentic apps | [40 min](outlines/adaptive-systems-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Adaptive systems](engineering/adaptive-systems/CFP.md) |
-| Buy Me a Free Tier | [40 min](outlines/free-tier-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Economics](economics-product/CFP.md) |
-| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](outlines/evidence-learning-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Education](education/CFP.md) |
-| Dynamic Scaling of Agentic Workloads | [40 min](outlines/dynamic-scaling-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Dynamic scaling](engineering/dynamic-scaling/CFP.md) |
-| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](outlines/product-engineering-40min.md) | 17 | [Browser deck](../../public/talks/product-engineering.html) | [Product variants](economics-product/CFP.md) |
-| Three Search Methods in a Fundable Trenchcoat | [40 min](outlines/retrieval-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Retrieval](engineering/retrieval/CFP.md) |
-| Stop Looking at My Benchmarks… Get Your Own! | [40 min](outlines/benchmarks-40min.md) | 15 | [Browser and PowerPoint](decks/README.md) | [Benchmarks](engineering/benchmarks/CFP.md) |
-| Code Is Cheap. Judgment Is Expensive. | [40 min](outlines/judgment-40min.md) | 14 | [Browser and PowerPoint](decks/README.md) | [Judgment](engineering/judgment/CFP.md) |
+| Automating Improvement From Failure | [40 min](talks/failure-improvement/outline-40min.md) | 15 | [Browser deck](../../public/talks/failure-improvement.html) | [Failure improvement](talks/failure-improvement/CFP.md) |
+| Adaptive, agentic apps | [40 min](talks/adaptive-systems/outline-40min.md) | 15 | [Browser and PowerPoint](talks/README.md) | [Adaptive systems](talks/adaptive-systems/CFP.md) |
+| Buy Me a Free Tier | [40 min](talks/free-tier/outline-40min.md) | 15 | [Browser and PowerPoint](talks/README.md) | [Economics](talks/free-tier/CFP.md) |
+| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](talks/evidence-learning/outline-40min.md) | 14 | [Browser and PowerPoint](talks/README.md) | [Education](talks/evidence-learning/CFP.md) |
+| Dynamic Scaling of Agentic Workloads | [40 min](talks/dynamic-scaling/outline-40min.md) | 14 | [Browser and PowerPoint](talks/README.md) | [Dynamic scaling](talks/dynamic-scaling/CFP.md) |
+| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](talks/product-engineering/outline-40min.md) | 17 | [Browser deck](../../public/talks/product-engineering.html) | [Product engineering](talks/product-engineering/CFP.md) |
+| Three Search Methods in a Fundable Trenchcoat | [40 min](talks/retrieval/outline-40min.md) | 15 | [Browser and PowerPoint](talks/README.md) | [Retrieval](talks/retrieval/CFP.md) |
+| Stop Looking at My Benchmarks… Get Your Own! | [40 min](talks/benchmarks/outline-40min.md) | 15 | [Browser and PowerPoint](talks/README.md) | [Benchmarks](talks/benchmarks/CFP.md) |
+| Turn Your Thinkin' Tokens Up to 11 | [40 min](talks/judgment/outline-40min.md) | 14 | [Browser and PowerPoint](talks/README.md) | [Judgment](talks/judgment/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 
@@ -50,21 +68,21 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 
 | Talk | 15-minute | 30-minute |
 | --- | --- | --- |
-| Automating Improvement From Failure | [Lightning](outlines/failure-improvement-15min-adaptation.md) | [Standard](outlines/failure-improvement-30min-adaptation.md) |
-| Adaptive, agentic apps | [Lightning](outlines/adaptive-systems-15min-adaptation.md) | [Standard](outlines/adaptive-systems-30min-adaptation.md) |
-| Buy Me a Free Tier | [Lightning](outlines/free-tier-15min-adaptation.md) | [Standard](outlines/free-tier-30min-adaptation.md) |
-| Outsmart Your Lying, Cheating Students | [Lightning](outlines/evidence-learning-15min-adaptation.md) | [Standard](outlines/evidence-learning-30min-adaptation.md) |
-| Dynamic Scaling of Agentic Workloads | [Lightning](outlines/dynamic-scaling-15min-adaptation.md) | [Standard](outlines/dynamic-scaling-30min-adaptation.md) |
-| Product Engineering | [Lightning](outlines/product-engineering-15min-adaptation.md) | [Standard](outlines/product-engineering-30min-adaptation.md) |
-| Judgment | [Lightning](outlines/judgment-15min-adaptation.md) | [Standard](outlines/judgment-30min-adaptation.md) |
-| Benchmarks | [Lightning](outlines/benchmarks-15min-adaptation.md) | [Standard](outlines/benchmarks-30min-adaptation.md) |
-| Three Search Methods in a Fundable Trenchcoat | [Lightning](outlines/retrieval-15min-adaptation.md) | [Standard](outlines/retrieval-30min-adaptation.md) |
+| Automating Improvement From Failure | [Lightning](talks/failure-improvement/adaptation-15min.md) | [Standard](talks/failure-improvement/adaptation-30min.md) |
+| Adaptive, agentic apps | [Lightning](talks/adaptive-systems/adaptation-15min.md) | [Standard](talks/adaptive-systems/adaptation-30min.md) |
+| Buy Me a Free Tier | [Lightning](talks/free-tier/adaptation-15min.md) | [Standard](talks/free-tier/adaptation-30min.md) |
+| Outsmart Your Lying, Cheating Students | [Lightning](talks/evidence-learning/adaptation-15min.md) | [Standard](talks/evidence-learning/adaptation-30min.md) |
+| Dynamic Scaling of Agentic Workloads | [Lightning](talks/dynamic-scaling/adaptation-15min.md) | [Standard](talks/dynamic-scaling/adaptation-30min.md) |
+| Product Engineering | [Lightning](talks/product-engineering/adaptation-15min.md) | [Standard](talks/product-engineering/adaptation-30min.md) |
+| Turn Your Thinkin' Tokens Up to 11 | [Lightning](talks/judgment/adaptation-15min.md) | [Standard](talks/judgment/adaptation-30min.md) |
+| Benchmarks | [Lightning](talks/benchmarks/adaptation-15min.md) | [Standard](talks/benchmarks/adaptation-30min.md) |
+| Three Search Methods in a Fundable Trenchcoat | [Lightning](talks/retrieval/adaptation-15min.md) | [Standard](talks/retrieval/adaptation-30min.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All nine talks include generated 40/30/15 presenter scripts. Outsmart also carries a hand-written 15-minute [procurement route](packets/evidence-learning/procurement-route.md) for administrator audiences.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All nine talks include generated 40/30/15 presenter scripts. Outsmart also carries a hand-written 15-minute [procurement route](talks/evidence-learning/procurement-route.md) for administrator audiences.
 
 ## Bullet outlines
 
-[outlines/bullets/](outlines/bullets/README.md) holds one compressed sheet per talk: the spine in a screen, then each slide's on-screen lines, the topic sentence of every spoken paragraph, and its Story, delivery and source notes. Use them to rehearse the arc, to fill a CFP form's outline field, and to find which slide owns an idea. Regenerate with `bun artifacts/speaking-portfolio-expanded/bullets.ts`; the 40-minute outlines stay canonical and edits to the generated sheets are overwritten.
+Each talk folder holds a generated `bullets.md`, indexed in [talks/bullets-index.md](talks/bullets-index.md): one compressed sheet per talk: the spine in a screen, then each slide's on-screen lines, the topic sentence of every spoken paragraph, and its Story, delivery and source notes. Use them to rehearse the arc, to fill a CFP form's outline field, and to find which slide owns an idea. Regenerate with `bun artifacts/speaking-portfolio-expanded/bullets.ts`; the 40-minute outlines stay canonical and edits to the generated sheets are overwritten.
 
 ## Shorts
 
@@ -72,7 +90,7 @@ A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings a
 
 ## Image prompts
 
-Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](packets/adaptive-systems/visuals.md) and [dynamic-scaling visual inventory](packets/dynamic-scaling/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for dynamic scaling, and readable labels. Failure Improvement, Product Engineering, Judgment, Benchmarks, and Retrieval also have real SVGs and packet visual inventories. Some other outlines retain `<!-- image: ... -->` prompts.
+Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines, with typography slides where a diagram adds little. See their [adaptive visual inventory](talks/adaptive-systems/visuals.md) and [dynamic-scaling visual inventory](talks/dynamic-scaling/visuals.md). The diagrams match the browser decks: dark backgrounds, mint for adaptive, amber for dynamic scaling, and readable labels. Failure Improvement, Product Engineering, Judgment, Benchmarks, and Retrieval also have real SVGs and packet visual inventories. Some other outlines retain `<!-- image: ... -->` prompts.
 
 ## What makes the talks distinct
 
@@ -88,10 +106,11 @@ The two education talks use different worked examples so they can be booked toge
 
 ## Evidence and demo details
 
-- [Education research and claim boundaries](education/evidence.md) and [worked assessment exercises](education/demo.md).
-- [Failure-improvement evidence](engineering/failure-improvement/evidence.md) and [stage sequence](engineering/failure-improvement/demo.md).
+- [Education research and claim boundaries](talks/evidence-learning/evidence.md) and [worked assessment exercises](talks/evidence-learning/demo.md).
+- [Failure-improvement evidence](talks/failure-improvement/evidence.md) and [stage sequence](talks/failure-improvement/demo.md).
 - Adaptive-systems evidence and stage sequence.
-- [Economics and experimentation evidence](economics-product/evidence.md) and [stage sequences](economics-product/demo.md).
+- [Free Tier evidence](talks/free-tier/evidence.md) and [stage sequence](talks/free-tier/demo.md).
+- [Product Engineering evidence](talks/product-engineering/evidence.md) and [stage sequence](talks/product-engineering/demo.md).
 
 
 The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and dynamic-scaling talks use paper walkthroughs with fixtures. Their recovery scenarios are documented in the packet walkthroughs; the offline resource-policy exercise demonstrates only strategy selection and caps.
@@ -100,7 +119,7 @@ The offline kit uses scripted or deterministic fixtures. It makes no model calls
 
 Each talk owns a topic; the others defer to it rather than re-teaching it.
 
-Retrieval owns the Cranfield/TREC history and the pooling exercise. Benchmarks owns validity, reliability and small-sample inference. Judgment owns the review queue, specifications and reviewer control. Multi-candidate orchestration, the Council of Guards and the barrel-of-monkeys maneuver belong to [Dynamic Scaling](outlines/dynamic-scaling-40min.md). Cost per accepted outcome belongs to [Free Tier](outlines/free-tier-40min.md). Runtime recovery belongs to [Adaptive](outlines/adaptive-systems-40min.md); the offline improvement loop belongs to [Failure Improvement](outlines/failure-improvement-40min.md).
+Retrieval owns the Cranfield/TREC history and the pooling exercise. Benchmarks owns validity, reliability and small-sample inference. Judgment owns feature selection, release pacing, the user's cost of change, and versioning as a user-facing surface. Multi-candidate orchestration, the Council of Guards and the barrel-of-monkeys maneuver belong to [Dynamic Scaling](talks/dynamic-scaling/outline-40min.md). Cost per accepted outcome belongs to [Free Tier](talks/free-tier/outline-40min.md). Runtime recovery belongs to [Adaptive](talks/adaptive-systems/outline-40min.md); the offline improvement loop belongs to [Failure Improvement](talks/failure-improvement/outline-40min.md).
 
 Run `bun artifacts/speaking-portfolio-expanded/build-talk.ts <slug>` after editing an outline, or `sync-talks.ts <slug…>` to also refresh the per-route decks and PowerPoints. Never edit generated scripts or browser decks. Sources and claim boundaries live beside slides and in each packet's evidence bank. Named Story prompts still require Dan's own records. The synthetic fixtures do not establish customer outcomes or productivity gains.
 
@@ -108,20 +127,23 @@ Run `bun artifacts/speaking-portfolio-expanded/build-talk.ts <slug>` after editi
 
 Pair the strategic education talk with the assessment-design talk when a program wants both framing and implementation. Pair failure improvement with adaptive systems or dynamic scaling when the audience wants to grow an agent's authority and change execution policy; failure improvement owns the offline loop and compile-what-repeats beat. Adaptive and Dynamic Scaling are companions: adaptive owns per-job agent generation and repair authority, dynamic scaling owns admission, ledgers and the compute substrate. Pair the economics talk with Product Engineering when the discussion spans market incentives and organizational decisions.
 
-Retrieval, Benchmarks, and Judgment now use canonical outlines here. The former `flagship-talks/` directory was removed on 6 September 2026: its outline files were pointer stubs and its PowerPoints were byte-identical aliases of the current screen exports, which drift on the next sync.
+Retrieval, Benchmarks, and Judgment now use canonical outlines here. The former `flagship-talks/` directory was removed on 6 September 2026: its outline files were pointer stubs and its PowerPoints were byte-identical aliases of the current screen exports, which drift on the next sync. The two `outlines/product-engineering-{15,30}min.md` pointer stubs went the same way on 7 September, as the audit had recommended.
 
 ## Adaptive and Dynamic Scaling rewrite, September 6
 
 Both talks were rewritten around Dan's direction: the assistant-with-everything question and a per-job agent generator for adaptive; the infra inversion, agent-directed compute and the ephemeral vendor substrate for dynamic scaling (formerly Rethinking Parallelization). Each outline is the single source; `bun artifacts/speaking-portfolio-expanded/build-talk.ts <talk>` regenerates the 40/30/15 scripts, the two adaptations and the browser deck. Disclaimers are said once per talk. Story slots are listed in each evidence bank and must be filled before delivery. Timings are rehearsal targets, not recordings.
 
+## Judgment rewrite, September 7
+
+*Code Is Cheap. Judgment Is Expensive.* became **Turn Your Thinkin' Tokens Up to 11**, keeping the `judgment` slug. The queue argument — Kingman, Deming, Elish, the rubber-stamp fixture — left the portfolio and survives only in three standalone shorts, [Who Ate My Slack?](shorts/you-ate-their-slack.md), [Human Crumple Zone](shorts/human-crumple-zone.md) and [The Test Who Loved Me](shorts/test-that-loves-the-bug.md), whose fixture now lives in [shorts/fixtures/](shorts/fixtures). The new talk owns feature selection, release pacing, the user's cost of change, and two labeled predictions about versioning and shared configuration profiles.
+
 ## September 6 review rewrites
 
-Failure Improvement owns the offline loop and its reviewer. Product Engineering reprices coordination and defines interfaces. Judgment puts Kingman’s curve in the opening. Benchmarks validates the measuring instrument. Retrieval follows Cranfield, TREC pooling, and assessor disagreement. Each has a visual inventory and a generated browser deck. The failure-improvement live recording still needs verified stories and an executed integration; see the recording plan.
+Failure Improvement owns the offline loop and its reviewer. Product Engineering reprices coordination and defines interfaces. Benchmarks validates the measuring instrument. Retrieval follows Cranfield, TREC pooling, and assessor disagreement. Each has a visual inventory and a generated browser deck. The failure-improvement live recording still needs verified stories and an executed integration; see the recording plan.
 
 | Rewritten talk | Canonical source | Full presenter script |
 | --- | --- | --- |
-| Failure Improvement | [Outline](outlines/failure-improvement-40min.md) | [Script](packets/failure-improvement/script-40min.md) |
-| Product Engineering | [Outline](outlines/product-engineering-40min.md) | [Script](packets/product-engineering/script-40min.md) |
-| Judgment | [Outline](outlines/judgment-40min.md) | [Script](packets/judgment/script-40min.md) |
-| Benchmarks | [Outline](outlines/benchmarks-40min.md) | [Script](packets/benchmarks/script-40min.md) |
-| Three Search Methods in a Fundable Trenchcoat | [Outline](outlines/retrieval-40min.md) | [Script](packets/retrieval/script-40min.md) |
+| Failure Improvement | [Outline](talks/failure-improvement/outline-40min.md) | [Script](talks/failure-improvement/script-40min.md) |
+| Product Engineering | [Outline](talks/product-engineering/outline-40min.md) | [Script](talks/product-engineering/script-40min.md) |
+| Benchmarks | [Outline](talks/benchmarks/outline-40min.md) | [Script](talks/benchmarks/script-40min.md) |
+| Three Search Methods in a Fundable Trenchcoat | [Outline](talks/retrieval/outline-40min.md) | [Script](talks/retrieval/script-40min.md) |

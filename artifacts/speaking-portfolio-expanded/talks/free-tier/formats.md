@@ -1,27 +1,27 @@
 <!-- BEGIN GENERATED EDITIONS -->
 # Synchronized editions
 
-Generated from [the current 40-minute outline](../../outlines/free-tier-40min.md).
+Generated from [the current 40-minute outline](outline-40min.md).
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/free-tier-15min.html) | [Download](../../decks/free-tier-15min-screen.pptx) | [Download](../../decks/free-tier-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/free-tier-30min.html) | [Download](../../decks/free-tier-30min-screen.pptx) | [Download](../../decks/free-tier-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/free-tier-40min.html) | [Download](../../decks/free-tier-40min-screen.pptx) | [Download](../../decks/free-tier-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/free-tier-15min.html) | [Download](free-tier-15min-screen.pptx) | [Download](free-tier-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/free-tier-30min.html) | [Download](free-tier-30min-screen.pptx) | [Download](free-tier-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/free-tier-40min.html) | [Download](free-tier-40min-screen.pptx) | [Download](free-tier-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: Buy Me a Free Tier
 
-The 15-slide [browser deck](../../../../public/talks/free-tier.html) follows the [40-minute outline](../../outlines/free-tier-40min.md). Scripts, adaptations, browser decks, and PowerPoints are generated from the outline by `sync-talks.ts`; edit the outline, then rebuild.
+The 15-slide [browser deck](../../../../public/talks/free-tier.html) follows the [40-minute outline](outline-40min.md). Scripts, adaptations, browser decks, and PowerPoints are generated from the outline by `sync-talks.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |
 | 7 minutes | Lightning script below; slides 1, 5, 6, 12, 15 |
 | 5 to 10 minute live demo | AI Tinkerers format, below |
-| 15 minutes | [Script](script-15min.md) and [route](../../outlines/free-tier-15min-adaptation.md) |
+| 15 minutes | [Script](script-15min.md) and [route](adaptation-15min.md) |
 | 25 minutes | 30-minute route with slide 11's sweep compressed to two rows |
-| 30 minutes | [Script](script-30min.md) and [route](../../outlines/free-tier-30min-adaptation.md) |
-| 40 minutes | [Script](script-40min.md) and [outline](../../outlines/free-tier-40min.md) |
+| 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
+| 40 minutes | [Script](script-40min.md) and [outline](outline-40min.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |

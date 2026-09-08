@@ -1,20 +1,20 @@
-# Code Is Cheap. Judgment Is Expensive.: 30-minute adaptation
+# Turn Your Thinkin' Tokens Up to 11: 30-minute adaptation
 
-Keep slides 1, 2, 3, 5, 6, 7, 8, 9, 10, 12, 13, 14. Hide the others in presenter preparation. [Complete talk track](../packets/judgment/script-30min.md).
+Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 03:00 | 1 | The morning four good implementations arrive |
-| 03:00 to 05:00 | 2 | Point at the queue |
-| 05:00 to 08:00 | 3 | A queue does not care how you feel about it |
-| 08:00 to 10:00 | 5 | You cannot inspect quality in |
-| 10:00 to 12:00 | 6 | "Add enterprise permissions" |
-| 12:00 to 14:00 | 7 | A spec reduces variance |
-| 14:00 to 16:00 | 8 | What review actually catches |
-| 16:00 to 20:00 | 9 | Demo: the rubber stamp |
-| 20:00 to 22:30 | 10 | Do not appoint a crumple zone |
-| 22:30 to 25:00 | 12 | Three levers on the queue |
-| 25:00 to 27:00 | 13 | Measure the wait, not the output |
-| 27:00 to 30:00 | 14 | Knowing when to stop |
+| 00:00 to 02:30 | 1 | These go to eleven |
+| 02:30 to 04:30 | 2 | What got cheap, and what didn't |
+| 04:30 to 07:00 | 3 | Nobody lives in your app |
+| 07:00 to 09:30 | 4 | Feature fatigue is a measured effect |
+| 09:30 to 11:30 | 5 | A change is a loss before it is a gain |
+| 11:30 to 14:00 | 6 | "Ship it Tuesday" |
+| 14:00 to 16:30 | 7 | Five axes, one of them a date |
+| 16:30 to 20:00 | 8 | Turn the tokens up |
+| 20:00 to 22:00 | 9 | What the machine is actually for |
+| 22:00 to 25:00 | 10 | Prediction: the version picker |
+| 25:00 to 28:00 | 12 | Prediction: the app your neighbor configured |
+| 28:00 to 30:00 | 14 | Knowing what not to ship |
 
-Drops Amdahl and Brooks as standalone slides; the permissions block is four minutes. The rubber stamp keeps four minutes. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Drops the architecture bill and the configured-fleet slide; both ride in bridges. The exercise keeps its full sixty seconds and the arithmetic keeps 3:30. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

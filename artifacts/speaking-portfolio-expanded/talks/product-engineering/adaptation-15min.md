@@ -1,6 +1,6 @@
 # The Future of Product Engineering: 15-minute adaptation
 
-Keep slides 1, 3, 5, 10, 11, 12, 15, 17. Hide the others in presenter preparation. [Complete talk track](../packets/product-engineering/script-15min.md).
+Keep slides 1, 3, 5, 10, 11, 12, 15, 17. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

@@ -1,6 +1,6 @@
 # Till Renewal Do Us Part
 
-6 min · lightning · parent: [Buy Me a Free Tier](../outlines/free-tier-40min.md), slides 12 and 13
+6 min · lightning · parent: [Buy Me a Free Tier](../talks/free-tier/outline-40min.md), slides 12 and 13
 
 The customer-has-the-power framing is wrong. Your counterparty has more money than you, and your architecture is the collateral.
 

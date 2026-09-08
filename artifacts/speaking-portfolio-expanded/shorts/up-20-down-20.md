@@ -1,6 +1,6 @@
 # Up 20, Down 20, Out Four Bucks
 
-2 min · video · parent: [Outsmart Your Lying, Cheating Students](../outlines/evidence-learning-40min.md), slides 4 and 7
+2 min · video · parent: [Outsmart Your Lying, Cheating Students](../talks/evidence-learning/outline-40min.md), slides 4 and 7
 
 Clean prose, perfect confidence, wrong base. A final-answer grader catches this exactly never.
 

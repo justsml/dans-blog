@@ -1,6 +1,6 @@
 # Buy Me a Free Tier: 15-minute adaptation
 
-Keep slides 1, 3, 6, 7, 10, 12, 15. Hide the others in presenter preparation. [Complete talk track](../packets/free-tier/script-15min.md).
+Keep slides 1, 3, 6, 7, 10, 12, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

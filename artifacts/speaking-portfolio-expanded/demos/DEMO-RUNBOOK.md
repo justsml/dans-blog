@@ -6,7 +6,7 @@ These are **interactive deterministic demonstrations with synthetic inputs**, no
 
 ## 1. Learning-goals exercise
 
-**Not booked to a current talk.** A Skeptic's Guide was retired on 6 September 2026 and its replacement, [Show Me the Misconception](../packets/evidence-learning/procurement-route.md), runs without a demo kit — if that room wants a live moment, use the four index cards from its section 4 instead. Keep this panel as a standalone exercise for workshops and office hours, in the same spirit as the resource-policy panel below.
+**Not booked to a current talk.** A Skeptic's Guide was retired on 6 September 2026 and its replacement, [Show Me the Misconception](../talks/evidence-learning/procurement-route.md), runs without a demo kit — if that room wants a live moment, use the four index cards from its section 4 instead. Keep this panel as a standalone exercise for workshops and office hours, in the same spirit as the resource-policy panel below.
 
 **Four and a half minutes**; compress to two by running one switch and stating the other two. Begin with “Spelling without assistance.” The result says Preserve. Switch to “Strength of an argument” and then “Scientific explanation.” The same general assistance changes category as the capability under assessment changes.
 
@@ -24,7 +24,7 @@ Click Evaluate proposed promotion with all gates unchecked. The fix stays in rev
 
 ## 3. Resource-policy exercise
 
-This standalone exercise covers strategy selection and caps. For the current talks, use the [adaptive recovery walkthrough](../packets/adaptive-systems/demo.md) or [dynamic-scaling walkthrough](../packets/dynamic-scaling/demo.md).
+This standalone exercise covers strategy selection and caps. For the current talks, use the [adaptive recovery walkthrough](../talks/adaptive-systems/demo.md) or [dynamic-scaling walkthrough](../talks/dynamic-scaling/demo.md).
 
 **Four minutes.** Show the known status lookup with no model agent. Select a routine task, then a novel intermittent failure. The selected organization changes. For the novel case, lower the budget to $0.10 or the deadline to five seconds. The system stops because the modeled strategy does not fit.
 
@@ -60,7 +60,7 @@ Five scripted turns, one click each:
 
 Reveal $120 only after the diagnostic question. Ask the room for $96 and one sentence explaining it. Then change the numbers to $80, up 25%, down 20%, and let the return to $80 break "opposite changes never cancel" — a transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment.
 
-The rubric and the four-line record are on slide 8; the written turns are also in the [education walkthrough](../education/demo.md) if you would rather read from a card than open the browser.
+The rubric and the four-line record are on slide 8; the written turns are also in the [education walkthrough](../talks/evidence-learning/demo.md) if you would rather read from a card than open the browser.
 
 **Expected outcome:** Assistance and the corrected explanation are recorded separately, and the transfer item is answered under known conditions. A scripted conversation does not validate automated assessment, assign a real grade, or establish learning gains.
 
@@ -72,7 +72,7 @@ Raise the support ceiling to 10% and show that the principle still rejects it. P
 
 **Expected outcome:** The objective function includes explicit constraints. These point estimates are synthetic; no sample size, significance test, causal claim, rollout, or live customer data is involved.
 
-Allow the final 45 seconds of the five-minute route for participants to write the rule they needed. See the [product stage sequence](../economics-product/demo.md).
+Allow the final 45 seconds of the five-minute route for participants to write the rule they needed. See the [product stage sequence](../talks/free-tier/demo.md).
 
 ## Rehearsal and recovery
 

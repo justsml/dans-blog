@@ -1,228 +1,238 @@
-# Code Is Cheap. Judgment Is Expensive.: 40-minute presenter script
+# Turn Your Thinkin' Tokens Up to 11: 40-minute presenter script
 
 Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
 
-## 00:00 to 02:30: slide 1, The morning four good implementations arrive
+## 00:00 to 02:30: slide 1, These go to eleven
 
 On screen:
 
-> 95% utilized → 19× waiting
-> Four plausible implementations. One reviewer.
+> Code is free. Features are free.
+> Attention is the budget.
 
-Four good implementations arrive before lunch. The reviewer is still on yesterday's change. Generation got cheaper. Delivery acquired a queue.
+Four features shipped before lunch. All four work. All four have tests. Your best customer opens the app for the first time in six weeks and cannot find the button she used every Friday. Nobody filed a bug.
 
-If your organization uses AI to build an infinite feature machine, you have tragically missed the potential of the magic AI genie. We can spend the gain on fewer defects and smaller changes. We do not have to spend it all on more code.
+Here is the line this talk has to earn. Don't count what the feature cost you to build, count what it costs them to relearn.
 
-Here is the scope once: the queue and permission examples are teaching models, not measurements of your team. The nineteen-times wait assumes one server and a variability factor of one. We will do the arithmetic. The argument is that protecting review capacity belongs upstream, where we decide what enters the queue.
+The title is a Spinal Tap joke and it is load-bearing. Turn the reasoning budget up to eleven. More tokens buy more consideration of situations the model has already seen. They do not buy taste, and they do not tell you which Tuesday.
 
-Story: The change that waited longer for review than it took to write. Bring arrival, first-review, and acceptance timestamps.
+Scope, once. The arithmetic later is counting, not a measurement of your team, and the two futures at the end are labeled predictions I have not measured.
 
-## 02:30 to 05:00: slide 2, Point at the queue
+Story: The feature you were proudest of that a long-absent customer experienced as a broken workflow. Bring the ticket, the gap between their sessions, and what they actually said.
 
-On screen:
-
-> Idea → specification → code → review → release
-> Not where it takes skill. Where it sits untouched.
-
-Where does your work wait? Not where does it take skill. Where does it sit untouched?
-
-A team can have an implementation bottleneck on Monday and a review bottleneck on Friday. Faster generation changes the arrival rate at the next stage. If that stage was already close to capacity, the wait grows even when each review takes exactly as long as before.
-
-Draw a boundary around the review system. Count a change when it is ready for review and stop the clock when it leaves. Separate hands-on service time from waiting for somebody to start. Otherwise we will call a three-day wait a three-day review and optimize the wrong thing.
-
-Delivery: Budget 45 seconds for hands on each stage. Take one answer about where work waits and use it for the diagram.
-
-## 05:00 to 08:00: slide 3, A queue does not care how you feel about it
+## 02:30 to 05:00: slide 2, What got cheap, and what didn't
 
 On screen:
 
-> Wq ≈ ((ca² + cs²) / 2) × ρ / (1 − ρ) × E[S]
-> V = 1: 80% → 4×; 90% → 9×; 95% → 19×
+> Someone has to want it · build it · learn it
+> We only automated the middle one
 
-Kingman's single-server approximation separates three things: variability, utilization, and mean service time. Call the variability term V. Set V to one for this curve. At eighty percent utilization, point eight divided by point two is four. At ninety-five, point nine five divided by point zero five is nineteen.
+Three things used to gate a feature. Someone had to want it, someone had to build it, and someone had to learn it. We spent a decade attacking the middle one and this year we finished the job. The other two did not move.
 
-Fifteen percentage points of utilization bought nearly five times the wait. That is the price of the last bit of headroom. The multiplier is waiting time divided by hands-on review time. It does not include the review itself.
+Build cost is now close enough to zero that it stops being the selection mechanism, and that is the part nobody plans for. Scarcity was doing your prioritization for free. When the constraint dies, the decision it was quietly making lands on your desk, unlabeled.
 
-Little's law gives a separate accounting identity for a stable system: average work in progress equals throughput times average time in the system. They tell us what to measure before claiming the reviewer just needs to try harder.
+So the interesting question stopped being what can we build. It is which of these should exist, who should see it, and when. Those are three separate decisions and most roadmaps answer only the first.
 
-Source: J. F. C. Kingman (1961), [The single server queue in heavy traffic](https://www.cambridge.org/core/journals/mathematical-proceedings-of-the-cambridge-philosophical-society/article/abs/single-server-queue-in-heavy-traffic/81C55BC00A68FE6D5385638AA0B0AF37), 57(4), 902–904. John D. C. Little (1961), [A Proof for the Queuing Formula: L = λW](https://pubsonline.informs.org/doi/abs/10.1287/opre.9.3.383), Operations Research 9(3), 383–387.
-
-Delivery: Trace the curve and do both divisions. Ask what happens if variability doubles; show that it multiplies the wait too.
-
-## 08:00 to 10:30: slide 4, The stage you didn't speed up
+## 05:00 to 08:00: slide 3, Nobody lives in your app
 
 On screen:
 
-> Fixed-work example: review is 30% of service time
-> Infinite generation speed → 1 / 0.30 = 3.33×
+> 90 days · 46 releases · 4 sessions
+> Between visits two and three: 21 changes, at once
 
-Take a fixed job. Seventy percent of its service time is producing the implementation, thirty percent is review. Make generation instantaneous. Thirty percent remains. One divided by point three is three and a third. That is the ceiling for this example.
+Here is ninety days. The top track is your deploys: forty-six of them, roughly every other day, which any DORA-literate team would call healthy. The bottom track is one customer's sessions: four. Day three, day nineteen, day sixty-one, day eighty-eight.
 
-This is Amdahl's argument applied to a sequence of work. Put your own fraction in. Do not put queueing delay into the unchanged fraction and then pretend that delay stays fixed while arrivals change.
+Between her second visit and her third you shipped twenty-one changes. She does not receive twenty-one changes. She receives one change, all at once, and it is enormous. Your release cadence and her absorption rate are different meters, and only one of them is on a dashboard.
 
-If you want more than that ceiling, change the remaining work. Specify the request better. Eliminate an unnecessary change. Reduce what a reviewer must reconstruct. Another speedup in generation does not remove the untouched stage.
+DORA's four keys measure delivery capability: deployment frequency, lead time, change failure rate, time to restore. They are good measures of your pipeline. None of them describes what a returning user walks into. That measurement does not exist at most companies, and it is the one this talk is about.
 
-Source: Gene M. Amdahl (1967), [Validity of the single processor approach to achieving large scale computing capabilities](https://doi.org/10.1145/1465482.1465560), AFIPS Spring Joint Computer Conference, 483–485.
+Source: Nicole Forsgren, Jez Humble and Gene Kim (2018), [Accelerate: The Science of Lean Software and DevOps](https://itrevolution.com/product/accelerate/), IT Revolution. The four key metrics describe delivery performance, not user absorption; the tracks in this diagram are an illustration, not measured telemetry.
 
-## 10:30 to 13:00: slide 5, You cannot inspect quality in
+Delivery: Ask for a show of hands on median return interval before revealing the bottom track. Most rooms have never measured it; say so and move on.
 
-On screen:
-
-> Fewer arrivals. Smaller surprises.
-> Fix the process producing the queue.
-
-Deming's third point says to stop depending on inspection to achieve quality and build quality into the process. That is a useful objection to the default plan for generated code: produce more, then ask somebody to catch everything.
-
-Keep review. Change what it receives. An unasked-for abstraction, an unexplained permission change, and a speculative feature all consume the same person's attention. Rejecting them before generation is cheaper than having a reviewer reverse-engineer why they exist.
-
-Hiring can increase capacity. It is still worth fixing arrivals first. Otherwise the new reviewer inherits the same variance, interruptions, and missing context, with a longer onboarding document.
-
-Source: W. Edwards Deming (1986), Out of the Crisis, MIT Center for Advanced Engineering Study; Point 3 of the Fourteen Points. Applied to review by the [Deming Institute](https://deming.org/software-code-reviews-from-a-deming-perspective/).
-
-## 13:00 to 16:00: slide 6, "Add enterprise permissions"
+## 08:00 to 11:00: slide 4, Feature fatigue is a measured effect
 
 On screen:
 
-> Who can do what, in which tenant?
-> What happens when access changes?
-> What must never happen?
+> Before use: capability wins
+> After use: usability wins
+> Delighters decay into expectations
 
-Add enterprise permissions. That is the entire request.
+Thompson, Hamilton and Rust ran this in 2005 and named it feature fatigue. Before purchase, people prefer the product with more capabilities. After using it, satisfaction tracks usability instead. The same person picks the loaded one and then resents it.
 
-Spend sixty seconds with the person next to you. Write the questions you need answered before implementing it. You do not get a second page of requirements; that is the point.
+That is not a quirk, it is a structural problem. Your acquisition signal and your retention signal point in opposite directions, and the feature list is exactly where they diverge. Adding capability makes the sale and costs the renewal. Both effects are real and they arrive at different times, which is why no single dashboard shows you the trade.
 
-Who can grant a role? Does it apply to one tenant or every tenant? What happens to an existing session after revocation? What does the audit record need to show? There are several plausible implementations, and most disagree about behavior the ticket never specified.
+Kano's model from 1984 splits attributes into must-be, one-dimensional and attractive. The attractive ones are the delighters, and Kano's own point is that they do not stay attractive. Today's delight is next year's baseline expectation, and the year after that its absence is a defect.
 
-We made code cheap and left the question expensive. Writing down the answer is part of implementation. It just happens before the diff.
+Source: Debora Viana Thompson, Rebecca W. Hamilton and Roland T. Rust (2005), [Feature Fatigue: When Product Capabilities Become Too Much of a Good Thing](https://doi.org/10.1509/jmkr.2005.42.4.431), Journal of Marketing Research 42(4), 431–442. Noriaki Kano, Nobuhiko Seraku, Fumio Takahashi and Shinichi Tsuji (1984), Attractive Quality and Must-Be Quality, Journal of the Japanese Society for Quality Control 14(2), 39–48.
 
-Delivery: Read the request once. Give pairs sixty seconds here, thirty in the 15-minute cut. Collect two answers, then introduce the tenant and revocation questions.
-
-## 16:00 to 19:00: slide 7, A spec reduces variance
+## 11:00 to 13:30: slide 5, A change is a loss before it is a gain
 
 On screen:
 
-> Actor + tenant + action + resource
-> Revocation changes the next decision
-> Denied actions leave state unchanged
+> Status quo bias · endowment effect
+> Recognition, not recall
+> The gain is yours. The loss is theirs, today.
 
-For this example, an administrator can grant a role only inside the tenant they administer. A revoked role cannot authorize the next operation. A denied change leaves protected state untouched and records the failed attempt.
+Samuelson and Zeckhauser named status quo bias in 1988: across lab and field decisions, people over-select the option they already hold. Kahneman, Knetsch and Thaler measured the endowment effect the same way — you want more for the mug once it is yours. Your user owns a workflow, and you are proposing to take it.
 
-Those statements produce cases. An admin in tenant A requests a change in A: allow. The same admin requests a change in B: deny. Revoke the role, repeat the A request: deny. Check the resulting state, not just the status message.
+Nielsen's heuristic says recognition rather than recall. A returning user recognizes; she does not recall. Move the button and you have converted a recognition task into a recall task, against a memory that has been decaying since her last visit.
 
-Tie this back to the curve. Clear boundaries reduce the number of interpretations arriving at review. Bounded diffs reduce the amount of code a reviewer has to reconstruct at once. That is the variance term. On purpose.
+The gain from a redesign is real, and it arrives later, spread thin. The loss is small, specific and arrives on first login. Individually every change was an improvement. In aggregate, at your cadence, it reads as instability.
 
-Delivery: Write the three cases beside the request. Keep the cross-tenant case visible in the handout, not beside the later demo’s initial code.
+Source: William Samuelson and Richard Zeckhauser (1988), [Status Quo Bias in Decision Making](https://doi.org/10.1007/BF00055564), Journal of Risk and Uncertainty 1(1), 7–59. Daniel Kahneman, Jack L. Knetsch and Richard H. Thaler (1990), [Experimental Tests of the Endowment Effect and the Coase Theorem](https://doi.org/10.1086/261737), Journal of Political Economy 98(6), 1325–1348. Jakob Nielsen (1994), [Ten Usability Heuristics for User Interface Design](https://www.nngroup.com/articles/ten-usability-heuristics/).
 
-## 19:00 to 22:00: slide 8, What review actually catches
-
-On screen:
-
-> Understanding is work
-> Defect finding · knowledge transfer · alternative designs
-
-Bacchelli and Bird studied modern code review at Microsoft. Finding defects was the main motivation, but the observed benefits included more knowledge transfer, awareness, and alternative solutions than that motivation suggests. Understanding the change was central.
-
-That gives the review queue more than one job. A check that proves a local invariant does not teach another engineer how this subsystem behaves. An agent summary does not guarantee that anyone could repair it next week.
-
-Keep junior engineers in the reasoning. Let them write the acceptance case, explain a rejection, and follow a change through its consequences. If all the practice becomes watching green checks, we are removing the work that builds the next reviewer.
-
-Source: Alberto Bacchelli and Christian Bird (2013), [Expectations, Outcomes, and Challenges of Modern Code Review](https://www.cabird.com/pubs/bacchelli2013eoc.pdf), ICSE 2013.
-
-Delivery: Spend 45 seconds on how a junior engineer would learn the permission boundary from this change.
-
-## 22:00 to 26:00: slide 9, Demo: the rubber stamp
+## 13:30 to 16:30: slide 6, "Ship it Tuesday"
 
 On screen:
 
-> canEdit(user, resourceTenant) = user.roles.includes("admin")
-> Test: admin user → allowed
-> PASS
+> "Ship it Tuesday."
+> That is the whole request.
 
-Here is the implementation. Here is its test. The user has the admin role. The function allows the edit. The test passes.
+Ship it Tuesday. That is the entire request, somebody senior said it, and everyone in the room nodded.
 
-The resource tenant is right there in the signature. Nothing reads it. And you already heard the cross-tenant case, back on the spec slide. Watch the vote anyway.
+Sixty seconds with the person next to you. Write down what else has to be true for Tuesday to be the right answer. You do not get a second page of context; that is the point.
 
-Would you approve it? Now run the case where that administrator belongs to tenant A and the resource belongs to tenant B. The test was accurate about the behavior it checked. The behavior was incomplete in exactly the same way as the implementation.
+Which customers get it Tuesday? Do they get it with the other three things in the branch, or on its own? Who is on support Tuesday afternoon? Has anyone told the people who write the docs, the people who trained the account team, or the customer whose renewal is Thursday? Is Tuesday reversible?
 
-The model wrote the test that agrees with the bug. Both of them are very confident.
+None of those are engineering questions and all of them are release questions. We made building free and left the sequencing expensive.
 
-Bainbridge asks what automation leaves the operator doing. Skitka and colleagues put people in a flight simulator with an automated monitoring aid and counted the trials where the aid was wrong. On those trials people missed events the aid did not flag, and acted on prompts the other instruments contradicted. That is the whole finding, and it is about the trials where the aid was wrong. This fixture is how the same concern shows up in our queue: the green signal gets attention that the missing case did not.
+Delivery: Read the request once, exactly as written. Give pairs sixty seconds here, thirty in the 15-minute cut. Collect two answers, then add the renewal date and the support roster yourself.
 
-Source: Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468), Automatica 19(6), 775–779. Linda J. Skitka, Kathleen L. Mosier and Mark Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991–1006. A flight-simulation task with a monitoring aid, not a code-review trial.
-
-Delivery: Open contracts.md only after the vote. Run `bun artifacts/speaking-portfolio-expanded/packets/judgment/demo.ts` for PASS, then add `--holdout` for the actual failing assertion. Do not assume the room approves; if someone catches it, ask which evidence caught their attention.
-
-## 26:00 to 29:00: slide 10, Do not appoint a crumple zone
+## 16:30 to 19:30: slide 7, Five axes, one of them a date
 
 On screen:
 
-> Responsibility must come with control
-> Who accepts, recovers, and maintains?
+> What · who · when · shape · reversibility
+> Every axis commits somebody who is not in this room
 
-Elish calls the human who absorbs blame without enough control a moral crumple zone. Put an engineer at the end of an automated pipeline, give them two minutes to approve a diff, and announce that responsibility stayed human. The org chart looks excellent. We did not remove the bottleneck. We moved it onto one person and gave them a keyboard shortcut for approving things.
+Five axes, not one. Most roadmap tools model exactly one of them, the date, which is why the date is the only one that ever gets argued about.
 
-Can that person stop arrivals? Can they demand another test? Can they reject the change without missing a throughput target? Do they own the rollback and have time to understand it? Those are controls. Their name in the approval log is a record.
+Read the right-hand column. Every one of these commits a person who is not in this room: support staffing, a documentation rewrite, an account executive who already promised it, a renewal conversation on Thursday. Marketing wants a date it can build a campaign against, and a campaign is a promise you cannot flag off.
 
-For the permissions change, name who accepts the behavior, who receives the incident, and who maintains the policy next year. Give each the context and authority their job requires. Accountability without those controls is just a convenient place to send the postmortem.
+You also have to keep all of it flexible, because a competitor ships something on a Wednesday and now you want to pull a feature forward. Pulling it forward is not free. It costs you the sequence, and the sequence was the part you had actually reasoned about.
 
-Source: Madeleine Clare Elish (2019), [Moral Crumple Zones: Cautionary Tales in Human-Robot Interaction](https://estsjournal.org/index.php/ests/article/download/260/177/), Engaging Science, Technology, and Society 5, 40–60.
+| Axis | Question | Commits |
+| --- | --- | --- |
+| What | Should it exist at all? | Docs, support surface |
+| Who | Everyone, or a cohort? | Sales, contracts |
+| When | Tuesday, or next quarter? | Marketing, renewals |
+| Shape | One batch or rolling? | Rollback, triage |
+| Reversible | Flag, migration, one-way? | On-call, data model |
 
-## 29:00 to 32:00: slide 11, Essence and accident
+Story: The release you pulled forward to answer a competitor. Bring what slipped, what support absorbed, and whether it worked.
 
-On screen:
-
-> Generating a branch is cheap
-> Choosing the permission boundary is still work
-
-Brooks distinguished the essential conceptual work of software from the accidental difficulty of expressing it in a machine. His forecast expired in 1996. The distinction did not.
-
-The syntax of the role check is the easy part. Deciding what a tenant boundary means is the product and security decision. Faster code generation gives us more ways to express a decision we still have to make.
-
-So invest the saved time in the model of the problem. Who is the actor? Which state is authoritative? What happens after revocation? Those questions reduce the space of plausible wrong implementations before they reach the reviewer.
-
-Source: Frederick P. Brooks Jr., [No Silver Bullet: Essence and Accidents of Software Engineering](https://www.cs.unc.edu/techreports/86-020.pdf), UNC technical report, 1986; published in Computer 20(4), 1987, 10–19.
-
-## 32:00 to 35:00: slide 12, Three levers on the queue
+## 19:30 to 23:30: slide 8, Turn the tokens up
 
 On screen:
 
-> Arrivals: decline work before generating it
-> Variance: bounded diffs and explicit behavior
-> Utilization: reserve actual review capacity
+> 6 features · 3 cohorts → 524,880 plans
+> 12,000 weekly actives · 4 weeks → 16 arms
+> 32,805 plans per arm of evidence
 
-Fewer arrivals means deciding which changes should exist, including declining a second implementation after the first already met the need. That is a rule about review load, not about generation: generate ten parallel attempts if you like, as long as a gate collapses them to one candidate before a human reads any of them. Judging the ten is Dynamic Scaling's talk, and its Council of Guards eats nine. This one protects the person who accepts the one that got through.
+Six features. Order them: seven hundred and twenty sequences. Assign each to one of three cohorts: three to the sixth, seven hundred and twenty-nine. Multiply. Five hundred and twenty-four thousand, eight hundred and eighty distinct plans, and that is before batching and before dates.
 
-Smaller variance means reducing surprises at review. Keep one purpose per diff, include the behavioral cases, and separate mechanical changes from policy changes. Small in line count is useful only when it is also small in meaning.
+Now the evidence you can buy. Twelve thousand weekly actives, a four-week window, forty-eight thousand exposures. At an eight percent baseline, detecting a two-point lift needs roughly three thousand per arm, so sixteen arms. Divide: thirty-two thousand, eight hundred and five plans for every arm of evidence you can afford. Benchmarks owns the power arithmetic; here I only need the count.
 
-Protect slack by reserving review time and limiting work in progress. If the reviewer is on call, their calendar is not eight hours of service capacity. Measure interruptions before declaring them underutilized. Pilot these changes on one recurring workflow and keep the baseline.
+So turn the thinkin' tokens up. Chollet's 2019 definition treats intelligence as skill acquisition over novel tasks, and a system that has already seen the situation is not demonstrating that. Your product's next six months is a task nobody has seen, including you.
 
-## 35:00 to 38:00: slide 13, Measure the wait, not the output
+There is a paper about exactly this: the Apple group's Illusion of Thinking, 2025, reporting that reasoning models collapse past a complexity threshold and spend fewer tokens as problems get harder. There is also a published rebuttal arguing the collapse was token limits and one unsolvable puzzle. I am citing the exchange, not a verdict.
 
-On screen:
+My claim is weaker and safer. The model has not met your users. More tokens do not fix that, and neither does more of you, because your judgment is biased too. The difference is that you can write your prediction down before the release and check it afterward.
 
-> Ready → first review → accepted
-> Hands-on review time ÷ available review time
-> Queue age and escaped defects beside throughput
+Source: François Chollet (2019), [On the Measure of Intelligence](https://arxiv.org/abs/1911.01547), arXiv:1911.01547. Parshin Shojaee and colleagues (2025), [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking), Apple Machine Learning Research; and the rebuttal, [The Illusion of the Illusion of Thinking](https://arxiv.org/abs/2506.09250), arXiv:2506.09250. Present as a contested exchange, not a settled result.
 
-Start with timestamps. When was the change ready, when did somebody first inspect it, and when was it accepted? Then sample hands-on review time separately. You need both the queue and the service time to explain a delay.
+Delivery: Run `bun artifacts/speaking-portfolio-expanded/talks/judgment/demo.ts` for the plan count, then add `--evidence` for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
 
-Estimate review utilization against time actually available for review, after meetings and incident duty. Do not infer it from how many green squares somebody has on GitHub. Keep the estimate beside backlog age, rework, and escaped defects.
-
-Take forty-five seconds. Estimate yours, or write down the missing measurement. The missing field is a better next action than another dashboard of generated lines.
-
-Delivery: Give 45 seconds. Invite one estimate and ask what counted as available time. Do not prescribe a universal utilization threshold.
-
-## 38:00 to 40:00: slide 14, Knowing when to stop
+## 23:30 to 26:00: slide 9, What the machine is actually for
 
 On screen:
 
-> What should exist? Does it work?
-> Is it worth maintaining?
+> Cluster 4,000 support threads → yes
+> Choose the order → no
+> It proposes. You sequence.
 
-Back to the curve. The reviewer did not get slower. We filled the space that let them absorb uneven work.
+This is not an anti-AI slide, and the useful list is long. Cluster four thousand support threads by complaint. Find the twelve accounts whose usage pattern matches the cohort you are about to change. Draft the rollout plan, the docs diff and the support macro at once.
 
-Ninety-five percent utilization is not efficiency. It is a nineteen-times wait with good posture. Argue with the model by measuring arrivals, service time, and variability. You cannot argue the queue away by pointing at how quickly the code appeared.
+Better, have it hunt the conflict you would have missed. Your release week is the week two of your three support engineers are at a conference. The workflow you are about to move belongs to your top three renewals this quarter. That is a search problem, and search is what it is good at.
 
-Sometimes the right result is a smaller change. Sometimes it is no change. Cheap code makes both decisions more valuable.
+What it cannot do is care which one your users will love, because it has never met them and because the answer does not exist yet. It proposes. You sequence. Then you own the sequence.
 
-Delivery: Leave the utilization curve up for questions.
+## 26:00 to 29:30: slide 10, Prediction: the version picker
+
+On screen:
+
+> Theme · Language · Version
+> "You're on 4.2. It's 43 days old. Update, or turn on auto-update."
+
+First prediction, labeled once as a prediction. Version becomes a first-class user-facing control, sitting in settings beside theme and language, because those two are already there for exactly this reason. They are preferences about how the software meets you.
+
+A returning user lands on the version she left. The banner reads: you are on 4.2, it is forty-three days old, here is what changed, update now or turn on auto-update. Change stops being something that happened to her while she was away and becomes something she asks for. That is the whole move.
+
+The web spent twenty years removing this control and calling it a feature. Everyone runs current, nobody sits on an old build, support reasons about one thing. That was the right trade when shipping was expensive and rare. Ask whether it is still the right trade at forty-six deploys a quarter.
+
+The picker also makes the cost visible to you. If a meaningful share of your users pin, you have measured the thing nobody measures. Their pin rate is your change-fatigue meter and it does not require a survey.
+
+## 29:30 to 32:00: slide 11, What that costs to build
+
+On screen:
+
+> Versioned runtime + a sandbox per user
+> Privacy: better. Patching: worse.
+> Every live version is a live contract
+
+Now the engineering bill, because the prediction is easy and the architecture is not. Serving many live versions means a versioned runtime against a shared data model, or a data model versioned per user: a semi-persistent sandbox holding their build and their state, resumed on arrival and suspended after.
+
+That buys something real on privacy. Data that never leaves a user's sandbox is data you cannot leak in bulk, and a breach costs you one tenant instead of one table. You are trading a class of problem you understand for one you do not: an unpatchable fleet you cannot force forward.
+
+Every live version is also a live contract. Hyrum's law: with enough users, every observable behavior of your system gets depended on, including the ones you consider bugs. Choose how many versions you support on purpose, and give the number an expiry date.
+
+Source: Hyrum Wright, [Hyrum's Law](https://www.hyrumslaw.com/). Stated as an observation about interface consumers, not a measured result.
+
+## 32:00 to 35:00: slide 12, Prediction: the app your neighbor configured
+
+On screen:
+
+> "Turn on what people like me have on"
+> Shareable configuration profiles
+> Developers have done this for thirty years
+
+Second prediction. Feature flags stop being your deployment tool and become the user's preference surface. Not a wall of switches: a profile. Turn on what people who use this the way I do have turned on. Follow this person's setup. Adopt my team's.
+
+This is not new, it is unevenly distributed. Dotfiles. VS Code extension packs. Home Assistant blueprints. Excel templates. Figma community files. Mod lists. Developers have been shipping configuration to each other as a social object for thirty years and we never offered it to anybody else.
+
+Von Hippel's lead-user work found users at the leading edge of a market inventing what the rest will want, and his toolkit work in 2002 is about shipping them the means to do it. Rogers gives you the shape of who adopts first. A shared profile is a toolkit and a diffusion channel in the same object.
+
+Source: Eric von Hippel (1986), [Lead Users: A Source of Novel Product Concepts](https://doi.org/10.1287/mnsc.32.7.791), Management Science 32(7), 791–805. Eric von Hippel and Ralph Katz (2002), [Shifting Innovation to Users via Toolkits](https://doi.org/10.1287/mnsc.48.7.821.2817), Management Science 48(7), 821–833. Everett M. Rogers (2003), Diffusion of Innovations, 5th edition, Free Press.
+
+## 35:00 to 38:00: slide 13, Everyone runs a different app now
+
+On screen:
+
+> Support: "which app do you have?"
+> Screenshots · A/B baselines · accessibility defaults
+> Same as it ever was: defaults still win
+
+Support opens with a new first question: which app do you have. Your documentation screenshots are wrong for most readers. Your A/B test has no common baseline, because the control group configured itself. Accessibility defaults are the ones people turn off first and need most.
+
+A user can also configure themselves into a corner and never meet the thing that would have helped. Call it a filter bubble for functionality rather than opinion.
+
+Choice overload is the obvious objection and I will raise it myself: Iyengar and Lepper's jam study, 2000. A 2010 meta-analysis across fifty published experiments put the mean effect near zero. So I cite it and set it aside. The risk is not too many switches.
+
+It is that nobody is curating them. Somebody owns the default profile, somebody decides which shared setups get promoted, and somebody decides what a new user gets before they have a neighbor. Distribution still concentrates. Defaults still win.
+
+Source: Sheena S. Iyengar and Mark R. Lepper (2000), [When Choice is Demotivating](https://doi.org/10.1037/0022-3514.79.6.995), Journal of Personality and Social Psychology 79(6), 995–1006. Benjamin Scheibehenne, Rainer Greifeneder and Peter M. Todd (2010), [Can There Ever Be Too Many Options?](https://doi.org/10.1086/651235), Journal of Consumer Research 37(3), 409–425. Cited to set aside.
+
+## 38:00 to 40:00: slide 14, Knowing what not to ship
+
+On screen:
+
+> Don't count what it cost you to build.
+> Count what it costs them to relearn.
+
+Back to the two tracks. Forty-six releases, four sessions. You did not get slower and she did not get dumber. You filled the space between her visits with work she has to do.
+
+Turn the reasoning up as far as it goes. It will hand you a better-argued plan for a market it has never seen. The part it cannot do is the part you were hired for: knowing which of these your people will love, and knowing when they can stand to receive it.
+
+Sometimes the right release is a smaller one. Sometimes it is the same app they left.
+
+Delivery: Step back to slide 3 for the two tracks, then return here. Stop talking.

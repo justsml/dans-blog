@@ -1,13 +1,13 @@
 <!-- BEGIN GENERATED EDITIONS -->
 # Synchronized editions
 
-Generated from [the current 40-minute outline](../../outlines/failure-improvement-40min.md).
+Generated from [the current 40-minute outline](outline-40min.md).
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/failure-improvement-15min.html) | [Download](../../decks/failure-improvement-15min-screen.pptx) | [Download](../../decks/failure-improvement-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/failure-improvement-30min.html) | [Download](../../decks/failure-improvement-30min-screen.pptx) | [Download](../../decks/failure-improvement-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/failure-improvement-40min.html) | [Download](../../decks/failure-improvement-40min-screen.pptx) | [Download](../../decks/failure-improvement-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/failure-improvement-15min.html) | [Download](failure-improvement-15min-screen.pptx) | [Download](failure-improvement-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/failure-improvement-30min.html) | [Download](failure-improvement-30min-screen.pptx) | [Download](failure-improvement-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/failure-improvement-40min.html) | [Download](failure-improvement-40min-screen.pptx) | [Download](failure-improvement-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: Automating Improvement From Failure
@@ -17,9 +17,9 @@ Generated from [the current 40-minute outline](../../outlines/failure-improvemen
 | Length | Format | Source |
 | --- | --- | --- |
 | 5–10 min | Lightning or live demo | Below |
-| 15 min | Lightning talk | [15-minute adaptation](../../outlines/failure-improvement-15min-adaptation.md) |
-| 25–30 min | Standard session | [30-minute adaptation](../../outlines/failure-improvement-30min-adaptation.md); drop slides 10 and 12 for 25; retain the 5:30 demo |
-| 40–45 min | Conference talk | [40-minute outline](../../outlines/failure-improvement-40min.md) plus five minutes of questions |
+| 15 min | Lightning talk | [15-minute adaptation](adaptation-15min.md) |
+| 25–30 min | Standard session | [30-minute adaptation](adaptation-30min.md); drop slides 10 and 12 for 25; retain the 5:30 demo |
+| 40–45 min | Conference talk | [40-minute outline](outline-40min.md) plus five minutes of questions |
 | 90 min | Workshop | Below |
 
 ## 5–10 minute lightning talk (slides)
@@ -35,7 +35,7 @@ Seven minutes, four slides from the full deck: 1, 2, 8, 15.
 
 ## 5–10 minute live demo (AI Tinkerers format)
 
-No slides, no pitch, a system you built. The offline kit is a deterministic replay and does not qualify. The live version needs a real scheduled agent reading real (or realistic sanitized) logs; see the [recording plan](../speaker/recording-plan.md) for the build list and the five-minute script. Bring a fallback recording in case of network failure.
+No slides, no pitch, a system you built. The offline kit is a deterministic replay and does not qualify. The live version needs a real scheduled agent reading real (or realistic sanitized) logs; see the [recording plan](../../speaker/recording-plan.md) for the build list and the five-minute script. Bring a fallback recording in case of network failure.
 
 ## 90 minute workshop
 

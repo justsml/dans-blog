@@ -43,4 +43,4 @@ The researcher should deliver a top-10 shortlist per talk where the evidence sup
 
 ## Talk versions in research results
 
-Saved research results retain the talk names and positioning evaluated on their recorded dates. Use the current [adaptive packet](../speaking-portfolio-expanded/packets/adaptive-systems/packet.md) and [parallelization packet](../speaking-portfolio-expanded/packets/parallelization/packet.md) for submission copy. Historical fit scores have not been recomputed for the revised talks.
+Saved research results retain the talk names and positioning evaluated on their recorded dates. Use the current [adaptive packet](../speaking-portfolio-expanded/talks/adaptive-systems/packet.md) and [dynamic-scaling packet](../speaking-portfolio-expanded/talks/dynamic-scaling/packet.md) for submission copy. Historical fit scores have not been recomputed for the revised talks.

@@ -2,7 +2,7 @@
 
 Reprice coordination, design agent interfaces, and budget human ownership.
 
-Generated from [the 40-minute outline](../product-engineering-40min.md) by `bun artifacts/speaking-portfolio-expanded/bullets.ts`. Edit the outline, not this file. 17 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](../product-engineering-15min-adaptation.md) · [30](../product-engineering-30min-adaptation.md).
+Generated from [the 40-minute outline](outline-40min.md) by `bun artifacts/speaking-portfolio-expanded/bullets.ts`. Edit the outline, not this file. 17 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
 ## Spine
 
@@ -159,7 +159,7 @@ Generated from [the 40-minute outline](../product-engineering-40min.md) by `bun 
 - Support contacts rose to nine percent, against a five-percent ceiling.
 - C has forty-five percent activation, four percent support, and no fabricated urgency.
 - Write the rule you wish you had before the first vote.
-- Do — Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow economics-product/demo.md. Allow 45 seconds to write the rule.
+- Do — Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow demo.md. Allow 45 seconds to write the rule.
 
 ### 12. Where guards go, including the two we forgot
 

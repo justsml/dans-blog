@@ -12,10 +12,10 @@ Each file has the same shape: length and format, parent, one-line pitch, hook, t
 | --: | --- | --- | --- |
 | 1 | [200 OK (Nothing Is)](vendor-renamed-a-field.md) | Adaptive apps | 2 min |
 | 2 | [Twenty for Twenty, One in Seven](twenty-green-tests.md) | Benchmarks | 3 min |
-| 3 | [Who Ate My Slack?](you-ate-their-slack.md) | Judgment | 3 min |
+| 3 | [Who Ate My Slack?](you-ate-their-slack.md) | Judgment (retired) | 3 min |
 | 4 | [Buy Ten, Get Forty](four-legal-calls-forty-images.md) | Dynamic scaling | 2 min |
 | 5 | [Your Eval Suite Needs Therapy](eval-suite-is-a-psych-test.md) | Benchmarks | 3 min |
-| 6 | [The Test Who Loved Me](test-that-loves-the-bug.md) | Judgment | 2 min |
+| 6 | [The Test Who Loved Me](test-that-loves-the-bug.md) | Judgment (retired) | 2 min |
 | 7 | [Run the Judges](run-your-judge-five-times.md) | Benchmarks | 3 min |
 | 8 | [Agreeable to a Fault (κ = 0)](you-calibrated-a-button.md) | Benchmarks | 2 min |
 | 9 | [Retry Hard](retry-until-the-403-goes-away.md) | Failure improvement | 2 min |
@@ -45,7 +45,7 @@ Each file has the same shape: length and format, parent, one-line pitch, hook, t
 | 28 | [The Council of Guards](council-of-guards.md) | Dynamic scaling | 7 min |
 | 29 | [The Barrel-of-Monkeys Maneuver](barrel-of-monkeys.md) | Dynamic scaling | 7 min |
 | 30 | [Charm Is Not a Currency](nice-paragraph-buys-a-refund.md) | Benchmarks | 5 min |
-| 31 | [Human Crumple Zone](human-crumple-zone.md) | Judgment | 5 min |
+| 31 | [Human Crumple Zone](human-crumple-zone.md) | Judgment (retired) | 5 min |
 
 ## Starter sets
 

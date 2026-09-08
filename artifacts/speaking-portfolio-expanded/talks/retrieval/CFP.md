@@ -26,4 +26,4 @@ AI engineers, search and platform engineers, ML practitioners running RAG in pro
 
 This is a history-to-practice talk, not a survey and not a vendor comparison. Every claim is cited to its primary source with a year, and the talk is explicit about what each result does not establish: Voorhees (2000) measured that ranking comparisons survive assessor disagreement, which is not a claim that judgments do not matter. No benchmark leaderboard is presented and no product is recommended. The pooling exercise runs offline from a synthetic fixture; the accompanying script is in the packet. Companion to *Stop Looking at My Benchmarks… Get Your Own!*, which owns instrument validity in general — this one owns retrieval specifically. Do not book both without saying so; they share the Cranfield citation and would repeat it.
 
-**Format:** 40 minutes, 15 slides, including a three-and-a-half-minute judging exercise. 15- and 30-minute routes are prepared. [Full submission packet](../../packets/retrieval/packet.md).
+**Format:** 40 minutes, 15 slides, including a three-and-a-half-minute judging exercise. 15- and 30-minute routes are prepared. [Full submission packet](packet.md).

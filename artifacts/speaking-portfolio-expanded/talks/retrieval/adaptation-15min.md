@@ -1,6 +1,6 @@
 # Three Search Methods in a Fundable Trenchcoat: 15-minute adaptation
 
-Keep slides 1, 2, 8, 9, 10, 11, 12, 15. Hide the others in presenter preparation. [Complete talk track](../packets/retrieval/script-15min.md).
+Keep slides 1, 2, 8, 9, 10, 11, 12, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

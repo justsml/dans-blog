@@ -1,29 +1,33 @@
-# Code Is Cheap. Judgment Is Expensive.
+# Turn Your Thinkin' Tokens Up to 11
 
-Prepared 6 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
+Prepared 7 September 2026, replacing the retired *Code Is Cheap. Judgment Is Expensive.* Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
 
 ## Short abstract (50 words)
 
-Four good implementations arrive before lunch. The reviewer is still on yesterday's change. Generation got cheaper and delivery acquired a queue, and no amount of faster generation touches it. Kingman's formula says a reviewer at ninety-five percent utilization waits nineteen times longer. That is not efficiency.
+Four features shipped before lunch. Your best customer returns after six weeks and cannot find her button. Building got free; learning did not. This talk is about choosing and pacing what ships — and why turning the model's reasoning budget up to eleven will never tell you which Tuesday.
 
 ## Standard abstract (150 words)
 
-We sped up one stage of software delivery and left the next one alone. The result is a queue, and queues have arithmetic. Kingman's approximation puts wait in proportion to utilization over one minus utilization: at ninety-five percent, a nineteen-times wait with good posture. You cannot argue that away by pointing at how quickly the code appeared.
+Generation is free, so scarcity has stopped doing your prioritization. What remains is the expensive part: which features should exist, who should see them, and when.
 
-This talk works the three levers that actually move it — arrivals, service time, and variability — starting before the code exists. A vague ticket becomes four plausible implementations; a spec reduces variance for free. Bacchelli and Bird found review catches design and knowledge-transfer problems more than defects, which changes what you can safely automate. A live demonstration produces a rubber stamp and asks the room to find what it missed. Bainbridge and Elish supply the warning: do not appoint a human crumple zone. Sometimes the right result is a smaller change, or none.
+Ninety days of healthy deploys meets one customer's four sessions, and between two visits she absorbs twenty-one changes at once. Feature fatigue is a measured effect — capability wins the sale, usability keeps the renewal — and every change is a loss before it is a gain. On stage we count the release plans for six features across three cohorts, count the experiment arms four weeks of traffic can pay for, and divide. The ratio is why this decision is judgment rather than analytics, and why more reasoning tokens do not close it.
+
+Then two predictions: version becomes a user-facing control beside theme and language, and feature flags become a shareable profile. Both carry an architecture bill, and it is itemized.
 
 ## Audience
 
-Engineering leaders, staff and principal engineers, platform and DevEx teams, and anyone who owns a review queue that has recently gotten longer. No queueing theory assumed; the formula is derived and checked on stage.
+Product engineers, engineering and product leaders, founders, platform teams, and anyone who owns a release calendar. No statistics background assumed; the arithmetic is done on stage and the script is offline and deterministic.
 
 ## Three audience outcomes
 
-1. Measure your review queue as a queue — arrival rate, service time, variability, utilization — instead of as a personal throughput problem.
-2. Move work off the review stage before it arrives: specify the request, reduce variance, and change what enters the queue rather than how fast it is emptied.
-3. Give a reviewer authority to stop work, the context to use it, and enough slack to recover, so no individual becomes the accountability sink for an automated system.
+1. Measure the gap between your release cadence and your users' return interval, and treat the second as a constraint rather than a fact of nature.
+2. Make the release decision on five axes — what, who, when, batch shape, reversibility — and name who outside engineering each axis commits.
+3. Size the plan space against the evidence a window can actually buy, so you can tell which parts of a roadmap decision are measurable and which are a judgment you should write down and check.
 
 ## Reviewer notes
 
-Kingman's approximation is presented as a heavy-traffic approximation with its assumptions stated, not as a law of code review; the talk says explicitly what would make it a bad model of a given team. The demonstration is scripted and deterministic, with synthetic diffs; it is not a measured study of reviewer performance. Bacchelli and Bird (2013) is an observational study at one company and is qualified as such. Elish's moral crumple zone is used as a design warning, not an accusation. Adjacent to *The Future of Product Engineering*, which owns coordination cost and human ownership; this talk owns the queue and stays out of the org chart. Parallel generation and multi-model judging are reconciled on stage: fan out if you like, so long as a gate collapses the candidates before a human reads any of them.
+The absorption diagram is an illustration with internally consistent arithmetic, not telemetry. The plan-space demo is offline and deterministic; the per-arm figure is the standard n ≈ 16·p(1−p)/δ² sizing heuristic, presented as a heuristic. Thompson, Hamilton and Rust (2005) is consumer research and the inference to software cadence is stated as an inference. The *Illusion of Thinking* result is delivered together with its published rebuttal and explicitly left unsettled; the argument does not depend on either side. Iyengar and Lepper's jam study is raised only so the 2010 meta-analysis can set it aside. The two futures are labeled predictions and neither is measured.
 
-**Format:** 40 minutes, 14 slides, including a live review demonstration. 15- and 30-minute routes are prepared. [Full submission packet](../../packets/judgment/packet.md).
+Adjacent to *The Future of Product Engineering*, which owns coordination cost and org design; this talk owns what reaches users and when. Adjacent to *Stop Looking at My Benchmarks*, which owns instrument validation; the power arithmetic here is deferred to it rather than re-taught.
+
+**Format:** 40 minutes, 14 slides, including a paired exercise and a live arithmetic run. 15- and 30-minute routes are prepared. [Full submission packet](packet.md).

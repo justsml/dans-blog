@@ -18,13 +18,13 @@ The HTML slides also open directly from disk. Reveal.js 5.2.1, the notes plugin,
 
 ## Content
 
-The full-length decks use `../speaking-portfolio-expanded/outlines/*-40min.md`. The former flagship outline files are compatibility pointers. Slide notes preserve speaker guidance, citations, rehearsal timing, and personal-story prompts. Personal-story prompts still need Dan's own experience before delivery; no biography or results were invented.
+The full-length decks use `../speaking-portfolio-expanded/talks/*/outline-40min.md`. The former flagship outline files are compatibility pointers. Slide notes preserve speaker guidance, citations, rehearsal timing, and personal-story prompts. Personal-story prompts still need Dan's own experience before delivery; no biography or results were invented.
 
 The free-tier deck includes dated company announcements and an AWS credit offer checked September 5, 2026. Refresh these before presenting. Synthetic scores and costs remain illustrative, not measurements of current products.
 
-Edit canonical outlines for registered talks; never edit their generated HTML or scripts. Shared typography and behavior live in `public/talks/assets/deck.css` and `public/talks/assets/deck.js`; each deck also has its own art direction. Astro serves these files directly from `public/talks/`; no page component is needed. Every full-length talk has synchronized 15-, 30-, and 40-minute browser and [PowerPoint editions](../speaking-portfolio-expanded/decks/README.md).
+Edit canonical outlines for registered talks; never edit their generated HTML or scripts. Shared typography and behavior live in `public/talks/assets/deck.css` and `public/talks/assets/deck.js`; each deck also has its own art direction. Astro serves these files directly from `public/talks/`; no page component is needed. Every full-length talk has synchronized 15-, 30-, and 40-minute browser and [PowerPoint editions](../speaking-portfolio-expanded/talks/README.md).
 
-The registered talks are skeptic-education, adaptive-systems, dynamic-scaling, evidence-learning, free-tier, failure-improvement, product-engineering, judgment, benchmarks, and retrieval. After editing `../speaking-portfolio-expanded/outlines/<talk>-40min.md`, run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts <talk>` to synchronize its browser decks, scripts, adaptations, and PowerPoints. The shared head lives in `templates/engineering-head.html`.
+The registered talks are skeptic-education, adaptive-systems, dynamic-scaling, evidence-learning, free-tier, failure-improvement, product-engineering, judgment, benchmarks, and retrieval. After editing `../speaking-portfolio-expanded/talks/<talk>/outline-40min.md`, run `bun artifacts/speaking-portfolio-expanded/sync-talks.ts <talk>` to synchronize its browser decks, scripts, adaptations, and PowerPoints. The shared head lives in `templates/engineering-head.html`.
 
 Implementation follows the official [initialization](https://revealjs.com/initialization/) and [speaker view](https://revealjs.com/speaker-view/) documentation.
 

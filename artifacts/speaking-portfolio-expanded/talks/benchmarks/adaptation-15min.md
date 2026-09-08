@@ -1,6 +1,6 @@
 # Stop Looking at My Benchmarks… Get Your Own!: 15-minute adaptation
 
-Keep slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Hide the others in presenter preparation. [Complete talk track](../packets/benchmarks/script-15min.md).
+Keep slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

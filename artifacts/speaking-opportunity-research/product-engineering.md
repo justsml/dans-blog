@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Product engineers, engineering leaders, product managers, founders, and experimentation teams.
 - Thesis: Use faster generation to build shorter learning loops while preserving product promises, evaluation standards, and human decisions about acceptable tradeoffs.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/economics-product/CFP.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/product-engineering/CFP.md)
 
 ## Search focus
 

@@ -5,7 +5,7 @@
  *   bun artifacts/speaking-portfolio-expanded/bullets.ts            all talks
  *   bun artifacts/speaking-portfolio-expanded/bullets.ts judgment   one talk
  *
- * Output: outlines/bullets/<slug>-bullets.md — a one-screen spine plus, per
+ * Output: talks/<slug>/bullets.md — a one-screen spine plus, per
  * slide, the on-screen lines, the topic sentence of each spoken paragraph, and
  * the Story, Stage direction and Source lines. Rehearsal and CFP-form material;
  * the outline stays the single source. Never edit the generated files.
@@ -15,12 +15,11 @@ import { join, dirname } from 'node:path';
 import { TALKS, parseOutline, fmt, toSec } from './build-talk';
 
 const root = dirname(new URL(import.meta.url).pathname);
-const out = join(root, 'outlines', 'bullets');
 const selected = process.argv.slice(2).filter(s => !s.startsWith('--'));
 const slugs = selected.length ? selected : Object.keys(TALKS);
 
-/** Relative links move one directory deeper than outlines/. */
-const rel = (s: string) => s.replace(/\]\(\.\.\//g, '](../../');
+/** The bullet sheet sits beside its outline, so links pass through unchanged. */
+const rel = (s: string) => s;
 const write = (p: string, s: string) => {
   mkdirSync(dirname(p), { recursive: true });
   if (!existsSync(p) || readFileSync(p, 'utf8') !== s) writeFileSync(p, s);
@@ -44,7 +43,7 @@ const topicSentence = (para: string) => {
 const bulletsFor = (slug: string) => {
   const talk = TALKS[slug];
   if (!talk) throw Error(`Unknown talk: ${slug}`);
-  const { slides } = parseOutline(readFileSync(join(root, 'outlines', `${slug}-40min.md`), 'utf8'));
+  const { slides } = parseOutline(readFileSync(join(root, 'talks', slug, 'outline-40min.md'), 'utf8'));
   const minutes = toSec(slides[slides.length - 1].end) / 60;
   const lines: string[] = [];
 
@@ -52,10 +51,10 @@ const bulletsFor = (slug: string) => {
   const blurb = talk.description.replace(new RegExp(`^${talk.title}:\\s*`), '');
   lines.push(blurb.charAt(0).toUpperCase() + blurb.slice(1), '');
   lines.push(
-    `Generated from [the 40-minute outline](../${slug}-40min.md) by \`bun artifacts/speaking-portfolio-expanded/bullets.ts\`. ` +
+    `Generated from [the 40-minute outline](outline-40min.md) by \`bun artifacts/speaking-portfolio-expanded/bullets.ts\`. ` +
       `Edit the outline, not this file. ${slides.length} slides, ${minutes} minutes, no Q&A. ` +
       `Every Story line needs Dan's own record before delivery. ` +
-      `Shorter routes: [15](../${slug}-15min-adaptation.md) · [30](../${slug}-30min-adaptation.md).`,
+      `Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).`,
     '',
   );
 
@@ -84,16 +83,16 @@ const bulletsFor = (slug: string) => {
 };
 
 for (const slug of slugs) {
-  write(join(out, `${slug}-bullets.md`), bulletsFor(slug));
+  write(join(root, 'talks', slug, 'bullets.md'), bulletsFor(slug));
   console.log(`${slug}: bullet outline written`);
 }
 
 if (!selected.length) {
   const rows = Object.keys(TALKS)
-    .map(slug => `| ${TALKS[slug].title} | [Bullets](${slug}-bullets.md) | [40-minute outline](../${slug}-40min.md) |`)
+    .map(slug => `| ${TALKS[slug].title} | [Bullets](${slug}/bullets.md) | [40-minute outline](${slug}/outline-40min.md) |`)
     .join('\n');
   write(
-    join(out, 'README.md'),
+    join(root, 'talks', 'bullets-index.md'),
     `# Bullet outlines\n\nOne compressed sheet per talk: the spine in a screen, then each slide's on-screen lines, ` +
       `the topic sentence of every spoken paragraph, and its Story, delivery and source notes. Use them to rehearse the arc, ` +
       `to fill a CFP form's outline field, and to find the slide that owns an idea.\n\n` +

@@ -1,6 +1,6 @@
 # The Council of Guards
 
-7 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../outlines/dynamic-scaling-40min.md), slide 12 · pairs with [The Barrel-of-Monkeys Maneuver](barrel-of-monkeys.md)
+7 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/outline-40min.md), slide 12 · pairs with [The Barrel-of-Monkeys Maneuver](barrel-of-monkeys.md)
 
 Not a correctness vote. A disagreement detector, and it costs a fraction of the work it protects. This is the judging side; the generation side, leading with cheap parallel drafts on purpose, is the barrel of monkeys. Book them together for a 15-minute slot.
 
@@ -38,7 +38,7 @@ Three candidate columns. Under each, three judge verdicts. Two columns aligned; 
 
 ## Demo
 
-Candidate table and stipulated council split in [demo.md](../packets/dynamic-scaling/demo.md).
+Candidate table and stipulated council split in [demo.md](../talks/dynamic-scaling/demo.md).
 
 ## Source
 

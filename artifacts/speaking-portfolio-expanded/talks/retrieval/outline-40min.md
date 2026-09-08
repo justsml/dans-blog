@@ -133,7 +133,7 @@ Stage direction: Give 60 seconds in pairs and collect two judgments with reasons
 
 20:00 to 23:00 · build
 
-![Cranfield, Bedfordshire, 1966](../../../public/talks/assets/retrieval/history.svg)
+![Cranfield, Bedfordshire, 1966](../../../../public/talks/assets/retrieval/history.svg)
 
 > Corpus + queries + relevance judgments
 > 1966 → 2026 = 60 years
@@ -162,7 +162,7 @@ TREC used pooling because judging every document for every query was impractical
 
 That is the lesson we missed. They tested whether the shortcut damaged the comparison. We called our first results golden.
 
-Stage direction: Run `bun artifacts/speaking-portfolio-expanded/packets/retrieval/pooling.ts` after revealing F. Walk through 2/2, 1/2, then 2/2. Explain that the metric measures topical relevance, not sufficiency or permission.
+Stage direction: Run `bun artifacts/speaking-portfolio-expanded/talks/retrieval/pooling.ts` after revealing F. Walk through 2/2, 1/2, then 2/2. Explain that the metric measures topical relevance, not sufficiency or permission.
 
 Source: Justin Zobel (1998), [How reliable are the results of large-scale information retrieval experiments?](https://doi.org/10.1145/290941.291014), SIGIR, 307–314. Voorhees, Soboroff, and Lin (2022), [Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?](https://arxiv.org/abs/2201.11086). [NIST TREC overview](https://trec.nist.gov/overview.html), started 1992.
 

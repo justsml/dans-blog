@@ -110,17 +110,17 @@ for talk in talks:
      for item in talk['appendices']:appendix(d,item)
     refs=list(dict.fromkeys(ref for b in slides for ref in b['sources']))
     if refs:reading(d,'References',refs,'\n\n'.join(refs),'SOURCE REFERENCES')
-   name=f'{talk["slug"]}-{mins}min-{mode}.pptx';p=out/name
+   dest=out/talk['slug'];dest.mkdir(parents=True,exist_ok=True)
+   name=f'{talk["slug"]}-{mins}min-{mode}.pptx';p=dest/name
    item=d.write(p);item.update(slug=talk['slug'],minutes=mins,source=talk['source'],source_sha256=talk['sourceHash'],source_slides=[b['n'] for b in slides],sha256=hashlib.sha256(p.read_bytes()).hexdigest());manifest.append(item)
   print(talk['slug'],mins,'exported',flush=True)
  # Retain existing file paths as byte-identical aliases of the current corresponding editions.
  aliases=[]
  for mins in [15,30,40]:
-  legacy=out/f'{talk["slug"]}-{mins}min.pptx'
-  if legacy.exists():shutil.copy2(out/f'{talk["slug"]}-{mins}min-screen.pptx',legacy);aliases.append(str(legacy))
-  legacy=out.parent.parent/'flagship-talks'/f'{talk["slug"]}-{mins}min.pptx'
-  if legacy.exists():shutil.copy2(out/f'{talk["slug"]}-{mins}min-screen.pptx',legacy);aliases.append(str(legacy))
+  legacy=out/talk['slug']/f'{talk["slug"]}-{mins}min.pptx'
+  if legacy.exists():shutil.copy2(out/talk['slug']/f'{talk["slug"]}-{mins}min-screen.pptx',legacy);aliases.append(str(legacy))
  if talk['slug']=='adaptive-systems':
-  for mode in ['screen','handout']:shutil.copy2(out/f'adaptive-systems-40min-{mode}.pptx',out/f'adaptive-systems-{mode}.pptx')
+  d=out/'adaptive-systems'
+  for mode in ['screen','handout']:shutil.copy2(d/f'adaptive-systems-40min-{mode}.pptx',d/f'adaptive-systems-{mode}.pptx')
 (out/'exports.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Exported',len(manifest),'editions')

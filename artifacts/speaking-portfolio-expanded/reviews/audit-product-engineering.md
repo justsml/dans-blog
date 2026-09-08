@@ -29,7 +29,7 @@ Ready after fixes. The canonical outline, both generated adaptations, the three 
 - `packets/product-engineering/packet.md:5` links `outlines/product-engineering-30min.md` and `-15min.md` (pointer stubs) with labels "the agent roster" and "big idea" from the old talk; should link the two `-adaptation.md` files.
 - `packet.md:56` "cites Conway's 1968 paper and Microsoft's experimentation guidance" and `packet.md:58-64` References omit Coase, Campbell, Graicunas, MacCormack et al., Thoughtworks and Team Topologies, all of which are on slides now.
 - `economics-product/CFP.md:3` "Submit one Product Engineering variant per event" describes the retired three-purpose-built-lengths model; `:39` and `:55` already say routes are derived.
-- `README.md:42` gives this talk "[Browser deck]" where every registered sibling gets "[Browser and PowerPoint](../decks/README.md)"; PPTX editions exist in `decks/`. `decks/README.md` itself lists only Dynamic Scaling ("These 6 PowerPoint files") even though nine product-engineering PPTX files are present, and the outline stubs (`outlines/product-engineering-15min.md:3`) point readers there.
+- `README.md:42` gives this talk "[Browser deck]" where every registered sibling gets "[Browser and PowerPoint](../talks/README.md)"; PPTX editions exist in `decks/`. `decks/README.md` itself lists only Dynamic Scaling ("These 6 PowerPoint files") even though nine product-engineering PPTX files are present, and the outline stubs (`outlines/product-engineering-15min.md:3`) point readers there.
 - `reviews/README.md:34` "Product Engineering ... not registered in build-talk.ts ... demo runs 5:00, 5:00, 3:30 and 4:00" is contradicted by `reviews/README.md:36-43` and by `build-talk.ts:377`.
 - SVG `reveal-talks/assets/product-engineering/interfaces.svg` title "Design the handoff, not a robot org chart" and row labels match slide 5's visible lines and spoken text; alt text "Draw the wires between agents" matches the heading.
 - Deck `reveal-talks/product-engineering.html` renders the three current `Story:` lines verbatim (1, 6, 9); no old story text found. No pre-rewrite phrases ("map every function", "one agent per function", "t-shirt") in any generated file.
@@ -101,6 +101,6 @@ Ready after fixes. The canonical outline, both generated adaptations, the three 
 11. `economics-product/CFP.md:3` delete "Submit one Product Engineering variant per event unless the organizer explicitly requests a series."
 12. `economics-product/evidence.md:23-33` rewrite the Product Engineering claim table to the current slides.
 13. `reviews/README.md:34` replace the unregistered/drift paragraph with a pointer to the implementation table.
-14. `README.md:42` change "[Browser deck]" to "[Browser and PowerPoint](../decks/README.md)" and add the talk's rows to `decks/README.md`.
+14. `README.md:42` change "[Browser deck]" to "[Browser and PowerPoint](../talks/README.md)" and add the talk's rows to `decks/README.md`.
 15. Delete `outlines/product-engineering-15min.md`, `outlines/product-engineering-30min.md`, and `decks/product-engineering-{15,30,40}min.pptx`.
 16. Before delivery: confirm the Colfer & Baldwin 70/22/8 row from the paper's table (`outlines/product-engineering-40min.md:29`), confirm the slide 7 estimation observation with Dan, and open the Microsoft ExP URL manually.

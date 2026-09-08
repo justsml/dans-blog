@@ -1,6 +1,6 @@
 # Dynamic Scaling of Agentic Workloads: 30-minute adaptation
 
-Keep slides 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14. Hide the others in presenter preparation. [Complete talk track](../packets/dynamic-scaling/script-30min.md).
+Keep slides 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

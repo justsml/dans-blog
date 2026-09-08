@@ -1,15 +1,15 @@
-# Code Is Cheap. Judgment Is Expensive.: 15-minute adaptation
+# Turn Your Thinkin' Tokens Up to 11: 15-minute adaptation
 
-Keep slides 1, 3, 6, 7, 9, 12, 14. Hide the others in presenter preparation. [Complete talk track](../packets/judgment/script-15min.md).
+Keep slides 1, 4, 5, 8, 10, 12, 14. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:30 | 1 | The morning four good implementations arrive |
-| 01:30 to 04:00 | 3 | A queue does not care how you feel about it |
-| 04:00 to 05:30 | 6 | "Add enterprise permissions" |
-| 05:30 to 07:00 | 7 | A spec reduces variance |
-| 07:00 to 10:30 | 9 | Demo: the rubber stamp |
-| 10:30 to 13:00 | 12 | Three levers on the queue |
-| 13:00 to 15:00 | 14 | Knowing when to stop |
+| 00:00 to 02:00 | 1 | These go to eleven |
+| 02:00 to 03:45 | 4 | Feature fatigue is a measured effect |
+| 03:45 to 05:30 | 5 | A change is a loss before it is a gain |
+| 05:30 to 08:45 | 8 | Turn the tokens up |
+| 08:45 to 11:15 | 10 | Prediction: the version picker |
+| 11:15 to 13:30 | 12 | Prediction: the app your neighbor configured |
+| 13:30 to 15:00 | 14 | Knowing what not to ship |
 
-Introduce the permission request before its criteria. Pairs get 30 seconds; the demo gets 3:30. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Lightning route: the cost of change, the plan-space arithmetic, then both predictions. The pair exercise is cut; its questions ride in the slide-5 bridge. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

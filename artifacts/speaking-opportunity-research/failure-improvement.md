@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: AI engineers, SREs, platform engineers, developer tooling builders, and engineering leads.
 - Thesis: Hand an agent your production logs, then grow its access and authority one failure class at a time into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/engineering/failure-improvement/CFP.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/failure-improvement/CFP.md)
 
 ## Search focus
 

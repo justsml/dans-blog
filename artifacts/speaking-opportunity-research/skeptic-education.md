@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Faculty, instructional designers, education leaders, EdTech evaluators, and workforce learning teams.
 - Thesis: Decide which human capability to develop, where to delegate, augment, or preserve effort, and how to evaluate educational AI without treating usage as learning.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/education/CFP.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/evidence-learning/CFP.md)
 
 ## Search focus
 

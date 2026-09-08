@@ -1,6 +1,6 @@
 # Outsmart Your Lying, Cheating Students: 15-minute adaptation
 
-Keep slides 1, 2, 4, 5, 7, 8, 9, 14. Hide the others in presenter preparation. [Complete talk track](../packets/evidence-learning/script-15min.md).
+Keep slides 1, 2, 4, 5, 7, 8, 9, 14. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |

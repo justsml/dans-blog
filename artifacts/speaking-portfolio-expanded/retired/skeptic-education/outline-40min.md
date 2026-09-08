@@ -2,9 +2,9 @@
 
 > **Retired 6 September 2026.** This talk is no longer in the portfolio and nothing is generated from it.
 > Its three surviving beats — skepticism as a method, the four-case local eval set, and the vendor questions —
-> live on as [Show Me the Misconception](../packets/evidence-learning/procurement-route.md), a 15-minute
-> procurement route under [Outsmart Your Lying, Cheating Students](evidence-learning-40min.md).
-> Reason: the [audit](../reviews/audit-skeptic-education.md) found the transplant plan was never executed while
+> live on as [Show Me the Misconception](../../talks/evidence-learning/procurement-route.md), a 15-minute
+> procurement route under [Outsmart Your Lying, Cheating Students](../../talks/evidence-learning/outline-40min.md).
+> Reason: the [audit](../../reviews/audit-skeptic-education.md) found the transplant plan was never executed while
 > Outsmart independently absorbed the three citations a Skeptic rewrite would have needed, leaving six colliding beats.
 > Kept for reference only. Do not book, do not rebuild.
 
@@ -16,7 +16,7 @@
 
 **Scope.** Planning assumption: AI access will remain available enough that curriculum cannot depend on preventing it. Research stays attached to its setting. The framework exercise and the demo are design tools. Say it once on slide 1.
 
-**Demo.** [Runbook section 1](../demos/DEMO-RUNBOOK.md#1-a-skeptics-guide-to-surviving-ai-in-education) · [Kit](../../../public/talks/demos/index.html). Fallback: narrate the three cases on slide 5.
+**Demo.** [Runbook section 1](../../demos/DEMO-RUNBOOK.md#1-a-skeptics-guide-to-surviving-ai-in-education) · [Kit](../../../../public/talks/demos/index.html). Fallback: narrate the three cases on slide 5.
 
 **Worked example.** A history essay weighing two conflicting primary sources. The percentage-change fixture belongs to the assessment-design talk, so the two can be booked together.
 
@@ -94,7 +94,7 @@ Write it (60 s): one verb from your assignment in a column, and finish "because 
 > Strength of an argument → Augment
 > Scientific explanation → Delegate
 
-Follow [runbook section 1](../demos/DEMO-RUNBOOK.md#1-a-skeptics-guide-to-surviving-ai-in-education). Same general assistance; the verdict changes with the capability under assessment. Translate to the history example: grammar help is Delegate; a counter-reading is Augment while drafting; the final "which source and why" paragraph is Preserve.
+Follow [runbook section 1](../../demos/DEMO-RUNBOOK.md#1-a-skeptics-guide-to-surviving-ai-in-education). Same general assistance; the verdict changes with the capability under assessment. Translate to the history example: grammar help is Delegate; a counter-reading is Augment while drafting; the final "which source and why" paragraph is Preserve.
 
 Ask (45 s): for your assignment, what evidence would show the capability if the artifact were produced with help?
 

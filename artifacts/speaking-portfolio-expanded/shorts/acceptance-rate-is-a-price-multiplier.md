@@ -1,6 +1,6 @@
 # Doubling on a Tuesday
 
-3 min · video · parent: [Buy Me a Free Tier](../outlines/free-tier-40min.md), slide 10
+3 min · video · parent: [Buy Me a Free Tier](../talks/free-tier/outline-40min.md), slide 10
 
 Everyone watches the token price. The number that actually moves your unit cost is on no dashboard.
 

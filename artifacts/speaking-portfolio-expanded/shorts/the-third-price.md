@@ -1,6 +1,6 @@
 # Name Your Price (No, the Other One)
 
-5 min · lightning · parent: [Buy Me a Free Tier](../outlines/free-tier-40min.md), slides 9, 10, 14
+5 min · lightning · parent: [Buy Me a Free Tier](../talks/free-tier/outline-40min.md), slides 9, 10, 14
 
 Two of these numbers are on your dashboard. The third decides whether you have a company.
 

@@ -1,6 +1,6 @@
 # The Robot Took the Easy Ones
 
-3 min · video / lightning · parent: [Automating Improvement From Failure](../outlines/failure-improvement-40min.md), slide 9
+3 min · video / lightning · parent: [Automating Improvement From Failure](../talks/failure-improvement/outline-40min.md), slide 9
 
 The routine work left. The hard cases stayed. The practice disappeared. This paper is from 1983.
 

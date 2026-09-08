@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Faculty, assessment leads, instructional designers, academic integrity teams, and learning-platform builders.
 - Thesis: Replace unreliable authorship inference with diagnostic questions, staged assistance, reconstruction, and independent transfer as evidence of understanding.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/education/CFP.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/evidence-learning/CFP.md)
 
 ## Search focus
 

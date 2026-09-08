@@ -1,6 +1,6 @@
 # Human Crumple Zone
 
-5 min · lightning · parent: [Code Is Cheap. Judgment Is Expensive.](../outlines/judgment-40min.md), slides 5, 8, 10
+5 min · lightning · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slides 5, 8 and 10, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/outline-40min.md) on 7 September 2026. The Elish, Deming and Bacchelli material lives only here now.
 
 An engineer at the end of a pipeline, two minutes per diff, "accountability stays human." The org chart looks great. The engineer is a bumper.
 

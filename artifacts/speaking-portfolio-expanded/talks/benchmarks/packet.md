@@ -1,6 +1,6 @@
 # Stop Looking at My Benchmarks… Get Your Own!
 
-This packet indexes the current source-preserving editions. The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](../../outlines/benchmarks-40min.md).
+This packet indexes the current source-preserving editions. The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](outline-40min.md).
 
 Browser decks, PowerPoints and presenter scripts for all three lengths are listed in [formats.md](formats.md), which `sync-talks.ts` regenerates. This file is not regenerated, so the links live there rather than being copied here.
 

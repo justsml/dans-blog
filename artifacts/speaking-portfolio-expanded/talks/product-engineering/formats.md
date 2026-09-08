@@ -1,13 +1,13 @@
 <!-- BEGIN GENERATED EDITIONS -->
 # Synchronized editions
 
-Generated from [the current 40-minute outline](../../outlines/product-engineering-40min.md).
+Generated from [the current 40-minute outline](outline-40min.md).
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/product-engineering-15min.html) | [Download](../../decks/product-engineering-15min-screen.pptx) | [Download](../../decks/product-engineering-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/product-engineering-30min.html) | [Download](../../decks/product-engineering-30min-screen.pptx) | [Download](../../decks/product-engineering-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/product-engineering-40min.html) | [Download](../../decks/product-engineering-40min-screen.pptx) | [Download](../../decks/product-engineering-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/product-engineering-15min.html) | [Download](product-engineering-15min-screen.pptx) | [Download](product-engineering-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/product-engineering-30min.html) | [Download](product-engineering-30min-screen.pptx) | [Download](product-engineering-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/product-engineering-40min.html) | [Download](product-engineering-40min-screen.pptx) | [Download](product-engineering-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: The Future of Product Engineering
@@ -18,9 +18,9 @@ One canonical outline generates every route. Current PowerPoint editions are lin
 
 | Length | Source | Demo |
 | --- | --- | --- |
-| 15 min | [Adaptation](../../outlines/product-engineering-15min-adaptation.md) | Slide 11, 3:30 |
-| 30 min | [Adaptation](../../outlines/product-engineering-30min-adaptation.md) | Slide 11, 5:00 |
-| 40 min | [Canonical outline](../../outlines/product-engineering-40min.md) | Slide 11, 5:00 |
+| 15 min | [Adaptation](adaptation-15min.md) | Slide 11, 3:30 |
+| 30 min | [Adaptation](adaptation-30min.md) | Slide 11, 5:00 |
+| 40 min | [Canonical outline](outline-40min.md) | Slide 11, 5:00 |
 | 95 min | Workshop below | Five-minute replay plus discussion |
 
 ## 5–10 minute lightning talk (slides)

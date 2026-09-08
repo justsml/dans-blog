@@ -6,20 +6,20 @@
  *   bun artifacts/speaking-portfolio-expanded/build-talk.ts adaptive-systems
  *   bun artifacts/speaking-portfolio-expanded/build-talk.ts dynamic-scaling
  *
- * Outline grammar (see outlines/*-40min.md):
+ * Outline grammar (see talks/<slug>/outline-40min.md):
  *   # Title
  *   Subtitle paragraph.
  *   ...front matter paragraphs...
  *   ## N. Slide heading
  *   MM:SS to MM:SS · pacing
- *   ![alt](../../../public/talks/assets/<topic>/file.svg)   optional diagram
+ *   ![alt](../../../../public/talks/assets/<topic>/file.svg)   optional diagram
  *   > visible line                                        one or more
  *   spoken paragraphs
  *   Story: prompt for a first-hand example                optional
  *   Stage direction: what to do, not say                  optional
  */
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, posix } from "node:path";
 
 type Slide = {
   n: number;
@@ -197,75 +197,35 @@ export const TALKS: Record<string, Talk> = {
 },
   "judgment": {
   "slug": "judgment",
-  "title": "Code Is Cheap. Judgment Is Expensive.",
-  "description": "Protect review capacity by changing arrivals, variance, and utilization.",
+  "title": "Turn Your Thinkin' Tokens Up to 11",
+  "description": "What to ship, to whom, and when, now that building it is the cheap part.",
   "deckFile": "judgment.html",
-  "eyebrow": "Code Is Cheap. Judgment Is Expensive. · Dan Levy",
+  "eyebrow": "Turn Your Thinkin' Tokens Up to 11 \u00b7 Dan Levy",
   "routes": {
     "30": {
       "minutes": 30.0,
-      "keep": [
-        1,
-        2,
-        3,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10,
-        12,
-        13,
-        14
-      ],
-      "times": [
-        3,
-        2,
-        3,
-        2,
-        2,
-        2,
-        2,
-        4,
-        2.5,
-        2.5,
-        2,
-        3
-      ],
+      "keep": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14],
+      "times": [2.5, 2, 2.5, 2.5, 2, 2.5, 2.5, 3.5, 2, 3, 3, 2],
       "bridges": {
-        "3": "Bridge: speeding only generation leaves review as the unchanged stage. Improve what arrives there.",
-        "10": "Bridge: writing the branch is cheap; deciding the permission boundary is still conceptual work."
+        "10": "Bridge: serving many live versions costs a versioned runtime and a semi-persistent sandbox per user. Privacy improves, patching gets worse, and under Hyrum's law every live version is a live contract, including the behaviors you consider bugs. Pick the number of supported versions on purpose and give it an expiry.",
+        "12": "Bridge: a configured fleet breaks support's first question, your documentation screenshots and your A/B baseline, and somebody still owns the default a new user gets before they have a neighbor. Distribution concentrates, defaults win, and curating the shared profiles becomes the job."
       },
-      "note": "Drops Amdahl and Brooks as standalone slides; the permissions block is four minutes. The rubber stamp keeps four minutes."
+      "trim": { "2": [0, 1], "5": [0, 2], "8": [0, 1, 2, 4], "9": [0, 2], "10": [0, 1, 2] },
+      "note": "Drops the architecture bill and the configured-fleet slide; both ride in bridges. The exercise keeps its full sixty seconds and the arithmetic keeps 3:30."
     },
     "15": {
       "minutes": 15.0,
-      "keep": [
-        1,
-        3,
-        6,
-        7,
-        9,
-        12,
-        14
-      ],
-      "times": [
-        1.5,
-        2.5,
-        1.5,
-        1.5,
-        3.5,
-        2.5,
-        2
-      ],
+      "keep": [1, 4, 5, 8, 10, 12, 14],
+      "times": [2, 1.75, 1.75, 3.25, 2.5, 2.25, 1.5],
       "bridges": {
-        "1": "Bridge: distinguish hands-on review from waiting to start it.",
-        "3": "Bridge: improve the process producing the queue. Start with the request before the code exists. Thirty seconds in pairs: what does the ticket leave unanswered?",
-        "7": "Bridge: review also teaches the system; a green test cannot replace understanding.",
-        "9": "Bridge: give the reviewer authority to stop work, enough context, and time to recover it."
+        "1": "Bridge: scope, once \u2014 the arithmetic ahead is counting, not a measurement of your team. Ninety days is forty-six of your deploys and four of her sessions, and between two visits she meets twenty-one changes at once.",
+        "5": "Bridge: the release decision has five axes, not one \u2014 what, who, when, batched or rolling, and reversible. Every one of them commits somebody outside this room.",
+        "8": "Bridge: the machine is good at the search half. Cluster four thousand support threads, find the accounts in the cohort you are about to change, notice that your release week is the week support is at a conference. It proposes; you sequence.",
+        "10": "Bridge: many live versions cost a versioned runtime and a sandbox per user. Privacy improves, patching gets worse, and under Hyrum's law every live version is a live contract, including the behaviors you call bugs.",
+        "12": "Bridge: a configured fleet breaks support's first question, your screenshots and your A/B baseline, and somebody still owns the default a new user gets. Distribution concentrates, defaults win, and curating shared profiles becomes the job."
       },
-      "trim": { "6": [0, 2, 3] },
-      "note": "Introduce the permission request before its criteria. Pairs get 30 seconds; the demo gets 3:30."
+      "trim": { "1": [0, 1, 2], "4": [0, 1], "5": [0, 2], "8": [0, 1, 2, 4], "10": [0, 1], "12": [0, 1] },
+      "note": "Lightning route: the cost of change, the plan-space arithmetic, then both predictions. The pair exercise is cut; its questions ride in the slide-5 bridge."
     }
   }
 },
@@ -593,8 +553,11 @@ export const fmt = (min: number) => {
 const minutesLabel = (min: number) => (Number.isInteger(min) ? `${min} minutes` : `${min} minutes`);
 const mdLinks = (s: string) =>
   esc(s).replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_m, t, u) => `<a href="${u}">${t}</a>`);
-const forScript = (s: string) => s.replace(/\]\(\.\.\//g, "](../../");
-const forDeck = (s: string) => s.replace(/\]\(\.\.\//g, "](../speaking-portfolio-expanded/");
+const forScript = (s: string) => s;
+/** Outline links are relative to talks/<slug>/; decks are served from public/talks/. */
+const deckLinks = (slug: string) => (s: string) =>
+  s.replace(/\]\((?![a-z][a-z0-9+.-]*:|\/|#)([^)\s]+)\)/gi, (_m, href) =>
+    `](${posix.relative("public/talks", posix.join("artifacts/speaking-portfolio-expanded/talks", slug, href))})`);
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#x27;");
 
@@ -636,7 +599,7 @@ export function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
   out.push(`# ${talk.title}: ${route.minutes}-minute adaptation`);
   out.push("");
   out.push(
-    `Keep slides ${route.keep.join(", ")}. Hide the others in presenter preparation. [Complete talk track](../packets/${talk.slug}/script-${route.minutes}min.md).`,
+    `Keep slides ${route.keep.join(", ")}. Hide the others in presenter preparation. [Complete talk track](script-${route.minutes}min.md).`,
   );
   out.push("", "| Time | Slide | Beat |", "| --- | --- | --- |");
   let t = 0;
@@ -650,6 +613,7 @@ export function adaptationFor(talk: Talk, slides: Slide[], route: Route) {
 }
 
 export function deckFor(talk: Talk, slides: Slide[]) {
+  const forDeck = deckLinks(talk.slug);
   const head = readFileSync(join(templateDir, "engineering-head.html"), "utf8")
     .replace("<title>", '<link rel="icon" href="data:,"><title>')
     .replace("{{DESCRIPTION}}", esc(talk.description))
@@ -657,7 +621,7 @@ export function deckFor(talk: Talk, slides: Slide[]) {
     .replace('data-topic="adaptive-systems"', `data-topic="${talk.slug}"`)
     .replace('body[data-topic="adaptive-systems"] { --accent:#a4d2c4; --bg:#122323; }', `body[data-topic="adaptive-systems"] { --accent:#a4d2c4; --bg:#122323; }
 body[data-topic="dynamic-scaling"] { --accent:#efb45f; --bg:#161d26; }\nbody[data-topic="evidence-learning"] { --accent:#efb15b; --bg:#151e28; }\nbody[data-topic="free-tier"] { --accent:#efb15b; --bg:#151e28; }`);
-  const evidence = `https://github.com/justsml/dans-blog/blob/main/artifacts/speaking-portfolio-expanded/packets/${talk.slug}/evidence-bank.md`;
+  const evidence = `https://github.com/justsml/dans-blog/blob/main/artifacts/speaking-portfolio-expanded/talks/${talk.slug}/evidence-bank.md`;
   const sections = slides.map((s, i) => {
     const timing = toSec(s.end) - toSec(s.start);
     const mins = timing / 60;
@@ -708,7 +672,7 @@ if (!talk) {
   console.error(`Unknown talk. Choose one of: ${Object.keys(TALKS).join(", ")}`);
   process.exit(1);
 }
-const outline = readFileSync(join(root, "outlines", `${slug}-40min.md`), "utf8");
+const outline = readFileSync(join(root, "talks", slug, "outline-40min.md"), "utf8");
 const { slides } = parseOutline(outline);
 
 // sanity: contiguous timings summing to 40 minutes
@@ -731,7 +695,7 @@ for (const key of [30, 15] as const) {
   }
 }
 
-const packet = join(root, "packets", slug);
+const packet = join(root, "talks", slug);
 mkdirSync(packet, { recursive: true });
 const all = slides.map((s) => s.n);
 const allTimes = slides.map((s) => (toSec(s.end) - toSec(s.start)) / 60);
@@ -739,7 +703,7 @@ writeFileSync(join(packet, "script-40min.md"), scriptFor(talk, slides, all, allT
 for (const key of [30, 15] as const) {
   const r = talk.routes[key];
   writeFileSync(join(packet, `script-${key}min.md`), scriptFor(talk, slides, r.keep, r.times, r.bridges, r.trim, r.minutes, r.note));
-  writeFileSync(join(root, "outlines", `${slug}-${key}min-adaptation.md`), adaptationFor(talk, slides, r));
+  writeFileSync(join(root, "talks", slug, `adaptation-${key}min.md`), adaptationFor(talk, slides, r));
 }
 writeFileSync(join(revealDir, talk.deckFile), deckFor(talk, slides));
 console.log(`${slug}: ${slides.length} slides, scripts 40/30/15, adaptations 30/15, deck ${talk.deckFile}`);

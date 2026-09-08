@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Engineering leaders, founders, platform teams, FinOps practitioners, and technical product managers.
 - Thesis: Expose assumptions tied to today’s AI pricing and evaluate cost per successful outcome, price sensitivity, and dependencies before making durable commitments.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/economics-product/CFP.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/free-tier/CFP.md)
 
 ## Search focus
 

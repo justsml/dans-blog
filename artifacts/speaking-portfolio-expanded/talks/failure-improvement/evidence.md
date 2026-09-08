@@ -11,7 +11,7 @@ Revised 2026-09-06 for the fail-to-win-loop arc. The loop's ordering (logs, enri
 
 ## Claims that need a Story line or get softened
 
-- **E2E cost savings from selective test runs.** The outline makes no measured cost claim; slide 10 says only that cheap selection must be compared against the full suite on retained changes. Do not add a number unless [evidence bank candidate 2](../../packets/failure-improvement/evidence-bank.md) is filled with a measured comparison.
+- **E2E cost savings from selective test runs.** The outline makes no measured cost claim; slide 10 says only that cheap selection must be compared against the full suite on retained changes. Do not add a number unless [evidence bank candidate 2](evidence-bank.md) is filled with a measured comparison.
 - **Cheap models handle short multi-step tool calls.** No model names are spoken. Name only models you have run on this workload, and give the observed cost per session or none at all.
 - **Agent-opened PRs merging.** Say "into a review queue," not "merged automatically," unless candidate 1 or 4 supplies a merged example.
 - **Proactive notices and credits.** Described as what the loop can do. Do not imply a deployed system issued credits.

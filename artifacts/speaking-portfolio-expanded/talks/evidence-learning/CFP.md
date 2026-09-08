@@ -6,7 +6,7 @@ The education portfolio is **one 40-minute talk and one 15-minute route**, not t
 
 ## Show Me the Misconception
 
-**Format:** 15 minutes, 6 sections, no demo kit. A route under Outsmart; the full text is in [procurement-route.md](../packets/evidence-learning/procurement-route.md).
+**Format:** 15 minutes, 6 sections, no demo kit. A route under Outsmart; the full text is in [procurement-route.md](procurement-route.md).
 
 ### 50-word abstract
 

@@ -1,6 +1,6 @@
 # Charm Is Not a Currency
 
-5 min · lightning · parent: [Stop Looking at My Benchmarks](../outlines/benchmarks-40min.md), slides 2, 3, 5, 6, 12, 13
+5 min · lightning · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/outline-40min.md), slides 2, 3, 5, 6, 12, 13
 
 Average "right account," "authorized action" and "friendly tone" into one score and the model learns that charm is a currency.
 

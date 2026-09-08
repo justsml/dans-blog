@@ -114,7 +114,7 @@ Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-
 
 18:00 to 21:30 · build
 
-![Twenty for Twenty, One in Seven](../../../public/talks/assets/benchmarks/bound.svg)
+![Twenty for Twenty, One in Seven](../../../../public/talks/assets/benchmarks/bound.svg)
 
 > Zero failures in 20 independent representative trials
 > 95% upper bound: 3 / 20 ≈ 15%; exact 13.9%

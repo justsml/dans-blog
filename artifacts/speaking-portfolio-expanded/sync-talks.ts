@@ -25,7 +25,7 @@ const syncBlock=(p:string,block:string)=>{
 };
 for(const slug of slugs){
  const talk=TALKS[slug];if(!talk)throw Error(`Unknown talk: ${slug}`);
- const file=join(root,'outlines',`${slug}-40min.md`);protect(file);
+ const file=join(root,'talks',slug,'outline-40min.md');protect(file);
  const raw=readFileSync(file,'utf8'), parsed=parseOutline(raw);
  const blocks=raw.split(/^## \d+\. /m).slice(1);
  const slides=parsed.slides.map((s,i)=>({...s,raw:blocks[i]}));
@@ -55,13 +55,13 @@ for(const slug of slugs){
  }
  const appendices=[];
  if(slug==='adaptive-systems'){
-  const p=join(root,'packets',slug,'memory-pattern.md');protect(p);appendices.push({path:p,text:readFileSync(p,'utf8')});
+  const p=join(root,'talks',slug,'memory-pattern.md');protect(p);appendices.push({path:p,text:readFileSync(p,'utf8')});
  }
  records.push({slug,title:parsed.title,description:talk.description,source:file,sourceHash:hash(file),front:parsed.front,slides,variants,media,appendices});
 }
 writeFileSync(join(build,'talks.json'),JSON.stringify(records,null,2));
-const priorExports=existsSync(join(root,'decks','exports.json'))?JSON.parse(readFileSync(join(root,'decks','exports.json'),'utf8')):[];
-const result=Bun.spawnSync(['python3',join(root,'tools/export_pptx.py'),join(build,'talks.json'),join(root,'decks')],{stdout:'inherit',stderr:'inherit'});
+const priorExports=existsSync(join(root,'talks','exports.json'))?JSON.parse(readFileSync(join(root,'talks','exports.json'),'utf8')):[];
+const result=Bun.spawnSync(['python3',join(root,'tools/export_pptx.py'),join(build,'talks.json'),join(root,'talks')],{stdout:'inherit',stderr:'inherit'});
 if(result.exitCode)throw Error('PowerPoint export failed');
 for(const [p,digest] of Object.entries(protectedInputs))if(hash(p)!==digest)throw Error(`Reference changed during export: ${p}; rerun this talk.`);
 writeFileSync(join(build,'protected-inputs.json'),JSON.stringify(protectedInputs,null,2));
@@ -73,29 +73,29 @@ const mergeBySlug=<T extends {slug:string}>(prior:T[],fresh:T[],key:(t:T)=>strin
  return [...byKey.values()].sort((a,b)=>order.indexOf(a.slug)-order.indexOf(b.slug)||key(a).localeCompare(key(b)));
 };
 const readJson=(p:string,fallback:any)=>existsSync(p)?JSON.parse(readFileSync(p,'utf8')):fallback;
-const priorInputs=readJson(join(root,'decks','sync-inputs.json'),{talks:[],inputs:{}});
+const priorInputs=readJson(join(root,'talks','sync-inputs.json'),{talks:[],inputs:{}});
 const syncInputs={
  talks:mergeBySlug(priorInputs.talks||[],records.map(r=>({slug:r.slug,source:r.source.replace(repo+'/',''),sha256:r.sourceHash})),t=>t.slug),
  inputs:{...(priorInputs.inputs||{}),...Object.fromEntries(Object.entries(protectedInputs).map(([p,h])=>[p.replace(repo+'/',''),h]))},
 };
-writeFileSync(join(root,'decks','sync-inputs.json'),JSON.stringify(syncInputs,null,2)+'\n');
-const editions=(slug:string)=>`| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |\n| ---: | --- | --- | --- | --- |\n${[15,30,40].map(m=>`| ${m} min | [Open](../../../../public/talks/${slug}-${m}min.html) | [Download](../../decks/${slug}-${m}min-screen.pptx) | [Download](../../decks/${slug}-${m}min-handout.pptx) | [Script](script-${m}min.md) |`).join('\n')}`;
+writeFileSync(join(root,'talks','sync-inputs.json'),JSON.stringify(syncInputs,null,2)+'\n');
+const editions=(slug:string)=>`| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |\n| ---: | --- | --- | --- | --- |\n${[15,30,40].map(m=>`| ${m} min | [Open](../../../../public/talks/${slug}-${m}min.html) | [Download](${slug}-${m}min-screen.pptx) | [Download](${slug}-${m}min-handout.pptx) | [Script](script-${m}min.md) |`).join('\n')}`;
 for(const talk of records){
- const dir=join(root,'packets',talk.slug);
- syncBlock(join(dir,'formats.md'),`# Synchronized editions\n\nGenerated from [the current 40-minute outline](../../outlines/${talk.slug}-40min.md).\n\n${editions(talk.slug)}`);
+ const dir=join(root,'talks',talk.slug);
+ syncBlock(join(dir,'formats.md'),`# Synchronized editions\n\nGenerated from [the current 40-minute outline](outline-40min.md).\n\n${editions(talk.slug)}`);
  if(!existsSync(join(dir,'packet.md')))
-  write(join(dir,'packet.md'),`# ${talk.title}\n\nThis packet indexes the current source-preserving editions. The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](../../outlines/${talk.slug}-40min.md).\n\n${editions(talk.slug)}\n`);
+  write(join(dir,'packet.md'),`# ${talk.title}\n\nThis packet indexes the current source-preserving editions. The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](outline-40min.md).\n\n${editions(talk.slug)}\n`);
 }
-const manifest=mergeBySlug(priorExports,JSON.parse(readFileSync(join(root,'decks','exports.json'),'utf8')),(e:any)=>e.file);
-writeFileSync(join(root,'decks','exports.json'),JSON.stringify(manifest,null,2)+'\n');
-const rowFor=(slug:string,title:string,slides:number)=>`| ${title} | ${slides} | ${[15,30,40].map(m=>`[${m} screen](${slug}-${m}min-screen.pptx) · [${m} handout](${slug}-${m}min-handout.pptx)`).join('<br>')} | [Outline](../outlines/${slug}-40min.md) |`;
+const manifest=mergeBySlug(priorExports,JSON.parse(readFileSync(join(root,'talks','exports.json'),'utf8')),(e:any)=>e.file);
+writeFileSync(join(root,'talks','exports.json'),JSON.stringify(manifest,null,2)+'\n');
+const rowFor=(slug:string,title:string,slides:number)=>`| ${title} | ${slides} | ${[15,30,40].map(m=>`[${m} screen](${slug}/${slug}-${m}min-screen.pptx) · [${m} handout](${slug}/${slug}-${m}min-handout.pptx)`).join('<br>')} | [Outline](${slug}/outline-40min.md) |`;
 /** Source slides, not exported PPTX slides: count the outline's `## N.` headings for talks not in this run. */
 const slideCount=(slug:string)=>{
  const fresh=records.find(r=>r.slug===slug); if(fresh)return fresh.slides.length;
- const outline=join(root,'outlines',`${slug}-40min.md`);
+ const outline=join(root,'talks',slug,'outline-40min.md');
  return existsSync(outline)?(readFileSync(outline,'utf8').match(/^## \d+\. /gm)||[]).length:0;
 };
 const deckRows=Object.keys(TALKS).filter(slug=>manifest.some((e:any)=>e.slug===slug))
  .map(slug=>rowFor(slug,TALKS[slug].title,slideCount(slug))).join('\n');
-write(join(root,'decks','README.md'),`# Current PowerPoint editions\n\nThese ${manifest.length} PowerPoint files are generated from the current canonical outlines. Screen editions contain succinct projected slides with full source notes. Handout editions retain the source wording in a reading layout.\n\n| Talk | Source slides | Downloads | Canonical source |\n| --- | ---: | --- | --- |\n${deckRows}\n\nRegenerate all sibling formats with \`bun artifacts/speaking-portfolio-expanded/sync-talks.ts\`. The source hashes used for the last export are recorded in [sync-inputs.json](sync-inputs.json).\n`);
+write(join(root,'talks','README.md'),`# Talks\n\nOne directory per talk. Each holds its canonical \`outline-40min.md\`, the generated \`adaptation-{15,30}min.md\` and \`script-{15,30,40}min.md\`, its \`bullets.md\`, \`packet.md\`, \`formats.md\`, \`CFP.md\`, hand-written evidence and fixtures, and its six PowerPoint editions (${manifest.length} across the portfolio). Edit the outline; everything else is regenerated.\n\nScreen editions contain succinct projected slides with full source notes. Handout editions retain the source wording in a reading layout.\n\n| Talk | Source slides | Downloads | Canonical source |\n| --- | ---: | --- | --- |\n${deckRows}\n\nRegenerate all sibling formats with \`bun artifacts/speaking-portfolio-expanded/sync-talks.ts\`. Bullet sheets come from \`bullets.ts\`; see [bullets-index.md](bullets-index.md). The source hashes used for the last export are recorded in [sync-inputs.json](sync-inputs.json). Retired talks live in [../retired/](../retired/).\n`);
 console.log(`Export data and review files: ${build}`);

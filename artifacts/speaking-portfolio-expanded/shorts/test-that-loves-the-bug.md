@@ -1,6 +1,6 @@
 # The Test Who Loved Me
 
-2 min · video · parent: [Code Is Cheap. Judgment Is Expensive.](../outlines/judgment-40min.md), slide 9
+2 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slide 9, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/outline-40min.md) on 7 September 2026. The fixture travels with the short.
 
 Two confident artifacts, identically wrong, and a green check between them.
 
@@ -35,4 +35,4 @@ Bainbridge (1983), Ironies of automation, Automatica 19(6). Skitka, Mosier and B
 
 ## Demo
 
-`bun artifacts/speaking-portfolio-expanded/packets/judgment/demo.ts` for PASS, then `--holdout` for the failing assertion.
+`bun artifacts/speaking-portfolio-expanded/shorts/fixtures/rubber-stamp.ts` for PASS, then `--holdout` for the failing assertion.

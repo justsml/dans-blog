@@ -16,4 +16,4 @@ The assistant with every customer record and tools that can email, refund, delet
 - Specify tool risk classes, cross-system boundaries, and per-job compute requests before widening automatic authority.
 - Add working and observational memory to one agent, check generated work against prior outcomes, and distinguish successful execution from verified correctness.
 
-Audience: application and platform engineers. 15 slides, 40 minutes including a five-minute paper walkthrough; 15 and 30 minute routes available. The agent generator is the speaker's working prototype. [Full submission packet](../../packets/adaptive-systems/packet.md).
+Audience: application and platform engineers. 15 slides, 40 minutes including a five-minute paper walkthrough; 15 and 30 minute routes available. The agent generator is the speaker's working prototype. [Full submission packet](packet.md).

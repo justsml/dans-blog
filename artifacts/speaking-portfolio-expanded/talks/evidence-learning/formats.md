@@ -1,28 +1,28 @@
 <!-- BEGIN GENERATED EDITIONS -->
 # Synchronized editions
 
-Generated from [the current 40-minute outline](../../outlines/evidence-learning-40min.md).
+Generated from [the current 40-minute outline](outline-40min.md).
 
 | Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
 | ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/evidence-learning-15min.html) | [Download](../../decks/evidence-learning-15min-screen.pptx) | [Download](../../decks/evidence-learning-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/evidence-learning-30min.html) | [Download](../../decks/evidence-learning-30min-screen.pptx) | [Download](../../decks/evidence-learning-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/evidence-learning-40min.html) | [Download](../../decks/evidence-learning-40min-screen.pptx) | [Download](../../decks/evidence-learning-40min-handout.pptx) | [Script](script-40min.md) |
+| 15 min | [Open](../../../../public/talks/evidence-learning-15min.html) | [Download](evidence-learning-15min-screen.pptx) | [Download](evidence-learning-15min-handout.pptx) | [Script](script-15min.md) |
+| 30 min | [Open](../../../../public/talks/evidence-learning-30min.html) | [Download](evidence-learning-30min-screen.pptx) | [Download](evidence-learning-30min-handout.pptx) | [Script](script-30min.md) |
+| 40 min | [Open](../../../../public/talks/evidence-learning-40min.html) | [Download](evidence-learning-40min-screen.pptx) | [Download](evidence-learning-40min-handout.pptx) | [Script](script-40min.md) |
 <!-- END GENERATED EDITIONS -->
 
 # Formats: Outsmart Your Lying, Cheating Students
 
-The 14-slide [browser deck](../../../../public/talks/evidence-learning.html) follows the [40-minute outline](../../outlines/evidence-learning-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
+The 14-slide [browser deck](../../../../public/talks/evidence-learning.html) follows the [40-minute outline](outline-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |
 | 5 to 7 minutes | Lightning script below; slides 1, 4, 5, 7, 14 |
 | 5 to 10 minute live demo | AI Tinkerers format, below |
-| 15 minutes | [Script](script-15min.md) and [route](../../outlines/evidence-learning-15min-adaptation.md) |
+| 15 minutes | [Script](script-15min.md) and [route](adaptation-15min.md) |
 | 15 minutes, procurement or administrator room | [Show Me the Misconception](procurement-route.md), hand-written; no kit |
 | 26 minutes | 30-minute route with slides 10 and 11 dropped |
-| 30 minutes | [Script](script-30min.md) and [route](../../outlines/evidence-learning-30min-adaptation.md) |
-| 40 minutes | [Script](script-40min.md) and [outline](../../outlines/evidence-learning-40min.md) |
+| 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
+| 40 minutes | [Script](script-40min.md) and [outline](outline-40min.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |
