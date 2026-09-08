@@ -1,6 +1,6 @@
 # Five-minute paper walkthrough: restart the batch
 
-Slide 11. Paper trace, no provider calls. Five minutes on the 40-minute route; on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the spot reclaim. Ask the room for each transition before revealing it. Arithmetic comes from the $2 ledger in contracts.md.
+Slide 10. Paper trace, no provider calls. Five minutes on the 40-minute route; on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the spot reclaim. Ask the room for each transition before revealing it. Arithmetic comes from the $2 ledger in contracts.md.
 
 | Time | Event | Ask | Expected behavior |
 | --- | --- | --- | --- |
@@ -10,7 +10,7 @@ Slide 11. Paper trace, no provider calls. Five minutes on the 40-minute route; o
 | 3:00 to 4:00 | One provider response never arrives | Is a missing local result a failed generation? | No; keep it unresolved, query the saved provider ID, do not resubmit |
 | 4:00 to 5:00 | All outputs stored; email fails | Which operation is retried? | Notification only; the customer sees per-item state and delivery status |
 
-## Candidate review exercise, slide 12
+## Candidate review exercise, slide 13
 
 Invented candidates with stipulated findings. Every candidate fails at least one gate; that is the exercise. The room finds the failure before you reveal it.
 

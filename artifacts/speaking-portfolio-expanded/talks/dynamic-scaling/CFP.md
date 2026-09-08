@@ -2,11 +2,11 @@
 
 ## Short abstract (50 words)
 
-Four legitimate callers launch forty image jobs for a customer who bought ten. Every local limit passed. This talk fixes the accounting, then shows the inversion that makes it urgent: agents that describe their own compute and ask for it, on sandboxes and spot capacity that live minutes, inside a per-customer budget.
+Four legitimate callers launch forty image jobs for a customer who bought ten. Every local limit passed. Now the same orchestrator can ask for its own compute: sandboxes and spot capacity that live minutes, inside a per-customer budget. This talk shows the inversion first, then builds the ledger that makes it safe.
 
 ## Standard abstract (100 words)
 
-Scaling used to be an infra decision made once for everyone. Agentic workloads invert it: the job can say it is waiting on a provider, needs a GPU for ninety seconds, or wants a sandbox, and ask for exactly that. This talk follows an image batch through hidden fan-out, shared admission, a $2 ledger, a reclaimed spot worker and a lost response, then shows compute as something the orchestrator requests inside a catalog and a lease. We survey the ephemeral substrate (Fly.io Sprites, Depot, Modal, Vast.ai, Cloudflare Durable Objects, EC2 Spot), then treat parallel generation and cheap multi-model judging as the last scaling axis.
+Scaling used to be an infra decision made once for everyone. Agentic workloads invert it: the job says it is waiting on a provider, needs a GPU for ninety seconds, or wants a sandbox, and asks for exactly that, resolved against a catalog into a lease with a teardown. The substrate already exists (Fly.io Sprites, Depot, Modal, Vast.ai, Cloudflare Durable Objects, EC2 Spot); what none of it ships is the ledger. We build one: hidden fan-out, shared admission, a $2 reservation ledger, a job that survives a reclaimed spot worker and a lost response. Then the third axis: the barrel-of-monkeys maneuver and a Council of Guards that reports disagreement.
 
 ## Outcomes
 

@@ -4,7 +4,7 @@ The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/READ
 
 | Slot | Preparation |
 | --- | --- |
-| 5 minutes | Lightning script below; slides 1, 4, 7, 8, 14 |
+| 5 minutes | Lightning script below; slides 1, 2, 3, 6, 14 |
 | 10 minutes | Lightning script plus the walkthrough in demo.md |
 | 15 minutes | [Script](script-15min.md) and [route](adaptation-15min.md) |
 | 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
@@ -17,11 +17,11 @@ The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/READ
 
 0:00 to 1:00, slide 1. A customer asks for ten images. A chat turn, a crashed worker's retry, a nightly cron and a second browser tab each call the batch tool. Every local limit passes. The provider renders forty. We put the limit on the wrong unit of work.
 
-1:00 to 2:00, slide 4. A prompt that says only run one expensive tool is guidance, not a lock. Every dispatch crosses one shared admission controller that reserves entitlement and spend atomically, enforces provider limits, and queues or rejects what does not fit.
+1:00 to 2:15, slide 2. Now the inversion. The orchestrator asks for compute the way it asks for a tool: eight sandboxes, six minutes, this region, this cap. The scheduler resolves it against a catalog and a tenant budget and returns a lease with a teardown. Per-job economics, no idle fleet, and least privilege for free: six minutes, three domains, one credential. The agent chooses; it does not grant.
 
-2:00 to 3:15, slide 7. Now the inversion. The orchestrator asks for compute the way it asks for a tool: eight sandboxes, six minutes, this region, this cap. The scheduler resolves it against a catalog and a tenant budget and returns a lease with a teardown. Per-job economics, no idle fleet, and least privilege for free: six minutes, three domains, one credential. The agent chooses; it does not grant.
+2:15 to 3:15, slide 3. The substrate exists. Fly.io Sprites create isolated VMs in seconds with egress set from outside. Depot bills sandboxes per second. Modal scales GPUs to zero; Vast.ai rents spare ones cheaply. Cloudflare Durable Objects hold the state that survives everything else being torn down. EC2 Spot is the old version of the idea. None of them ship the ledger. That is still yours.
 
-3:15 to 4:15, slide 8. The substrate exists. Fly.io Sprites create isolated VMs in seconds with egress set from outside. Depot bills sandboxes per second. Modal scales GPUs to zero; Vast.ai rents spare ones cheaply. Cloudflare Durable Objects hold the state that survives everything else being torn down. EC2 Spot is the old version of the idea. None of them ship the ledger. That is still yours.
+3:15 to 4:15, slide 6. A prompt that says only run one expensive tool is guidance, not a lock. Every dispatch crosses one shared admission controller that reserves entitlement and spend atomically, enforces provider limits, and queues or rejects what does not fit.
 
 4:15 to 5:00, slide 14. Inspect one expensive tool in your system. Count the work it can launch underneath itself. Put the limit where that work begins.
 

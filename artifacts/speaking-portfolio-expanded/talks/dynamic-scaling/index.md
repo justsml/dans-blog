@@ -1,10 +1,18 @@
-# Dynamic Scaling of Agentic Workloads: 40-minute presenter script
+# Dynamic Scaling of Agentic Workloads
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
+Agents now direct their own compute. Put the limits where the work begins.
 
-## 00:00 to 02:00: slide 1, Four callers, forty images, one customer
+Rewritten 2026-09-06 from Dan's notes; arc rebuilt 2026-09-07. 40 minutes, 14 slides, four audience moments, no Q&A. Add five minutes for a 45-minute booking. Job counts and prices are fixtures; the vendors on slide 3 are real and were checked on 2026-09-06. Say the scope once, on slide 1.
 
-On screen:
+The arc in three acts: the inversion (slides 1 to 4, the new thing and its real substrate), the ledger (slides 5 to 10, everything the lease is enforced against, paid off by the walkthrough), and the third axis (slides 11 to 13, attempts, with Amdahl as the brake before the barrel and the council). Slide 14 lands.
+
+[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Walkthrough](demo.md) · [Evidence](evidence-bank.md)
+
+## 1. Four callers, forty images, one customer
+
+00:00 to 02:00 · warm
+
+![Each of four batch-tool calls starts ten jobs: 4 × 10 = 40, before retries.](../../../../public/talks/assets/dynamic-scaling/01-four-calls-hide-forty-provider-jobs.svg)
 
 > A chat turn, a retry, a cron job, a second tab
 > Each legal. Each ten images.
@@ -18,11 +26,13 @@ That is the whole talk in one multiplication. The agentic part is what comes nex
 
 Story: The fan-out you found on a bill before you found it in a dashboard.
 
-Delivery: Let the room multiply before you show forty. Then ask which component knew the customer's entitlement. Silence is the answer.
+Stage direction: Let the room multiply before you show forty. Then ask which component knew the customer's entitlement. Silence is the answer.
 
-## 02:00 to 06:00: slide 2, Infra Is a Tool Call
+## 2. Infra Is a Tool Call
 
-On screen:
+02:00 to 06:00 · peak
+
+![The job requests shape, size, duration and a cost cap; the scheduler resolves it against a catalog and tenant budget and returns a lease.](../../../../public/talks/assets/dynamic-scaling/07-infra-as-an-agent-capability.svg)
 
 > `replicas: 12`, decided by ops in 2023, for everyone
 > `{ shape: provider-wait, n: 8, ttl: 6m, cap: $1.50 }`, decided by the job, at job start
@@ -38,11 +48,13 @@ What you risk is obvious. An agent that can provision is an agent that can spend
 
 Story: The moment an agent-sized request would have replaced a capacity-planning meeting.
 
-Delivery: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
+Stage direction: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
 
-## 06:00 to 09:00: slide 3, Torn Down by Default
+## 3. Torn Down by Default
 
-On screen:
+06:00 to 09:00 · steady
+
+![Sandboxes, serverless GPUs, durable edge state and spot capacity, all created in seconds and torn down by default.](../../../../public/talks/assets/dynamic-scaling/08-the-ephemeral-ecosystem.svg)
 
 > Sandboxes: Fly.io Sprites, Depot
 > Serverless compute and GPUs: Modal, Vast.ai
@@ -55,11 +67,11 @@ Modal gives you functions and GPUs that scale to zero; Vast.ai is a marketplace 
 
 The common thread: create in seconds, pay per second, torn down unless someone says otherwise, and the network narrowed from the outside. That is the substrate an agent-directed scheduler needs. What none of them give you is the ledger; that is still yours.
 
-Delivery: Ask who runs agent code on something with a lifetime under an hour. Then ask who has an egress policy on it.
+Stage direction: Ask who runs agent code on something with a lifetime under an hour. Then ask who has an egress policy on it.
 
-## 09:00 to 11:00: slide 4, Fifty Containers Don't Render Faster
+## 4. Fifty Containers Don't Render Faster
 
-On screen:
+09:00 to 11:00 · steady
 
 > Waiting on a provider → durable step, not a GPU
 > CPU or GPU work → compute worker, spot if restartable
@@ -69,11 +81,13 @@ If the provider is rendering the image, you are waiting on the network. Fifty co
 
 These combine. The decision that matters is where execution happens and where recovery state lives; get those two right and the vendor list is a detail. Where execution happens, you just saw. Where the money and the state live is the next eleven minutes, and it starts by counting.
 
-Delivery: Place a local graph solver, a remote image request and an agent-written script into their classes.
+Stage direction: Place a local graph solver, a remote image request and an agent-written script into their classes.
 
-## 11:00 to 13:00: slide 5, Count items and attempts, not tool slots
+## 5. Count items and attempts, not tool slots
 
-On screen:
+11:00 to 13:00 · steady
+
+![One retry per item can turn 40 logical items into 80 provider attempts.](../../../../public/talks/assets/dynamic-scaling/03-count-items-and-attempts-separately.svg)
 
 > Agent slots ≠ tool batch size ≠ provider attempts ≠ entitlement
 
@@ -81,11 +95,13 @@ Back to the forty. It is worse. A runtime's concurrency limit counts tool calls.
 
 Record logical items and external attempts separately. A retry is another attempt at an item, not a new entitlement. And read the batch tool's actual contract: maximum batch size, resource estimate, cancellation behavior, what a partial result looks like.
 
-Delivery: Draw four callers, ten children, one retry layer. Count to eighty out loud.
+Stage direction: Draw four callers, ten children, one retry layer. Count to eighty out loud.
 
-## 13:00 to 15:30: slide 6, Put admission below every caller
+## 6. Put admission below every caller
 
-On screen:
+13:00 to 15:30 · build
+
+![One coordinated reservation protects tenant spend and entitlement across all callers.](../../../../public/talks/assets/dynamic-scaling/04-every-caller-crosses-shared-admission.svg)
 
 > Reserve before dispatch
 > Share tenant and provider limits
@@ -95,11 +111,13 @@ A prompt that says only run one expensive tool is guidance. It is not a lock. Th
 
 So every external dispatch crosses one shared admission controller. It atomically checks tenant entitlement, budget, provider concurrency, rate and deadline, then reserves. If the request does not fit, it queues or returns an explicit rejection. A process-local semaphore only works when that process owns all the work, and in an agentic system it never does.
 
-Delivery: Walk two simultaneous callers in contracts.md. Read-balance-then-write loses; atomic reservation admits one.
+Stage direction: Walk two simultaneous callers in contracts.md. Read-balance-then-write loses; atomic reservation admits one.
 
-## 15:30 to 17:30: slide 7, Money, concurrency and rate are three limits
+## 7. Money, concurrency and rate are three limits
 
-On screen:
+15:30 to 17:30 · steady
+
+![Illustrative $2 run cap: settled + reserved ≤ $2. Prices here are invented fixture values.](../../../../public/talks/assets/dynamic-scaling/05-reservations-and-charges-share-one-ceiling.svg)
 
 > Concurrency ≠ requests per minute ≠ dollars
 > Reserved ≠ charged. Cancelled ≠ refunded.
@@ -109,11 +127,13 @@ You can satisfy any one of these and blow the other two. Reserve a defensible ma
 
 There is a real trade here. Reserve the full retry allowance up front and a second legitimate caller gets queued behind money that may never be spent. Reserve lazily and you can overshoot. Pick a tightness on purpose and write it down.
 
-Delivery: Use the $2 ledger in contracts.md. Show settled plus reserved never passing $2, then ask what the second caller should have seen.
+Stage direction: Use the $2 ledger in contracts.md. Show settled plus reserved never passing $2, then ask what the second caller should have seen.
 
-## 17:30 to 20:00: slide 8, A durable job survives the caller
+## 8. A durable job survives the caller
 
-On screen:
+17:30 to 20:00 · build
+
+![Persist intent and provider identity; uncertain acceptance goes to reconciliation, not blind replay.](../../../../public/talks/assets/dynamic-scaling/08-a-job-survives-the-caller.svg)
 
 > queued → submitted → waiting → completed / failed / unresolved
 > Callbacks: authenticate, deduplicate, valid transitions only
@@ -123,11 +143,13 @@ Accept ten prompts, return a stable job ID, persist item IDs, provider IDs, rese
 
 Callbacks arrive twice and out of order; authenticate, deduplicate, apply only valid transitions. A restart rebuilds pending work from storage, not from replaying the conversation. And when the output is stored, enqueue the notification through an outbox so an email failure never regenerates an image. Naming something durable does not make an in-flight promise survive a lifecycle transition; the recovery protocol is yours to write.
 
-Delivery: Draw the state machine in contracts.md. Crash after submission and before the provider ID is saved. Discuss unresolved.
+Stage direction: Draw the state machine in contracts.md. Crash after submission and before the provider ID is saved. Discuss unresolved.
 
-## 20:00 to 22:00: slide 9, Adapt pressure inside a fixed ceiling
+## 9. Adapt pressure inside a fixed ceiling
 
-On screen:
+20:00 to 22:00 · steady
+
+![The scheduler reduces admission after throttling; every increase remains inside the approved maximum.](../../../../public/talks/assets/dynamic-scaling/06-adapt-pressure-within-a-fixed-limit.svg)
 
 > Throttled → wait and reduce
 > Healthy window → cautious increase
@@ -137,11 +159,11 @@ An agent can propose that a batch of ten becomes five after the provider starts 
 
 When the deadline arrives, stop new work and report completed, pending and unresolved separately. The user needs an accurate result, not a cheerful completion message over a pile of missing images. That is every rule. Now run them all at once.
 
-Delivery: Walk ten to five, then a cautious recovery that never exceeds the original ceiling.
+Stage direction: Walk ten to five, then a cautious recovery that never exceeds the original ceiling.
 
-## 22:00 to 27:00: slide 10, Walkthrough: restart the batch
+## 10. Walkthrough: restart the batch
 
-On screen:
+22:00 to 27:00 · peak
 
 > Two callers, one entitlement
 > Spot instance reclaimed mid-batch
@@ -153,11 +175,11 @@ A new worker reloads the job, checks provider status for every submitted item, a
 
 One job, a recoverable lifecycle, honest accounting, and a compute substrate that was allowed to disappear under it. That is the abstraction the batch tool owed us.
 
-Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
+Stage direction: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
-## 27:00 to 29:30: slide 11, Ten Workers Buy You Five
+## 11. Ten Workers Buy You Five
 
-On screen:
+27:00 to 29:30 · steady
 
 > Serial tenth: ten workers → 5.26×, a hundred → 9.17×
 > Latency: dispatch + queue + slowest branch + merge + verify
@@ -171,11 +193,13 @@ Measure accepted outcomes, not launched workers. We are trying to buy useful wor
 
 Source: Amdahl (1967), Validity of the single processor approach to achieving large scale computing capabilities, AFIPS Conference Proceedings 30, 483 to 485.
 
-Delivery: Do the division on stage. Let the room shout five before you reveal 5.26.
+Stage direction: Do the division on stage. Let the room shout five before you reveal 5.26.
 
-## 29:30 to 33:00: slide 12, The Barrel-of-Monkeys Maneuver
+## 12. The Barrel-of-Monkeys Maneuver
 
-On screen:
+29:30 to 33:00 · build
+
+![Cheap parallel generation produces candidates; shared gates reject before preference; cheap multi-model judges report disagreement rather than an average score.](../../../../public/talks/assets/dynamic-scaling/12-monkeys-then-guards.svg)
 
 > Somebody will cite Knight and Leveson. Cite it first.
 > Race · Synthesize · Rank · Catch
@@ -191,11 +215,11 @@ Speculative optimization in a lab coat? Possibly. Ship it with an env var that s
 
 Source: Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109. Cited to set aside: it is a result about redundancy as a correctness strategy, which this slide does not claim.
 
-Delivery: Ask the room which of the four reasons their last fan-out was for. Most will not know. That is the point of naming them.
+Stage direction: Ask the room which of the four reasons their last fan-out was for. Most will not know. That is the point of naming them.
 
-## 33:00 to 37:30: slide 13, Council of Guards
+## 13. Council of Guards
 
-On screen:
+33:00 to 37:30 · peak
 
 > A judge reads a thousand tokens and writes fifty
 > Five judges, different models. Report the disagreement, not the average.
@@ -207,11 +231,11 @@ Write the gates before you read the candidates: no duplicate dispatch after rest
 
 None of this looks like the engineering we were raised on. Do not do the work twice. Do not spend compute speculatively. One right answer per ticket. Those were axioms when the expensive thing was the engineer. When the expensive thing is being wrong and a second draft costs cents, doing it three times and reading what disagrees is the frugal move. I am not a shill for Big Token. Cheaper, safer and faster now sometimes come from spending exactly where yesterday's wisdom told you not to.
 
-Delivery: Score the three candidates in demo.md. Have the room find each candidate's failed gate before revealing it. Then show the council split per candidate: high agreement on the minimalist's failure, low overlap on the maintainer's, and ask which one deserves the human's afternoon.
+Stage direction: Score the three candidates in demo.md. Have the room find each candidate's failed gate before revealing it. Then show the council split per candidate: high agreement on the minimalist's failure, low overlap on the maintainer's, and ask which one deserves the human's afternoon.
 
-## 37:30 to 40:00: slide 14, Put the limit where the work begins
+## 14. Put the limit where the work begins
 
-On screen:
+37:30 to 40:00 · land
 
 > One ledger across every caller
 > Durable state across every restart
@@ -223,4 +247,4 @@ The inversion is real: the workload can now describe its own shape and ask for i
 
 Inspect one expensive tool in your system. Count the work it can launch underneath itself. Put the limit where that work actually begins.
 
-Delivery: Close on the multiplication and the shared admission line. Do not add a vendor. Stop talking.
+Stage direction: Close on the multiplication and the shared admission line. Do not add a vendor. Stop talking.

@@ -1,8 +1,8 @@
 # Dynamic Scaling of Agentic Workloads: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 7, 8, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 6 and 9 are cut with bridges. Keep the spot-interruption event in the walkthrough. Slide 12 needs the full five minutes: it carries Knight and Leveson cited-to-set-aside, both named techniques, the env-var hedge and the axiom-breaking close. Drop its opening setup sentence, never the hedge.
+Use slides 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
 
-## 00:00 to 01:30: slide 1, Four callers, forty images, one customer
+## 00:00 to 02:00: slide 1, Four callers, forty images, one customer
 
 On screen:
 
@@ -14,89 +14,33 @@ A customer asks for ten images. Four things happen within a minute, and every on
 
 Four callers, ten images each. Every local limit passed. The provider is rendering forty. Your dashboard proudly reports four tool calls. We put the limit on the wrong unit of work.
 
-That is the whole talk in one multiplication. The agentic part is what comes next: the same system that hid the fan-out can also ask for its own compute, and we have to decide what that is allowed to mean. Numbers here are fixtures; the vendors later are real.
+That is the whole talk in one multiplication. The agentic part is what comes next: the same system that hid the fan-out can now ask for its own compute, and we have to decide what that is allowed to mean. Numbers here are fixtures; the vendors later are real.
 
 Story: The fan-out you found on a bill before you found it in a dashboard.
 
 Delivery: Let the room multiply before you show forty. Then ask which component knew the customer's entitlement. Silence is the answer.
 
-## 01:30 to 04:00: slide 2, Horizontal, vertical, and now self-directed
+## 02:00 to 05:30: slide 2, Infra Is a Tool Call
 
 On screen:
 
-> Horizontal: more boxes, decided by ops
-> Vertical: bigger box, decided by ops
-> Self-directed: the job describes its shape and asks
+> `replicas: 12`, decided by ops in 2023, for everyone
+> `{ shape: provider-wait, n: 8, ttl: 6m, cap: $1.50 }`, decided by the job, at job start
+> Resolve: catalog, tenant budget, lease with a teardown
 
-For twenty years scaling was an infra question answered once for everyone. Add replicas or buy a bigger box, then let an autoscaler watch CPU and guess. The workload never got a say.
-
-Agentic workloads do. The orchestrator knows this batch is mostly waiting on a provider, that this one needs a GPU for ninety seconds, that this one is untrusted code and wants a sandbox. It can say so, per job, at the moment the job starts.
-
-Three decisions stay separate. Tasks: split the work. Attempts: try several complete answers. Placement: choose where it runs. A model can propose all three cheaply now; it does not repeal the dependency graph, and it does not get to repeal the budget.
-
-Delivery: Classify an image batch, a route-optimization run, three competing designs and a region move. Note that an LLM can schedule a solver without doing the arithmetic.
-
-## 04:00 to 05:30: slide 3, Count items and attempts, not tool slots
-
-On screen:
-
-> Agent slots ≠ tool batch size ≠ provider attempts ≠ entitlement
-
-A runtime's concurrency limit counts tool calls. A batch tool multiplies each one. A retry layer multiplies again. Forty logical items become eighty provider attempts when every item gets one retry, and the visible count still says four.
-
-Record logical items and external attempts separately. A retry is another attempt at an item, not a new entitlement. And read the batch tool's actual contract: maximum batch size, resource estimate, cancellation behavior, what a partial result looks like.
-
-Delivery: Draw four callers, ten children, one retry layer. Count to eighty out loud.
-
-## 05:30 to 08:00: slide 4, Put admission below every caller
-
-On screen:
-
-> Reserve before dispatch
-> Share tenant and provider limits
-> Queue or reject what does not fit
-
-A prompt that says only run one expensive tool is guidance. It is not a lock. The chat turn, the retry, the cron job and the second tab arrive at once, and none of them can see the others.
-
-So every external dispatch crosses one shared admission controller. It atomically checks tenant entitlement, budget, provider concurrency, rate and deadline, then reserves. If the request does not fit, it queues or returns an explicit rejection. A process-local semaphore only works when that process owns all the work, and in an agentic system it never does.
-
-Delivery: Walk two simultaneous callers in contracts.md. Read-balance-then-write loses; atomic reservation admits one.
-
-## 08:00 to 09:30: slide 5, Money, concurrency and rate are three limits
-
-On screen:
-
-> Concurrency ≠ requests per minute ≠ dollars
-> Reserved ≠ charged. Cancelled ≠ refunded.
-> Pessimistic reservations refuse real work; choose your tightness
-
-You can satisfy any one of these and blow the other two. Reserve a defensible maximum per operation, reconcile against the bill when the answer arrives, and keep unresolved provider jobs charged until you know. A worker lease expiring proves the worker died, not that the remote render stopped.
-
-There is a real trade here. Reserve the full retry allowance up front and a second legitimate caller gets queued behind money that may never be spent. Reserve lazily and you can overshoot. Pick a tightness on purpose and write it down.
-
-Delivery: Use the $2 ledger in contracts.md. Show settled plus reserved never passing $2, then ask what the second caller should have seen.
-
-Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt.
-
-## 09:30 to 12:00: slide 7, Infra Is a Tool Call
-
-On screen:
-
-> Request: shape, size, duration, region, cost cap
-> Resolve: catalog, tenant budget, lease
-> Pay per job. No idle fleet. Least privilege for free.
+For twenty years scaling was an infra question answered once for everyone. Add replicas or buy a bigger box, then let an autoscaler watch CPU and guess. The workload never got a say. Now it does. The orchestrator knows this batch is mostly waiting on a provider, that this one needs a GPU for ninety seconds, that this one is untrusted code and wants a sandbox, and it knows at the moment the job starts.
 
 Here is the part that is actually new. The orchestrator asks for compute the way it asks for a tool. Eight sandboxes for six minutes, this region, this cost cap. The scheduler resolves that against a catalog of approved classes and the tenant's budget, and returns a lease with a teardown.
 
 What you get is per-job economics. A customer can buy a faster turnaround. Finance can cap one workflow instead of one environment. Nobody pays for a warm fleet sized for the worst Tuesday of the year. And least privilege stops being a project: an instance that lives six minutes, reaches three domains, and holds one scoped credential is hard to abuse even when the agent inside it is confused.
 
-What you risk is obvious. An agent that can provision is an agent that can spend. The catalog, the lease and the teardown are the answer, and they are enforced outside the model. The agent chooses; it does not grant.
+What you risk is obvious. An agent that can provision is an agent that can spend. The catalog, the lease and the teardown are the answer, and they are enforced outside the model. The agent chooses; it does not grant. Everything the lease is enforced against is still yours to build, and that is the middle of this talk. First, proof that the substrate exists.
 
 Story: The moment an agent-sized request would have replaced a capacity-planning meeting.
 
 Delivery: Contrast one autoscaler threshold with one job request. Ask which one you could put on an invoice.
 
-## 12:00 to 14:30: slide 8, Torn Down by Default
+## 05:30 to 08:30: slide 3, Torn Down by Default
 
 On screen:
 
@@ -113,9 +57,49 @@ The common thread: create in seconds, pay per second, torn down unless someone s
 
 Delivery: Ask who runs agent code on something with a lifetime under an hour. Then ask who has an egress policy on it.
 
-Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU.
+Bridge: match the execution class to the work; waiting on a provider needs a durable step, not a GPU. Where the money and the state live starts by counting.
 
-## 14:30 to 17:00: slide 10, A durable job survives the caller
+## 08:30 to 10:00: slide 5, Count items and attempts, not tool slots
+
+On screen:
+
+> Agent slots ≠ tool batch size ≠ provider attempts ≠ entitlement
+
+Back to the forty. It is worse. A runtime's concurrency limit counts tool calls. A batch tool multiplies each one. A retry layer multiplies again. Forty logical items become eighty provider attempts when every item gets one retry, and the visible count still says four.
+
+Record logical items and external attempts separately. A retry is another attempt at an item, not a new entitlement. And read the batch tool's actual contract: maximum batch size, resource estimate, cancellation behavior, what a partial result looks like.
+
+Delivery: Draw four callers, ten children, one retry layer. Count to eighty out loud.
+
+## 10:00 to 12:00: slide 6, Put admission below every caller
+
+On screen:
+
+> Reserve before dispatch
+> Share tenant and provider limits
+> Queue or reject what does not fit
+
+A prompt that says only run one expensive tool is guidance. It is not a lock. The chat turn, the retry, the cron job and the second tab arrive at once, and none of them can see the others.
+
+So every external dispatch crosses one shared admission controller. It atomically checks tenant entitlement, budget, provider concurrency, rate and deadline, then reserves. If the request does not fit, it queues or returns an explicit rejection. A process-local semaphore only works when that process owns all the work, and in an agentic system it never does.
+
+Delivery: Walk two simultaneous callers in contracts.md. Read-balance-then-write loses; atomic reservation admits one.
+
+## 12:00 to 13:30: slide 7, Money, concurrency and rate are three limits
+
+On screen:
+
+> Concurrency ≠ requests per minute ≠ dollars
+> Reserved ≠ charged. Cancelled ≠ refunded.
+> Pessimistic reservations refuse real work; choose your tightness
+
+You can satisfy any one of these and blow the other two. Reserve a defensible maximum per operation, reconcile against the bill when the answer arrives, and keep unresolved provider jobs charged until you know. A worker lease expiring proves the worker died, not that the remote render stopped.
+
+There is a real trade here. Reserve the full retry allowance up front and a second legitimate caller gets queued behind money that may never be spent. Reserve lazily and you can overshoot. Pick a tightness on purpose and write it down.
+
+Delivery: Use the $2 ledger in contracts.md. Show settled plus reserved never passing $2, then ask what the second caller should have seen.
+
+## 13:30 to 15:30: slide 8, A durable job survives the caller
 
 On screen:
 
@@ -129,7 +113,9 @@ Callbacks arrive twice and out of order; authenticate, deduplicate, apply only v
 
 Delivery: Draw the state machine in contracts.md. Crash after submission and before the provider ID is saved. Discuss unresolved.
 
-## 17:00 to 20:00: slide 11, Walkthrough: restart the batch
+Bridge: a scheduler can lower pressure after throttling without ever raising the ceiling; that policy is deterministic code, not a prompt. Now run every rule at once.
+
+## 15:30 to 19:00: slide 10, Walkthrough: restart the batch
 
 On screen:
 
@@ -145,19 +131,49 @@ One job, a recoverable lifecycle, honest accounting, and a compute substrate tha
 
 Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
-## 20:00 to 25:00: slide 12, Monkeys, Then Guards
+## 19:00 to 21:00: slide 11, Ten Workers Buy You Five
 
 On screen:
 
-> Barrel of monkeys: lead with cheap parallel generation, on purpose
-> Council of Guards: judges read a thousand tokens and write fifty; measure the disagreement
-> Gates before preferences; the judge may reject everyone
+> Serial tenth: ten workers → 5.26×, a hundred → 9.17×
+> Latency: dispatch + queue + slowest branch + merge + verify
+> Cost: every candidate, every retry, every held reservation, review time
 
-Somebody is going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven programmers, one specification, a million tests, and the independently written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. Not this. I am not voting three models toward the truth.
+Starting three workers does not delete the serial parts. That is Amdahl, 1967: if a tenth of the job is serial, ten workers get you five and a quarter times, and a hundred workers get you nine. Waiting on every branch can make a finished task slower. Count the whole thing: all candidates, failed work, reserved uncertainty, judging and human review, and compare against one competent attempt on the same task set.
+
+Measure accepted outcomes, not launched workers. We are trying to buy useful work, not maximize the number of things blinking. Amdahl prices speed. The third axis buys something else.
+
+Source: Amdahl (1967), Validity of the single processor approach to achieving large scale computing capabilities, AFIPS Conference Proceedings 30, 483 to 485.
+
+Delivery: Do the division on stage. Let the room shout five before you reveal 5.26.
+
+## 21:00 to 24:30: slide 12, The Barrel-of-Monkeys Maneuver
+
+On screen:
+
+> Somebody will cite Knight and Leveson. Cite it first.
+> Race · Synthesize · Rank · Catch
+> Fan-out is one node with an env var; the next stage handles the barrel
+
+Change the unit of work from images to whole designs. Same batch API, three competing designs, from three cheap models with three different priorities.
+
+Somebody is going to cite Knight and Leveson at me, so let me do it first. 1986, twenty-seven programmers, one specification, a million tests, and the separately written versions failed together far more than independence predicts. True, important, and about N-version programming as a correctness strategy. Not this. I am not voting three models toward the truth.
 
 The generation side has a name I am not sorry about: the barrel-of-monkeys maneuver. Lead with cheap parallel generation on purpose — monkeys at a hundredth of the frontier's price — and hand the barrel to the next stage. Four reasons. Race: take the first draft that passes the gate. Synthesize: a frontier model reads them all, input tokens being the cheap ones, and writes one coherent output. Rank: more candidates for the judges, so the best whole answer goes downstream. Catch: in law or medicine, where the rules are extensive and specific, the mistake you fear shows up in one output out of ten, and the only way to see it is to have ten.
 
-Speculative optimization in a lab coat? Possibly. Ship it with an env var that sets fan-out to one, and ideally let the system tune that knob itself. Right? Right. That is the companion talk.
+Speculative optimization in a lab coat? Possibly. Ship it with an env var that sets fan-out to one, and ideally let the system tune that knob itself. Right? Right. That is the companion talk. Something still has to handle the barrel.
+
+Source: Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109. Cited to set aside: it is a result about redundancy as a correctness strategy, which this slide does not claim.
+
+Delivery: Ask the room which of the four reasons their last fan-out was for. Most will not know. That is the point of naming them.
+
+## 24:30 to 28:00: slide 13, Council of Guards
+
+On screen:
+
+> A judge reads a thousand tokens and writes fifty
+> Five judges, different models. Report the disagreement, not the average.
+> Gates before preferences; the council may reject the room
 
 The cheap half is judging. A judge reads a thousand tokens and writes fifty, and output is what costs, so five judges from different models on every candidate is affordable. Not the average score. The disagreement. Judges that split, or whose reasons barely overlap, have found territory nobody understands; that candidate does not ship on autopilot. I call this the Council of Guards: it reads everything, writes almost nothing, and costs a fraction of what it guards.
 
@@ -165,27 +181,9 @@ Write the gates before you read the candidates: no duplicate dispatch after rest
 
 None of this looks like the engineering we were raised on. Do not do the work twice. Do not spend compute speculatively. One right answer per ticket. Those were axioms when the expensive thing was the engineer. When the expensive thing is being wrong and a second draft costs cents, doing it three times and reading what disagrees is the frugal move. I am not a shill for Big Token. Cheaper, safer and faster now sometimes come from spending exactly where yesterday's wisdom told you not to.
 
-Source: Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109. Cited to set aside: it is a result about redundancy as a correctness strategy, which this slide does not claim.
-
 Delivery: Score the three candidates in demo.md. Have the room find each candidate's failed gate before revealing it. Then show the council split per candidate: high agreement on the minimalist's failure, low overlap on the maintainer's, and ask which one deserves the human's afternoon.
 
-## 25:00 to 27:30: slide 13, Measure the accepted outcome
-
-On screen:
-
-> Latency: dispatch + queue + slowest branch + merge + verify
-> Cost: every candidate, every retry, every held reservation, review time
-> Compare against one competent attempt
-
-Starting three workers does not delete the serial parts. That is Amdahl, 1967, and it is unkind: if a tenth of the job is serial, ten workers get you five and a quarter times, and a hundred workers get you nine. Waiting on every branch can make a finished task slower. Count the whole thing: all candidates, failed work, reserved uncertainty, judging and human review, and compare against one competent attempt on the same task set.
-
-Measure accepted outcomes, not launched workers. Start with one extra attempt or one batch boundary; if it does not buy quality, time or cost, keep the simpler path. We are trying to buy useful work, not maximize the number of things blinking.
-
-Source: Amdahl (1967), Validity of the single processor approach to achieving large scale computing capabilities, AFIPS Conference Proceedings 30, 483 to 485.
-
-Delivery: Ninety seconds: choose a baseline, a cap and an acceptance gate. Keep latency and total cost as separate numbers.
-
-## 27:30 to 30:00: slide 14, Put the limit where the work begins
+## 28:00 to 30:00: slide 14, Put the limit where the work begins
 
 On screen:
 
@@ -199,4 +197,4 @@ The inversion is real: the workload can now describe its own shape and ask for i
 
 Inspect one expensive tool in your system. Count the work it can launch underneath itself. Put the limit where that work actually begins.
 
-Delivery: Close on the multiplication and the shared admission line. Do not add a vendor.
+Delivery: Close on the multiplication and the shared admission line. Do not add a vendor. Stop talking.

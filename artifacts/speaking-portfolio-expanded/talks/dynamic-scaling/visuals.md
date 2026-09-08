@@ -5,17 +5,18 @@ Matches the 14-slide outline. Diagrams are editable SVG in `public/talks/assets/
 | Slide | Visual |
 | --- | --- |
 | 1 | [Four calls hide forty provider jobs](../../../../public/talks/assets/dynamic-scaling/01-four-calls-hide-forty-provider-jobs.svg) |
-| 2 | [Horizontal, vertical, self-directed](../../../../public/talks/assets/dynamic-scaling/02-horizontal-vertical-self-directed.svg) |
-| 3 | [Count items and attempts separately](../../../../public/talks/assets/dynamic-scaling/03-count-items-and-attempts-separately.svg) |
-| 4 | [Every caller crosses shared admission](../../../../public/talks/assets/dynamic-scaling/04-every-caller-crosses-shared-admission.svg) |
-| 5 | [Reservations and charges share one ceiling](../../../../public/talks/assets/dynamic-scaling/05-reservations-and-charges-share-one-ceiling.svg) |
-| 6 | [Adapt pressure within a fixed limit](../../../../public/talks/assets/dynamic-scaling/06-adapt-pressure-within-a-fixed-limit.svg) |
-| 7 | [Infra as an agent capability](../../../../public/talks/assets/dynamic-scaling/07-infra-as-an-agent-capability.svg) |
-| 8 | [The ephemeral ecosystem](../../../../public/talks/assets/dynamic-scaling/08-the-ephemeral-ecosystem.svg) |
-| 9 | Typography: execution classes |
-| 10 | [A job survives the caller](../../../../public/talks/assets/dynamic-scaling/08-a-job-survives-the-caller.svg) |
-| 11 | Typography: walkthrough beats |
+| 2 | [Infra as an agent capability](../../../../public/talks/assets/dynamic-scaling/07-infra-as-an-agent-capability.svg) |
+| 3 | [The ephemeral ecosystem](../../../../public/talks/assets/dynamic-scaling/08-the-ephemeral-ecosystem.svg) |
+| 4 | Typography: execution classes |
+| 5 | [Count items and attempts separately](../../../../public/talks/assets/dynamic-scaling/03-count-items-and-attempts-separately.svg) |
+| 6 | [Every caller crosses shared admission](../../../../public/talks/assets/dynamic-scaling/04-every-caller-crosses-shared-admission.svg) |
+| 7 | [Reservations and charges share one ceiling](../../../../public/talks/assets/dynamic-scaling/05-reservations-and-charges-share-one-ceiling.svg) |
+| 8 | [A job survives the caller](../../../../public/talks/assets/dynamic-scaling/08-a-job-survives-the-caller.svg) |
+| 9 | [Adapt pressure within a fixed limit](../../../../public/talks/assets/dynamic-scaling/06-adapt-pressure-within-a-fixed-limit.svg) |
+| 10 | Typography: walkthrough beats |
+| 11 | Typography: Amdahl arithmetic |
 | 12 | [Monkeys, then guards](../../../../public/talks/assets/dynamic-scaling/12-monkeys-then-guards.svg) |
-| 13 to 14 | Typography |
+| 13 | Typography: the council, the gates, the candidate table |
+| 14 | Typography |
 
-The synthesis diagram (13-synthesis-must-pass-the-gates-again.svg) is retained in assets for the workshop but no longer has a slide. File numbers on reused assets reflect their original positions.
+The synthesis diagram (13-synthesis-must-pass-the-gates-again.svg) and the scaling taxonomy (02-horizontal-vertical-self-directed.svg) are retained in assets for the workshop but no longer have slides; the taxonomy folded into slide 2 on 2026-09-07. File numbers on reused assets reflect their original positions, not the current order.

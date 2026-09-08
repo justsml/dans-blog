@@ -10,19 +10,19 @@
 
 ## Short abstract (50 words)
 
-Four legitimate callers launch forty image jobs for a customer who bought ten. Every local limit passed. This talk fixes the accounting, then shows the inversion that makes it urgent: agents that describe their own compute and ask for it, on sandboxes and spot capacity that live minutes, inside a per-customer budget.
+Four legitimate callers launch forty image jobs for a customer who bought ten. Every local limit passed. Now the same orchestrator can ask for its own compute: sandboxes and spot capacity that live minutes, inside a per-customer budget. This talk shows the inversion first, then builds the ledger that makes it safe.
 
 ## Standard abstract (100 words)
 
-Scaling used to be an infra decision made once for everyone. Agentic workloads invert it: the job can say it is waiting on a provider, needs a GPU for ninety seconds, or wants a sandbox, and ask for exactly that. This talk follows an image batch through hidden fan-out, shared admission, a $2 ledger, a reclaimed spot worker and a lost response, then shows compute as something the orchestrator requests inside a catalog and a lease. We survey the ephemeral substrate (Fly.io Sprites, Depot, Modal, Vast.ai, Cloudflare Durable Objects, EC2 Spot), treat parallel attempts as a scaling axis, and measure the accepted outcome.
+Scaling used to be an infra decision made once for everyone. Agentic workloads invert it: the job says it is waiting on a provider, needs a GPU for ninety seconds, or wants a sandbox, and asks for exactly that, resolved against a catalog into a lease with a teardown. The substrate already exists (Fly.io Sprites, Depot, Modal, Vast.ai, Cloudflare Durable Objects, EC2 Spot); what none of it ships is the ledger. We build one: hidden fan-out, shared admission, a $2 reservation ledger, a job that survives a reclaimed spot worker and a lost response. Then the third scaling axis, attempts, with gates before preferences.
 
-## Extended abstract (205 words)
+## Extended abstract (230 words)
 
-Scaling used to be an infra decision made once for everyone: add replicas, buy a bigger box, let an autoscaler watch CPU. Agentic workloads invert it. The orchestrator knows the shape of each job at the moment it starts and can ask for compute the way it asks for a tool, inside a per-customer cost cap.
+Scaling used to be an infra decision made once for everyone: add replicas, buy a bigger box, let an autoscaler watch CPU. Agentic workloads invert it. The orchestrator knows the shape of each job at the moment it starts and can ask for compute the way it asks for a tool: shape, size, duration, region and a cost cap, resolved against a catalog into a lease with a teardown. Least privilege stops being a project when the box lives six minutes and reaches three domains. The substrate that already works this way is real (Fly.io Sprites, Depot sandboxes, Modal, Vast.ai, Cloudflare Workers and Durable Objects, EC2 Spot). None of it ships the ledger.
 
-The worked example is an image batch. Four legitimate callers (a chat turn, a retry, a cron job, a second browser tab) launch forty provider jobs for a customer who bought ten. We put admission below every caller, separate money from concurrency from rate, walk a $2 ledger with its reservation-tightness trade, and persist the job so it survives a reclaimed spot worker and a lost response without resubmitting.
+So the middle of the talk builds one, around a worked example. Four legitimate callers (a chat turn, a retry, a cron job, a second browser tab) launch forty provider jobs for a customer who bought ten. We put admission below every caller, separate money from concurrency from rate, walk a $2 ledger with its reservation-tightness trade, and persist the job so it survives a reclaimed spot worker and a lost response without resubmitting.
 
-Then the inversion: a compute request with shape, size, duration and cap, resolved against a catalog into a lease with a teardown. Least privilege stops being a project when the box lives six minutes and reaches three domains. We survey the substrate that already works this way (Fly.io Sprites, Depot sandboxes, Modal, Vast.ai, Cloudflare Workers and Durable Objects, EC2 Spot), then treat parallel design attempts as one more axis with gates before preferences. Close on measuring the accepted outcome against one competent attempt.
+Then the third scaling axis, attempts. Amdahl prices speed and is unkind about it; the barrel-of-monkeys maneuver buys something else, and a Council of Guards of cheap multi-model judges reports disagreement rather than an average. Close where the talk began: put the limit where the work begins.
 
 ## Learning outcomes
 
