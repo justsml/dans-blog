@@ -6,7 +6,7 @@ Rewritten 2026-09-06 from Dan's notes. 40 minutes, 15 slides, four audience mome
 
 [Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Memory pattern and prompt](memory-pattern.md) · [Walkthrough](demo.md) · [Evidence](evidence-bank.md)
 
-Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts adaptive-systems`.
+
 
 ## 1. The vendor renamed a field
 

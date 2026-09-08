@@ -1,8 +1,8 @@
 # Stop Looking at My Benchmarks… Get Your Own!
 
-This packet indexes the current source-preserving editions. The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](outline-40min.md).
+This packet indexes the talk's editions. Presenter scripts: [15 min](script-15min.md), [30 min](script-30min.md), [40 min](script-40min.md). The canonical wording, notes, citations, and slide structure live in [the 40-minute outline](outline-40min.md).
 
-Browser decks, PowerPoints and presenter scripts for all three lengths are listed in [formats.md](formats.md), which `sync-talks.ts` regenerates. This file is not regenerated, so the links live there rather than being copied here.
+Presenter scripts for all three lengths are listed in [formats.md](formats.md).
 
 | File | What it holds |
 | --- | --- |

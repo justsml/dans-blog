@@ -1,6 +1,6 @@
 # Stage demonstration: the winning treatment fails the product
 
-Both demonstrations run offline in the portfolio demo kit. They use fixed, synthetic fixtures and deterministic rules. Nothing is sent to customers or providers. The presenter must call them simulations before revealing results.
+Both demonstrations use fixed, synthetic fixtures and deterministic rules. Nothing is sent to customers or providers. The presenter must call them simulations before revealing results.
 
 **Duration:** 5:00 in the 30- and 40-minute routes; 3:30 in the 15-minute route. Full-deck slide 11 in every route. Start on the slide showing only A/B/C activation; open the kit after the vote. The kit’s answer-labelled controls must not be visible first.
 

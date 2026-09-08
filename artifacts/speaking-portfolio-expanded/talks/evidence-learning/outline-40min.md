@@ -8,7 +8,7 @@ Rewritten 2026-09-06 from Dan's dictated notes. 40 minutes, 14 slides, four audi
 
 Worked example: $100, up 20%, then down 20%. The smudged arithmetic sheet is the K-12 example. [Show Me the Misconception](procurement-route.md), the 15-minute procurement route, uses the history-essay example instead, so a program can book both without hearing the percentage fixture twice.
 
-Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts evidence-learning`. Image prompts (dark slate, one amber accent, flat vector, no text) ride along in the notes for the PPTX export.
+ Image prompts (dark slate, one amber accent, flat vector, no text) ride along in the notes for the PPTX export.
 
 ## 1. The cat is out of the bag
 

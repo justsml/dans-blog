@@ -1,18 +1,6 @@
-<!-- BEGIN GENERATED EDITIONS -->
-# Synchronized editions
-
-Generated from [the current 40-minute outline](outline-40min.md).
-
-| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
-| ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/free-tier-15min.html) | [Download](free-tier-15min-screen.pptx) | [Download](free-tier-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/free-tier-30min.html) | [Download](free-tier-30min-screen.pptx) | [Download](free-tier-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/free-tier-40min.html) | [Download](free-tier-40min-screen.pptx) | [Download](free-tier-40min-handout.pptx) | [Script](script-40min.md) |
-<!-- END GENERATED EDITIONS -->
-
 # Formats: Buy Me a Free Tier
 
-The 15-slide [browser deck](../../../../public/talks/free-tier.html) follows the [40-minute outline](outline-40min.md). Scripts, adaptations, browser decks, and PowerPoints are generated from the outline by `sync-talks.ts`; edit the outline, then rebuild.
+The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](outline-40min.md). Scripts and adaptations are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |

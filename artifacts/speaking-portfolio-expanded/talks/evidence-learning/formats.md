@@ -1,18 +1,6 @@
-<!-- BEGIN GENERATED EDITIONS -->
-# Synchronized editions
-
-Generated from [the current 40-minute outline](outline-40min.md).
-
-| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
-| ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/evidence-learning-15min.html) | [Download](evidence-learning-15min-screen.pptx) | [Download](evidence-learning-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/evidence-learning-30min.html) | [Download](evidence-learning-30min-screen.pptx) | [Download](evidence-learning-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/evidence-learning-40min.html) | [Download](evidence-learning-40min-screen.pptx) | [Download](evidence-learning-40min-handout.pptx) | [Script](script-40min.md) |
-<!-- END GENERATED EDITIONS -->
-
 # Formats: Outsmart Your Lying, Cheating Students
 
-The 14-slide [browser deck](../../../../public/talks/evidence-learning.html) follows the [40-minute outline](outline-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
+The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](outline-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
 
 | Slot | Preparation |
 | --- | --- |

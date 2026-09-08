@@ -1,18 +1,6 @@
-<!-- BEGIN GENERATED EDITIONS -->
-# Synchronized editions
-
-Generated from [the current 40-minute outline](outline-40min.md).
-
-| Length | Browser | Screen PPTX | Handout PPTX | Presenter script |
-| ---: | --- | --- | --- | --- |
-| 15 min | [Open](../../../../public/talks/failure-improvement-15min.html) | [Download](failure-improvement-15min-screen.pptx) | [Download](failure-improvement-15min-handout.pptx) | [Script](script-15min.md) |
-| 30 min | [Open](../../../../public/talks/failure-improvement-30min.html) | [Download](failure-improvement-30min-screen.pptx) | [Download](failure-improvement-30min-handout.pptx) | [Script](script-30min.md) |
-| 40 min | [Open](../../../../public/talks/failure-improvement-40min.html) | [Download](failure-improvement-40min-screen.pptx) | [Download](failure-improvement-40min-handout.pptx) | [Script](script-40min.md) |
-<!-- END GENERATED EDITIONS -->
-
 # Formats: Automating Improvement From Failure
 
-[Browser deck](../../../../public/talks/failure-improvement.html).
+Browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)).
 
 | Length | Format | Source |
 | --- | --- | --- |

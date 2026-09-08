@@ -1,6 +1,6 @@
 # Talk packet: The Future of Product Engineering
 
-[Browser deck](../../../../public/talks/product-engineering.html) · [Presenter script](script-40min.md)
+Browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) · [Presenter script](script-40min.md)
 
 Outlines: [40 min, canonical](outline-40min.md) · [30 min](adaptation-30min.md) · [15 min](adaptation-15min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 

@@ -16,7 +16,7 @@ For four minutes, show one family and the saved ticket, then execute both tests 
 
 The following kit remains available for workshops. It is not the flagship peak or proof of a working integration.
 
-This demo supports slide 8 only. The talk's spine is the scheduled log-reading loop; the kit illustrates what happens once that loop proposes a fix. Open [the offline stage kit](../../../../public/talks/demos/index.html), select **Failure loop**, and reload before rehearsal. No server or account is required. Keep `demo-logic.js` next to the HTML file. All inputs are synthetic.
+This demo supports slide 8 only. The talk's spine is the scheduled log-reading loop; the demo illustrates what happens once that loop proposes a fix. All inputs are synthetic.
 
 | Clock | Action | Expected output and stage line |
 | --- | --- | --- |
@@ -37,4 +37,3 @@ Read the two errors and ask whether they look like the same incident. Reveal the
 
 ## Validation
 
-The shared kit's Bun tests exercise normalization, unknown failures, and promotion behavior. See [the shared runbook](../../demos/DEMO-RUNBOOK.md). These validate demonstration mechanics, not the effectiveness of any loop described in the talk.

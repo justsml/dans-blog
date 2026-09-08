@@ -1,9 +1,9 @@
-/** Requires the talks server; uses installed Chrome. bun artifacts/speaking-portfolio-expanded/check-talks.ts <slug...> */
+/** Renders every slide of a hand-authored deck (public/decks/<slug>/) and checks overflow, console and network errors, then local Markdown links in changed files. Requires the Astro dev server (bun run dev) and installed Chrome. */
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
-const base = process.env.TALKS_URL || 'http://localhost:4399';
+const base = process.env.TALKS_URL || 'http://localhost:4242';
 const slugs = process.argv.slice(2);
 if (!slugs.length) throw new Error('Pass at least one talk slug');
 const failures: string[] = [];
@@ -15,7 +15,7 @@ try {
     page.on('console', m => { if (m.type() === 'error') failures.push(`${slug}: ${m.text()}`); });
     page.on('requestfailed', r => failures.push(`${slug}: ${r.url()} ${r.failure()?.errorText}`));
     page.on('response', r => { if (r.status() >= 400) failures.push(`${slug}: HTTP ${r.status()} ${r.url()}`); });
-    await page.goto(`${base}/talks/${slug}.html`);
+    await page.goto(`${base}/decks/${slug}/`);
     await page.waitForFunction(() => (window as any).Reveal?.isReady());
     const count = await page.locator('.slides > section').count();
     for (let i = 0; i < count; i++) {
@@ -29,7 +29,7 @@ try {
       await page.waitForTimeout(80);
       const problems = await page.evaluate(() => {
         const slide = document.querySelector('.slides > section.present')!;
-        return [...slide.querySelectorAll('h2,p,span,b,table,img,svg,pre')]
+        return [...slide.querySelectorAll('h1,h2,p,span,b,table,img,svg,pre,div')]
           .filter(el => !el.closest('aside') && (el as HTMLElement).checkVisibility())
           .flatMap(el => {
             const r = el.getBoundingClientRect();

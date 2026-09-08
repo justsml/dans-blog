@@ -4,11 +4,11 @@ What the cheap input taught your architecture to expect.
 
 Rewritten and retitled 2026-09-06 (was "Cry Me a Free Tier"). 40 minutes, 15 slides, four audience moments, no Q&A. Nobody outside a provider knows its margins and this talk never estimates one; the fixture arithmetic is synthetic. Say that once, on slide 1, then argue.
 
-[Presenter scripts](script-40min.md) · [Packet](packet.md) · [Runbook section 4](../../demos/DEMO-RUNBOOK.md#4-cry-me-a-free-tier) · [Kit](../../../../public/talks/demos/index.html) · [Evidence](evidence-bank.md)
+[Presenter scripts](script-40min.md) · [Packet](packet.md) · [Evidence](evidence-bank.md)
 
 The talk hands the room eight words: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, real option. Each one is a thing engineers already feel and cannot name in a budget meeting. Slide 15 lists them back.
 
-Recheck the dated announcements and the credit offer on slide 4 before every delivery. Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts free-tier`.
+Recheck the dated announcements and the credit offer on slide 4 before every delivery.
 
 ## 1. Free electricity for a year
 

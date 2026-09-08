@@ -1,6 +1,6 @@
 # Stage demonstration: what survives the price assumption?
 
-Both demonstrations run offline in the portfolio demo kit. They use fixed, synthetic fixtures and deterministic rules. Nothing is sent to customers or providers. The presenter must call them simulations before revealing results.
+Both demonstrations use fixed, synthetic fixtures and deterministic rules. Nothing is sent to customers or providers. The presenter must call them simulations before revealing results.
 
 **Duration:** 4:00. Use the price sensitivity panel. The 40-minute deck reserves slide 11 for this run.
 

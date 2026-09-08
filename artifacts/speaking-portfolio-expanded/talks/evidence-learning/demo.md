@@ -2,7 +2,7 @@
 
 All fixtures are authored examples. Read the role cards or use a prepared replay; do not present them as a live model evaluation. No student account, internet, paid model, or personal data is required.
 
-Two exercises live here. The **percentage replay** below is slide 7 of Outsmart Your Lying, Cheating Students, and it is also what the [stage kit](../../demos/DEMO-RUNBOOK.md) section 5 runs. The **history-essay cards** are the alternate for [Show Me the Misconception](procurement-route.md), the 15-minute procurement route. A booking that runs both gets one fixture each: the percentage example never runs twice in one program.
+Two exercises live here. The **percentage replay** below is slide 7 of Outsmart Your Lying, Cheating Students. The **history-essay cards** are the alternate for [Show Me the Misconception](procurement-route.md), the 15-minute procurement route. A booking that runs both gets one fixture each: the percentage example never runs twice in one program.
 
 ## Outsmart Your Lying, Cheating Students: four-minute evidence replay
 

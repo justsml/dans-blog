@@ -6,7 +6,7 @@ Rewritten 2026-09-06 from Dan's notes. 40 minutes, 14 slides, four audience mome
 
 [Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Walkthrough](demo.md) · [Evidence](evidence-bank.md)
 
-Regenerate scripts, adaptations and the browser deck with `bun artifacts/speaking-portfolio-expanded/build-talk.ts dynamic-scaling`.
+
 
 ## 1. Four callers, forty images, one customer
 

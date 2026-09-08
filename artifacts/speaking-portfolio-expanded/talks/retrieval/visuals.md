@@ -1,5 +1,5 @@
 # Visual inventory
 
-SVGs are editable source assets. The canonical outline selects them; build-talk.ts embeds them in the browser deck. Other slides use live typography.
+SVGs are editable source assets. They illustrated the retired generated decks and remain available as source material for the hand-authored deck in artifacts/decks.
 
 - [history](../../../../public/talks/assets/retrieval/history.svg)
