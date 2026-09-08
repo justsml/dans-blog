@@ -1,6 +1,6 @@
 # Formats: Outsmart Your Lying, Cheating Students
 
-The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](outline-40min.md). Scripts, adaptations and the deck are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
+The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](index.md). Scripts and adaptations are plain files; edit the outline first, then bring them into line by hand.
 
 | Slot | Preparation |
 | --- | --- |
@@ -10,7 +10,7 @@ The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/READ
 | 15 minutes, procurement or administrator room | [Show Me the Misconception](procurement-route.md), hand-written; no kit |
 | 26 minutes | 30-minute route with slides 10 and 11 dropped |
 | 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
-| 40 minutes | [Script](script-40min.md) and [outline](outline-40min.md) |
+| 40 minutes | [Script](script-40min.md) and [outline](index.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |

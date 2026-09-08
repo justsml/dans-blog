@@ -1,6 +1,6 @@
 # Compute, Please (and a Receipt)
 
-6 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/outline-40min.md), slides 2, 3
+6 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/index.md), slides 2, 3
 
 For twenty years ops guessed a fleet size for everyone. The workload never got a vote. Now it can.
 

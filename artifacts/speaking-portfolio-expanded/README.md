@@ -8,13 +8,13 @@ One directory per talk under [talks/](talks/README.md). Everything for a talk li
 
 ```
 talks/<slug>/
-  outline-40min.md            canonical source; edit this one
+  index.md            canonical source; edit this one
   adaptation-{15,30}min.md    route plans
   script-{15,30,40}min.md     presenter scripts
   bullets.md                  rehearsal sheet
   packet.md  formats.md       submission index and edition table
   CFP.md  evidence-bank.md    submission copy and claim boundaries
-  visuals.md  contracts.md    hand-written companions, fixtures, demos
+  visuals.md  contracts.md    hand-written companions and fixtures
 ```
 
 Shared material stays at this level: [shorts/](shorts/README.md), [reviews/](reviews/README.md), [speaker/](speaker/bio.md), [alternate-angles/](alternate-angles/README.md). Retired talks live in [retired/](retired). Consolidated on 7 September 2026 from the former `outlines/`, `packets/`, `decks/`, `engineering/`, `education/` and `economics-product/` directories.
@@ -27,9 +27,11 @@ Shared material stays at this level: [shorts/](shorts/README.md), [reviews/](rev
 
 ## Submission packets
 
-Each talk's `packet.md` and `formats.md` sit in its own directory. `formats.md` indexes the synchronized editions while retaining any authored lightning, live-demo, and workshop material already present. Existing packet, evidence, contract, walkthrough, and visual-reference content remains in place.
+Each talk's `packet.md` and `formats.md` sit in its own directory. `formats.md` indexes the available talk lengths and workshop material. Existing packet, evidence, contract, worked-example, and visual-reference content remains in place.
 
-The [speaker kit](speaker/bio.md) holds 50/100/200-word bios built from the resume, links, location, and a past-speaking template. The [recording plan](speaker/recording-plan.md) specifies the 25-minute talk to record first and the five-minute live demo that AI Tinkerers routes require.
+The [speaker kit](speaker/bio.md) holds 50/100/200-word bios built from the resume, links, location, and a past-speaking template. The [recording plan](speaker/recording-plan.md) specifies the 25-minute talk to record first.
+
+Runnable supporting code lives outside the blog. [Scaling AI Agents](https://github.com/justsml/scaling-ai-agents) contains the examples behind Dynamic Scaling, Adaptive Systems, and Judgment. The planned `mastra-agent-lab` repository will hold the incident-loop and product-policy examples when they are implemented. Talks may quote a small result or code fragment and link to the relevant repository; they do not depend on an interactive stage kit.
 
 | Talk | Packet | Formats | Evidence bank |
 | --- | --- | --- | --- |
@@ -47,21 +49,21 @@ The [speaker kit](speaker/bio.md) holds 50/100/200-word bios built from the resu
 
 | Talk | Outline | Slides | Deck | CFP package |
 | --- | --- | ---: | --- | --- |
-| Automating Improvement From Failure | [40 min](talks/failure-improvement/outline-40min.md) | 15 | not yet rebuilt | [Failure improvement](talks/failure-improvement/CFP.md) |
-| Adaptive, agentic apps | [40 min](talks/adaptive-systems/outline-40min.md) | 15 | not yet rebuilt | [Adaptive systems](talks/adaptive-systems/CFP.md) |
-| Buy Me a Free Tier | [40 min](talks/free-tier/outline-40min.md) | 15 | not yet rebuilt | [Economics](talks/free-tier/CFP.md) |
-| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](talks/evidence-learning/outline-40min.md) | 14 | not yet rebuilt | [Education](talks/evidence-learning/CFP.md) |
-| Dynamic Scaling of Agentic Workloads | [40 min](talks/dynamic-scaling/outline-40min.md) | 14 | not yet rebuilt | [Dynamic scaling](talks/dynamic-scaling/CFP.md) |
-| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](talks/product-engineering/outline-40min.md) | 17 | not yet rebuilt | [Product engineering](talks/product-engineering/CFP.md) |
-| Three Search Methods in a Fundable Trenchcoat | [40 min](talks/retrieval/outline-40min.md) | 15 | [Deck](../../public/decks/retrieval/index.html) | [Retrieval](talks/retrieval/CFP.md) |
-| Stop Looking at My Benchmarks… Get Your Own! | [40 min](talks/benchmarks/outline-40min.md) | 15 | not yet rebuilt | [Benchmarks](talks/benchmarks/CFP.md) |
-| Turn Your Thinkin' Tokens Up to 11 | [40 min](talks/judgment/outline-40min.md) | 14 | not yet rebuilt | [Judgment](talks/judgment/CFP.md) |
+| Automating Improvement From Failure | [40 min](talks/failure-improvement/index.md) | 15 | not yet rebuilt | [Failure improvement](talks/failure-improvement/CFP.md) |
+| Adaptive, agentic apps | [40 min](talks/adaptive-systems/index.md) | 15 | not yet rebuilt | [Adaptive systems](talks/adaptive-systems/CFP.md) |
+| Buy Me a Free Tier | [40 min](talks/free-tier/index.md) | 15 | not yet rebuilt | [Economics](talks/free-tier/CFP.md) |
+| Outsmart Your Lying, Cheating Students (event-friendly: Stop Trying to Catch Students Using AI) | [40 min](talks/evidence-learning/index.md) | 14 | not yet rebuilt | [Education](talks/evidence-learning/CFP.md) |
+| Dynamic Scaling of Agentic Workloads | [40 min](talks/dynamic-scaling/index.md) | 14 | not yet rebuilt | [Dynamic scaling](talks/dynamic-scaling/CFP.md) |
+| The Future of Product Engineering: Break the Mirror on Purpose | [40 min](talks/product-engineering/index.md) | 17 | not yet rebuilt | [Product engineering](talks/product-engineering/CFP.md) |
+| Three Search Methods in a Fundable Trenchcoat | [40 min](talks/retrieval/index.md) | 15 | [Deck](../../public/decks/retrieval/index.html) | [Retrieval](talks/retrieval/CFP.md) |
+| Stop Looking at My Benchmarks… Get Your Own! | [40 min](talks/benchmarks/index.md) | 15 | not yet rebuilt | [Benchmarks](talks/benchmarks/CFP.md) |
+| Turn Your Thinkin' Tokens Up to 11 | [40 min](talks/judgment/index.md) | 14 | not yet rebuilt | [Judgment](talks/judgment/CFP.md) |
 
 CFP packages include 50- and 150-word abstracts, intended audiences, learning outcomes and reviewer notes. They contain no invented biography, speaking history, or case-study results. Adapt the fields to a venue's form before submission.
 
 ## Shorter routes
 
-Each adaptation uses the full deck with unlisted slides hidden. It names the slides kept, a bridge sentence for every dependency a cut removes, a compression plan for the demo, and a close for that length.
+Each adaptation uses the full deck with unlisted slides hidden. It names the slides kept, a bridge sentence for every dependency a cut removes, a compression plan for each worked example, and a close for that length.
 
 | Talk | 15-minute | 30-minute |
 | --- | --- | --- |
@@ -75,11 +77,11 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 | Benchmarks | [Lightning](talks/benchmarks/adaptation-15min.md) | [Standard](talks/benchmarks/adaptation-30min.md) |
 | Three Search Methods in a Fundable Trenchcoat | [Lightning](talks/retrieval/adaptation-15min.md) | [Standard](talks/retrieval/adaptation-30min.md) |
 
-A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All nine talks include generated 40/30/15 presenter scripts. Outsmart also carries a hand-written 15-minute [procurement route](talks/evidence-learning/procurement-route.md) for administrator audiences.
+A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All nine talks carry 40/30/15 presenter scripts as plain files. Outsmart also carries a hand-written 15-minute [procurement route](talks/evidence-learning/procurement-route.md) for administrator audiences.
 
 ## Bullet outlines
 
-Each talk folder holds a generated `bullets.md`, indexed in [talks/bullets-index.md](talks/bullets-index.md): one compressed sheet per talk: the spine in a screen, then each slide's on-screen lines, the topic sentence of every spoken paragraph, and its Story, delivery and source notes. Use them to rehearse the arc, to fill a CFP form's outline field, and to find which slide owns an idea. Regenerate with `bun artifacts/speaking-portfolio-expanded/bullets.ts`; the 40-minute outlines stay canonical and edits to the generated sheets are overwritten.
+Each talk folder holds a hand-written `bullets.md`, indexed in [talks/bullets-index.md](talks/bullets-index.md): the spine in a screen, then each slide's on-screen lines and the beats to say in order, with Story, delivery and source notes. Use them to rehearse the arc, to fill a CFP form's outline field, and to find which slide owns an idea. `index.md` in each talk folder is the canonical complete talk; when it changes, update the bullets by hand.
 
 ## Shorts
 
@@ -116,7 +118,7 @@ The offline kit uses scripted or deterministic fixtures. It makes no model calls
 
 Each talk owns a topic; the others defer to it rather than re-teaching it.
 
-Retrieval owns the Cranfield/TREC history and the pooling exercise. Benchmarks owns validity, reliability and small-sample inference. Judgment owns feature selection, release pacing, the user's cost of change, and versioning as a user-facing surface. Multi-candidate orchestration, the Council of Guards and the barrel-of-monkeys maneuver belong to [Dynamic Scaling](talks/dynamic-scaling/outline-40min.md). Cost per accepted outcome belongs to [Free Tier](talks/free-tier/outline-40min.md). Runtime recovery belongs to [Adaptive](talks/adaptive-systems/outline-40min.md); the offline improvement loop belongs to [Failure Improvement](talks/failure-improvement/outline-40min.md).
+Retrieval owns the Cranfield/TREC history and the pooling exercise. Benchmarks owns validity, reliability and small-sample inference. Judgment owns feature selection, release pacing, the user's cost of change, and versioning as a user-facing surface. Multi-candidate orchestration, the Council of Guards and the barrel-of-monkeys maneuver belong to [Dynamic Scaling](talks/dynamic-scaling/index.md). Cost per accepted outcome belongs to [Free Tier](talks/free-tier/index.md). Runtime recovery belongs to [Adaptive](talks/adaptive-systems/index.md); the offline improvement loop belongs to [Failure Improvement](talks/failure-improvement/index.md).
 
 The outline is the canonical text. The scripts, adaptations and bullet sheets beside it were generated once and are now plain files; edit them by hand, and keep the deck's speaker notes in step with the outline. Sources and claim boundaries live beside slides and in each packet's evidence bank. Named Story prompts still require Dan's own records. The synthetic fixtures do not establish customer outcomes or productivity gains.
 
@@ -136,11 +138,11 @@ Both talks were rewritten around Dan's direction: the assistant-with-everything 
 
 ## September 6 review rewrites
 
-Failure Improvement owns the offline loop and its reviewer. Product Engineering reprices coordination and defines interfaces. Benchmarks validates the measuring instrument. Retrieval follows Cranfield, TREC pooling, and assessor disagreement. Each has a visual inventory and a generated browser deck. The failure-improvement live recording still needs verified stories and an executed integration; see the recording plan.
+Failure Improvement owns the offline loop and its reviewer. Product Engineering reprices coordination and defines interfaces. Benchmarks validates the measuring instrument. Retrieval follows Cranfield, TREC pooling, and assessor disagreement. Each has a visual inventory. The failure-improvement live recording still needs verified stories and an executed integration; see the recording plan.
 
 | Rewritten talk | Canonical source | Full presenter script |
 | --- | --- | --- |
-| Failure Improvement | [Outline](talks/failure-improvement/outline-40min.md) | [Script](talks/failure-improvement/script-40min.md) |
-| Product Engineering | [Outline](talks/product-engineering/outline-40min.md) | [Script](talks/product-engineering/script-40min.md) |
-| Benchmarks | [Outline](talks/benchmarks/outline-40min.md) | [Script](talks/benchmarks/script-40min.md) |
-| Three Search Methods in a Fundable Trenchcoat | [Outline](talks/retrieval/outline-40min.md) | [Script](talks/retrieval/script-40min.md) |
+| Failure Improvement | [Outline](talks/failure-improvement/index.md) | [Script](talks/failure-improvement/script-40min.md) |
+| Product Engineering | [Outline](talks/product-engineering/index.md) | [Script](talks/product-engineering/script-40min.md) |
+| Benchmarks | [Outline](talks/benchmarks/index.md) | [Script](talks/benchmarks/script-40min.md) |
+| Three Search Methods in a Fundable Trenchcoat | [Outline](talks/retrieval/index.md) | [Script](talks/retrieval/script-40min.md) |

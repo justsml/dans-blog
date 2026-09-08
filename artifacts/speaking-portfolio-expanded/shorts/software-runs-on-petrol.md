@@ -1,6 +1,6 @@
 # Software Runs on Petrol Now
 
-3 min · video · parent: [The Future of Product Engineering](../talks/product-engineering/outline-40min.md), slide 14
+3 min · video · parent: [The Future of Product Engineering](../talks/product-engineering/index.md), slide 14
 
 Tokens stop being a build cost and become a running cost. Then they never stop.
 

@@ -1,6 +1,6 @@
 # Conway's Photocopier
 
-3 min · video / lightning · parent: [Break the Mirror on Purpose](../talks/product-engineering/outline-40min.md), slides 1, 3, 5
+3 min · video / lightning · parent: [Break the Mirror on Purpose](../talks/product-engineering/index.md), slides 1, 3, 5
 
 Conway said your software mirrors your meetings. You're about to build one agent per department so the robots can have the same handoffs and the same lost tickets, only faster.
 

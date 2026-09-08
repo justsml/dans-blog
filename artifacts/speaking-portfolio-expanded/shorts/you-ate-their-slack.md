@@ -1,6 +1,6 @@
 # Who Ate My Slack?
 
-3 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slides 1 and 3, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/outline-40min.md) on 7 September 2026. The queue material lives only here now; its diagram is [queue.svg](../../../public/talks/assets/judgment/queue.svg).
+3 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slides 1 and 3, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/index.md) on 7 September 2026. The queue material lives only here now; its diagram is [queue.svg](../../../public/talks/assets/judgment/queue.svg).
 
 Generation got cheap. Review acquired a queue. The reviewer did not change; the arrival rate did, and queues are not sentimental about it.
 

@@ -2,7 +2,7 @@
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
-Outline: [40 min](outline-40min.md). Current screen and handout PowerPoints are linked from the [deck index](../README.md).
+Outline: [40 min](index.md). Current screen and handout PowerPoints are linked from the [deck index](../README.md).
 
 ## Titles
 

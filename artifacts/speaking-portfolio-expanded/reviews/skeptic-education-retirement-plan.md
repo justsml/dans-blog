@@ -4,7 +4,7 @@ Written 2026-09-06 alongside the [critical review](skeptic-education-review.md).
 
 ## Why it is droppable
 
-The review measured the overlap with [Outsmart Your Lying, Cheating Students](../talks/evidence-learning/outline-40min.md): six load-bearing beats duplicate, including Liang, Bastani and TEQSA, plus an identical pairs worksheet at the same slide number in the same minute. Roughly thirteen of forty minutes are genuinely distinct. A program that books both hears the same three citations twice.
+The review measured the overlap with [Outsmart Your Lying, Cheating Students](../talks/evidence-learning/index.md): six load-bearing beats duplicate, including Liang, Bastani and TEQSA, plus an identical pairs worksheet at the same slide number in the same minute. Roughly thirteen of forty minutes are genuinely distinct. A program that books both hears the same three citations twice.
 
 The two talks also fail differently. Outsmart has a person in it, a confession, a joke and a checkable number. Skeptic has a framework and no numbers at all. If a committee reads both, they book Outsmart.
 

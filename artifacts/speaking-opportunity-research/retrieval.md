@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: Senior engineers, architects, platform engineers, engineering managers, and developers entering AI.
 - Thesis: Translate AI terminology into familiar engineering concepts, then show where probabilistic behavior, context, and autonomous tool choice change the underlying problem.
 - Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/retrieval/outline-40min.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/retrieval/index.md)
 
 ## Search focus
 

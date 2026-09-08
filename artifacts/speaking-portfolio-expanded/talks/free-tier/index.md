@@ -216,7 +216,7 @@ Read the one-times row, then the ten-times row. Then move the acceptance rate an
 
 Then multiply by your own volume, because the table is meaningless without it. At a thousand attempts a month this entire talk is not worth an engineer's afternoon and you should go build features. At a million attempts a month the same four rows are a hiring plan. The most expensive mistake available in this room is not overspending on inference. It is spending three weeks optimizing a thirty-dollar bill because a conference talk made you anxious.
 
-Stage direction: Runbook section 4. Two-minute compression: the 1× and 10× rows only. Ask for 45 seconds: which assumption would you attack first before funding an optimization project?
+Stage direction: Walk the 1× and 10× rows, then change the acceptance assumption. Ask for 45 seconds: which assumption would you test before funding an optimization project?
 
 ## 12. You are not shopping, you are contracting
 

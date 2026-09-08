@@ -1,6 +1,6 @@
 # Cancel Means Cancel*
 
-2 min · video · parent: [Retrieval](../talks/retrieval/outline-40min.md), slide 5
+2 min · video · parent: [Retrieval](../talks/retrieval/index.md), slide 5
 
 Same meaning, different words. Same word, different meanings. Your eval needs both cases and has neither.
 

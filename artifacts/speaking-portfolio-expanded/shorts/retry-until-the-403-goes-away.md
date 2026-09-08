@@ -1,6 +1,6 @@
 # Retry Hard
 
-2 min · video · parent: [Automating Improvement From Failure](../talks/failure-improvement/outline-40min.md), slide 6
+2 min · video · parent: [Automating Improvement From Failure](../talks/failure-improvement/index.md), slide 6
 
 The retry worked. That's the problem.
 

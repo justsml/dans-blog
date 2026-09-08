@@ -1,6 +1,6 @@
 # Formats: Buy Me a Free Tier
 
-The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](outline-40min.md). Scripts and adaptations are generated from the outline by `build-talk.ts`; edit the outline, then rebuild.
+The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](index.md). Scripts and adaptations are plain files; edit the outline first, then bring them into line by hand.
 
 | Slot | Preparation |
 | --- | --- |
@@ -9,7 +9,7 @@ The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/READ
 | 15 minutes | [Script](script-15min.md) and [route](adaptation-15min.md) |
 | 25 minutes | 30-minute route with slide 11's sweep compressed to two rows |
 | 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
-| 40 minutes | [Script](script-40min.md) and [outline](outline-40min.md) |
+| 40 minutes | [Script](script-40min.md) and [outline](index.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |

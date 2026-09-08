@@ -114,22 +114,22 @@ Opening a PR spends somebody else's attention. Require a reproduction, a bounded
 
 Match ceremony to consequence. A documentation correction and a payment retry do not get the same permissions because they happen to arrive through the same agent.
 
-## 8. Demo: nothing leaves without evidence
+## 8. Nothing leaves without evidence
 
 18:30 to 24:00 · peak
 
 > Regression · holdout · scope · human
 > The useful result is permission denied
 
-The candidate removes the visible failure. That is the beginning of the demo, not the result.
+In the supporting example, the candidate removes the visible failure. That is the beginning of the review, not the result.
 
 Run the regression. Now run the held-out authorization case. It fails. The proposed retry used authority that belonged to somebody else. The gate holds the change without asking the agent whether it feels finished.
 
 Toyota calls stopping at an abnormality jidoka. That is the useful part to borrow. Detect the defect and stop producing it. The andon summons help; it is not a story about one cord stopping an entire company.
 
-Now give the classifier the case it cannot explain. Unknown is an output. It lands in review with the evidence intact. No automatic promotion, no invented diagnosis. Does similarity establish cause? We just watched it fail that test.
+Now give the classifier the case it cannot explain. Unknown is an output. It lands in review with the evidence intact. No automatic promotion, no invented diagnosis. Similarity did not establish cause.
 
-Stage direction: Use the live sequence in engineering/failure-improvement/demo.md. Full slot 5:30. Run real tests; never substitute the checkbox kit for execution. Recording remains blocked until a sanitized production export, working tracker integration, and captured gate run exist.
+Stage direction: Walk through the saved test output from the supporting repository. Show the passing regression, the failed authorization holdout, and the unknown classification. Link the repository for the implementation; do not switch to a live application.
 
 Source: Toyota, [Toyota Production System](https://global.toyota/en/company/vision-and-philosophy/production-system/), jidoka and the andon response.
 

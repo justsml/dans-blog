@@ -1,6 +1,6 @@
 # 200 OK (Nothing Is)
 
-2 min · video · parent: [Adaptive, agentic apps](../talks/adaptive-systems/outline-40min.md), slide 1
+2 min · video · parent: [Adaptive, agentic apps](../talks/adaptive-systems/index.md), slide 1
 
 HTTP 200 is not a contract. It is a vendor saying "I answered," which is a different thing from "I answered the question you were asking."
 

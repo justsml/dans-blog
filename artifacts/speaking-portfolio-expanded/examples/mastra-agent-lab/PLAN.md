@@ -21,7 +21,7 @@ Status: plan only. Nothing is implemented yet. This PLAN.md sits with the talk m
 - No production auth. `userId` from the query string is trusted on purpose and labelled as fake in every file that reads it.
 - No hosted eval platform. The talks name LangSmith, Braintrust and Langfuse; the lab shows the same evidence contract with Mastra storage only. One optional exporter stub shows where a hosted exporter would plug in.
 - No fine-tuning, no GEPA/DSPy run. The prompt-optimizer slide gets a hand-rolled "propose, score, keep-if-better" loop over dataset items to show the shape, not the library.
-- Does not replace the offline browser kit in `../../demos/`. That kit is for projection with zero network. This project is for the "show me real code" follow-up and for blog posts.
+- Supporting code, not a presentation dependency. A talk may show one result or short code fragment and link here for readers who want the implementation. The project does not provide a stage UI or an interactive demo flow.
 
 ## 2. Concept map: talk slide to snippet
 
@@ -157,7 +157,7 @@ Comment style inside snippets: short section banners that name the talk slide (`
 3. Failure loop: `lib/normalize-error.ts`, `lib/fixtures.ts`, 05, 06, 07. This is the core of the failure-improvement talk and the datasets/evals/experiments requirement.
 4. Adaptive and parallel: `lib/budget.ts`, 08, 09, 10.
 5. Remaining: 11, 12, 13.
-6. README with the concept table, the `curl` examples, and links back to each outline slide in the blog repo by GitHub URL. Add one line to `artifacts/speaking-portfolio-expanded/README.md` in the blog pointing at the lab repo, beside the offline kit link.
+6. README with the concept table, the `curl` examples, and links back to each outline slide in the blog repo by GitHub URL. Add one line to `artifacts/speaking-portfolio-expanded/README.md` in the blog after the repository is public.
 
 Each step ends with `bun run check` and the affected snippets run once.
 

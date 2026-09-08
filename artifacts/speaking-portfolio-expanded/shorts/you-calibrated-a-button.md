@@ -1,6 +1,6 @@
 # Agreeable to a Fault (κ = 0)
 
-2 min · video · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/outline-40min.md), slide 9
+2 min · video · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/index.md), slide 9
 
 90% agreement with the experts. Zero information. Here's how.
 

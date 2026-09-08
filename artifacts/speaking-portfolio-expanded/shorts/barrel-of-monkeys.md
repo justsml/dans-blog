@@ -1,6 +1,6 @@
 # The Barrel-of-Monkeys Maneuver
 
-7 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/outline-40min.md), slide 12 · pairs with [The Council of Guards](council-of-guards.md)
+7 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/index.md), slide 12 · pairs with [The Council of Guards](council-of-guards.md)
 
 Lead with parallel generation on purpose. You are adding a controlled section of chaos, and the next stage has to handle it. That's the design, not the bug.
 
@@ -26,7 +26,7 @@ Something has to. A revision loop that takes the synthesis back through the gate
 
 ## Beat: is this speculative optimization in a lab coat? (5:15)
 
-Yes, possibly. Probably sometimes. We'll find out. So: never ship any of this without env vars to turn the fan-out down to one. And ideally, don't hand-tune the knob at all; build the system that watches its own acceptance rate and token burn and adjusts fan-out itself. Right? Right. That system is [a different talk](../talks/adaptive-systems/outline-40min.md), including when to bother and at what level of direct control.
+Yes, possibly. Probably sometimes. We'll find out. So: never ship any of this without env vars to turn the fan-out down to one. And ideally, don't hand-tune the knob at all; build the system that watches its own acceptance rate and token burn and adjusts fan-out itself. Right? Right. That system is [a different talk](../talks/adaptive-systems/index.md), including when to bother and at what level of direct control.
 
 ## Landing (6:15)
 

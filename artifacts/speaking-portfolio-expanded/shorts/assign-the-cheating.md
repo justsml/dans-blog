@@ -1,6 +1,6 @@
 # Assign the Cheating
 
-3 min · video / lightning · parent: [Outsmart Your Lying, Cheating Students](../talks/evidence-learning/outline-40min.md), slide 5
+3 min · video / lightning · parent: [Outsmart Your Lying, Cheating Students](../talks/evidence-learning/index.md), slide 5
 
 The highest-leverage assignment I know lets students feel like they're getting away with something.
 

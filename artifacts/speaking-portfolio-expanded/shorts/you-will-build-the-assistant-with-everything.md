@@ -1,6 +1,6 @@
 # Sorry, You're Building It
 
-6 min · lightning · parent: [Adaptive, agentic apps](../talks/adaptive-systems/outline-40min.md), slides 3, 4, 5
+6 min · lightning · parent: [Adaptive, agentic apps](../talks/adaptive-systems/index.md), slides 3, 4, 5
 
 It's coming one integration at a time and you can't opt out. The hazard isn't the tool count. It's the pathways.
 

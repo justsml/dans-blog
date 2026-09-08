@@ -1,6 +1,6 @@
 # Your Eval Suite Needs Therapy
 
-3 min · video · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/outline-40min.md), slides 4 and 5
+3 min · video · parent: [Stop Looking at My Benchmarks](../talks/benchmarks/index.md), slides 4 and 5
 
 It produces scores. You make decisions from the scores. Nobody has ever checked whether it measures anything.
 

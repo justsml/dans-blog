@@ -2,7 +2,7 @@
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Working notes](notes-2026-09-05.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
-Outline: [40 min](outline-40min.md). Current PPTX and browser editions are indexed in [formats.md](formats.md).
+Outline: [40 min](index.md). Current PPTX and browser editions are indexed in [formats.md](formats.md).
 
 ## Titles
 

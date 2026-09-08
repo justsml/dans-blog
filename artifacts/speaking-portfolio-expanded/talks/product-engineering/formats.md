@@ -8,7 +8,7 @@ One canonical outline generates every route. Current PowerPoint editions are lin
 | --- | --- | --- |
 | 15 min | [Adaptation](adaptation-15min.md) | Slide 11, 3:30 |
 | 30 min | [Adaptation](adaptation-30min.md) | Slide 11, 5:00 |
-| 40 min | [Canonical outline](outline-40min.md) | Slide 11, 5:00 |
+| 40 min | [Canonical outline](index.md) | Slide 11, 5:00 |
 | 95 min | Workshop below | Five-minute replay plus discussion |
 
 ## 5–10 minute lightning talk (slides)

@@ -1,6 +1,6 @@
 # Fool's Golden Dataset
 
-4 min · video / lightning · parent: [Retrieval](../talks/retrieval/outline-40min.md), slides 9 and 10
+4 min · video / lightning · parent: [Retrieval](../talks/retrieval/index.md), slides 9 and 10
 
 The better retriever scored worse because nobody had ever judged what it found. You didn't break retrieval. You found the hole in the ruler.
 

@@ -1,6 +1,6 @@
 # Review: The Future of Product Engineering
 
-Reviewed 2026-09-06 against the bar set by [free-tier-40min.md](../talks/free-tier/outline-40min.md).
+Reviewed 2026-09-06 against the bar set by [free-tier-40min.md](../talks/free-tier/index.md).
 Material read: the 15/30/40 outlines, [packet.md](../talks/product-engineering/packet.md), [formats.md](../talks/product-engineering/formats.md), [evidence-bank.md](../talks/product-engineering/evidence-bank.md), [CFP.md](../talks/product-engineering/CFP.md), [evidence.md](../talks/product-engineering/evidence.md), [demo.md](../talks/product-engineering/demo.md), [DEMO-RUNBOOK.md §6](../demos/DEMO-RUNBOOK.md#6-the-future-of-product-engineering), and the rendered deck at [reveal-talks/product-engineering.html](../../../public/talks/product-engineering.html).
 
 ---

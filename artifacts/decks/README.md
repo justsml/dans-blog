@@ -16,7 +16,7 @@ No bullet lists, no numbered rows, no eyebrow labels, no meta strings joined wit
 
 ## Present and check
 
-`bun run dev`, then <http://localhost:4242/decks/index.html>. Decks also open from disk. `?all` shows every fragment at once. S opens speaker view. `bun artifacts/speaking-portfolio-expanded/check-talks.ts retrieval` renders every slide in Chrome and reports overflow, console errors, and broken links.
+`bun run dev`, then <http://localhost:4242/decks/index.html>. Decks also open from disk. `?all` shows every fragment at once. S opens speaker view.
 
 Shorter routes: do not build separate 15- and 30-minute decks. The cut lists are in each talk's adaptation files; hide the skipped slides in speaker preparation.
 

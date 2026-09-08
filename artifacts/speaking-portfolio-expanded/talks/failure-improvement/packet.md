@@ -2,7 +2,7 @@
 
 Browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) · [Presenter script](script-40min.md) · [Visuals](visuals.md)
 
-Outline: [40 min](outline-40min.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
+Outline: [40 min](index.md) · Formats: [formats.md](formats.md) · Evidence: [evidence-bank.md](evidence-bank.md)
 
 ## Titles
 
@@ -52,7 +52,7 @@ Engineers, SREs, and technical leads who own a production system with logs and a
 
 ## Not a product pitch
 
-The talk uses a coding agent and bounded integrations as its implementation pattern. The speaker has no commercial relationship with any of them to disclose beyond ordinary use. The offline kit is vendor-free and makes no network calls.
+The talk uses a coding agent and bounded integrations as its implementation pattern. The speaker has no commercial relationship with any of them to disclose beyond ordinary use. Supporting code belongs in a separate repository and is not required to follow the talk.
 
 ## References
 
@@ -82,4 +82,4 @@ Most companies pay for detailed records of everything that goes wrong and then r
 
 ## Recording readiness
 
-The peak requires a real failed holdout and a real unknown result; the historical checkbox kit does not qualify. Outstanding evidence is tracked in the [recording plan](../../speaker/recording-plan.md).
+The worked example requires captured output from a failed holdout and an unknown result. The implementation will live in the planned `mastra-agent-lab` repository.

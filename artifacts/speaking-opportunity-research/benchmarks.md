@@ -9,7 +9,7 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Audience: AI engineers, product engineers, ML engineers, platform teams, CTOs, and technical product leaders.
 - Thesis: Define quality using real workloads and failure classes, then evaluate whole systems against cost, latency, and reliability requirements.
 - Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/benchmarks/outline-40min.md)
+- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/benchmarks/index.md)
 
 ## Search focus
 

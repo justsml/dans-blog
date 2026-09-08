@@ -1,6 +1,6 @@
 # The Test Who Loved Me
 
-2 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slide 9, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/outline-40min.md) on 7 September 2026. The fixture travels with the short.
+2 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slide 9, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/index.md) on 7 September 2026. The fixture travels with the short.
 
 Two confident artifacts, identically wrong, and a green check between them.
 
