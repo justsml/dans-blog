@@ -14,4 +14,4 @@ Promotion requires a reproducing regression, held-out cases controlled separatel
 
 ## Demo acceptance
 
-Run the regression and holdout as actual commands. Retain their output and exit status. Show a held change after the holdout fails, then an unknown classification held for a person. Fix the candidate, never the holdout to obtain green. Tracker writes require a pre-authorized demo project. The checkbox kit is a teaching aid and is not evidence that these operations ran.
+The supporting repository runs the regression and holdout as actual commands and retains their output and exit status. It shows a held change after the holdout fails, then an unknown classification held for a person. Fix the candidate, never the holdout to obtain green. Any tracker integration uses an isolated fixture project.

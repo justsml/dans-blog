@@ -52,7 +52,7 @@ Instructors, assessment designers, academic integrity staff, and edtech product 
 
 ## Not a product pitch
 
-The speaker has built AI systems at an education technology company. The session names no detector, no tutoring product, and no platform. Fixtures are authored for the demonstration and the demo is offline.
+The speaker has built AI systems at an education technology company. The session names no detector, no tutoring product, and no platform. The classroom examples are authored fixtures.
 
 ## References
 

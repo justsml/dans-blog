@@ -32,7 +32,7 @@ Two exercises live here. The **percentage replay** below is slide 7 of Outsmart 
 
 ### Proposed rubric
 
-Score each dimension 0–2: current base identified, calculation justified, transfer explained. Zero means absent or incorrect, one means partial or unexplained, two means correct with relevant explanation. Refine these anchors with sample work before consequential use. Record assistance separately. A correct number without the reasoning does not earn full explanation credit. The demonstration does not assign a real grade.
+Score each dimension 0–2: current base identified, calculation justified, transfer explained. Zero means absent or incorrect, one means partial or unexplained, two means correct with relevant explanation. Refine these anchors with sample work before consequential use. Record assistance separately. A correct number without the reasoning does not earn full explanation credit. This worked example does not assign a real grade.
 
 ## Show Me the Misconception: the four index cards
 

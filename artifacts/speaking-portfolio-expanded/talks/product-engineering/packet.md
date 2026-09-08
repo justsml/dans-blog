@@ -19,7 +19,7 @@ Your org chart records what coordination used to cost. Before copying it onto ag
 
 ### Standard abstract
 
-An agent per department sounds like organizational design. It may just preserve every expensive handoff your company already has. This talk argues for repricing coordination before copying the org chart. Research and feedback agents deliver cited evidence to a product review; the accepted hypothesis becomes the interface to build and experiment work. A synthetic onboarding demo makes the room choose from activation alone, then reveals support costs and fabricated urgency. The apparent winner is blocked. Attendees leave with artifact contracts, owners with review capacity, and explicit approval boundaries for rollout, spending, infrastructure, customer messaging, and data deletion.
+An agent per department sounds like organizational design. It may just preserve every expensive handoff your company already has. This talk argues for repricing coordination before copying the org chart. Research and feedback agents deliver cited evidence to a product review; the accepted hypothesis becomes the interface to build and experiment work. A synthetic onboarding example asks the room to choose from activation alone, then reveals support costs and fabricated urgency. The apparent winner is blocked. Attendees leave with artifact contracts, owners with review capacity, and explicit approval boundaries for rollout, spending, infrastructure, customer messaging, and data deletion.
 
 ### Extended abstract
 
@@ -27,7 +27,7 @@ Conway describes communication structures, not a row of boxes with robots in the
 
 This talk follows one product decision through sourced research, customer-feedback clusters, product review, a candidate build, and an opt-in beta. Each handoff has an artifact and an owner. The review stays because the evidence can disagree. A cluster that merges two different complaints is a product mistake even when its JSON validates.
 
-The demo comes before the rules. The audience sees three activation figures and chooses a candidate. Only then do support contacts and fabricated urgency appear. The highest activation result fails the saved policy. A quieter candidate becomes eligible for review, not automatically shipped. The numbers are synthetic; the policy execution is inspectable.
+The example comes before the rules. The audience sees three activation figures and chooses a candidate. Only then do support contacts and fabricated urgency appear. The highest activation result fails the saved policy. A quieter candidate becomes eligible for review, not automatically shipped. The numbers are synthetic; supporting code will live in a separate repository.
 
 The back half prices the human work. Graicunas’s maximum relationship count gives 222 possibilities for six reports, an illustration of combinatorial growth rather than a staffing limit. Bainbridge asks what happens to the person left monitoring automation and handling its exceptions. Ownership needs time and recovery practice, not just a name in a config file.
 
@@ -53,7 +53,7 @@ Product engineers, engineering leaders, founders, and product managers building 
 
 ## Not a product pitch
 
-The talk cites Conway's 1968 paper and Microsoft's experimentation guidance. It names no experimentation platform, analytics tool, warehouse, or agent framework; tools mentioned in speaker notes are examples. The demo is offline and vendor-free.
+The talk cites Conway's 1968 paper and Microsoft's experimentation guidance. It names no experimentation platform, analytics tool, warehouse, or agent framework; tools mentioned in speaker notes are examples.
 
 ## References
 
@@ -65,4 +65,4 @@ The talk cites Conway's 1968 paper and Microsoft's experimentation guidance. It 
 
 ## Audience adaptation
 
-For engineering rooms, spend the interface example on code, evidence IDs, and review capacity. For product leadership, spend it on who reconciles contradictory research and feedback. Keep the same arc, demo order, and named customer-consequence boundaries. Use the standard abstract above as the source; do not restore the former one-agent-per-function thesis.
+For engineering rooms, spend the interface example on code, evidence IDs, and review capacity. For product leadership, spend it on who reconciles contradictory research and feedback. Keep the same arc, example order, and named customer-consequence boundaries. Use the standard abstract above as the source; do not restore the former one-agent-per-function thesis.
