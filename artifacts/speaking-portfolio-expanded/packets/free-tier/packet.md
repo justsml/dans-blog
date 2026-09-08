@@ -8,7 +8,6 @@ Outline: [40 min](../../outlines/free-tier-40min.md). Current screen and handout
 
 - **Primary:** Buy Me a Free Tier
 - Eight Words for the Budget Meeting
-- You Are Not Shopping, You Are Contracting
 
 ## Abstracts
 

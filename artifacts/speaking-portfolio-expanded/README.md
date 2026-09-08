@@ -62,6 +62,10 @@ Each adaptation uses the full deck with unlisted slides hidden. It names the sli
 
 A 45-minute slot is the 40-minute deck plus five minutes of questions. Timings are rehearsal targets without Q&A. All nine talks include generated 40/30/15 presenter scripts. Outsmart also carries a hand-written 15-minute [procurement route](packets/evidence-learning/procurement-route.md) for administrator audiences.
 
+## Bullet outlines
+
+[outlines/bullets/](outlines/bullets/README.md) holds one compressed sheet per talk: the spine in a screen, then each slide's on-screen lines, the topic sentence of every spoken paragraph, and its Story, delivery and source notes. Use them to rehearse the arc, to fill a CFP form's outline field, and to find which slide owns an idea. Regenerate with `bun artifacts/speaking-portfolio-expanded/bullets.ts`; the 40-minute outlines stay canonical and edits to the generated sheets are overwritten.
+
 ## Shorts
 
 [shorts/](shorts/README.md) holds 31 standalone cuts, 1 to 10 minutes each: one idea, one number or picture, one landing line. Each names its parent talk and slide so the fixtures and evidence travel with it. Twenty-three are sized for video (1 to 5 minutes); eight are lightning slots (5 to 10). Hand-written, not generated from the outlines.
