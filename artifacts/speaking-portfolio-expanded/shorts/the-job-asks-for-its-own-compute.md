@@ -18,7 +18,7 @@ Per-job economics. A customer can buy a faster turnaround. Finance can cap one w
 
 ## Beat: the substrate already exists (3:00)
 
-Fly.io Sprites: hardware-isolated VMs, with a stated creation target under a second, egress policy set from outside so the agent can't loosen it. Depot sandboxes: per-second billing for exactly this. Modal for functions and GPUs that scale to zero; Vast.ai for a cheap spare GPU. Cloudflare Durable Objects and Workflows for the state that survives everything else being torn down. EC2 Spot is the old version of the same idea. Common thread: create in seconds, pay per second, torn down unless someone says otherwise. What none of them give you is the ledger. That's still yours.
+Fly.io Sprites: hardware-isolated VMs, with a stated creation target under a second, egress policy set from outside so the agent can't loosen it. Depot sandboxes: per-second billing for exactly this. Modal for functions and GPUs that scale to zero; Vast.ai for a cheap spare GPU. Cloudflare Durable Objects and Workflows for the state that survives everything else being torn down. EC2 Spot is the old version of the same idea. Different billing and isolation contracts; the scheduler must enforce lifetime and network policy. What none of them give you is the ledger. That's still yours.
 
 ## Beat: what you risk (4:15)
 
@@ -34,4 +34,4 @@ Left: `replicas: 12` set in a YAML file in 2023. Right: `{ shape: sandbox, n: 8,
 
 ## Scope
 
-Vendors named were checked 2026-09-06; recheck before delivery. Prices and job counts are fixtures.
+Vendors named were checked 2026-09-08; recheck before delivery. Prices and job counts are fixtures.

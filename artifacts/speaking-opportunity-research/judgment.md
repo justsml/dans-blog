@@ -7,9 +7,9 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Talk ID: `judgment`
 - Title: Turn Your Thinkin' Tokens Up to 11
 - Audience: Engineering leaders, CTOs, senior engineers, founders, and DevEx/platform audiences.
-- Thesis: As code generation becomes less costly, deciding what to build, validating behavior, controlling complexity, and reviewing tradeoffs become stronger constraints.
-- Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/judgment/index.md)
+- Thesis: Cheap generation makes feature selection and release pacing more important. Count the user’s cost of absorbing change, then evaluate bounded version controls and shared configuration profiles without giving away product responsibility.
+- Available formats: Prepared 15-, 30-, and 40-minute scripts; 45 minutes uses 40 plus five minutes Q&A. See the current packet for deck availability.
+- Source material: [Current CFP](../speaking-portfolio-expanded/talks/judgment/CFP.md)
 
 ## Search focus
 
@@ -18,11 +18,11 @@ Engineering leadership; CTO forums; developer experience; software economics; or
 Seed queries (expand each across years, geography, and submission terminology):
 
 - AI engineering leadership judgment conference CFP
-- code generation review bottleneck speakers
+- AI release pacing user change fatigue speakers
 - CTO AI organization design meetup
 - developer experience validated outcomes talk
 
-Search engineering management, CTO, DevEx, and technical founder programs. Inspect archives for review capacity, organizational design, specifications, and outcome metrics. These are search hypotheses, not verified recommendations or current CFP claims.
+Search engineering management, CTO, DevEx, and technical founder programs. Inspect archives for release pacing, user control, feature selection, and change adoption. These are search hypotheses, not verified recommendations or current CFP claims.
 
 ## Positioning and fit boundaries
 

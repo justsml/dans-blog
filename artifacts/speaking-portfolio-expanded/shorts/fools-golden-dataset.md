@@ -10,7 +10,7 @@ Acme asks: can we cancel today without a fee? Your golden set has five judged do
 
 ## Beat: the new retriever
 
-It returns B and F. F is the signed Schedule R, the one B refers to, the one that waives the fee. Nobody judged F because none of the old retrievers ever surfaced it. Your scorer treats unjudged as nonrelevant. Old top-two: B, A → precision 1.0. New top-two: B, F → precision 0.5. The system that found the actual answer just lost.
+It returns B and F. F is the signed Schedule R, the one B refers to, the one that waives the fee. Nobody judged F because none of the old retrievers ever surfaced it. Your scorer treats unjudged as negative under the applicability rubric. Old top-two: B, A → precision 1.0. New top-two: B, F → precision 0.5. The system that found the actual answer just lost.
 
 ## Beat: the field already checked this
 
@@ -26,8 +26,10 @@ Pool: `A B C D E`. New result: `B F`. P@2: **1.0 → 0.5 → 1.0** with "judge F
 
 ## Demo
 
-After revealing F, walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged relevant.
+After revealing F, walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged positive under the applicability rubric.
 
 ## Source
 
 Cleverdon, Mills, Keen (1966), Cranfield report. Zobel (1998), How reliable are the results of large-scale IR experiments? Voorhees, Soboroff, Lin (2022), Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?
+
+Fixture rule: positive means current governing evidence for Acme. C is expired, not topically unrelated. This is applicability P@2; answer sufficiency is separate. Ask higher/lower/same before showing 1.0 → 0.5 → 1.0.

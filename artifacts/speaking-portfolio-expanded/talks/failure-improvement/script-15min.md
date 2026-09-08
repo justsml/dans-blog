@@ -1,146 +1,109 @@
-# Automating Improvement From Failure: 15-minute presenter script
+# The Pager Cried Wolf: 15-minute presenter script
 
-Use slides 1, 2, 4, 6, 8, 9, 13, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The worked example gets four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration.
+Use slide IDs in the order below. [Timing](timing.md) separates speech, reading, decisions and writing. The four-minute slide-8 walkthrough uses authored case cards, not captured execution; do not switch to a live application. Stories are omitted from shorter routes unless they replace rehearsed prose.
 
-## 00:00 to 01:45: slide 1, Nobody reads the scroll
+## 00:00 to 02:00: slide 1, Nobody reads the scroll
 
-On screen:
+> Every green suggestion can teach you to stop reading the next one.
+> 16,953 ÷ 18 days ÷ 15 beds ≈ 63 alarms per available bed-day
 
-> The pager trained you to ignore it
-> The next improvement is already in the scroll
+The logs are still arriving. Somewhere in that scroll is work we will call urgent after a customer sends an angry email.
 
-The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will eventually call urgent. Usually after somebody sends an angry email.
+Every green suggestion can teach you to stop reading the next one. Our offline loop has to earn its way past that risk. These are authored teaching fixtures; live integration is unverified.
 
-This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery, and how much authority a running agent earns for itself, belongs to Adaptive, agentic apps.
+Cvach's 2012 review reports an earlier project: sixteen thousand nine hundred and fifty-three alarms over eighteen days on a fifteen-bed unit. About sixty-three per available bed-day, not per patient-day. The question for our loop: did we reduce noise, or move it into another queue?
 
-There is a name for training people to ignore the channel that is supposed to warn them. Alert fatigue. Cvach measured it on hospital monitors. Your pager is the same instrument. If our new agent creates a ticket for every log line, we have automated the thing that made the logs unreadable.
+Delivery: Allow fifteen seconds to read the arithmetic. No hands-up.
 
-Source: Maria Cvach (2012), [Monitor alarm fatigue: an integrative review](https://pubmed.ncbi.nlm.nih.gov/22839984/), Biomedical Instrumentation & Technology 46(4), 268–277.
-
-Story: The failure that sat in your logs until a customer reported it. Bring the first log timestamp, the report, and what you missed.
-
-Delivery: Scroll a sanitized export. Take a show of hands: who learned about a logged failure from a customer? Allow 30 seconds.
-
-## 01:45 to 03:15: slide 2, Step one: hand an agent the logs
-
-On screen:
+## 02:00 to 03:30: slide 2, Step one: hand an agent the logs
 
 > Already better than the nobody who was doing it before
 > Read access. One question. One saved answer.
 
-Give a coding agent a sanitized export. Ask what broke since yesterday. That is the first version. A file and a question.
+Give an agent a sanitized log export. Ask what broke since yesterday. A file and a question.
 
-It may group unrelated failures together. It may miss the one line you care about. Inspect the answer against the input before you wire it to anything. But for the queue nobody was reading, we finally have a candidate reader. Already better than the nobody who was doing it before.
+It can group unrelated failures or miss the important line. Inspect the answer against the input before wiring it to anything. Save the answer and its input window so tomorrow you can distinguish a new finding from a more confident retelling.
 
-Save the answer with the input window. Tomorrow, you want to know whether it found something new or just described yesterday more confidently.
+One failure class first. Read access to code does not imply write access to production. Add the individual grant that answers the next question.
 
-Bridge: add only the integration needed for one failure class; the check preserves counts and evidence.
 
-## 03:15 to 04:45: slide 4, The out-of-band check
 
-On screen:
-
-> Schedule → bookmark → distill → artifact
-> Advance the bookmark after durable output
-
-Run outside the request path. A scheduled job reads the last completed bookmark, fetches a bounded window, strips secrets, and produces an artifact. Each family gets a count, first seen, last seen, and links to the evidence.
-
-Only advance the bookmark after the artifact is saved. If ticket creation fails, retry from that artifact using a stable incident key. Otherwise the failure-improvement system gets its own failure-improvement system, and we are all going home late.
-
-Keep the collection window and the classifier version beside the result. Late-arriving logs need an overlap window and deduplication. A cron expression does not solve delivery semantics.
-
-Delivery: Open contracts.md and trace one interrupted run. Show which artifact survives and why repeating it does not open another ticket.
-
-Bridge: distill before classifying, and give unexplained cases an unknown result.
-
-## 04:45 to 06:15: slide 6, The retry that hid the auth failure
-
-On screen:
+## 03:30 to 05:00: slide 6, The retry that hid the auth failure
 
 > A retry hides an auth failure
 > A sleep hides a race
 > Successful workaround ≠ repaired system
 
-A request fails. The agent retries. It works. Score the loop on eventual success and the lesson is obvious: retry more.
+A retry works. Score only eventual success and the lesson is retry more. But the first request was forbidden; the second credential belonged to someone else. Green hid the boundary violation.
 
-Now make the failure an authorization error. A second credential works, but the first request was forbidden for a reason. The green result hid the boundary violation. A sleep that hides a race teaches the same lesson more slowly.
+A workaround is not a repair. Vaughan's normalization of deviance is the warning: an accepted anomaly can become routine. The offline loop needs evidence that the defect is gone, not another demonstration that the symptom disappeared.
 
-Diane Vaughan called the organizational pattern normalization of deviance. Her Challenger analysis shows how repeated acceptance of anomalies made them ordinary. A repair loop needs evidence that the defect is gone. Successful workarounds are very persuasive evidence of the wrong thing.
+Delivery: Take one twenty-second answer; no incident story.
 
-Source: Diane Vaughan, [The Challenger Launch Decision](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html), University of Chicago Press, original 1996; linked enlarged edition 2016.
+## 05:00 to 06:45: slide 4, The out-of-band check
 
-Story: A workaround you left running after it stopped the symptom. Name the underlying defect and the test that eventually exposed it.
+> Schedule → bookmark → distill → artifact
+> Advance the bookmark after durable output
 
-Delivery: Take two short answers about fixes that hid a problem. Budget 45 seconds; do not invite incident-length stories.
+Run outside the request path. Read a bookmark, collect a bounded overlap window, strip secrets, and save an artifact with counts and evidence IDs. Advance the bookmark only after durable output. Retry ticket creation from that artifact with a stable incident key.
 
-Bridge: tickets and PRs carry evidence into a bounded review queue.
+Distill repetition before classifying causes. Matching strings suggest a family; they do not establish a root cause. Unknown needs a queue and an owner.
 
-## 06:15 to 09:45: slide 8, Nothing leaves without evidence
+A cron expression does not solve delivery semantics. Nor does it buy permission to move money or message customers. Detect, recommend, draft. A person presses the button.
 
-On screen:
 
+
+## 06:45 to 10:45: slide 8, Nothing leaves without evidence
+
+> New case: three matching timeouts; one missing trace
 > Regression · holdout · scope · human
-> The useful result is permission denied
+> Decide before revealing the evidence
 
-The candidate removes the visible failure. That is the beginning of the review, not the result.
+Three timeouts: two in tenant A, one in tenant B. A broader retry policy makes the visible regression green. Promote, hold, or ask for evidence?
 
-Run the regression. Now run the held-out authorization case. It fails. The proposed retry used authority that belonged to somebody else. The gate holds the change without asking the agent whether it feels finished.
+Reveal the held-out cancellation case: a cancelled job resumes and writes output. The scope check also shows the policy changed for every tenant. Hold the candidate. Regression, holdout, scope and a person are separate gates.
 
-Toyota calls stopping at an abnormality jidoka. That is the useful part to borrow. Detect the defect and stop producing it. The andon summons help; it is not a story about one cord stopping an entire company.
+Now tenant B has no trace. Does matching text establish the same cause? Unknown is an output. Preserve the report for investigation; do not borrow tenant A's diagnosis.
 
-Now give the classifier the case it cannot explain. Unknown is an output. It lands in review with the evidence intact. No automatic promotion, no invented diagnosis. Does similarity establish cause? We just watched it fail that test.
+Jidoka names the manufacturing idea of stopping at an abnormality. Here we stop promotion. A rejection without a replacement diagnosis is still useful work.
 
-Source: Toyota, [Toyota Production System](https://global.toyota/en/company/vision-and-philosophy/production-system/), jidoka and the andon response.
+Delivery: Use the authored case cards in demo.md. Spend 45 seconds on the first vote, 30 seconds reading the two reveal rows, and 45 seconds on the missing-trace decision. Reveal answers only after each decision. No implementation has been run to produce these cards; do not switch to a live application or present them as captured test output.
 
-Delivery: Walk through the captured output from the supporting repository: passing regression, failed authorization holdout, and unknown classification. Link the repository for the implementation.
-
-## 09:45 to 12:00: slide 9, Who reviews the robot's PRs?
-
-On screen:
+## 10:45 to 12:45: slide 9, Who reviews the robot's PRs?
 
 > The easy cases disappear
 > The reviewer keeps the exceptions
 
-The robot opens good PRs for a month. What happens to the person reviewing them?
+Bainbridge's 1983 Ironies of Automation asks what remains for people after routine work disappears. Monitoring and hard interventions remain; practice can shrink.
 
-Bainbridge's Ironies of Automation asks what remains for the human after automation takes the routine work. Monitoring and difficult interventions remain, while opportunities to practise shrink. That paper is from 1983. The problem did not wait for a chat interface.
+My design response is to rotate review duty, reserve time, and practise recovery outside production. That is my proposal, not her measured treatment effect.
 
-My design response is to rotate review duty, reserve time for it, and practise recovery on known failures outside production. Sample accepted work for missed defects. Keep evaluation cases separate from the repair agent's tuning loop. A sampling policy is for the audit; it does not wave through a payment or a data deletion.
+Count reviewer time, wrong proposals, missed failures and recurrence. A hundred tickets with ninety wrong is ten percent useful: synthetic arithmetic, not our result. If the loop's review burden exceeds the failures it avoids, turn it down or off. A hundred green suggestions are not a hundred reasons to trust the next one.
 
-If the queue is too big to inspect, reduce what enters it. Giving one engineer a hundred green suggestions is not giving them a hundred reasons to trust the next one.
 
-Source: Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468), Automatica 19(6), 775–779.
 
-Bridge: compile repeated paths into tested scripts; feedback uses the same queue, and people approve money, messages, and deletion.
+## 12:45 to 14:15: slide 14, Start Monday
 
-## 12:00 to 13:45: slide 13, The metrics that will lie to you
+> One failure class
+> One integration
+> One place the loop must stop
+> Handout vocabulary: alert fatigue · normalization of deviance · jidoka · automation irony · Goodhart
 
-On screen:
+Write one failure class for Monday, its input and the person who will inspect the first output. Name one integration and one condition that stops the loop.
 
-> 100 tickets. 90 wrong. Ten worth reading.
-> Measure recurrence and wrong tickets, with denominators
+Measure review burden alongside what it finds. If the queue gets worse, the first improvement is fewer proposals.
 
-Suppose the agent files a hundred tickets and a reviewer closes ninety as wrong. Time-to-ticket looks terrific. Ten percent were worth reading. That is our arithmetic fixture, and it is the number I want next to the throughput chart.
+Delivery: Give the room 45 seconds to write; do not fill the silence.
 
-Goodhart is the warning here: once we reward a proxy, we change the behavior producing it. Faster tickets are very easy to manufacture. Faster learning is harder.
+## 14:15 to 15:00: slide 15, Fail to win
 
-Track recurring failures after a fix, with exposure counts. Track wrong tickets among reviewed tickets, and audit the cases the agent ignored. A low false-positive rate bought by filing nothing is another beautiful dashboard. Record backlog age too. Otherwise the reviewer silently pays for the metric win.
+> A smaller queue, with evidence and a stop
+> Do not let the loop train you to stop reading.
 
-Source: Marilyn Strathern (1997), [Improving ratings: audit in the British University system](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. The familiar target-and-measure wording is Strathern’s formulation of Goodhart’s law.
+The scroll still arrives. The smaller artifact carries evidence, and the reviewer can stop it.
 
-Bridge: choose one failure class and one integration on Monday.
+If green becomes a reason to stop reading, we built another pager.
 
-## 13:45 to 15:00: slide 15, Fail to win
+Do not let the loop train you to stop reading.
 
-On screen:
-
-> Alert fatigue · normalization of deviance
-> Jidoka · automation irony · Goodhart
-
-The scroll is still arriving. Now the loop leaves a smaller pile of inspectable work, and it knows where to stop.
-
-Alert fatigue explains the unread channel. Normalization of deviance explains the successful workaround. Jidoka gives the stop a job. Automation irony asks what we did to the reviewer. Goodhart asks whether the dashboard rewarded the wrong thing.
-
-The model did not get smarter. The system around it got a job.
-
-Delivery: Replay the opening scroll beside the distilled artifact. End there. Stop talking.
+Delivery: Show the authored opening scroll beside the smaller artifact. Stop talking.

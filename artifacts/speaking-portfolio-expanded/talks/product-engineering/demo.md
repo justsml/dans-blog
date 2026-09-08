@@ -1,38 +1,78 @@
-# Supporting example: the winning treatment fails the product
+# Worked scorecard: open the rest of the record
 
-This example uses fixed, synthetic fixtures and deterministic rules. Nothing is sent to customers or providers.
+An authored policy exercise, not captured customer or experiment data. No application or provider request is required. Display neutral A/B/C labels until the vote; do not show the answer table or Campbell before that decision.
 
-**Duration:** 5:00 in the 30- and 40-minute routes; 3:30 in the 15-minute route. Full-deck slide 11 in every route. Start on the slide showing only A/B/C activation. Reveal the rest of the record after the vote.
+**Duration:** slide 11 gets 4:30 in 40,4:00 in 30,3:00 in 15. The separate seven-minute lightning cut gives the scorecard 2:30. Each run below includes the audience work; no extra spoken runbook is added to the script.
 
-**Question:** “Which onboarding treatment would you promote if activation were the only number you saw?”
+## First screen
 
-### Exact fixture and policy
+| Candidate | Activation |
+| --- | ---: |
+| A |40% |
+| B |48% |
+| C |45% |
 
-| Candidate | Activation | Support rate | False urgency |
-|---|---:|---:|---|
-| Control | 40% | 3% | No |
-| Pressure copy | 48% | 9% | Yes |
-| Clearer first step | 45% | 4% | No |
+Ask which candidate to investigate first; asking for more evidence is an allowed answer. Do not pretend the audience must choose B for the lesson to work.
 
-Policy is chosen **before** viewing results: support rate must be at most 5%; fabricated urgency is prohibited. In this fixture, passing both rules means **eligible for human review**. It never means automatically ship. There is no randomized event dataset, power calculation, confidence interval, or causal claim.
+## Reveal after the vote
 
-### Stage sequence
+| Candidate | Description | Activation | Support rate | Fabricated urgency |
+| --- | --- | ---: | ---: | --- |
+| A | Control |40% |3% | No |
+| B | Pressure copy |48% |9% | Yes |
+| C | Clearer first step |45% |4% | No |
 
-| Clock | Action and exact teaching beat |
-|---|---|
-| 0:00–0:30 | Introduce the synthetic onboarding question. Show only full-deck slide 11 with neutral A/B/C names and activation figures. Ask for a show of hands. |
-| 0:30–1:00 | Reveal support rates and the false-urgency flag. Do not suggest these invented values came from customers. |
-| 1:00–1:45 | Show the predeclared policy. Pressure copy is blocked for support above 5% and fabricated urgency. |
-| 1:45–2:30 | Highlight the clearer first-step candidate: 45% activation, 4% support, no false urgency. It is eligible for human review. Say: “Passing a gate is different from having enough evidence to ship.” |
-| 2:30–3:15 | Inspect or narrate the reasons. Explain that hard prohibitions cannot be offset by a higher weighted activation score. A policy edit requires an accountable decision; it is not an optimization trick. |
-| 3:15–4:15 | State what a real experiment still needs: valid assignment, event checks, observation window, analysis suited to the design, uncertainty, and a named owner. Close: “The rule was written before the scorecard. Automate the right things; keep the taste.” |
+The authored policy predates the scorecard: support must be at most 5%; fabricated urgency is prohibited. B fails both. Even a 10% support ceiling would leave B prohibited. C is eligible for human review, not automatically shipped. The false-urgency flag is labelled fixture input, not a demonstrated AI detection capability.
 
-| 4:15–5:00 | Ask the room to write the rule it needed, then compare with the predeclared policy. |
+## 40-minute route — 4:30 total
 
-**Lightning timing:** 0:00–0:30 setup; 0:30–1:00 reveal; 1:00–1:45 apply the rules; 1:45–2:15 contrast blocked and review-eligible candidates; 2:15–2:45 write the rule; 2:45–3:30 limits and human ownership. Full-deck slide 12 then explains the boundaries without repeating the example.
+| Clock | Action |
+| --- | --- |
+|0:00–0:25 | Speak setup; show activation only. |
+|0:25–0:55 | Vote,30 seconds. |
+|0:55–1:25 | Read reveal rows,30 seconds. |
+|1:25–2:10 | Speak B's rejection and C's review eligibility. |
+|2:10–2:30 | Silence after rejection,20 seconds. |
+|2:30–3:15 | Write the needed rule,45 seconds. |
+|3:15–3:30 | Compare with saved policy,15 seconds. |
+|3:30–4:30 | Finish the script's policy/owner explanation; advance to Campbell on 12. |
 
-**Expected outcome:** The apparently strongest activation result is rejected. The less aggressive candidate clears the stated rules but still requires a release decision. This is a policy example, not a reliable AI taste evaluator or a statistically valid experiment.
+Speech 130 seconds; audience/reading/silence 140 seconds.
 
-**Honest limits:** Aggregates are synthetic; support is an illustrative rate without underlying people or exposure dates. The false-urgency flag is labelled input, not a model's demonstrated ability to detect manipulation. The 5% ceiling is a fictional choice, not a recommendation for other products. No reweighting, significance test, or causal inference occurs. A real deployment would need consent and access boundaries, stable identifiers and metrics, experiment design, sample requirements, stopping rules, rollout controls, and an accountable owner.
+## 30-minute route — 4:00 total
 
-Use the fixed table and reveal the decision verbally. Pressure copy is blocked on two grounds. Clearer first step is eligible for review.
+| Clock | Action |
+| --- | --- |
+|0:00–0:25 | Speak setup; activation only. |
+|0:25–0:55 | Vote,30 seconds. |
+|0:55–1:15 | Read reveal,20 seconds. |
+|1:15–2:00 | Speak rejection and review eligibility. |
+|2:00–2:10 | Silence,10 seconds. |
+|2:10–2:55 | Write,45 seconds. |
+|2:55–3:10 | Compare,15 seconds. |
+|3:10–4:00 | Finish policy explanation; advance to 12. |
+
+Speech 120 seconds; audience/reading/silence 120 seconds.
+
+## 15-minute route — 3:00 total
+
+| Clock | Action |
+| --- | --- |
+|0:00–0:15 | Speak setup; activation only. |
+|0:15–0:35 | Vote,20 seconds. |
+|0:35–0:55 | Read reveal,20 seconds. |
+|0:55–1:25 | Speak rejection and eligibility from the short script. |
+|1:25–1:35 | Silence,10 seconds. |
+|1:35–2:05 | Write,30 seconds. |
+|2:05–2:15 | Compare,10 seconds. |
+|2:15–3:00 | Finish the short policy explanation; advance to 12. |
+
+Speech 90 seconds; audience/reading/silence 90 seconds.
+
+## Separate lightning excerpt — 2:30 total
+
+Thirty seconds setup,20 seconds vote,20 seconds reveal reading,30 seconds explaining the rules,30 seconds writing,20 seconds comparing and closing. Do not add the full route's dialogue. The whole seven-minute format is in formats.md.
+
+## Boundaries
+
+The support ceiling is fictional policy, not advice for another product. There is no randomized event dataset, power calculation, uncertainty interval or causal effect claim. A real experiment requires a hypothesis, valid assignment and exposure data, outcome and guardrail definitions, a stopping plan, suitable analysis and an accountable release decision. The vote cannot establish a customer's preference or an effect size.

@@ -1,4 +1,4 @@
-# Talk packet: Automating Improvement From Failure
+# Talk packet: The Pager Cried Wolf
 
 Browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) · [Presenter script](script-40min.md) · [Visuals](visuals.md)
 
@@ -6,29 +6,26 @@ Outline: [40 min](index.md) · Formats: [formats.md](formats.md) · Evidence: [e
 
 ## Titles
 
-- **Primary:** Automating Improvement From Failure
+- **Primary:** The Pager Cried Wolf
 - The Fail-to-Win Loop
-- Hand Your Production Logs to an Agent
 
 ## Abstracts
 
 ### 50 words
 
-Your production logs already contain next month's engineering work, and nobody is reading them. This talk builds the loop that works that queue: hand an agent the logs, earn each next access, distill and classify what comes back, and watch a gate refuse to promote a fix that passed everything except the held-out case.
+An agent can turn unread logs into another unread queue. This talk builds an offline improvement loop that carries evidence, stops on uncertainty, and counts the reviewer’s time. A fresh cancellation case puts regression, holdout, scope and human review to work before you choose one failure class to start Monday.
 
 ### 100 words
 
-Every failure in production is a queued improvement, and most teams never work the queue. This talk builds the loop in order: read access to logs and one question, an enrichment ladder where access is a set of individual grants, a scheduled out-of-band check that distills a bounded window and classifies it with a real unknown category, and tickets and PRs that travel with their evidence. The central example follows a gate holding a candidate fix when the held-out authorization case fails because the retry had hidden a 403. Then the harder half: what the queue does to the reviewer, what to compile into scripts, and which metrics will lie to you.
+Every green suggestion can teach you to stop reading the next one. The Pager Cried Wolf starts with that risk, then builds an offline improvement loop around it. Give an agent sanitized logs, add individual access grants, persist a bounded artifact, and classify without inventing a cause. The audience decides an unseen cancellation case before the holdout and scope evidence appear. A missing trace earns an unknown result. The back half asks what automation leaves for the reviewer, when repeated work should become a tested script, and whether the avoided failures justify the review burden. Start with one failure class.
 
 ### 250 words
 
-Teams pay for observability and read it only when a pager goes off. Meanwhile the logs contain every stack trace, retry storm, and thumbs-down the product produced this week, each one a ticket nobody filed. There is a name for training people to ignore the channel meant to warn them: alert fatigue. The way out is smaller than people expect. Give a coding agent read access to a sanitized export and ask what broke since yesterday. Already better than the nobody who was doing it before.
+An agent can turn unread logs into another unread queue. This talk builds an offline improvement loop that carries evidence, stops on uncertainty, and counts the reviewer’s time. A fresh cancellation case puts regression, holdout, scope and human review to work before you choose one failure class to start Monday.
 
-From there the talk is an ordering. Add the integration that answers the next question: the code to locate the branch, a trace to say what happened before it, a reproduction to test whether the explanation survives. Read access to code does not require write access to production. Access is a set of individual grants, not a graduation ceremony. The mechanism is a scheduled out-of-band check that reads a bookmark, distills a bounded window into distinct failure families with counts and evidence links, and classifies them — including an unknown result and a queue that receives it.
+Every green suggestion can teach you to stop reading the next one. The Pager Cried Wolf starts with that risk, then builds an offline improvement loop around it. Give an agent sanitized logs, add individual access grants, persist a bounded artifact, and classify without inventing a cause. The audience decides an unseen cancellation case before the holdout and scope evidence appear. A missing trace earns an unknown result. The back half asks what automation leaves for the reviewer, when repeated work should become a tested script, and whether the avoided failures justify the review burden. Start with one failure class.
 
-The central example follows a candidate fix that removes the visible failure and passes regression, then fails the held-out authorization case: the retry that made the error disappear was a 403 a second credential happened to answer. A successful workaround is not a repaired system, and jidoka gives the stop a job.
-
-The back half is the part build guides skip. What a month of green pull requests does to the reviewer. When to compile repeated work into a tested, versioned script. The money gate: detect, recommend, draft, and a person presses the button. And why a hundred tickets with ninety closed as wrong is a ten percent useful rate, whatever time-to-ticket says. It ends on Monday: one failure class, one integration, one place the loop must stop.
+The opening distinguishes Cvach’s integrative review from the earlier quality-improvement study it reports. Its alarm count becomes an explicit available-bed calculation, without pretending that hospital measurements establish a software effect. A separate synthetic ticket example shows why throughput can reward the wrong work. Participants finish by naming an input, an owner, one needed integration and a stop condition. The walkthrough uses authored cards and requires no live application. Actual integration, captured test output and first-hand production stories remain recording prerequisites, not implied accomplishments. The goal is inspectable work worth its review cost, with permission to reduce or stop the loop.
 
 ## Learning outcomes
 
@@ -45,14 +42,14 @@ Engineers, SREs, and technical leads who own a production system with logs and a
 
 ## Practical takeaways
 
-- The out-of-band check as a skeleton: one schedule, one bookmark, one bounded window, one artifact, and the rule that the bookmark only advances after the artifact is saved.
-- The enrichment ladder (logs, code, trace, reproduction, ticket) as a one-page table, with a "verify before use" column for each platform's MCP, API, and CLI.
+- The out-of-band check as a design worksheet: one schedule, one bookmark, one bounded window, one artifact, and the rule that the bookmark only advances after the artifact is saved.
+- The enrichment ladder (logs, code, trace, reproduction, ticket) as a one-page table, with a boundary for each input or grant in contracts.md.
 - A gate checklist: regression, holdout, scope, and a person, with the list of actions that always require one — money, deletion, and customer messaging.
 - A metrics sheet with denominators: failures that recurred after a fix, wrong tickets among reviewed tickets, backlog age, and the cases the agent ignored.
 
 ## Not a product pitch
 
-The talk uses a coding agent and bounded integrations as its implementation pattern. The speaker has no commercial relationship with any of them to disclose beyond ordinary use. Supporting code belongs in a separate repository and is not required to follow the talk.
+The talk uses a coding agent and bounded integrations as its implementation pattern. No vendor recommendation is part of the argument. Supporting code belongs in a separate repository and is not required to follow the talk.
 
 ## References
 
@@ -62,11 +59,11 @@ The talk uses a coding agent and bounded integrations as its implementation patt
 - Anthropic (January 2026). [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents).
 - Vendor MCP and API documentation for whichever platform supplies each rung of the enrichment ladder; verify current names and auth models before delivery.
 
-## Audience-specific abstracts (100 words each)
+## Audience-specific abstracts (approximately 100 words each)
 
 ### Engineering practitioner
 
-Point a coding agent at a sanitized log export and ask what broke since yesterday. That is step one of a loop this session builds in order: an enrichment ladder where each rung is an individual grant, a scheduled out-of-band check with a bookmark that only advances after durable output, distillation kept separate from classification, and tickets and PRs that travel with their evidence. The peak is run live — a candidate fix passes regression and fails the held-out authorization case, because the retry had hidden a 403. Then the parts a build guide skips: what the queue does to the reviewer, what to compile into a versioned script, and the metrics that will lie to you.
+Point a coding agent at a sanitized log export and ask what broke since yesterday. That is step one of a loop this session builds in order: an enrichment ladder where each rung is an individual grant, a scheduled out-of-band check with a bookmark that only advances after durable output, distillation kept separate from classification, and tickets and PRs that travel with their evidence. The peak is an authored slide walkthrough — an unseen cancellation case passes regression but fails holdout and scope checks; missing tenant evidence is held as unknown. Then the parts a build guide skips: what the queue does to the reviewer, what to compile into a versioned script, and the metrics that will lie to you.
 
 ### Engineering leadership and product
 
@@ -82,4 +79,4 @@ Most companies pay for detailed records of everything that goes wrong and then r
 
 ## Recording readiness
 
-The worked example requires captured output from a failed holdout and an unknown result. The implementation will live in the planned `mastra-agent-lab` repository.
+The slide walkthrough uses authored cards in demo.md. A live recording still requires verified first-hand stories and an implemented integration with retained command output. The proposed `mastra-agent-lab` implementation has not been verified; do not claim these cards are captured output.

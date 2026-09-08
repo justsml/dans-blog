@@ -1,20 +1,26 @@
 # Plan-space fixture
 
-The demo is arithmetic on the board, not a simulation. The constants are six features, three cohorts, 12,000 weekly actives over four weeks, an 8% baseline and a 2-point lift; swap in the room's numbers if it supplies better ones.
+An illustrative count, not a measured traffic forecast or experimental design recommendation. Substitute a product's actual eligible population, assignment unit and constraints before using it.
 
-The plan count:
+## Candidate plans
 
-- 6! = 720 orderings
-- 3⁶ = 729 cohort assignments
-- 720 × 729 = 524,880 distinct plans, before batching and before dates
+Assume six distinct features, no precedence constraints, every feature launched exactly once, one of three cohorts assigned to each feature, and all assignments and orderings considered distinct. Then 6! × 3⁶ = 720 × 729 = 524,880 plans. Dependencies, equivalences and prior decisions can remove most of them. Dates and batching are not counted. This does not imply every plan must be tested independently or that models cannot generalize.
 
-The arm count:
+## Illustrative evidence budget
 
-- 12,000 × 4 = 48,000 exposures in the window
-- 16 × 0.08 × 0.92 ÷ 0.02² = 2,944 per arm
-- ⌊48,000 ÷ 2,944⌋ = 16 arms
-- 524,880 ÷ 16 = 32,805 plans per arm of evidence
+Assume 12,000 *new, distinct eligible users* in each of four weeks: 48,000 unique users total, one independent binary outcome each, random assignment, no spillovers, no missing outcomes. Ordinary WAU cannot be multiplied this way: the same users can return every week. Repeated measures, account-level randomization or overlapping cohorts need another variance calculation.
 
-The per-arm figure uses the standard two-proportion rule of thumb, n ≈ 16·p(1−p)/δ², which approximates 80% power at α = 0.05. It is a sizing heuristic, not a derivation; Benchmarks owns instrument validation and small-sample inference, and this talk does not re-teach either.
+For a two-sided, two-arm comparison at approximately 80% power and α = 0.05, a local normal approximation gives n per arm ≈ 2 × (1.96 + 0.84)² × p(1−p) / δ². Rounding the constant 15.68 to 16 gives the talk's heuristic:
 
-Nothing here measures a real team, a real product, or a real release. The numbers establish one thing: the plan space is enormous relative to the evidence any single window can buy, so most of the decision is made without data.
+- p = 0.08; δ = 0.02 absolute (8% to 10%, not a 2% relative lift).
+- 16 × 0.08 × 0.92 / 0.02² = 2,944, rounded to about 3,000 users per arm.
+- floor(48,000 / 2,944) = 16 arms, including a control; these are not sixteen independent two-arm experiments.
+- 524,880 / 16 = 32,805 candidate plans per arm slot in this illustrative allocation.
+
+The alternative proportion has a different variance, so 2,944 is a rough sizing heuristic rather than an exact 8%-versus-10% power calculation. A real multi-arm design specifies comparisons, control allocation, multiplicity, attrition and stopping rules. Under the same power criterion, correcting many comparisons ordinarily demands more evidence; do not imply the naive sixteen-arm allocation is already powered. A useful primary implementation reference is [R stats power.prop.test](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/power.prop.test.html), which computes power for a two-sample proportions test.
+
+The ratio illustrates scarce direct evidence within a large unconstrained plan space. It is not a theorem that analytics cannot guide release planning or that reasoning tokens buy nothing. The product owner still decides which constraints and outcomes matter.
+
+## Delivery
+
+40/30 routes: 45 seconds of board work; prewrite the assumptions, calculate plan count, show the per-arm sizing, then divide. Use the room's alternative numbers only in Q&A so the booked timing remains meaningful. 15 route: calculate 6! × 3⁶ only; supply the arm result and assumptions verbally. No second derivation.

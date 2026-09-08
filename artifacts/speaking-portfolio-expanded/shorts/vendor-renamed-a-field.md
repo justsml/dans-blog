@@ -1,6 +1,6 @@
 # 200 OK (Nothing Is)
 
-2 min · video · parent: [Adaptive, agentic apps](../talks/adaptive-systems/index.md), slide 1
+2 min · video · parent: [Conjure Exactly Enough](../talks/adaptive-systems/index.md), slide 1
 
 HTTP 200 is not a contract. It is a vendor saying "I answered," which is a different thing from "I answered the question you were asking."
 
@@ -14,7 +14,7 @@ Every monitor you have watches transport. Latency, status codes, error rate. The
 
 ## Beat: the boring baseline
 
-The honest fix is boring: diff the schema, alert, and have a human replay after coffee. It costs a morning per surprise, and the 98% of records that were fine sit behind the broken ones the whole time. That is the bar anything smarter has to beat, on time to recover and on false repairs.
+The honest fix is boring: diff the schema, alert, and have a human replay after coffee. It costs a morning per surprise, and the fixture's 882 unaffected records out of 900 sit behind the broken ones the whole time. That is the bar anything smarter has to beat, on time to recover and on false repairs.
 
 ## Landing
 

@@ -1,0 +1,44 @@
+# Corrections: Compute, Please (and a Receipt)
+
+Verified and corrected 2026-09-08 against [the individual audit](audit-2026-09-08-dynamic-scaling.md) and [aggregate audit](AUDIT-2026-09-08.md). Primary title changed; stable `dynamic-scaling` slug and 14-slide structure retained. Canonical outline, three scripts, two adaptations, bullets, packet, CFP, contracts, demo, evidence, visuals, four associated shorts and three SVGs were updated together. Original audit reports remain unchanged.
+
+## Finding-by-finding disposition
+
+| Audit finding | Status | Correction or evidence |
+| --- | --- | --- |
+| Blocking 1a: output dominates the judge bill | Verified; corrected | Haiku 4.5 official base rates are $1/$5 per million. 1,000 input + 50 output costs $0.00125, 80% input. Removed the inverted explanation from all talk variants, short and SVG. |
+| Blocking 1b: council costs a fraction of cheap generation | Verified; corrected; proposed fix disputed | A 300/1,500 draft is $0.0078; five 1,800/50 verdicts at the same rates are $0.01025 (131.41%). The audit's proposed penny/quarter/one-more-generation wording conflates different denominators and would not price five different models. The talk now gives the same-rate benchmark explicitly, requiring actual per-model prices for a real council. No unsupported frontier lineup quotes adopted. |
+| Blocking 2: unbudgeted stories | Verified; corrected | Removed opener story; moved it to walkthrough with 30-word/25-second substitution. Slide 2 substitutes up to 40 words, never appends them. Counts include stories; [pacing](../talks/dynamic-scaling/pacing.md) separately accounts for audience time. |
+| Blocking 3: exercise after climax / too long at 30 | Verified; corrected | Exercise precedes climax in outline, scripts and bullets. Two-minute three-candidate exercise at 40; one-minute maintainer-only reveal at 30. Answer columns stay hidden until the response. |
+| Sharpen 1: Amdahl assumptions and three/ten mismatch | Verified; corrected | Ten workers throughout full prose; fixed-work, perfect-division, free-coordination ceiling stated. 1/(0.1+0.9/10)=5.263; 100 workers=9.174. |
+| Sharpen 2: request absent from walkthrough | Verified; corrected | Trace runs on lease-88f1, sandbox-small, eight workers, six-minute TTL. Expiry is the event; it is no longer conflated with an AWS two-minute interruption notice. |
+| Sharpen 3: cap never binds | Verified; corrected | Provider cap $1.50; seven two-attempt allowances reserve $1.40, three items refused. All ledger rows reconcile. Separate $1.50 compute ceiling is explicitly distinct, with up to $3 parent reservation. Duplicate logical requests reuse the job; distinct batches queue. Lazy atomic retry admission can refuse a retry but does not inherently overspend. |
+| Sharpen 4: January ecosystem story | Verified; corrected / partial dispute | Added Cloudflare Dynamic Workflows (1 May 2026). Rechecked Fly target, Depot pricing, Modal scale-to-zero, Vast instance types and AWS interruption semantics. Did not promote the audit's competitor-sourced Depot shared-kernel claim into a slide fact. |
+| Sharpen 5: extra on-screen disclaimers | Verified; corrected | Removed fixture disclaimer from ledger SVG; changed ecosystem date to evidence-bank reference. Scope stays on opener. |
+| Sharpen 6: wrong audience-moment count | Verified; corrected | Seven explicitly budgeted response beats, 7.75 minutes at 40. Other stage cues are guided explanation or silent reflection, not extra discussion. |
+| Sharpen 7: abstract drift / lengths | Verified; corrected | CFP and packet share identical short (47 words) and standard (98 words) abstracts; standard names both techniques. Extended packet is 226/230 words. Labels are limits, not claimed exact counts. |
+| Sharpen 8: missing synthesis SVG | Verified; corrected | Removed dangling inventory claim; workshop synthesis uses demo.md. Existing taxonomy SVG remains. |
+| Sharpen 9: short's vote and startup claim | Verified; corrected | “Got a say”; startup remains Fly's stated target, not measured latency. |
+| Sharpen 10: admission outage omitted | Verified; corrected | Queue durably or reject explicitly; never dispatch without reservation. Name coordinated-write p99 as a measurement requirement. No invented latency result. |
+| Nit: closing actually | Verified; corrected | Removed; final imperative is “Put the limit where the work begins.” |
+| Nit: independently/separately | Verified; corrected | Short uses separately written versions. |
+| Nit: no summed cost | Verified; corrected | Evidence totals three drafts plus fifteen verdicts at $0.05415; explicitly excludes and requires adding retries, synthesis, compute and measured human review. No fabricated all-in saving. |
+| Nit: deck not rebuilt | Verified; remaining | Truthful status preserved; audit did not provide a finished hand-authored deck. |
+| Part B1: two-talk seam | Editorial diagnosis addressed | Named request/lease now survives into the binding ledger and restart trace. Generic correctness content stays as enforcement of this request. No claim it was invented for agents. |
+| Part B2: thesis lacks reversal | Corrected | “Your agent chooses the compute, and the bill still has your name on it.” Added to opener, returned in close. |
+| Part B3: title | Corrected | Primary: Compute, Please (and a Receipt). Descriptive subtitle retained only where useful. Shared portfolio title propagation belongs to parent integration. |
+| Part B4: hallway number | Corrected; proposed quarter ratio disputed | 1.025-cent verdict council versus 0.78-cent draft: 131%, with explicit same-rate assumptions. A checkable cost replaces affordable. |
+| Part B5: peak dissipates | Corrected | Gate exercise and split occur before the engineering-axioms paragraph, then closing slide. |
+| Part B6: hostile FinOps/SRE questions | Corrected | Council arithmetic and no assumed cross-model cache saving; admission outage queues/rejects. |
+| Part B7: cut slide 9 | Editorial proposal not adopted | Retained 14 slides: granted throughput ceiling links the compute request to dispatch policy. Timed as guided explanation; full route now passes explicit budgets without needing this cut. Short routes already omit it. |
+| Part B8: landing as homework | Corrected | Verdict callback (“The bill still has your name on it”) precedes the concrete imperative. No new closing topic. |
+
+Prior-audit carryovers: the 806-word slide remains split across 12/13; evidence retains separate barrel/council roles and declared review budget; Adaptive handoff untouched; corrected short and dangling visual issues are closed above; obsolete generator finding remains not applicable. Existing workshop table still totals 60 minutes; no workshop expansion was needed.
+
+## Verification and boundaries
+
+[Haiku pricing](https://www.anthropic.com/claude/haiku), [Cloudflare announcement](https://blog.cloudflare.com/dynamic-workflows/), [Fly target](https://fly.io/learn/agent-sandbox/), [Depot pricing](https://depot.dev/docs/agents/overview), [Modal scaling](https://modal.com/docs/guide/scale), [Vast instance types](https://docs.vast.ai/guides/instances/choosing/instance-types), and [AWS interruption notice](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-instance-termination-notices.html) were checked against primary sources. AWS hibernation starts immediately; “two minutes” is not a universal guarantee. [Knight/Leveson paper](https://www.csc.kth.se/utbildning/kth/kurser/DA2210/vettig12/Seminarier/KnightLeveson.pdf) supports 27 versions and one million tests; no correctness-vote inference added.
+
+Temporary checks parsed every script slide and counted prose plus bridges and story allowances. Routes total 40/30/15 exactly, with spoken+interaction budgets 32.25+7.75, 26+4, and 13+2. The integration review caught a denominator error in the first pacing pass. Walkthrough and review narration were shortened; rates now divide by spoken time after interaction. Every slide is at or below 80 words per spoken minute. See the recounted pacing tables for all three routes. Three-candidate and five-judge counts now agree across prose, example and SVG. The revised ledger and council SVGs were rendered with librsvg and visually inspected; ledger bars use the $1.50 scale. Scoped git diff whitespace checks passed. No generator, checker or deck-builder was added.
+
+Remaining delivery dependencies: Dan must supply the bounded first-hand stories and rehearse them; no measured delivery pace, real council quality result, real multi-model quote, provider startup benchmark or finished presentation deck is claimed. Modal/Vast price comparisons and the audit's full frontier-price inventory are not needed for the narrowed assertions. Free Tier ratios and WebMCP claims are outside this talk's scope.

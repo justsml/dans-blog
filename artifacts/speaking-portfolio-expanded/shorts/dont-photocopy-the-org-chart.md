@@ -10,11 +10,11 @@ Research writes a brief. Product turns it into tickets. Engineering turns ticket
 
 ## Beat: why the boundaries exist
 
-Coase, 1937: coordination has a cost, and the boundary sits where the cost balances. A weekly brief existed because collecting it took two days. A triage meeting existed because linking a complaint to a trace needed three people and a spreadsheet. Those costs just changed. The old boundary deserves a second look before you teach an agent to reproduce it.
+Coase, 1937, compares firms with markets. My application inside a product group is narrower: compare cheaper evidence collection and transmission with added verification and maintenance. A weekly brief existed because collecting it took two days. A triage meeting existed because linking a complaint to a trace needed three people and a spreadsheet. If those costs change, measure the new total. The old boundary deserves a second look before you teach an agent to reproduce it.
 
 ## Beat: draw the wires, not the boxes
 
-Design communication between agents and people, not a robot per job title. Research delivers a sourced brief with dates. Feedback delivers clusters with the original complaints attached. A product review resolves the disagreement and writes down the accepted hypothesis; a build agent consumes that artifact instead of polling six chat histories to guess which decision won. Keep the meeting where the evidence conflicts. Delete the one that was only ever a spreadsheet.
+Design communication between agents and people, not a robot per job title. Research delivers a sourced brief with dates. Feedback delivers clusters with the original complaints attached. A product review resolves the disagreement and writes down the accepted hypothesis; a build agent consumes that artifact instead of polling six chat histories to guess which decision won. Keep the meeting where the evidence conflicts. Reprice the one that was only ever a spreadsheet.
 
 ## Landing
 

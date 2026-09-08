@@ -1,4 +1,4 @@
-# Adaptive, agentic apps: implementation handout
+# Conjure Exactly Enough: implementation handout
 
 [Smaller memory pattern: prompt, record and worked example](memory-pattern.md)
 
@@ -9,6 +9,7 @@ Contracts from the talk. The job contract and tool policy mirror Dan's prototype
 ```json
 {
   "jobId": "ingest-1042",
+  "inputRecordCount": 900,
   "goal": "Preserve address meaning and account for every input record",
   "trigger": "schema-mismatch: vendor-address-v7 vs observed payload",
   "evidence": ["approved-contract-v8", "redacted-sample-set-12"],
@@ -103,23 +104,25 @@ The planner never holds a storage credential or a signed URL. The dispatcher han
   "jobId": "ingest-1042",
   "shape": "provider-wait",
   "size": {"class": "sandbox-small", "count": 8},
-  "durationSeconds": 360,
+  "durationSeconds": 120,
   "region": "us-east",
   "costCapUsd": 1.5,
   "billTo": "customer-4471"
 }
 ```
 
-The scheduler resolves this against a catalog of approved classes, the tenant's plan and budget, and residency rules, then returns a lease with an expiry and a teardown. The agent chooses within the catalog; it never grants itself a class or a region. Mechanics are in the companion talk, Dynamic Scaling of Agentic Workloads.
+The scheduler caps the lease at the remaining 120-second job deadline, measured from the same job start; a later request receives a shorter lease. The $1.50 compute cap is reserved inside the $2 total job cap, leaving at most $0.50 for other work. Expiry stops new dispatch and triggers teardown; it does not cancel accepted external work.
+
+The scheduler resolves this against a catalog of approved classes, the tenant's plan and budget, and residency rules, then returns a lease with an expiry and a teardown. The agent chooses within the catalog; it never grants itself a class or a region. Mechanics are in the companion talk, Compute, Please (and a Receipt).
 
 ## A daily report an engineer can act on
 
 | Priority | Observation | Impact | Next action |
 | --- | --- | --- | --- |
-| High | `status=pending` has no approved interpretation | 18 records quarantined | Integration owner requests vendor semantics |
+| High | `status=pending` has no approved interpretation | 18 of 900 records quarantined | Integration owner requests vendor semantics |
 | Medium | Verification submission has no confirmed outcome | One job, $0.20 reservation outstanding | Query saved provider job ID; no blind resubmission |
-| Medium | 3 denied tool requests: write-database from ingest-repair jobs | No action taken | Owner decides whether a promotion job class is needed |
-| Low | Address mapping v8 passed canary | 100 records checked, no fixture violations | Owner reviews evidence before scope expansion |
+| Medium | 3 denied tool requests: write-mapping-version, write-database, send-email | No action taken | Owner decides whether a promotion job class is needed |
+| Low | Address mapping v8 passed canary | 100-record canary is a subset of 882 eligible records; no fixture violations | Owner reviews evidence before scope expansion |
 
 Include source refs, timestamps, policy and model versions, actual versus reserved spend, and counts of every input disposition. Aggregate routine retries. Page urgent failures through independently configured monitoring.
 
@@ -135,3 +138,5 @@ Answer each before enabling automatic action:
 6. Which uncertain states stop or escalate the job?
 7. How are partial writes reconciled after rollback?
 8. Who reads the denied-request log, owns the report, and approves a wider policy?
+
+Fixture denominator: 900 inputs = 882 mapped or eligible for controlled continuation + 18 quarantined; 882 / 900 = 98%. The 100 canary records are included in the 882, not an additional disposition. One unresolved provider verification job is an operation-level status, not an extra input record. No measured production success rate is implied.

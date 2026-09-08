@@ -1,57 +1,54 @@
-# The Future of Product Engineering: 40-minute presenter script
+# Break the Mirror on Purpose: 40-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
+Use all 17 slides. [Timing](timing.md) includes interaction; stories replace prose. The authored scorecard is a policy exercise, not a live experiment. Reveal Campbell only after the vote.
 
-## 00:00 to 02:00: slide 1, The architecture you could read off the org chart
+## 00:00 to 02:15: slide 1, The architecture you could read off the org chart
 
-On screen:
-
+> You design the agents; your org chart chooses their handoffs.
 > Conway, 1968: communication structures constrain designs
-> Which of those boundaries still earns its keep?
 
-Conway said organizations designing systems "are constrained to produce designs which are copies of the communication structures of these organizations." Constrained. Communication structures. The wires matter more than the boxes.
+You design the agents; your org chart chooses their handoffs. Unless you make those handoffs a decision too.
 
-This is a proposed operating model. The worked example uses synthetic numbers to explain a policy, not measure customer benefit. My bet is that cheaper coordination makes some of our current boundaries obsolete. We should find those boundaries before we photocopy them onto agents.
+Conway's 1968 argument connects a system's design with the communication structure of its builders. The wires matter more than the boxes. Research writes a brief. Product translates it into tickets. Engineering translates tickets into software. Support translates software back into complaints. Which translations carry judgment, and which carry the same sentence into another tool?
 
-Look at the handoffs in a product you own. Research writes a brief. Product translates it into tickets. Engineering translates the tickets into software. Support translates the software back into complaints. Which translations carry judgment, and which just carry the same sentence into another tool?
+This is a proposed operating model, and the worked example uses synthetic numbers to explain policy. My bet is that cheaper evidence collection changes what some handoffs cost. Measure that before copying those boundaries onto agents.
 
-Source: Melvin E. Conway (1968), [How Do Committees Invent?](https://melconway.com/Home/pdf/committees.pdf), Datamation, April, 28–31.
+
 
 Story: A system whose API boundaries reproduced the team handoffs, and the change that got stuck between them.
 
-## 02:00 to 04:15: slide 2, Mirroring is measured. It is not destiny.
+## 02:15 to 04:45: slide 2, Mirroring is measured. It is not destiny.
 
-On screen:
+> Industry/firm descriptive subset: 50 studies
+> 35 strong / 11 partial / 4 no support = 70% / 22% / 8%
+> Map dependencies before splitting the work
 
-> 142 studies reviewed
-> Mostly supported, with a documented minority that was not
+Colfer and Baldwin reviewed a hundred and forty-two studies. In the fifty descriptive studies of industries and firms, thirty-five strongly supported mirroring, eleven partly supported it, and four did not: seventy, twenty-two and eight percent. Those are studies, not percentages of companies that deliberately broke the mirror.
 
-Colfer and Baldwin reviewed 142 empirical studies. The firm and industry descriptive studies mostly supported mirroring, with a documented minority that did not. Read the split off their table before you quote a percentage at anyone. The open collaborative projects looked different. Do not turn that into a claim that one third of companies broke Conway's law.
+The same review found ten poorly performing unmirrored cases in its normative firm sample. The common problem was premature modularization: hidden technical dependencies outlived the organizational split. Partial mirroring keeps knowledge broader than the work boundary.
 
-Their useful finding is that firms can deliberately break the mirror through modular partitions or relationships across organizational boundaries. MacCormack, Rusnak, and Baldwin also found differences in modularity across development arrangements. These are studies of association and organization, not a randomized trial of rearranging your teams.
+So map what depends on what before reorganizing it. The research supports exceptions and a warning, not a guarantee that a new org chart improves software. MacCormack and colleagues also studied associations between development arrangements and modularity. Neither paper ran our proposed agent organization as an experiment.
 
-So the org chart is evidence about why the software looks like this. It is not an instruction to make the next system look identical.
 
-Source: Colfer and Baldwin (2016), [The mirroring hypothesis: theory, evidence, and exceptions](https://doi.org/10.1093/icc/dtw027), Industrial and Corporate Change 25(5), 709–738. MacCormack, Rusnak, and Baldwin (2012), [Exploring the duality between product and organizational architectures](https://www.hbs.edu/ris/Publication%20Files/Research%20Policy%2041%20%282012%29%201309%E2%80%93%201324_c5c2350e-013c-4065-a2f9-d95eb32177d5.pdf), Research Policy 41(8), 1309–1324.
 
-## 04:15 to 06:30: slide 3, Your org chart is a fossil of coordination cost
 
-On screen:
+
+## 04:45 to 07:00: slide 3, Who Ordered This Handoff?
 
 > Coase, 1937: coordination has a cost
 > Reprice the handoff before copying it
 
-Coase asked why firms exist when people could contract through the market. Using the market costs something; coordinating inside the firm costs something too. The boundary depends on that comparison.
+Coase's 1937 question was why firms exist when transactions could go through markets. Compare the cost of using the market with organizing work inside the firm. Lower internal costs can support a larger firm; Coase does not prescribe deleting departments.
 
-Apply that question inside a product group. A weekly brief may have existed because collecting it took somebody two days. A separate triage meeting may have existed because linking a complaint to a trace required three people and a spreadsheet. If those costs change, the old boundary deserves another look.
+Here is my narrower application. An agent may make collecting, translating and transmitting evidence across a handoff cheaper. Verification, permissions and maintenance can grow at the same time. Price both changes.
 
-That is the inversion. Do not start with one agent per box on the current org chart. Start with the outcome and price the handoffs again. Agents do not delete coordination cost. They move some of it into verification, permissions, and maintenance. Count those before declaring the meeting extinct.
+A weekly brief that took two days to assemble might no longer need the same preparation process. The decision meeting may still be valuable. Start with the outcome and the handoff cost, not one agent per box on the current org chart.
 
-Source: Ronald H. Coase (1937), [The Nature of the Firm](https://onlinelibrary.wiley.com/doi/10.1111/j.1468-0335.1937.tb00002.x), Economica 4(16), 386–405. The agent-design application is the speaker’s argument.
 
-## 06:30 to 08:00: slide 4, The spectrum, and the two ways to lose
 
-On screen:
+
+
+## 07:00 to 09:00: slide 4, The spectrum, and the two ways to lose
 
 > Committee at one end. Five people at the other.
 > The suffering arrives later than the speed does.
@@ -64,25 +61,27 @@ Automate the right things and keep the taste. Trade judgment for AI vibes and th
 
 Delivery: Take 30 seconds: where is your team on the spectrum, and what is its heaviest handoff? Keep the answers for the close.
 
-## 08:00 to 10:00: slide 5, Draw the wires between agents
 
-On screen:
+
+## 09:00 to 11:15: slide 5, Draw the wires between agents
 
 > Research → sourced brief → product review
 > Feedback → cited clusters → product review
 > Review → accepted hypothesis → build
 
-The inverse Conway manoeuvre is the name people use for changing the organization to encourage the architecture they want. Here that means designing communication between agents and people, not putting a robot beside every job title.
+Draw one wire: feedback sends cited clusters to product review. What arrives, what leaves, who decides, and what did it cost last week?
 
-Research delivers a brief with source URLs and dates. Feedback delivers clusters with the original complaints attached. The product review resolves disagreement between them and writes the accepted hypothesis. A build agent consumes that artifact. It does not poll six chat histories and guess which decision won.
+Price collection and translation separately from checking the claims, resolving disagreement and maintaining the integration. If the agent saves an hour of collection and adds two hours of correction, the new wire costs more. That is a synthetic comparison, not a productivity result.
 
-Team Topologies distinguishes collaboration, service consumption, and facilitation. Use collaboration while discovering the interface. Make the repeated delivery a service once the contract is understood. Keep facilitation temporary. An agent roster without these wires is a seating plan.
+Research delivers dated sources. Feedback keeps original complaints. Review produces an accepted hypothesis; build consumes that artifact instead of guessing across six chat histories.
 
-Source: [Thoughtworks, Inverse Conway Maneuver](https://www.thoughtworks.com/en-br/radar/techniques/inverse-conway-maneuver), 2014/2015. Skelton and Pais, [Team Topologies interaction modes](https://teamtopologies.com/key-concepts).
+Thoughtworks popularized the inverse Conway manoeuvre. Team Topologies distinguishes collaboration, service consumption and facilitation. Collaborate while discovering the contract; make repeated delivery a service once understood. An agent roster without these wires is a seating plan.
 
-## 10:00 to 11:30: slide 6, Two directions of attention
 
-On screen:
+
+
+
+## 11:15 to 13:15: slide 6, Two directions of attention
 
 > Research looks out. Feedback looks in.
 > Keep the meeting where the evidence disagrees.
@@ -93,180 +92,185 @@ Now make them disagree. Research says onboarding lacks a feature. Feedback says 
 
 Keep the review where somebody opens the source material and argues about what belongs at the top. It is the integrating interface in this system. Taste gets exercised in public there.
 
+Price the disagreement separately from collecting the evidence. Making both summaries cheaper does not make deciding between them free.
+
+
+
 Story: A feedback cluster that merged different complaints and changed the wrong priority. Bring one original complaint that the summary obscured.
 
-## 11:30 to 12:45: slide 7, Effort left the rubric. Argue with me.
+## 13:15 to 14:45: slide 7, Effort left the rubric. Argue with me.
 
-On screen:
-
-> My observation, not your sprint report
 > Who estimated a ticket last week?
+> Build cost · review cost · support cost · maintenance
 
-I have not heard an engineering team discuss level of effort on a ticket in months. That is the observation in my working notes. Let us test how badly it travels.
+Who estimated a ticket last week? The first implementation can be cheap while rollout, review, customer support and maintenance remain expensive.
 
-We still have to choose what to ship. Even when the first implementation is cheap, rollout, review, customer support, and maintenance have costs. Put those beside evidence for the idea. Do not replace story points with a model's confidence and call that prioritization.
+Put those costs beside the evidence for the idea. If an agent removed research work but created a pile of proposals nobody can inspect, effort did not disappear. It changed owners.
 
-Delivery: Ask who estimated a ticket last week, take the show of hands, and say the count without inventing a denominator. Confirm the first-person observation with Dan before delivery; if it no longer holds, open with the question instead.
+Do not replace story points with a model's confidence and call that prioritization.
 
-## 12:45 to 14:30: slide 8, Gap analysis, past engineering
+Delivery: Take fifteen seconds for hands. Count hands without inventing a denominator. The former first-person claim about effort estimation is optional only after Dan verifies it; it is not required prose.
 
-On screen:
+
+
+## 14:45 to 16:30: slide 8, Gap analysis, past engineering
 
 > Walk the build. Attach screenshots and reasons.
 > A candidate should be cheap to reject.
 
-Point an agent with a browser at a build. Ask it to walk onboarding as a new user, compare the result with the sourced brief, and propose changes to the information hierarchy. Each proposal carries the screenshot, the attempted task, and the reason the current page got in the way.
+Have a browser agent walk onboarding and attach the screenshot, task and account state to each proposal.
 
-Make one proposal wrong in review. The screenshot may show a feature hidden because the test account lacks permission. That is a setup defect, not evidence to redesign the product. The reviewer needs the account state to tell the difference.
+Now make one proposal wrong. The screenshot shows a missing feature because the account lacks permission. That is a setup defect, not a reason to redesign the product. Account state makes the suggestion cheaper to reject.
 
-Analytics, warehouse queries and marketing drafts feed the same queue. They share provenance and owners, and none of them needs write access to customer records.
+Measure the review time per useful proposal against the old walkthrough. More screenshots are not a saving if a person has to reconstruct every session. Keep the integration only when the evidence it produces earns its maintenance and review cost.
 
-## 14:30 to 16:30: slide 9, Targeted beta enrollment, and the deluge
 
-On screen:
+
+
+
+## 16:30 to 18:15: slide 9, Targeted beta enrollment, and the deluge
 
 > Keep the customers behind the cluster
 > Invite an opt-in cohort. Keep the exit.
 
 This idea came from a cluster of customers. Preserve that provenance. Find people with the same task, then ask whether they want to try the change. Similar company size is not necessarily a similar problem.
 
-The invitation explains what changes, that it is a beta, and how to turn it off. A person approves the message and the recipients. Narrow feedback tells us what to try next; it does not establish a causal improvement.
+The invitation explains what changes, that it is a beta, and how to turn it off. A person approves the message and the recipients. Narrow feedback tells us what to try next. That is all it tells us.
 
 Prepare the intake before inviting people. If customers answer and nobody follows up, you have taught your best customers that responding is a one-time event. The feedback loop needs an owner even when the summarizer runs itself.
 
+
+
 Story: A beta invitation that selected users on the wrong axis, or feedback that arrived faster than the team could act on it.
 
-## 16:30 to 18:00: slide 10, Campbell's law arrives on schedule
+## 18:15 to 19:45: slide 10, Ship Friday
 
-On screen:
+> Onboarding activation
+> A · B · C
+> Which candidate gets your attention?
 
-> Activation is the target
-> What behavior did we just pay for?
+Friday's product review has three onboarding candidates. Their labels are A, B and C. The next screen shows activation rates.
 
-Give the system a target and it will search for ways to improve it. So will a team. Campbell described the pressure that decision-making puts on quantitative indicators and on the activity they are supposed to measure.
+Choose which candidate you would investigate first. You can choose one or ask for more information. We will open the rest of the record after the vote.
 
-Our target is onboarding activation. The next screen has three candidates. Before we inspect anything else, choose the one you would investigate. Do not reverse-engineer the answer from the names; they are A, B, and C.
+For now, write down the first fact you would request alongside the activation number. Keep it to one fact. We will use that answer when the record opens.
 
-The interesting question is what the winning candidate did to earn the number. A metric tells you that something moved. It does not tell you whether you wanted the movement.
+Delivery: Allow fifteen seconds to choose the additional fact. Do not name Campbell, urgency, support ceilings or a metric trap before the vote.
 
-Source: Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
-## 18:00 to 22:30: slide 11, The metric winner fails the product
 
-On screen:
+## 19:45 to 24:15: slide 11, Open the Rest of the Record
 
 > A · 40% activation
 > B · 48% activation
 > C · 45% activation
 
-Which candidate gets your attention? B has the largest activation number. Now open the rest of its record.
+Which candidate gets your attention? A is forty percent activation, B forty-eight, C forty-five. Vote before we open the rest of the record.
 
-Support contacts rose to nine percent, against a five-percent ceiling. The copy invents urgency. Raise the support ceiling to ten and it still fails the urgency rule. A metric win cannot buy off a product principle.
+B's support rate is nine percent against a five-percent ceiling. Its copy invents urgency. Raise the ceiling to ten and it still fails the urgency rule. A metric win cannot buy off a product principle.
 
-C has forty-five percent activation, four percent support, and no fabricated urgency. It is eligible for human review. It is not shipped. These point estimates have no sample size or uncertainty behind them; our opening scope statement matters here.
+C has forty-five percent activation, four percent support and no fabricated urgency. It is eligible for human review. It is not shipped.
 
-Write the rule you wish you had before the first vote. Compare it with the policy we saved before opening the scorecard. The gap is what this exercise was for.
+Write the rule you wish you had before the vote, then compare it with the policy saved before the scorecard. That policy belongs to the owner of the decision; an optimizer does not get to rewrite it.
 
-Delivery: Begin with the three activation figures and take the vote. Then reveal the support and copy evidence from the worked-example notes. Allow 45 seconds to write the rule.
+Delivery: Neutral A/B/C activation only at first. Give thirty seconds to vote, thirty to read the reveal, twenty of silence after the rejection, forty-five to write a rule, and fifteen to compare it with the saved policy. demo.md specifies each route. Do not name Campbell until slide 12.
 
-## 22:30 to 24:30: slide 12, Where guards go, including the two we forgot
 
-On screen:
+
+## 24:15 to 26:30: slide 12, Where guards go, including the two we forgot
 
 > Wider rollout · expensive runs · infrastructure changes
 > Customer messaging · customer data deletion
 
-The example gave us a reason for the guard. Put it where the consequence changes, before the action happens.
+Campbell described what decision pressure can do to a quantitative indicator and the activity it measures. Now we have a reason to name it: the activation winner failed the product rules.
 
-Widening a cohort spends more customer exposure. An expensive run spends money. Creating infrastructure adds ongoing obligations; tearing it down may remove somebody's recovery path. Name the budget, the owner, and the evidence needed at each crossing.
+Put the guard where consequences change, before the action. Wider rollout spends customer exposure. Expensive runs spend money. Infrastructure changes create obligations or remove recovery paths. Name the budget, owner and evidence at each crossing.
 
-Then add the two missing from the old list. Sending a message to a real customer. Deleting their records. Those are consequences for another person, even when the API call costs a fraction of a cent. A person approves them, and the system enforces that permission rather than mentioning it in a prompt.
+Customer messaging and data deletion affect another person even when the API call is cheap. A person approves them; the tool layer enforces that permission. Consent to a beta is permission for a bounded experience, not every future experiment.
 
-## 24:30 to 26:30: slide 13, How many agents can one person own?
 
-On screen:
+
+
+
+## 26:30 to 28:45: slide 13, How many agents can one person own?
 
 > 6 × (32 + 5) = 222 possible relationships
 > Ownership costs attention. Budget it.
 
-Six agents, six owners. Somehow you own four of them and are on call for all six.
+Six agents, six owners. Somehow you own four and are on call for all six.
 
-Graicunas counted possible direct, cross, and group relationships. His maximum counting formula is n times the quantity two-to-the-n-minus-one plus n-minus-one. For six that is six times the quantity thirty-two plus five, which is six times thirty-seven: 222. This is combinatorics, not a staffing limit. It does not mean your six agents generate 222 meetings.
+Graicunas's 1933 relationship count, reprinted in 1937, gives six times the quantity thirty-two plus five. Six times thirty-seven: two hundred and twenty-two possible relationships. A maximum combinatorial count is not a validated staffing limit. Count the interfaces you actually require.
 
-The lesson is to restrict the interfaces we actually require. Bainbridge adds the human problem: automation leaves monitoring and exceptional interventions while removing routine practice. Assign recovery drills and review time along with the agent. An owner field without capacity is a forwarding address for blame.
-
-Source: V. A. Graicunas, [Relationship in Organization](https://nickols.us/relationship.pdf), reprinted in Papers on the Science of Administration, 1937, maximum-basis table. Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468).
+Bainbridge's 1983 warning is about the work left for people: monitoring and exceptional intervention, with less routine practice. My design response is to assign recovery drills and review time with the agent. An owner field without capacity is a forwarding address for blame.
 
 Delivery: Do 6 × (32 + 5) aloud. Ask who owns more automated jobs than they could inspect in one afternoon. Take 20 seconds.
 
-## 26:30 to 30:30: slide 14, Software Runs on Petrol Now
 
-On screen:
+
+## 28:45 to 31:30: slide 14, Software Runs on Petrol Now
 
 > Tokens stop being a build cost and become a running cost
 > Sentry bots hunting your own vulnerabilities, 24/7, forever
 > Be careful firing the security bots. They know who you are.
 
-Two predictions to close on, and I will label them as predictions once: this is where I think the operating model goes, not something I have measured. Here is the first. Today you buy tokens to build software. Before long most software will need a steady stream of them just to keep running — to stay current with its dependencies, to re-derive the integration a vendor renamed last night, to keep its own documentation true. It stops being a build cost and becomes fuel, metered like electricity, which is to say you only notice it when it moves.
+Two predictions to close, labelled once: this is where I think the operating model goes. First, software will need a steady or bursty token stream just to keep running, staying current and defending itself. Tokens become fuel instead of only a build cost.
 
-And some of that burn is not features at all. It is defense. If an attacker can point a tireless agent at your surface, the only symmetric answer is a tireless agent of your own, self-hacking around the clock. That is a permanent line item on a product that is otherwise finished. It never completes.
+Some of that burn is sentry bots looking for weaknesses in your own system around the clock. Be careful firing them. They know who you are. They have read all your commits. Revoking their access is part of owning the service.
 
-Be careful when you fire the security sentry bots, incidentally. They know who you are. They know where the keys are. They have read all of your commits. Underneath the joke is slide 12's question: an agent whose account you revoked while its credential is still live is the boring version, and it happens today.
+Price the fuel line. At an invented two dollars a day, a continuing agent costs seven hundred and thirty dollars a year before maintenance and review. No new feature required. Record your actual rate and assign the meter to someone who can change the budget.
 
-So price it now. When you draw the wires between agents, one of them is a fuel line. The ongoing burn belongs in the design doc beside the latency budget, and somebody owns that meter. Not the person who wrote the prompt. Buy Me a Free Tier owns the arithmetic; this org chart owns the owner.
+If maintained products keep working without continuing inference, this prediction weakens. Track ongoing operation separately from feature-building calls. Buy Me a Free Tier owns the detailed arithmetic; this design needs the owner.
+
+Delivery: Allow fifteen seconds to read 2×365=$730 and identify the budget owner silently. Do not solicit credential details from the audience.
 
 Story: The first time an always-on agent showed up as a recurring cost nobody had budgeted.
 
-Delivery: Ask who has a security agent running right now with credentials nobody has rotated. Do not take an answer.
-
-## 30:30 to 35:00: slide 15, Minority Report, With Terminals
-
-On screen:
+## 31:30 to 35:30: slide 15, Minority Report, With Terminals
 
 > Generated UI, adapting in real time, per person
 > Yes, the software you mastered is going away. As you know it.
 > The channel is not spoken for.
 
-Second prediction, and this one is less comfortable. AI does not magically make software work. Well-understood software still gets harder to operate as the world moves under it: you outgrow a performance envelope, you accumulate features, somebody deprecates your dependency. Generation makes the first version cheap. It does not make the tenth year cheap.
+Second prediction: more software reaches people as an interface generated for their task, adapting in real time, rather than a grid of apps they chose off a shelf.
 
-And throwaway software is a taste this room has and the world does not. We are early adopters, delighted to regenerate a tool rather than maintain it. Normal people are not turned on by vibe coding their own recipe tracker, never mind a Slack replacement. What they will accept is an interface generated for them, adapting in real time, that they never had to choose off a shelf.
+Throwaway software is a taste this room has and the world does not. Normal people do not want to vibe-code a recipe tracker, never mind a Slack replacement. They may accept an interface generated for them that they never had to build.
 
-Which raises the question this room should be arguing about. Should OpenAI and Anthropic end up owning every software channel? Watch what happens when the assistants ship real-time collaboration: who spends less time in email, Slack and Docs then? I can already edit images and video in ways that make me less likely to open Photoshop or DaVinci, and if I need a jingle I ask Suno and it is done. So is everything you spent a lifetime mastering about to be irrelevant? Yes. At least as you know it.
+Who owns that software channel: the assistant through which a person finds, uses and shares the tool? Should the frontier labs own all of it? Collaboration inside assistants could move work out of email and specialist apps. The product categories we mastered can change underneath us.
 
-What replaces it looks less like a grid of apps and more like Minority Report, with a surprise revival of the terminal. Which is a Matrix ending when you think about it. Thanks, AI. Skynet is not so bad if I get to keep my CLIs.
+It looks a little like Minority Report, with a surprise revival of the terminal. Thanks, AI. Skynet is not so bad if I get to keep my CLIs.
 
-Here is the part I want you to leave with. That future is not spoken for. GPT image being pretty good does not mean image creation belongs to the big players, and the same holds in whichever industry you work in. Those of us who do not work at a frontier lab — the organic agents in the room — get to rethink any and every app as an AI-native system, from the boundary up. That is this whole talk one level higher: do not photocopy today's product categories onto tomorrow's substrate either.
+Here is the opportunity. GPT image being good does not mean image creation belongs to the big players. Those of us outside frontier labs, the organic agents in the room, get to rethink every app as an AI-native system. The channel is not spoken for.
+
+If people keep choosing stable specialist apps instead of returning to generated task interfaces, that weakens the prediction. Watch repeated use, not a launch demo.
 
 Delivery: Ask which product they use daily that would not survive somebody else rebuilding it AI-native. Take one answer. Do not resolve it.
 
-## 35:00 to 37:00: slide 16, Every experiment reports its hypothesis
 
-On screen:
+
+## 35:30 to 38:00: slide 16, Every experiment reports its hypothesis
 
 > If we do X, we expect Y to move
 > Report success, failure, and surprise where the team looks
 
-Every beta, ad test, and feature flag gets a hypothesis. If we change this, we expect that to increase. State who it is for, what would make us stop, and when we will look.
+Every beta and feature flag gets a hypothesis: if we change this, we expect that. State who it is for, what would make us stop, and when we will look.
 
-Generate the measurement with the change. It needs the exposure count, the intended outcome, the unwanted outcomes, and the owner who will act, and it goes where the team already looks. Remembering to check a dashboard is a bad dependency.
+Generate the report with the change: exposure count, intended and unwanted outcomes, and the owner who will act. Remembering to check a dashboard is a bad dependency.
 
-Take the handoff you named near the start. Write the artifact an agent would produce, who receives it, and the observation that would make them reject it. If that last field is blank, you have designed a suggestion machine.
+Take the handoff you named earlier. Write the artifact an agent would produce, who receives it, and what would make them reject it. If that last field is blank, you designed a suggestion machine.
 
-Source: Microsoft ExP (2020), [Patterns of trustworthy experimentation: pre-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/).
+Stage direction: Give 45 seconds to write, then 15 seconds to inspect one answer. Both are outside the spoken budget.
 
-Delivery: Give 45 seconds to write. Walk through one answer for the remaining discussion time.
-
-## 37:00 to 40:00: slide 17, Break the mirror on purpose
-
-On screen:
+## 38:00 to 40:00: slide 17, Break the mirror on purpose
 
 > Reprice the handoffs. Draw the interfaces.
 > Automate the right things. Keep the taste.
 
-Back to the org chart. Some of those boundaries exist because the work really is different. Some exist because the person with the spreadsheet sat in another department. We should know which before teaching agents to repeat them.
+Back to the handoff you named. Some boundaries protect real differences in the work. Others survive because the spreadsheet used to live in another department.
 
-Take one boundary. What arrives, what leaves, who decides, and what did it cost last week? Make collection cheaper without erasing the disagreement the handoff used to expose. Keep the product review where the evidence conflicts, and give the decision a durable artifact so the next agent does not have to guess.
+What arrives, what leaves, who decides, and what did it cost last week? Make collection cheaper without erasing the disagreement the handoff exposed. Price verification, ownership and fuel alongside the saving.
 
-Then price ownership, and price the fuel. Six agents do not become free because one person has their names in a config file, and neither does the burn that keeps them running. Put permission before customer consequences.
+Your org chart can choose the agents' handoffs for you, or you can make those choices explicit. The same is true of the product category you work inside. Builders outside frontier labs can redraw those boundaries too.
 
-And then do the larger version of the same move. The org chart is a record of earlier tradeoffs; so is the product category you are working inside. You are allowed to make new ones, and the channel is not spoken for yet. Break the mirror on purpose. Automate the right things. Keep the taste.
+Break the mirror on purpose.
+
+Delivery: Return to the opening handoff. Stop talking.

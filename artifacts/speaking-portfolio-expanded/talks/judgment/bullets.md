@@ -2,7 +2,7 @@
 
 What to ship, to whom, and when, now that building it is the cheap part.
 
-Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
+Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no Q&A. Every Story substitutes at most 40 existing words / 25 seconds; 15 route omits stories. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
 ## Spine
 
@@ -27,12 +27,12 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 
 00:00–02:30 · warm · 02:30
 
-> Code is free. Features are free.
+> Generating got cheap.
 > Attention is the budget.
 
 - Four features shipped before lunch. All four work.
 - Here is the line this talk has to earn. Don't count what the feature cost you to build, count what it costs them to relearn.
-- The title is a Spinal Tap joke and it is load-bearing.
+- Turn the reasoning up to eleven; it still does not choose Tuesday.
 - Scope, once. The arithmetic later is counting, not a measurement of your team, and the two futures at the end are labeled predictions I have not measured.
 - Story — The feature you were proudest of that a long-absent customer experienced as a broken workflow. Bring the ticket, the gap between their sessions, and what they actually said.
 
@@ -44,7 +44,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 > We only automated the middle one
 
 - Three things used to gate a feature. Someone had to want it, someone had to build it, and someone had to learn it.
-- Build cost is now close enough to zero that it stops being the selection mechanism, and that is the part nobody plans for.
+- When building gets much cheaper, it stops filtering as many proposals.
 - So the interesting question stopped being what can we build.
 
 ### 3. Nobody lives in your app
@@ -54,9 +54,9 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 > 90 days · 46 releases · 4 sessions
 > Between visits two and three: 21 changes, at once
 
-- Here is ninety days. The top track is your deploys: forty-six of them, roughly every other day, which any DORA-literate team would call healthy.
+- Here is ninety days. The top track is your deploys: forty-six of them, roughly every other day, which says something about frequency, not whether the changes are useful.
 - Between her second visit and her third you shipped twenty-one changes.
-- DORA's four keys measure delivery capability: deployment frequency, lead time, change failure rate, time to restore.
+- The 2018 DORA four-key model measures delivery capability: deployment frequency, lead time, change failure rate, time to restore.
 - Diagram — Ninety days of releases against one user's four sessions
 - Do — Ask for a show of hands on median return interval before revealing the bottom track. Most rooms have never measured it; say so and move on.
 - Source — Nicole Forsgren, Jez Humble and Gene Kim (2018), [Accelerate: The Science of Lean Software and DevOps](https://itrevolution.com/product/accelerate/), IT Revolution. The four key metrics describe delivery performance, not user absorption; the tracks in this diagram are an illustration, not measured telemetry.
@@ -98,7 +98,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 - Sixty seconds with the person next to you.
 - Which customers get it Tuesday? Do they get it with the other three things in the branch, or on its own?
 - None of those are engineering questions and all of them are release questions.
-- Do — Read the request once, exactly as written. Give pairs sixty seconds here, thirty in the 15-minute cut. Collect two answers, then add the renewal date and the support roster yourself.
+- Do — Read the request once, exactly as written. Give pairs sixty seconds. The 15-minute route drops this slide. Collect two answers, then add the renewal date and the support roster yourself.
 
 ### 7. Five axes, one of them a date
 
@@ -117,17 +117,18 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 
 19:30–23:30 · peak · 04:00
 
-> 6 features · 3 cohorts → 524,880 plans
-> 12,000 weekly actives · 4 weeks → 16 arms
-> 32,805 plans per arm of evidence
+> Half a million candidate plans. At most sixteen arms.
+> 6! × 3⁶ = 524,880
+> 48,000 distinct eligible users; two-arm sizing heuristic
 
 - Six features. Order them: seven hundred and twenty sequences.
-- Now the evidence you can buy. Twelve thousand weekly actives, a four-week window, forty-eight thousand exposures.
-- So turn the thinkin' tokens up. Chollet's 2019 definition treats intelligence as skill acquisition over novel tasks, and a system that has already seen the situation is not demonstrating that.
+- Assume 48,000 distinct eligible users, independent outcomes. At most sixteen arm slots including control by a two-arm heuristic, before multiplicity and attrition. Repeated weekly visits are not new users.
+- So turn the thinkin' tokens up. Chollet's 2019 definition treats intelligence as skill-acquisition efficiency over novel tasks, relative to priors and experience, and a system that has already seen the situation is not demonstrating that.
 - There is a paper about exactly this: the Apple group's Illusion of Thinking, 2025, reporting that reasoning models collapse past a complexity threshold and spend fewer tokens as problems get harder.
-- My claim is weaker and safer. The model has not met your users.
-- Do — Do 6! × 3⁶ on the board for the plan count, then exposures over the per-arm sample size for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
-- Source — François Chollet (2019), [On the Measure of Intelligence](https://arxiv.org/abs/1911.01547), arXiv:1911.01547. Parshin Shojaee and colleagues (2025), [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking), Apple Machine Learning Research; and the rebuttal, [The Illusion of the Illusion of Thinking](https://arxiv.org/abs/2506.09250), arXiv:2506.09250. Present as a contested exchange, not a settled result.
+- Lawsen's unrefereed arXiv comment challenges output limits and impossible River Crossing instances. Models can use customer evidence; more compute does not manufacture it.
+- Why not make ten the top number? Because these go to eleven.
+- Do — Forty-five seconds of board work with assumptions prewritten. Distinct eligible users, not exposures. At 15 minutes, calculate only the plan count.
+- Source — François Chollet (2019), [On the Measure of Intelligence](https://arxiv.org/abs/1911.01547), arXiv:1911.01547. Parshin Shojaee and colleagues (2025), [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking), Apple Machine Learning Research; and A. Lawsen (2025), [Comment on The Illusion of Thinking](https://arxiv.org/abs/2506.09250), arXiv:2506.09250 (unrefereed comment). Present as a contested exchange, not a settled result.
 
 ### 9. What the machine is actually for
 
@@ -146,24 +147,24 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 26:00–29:30 · build · 03:30
 
 > Theme · Language · Version
-> "You're on 4.2. It's 43 days old. Update, or turn on auto-update."
+> "You're on 4.2. It's 42 days old. Update, or turn on auto-update."
 
-- First prediction, labeled once as a prediction.
+- First prediction.
 - A returning user lands on the version she left.
 - The web spent twenty years removing this control and calling it a feature.
-- The picker also makes the cost visible to you.
+- Pinning is a signal to investigate: fatigue, compatibility, habit and training schedules can all cause it.
 - Diagram — A settings panel where version sits beside theme and language
 
 ### 11. What that costs to build
 
 29:30–32:00 · build · 02:30
 
-> Versioned runtime + a sandbox per user
-> Privacy: better. Patching: worse.
+> One option: versioned runtime + scoped sandbox
+> Scoped isolation helps. Shared risks remain.
 > Every live version is a live contract
 
 - Now the engineering bill, because the prediction is easy and the architecture is not.
-- That buys something real on privacy. Data that never leaves a user's sandbox is data you cannot leak in bulk, and a breach costs you one tenant instead of one table.
+- Scoped per-tenant isolation can reduce exposure; shared credentials, exports, backups and control planes can still expose many tenants. Per-tenant isolation can limit a compromised worker's reach. Shared credentials, control planes, exports and backups can still expose many tenants.
 - Every live version is also a live contract.
 - Source — Hyrum Wright, [Hyrum's Law](https://www.hyrumslaw.com/). Stated as an observation about interface consumers, not a measured result.
 
@@ -205,3 +206,5 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 - Turn the reasoning up as far as it goes.
 - Sometimes the right release is a smaller one.
 - Do — Step back to slide 3 for the two tracks, then return here. Stop talking.
+
+Delivery: [pacing.md](pacing.md) counts words against remaining spoken time. Pair exercise: 60 seconds plus 15 seconds for answers; absent at 15. Board work: 45 seconds; 15 route calculates only 6!×3⁶. Say the dial joke rather than explaining the title. At the configured-app close, say “Same as it ever was: defaults still win.”

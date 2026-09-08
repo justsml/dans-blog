@@ -16,6 +16,7 @@ Authored teaching diagrams and deliberate typography choices are listed in [visu
 
 > Horse out of the barn. Cat out of the bag.
 > Math class survived the Casio watch.
+> You think you’re running the detector; the detector is writing your curriculum.
 
 The historical parallels have been beaten to death, so one and done: the calculator panic. Specifically the Casio calculator watch. Math class was dead. The kid sitting next to the Casio owner didn't even need one.
 
@@ -32,6 +33,8 @@ Stage direction: Let the confession land before the pivot. The laugh is the titl
 ## 2. The doom loop
 
 02:30 to 05:00 · warm
+
+![Historical detector bias, 61% to 12%](visuals/detector-bias.svg)
 
 > Proctoring fails. The pop quiz proves what you already knew.
 > Getting away with it is the reward.
@@ -87,6 +90,8 @@ Stage direction: Thirty seconds: what would the smudge be in your subject? Take 
 
 12:00 to 17:00 · peak
 
+![Unsolved percentage prompts](visuals/reconstruction-prompt.svg)
+
 > $100 → +20% → −20%. Which base does the discount use?
 > Now: $80 → +25% → −20%
 
@@ -100,6 +105,8 @@ Stage direction: The worked-example notes contain the five scripted turns. If th
 
 17:00 to 19:00 · steady
 
+![Six rungs of help](visuals/help-ladder.svg)
+
 > "Which price does the discount use?" Learner: "The original $100."
 > Clarify → conceptual hint → missing step → part of an example → full explanation → fresh reconstruction
 
@@ -110,6 +117,8 @@ Here is what we just did, in order: the ladder. Clarification: the second change
 ## 8. Score the reasoning. Write it down
 
 19:00 to 22:30 · steady
+
+![Four-line observation record](visuals/record.svg)
 
 > Base identified 0–2 · Calculation justified 0–2 · Transfer explained 0–2 · Help in its own column
 > Record: concept · what they said · what help they got · next check
@@ -147,15 +156,15 @@ Now the care, and it's real. A student's voice identifies them and can be cloned
 
 25:30 to 28:00 · build
 
+![Proposed transcript review budget](visuals/access-review.svg)
+
 > Teacher talk · student talk · think time · AI time
 > Guided by you, or alone with the model?
 > "Show me five students who took a path worth showing the room."
 
-You already count who's talking, how much silence there is, whose engagement it is. Add one factor: AI time. How much of it did you guide, and how much was a student alone with the model.
+Count AI time alongside teacher talk, student talk, and think time. A model pass across 300 transcripts can nominate paths worth showing tomorrow. Give the teacher five linked excerpts and two randomly selected transcripts to check what the summary missed. Budget ten teacher minutes, and time the model pass separately. This is a proposed pilot budget, not measured throughput. If review exceeds it, sample less or fund the work.
 
-Then the view you have never had. A model pass across a class of 30 or a course of 300 can nominate excerpts. Budget ten teacher minutes for five linked excerpts and two randomly selected transcripts; time the model pass separately. This is a pilot budget, not measured throughput. If checks exceed it, sample less or fund the review. Show me the five students who opened a line of inquiry I didn't teach. Show me the one who reached the answer by a path worth putting on the board tomorrow. The same pass surfaces the kid who typed exactly the right terms, or pasted a big block from somewhere. Before you conclude anything: a big block also looks like voice-to-text. Look first.
-
-And know what you are up against when you read the model's summary instead of the transcript. Skitka and colleagues measured it in 1999: people given a highly but imperfectly reliable aid did worse than people with no aid at all on the trials where the aid was wrong, because it is right often enough that you stop checking. The summary is a place to start looking, never a place to stop.
+A pasted block may be voice-to-text. Look before concluding. Skitka's 1999 simulated flight task found automation users followed bad advice despite contradictory indicators. My application here: a summary that is right often enough can make you stop checking. It tells you where to start looking, never where to stop.
 
 Source: Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 
@@ -197,9 +206,9 @@ Those barriers reflect our socioeconomic structure and sit unexamined in the sys
 > Minutes to review a class set
 > Neighbor challenges one hidden assumption
 
-Pairs, two minutes. Write the capability, the task, the smudge that makes verification feel like cheating, one purposeful follow-up, the help you'll permit, and the interpretation you could defend to a parent. Then estimate the minutes to review a class set, because a richer assessment nobody has time to read is a worse assessment. Let the model draft the follow-ups and summarize with links to the excerpt; grading, accusations and anything sensitive stay with you.
+Write the capability, task, smudge, permitted help, purposeful follow-up, and defensible interpretation. Estimate class-set review minutes: a richer assessment nobody has time to read is a worse assessment.
 
-Then your neighbor challenges one hidden assumption: does this also measure fluency, paid-tool access, or comfort speaking under pressure? TEQSA's guidance backs contextual, multiple approaches. This worksheet is our version of it. Output: a sketch you can review, then a small pilot.
+Your neighbor challenges one assumption: fluency, paid access, or comfort speaking? TEQSA's 2023 guidance supports contextual, multiple approaches. This worksheet is our proposed implementation.
 
 Source: TEQSA (2023), [Assessment reform for the age of artificial intelligence](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence).
 
@@ -218,4 +227,4 @@ The kid next to the Casio owner didn't need a watch. The kid with no car never t
 
 This is a great deal of data and a great deal of power. Too much to hold casually. The value has to be proven, constantly, for educators and students, or the data should not exist. No ambling through conversations dispensing answers. A purpose-built machine. AI scales instruction more easily than it scales wisdom. There are technical ways to build one; come find me after. Don't let the detector write your curriculum.
 
-Stage direction: Land on "come find me after." Stop.
+Stage direction: Land on "Don't let the detector write your curriculum." Stop talking.

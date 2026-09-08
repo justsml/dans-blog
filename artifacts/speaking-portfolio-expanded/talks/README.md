@@ -9,11 +9,11 @@ Slide decks are not generated from outlines. They are hand-authored, one design 
 | Three Search Methods in a Fundable Trenchcoat | [Outline](retrieval/index.md) | [Deck](../../../public/decks/retrieval/index.html) |
 | Stop Looking at My Benchmarks… Get Your Own! | [Outline](benchmarks/index.md) | not yet rebuilt |
 | Turn Your Thinkin' Tokens Up to 11 | [Outline](judgment/index.md) | not yet rebuilt |
-| The Future of Product Engineering | [Outline](product-engineering/index.md) | not yet rebuilt |
-| Automating Improvement From Failure | [Outline](failure-improvement/index.md) | not yet rebuilt |
-| Adaptive, agentic apps | [Outline](adaptive-systems/index.md) | not yet rebuilt |
+| Break the Mirror on Purpose | [Outline](product-engineering/index.md) | not yet rebuilt |
+| The Pager Cried Wolf | [Outline](failure-improvement/index.md) | not yet rebuilt |
+| Conjure Exactly Enough | [Outline](adaptive-systems/index.md) | not yet rebuilt |
 | Outsmart Your Lying, Cheating Students | [Outline](evidence-learning/index.md) | not yet rebuilt |
-| Cry Me a Free Tier | [Outline](free-tier/index.md) | not yet rebuilt |
-| Dynamic Scaling of Agentic Workloads | [Outline](dynamic-scaling/index.md) | not yet rebuilt |
+| Buy Me a Free Tier | [Outline](free-tier/index.md) | not yet rebuilt |
+| Compute, Please (and a Receipt) | [Outline](dynamic-scaling/index.md) | not yet rebuilt |
 
 Retired talks live in [../retired/](../retired/).

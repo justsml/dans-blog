@@ -1,5 +1,7 @@
 # Compute, Please (and a Receipt): 30-minute presenter script
 
+Budget: 26 spoken minutes (including bounded stories and bridges) + 4 interaction minutes = 30. See [per-slide counts and reveal limits](pacing.md).
+
 Use slides 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill the bounded Story slots before delivery; their allowances are included, never added. [Spoken and interaction budgets](pacing.md) sum to this slot. Timings are rehearsal targets without Q&A.
 
 ## 00:00 to 02:00: slide 1, Four callers, forty images, one customer
@@ -121,13 +123,13 @@ On screen:
 > lease-88f1 expires mid-batch
 > One response lost, one email fails
 
-Two callers want distinct batches against one entitlement. Seven items reserve $1.40 of the $1.50 provider cap; three are refused. The second batch queues. Duplicate calls for the first batch get its existing job ID. Dispatch uses slide 2's lease-88f1, eight sandbox-small workers. Six minutes into the job its TTL expires: the sandboxes stop, the provider keeps rendering, the reservations stay charged.
+Seven items reserve $1.40 of the $1.50 cap; three are refused. The next batch queues. Duplicate calls get the existing job ID.
 
-A new worker reloads the job, checks provider status for every submitted item, and collects what finished. One item's response never arrived; it stays unresolved with its reservation held, and the worker asks the provider rather than resubmitting. All seven accepted outputs land. The email fails. The delivery worker retries the email against the completed job, and the expensive generation is untouched.
+Lease-88f1 expires after six minutes. The sandboxes stop; the provider keeps rendering and reservations stay held. A new worker reloads the job and queries saved provider IDs. A missing response remains unresolved until reconciled; nobody resubmits it blindly. All seven outputs eventually land. The email fails. Retry notification, never generation.
 
-One job, a recoverable lifecycle, honest accounting, and a compute substrate that was allowed to disappear under it. That is the abstraction the batch tool owed us.
+The batch survives its caller and its compute. One lifecycle owns the reservations, provider identities and delivery state. The disappearing box never owned the truth.
 
-Story: Up to 40 words from Dan's own bill-before-dashboard example; at most 25 seconds, already included in slide 10's spoken budget.
+Story: Optional bill-before-dashboard example from Dan's records: replace at most 30 existing words, maximum 25 seconds. Do not append; preserve the accounting and recovery facts.
 
 Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
@@ -175,9 +177,9 @@ On screen:
 > Five judges, different models. Report the disagreement, not the average.
 > Gates before preferences; the council may reject the room
 
-The Council of Guards has a bill. At Haiku 4.5 rates, a draft with 300 input and 1,500 output tokens costs 0.78 cents. Five judges, each reading 1,800 tokens and writing fifty at those same rates, cost 1.025 cents: 131 percent of generation. Reading dominates. A real council uses different models; sum their actual rates, with no assumed cache sharing. You are buying disagreement. When judges split or their reasons barely overlap, the candidate gets human review, not an automatic release.
+The Council of Guards has a bill. At Haiku 4.5 rates, a draft with 300 input and 1,500 output tokens costs 0.78 cents. Five judges, each reading 1,800 tokens and writing fifty at those same rates, cost 1.025 cents: 131 percent of generation. Reading dominates. A real council uses different models; sum their actual rates, with no assumed cache sharing. You are buying disagreement. A split buys human review, never automatic release.
 
-Write the gates before you read the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. Every candidate fails one, including the careful one; the council is allowed to reject the room. A synthesis is a new candidate. Stop at the review budget.
+Write the gates before you read the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline. A synthesis is a new candidate. Stop at the review budget.
 
 Delivery: One candidate only: the maintainer. Give 20 seconds to find the missing deadline check, reveal the gate, then show the five-judge split. Total exercise: one minute. Deliver the closing paragraph after the reveal.
 

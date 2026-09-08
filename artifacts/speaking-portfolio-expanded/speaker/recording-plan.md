@@ -2,13 +2,13 @@
 
 Two recordings cover most application requirements: one 15–30 minute talk with clear audio and captions at a stable URL, and one five-minute technical demo reel for meetup and AI Tinkerers routes.
 
-## Recording 1: the 25-minute talk
+## Recording 1: the 30-minute talk
 
-**Pick:** Automating Improvement From Failure. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), its supporting example is specified in [demo.md](../talks/failure-improvement/demo.md) and not yet built, and it is the talk most engineering programs will ask to preview.
+**Pick:** The Pager Cried Wolf. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), its supporting example is specified in [demo.md](../talks/failure-improvement/demo.md) and not yet built, and it is the talk most engineering programs will ask to preview.
 
-**Cut:** Use the [30-minute adaptation](../talks/failure-improvement/adaptation-30min.md) and drop slides 10 and 12, each allocated 2:30 in that route, to land at 25 minutes. Keep slide 8 at 5:30 and keep 6, 9, and 13. After slide 9, bridge to feedback: "The same queue takes customer feedback; people still approve messages, money, and deletion." After slide 11: "The queue now needs a measure of whether its work was worth reading."
+**Cut:** Use the current [30-minute adaptation](../talks/failure-improvement/adaptation-30min.md) and its [presenter script](../talks/failure-improvement/script-30min.md). The former 25-minute cut depended on superseded slide times and is withdrawn. Follow the route’s speech and interaction budgets; do not subtract slide durations from the old edition.
 
-**Readiness:** the deck is generated; the live integration and firsthand stories remain prerequisites. Fill at least three story prompts from records, including the opening. A checkbox replay does not clear the recording gate.
+**Readiness:** the hand-authored deck has not been rebuilt; live integration and first-hand evidence remain prerequisites for this recording plan. Supply only the stories named and budgeted in the route. A static fixture supports the talk, but does not demonstrate an executed production integration.
 
 **Production checklist**
 
@@ -21,7 +21,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 
 ## Recording 2: the five-minute demo reel
 
-**Constraint:** AI Tinkerers requires a genuine working demonstration of something you built, with no slides or pitch. This is a separate submission format built from the supporting repository.
+**Constraint:** For opportunities whose current rules require a genuine working demonstration, prepare an executed demo with no slides or pitch and verify that venue’s requirements before submission. This is a separate submission format built from the supporting repository.
 
 **Candidate demo:** the fail-to-win loop from the failure-improvement talk, run live against a sanitized log export. Show a scheduled agent distilling everything since the last check, classifying the result, filing a ticket with the trace, and proposing a PR that the guardrails hold in review until the holdout passes. Five minutes, one terminal, one browser tab.
 
@@ -37,7 +37,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 
 **Supporting repository required before recording:** a scheduled agent invocation with distill and classify steps, a sanitized log fixture, an isolated ticket fixture, and the gate script. The talk references captured output from that repository.
 
-## What each recording satisfies
+## Intended application use once recordings exist
 
 | Application need | Recording 1 | Recording 2 |
 | --- | --- | --- |
@@ -45,4 +45,4 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 | "Speaker video or sample" | Yes | Yes |
 | AI Tinkerers demo gate | No | Yes |
 | Meetup organizer preview | Yes | Yes |
-| Education program preview | Weak; record the skeptic talk next | No |
+| Education program preview | Weak; record Outsmart or its procurement route next | No |

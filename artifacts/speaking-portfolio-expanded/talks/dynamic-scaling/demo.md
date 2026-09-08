@@ -1,6 +1,6 @@
 # Five-minute paper walkthrough: restart the batch
 
-Slide 10. Paper trace, no provider calls. Five minutes on the 40-minute route (1.5 spoken, including a 40-word story; 3.5 interaction); on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the lease expiry. Ask the room for each transition before revealing it. Arithmetic comes from the $1.50 ledger in contracts.md.
+Slide 10. Paper trace, no provider calls. Five minutes on the 40-minute route (1.5 spoken, with an optional 30-word story substitution; 3.5 interaction); on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the lease expiry. Ask the room for each transition before revealing it. Arithmetic comes from the $1.50 ledger in contracts.md.
 
 | Time | Event | Ask | Expected behavior |
 | --- | --- | --- | --- |

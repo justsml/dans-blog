@@ -1,4 +1,4 @@
-# Evidence bank: Automating Improvement From Failure
+# Evidence bank: The Pager Cried Wolf
 
 Firsthand examples the talk can draw on. Each entry needs every field filled from your own records before it is used on stage or in an application. Candidate contexts below come from the resume; the details, measurements, and permissions are yours to supply. Do not publish numbers you cannot reproduce.
 
@@ -78,6 +78,17 @@ The memorable arithmetic on slide 13 is explicitly synthetic: 100 tickets minus 
 
 Model names and per-run costs are not spoken in this talk. If candidate 2 is ever filled, name only models actually run on that workload, with the observed cost per session, the date, and the task set — or say nothing.
 
-## Research checked 6 September 2026
+## Research checked or bounded 8 September 2026
 
-Cvach 2012, Vaughan’s Challenger analysis, Toyota’s jidoka description, Bainbridge 1983, and Strathern 1997 are linked beside their claims in the canonical outline and generated scripts. Clinical and industrial findings motivate engineering design choices; they are not code-review effect-size measurements.
+Cvach 2012, Vaughan’s Challenger analysis, Toyota’s jidoka description, Bainbridge 1983, and Strathern 1997 are linked beside their claims in the canonical outline and hand-maintained scripts. Clinical and industrial findings motivate engineering design choices; they are not code-review effect-size measurements.
+
+
+## Cvach attribution and denominator
+
+[Cvach 2012](https://pubmed.ncbi.nlm.nih.gov/22839984/) is an integrative review of 72 articles, not a new measurement study. Its full text, page 272, reports [Graham and Cvach 2010](https://pubmed.ncbi.nlm.nih.gov/20045845/): 16,953 critical alarms in an eighteen-day baseline on a fifteen-bed unit; 9,647 afterward, approximately 43% fewer. The original paper's Results section gives a mean census of 12 at baseline and 13.3 afterward; census was not included in its count analysis. The talk's 16,953 / 18 / 15 = 62.79 is **per available bed-day**, not per patient-day, and is arithmetic derived here. It is not a patient outcome or an effect estimate for software reviewers. Intervention elements included monitor defaults, individual limits, staff education and policy; do not claim one element alone caused the change.
+
+The audit's proposed phrase “63 per patient per day” is therefore rejected. Its stronger causal slogan about deleting duplicates is narrowed to a multicomponent quality-improvement report. The review/paper support noise reduction as motivation, not the performance of this proposed loop.
+
+## Pairing with Adaptive
+
+Failure Improvement owns the offline reviewer and whether proposals are worth their review cost. Vaughan is a one-clause callback here; the cancellation case and reviewer economics carry the argument. Bainbridge motivates the reviewer question; rotation, reserved review time and recovery practice are explicitly Dan's design response, not Bainbridge's experimentally validated intervention. No reciprocal handoff or prerequisite session is asserted.

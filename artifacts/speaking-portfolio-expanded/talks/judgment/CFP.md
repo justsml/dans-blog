@@ -4,15 +4,15 @@ Prepared 7 September 2026, replacing the retired *Code Is Cheap. Judgment Is Exp
 
 ## Short abstract (50 words)
 
-Four features shipped before lunch. Your best customer returns after six weeks and cannot find her button. Building got free; learning did not. This talk is about choosing and pacing what ships — and why turning the model's reasoning budget up to eleven will never tell you which Tuesday.
+Four features shipped before lunch. Your customer returns after six weeks and cannot find her button. Building got cheaper; learning did not. This talk follows the cost of change, counts a release plan space, and proposes user controls whose defaults, support windows and patch policy you still own.
 
 ## Standard abstract (150 words)
 
-Generation is free, so scarcity has stopped doing your prioritization. What remains is the expensive part: which features should exist, who should see them, and when.
+Cheaper generation leaves a harder selection problem: which features should exist, who should see them, and when? One returning customer meets twenty-one changes at once in an illustrative release timeline. Consumer feature-fatigue research raises a question for software teams: does capability win attention while usability sustains use?
 
-Ninety days of healthy deploys meets one customer's four sessions, and between two visits she absorbs twenty-one changes at once. Feature fatigue is a measured effect — capability wins the sale, usability keeps the renewal — and every change is a loss before it is a gain. On stage we count the release plans for six features across three cohorts, count the experiment arms four weeks of traffic can pay for, and divide. The ratio is why this decision is judgment rather than analytics, and why more reasoning tokens do not close it.
+We count six features across three cohorts, then compare that unconstrained plan space with a tightly qualified evidence budget. More reasoning can improve a proposal; it cannot manufacture customer observations.
 
-Then two predictions: version becomes a user-facing control beside theme and language, and feature flags become a shareable profile. Both carry an architecture bill, and it is itemized.
+Two predictions follow: supported version choice becomes a user-facing preference, and shared configuration profiles become a familiar way to adopt features. These controls provide feedback without transferring responsibility for defaults, compatibility, security updates or rollout policy. The talk closes on the user's cost of relearning, with explicit architecture tradeoffs and no claimed adoption results.
 
 ## Audience
 
@@ -26,8 +26,8 @@ Product engineers, engineering and product leaders, founders, platform teams, an
 
 ## Reviewer notes
 
-The absorption diagram is an illustration with internally consistent arithmetic, not telemetry. The plan-space demo is offline and deterministic; the per-arm figure is the standard n ≈ 16·p(1−p)/δ² sizing heuristic, presented as a heuristic. Thompson, Hamilton and Rust (2005) is consumer research and the inference to software cadence is stated as an inference. The *Illusion of Thinking* result is delivered together with its published rebuttal and explicitly left unsettled; the argument does not depend on either side. Iyengar and Lepper's jam study is raised only so the 2010 meta-analysis can set it aside. The two futures are labeled predictions and neither is measured.
+The absorption diagram is an illustration with internally consistent arithmetic, not telemetry. The plan-space demo is offline and deterministic; the per-arm figure is the standard n ≈ 16·p(1−p)/δ² sizing heuristic, presented as a heuristic. Thompson, Hamilton and Rust (2005) is consumer research and the inference to software cadence is stated as an inference. The *Illusion of Thinking* result is delivered together with Lawsen's unrefereed arXiv comment and explicitly left unsettled; the argument does not depend on either side. Iyengar and Lepper's jam study is raised only so the 2010 meta-analysis can set it aside. The two futures are labeled predictions and neither is measured.
 
-Adjacent to *The Future of Product Engineering*, which owns coordination cost and org design; this talk owns what reaches users and when. Adjacent to *Stop Looking at My Benchmarks*, which owns instrument validation; the power arithmetic here is deferred to it rather than re-taught.
+Adjacent to *The Future of Product Engineering*, which owns coordination cost and org design; this talk owns what reaches users and when. Adjacent to *Stop Looking at My Benchmarks*, which owns instrument validation; the sample assumptions here are explicit, while formal instrument validation belongs there.
 
 **Format:** 40 minutes, 14 slides, including a paired exercise and a live arithmetic run. 15- and 30-minute routes are prepared. [Full submission packet](packet.md).

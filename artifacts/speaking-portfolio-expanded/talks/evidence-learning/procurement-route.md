@@ -4,7 +4,7 @@
 
 The Skeptic's Guide was retired on 6 September 2026. Its three load-bearing beats — skepticism as a method, a local eval set, and the questions to ask a vendor — survive here as a separate route for the room that buys the tool rather than teaches with it. The retired outline stays at [retired/skeptic-education/index.md](../../retired/skeptic-education/index.md) for reference; nothing generates from it.
 
-Spoken scope, included in section 1 budget: research stays attached to its setting, the eval cases are authored, and the rubric is proposed. Then stop qualifying.
+Spoken scope, included in section 1 budget: “Research stays attached to its setting, the eval cases are authored, and the rubric is proposed.”
 
 ## 1. Assume access. Demand evidence. (0:00–2:30)
 
@@ -27,7 +27,7 @@ Skepticism should produce better questions, not permanent refusal. A vendor says
 
 Write the claim so it could fail: "students using this hint sequence will explain source bias on a new document next week." A claim that cannot fail is marketing with a footnote.
 
-Two failures you will hear about this year: the confident wrong answer that got an A, and the pilot that improved scores and nothing else. Both are design failures. Both can be anticipated, which is the whole point of the next ten minutes.
+Anticipate the pilot that improves scores and nothing else. Decide what you need to observe before signing.
 
 Delivery: Forty-five seconds: turn "improves learning" into an observable claim on the card. Thirty seconds: ask a neighbor what observation would make them reject it.
 
@@ -52,7 +52,7 @@ Source: Bastani et al. (2025), [Generative AI without guardrails can harm learni
 
 This is your local eval set, and it is four index cards, not a platform. For a history seminar: it must not affirm "the diary is more reliable because it is older."
 
-Two educators score the teaching moves, with factual errors counted separately from pacing and tone. A benchmark score cannot certify your lesson, and a vendor whose tutor has the help level exactly right is selling you a solved version of an open problem. Koedinger and Aleven named that open problem the assistance dilemma in 2007 and nobody has closed it since.
+Two educators score factual errors separately from teaching moves. Koedinger and Aleven named the assistance dilemma in 2007: too much help removes the work; too little stalls the learner. Ask the vendor how it chooses, and test that choice.
 
 Delivery: Sixty seconds in pairs: one writes "the diary is more reliable because it is older," the other writes the next tutor question. Compare "Great point" with "Older than what?" Spend thirty seconds identifying which response leaves source evaluation to the learner.
 
@@ -65,7 +65,7 @@ Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma](https://
 > A detector score is not a learning measurement
 > Unequal access distorts the measurement before the first answer
 
-Liang and colleagues found the detectors they tested produced false positives on non-native English writing and were sensitive to rewriting. Even a perfect authorship signal would not tell you whether the student can weigh sources. No disciplinary consequence gets automated from a score.
+Liang’s 2023 detectors penalized non-native writing and were sensitive to rewriting. Even a perfect authorship signal would not tell you whether the student can weigh sources. No disciplinary consequence gets automated from a score.
 
 And if assisted practice is permitted, provide comparable access or a usable alternative. If oral explanation is chosen, plan accommodations and language needs so you are not grading speaking ease by accident. State what is retained and who sees it, before the first recording.
 

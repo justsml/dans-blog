@@ -14,4 +14,4 @@ Promotion requires a reproducing regression, held-out cases controlled separatel
 
 ## Supporting-example acceptance
 
-The supporting repository runs the regression and holdout as actual commands and retains their output and exit status. It shows a held change after the holdout fails, then an unknown classification held for a person. Fix the candidate, never the holdout to obtain green. Any tracker integration uses an isolated fixture project.
+The unverified supporting implementation must run the regression and holdout as actual commands and retains their output and exit status. It must show a held change after the holdout fails, then an unknown classification held for a person. Fix the candidate, never the holdout to obtain green. Any tracker integration uses an isolated fixture project.

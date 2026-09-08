@@ -1,29 +1,37 @@
-# Automating Improvement From Failure
+# The Pager Cried Wolf
 
-40 minutes. Timings include the exercises and delivery pauses, without Q&A. Sources checked 6 September 2026. Story prompts belong in speaker notes and require Dan’s own records before delivery.
+40 minutes, 15 slides. Sources rechecked or bounded 8 September 2026. Slides are presented in the order below; stable IDs preserve short links. [Timing](timing.md) includes audience decisions, arithmetic and writing. The [authored case cards](demo.md) are usable now; live integration and captured execution remain unverified. Optional Story material replaces prose only after rehearsal.
 
 ## 1. Nobody reads the scroll
 
-00:00 to 02:30 · warm
+00:00 to 03:45 · warm
 
-> The pager trained you to ignore it
-> The next improvement is already in the scroll
 
-The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will eventually call urgent. Usually after somebody sends an angry email.
 
-This talk owns the offline improvement loop, including the people reviewing its output. The examples are teaching fixtures until I attach a production record. Runtime recovery, and how much authority a running agent earns for itself, belongs to Adaptive, agentic apps.
+> Every green suggestion can teach you to stop reading the next one.
+> 16,953 ÷ 18 days ÷ 15 beds ≈ 63 alarms per available bed-day
 
-There is a name for training people to ignore the channel that is supposed to warn them. Alert fatigue. Cvach measured it on hospital monitors. Your pager is the same instrument. If our new agent creates a ticket for every log line, we have automated the thing that made the logs unreadable.
+The logs are still arriving. Stack traces, retries, the same customer clicking the same broken button. Somewhere in that scroll is work we will call urgent after somebody sends an angry email.
+
+Every green suggestion can teach you to stop reading the next one. That is the risk this offline improvement loop has to earn its way past. The examples are authored teaching fixtures, not captured production results. Runtime recovery belongs to Adaptive, agentic apps.
+
+Cvach's 2012 integrative review covers alarm fatigue across seventy-two articles. It reports Graham and Cvach's earlier quality-improvement project: sixteen thousand nine hundred and fifty-three alarms, eighteen days, fifteen beds. Divide: about sixty-three alarms per available bed per day. That is a capacity denominator, not a patient exposure rate.
+
+The project reported forty-three percent fewer critical alarms after changing alarm defaults, individual limits and policy. It does not measure our pager or prove our loop works. It gives us a question: did we reduce noise, or just move it into another queue?
+
+Stage direction: Show the authored log card. Write the division; reserve 15 seconds for it. Allow 30 seconds for hands: who learned about a logged failure from a customer?
 
 Story: The failure that sat in your logs until a customer reported it. Bring the first log timestamp, the report, and what you missed.
 
-Stage direction: Scroll a sanitized export. Take a show of hands: who learned about a logged failure from a customer? Allow 30 seconds.
-
 Source: Maria Cvach (2012), [Monitor alarm fatigue: an integrative review](https://pubmed.ncbi.nlm.nih.gov/22839984/), Biomedical Instrumentation & Technology 46(4), 268–277.
+
+Source: Graham and Cvach (2010), [Monitor alarm fatigue: standardizing use of physiological monitors and decreasing nuisance alarms](https://pubmed.ncbi.nlm.nih.gov/20045845/), American Journal of Critical Care 19(1), 28–34; details reported in [Cvach 2012, p. 272](https://doi.org/10.2345/0899-8205-46.4.268).
 
 ## 2. Step one: hand an agent the logs
 
-02:30 to 04:30 · warm
+03:45 to 05:45 · warm
+
+
 
 > Already better than the nobody who was doing it before
 > Read access. One question. One saved answer.
@@ -34,9 +42,37 @@ It may group unrelated failures together. It may miss the one line you care abou
 
 Save the answer with the input window. Tomorrow, you want to know whether it found something new or just described yesterday more confidently.
 
+
+
+
+
+
+
+## 6. The retry that hid the auth failure
+
+05:45 to 08:45 · build
+
+
+
+> A retry hides an auth failure
+> A sleep hides a race
+> Successful workaround ≠ repaired system
+
+A request fails. The agent retries. It works. Score the loop on eventual success and the lesson is obvious: retry more.
+
+Now make the failure an authorization error. A second credential works, but the first request was forbidden for a reason. The green result hid the boundary violation. A sleep that hides a race teaches the same lesson more slowly.
+
+Vaughan gives this a name: normalization of deviance. Here the offline review must distinguish a successful workaround from a repaired defect. A repair loop needs evidence that the defect is gone. Successful workarounds are very persuasive evidence of the wrong thing.
+
+Stage direction: Take two short answers about fixes that hid a problem. Budget 45 seconds; do not invite incident-length stories.
+
+Story: A workaround you left running after it stopped the symptom. Name the underlying defect and the test that eventually exposed it.
+
+Source: Diane Vaughan, [The Challenger Launch Decision](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html), University of Chicago Press, original 1996.
+
 ## 3. Enrichment earns the next step
 
-04:30 to 07:30 · build
+08:45 to 11:45 · build
 
 ![Enrichment earns the next step](../../../../public/talks/assets/failure-improvement/enrichment.svg)
 
@@ -49,11 +85,15 @@ Add the integration that answers the next question. Read access to code does not
 
 The assistant with access to everything is coming anyway, and I am not arguing against it. This loop is one job with a countable tool list. An agent reading everything writes you a summary of the noise. Pick one failure class. If the class turns out to contain three different mechanisms, split it. That discovery is useful work.
 
-Stage direction: Walk up the ladder using one timeout. Stop at the first rung that supports an action. Use the contracts handout for the integration table.
+Stage direction: Walk up the ladder using one timeout. Stop at the first rung that supports an action. Use the contracts handout for the integration table. Reserve twenty seconds for this walk.
+
+
+
+
 
 ## 4. The out-of-band check
 
-07:30 to 10:30 · build
+11:45 to 14:30 · build
 
 ![The out-of-band check](../../../../public/talks/assets/failure-improvement/check.svg)
 
@@ -66,11 +106,17 @@ Only advance the bookmark after the artifact is saved. If ticket creation fails,
 
 Keep the collection window and the classifier version beside the result. Late-arriving logs need an overlap window and deduplication. A cron expression does not solve delivery semantics.
 
-Stage direction: Open contracts.md and trace one interrupted run. Show which artifact survives and why repeating it does not open another ticket.
+Stage direction: Open contracts.md and trace one interrupted run. Show which artifact survives and why repeating it does not open another ticket. Reserve twenty seconds for this walk.
+
+
+
+
 
 ## 5. Distill, then classify
 
-10:30 to 13:00 · build
+14:30 to 17:00 · build
+
+
 
 > Count occurrences before guessing causes
 > Severity · evidence · owner · unknown
@@ -81,29 +127,19 @@ Two matching strings are a family candidate. They are not a root cause. Keep the
 
 Give the classifier an unknown result and a queue that receives it. If every answer must be one of the happy categories, the prompt has already decided what the agent is allowed to notice.
 
-## 6. The retry that hid the auth failure
+This is where your one failure class turns out to be three. Let it split. The taxonomy was a guess; the counterexample just improved it.
 
-13:00 to 16:00 · build
 
-> A retry hides an auth failure
-> A sleep hides a race
-> Successful workaround ≠ repaired system
 
-A request fails. The agent retries. It works. Score the loop on eventual success and the lesson is obvious: retry more.
 
-Now make the failure an authorization error. A second credential works, but the first request was forbidden for a reason. The green result hid the boundary violation. A sleep that hides a race teaches the same lesson more slowly.
 
-Diane Vaughan called the organizational pattern normalization of deviance. Her Challenger analysis shows how repeated acceptance of anomalies made them ordinary. A repair loop needs evidence that the defect is gone. Successful workarounds are very persuasive evidence of the wrong thing.
 
-Story: A workaround you left running after it stopped the symptom. Name the underlying defect and the test that eventually exposed it.
-
-Stage direction: Take two short answers about fixes that hid a problem. Budget 45 seconds; do not invite incident-length stories.
-
-Source: Diane Vaughan, [The Challenger Launch Decision](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html), University of Chicago Press, original 1996; linked enlarged edition 2016.
 
 ## 7. Tickets are cheap. Review is not.
 
-16:00 to 18:30 · build
+17:00 to 20:00 · build
+
+
 
 > Tickets are cheap. Review is not.
 > A proposed diagnosis travels with its evidence
@@ -114,28 +150,47 @@ Opening a PR spends somebody else's attention. Require a reproduction, a bounded
 
 Match ceremony to consequence. A documentation correction and a payment retry do not get the same permissions because they happen to arrive through the same agent.
 
+We are moving a queue, not deleting one. Count review time and missed failures against the burden this replaces. If inspecting the proposals costs more than the failures you avoid, turn the loop down or off. Detect, recommend, draft. A person presses the button.
+
+
+
+
+
+
+
 ## 8. Nothing leaves without evidence
 
-18:30 to 24:00 · peak
+20:00 to 24:30 · peak
 
+
+
+> New case: three matching timeouts; one missing trace
 > Regression · holdout · scope · human
-> The useful result is permission denied
+> Decide before revealing the evidence
 
-In the supporting example, the candidate removes the visible failure. That is the beginning of the review, not the result.
+Three timeout reports. Two from tenant A, one from tenant B. The candidate widens the retry policy. The visible regression is green. Would you promote it, hold it, or ask for evidence?
 
-Run the regression. Now run the held-out authorization case. It fails. The proposed retry used authority that belonged to somebody else. The gate holds the change without asking the agent whether it feels finished.
+First reveal: the held-out cancellation case fails. A cancelled job resumes and writes output. The scope check also finds the retry policy changed for every tenant. Those are two reasons to hold the candidate, even though its regression passed.
 
-Toyota calls stopping at an abnormality jidoka. That is the useful part to borrow. Detect the defect and stop producing it. The andon summons help; it is not a story about one cord stopping an entire company.
+Now the third timeout. Its trace is missing. Does matching text establish a shared cause? Unknown is an output. Preserve the report and route it for investigation; do not assign tenant A's diagnosis to tenant B.
 
-Now give the classifier the case it cannot explain. Unknown is an output. It lands in review with the evidence intact. No automatic promotion, no invented diagnosis. Similarity did not establish cause.
+Toyota's jidoka supplies the useful manufacturing idea: detect an abnormality and stop producing the defect. The andon summons help. Our gate stops promotion; it does not claim to stop an entire company.
 
-Stage direction: Walk through the saved test output from the supporting repository. Show the passing regression, the failed authorization holdout, and the unknown classification. Link the repository for the implementation; do not switch to a live application.
+The reviewer can reject this proposal without guessing a replacement diagnosis. That is useful work. A blank answer with evidence beats a confident ticket for the wrong incident.
+
+Stage direction: Use the authored case cards in demo.md. Spend 45 seconds on the first vote, 30 seconds reading the two reveal rows, and 45 seconds on the missing-trace decision. Reveal answers only after each decision. No implementation has been run to produce these cards; do not switch to a live application or present them as captured test output.
+
+
 
 Source: Toyota, [Toyota Production System](https://global.toyota/en/company/vision-and-philosophy/production-system/), jidoka and the andon response.
 
+Source: Taiichi Ohno (1988), Toyota Production System: Beyond Large-Scale Production, Productivity Press. Toyota's page is its own description, not independent evidence for our software gate.
+
 ## 9. Who reviews the robot's PRs?
 
-24:00 to 27:00 · build
+24:30 to 27:30 · peak
+
+
 
 > The easy cases disappear
 > The reviewer keeps the exceptions
@@ -148,11 +203,19 @@ My design response is to rotate review duty, reserve time for it, and practise r
 
 If the queue is too big to inspect, reduce what enters it. Giving one engineer a hundred green suggestions is not giving them a hundred reasons to trust the next one.
 
-Source: Lisanne Bainbridge (1983), [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468), Automatica 19(6), 775–779.
+The acceptance history is not permission to stop checking. Keep the rejection evidence visible beside every proposal, and budget reviewer time as part of the system cost.
+
+
+
+
+
+Source: Lisanne Bainbridge (1983), [Ironies of automation](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6), 775–779.
 
 ## 10. Compile what repeats
 
-27:00 to 30:00 · build
+27:30 to 30:30 · build
+
+
 
 > Nondeterminism finds the path. Determinism runs it.
 > Save the script, its tests, and its invalidation rule
@@ -161,15 +224,21 @@ Let the agent explore a changed flow in a browser. Once it finds the login path,
 
 The scheduled check is the same move. Memory and search over prior work help identify repetition. A skill describes when to turn a repeated task into a file. The output gets reviewed, tested, versioned, and scheduled. When the page or the log schema changes, invalidate it.
 
-This is where Adaptive, agentic apps hands work back. A runtime agent earns its own authority there; the compiled procedure it keeps reusing gets evaluated here, offline, like any other change.
+A runtime agent earns its own authority elsewhere. A reusable procedure gets evaluated here, offline, like any other change. This is the boundary this talk owns, not a prerequisite handoff from another session.
 
 Selecting tests from a diff is another candidate. Compare it against the full suite on retained changes before trusting the selection. Count missed regressions as well as runtime. Keep the full suite on a schedule. Cheap selection that skips the failing test has excellent unit economics right up to the incident.
 
+
+
 Story: The repeated agent task you turned into a script. Bring the file and a case where it needed invalidating.
+
+
 
 ## 11. Feedback is the same loop
 
-30:00 to 32:30 · build
+30:30 to 32:45 · build
+
+
 
 > Thumbs down + a sentence of rage = a useful input
 > Feedback → evidence → candidate → opt-in flag
@@ -180,11 +249,17 @@ The pipeline now proposes a change instead of a failure diagnosis. Put it behind
 
 Keep feature requests and incident fixes visibly distinct in the queue. They share machinery. They do not share an acceptance criterion.
 
+
+
 Story: A complaint that became a change, including what the first proposed fix misunderstood.
+
+
 
 ## 12. Correlate, escalate, and the money gate
 
-32:30 to 35:00 · build
+32:45 to 34:30 · build
+
+
 
 > Session ID → linked trace → incident candidate
 > Detect. Recommend. Draft. A person presses the button.
@@ -193,11 +268,19 @@ A customer reports lost data. Their session links to an error. Escalate with the
 
 Three address complaints and a shipping error suggest a shared incident. Check tenant, time window, and operation before merging the tickets. A matching word is not a matching outage.
 
-Draft the notice before the fourth customer asks. A person approves the recipients and the message. The same rule covers credits and data deletion. Detect, recommend, draft. A person presses the button.
+Draft the notice before the fifth customer asks. A person approves the recipients and the message. The same rule covers credits and data deletion. Detect, recommend, draft. A person presses the button.
+
+
+
+
+
+
 
 ## 13. The metrics that will lie to you
 
-35:00 to 37:00 · build
+34:30 to 36:30 · land
+
+
 
 > 100 tickets. 90 wrong. Ten worth reading.
 > Measure recurrence and wrong tickets, with denominators
@@ -208,15 +291,22 @@ Goodhart is the warning here: once we reward a proxy, we change the behavior pro
 
 Track recurring failures after a fix, with exposure counts. Track wrong tickets among reviewed tickets, and audit the cases the agent ignored. A low false-positive rate bought by filing nothing is another beautiful dashboard. Record backlog age too. Otherwise the reviewer silently pays for the metric win.
 
+
+
+
+
 Source: Marilyn Strathern (1997), [Improving ratings: audit in the British University system](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. The familiar target-and-measure wording is Strathern’s formulation of Goodhart’s law.
 
 ## 14. Start Monday
 
-37:00 to 38:30 · land
+36:30 to 38:45 · land
+
+
 
 > One failure class
 > One integration
 > One place the loop must stop
+> Handout vocabulary: alert fatigue · normalization of deviance · jidoka · automation irony · Goodhart
 
 Write down one failure class you could hand this loop on Monday. Name the input and the person who would inspect its first output.
 
@@ -224,17 +314,23 @@ Now name the one integration it needs next. Leave the rest blank. Last, write th
 
 Stage direction: Give the room a full 60 seconds. Do not fill it with a recap.
 
+
+
+
+
 ## 15. Fail to win
 
-38:30 to 40:00 · land
+38:45 to 40:00 · land
 
-> Alert fatigue · normalization of deviance
-> Jidoka · automation irony · Goodhart
 
-The scroll is still arriving. Now the loop leaves a smaller pile of inspectable work, and it knows where to stop.
 
-Alert fatigue explains the unread channel. Normalization of deviance explains the successful workaround. Jidoka gives the stop a job. Automation irony asks what we did to the reviewer. Goodhart asks whether the dashboard rewarded the wrong thing.
+> A smaller queue, with evidence and a stop
+> Do not let the loop train you to stop reading.
 
-The model did not get smarter. The system around it got a job.
+The scroll is still arriving. Now the loop proposes a smaller pile of inspectable work, and the reviewer can stop it. That is the design, not a measured result.
 
-Stage direction: Replay the opening scroll beside the distilled artifact. End there. Stop talking.
+If the queue grows, if the evidence disappears, or if green becomes a reason to stop reading, we built another pager. Measure that before calling it improvement.
+
+Do not let the loop train you to stop reading.
+
+Stage direction: Show the authored opening scroll beside the smaller artifact. Stop talking.

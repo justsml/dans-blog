@@ -12,7 +12,7 @@ The default horizon is the next 18 months from execution, internationally, inclu
 
 - Retired: [A Skeptic’s Guide to Surviving AI in Education](skeptic-education.md); use [Show Me the Misconception](../speaking-portfolio-expanded/talks/evidence-learning/procurement-route.md) for current procurement copy.
 - [Outsmart Your Lying, Cheating Students](evidence-learning.md)
-- [Automating Improvement From Failure](failure-improvement.md)
+- [The Pager Cried Wolf](failure-improvement.md)
 - [Conjure Exactly Enough](adaptive-systems.md)
 - [Buy Me a Free Tier](free-tier.md)
 - [Break the Mirror on Purpose](product-engineering.md)

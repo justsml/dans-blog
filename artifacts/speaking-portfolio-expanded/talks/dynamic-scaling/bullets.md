@@ -219,18 +219,18 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 - Change the unit of work from images to whole designs. Same batch API, three competing designs, three cheap models, three different priorities.
 - Pre-empt: Knight and Leveson, 1986. Twenty-seven programmers, one spec, a million tests, separately written versions failed together. About N-version programming as a correctness strategy. Not this. I am not voting three models toward the truth.
 - Name it: the barrel-of-monkeys maneuver. Cheap parallel generation on purpose, models chosen against a declared generation budget, hand the barrel to the next stage.
-- Race: first draft that passes the gate. Synthesize: frontier model reads them all (input is cheap), writes one. Rank: more candidates for the judges. Catch: law or medicine, the mistake shows up in one output of ten, and you only see it if you have ten.
+- Race: first draft that passes the gate. Synthesize: frontier model reads them all (input is cheap), writes one. Rank: more candidates for the judges. Catch: more samples can expose a hidden failure mode; no guaranteed detection rate.
 - Hedge, in the open: speculative optimization in a lab coat? Possibly. Ship behind an env var that sets fan-out to one; ideally the system tunes that knob itself. That is the companion talk.
 - Bridge: something still has to handle the barrel.
 - Diagram — Cheap generation → shared gates → cheap multi-model judges reporting disagreement.
-- Do — Ask which of the four reasons their last fan-out was for. Most will not know. That is why the four have names.
+- Do — Name the four reasons; silent reflection only, no extra audience-response beat.
 - Source — Knight and Leveson (1986), [An Experimental Evaluation of the Assumption of Independence in Multiversion Programming](https://doi.org/10.1109/TSE.1986.6312924), IEEE Transactions on Software Engineering SE-12(1), 96 to 109. Cited to set aside.
 
 ### 13. Council of Guards
 
 33:00–37:30 · peak · 04:30
 
-> Five judges at $1/$5 per million: 1.025¢ per candidate
+> Same-rate example: five verdicts 1.025¢; one draft 0.78¢
 > Five judges, different models. Report the disagreement, not the average.
 > Gates before preferences; the council may reject the room
 
@@ -257,4 +257,4 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 - Inspect one expensive tool in your system. Count the work it can launch underneath itself. Put the limit where the work begins.
 - Do — Close on the multiplication and the shared admission line. No new vendor. Stop talking.
 
-Delivery limits: follow [pacing.md](pacing.md). Seven audience-response beats; all other diagrams are guided explanation. Admission unavailable: durably queue or explicitly reject, never fail open. Slide 10 uses lease-88f1 (sandbox-small, eight workers, six-minute TTL), with a 40-word/25-second story allowance. Amdahl assumes fixed work, perfect parallel division and free coordination.
+Delivery limits: follow [pacing.md](pacing.md). Seven audience-response beats; all other diagrams are guided explanation. Admission unavailable: durably queue or explicitly reject, never fail open. Slide 10 uses lease-88f1 (sandbox-small, eight workers, six-minute TTL), with a 30-word/25-second story substitution. Amdahl assumes fixed work, perfect parallel division and free coordination.

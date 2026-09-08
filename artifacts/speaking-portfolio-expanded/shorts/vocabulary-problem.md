@@ -2,7 +2,7 @@
 
 2 min · video · parent: [Retrieval](../talks/retrieval/index.md), slide 5
 
-Same meaning, different words. Same word, different meanings. Your eval needs both cases and has neither.
+Same meaning, different words. Same word, different meanings. Your eval needs both cases. Check that they are there.
 
 ## Hook
 
@@ -14,7 +14,7 @@ Furnas, Landauer, Gomez and Dumais named the vocabulary problem in 1987: two peo
 
 ## Beat: now reverse it
 
-Two documents both say "cancel." One cancels a meeting. One cancels a subscription. Shared words do not establish shared intent, and a semantic retriever can be just as confidently wrong in that direction. Your eval set needs a case for vocabulary mismatch and a case for misleading overlap. If the first retriever picked the test set, it has neither.
+Two documents both say "cancel." One cancels a meeting. One cancels a subscription. Shared words do not establish shared intent, and a semantic retriever can be just as confidently wrong in that direction. Your eval set needs a case for vocabulary mismatch and a case for misleading overlap. If the first retriever picked the test set, check which of these cases it missed.
 
 ## Landing
 
@@ -26,4 +26,4 @@ Left: *stop billing* ↔ *terminate renewal*. Right: *cancel* (meeting) ↔ *can
 
 ## Source
 
-Furnas, Landauer, Gomez, Dumais (1987), The vocabulary problem in human-system communication, CACM 30(11).
+Furnas, Landauer, Gomez, Dumais (1987), [The vocabulary problem in human-system communication](https://doi.org/10.1145/32206.32212), CACM 30(11).

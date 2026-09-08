@@ -43,7 +43,7 @@ NEAR_COUNTRIES = {"canada", "mexico"}
 TALK_NAMES = {
     "skeptic-education": "A Skeptic's Guide to Surviving AI in Education",
     "evidence-learning": "Outsmart Your Lying, Cheating Students",
-    "failure-improvement": "Automating Improvement From Failure",
+    "failure-improvement": "The Pager Cried Wolf",
     "adaptive-systems": "Conjure Exactly Enough",
     "free-tier": "Buy Me a Free Tier",
     "product-engineering": "Break the Mirror on Purpose",

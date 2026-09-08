@@ -56,4 +56,3 @@ Total: 1398 spoken words, 195 interaction seconds, 52.3 spoken wpm after interac
 | 15 | 13:15–15:00 | 86 | 0 | 105 | 49.1 |
 
 Total: 681 spoken words, 60 interaction seconds, 48.6 spoken wpm after interaction. Maximum slide: 55.4 wpm.
-

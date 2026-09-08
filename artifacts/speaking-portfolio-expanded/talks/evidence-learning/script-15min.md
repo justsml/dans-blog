@@ -4,7 +4,8 @@ Read prose; perform delivery notes. Sources and screen text are not extra spoken
 
 ## 00:00 to 01:15: slide 1, The cat is out of the bag
 
- > Math class survived the Casio watch.
+> Math class survived the Casio watch.
+> You think you’re running the detector; the detector is writing your curriculum.
 
 Math class survived the Casio calculator watch. The kid next to its owner didn't even need one. Confession: I may have used one on an assessment. What I did was wholesome. These kids are phoning it in. Infuriating, right?
 
@@ -92,4 +93,3 @@ The kid next to the Casio owner didn't need a watch. The kid with no car never t
 This is too much data and power to hold casually. Prove the value for teachers and students, or stop collecting it. Come find me after. Don't let the detector write your curriculum.
 
 Delivery: Stop talking.
-

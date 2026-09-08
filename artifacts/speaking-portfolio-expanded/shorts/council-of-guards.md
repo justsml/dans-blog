@@ -43,3 +43,5 @@ Candidate table and stipulated council split in [demo.md](../talks/dynamic-scali
 ## Source
 
 Knight and Leveson (1986), cited to set aside. Anthropic, Building effective agents, for the parallelization and evaluator vocabulary.
+
+Arithmetic and current price source: [Council calculation](../talks/dynamic-scaling/evidence-bank.md#council-arithmetic-checked-2026-09-08), using [Haiku 4.5 base rates](https://www.anthropic.com/claude/haiku), checked 2026-09-08.

@@ -1,6 +1,6 @@
 # Sorry, You're Building It
 
-6 min · lightning · parent: [Adaptive, agentic apps](../talks/adaptive-systems/index.md), slides 3, 4, 5
+6 min · lightning · parent: [Conjure Exactly Enough](../talks/adaptive-systems/index.md), slides 3, 4, 5
 
 It's coming one integration at a time and you can't opt out. The hazard isn't the tool count. It's the pathways.
 
@@ -10,7 +10,7 @@ Open with [`--no-agent`](no-agent.md) compressed to forty seconds: browser chats
 
 ## Beat: pathways, not tools (1:00)
 
-Risk doesn't grow with the number of tools. It grows with the number of routes between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you didn't add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews the combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
+Count the possible read-to-write pairings. Assume five read tools and five write tools, all allowed to connect: twenty-five. Add one SaaS with six reads and six writes: eleven times eleven, a hundred and twenty-one. Ninety-six new pairings from one integration. Those are potential routes before policy filtering, not ninety-six proven exploits. Nobody reviews the combinations. The dangerous pairing is never on the roadmap. It gets discovered.
 
 ## Beat: accidents first (2:15)
 
@@ -30,7 +30,7 @@ The big assistant still exists. It just never has all of its hands full at the s
 
 ## On screen
 
-`10 tools → 45 pairs`. Then one integration plugged in, pair count exploding. Then a single small box: *this job: 3 tools, 2 minutes, $2.*
+`5 reads × 5 writes = 25 → 11 × 11 = 121`: one SaaS adds six reads and six writes, 96 potential pairings before policy filtering. Then a single small box: *this job: 3 tools, 2 minutes, $2.*
 
 ## Source
 

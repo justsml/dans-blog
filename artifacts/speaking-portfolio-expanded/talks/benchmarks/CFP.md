@@ -1,16 +1,18 @@
 # Stop Looking at My Benchmarks… Get Your Own!
 
-Prepared 6 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
+Prepared 8 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
 
 ## Short abstract (50 words)
 
-Model A scores 89.7, B scores 88.9, C scores 84.3. On your actual work the order reverses. The problem is not that you picked the wrong benchmark. It is that nobody tested the instrument. Twenty green cases prove less than you think, and this talk does the arithmetic.
+Model A scores 89.7, B scores 88.9, C scores 84.3. On your actual work the order reverses. The problem is not that you picked the wrong benchmark. It is that nobody tested the instrument. Twenty green cases prove less than you think, and this talk does the arithmetic on stage.
 
 ## Standard abstract (150 words)
 
-Your eval suite is a measuring instrument, and measuring instruments get validated before anyone optimizes against them. Psychometrics has done this since Cronbach and Meehl in 1955; we ship a JSON file and call it a holdout.
+Your eval suite is a measuring instrument. Before optimizing its score, ask what evidence supports the decisions you make from it. Psychometrics supplies the questions; our cancellation workflow makes them concrete.
 
-This talk asks six questions of a suite. Validity: what inference does the score support? Reliability: is it repeatable enough for its use? Agreement: where do graders differ, and what is your kappa when everything passes? Power: twenty for twenty still leaves a one-in-seven true failure rate, by the rule of three. Contamination: what has the system already seen? Goodhart: what breaks when you optimize the number? Along the way a cancellation workload reverses the leaderboard, an always-pass judge scores a perfect record and a kappa of zero, and a rejection rule gets written before anyone looks at the candidate. You leave with twenty cases worth trusting and the limitation written next to them.
+Validity: what does a passing score mean? Reliability: does repeating the judgment change the verdict? Agreement: which failures does the grader miss? Power: what difference could this experiment detect? Contamination: what evidence influenced development? Goodhart: what exploit improves the score while making the service worse?
+
+We derive the exact upper bound after twenty independent representative trials with zero failures: 13.9% at ninety-five percent confidence. That is a limit, not an estimated failure rate. An always-pass judge then earns ninety-percent agreement while missing every failure. You leave with a Calibration Certificate: six questions, evidence fields, limitations, and an owner. Fill it against your own suite, distinguish regression specifications from population claims, and write the rejection rule before seeing the candidate.
 
 ## Audience
 
@@ -24,6 +26,6 @@ AI engineers, ML and platform engineers, QA and DevEx teams, and technical leade
 
 ## Reviewer notes
 
-Not a leaderboard talk and not a benchmark review; no public benchmark is ranked and no model is recommended. Every statistical claim is derived on stage from stated assumptions, and the fixture arithmetic is synthetic and labelled as such. Goodhart is cited to his 1975 paper rather than the aphorism, and Campbell is distinguished from him rather than merged. The contamination section reports what detection methods can and cannot establish. Companion to *Three Search Methods in a Fundable Trenchcoat*, which owns retrieval evaluation and the IR history; cost per accepted outcome belongs to *Buy Me a Free Tier*. This talk defers both explicitly on stage.
+Not a leaderboard talk and not a benchmark review; no public benchmark is ranked and no model is recommended. Every statistical claim is derived on stage from stated assumptions, and the fixture arithmetic is synthetic and labelled as such. Goodhart is cited to his 1975 paper rather than the aphorism, and Campbell is distinguished from him rather than merged. The contamination section reports what detection methods can and cannot establish. Companion to *Three Search Methods in a Fundable Trenchcoat*, which owns retrieval evaluation and the IR history; cost per accepted outcome belongs to *Buy Me a Free Tier*. Their arithmetic and history remain in those companion talks.
 
 **Format:** 40 minutes, 15 slides, including a judge-agreement exercise. 15- and 30-minute routes are prepared. [Full submission packet](packet.md).

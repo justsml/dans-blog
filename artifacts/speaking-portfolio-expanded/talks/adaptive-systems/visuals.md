@@ -1,6 +1,6 @@
-# Visual inventory: Adaptive, agentic apps
+# Visual inventory: Conjure Exactly Enough
 
-Matches the 15-slide outline. Diagrams are editable SVG in `reveal-talks/assets/adaptive-systems/` and render offline. Slides without a diagram use typography on purpose.
+Matches the 15-slide outline. Diagrams are editable SVG in `public/talks/assets/adaptive-systems/` and render offline. Slides without a diagram use typography on purpose.
 
 | Slide | Visual |
 | --- | --- |
@@ -20,3 +20,5 @@ Matches the 15-slide outline. Diagrams are editable SVG in `reveal-talks/assets/
 | 15 | Typography |
 
 The regional-recovery diagram was removed with its slide. File numbers on reused assets reflect their original slide positions.
+
+Slide 10 SVG is the after-reveal summary only. The first screen shows the candidate and string-only check from demo.md; keep outputs and decisions covered until the room responds.

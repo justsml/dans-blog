@@ -1,5 +1,7 @@
 # If we drop A Skeptic's Guide: where the content goes
 
+Status update, 8 September 2026: retirement is complete. See the [Outsmart correction record](corrections-2026-09-08-evidence-learning.md) for the adopted transplants and current procurement route. The plan below records the earlier proposals, not an outstanding deletion request. Its VanLehn “medians” wording is corrected to means in the live evidence bank.
+
 Written 2026-09-06 alongside the [critical review](skeptic-education-review.md). Nothing has been deleted. This is the plan if the decision is yes.
 
 ## Why it is droppable

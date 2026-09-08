@@ -1,6 +1,6 @@
 # Software Runs on Petrol Now
 
-3 min · video · parent: [The Future of Product Engineering](../talks/product-engineering/index.md), slide 14
+3 min · video · parent: [Break the Mirror on Purpose](../talks/product-engineering/index.md), slide 14
 
 Tokens stop being a build cost and become a running cost. Then they never stop.
 
@@ -14,7 +14,7 @@ You will meter it the way you meter electricity, which is to say you will only n
 
 ## Beat: the half that is defense
 
-And some of that burn is not features at all. If an attacker can point a tireless agent at your surface, the only symmetric answer is a tireless agent of your own — self-hacking around the clock, finding and mitigating faster than the countless people trying to get in. That is a permanent line item on a product that is otherwise done. It never completes.
+And some of that burn is not features at all. If an attacker can point a tireless agent at your surface, my prediction is a tireless defensive agent of your own — self-hacking around the clock, finding and mitigating faster than the countless people trying to get in. That is a permanent line item on a product that is otherwise done. It never completes.
 
 Be careful when you fire the security sentry bots, incidentally. They know who you are. They know where the keys are. They have read all of your commits.
 
@@ -28,7 +28,7 @@ A fuel gauge on a "finished" product. Below it two line items: `features: 0` · 
 
 ## Scope
 
-A prediction, labeled as one. No measured figures.
+A prediction, labeled as one. No measured figures. A useful synthetic budget illustration is $2 a day ×365=$730 a year before maintenance and review. Continued operation without ongoing inference would weaken the forecast.
 
 ## Story slot
 

@@ -1,6 +1,6 @@
 # Education CFP package
 
-Prepared 4 September 2026; revised 8 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
+Prepared 4 September 2026; revised 8 September 2026. Abstract limits use whitespace-separated words; shorter abstracts intentionally leave room for venue edits. No biography, affiliation, or speaking history is asserted.
 
 The education portfolio is **one 40-minute talk and one 15-minute route**, not two talks. Submit Outsmart for teaching audiences and Show Me the Misconception for procurement, curriculum-committee and administrator audiences. They pair as a double-header: one is for the people who teach, the other for the people who sign.
 
@@ -34,7 +34,7 @@ Retired as a standalone 40-minute talk ("A Skeptic's Guide to Surviving AI in Ed
 
 ### 50-word abstract
 
-Math class survived the calculator watch. Your class can survive chatbots without building a curriculum around catching anyone. This session shows ways to out-design students instead: an assignment where verification feels like cheating, a four-minute reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
+Math class survived the calculator watch. This session makes verification feel like cheating: a smudged worksheet, a spoken reconstruction, and a transcript view across 300 students. Teachers score reasoning, record help separately, protect access, and budget review time. Integrity processes stay in place; the checkpoint starts measuring what students understand.
 
 ### 150-word abstract
 

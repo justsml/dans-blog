@@ -1,22 +1,22 @@
-# Three Search Methods in a Fundable Trenchcoat: 30-minute adaptation
+# Retrieval: 30-minute route
 
-Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
+[Full script](script-30min.md). Open the browser deck with `?route=30`; the deck uses these slide IDs, order, durations and notes. Pairs get 60 seconds before labels. Protect the F prediction and separate score reveals.
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 02:30 | 1 | The sentence |
-| 02:30 to 04:00 | 2 | The bet, and the eight words |
-| 04:00 to 05:30 | 3 | 1972: rare words matter more |
-| 05:30 to 07:00 | 4 | Vector Database, 1975 |
-| 07:00 to 08:30 | 5 | The vocabulary problem |
-| 08:30 to 10:00 | 6 | Chunking is passage retrieval |
-| 10:00 to 11:30 | 7 | BM25 is still standing there |
-| 11:30 to 14:30 | 8 | Judge these five documents |
-| 14:30 to 17:00 | 9 | Cranfield, Bedfordshire, 1966 |
-| 17:00 to 21:00 | 10 | Fool's Golden Dataset |
-| 21:00 to 23:30 | 11 | Assessors disagree. Rankings can survive. |
-| 23:30 to 26:00 | 12 | The Reader Stopped Being a Person |
-| 26:00 to 28:00 | 13 | Retrieved text now sits beside instructions |
+| 00:00 to 02:00 | 1 | The sentence |
+| 02:00 to 03:40 | 2 | You are joining an old field late |
+| 03:40 to 06:40 | 8 | Judge these five documents |
+| 06:40 to 08:40 | 9 | Cranfield, Bedfordshire, 1966 |
+| 08:40 to 12:40 | 10 | Fool's Golden Dataset |
+| 12:40 to 14:10 | 3 | 1972: rare words matter more |
+| 14:10 to 15:40 | 4 | Vector Database, 1975 |
+| 15:40 to 17:10 | 5 | The vocabulary problem, both ways |
+| 17:10 to 19:10 | 6 | Chunking is passage retrieval |
+| 19:10 to 20:50 | 7 | BM25 is still standing there |
+| 20:50 to 23:20 | 11 | Assessors disagree. Rankings can survive. |
+| 23:20 to 25:50 | 12 | The Reader Stopped Being a Person |
+| 25:50 to 28:00 | 13 | Retrieved text now sits beside instructions |
 | 28:00 to 30:00 | 15 | Eight words. Sixty years. One instruction. |
 
-Keeps the opening and every IR term. Drops the expert-system aside; the pool exercise retains four minutes. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Title setup survives on slide 2. Sources only appear with spoken claims. Longer historical diagnoses are bridged in the short route. The optional Story substitutes within the speech budget after verification.

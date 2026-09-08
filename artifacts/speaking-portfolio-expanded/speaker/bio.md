@@ -73,8 +73,8 @@ Adjacent evidence already documented: 100+ hours of recorded instruction at Galv
 | [Semantic Vector Search](../../../src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx) | Failure improvement (search ladder), adaptive systems |
 | [Production AI is Terrifying](../../../src/content/posts/2026-01-03--mastra-security-guardrails/index.mdx) | Adaptive systems, dynamic scaling (boundaries) |
 | [LLM Connection Strings](../../../src/content/posts/2026-01-30--llm-connection-strings/index.mdx) | Free tier (provider portability), dynamic scaling (distribute) |
-| [The Unassuming Power of Multiple-Choice Questions](../../../src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx) | Evidence of learning, skeptic's guide |
-| [The Last to Think](../../../src/content/posts/2025-05-31--the-last-to-think/index.mdx) | Skeptic's guide, evidence of learning |
+| [The Unassuming Power of Multiple-Choice Questions](../../../src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx) | Outsmart, Show Me the Misconception procurement route |
+| [The Last to Think](../../../src/content/posts/2025-05-31--the-last-to-think/index.mdx) | Outsmart, Show Me the Misconception procurement route |
 | [One Weird Trick](../../../src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx) | Product engineering, dynamic scaling |
 
 ## One-line variants for forms

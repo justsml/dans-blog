@@ -2,9 +2,11 @@
 
 All fixtures are authored examples. Read the role cards or use a prepared replay; do not present them as a live model evaluation. No student account, internet, paid model, or personal data is required.
 
-Two exercises live here. The **percentage replay** below is slide 7 of Outsmart Your Lying, Cheating Students. The **history-essay cards** are the alternate for [Show Me the Misconception](procurement-route.md), the 15-minute procurement route. A booking that runs both gets one fixture each: the percentage example never runs twice in one program.
+Two exercises live here. The **percentage replay** below is slide 7 of Outsmart Your Lying, Cheating Students. The **history-essay cards** are the fixture for [Show Me the Misconception](procurement-route.md), the 15-minute procurement route. A booking that runs both gets one fixture each: the percentage example never runs twice in one program.
 
 ## Outsmart Your Lying, Cheating Students: four-minute evidence replay
+
+Four minutes inside the five-minute slide on the full route; the other minute introduces the question and debriefs the invariant. The 30-minute route uses four minutes; the 15-minute route uses three. In a two-minute compression, state the $100 answer and run the $80 transfer item live.
 
 **Exact fixture**, shown on slide 4: “A shop raises a $100 price by 20%, then reduces the new price by 20%. Because the changes are equal and opposite, the final price is $100.” Clean prose, wrong base. Below it runs as a scripted tutor/learner interaction. No accusation is made and no actual learner is graded.
 
@@ -13,7 +15,7 @@ Two exercises live here. The **percentage replay** below is slide 7 of Outsmart 
 | 0:00–0:40 | Tutor: “Which price does the discount use?” Learner: “The original $100.” | Identifies a specific mistaken base. |
 | 0:40–1:20 | Tutor: “What is the price after the increase?” Learner: “$120.” Tutor: “Apply the discount to that current price.” | Conceptual support is visible. |
 | 1:20–2:10 | Learner: “$120 times 0.8 is $96. I used the wrong starting amount for the discount.” | Supported correction and explanation. |
-| 2:10–3:10 | Tutor: “Now start at $80, increase 25%, then decrease 20%. Explain why this case returns to its start.” Learner: “It reaches $100, then $80; 1.25 times 0.8 equals 1.” | Immediate transfer under known conditions, not durable mastery. |
+| 2:10–3:10 | Tutor: “Now start at $80, increase 25%, then decrease 20%. Predict the final amount, then explain it.” Learner: “It reaches $100, then $80; 1.25 times 0.8 equals 1.” | Immediate transfer under known conditions, not durable mastery. |
 | 3:10–4:00 | Presenter: “What would you record, and what remains unknown?” | Record concept, observation, assistance, and next independent check. Retention and unaided performance remain unknown. |
 
 ### Compact fictional record

@@ -1,4 +1,4 @@
-# Formats: Adaptive, agentic apps
+# Formats: Conjure Exactly Enough
 
 The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](index.md). Scripts and adaptations are plain files; edit the outline first, then bring them into line by hand.
 
@@ -15,11 +15,11 @@ The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/READ
 
 ## Five-minute lightning script
 
-0:00 to 1:00, slide 1. The API still returns 200. Authentication works. The status page is green. Your ingest is broken because somebody renamed a field. An app can notice, investigate, propose, prove, and keep the other ninety-eight percent flowing before you wake up, without holding a permission you would be scared to give it.
+0:00 to 1:00, slide 1. The API still returns 200. Authentication works. The status page is green. Your ingest is broken because somebody renamed a field. An app can notice, investigate, propose, prove, and keep the fixture's 882 of 900 records moving while eighteen remain quarantined.
 
-1:00 to 2:00, slide 3. Zoom out. The assistant with every customer's data and tools that email, refund, delete and deploy is arriving one integration at a time, in browsers, in CLIs, in every SaaS, and you will opt out with `--no-agent`. The hazard is not the tool count; it is the pathways between tools, and every integration multiplies them. Ten tools is forty-five pairs. Nobody reviews the combinations. Most of the damage will be accidents; some will be people who mean it, and a vendor payload is now untrusted input read by something that can act. So keep the live pathways countable: conjure a small agent per job.
+1:00 to 2:00, slide 3. The assistant with everything arrives one integration at a time. Assume five read tools and five write tools: 25 possible pairings. One SaaS adds six of each: eleven times eleven, 121. Ninety-six new potential routes before policy filtering. Most damage starts with an accident. Keep the live set countable: conjure a small agent per job.
 
-2:00 to 3:15, slide 4. An orchestrator reads the failure, writes a job with goal, evidence, tools, budget and stop conditions, and generates an agent with a tailored prompt and only the tools it needs. If it needs more, it asks through tool search; policy decides; the answer is logged either way. The orchestrator loops: done, another specialist, or stop. The known mapping runs as code and conjures nothing. The log of denied requests taught me more about my permissions than any audit.
+2:00 to 3:15, slide 4. An orchestrator reads the failure, writes a job with goal, evidence, tools, budget and stop conditions, and generates an agent with a tailored prompt and only the tools it needs. If it needs more, it asks through tool search; policy decides; the answer is logged either way. The orchestrator loops: done, another specialist, or stop. The known mapping runs as code and conjures nothing. The planner holds no operational credentials; server-owned policy and tools validate every grant.
 
 3:15 to 4:15, slide 14. Start with one agent and an execution log. Before returning SQL, commands or reports, retrieve relevant successes and failures, check this draft and correct known mistakes. After authorized execution, record what actually happened and update the pattern counts. Keep generated, executed, verified and unknown separate. A query can run and still answer the wrong question. The [copyable prompt](memory-pattern.md) gives the agent this routine; independent checks still catch mistakes.
 

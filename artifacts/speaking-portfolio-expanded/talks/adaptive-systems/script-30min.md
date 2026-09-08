@@ -1,6 +1,8 @@
-# Adaptive, agentic apps: 30-minute presenter script
+# Conjure Exactly Enough: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The walkthrough runs at four minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script. Slide 3 keeps the inevitability, the pathway arithmetic and the pivot; the --no-agent riff is the first thing to go when compressing.
+Use slides 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill bounded Story substitutions before delivery; their word and time allowances replace existing prose. Timings are rehearsal targets without Q&A. The walkthrough runs at four minutes. Slides 8 and 12 are cut; their one-sentence bridges are in the script. Slide 3 keeps the inevitability, the pathway arithmetic and the pivot; the --no-agent riff is the first thing to go when compressing.
+
+Budget: 26 spoken minutes (including story substitutions and bridges) + 4 audience minutes = 30. See [per-slide counts](pacing.md); walkthrough time includes its narration.
 
 ## 00:00 to 02:00: slide 1, The vendor renamed a field
 
@@ -10,13 +12,13 @@ On screen:
 > Today: postal_code
 > Your ingest stops. The status page is green.
 
-The API still returns 200. Authentication works. The vendor's status page is green. Your ingest is broken because somebody renamed a field. If you work around B2B integrations, this is a very boring way to have a very expensive morning.
+The API still returns 200. Authentication works. The vendor's status page is green. Your ingest is broken because somebody renamed a field. A boring way to have an expensive morning.
 
-Here is the promise of this talk. An application can notice that, investigate it, propose a fix, prove the fix, and keep the other ninety-eight percent of records flowing, all before you wake up. And it can do that without ever holding a permission you would be scared to give it.
+Here is the promise of this talk. An application can notice that, investigate it, propose a fix, prove the fix, and keep 882 of 900 records moving while eighteen stay quarantined, all before you wake up. That is a fixture target, enforced by scoped tools and independent checks.
 
 The design is mine. The incidents are composites; I have had this exact morning more than once. We will follow one address ingest job through a rename, a change in meaning, and a provider that stops answering.
 
-Story: The vendor rename you actually lived through. Name the field, the hour you noticed, and what it cost.
+Story: Replace at most 35 words of this slide's existing prose with the following first-hand example (maximum 20 seconds; never append): The vendor rename you actually lived through. Name the field, the hour you noticed, and what it cost.
 
 Delivery: Hands up for a 200 response that carried a breaking change. Take one story, thirty seconds, and return to the ingest job.
 
@@ -34,27 +36,29 @@ The agent has to beat that. Not on vibes. On time to recover, on records kept mo
 
 Delivery: Write the three metrics on the board and leave them there.
 
-## 03:30 to 07:15: slide 3, Sorry, You're Building It
+## 03:30 to 07:00: slide 3, Sorry, You're Building It
 
 On screen:
 
 > Browsers, CLIs, every SaaS: an agent layer you opt out of with --no-agent
-> Ten tools is forty-five pairs. One more integration is not one more path.
+> 5 reads × 5 writes = 25; add 6 of each: 11 × 11 = 121.
 > Accidents first. Then people who mean it.
 
 Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline. It is arriving one integration at a time, and not only in our products.
 
-Here is the hazard, and it applies to the small systems too. Risk does not grow with the number of tools. It grows with the pathways between them, and every integration multiplies those. Ten tools is forty-five pairs before you count chains. Plug in one SaaS with a dozen endpoints and you did not add twelve capabilities; you added hundreds of routes from something the agent can read to something it can do. Nobody reviews those combinations. Not your security team, not the model, not you at three in the morning. The dangerous pairing is never on the roadmap. It gets discovered.
+I expect CLIs to take English by default, with --no-agent for the old behavior. I know who to blame: the kids. Actually, the kids hate AI.
+
+Count the possible read-to-write pairings. Assume five read tools and five write tools, all allowed to connect: twenty-five. Add one SaaS with six reads and six writes: eleven times eleven, a hundred and twenty-one. Ninety-six new pairings from one integration. Those are potential routes before policy filtering, not ninety-six proven exploits. Nobody reviews the combinations. The dangerous pairing is never on the roadmap. It gets discovered.
 
 So the question is not whether to grant access. It is how many pathways are live at once. The big assistant still exists; it just never has all of its hands full at the same time, because it conjures a small agent per job with exactly enough.
 
-Story: Your own near miss with an over-permissioned agent, or the tool pairing you only noticed after it fired.
+Story: Replace at most 35 words of this slide's existing prose with the following first-hand example (maximum 20 seconds; never append): Your own near miss with an over-permissioned agent, or the tool pairing you only noticed after it fired.
 
-Delivery: Write 10 → 45 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
+Delivery: Write 5 × 5 = 25 → 11 × 11 = 121 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
 
 Bridge: most of the damage will be accidents — a confident mapping, a helpful cleanup, a tool called with the wrong ID — and a renamed field is untrusted input read by something that can act.
 
-## 07:15 to 10:45: slide 4, Conjure the agent the job needs
+## 07:00 to 10:30: slide 4, Conjure the agent the job needs
 
 On screen:
 
@@ -64,17 +68,17 @@ On screen:
 
 Here is the shape. An orchestrator reads the failure and writes a job: goal, evidence it may read, actions it may take, deadline, spend, and the conditions that end it. Then it generates an agent for that job with a tailored prompt and only the tools it expects to need. A schema-diff agent gets read access to two samples and a contract. It does not get the database.
 
-If the agent needs something else, it asks. Dynamic tool search lets it discover a tool; policy decides whether this job may have it; the request and the answer are logged whether or not it was granted. That log is the most interesting file in the system.
+If the agent needs something else, it asks. Dynamic tool search lets it discover a tool; policy decides whether this job may have it; the request and the answer are logged whether or not it was granted. That log is the most interesting file in the system. The planner reads untrusted input too. It holds no operational credentials: it proposes a server-defined job class. A trusted dispatcher validates the grant, and every tool rechecks authorization. Log the job, policy version and decision so temporary agents remain auditable.
 
 The orchestrator loops on the result: done, needs another specialist, or must stop. A diff agent hands to a fixture-writer hands to a reviewer, each with its own blast radius, each disposable when finished. Nobody rents a committee every time a CSV arrives — the known mapping runs as code, and only the unfamiliar case conjures anything.
 
 This is a prototype on my own integrations. I am not giving you a success rate today because I do not have one I trust. I can tell you the log of denied tool requests taught me more about my own permissions than any audit.
 
-Story: What the prototype's first denied tool request was, and what it revealed.
+Story: Replace at most 35 words of this slide's existing prose with the following first-hand example (maximum 20 seconds; never append): What the prototype's first denied tool request was, and what it revealed.
 
 Delivery: Draw the three boxes: orchestrator, generated agent, tool catalog with policy gate. Show one request crossing the gate and being refused.
 
-## 10:45 to 13:15: slide 5, Guard the tools that can hurt
+## 10:30 to 13:00: slide 5, Guard the tools that can hurt
 
 On screen:
 
@@ -90,13 +94,13 @@ Second, watch the boundary between systems. An agent that can read customer data
 
 Source: Saltzer and Schroeder (1975), [The Protection of Information in Computer Systems](https://doi.org/10.1109/PROC.1975.9939), Proceedings of the IEEE 63(9), 1278 to 1308. Least privilege is their principle (f).
 
-Story: The client setup with local models for sensitive data and a frontier orchestrator. Say which parts were real and which are the stronger design you would build now.
+Story: Replace at most 35 words of this slide's existing prose with the following first-hand example (maximum 20 seconds; never append): The client setup with local models for sensitive data and a frontier orchestrator. Say which parts were real and which are the stronger design you would build now.
 
-Delivery: Point at the filter between worker and planner. Ask what else crosses it: prompts, traces, error bodies, notification previews.
+Delivery: Point at the filter between worker and planner. Name the other paths: prompts, traces, error bodies, notification previews. No audience response here.
 
 Bridge: a signed download URL is a bearer credential; handing it to a model while asking the model not to use it is hope, not isolation.
 
-## 13:15 to 15:00: slide 6, Repair syntax; prove meaning
+## 13:00 to 14:45: slide 6, Repair syntax; prove meaning
 
 On screen:
 
@@ -107,11 +111,11 @@ Back to the ingest. A name resemblance is a hypothesis, not evidence. A postal c
 
 A Boolean status becoming an enum is harder. Does true mean active, eligible, verified, or anything except cancelled? Pending cannot become true just because both are truthy in JavaScript.
 
-So the generated agent may propose a reversible mapping when evidence supports equivalence, and it must quarantine the rest. An unexplained business-state change goes to an owner with samples and a question. Automatic recovery is useful precisely because it has somewhere honest to stop.
+So the generated agent may propose a reversible mapping when evidence supports equivalence, and it must quarantine the rest. An unexplained business-state change goes to an owner with samples and a question. Automatic recovery has somewhere honest to stop. The diff agent never held a write tool.
 
 Delivery: Show {zip:"02108"} and {postal_code:"02108"}, then {status:"pending"}. Ask what evidence is missing in each. Two answers, then move.
 
-## 15:00 to 16:15: slide 7, The repair is a versioned artifact
+## 14:45 to 16:15: slide 7, The repair is a versioned artifact
 
 On screen:
 
@@ -119,7 +123,7 @@ On screen:
 > Evidence + fixtures + rollback
 > No silent mutation of the database
 
-The agent produces a mapping artifact, not a paragraph saying it fixed things. Parent version, input fingerprint, the transforms, the rejected cases, the evidence it read, and the fixture results.
+The proposing agent cannot promote its own repair. It produces a mapping artifact, not a paragraph saying it fixed things. Parent version, input fingerprint, the transforms, the rejected cases, the evidence it read, and the fixture results.
 
 A narrow mapping change can pass a pre-authorized canary policy. A schema migration has a different blast radius and its own approval path. Keep the source records so you can replay; keep the old mapping so you can restore. Rollback changes future processing. It does not un-write yesterday's downstream rows; those need reconciliation.
 
@@ -136,7 +140,7 @@ On screen:
 
 The same ingest calls an address-verification provider. Suppose the provider accepted the batch and charged for it, then the connection dropped. Resubmitting elsewhere recovers latency and doubles the bill.
 
-Record an operation identity before dispatch. Keep the provider's job ID. Reconcile before resubmitting, and when the provider offers no way to ask, stop with an unknown outcome and say so. A deadline ends new dispatch; it does not reverse a side effect already performed. The ledger has to hold that uncertainty, reserved money included, until the answer arrives.
+Record an operation identity before dispatch. Keep the provider's job ID. Reconcile before resubmitting, and when the provider offers no way to ask, stop with an unknown outcome and say so. A deadline ends new dispatch; it does not reverse a side effect already performed. The ledger has to hold that uncertainty, reserved money included, until the answer arrives. The reconciliation job gets status lookup, never pay or submit.
 
 Delivery: Mark the moment on the timeline where your process knows less than the provider does.
 
@@ -144,19 +148,19 @@ Delivery: Mark the moment on the timeline where your process knows less than the
 
 On screen:
 
-> Rename → validated mapping, canary
-> Unknown status → quarantine, owner
-> Lost response → reconcile, hold the reservation
+> Rename: what did the green check prove?
+> Unknown status: who knows what it means?
+> Lost response: retry or reconcile?
 
-Run the design. The rename has contract evidence. The conjured diff agent proposes copy-string; now reveal the fixtures one at a time and let the room reject the one that must not be repaired. Passing both, policy permits a canary of that mapping version and the job continues for matching records.
+Run the design. The rename has contract evidence. First show a candidate that converts the postal code through a number and back to a string. Ask what a green type check proves before revealing the input and output. A string-only check passes the lossy proposal. The independent leading-zero fixture rejects it. Only the corrected copy-string mapping, passing the full fixture set, becomes eligible for a canary.
 
 The status change has no semantic evidence. The job isolates affected records, reports what is incomplete, and hands an owner the samples and the exact question.
 
 The provider timeout has an uncertain outcome. The controller queries the saved job ID instead of submitting again, and where it cannot, it holds the unresolved operation and its reservation.
 
-Three events, three different right answers, none of them success or failure. If your dashboard only has two states, it is hiding the most interesting one.
+Three events, three different right answers. A two-state dashboard hides the uncertainty.
 
-Delivery: Five minutes from demo.md. Reveal fixtures before expected results. Ask the room for the next decision before showing it.
+Delivery: Four-minute route in demo.md (1.75 spoken, 2.25 interaction). Reveal fixtures before expected results. Ask the room for the next decision before showing it.
 
 ## 21:30 to 23:15: slide 11, Compute Is a Tool Too
 
@@ -166,15 +170,15 @@ On screen:
 > New: the job describes its shape and asks
 > Per-customer, per-job cost controls and pay-for-performance
 
-One more thing the orchestrator can conjure: compute. Scaling is still an infra decision made once for everyone — replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for six minutes would clear the backlog, and what this customer's plan allows.
+One more thing the orchestrator can conjure: compute. Scaling is still an infra decision made once for everyone — replica counts, instance classes, an autoscaler watching CPU. The agent inverts that. It knows this batch is mostly waiting on a provider, that eight sandboxes for at most two minutes might clear the backlog, and what this customer's plan allows.
 
 So it asks. The request names shape, size, duration and a cost cap, charged to this job rather than a shared cluster. That is a new product surface: a customer buys a faster turnaround, and finance caps one workflow instead of an environment.
 
-Story: A job where per-customer compute would have changed the pricing conversation.
+Story: Replace at most 35 words of this slide's existing prose with the following first-hand example (maximum 20 seconds; never append): A job where per-customer compute would have changed the pricing conversation.
 
-Delivery: Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
+Delivery: Contrast one autoscaler threshold with one job request. Name which one a customer could be billed for; no audience response.
 
-Bridge: the compute guard is the tool guard — an approved catalog, enforced leases, and no unapproved region no matter how good the latency looks. Whatever the app changed today, an engineer sees it in one report, and authority widens only from measured outcomes on the same recorded incidents: recoveries, but also false repairs, dropped records, cost and human corrections.
+The compute guard is the tool guard: approved classes and regions, enforced leases and teardown. The mechanics are a companion talk.
 
 ## 23:15 to 25:15: slide 13, Widen Per Class, Never Per Streak
 
@@ -184,9 +188,9 @@ On screen:
 > Canary: one reversible change class
 > Expand: from correct recoveries, false repairs, cost, interventions
 
-Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class, and widen authority per class from evidence about that class. Same discipline for tools and for compute. It is also the loop that tunes its own fan-out: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down.
+Start in shadow mode: the conjured agents propose artifacts and apply none. Then permit one reversible change class, and widen authority per class from evidence about that class. Same discipline for tools and for compute. It is also the loop that tunes its own fan-out: acceptance up and false repairs flat, that job class gets more parallel attempts and a bigger budget; false repairs up, both come down. Tune only recurring, evaluated job classes where the accepted-outcome gain exceeds the added review cost; keep human-owned budget ceilings and a fan-out-one override.
 
-Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance. Every widening is locally reasonable. Each one cites the last one as precedent. Nobody ever decides to be reckless. That is exactly why authority expands per class and from measured outcomes for that class, and never from how the last six went.
+An engineer sees changed authority and unresolved work in one report. Bainbridge, 1983: the human inherits exceptions; keep that digest inspectable. Vaughan, 1996: repeated departures can become normal. A lucky streak is not permission.
 
 Source: Vaughan (1996), The Challenger Launch Decision, University of Chicago Press, on normalization of deviance.
 
@@ -219,6 +223,6 @@ On screen:
 
 And return to the assistant with everything. It is still coming; nothing on these slides stops it, and I would not want them to. What changed is how many of its pathways are live at once. Not one agent holding every combination, which nobody can check. Many small ones you can afford to.
 
-Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. That is enough to start.
+Pick one integration that already costs your team mornings. Give it a conjured agent with a bounded way to investigate, a test it did not write, and a place to record what happened. Or start with one reporting agent: keep its execution observations, make it check them before returning work, and measure whether the same mistake comes back. Count the routes you opened. Conjure exactly enough.
 
 Delivery: Land on the third line. Stop talking.

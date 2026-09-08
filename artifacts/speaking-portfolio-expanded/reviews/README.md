@@ -1,4 +1,8 @@
-# Critical reviews, September 6 2026
+# Reviews and correction records
+
+The [8 September audit](AUDIT-2026-09-08.md) was verified talk by talk. See [the correction record](CORRECTIONS-2026-09-08.md) for dispositions, primary-source checks, route budgets, and remaining delivery evidence. Original audits below retain their historical verdicts and titles.
+
+## Critical reviews, September 6 2026
 
 
 > **Paths in these files predate 7 September 2026.** The portfolio was reorganized that day into one directory per talk under `talks/<slug>/`. Bare path mentions such as `outlines/<slug>-40min.md`, `packets/<slug>/…`, `decks/…`, `engineering/…`, `education/…` and `economics-product/…` refer to the layout as audited; Markdown links were repointed. Judgment was also retitled that day — see the portfolio README.
@@ -36,7 +40,7 @@ Nothing in the talks was edited. These are proposals.
 
 ## Tooling gaps the reviews surfaced
 
-Product Engineering and the three flagship talks are not registered in [`build-talk.ts`](../build-talk.ts), so their short routes are hand-maintained rather than derived. Measured drift is already present in Product Engineering: the demo runs 5:00, 5:00, 3:30 and 4:00 depending on which file you read.
+Historical tooling finding: Product Engineering and the three flagship talks were not registered in the since-deleted `build-talk.ts`, so their short routes are hand-maintained rather than derived. Measured drift is already present in Product Engineering: the demo runs 5:00, 5:00, 3:30 and 4:00 depending on which file you read.
 
 ## Implementation status, 6 September 2026
 
@@ -46,8 +50,8 @@ The verdicts above describe the reviewed versions and remain as the historical s
 | --- | --- | --- |
 | Failure Improvement | [15-slide outline](../talks/failure-improvement/index.md) | Personal stories and live integration for recording |
 | Product Engineering | [Canonical outline](../talks/product-engineering/index.md) | Personal stories and reconfirmed estimation observation |
-| Judgment | [Queueing arc](../talks/judgment/index.md) | Personal review-delay story |
+| Judgment | [Feature selection and release pacing](../talks/judgment/index.md) | Long-absent customer and pulled-forward release stories |
 | Benchmarks | [Instrument-validation arc](../talks/benchmarks/index.md) | Personal green-eval failure story |
 | Retrieval | [Three Search Methods in a Fundable Trenchcoat](../talks/retrieval/index.md) | Personal missing-judgment story |
 
-Skeptic’s editorial rewrite remains pending an explicit retirement/procurement choice. The new evidence banks record corrections to the review’s proposed statistics and history, including mirroring-study denominators, threshold-flip arithmetic, incomplete-pool limits, and the R1 publication year. No anecdote or production measurement was invented to fill a slot.
+This status was superseded: A Skeptic’s Guide is retired and its adopted material is recorded in [Outsmart’s correction report](corrections-2026-09-08-evidence-learning.md). The new evidence banks record corrections to the review’s proposed statistics and history, including mirroring-study denominators, threshold-flip arithmetic, incomplete-pool limits, and the R1 publication year. No anecdote or production measurement was invented to fill a slot.

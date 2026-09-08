@@ -1,5 +1,7 @@
 # Compute, Please (and a Receipt): 30-minute adaptation
 
+Budget: 26 spoken minutes (including bounded stories and bridges) + 4 interaction minutes = 30. See [per-slide counts and reveal limits](pacing.md).
+
 Keep slides 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
 
 | Time | Slide | Beat |

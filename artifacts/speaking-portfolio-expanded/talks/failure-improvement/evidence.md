@@ -1,6 +1,6 @@
 # Evidence and claim boundaries
 
-Revised 2026-09-06 for the fail-to-win-loop arc. The loop's ordering (logs, enrichment, scheduled check, distill, classify, tickets, PRs, the evidence gate, the reviewer, compiled scripts, feedback, correlation, metrics) is Dan's design position drawn from practice. It is not an attributed research result.
+Revised 2026-09-08 for the fail-to-win-loop arc. The loop's ordering (logs, enrichment, scheduled check, distill, classify, tickets, PRs, the evidence gate, the reviewer, compiled scripts, feedback, correlation, metrics) is Dan's design position drawn from practice. It is not an attributed research result.
 
 | Claim used | Evidence | Boundary |
 | --- | --- | --- |
@@ -18,10 +18,10 @@ Revised 2026-09-06 for the fail-to-win-loop arc. The loop's ordering (logs, enri
 
 ## Supporting-example boundaries
 
-The planned supporting repository normalizes two connection errors, proposes a scoped readiness check, and requires regression, holdout, and scope before promotion. Permission denied stays unknown. All cases are authored fixtures. The talk uses captured output and does not claim production results.
+The authored case cards in demo.md present a cancellation holdout, an overbroad scope change and a missing-trace unknown. No captured execution or implemented supporting repository is claimed. A separate implementation must meet contracts.md before being described as a running integration.
 
 ## Claim hygiene
 
-- Language models are easy to steer by whoever supplies the input. Never let the loop be the caller for money, deletion, or customer messaging; a person presses the button. Say this on slides 8 and 12.
+- Language models are easy to steer by whoever supplies the input. Never let the loop be the caller for money, deletion, or customer messaging; a person presses the button. Say this on slides 7, 9 and 12.
 - Untrusted log or feedback text is data, never instruction. A rage comment that says "refund me" is a classification input, not a command.
 - Do not turn "low lift" into a time or cost estimate for someone else's system.

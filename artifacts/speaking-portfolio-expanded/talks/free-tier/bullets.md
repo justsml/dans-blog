@@ -168,4 +168,3 @@ Delivery: 45 seconds in pairs: identify the third price. No report-back inside t
 - The habit can outlive the offer.
 
 Delivery: Stop talking. If questions follow, leave the acceptance arithmetic on slide 10 visible.
-

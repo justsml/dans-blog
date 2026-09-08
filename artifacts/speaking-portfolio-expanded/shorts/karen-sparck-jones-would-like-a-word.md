@@ -2,7 +2,7 @@
 
 2 min · video · parent: [Retrieval](../talks/retrieval/index.md), slides 3 and 7
 
-Hybrid search: invented last quarter, published in 1972.
+The pitch is new. The lexical evidence is from 1972.
 
 ## Hook
 
@@ -14,7 +14,7 @@ Karen Spärck Jones published a statistical interpretation of term specificity. 
 
 ## Beat: why it still matters with embeddings
 
-Semantic retrieval is great at paraphrase and bad at exact identifiers, unfamiliar domain jargon, and anything the embedding model never saw. BEIR in 2021 found BM25 a robust baseline across heterogeneous tasks. Not "BM25 wins in 2026"; a reason to keep the cheap lexical baseline in the comparison, on the same corpus, queries and judgments, before you announce the new retriever is better.
+Semantic retrieval can connect paraphrases and still miss exact identifiers or unfamiliar domain jargon. Test those cases. BEIR in 2021 found BM25 a robust baseline across heterogeneous tasks. Not "BM25 wins in 2026"; a reason to keep the cheap lexical baseline in the comparison, on the same corpus, queries and judgments, before you announce the new retriever is better.
 
 ## Landing
 
@@ -22,8 +22,8 @@ Rare words carry signal. Keep lexical evidence in a system that also understands
 
 ## On screen
 
-`application error` · in 40,000 docs. `ERR_4471_TENANT` · in 1. Year stamp: **1972**.
+Synthetic frequency fixture: `application error` · in 40,000 docs. `ERR_4471_TENANT` · in 1. Year stamp: **1972**.
 
 ## Source
 
-Spärck Jones (1972), A statistical interpretation of term specificity, Journal of Documentation 28(1). Thakur et al. (2021), BEIR, NeurIPS D&B.
+Spärck Jones (1972), [A statistical interpretation of term specificity](https://doi.org/10.1108/eb026526), Journal of Documentation 28(1). Thakur et al. (2021), BEIR, NeurIPS D&B.

@@ -108,4 +108,3 @@ Use the cheap inference. Measure what it rewards you for repeating. Keep the exp
 The habit can outlive the offer.
 
 Delivery: Stop talking. If questions follow, leave the acceptance arithmetic on slide 10 visible.
-

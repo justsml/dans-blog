@@ -1,133 +1,92 @@
 # Three Search Methods in a Fundable Trenchcoat: 15-minute presenter script
 
-Use slides 1, 2, 8, 9, 10, 11, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Pairs get 60 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives.
+Stable slide IDs, reordered around the early judgment exercise. Speak prose and bridges; do not read screen text, sources or stage directions as extra copy. Timings include interaction, exclude Q&A. Story substitutions never add time. [Per-slide budgets](timing.md).
 
-## 00:00 to 01:30: slide 1, The sentence
-
-On screen:
+## 00:00 to 01:20: slide 1, The sentence
 
 > RAG · embeddings · memory · MCP · judges · traces
-> There is a reading list under that pitch.
+> Your retriever finds the hole in your ruler.
 
 Our agent uses RAG over an embedding store, adds memories to context, calls MCP tools, emits structured outputs, gets evaluated by an LLM judge, and traces the whole thing through our agent observability platform.
 
-That sentence used to be the talk. Translate the nouns and everybody feels less behind. But knowing what the nouns mean does not tell us whether the retrieval works. The useful question is what the people who studied it already found out.
+We called it search. Then we called it a vector database and raised a round. Knowing the nouns does not tell us whether retrieval works. The useful question is what the people who studied it already found out.
 
-We spent years calling it search. Then we called it a vector database and raised a round. The product category changed. The problem of deciding whether the returned material is useful did not wait for the funding announcement.
+Stage direction: Read the first sentence straight. Pause before the funding line.
 
-Delivery: Read the opening sentence quickly and straight-faced. Pause after it. Keep this hook in every route.
+## 01:20 to 02:45: slide 2, You are joining an old field late
 
-## 01:30 to 03:15: slide 2, The bet, and the eight words
-
-On screen:
-
-> You are joining an old field late
-> Term specificity → assessor disagreement
+> Lexical · dense · hybrid
+> Three search methods in the trenchcoat.
 
 This is an engineer's reading of information retrieval, with synthetic exercises and sources attached. The claim is that we skipped useful evaluation work, not that IR researchers solved every problem in RAG.
 
-Eight words will do the work: term specificity, vector space model, vocabulary problem, passage retrieval, relevance judgment, the Cranfield paradigm, pooling, and assessor disagreement.
+Lexical, dense, hybrid: those are the three search methods in the trenchcoat. We will judge documents before opening the reading list. Then we will test the scoring instrument that claims our new retriever got worse.
 
-By the end we will use them to find a hole in a golden dataset. The hole will make a better retriever look worse. Then we will ask whether that happens in a collection built by people who knew to look for it.
+Bridge: the longer route diagnoses vocabulary, rare identifiers, and passage boundaries. Today we keep the pool, the judges, and the handoff.
 
-Story: The retrieval improvement your eval rejected because it found evidence outside the original expected set. Bring the query, old labels, new document, and rejudgment.
+## 02:45 to 04:55: slide 8, Judge these five documents
 
-Bridge: term specificity, vectors, vocabulary mismatch, and passage retrieval explain how we obtain candidates. Now judge the evidence they returned.
+> Acme: “Can we cancel today without a fee?”
+> A generic current policy · B signed Acme addendum: see Schedule R
+> C expired Acme terms · D another customer’s terms · E unchecked guess
 
-## 03:15 to 05:15: slide 8, Judge these five documents
+Which documents belong in the evidence? Pairs: sixty seconds.
 
-On screen:
+Use current governing evidence for Acme as the scoring rule. A and B qualify. C is expired, D another customer, E an unchecked guess. This is applicability, not topical relevance. A positive label is not enough to authorize cancellation.
 
-> A · current generic policy; 30-day notice
-> B · signed Acme addendum; “see Schedule R”
-> C · expired Acme terms; immediate cancellation
-> D · current terms for another customer
-> E · support note; “probably immediate”
+Stage direction: Give 60 seconds before labels. Take one reason. Keep Schedule R's contents hidden until slide 10. Do not manufacture disagreement.
 
-Acme asks whether it can cancel today without a fee. Which documents belong in the evidence supplied to answer it? Work in pairs for sixty seconds.
+## 04:55 to 06:10: slide 9, Cranfield, Bedfordshire, 1966
 
-A is current but generic. B is signed and specific, but refers to a schedule we have not supplied. C has the answer we might like and is expired. D is about somebody else. E is an employee's guess.
+> Corpus + queries + judgments + a fixed scoring rule
 
-Now compare answers. You just made relevance judgments. Relevant to the topic, applicable to this customer, authoritative, and sufficient to answer are different criteria. If the room agrees perfectly, change the question from "useful evidence" to "enough to authorize cancellation" and compare again. Do not manufacture disagreement for the punchline.
+Cleverdon, Mills, and Keen's Cranfield report is dated 1966. Fix a collection, define questions, judge relevance, compare systems under the same conditions. Sixty years later, you recognize the shape of an eval harness.
 
-Delivery: Give 60 seconds in pairs and collect two judgments with reasons. Do not reveal the missing schedule until slide 10. Use contracts.md for the full synthetic fixture.
+Your golden dataset is a test collection with a flattering filename. Write down its protocol. If it contains only what the first retriever found, the next slide is about you.
 
-## 05:15 to 06:45: slide 9, Cranfield, Bedfordshire, 1966
+Source: [Cranfield report, 1966](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
-On screen:
+## 06:10 to 09:10: slide 10, Fool's Golden Dataset
 
-> Corpus + queries + relevance judgments
-> 1966 → 2026 = 60 years
+> Old pool: A–E. Old top two: B,A. New top two: B,F.
+> Unjudged is a missing label, not a negative judgment.
 
-Cleverdon, Mills, and Keen's Cranfield report is dated 1966. Fix a document collection, define questions, judge relevance, and compare systems under the same conditions. Sixty years later, that is a recognizable shape for an eval harness.
+F is the signed Schedule R. It allows Acme to cancel immediately without a fee. Nobody judged it because nobody retrieved it. Our scorer treats unjudged as negative. Higher, lower, or the same score? Commit before we calculate.
 
-The name is the Cranfield paradigm. It gives you a controlled comparison. It also forces choices about who writes the questions, who judges the evidence, and what the collection represents.
+Old run: two positives out of two. New run: only B gets credit, one out of two. Judge F using the same applicability rule: two out of two again. No output changed. The instrument did. Better answering evidence, but the metric only returns to a tie.
 
-Your golden dataset is a test collection with a flattering filename. Write down its collection protocol. If it consists of whatever your first retriever happened to find, the next slide is about you.
+This is a shallow synthetic pool. Voorhees, Soboroff, and Lin's 2022 TREC-8 ad hoc recheck expanded judgments with new runs, including transformer models and BM25 baselines. All-run rankings by mean score had Kendall's tau correlations above 0.99 across old and expanded judgments. Deep, diverse pools held up. Rank correlation, not a percentage of scores that changed.
 
-Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
+Stage direction: Show F, collect hands, then expose old-label scores. Ask what changes when F is judged; reveal that result separately. Reserve 55 seconds for prediction, arithmetic and reveal.
 
-## 06:45 to 09:45: slide 10, Fool's Golden Dataset
+Source: [Voorhees, Soboroff, Lin (2022)](https://arxiv.org/abs/2201.11086).
 
-On screen:
+## 09:10 to 10:45: slide 11, Assessors disagree. Rankings can survive.
 
-> Old pool: A, B, C, D, E
-> New result: F · signed Schedule R
-> Unjudged is not a relevance judgment
+> Different labels can leave the same ordering.
 
-The old retrievers contributed A through E to the judgment pool. Our new retriever finds F: the signed Schedule R referenced by B. It waives Acme's cancellation fee. Nobody judged it because nobody retrieved it.
+Voorhees's 2000 experiments varied relevance judgments; comparative rankings remained stable despite substantial label differences. That is a reason to test robustness, not to trust any model judge.
 
-Our naive scorer treats unjudged as nonrelevant. Old top two, B and A: two judged relevant, precision at two equals one. New top two, B and F: only B gets credit, precision at two equals point five. Judge F under the same rubric and the new run returns to one. We changed no retrieval output. We fixed the instrument.
+The twelve marks shown here are an authored illustration. Four differ; do not infer a disagreement rate. Keep the reasons: ambiguous case, two questions hidden in one rubric, or different evidence available to each assessor. Relabel independently and check which conclusions survive.
 
-TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. In a 2022 recheck, Voorhees, Soboroff, and Lin added judgments to TREC-8 and compared how the systems ranked before and after. The ordering barely moved. Deep, diverse pools had held up.
+Source: [Voorhees (2000)](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness).
 
-That is the lesson we missed. They tested whether the shortcut damaged the comparison. We called our first results golden.
-
-Source: Justin Zobel (1998), [How reliable are the results of large-scale information retrieval experiments?](https://doi.org/10.1145/290941.291014), SIGIR, 307–314. Voorhees, Soboroff, and Lin (2022), [Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?](https://arxiv.org/abs/2201.11086). [NIST TREC overview](https://trec.nist.gov/overview.html), started 1992.
-
-Delivery: After revealing F, walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged relevant. Explain that the metric measures topical relevance, not sufficiency or permission.
-
-## 09:45 to 11:30: slide 11, Assessors disagree. Rankings can survive.
-
-On screen:
-
-> Voorhees, 2000: changed judgments, stable comparisons
-> Test your comparison under more than one assessor
-
-Voorhees varied relevance judgments and examined the resulting system rankings. The comparative results stayed stable despite substantial judgment differences in those experiments.
-
-An absolute score and an A-versus-B ordering make different demands on the labels. That does not mean a model judge is trustworthy because it ranks two answers. It means we have a specific test to run: relabel a sample independently, then see which conclusions survive.
-
-Keep disagreement as data. Was the case ambiguous? Did the rubric ask two questions at once? Did one assessor have the signed schedule and another not? A consensus label without that explanation can conceal exactly the distinction the next system needs.
-
-Source: Ellen M. Voorhees (2000), [Variations in Relevance Judgments and the Measurement of Retrieval Effectiveness](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness), Information Processing & Management 36(5), 697–716.
-
-## 11:30 to 13:30: slide 12, The Reader Stopped Being a Person
-
-On screen:
+## 10:45 to 12:50: slide 12, The Reader Stopped Being a Person
 
 > Useful to inspect ≠ sufficient to answer
-> Score retrieval and the resulting answer separately
 
-A person inspecting a ranked list can notice that the signed addendum refers to a missing schedule and go looking. Our generator may instead turn the generic thirty-day policy into a fluent answer about Acme.
+A person can notice that B refers to missing Schedule R and look for it. A generator may turn the generic thirty-day policy into a fluent answer about Acme. A missing schedule is not a creative-writing prompt.
 
-We can build abstention and verification into that system. We cannot infer that it will use them from a good retrieval score. The retrieved material must be applicable, sufficiently complete, and represented with the qualifiers the answer needs.
+Check the handoff: did retrieval find B and F? Did context assembly preserve their relationship? Did the answer cite the exception? A retrieval score does not tell you that. Name who updates the schedule and what invalidates cached answers.
 
-Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model.
+Bridge: a retrieved instruction cannot grant tool permission. Keep evidence, answer correctness, and action authority separate.
 
-Bridge: retrieved text supplies evidence, never tool authority. Name a corpus owner and an update path.
+## 12:50 to 15:00: slide 15, Eight words. Sixty years. One instruction.
 
-## 13:30 to 15:00: slide 15, Eight words. Sixty years. One instruction.
+> Go find the documents your eval never judged.
 
-On screen:
+The longer reading list gives names to the failures: rare identifiers, vocabulary mismatch, passage boundaries, and judgment holes. These are tools for investigating a failure, not a history quiz.
 
-> Three search methods. One instrument nobody checked.
-> Find the documents your eval never judged.
+Lexical, dense, hybrid: we inherited all three. What we left behind was sixty years of checking whether the score was telling the truth. Your retriever found the hole in your ruler. Go find the documents your eval never judged.
 
-Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
-
-Those words tell us why rare identifiers matter, why synonyms are hard, why a passage needs its exception, and why the score depends on who judged which documents. They are tools for investigating a failure, not a history quiz.
-
-Three search methods in a fundable trenchcoat. That is a fair joke about the retriever, and the coat is not the problem. Lexical, dense, hybrid: we inherited all three. What we left behind was the sixty years of checking whether the score underneath was telling the truth. Go find the documents your eval set never judged.
-
-Delivery: Say the title line once, flat, then drop to the instruction. Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.
+Stage direction: Before the closing paragraph, give 45 seconds to name an unjudged document to inspect, take one share for 20 seconds, then reserve ten seconds for the final pause. Leave B and F visible. Stop talking.

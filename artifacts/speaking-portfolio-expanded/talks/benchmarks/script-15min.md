@@ -1,6 +1,8 @@
 # Stop Looking at My Benchmarks… Get Your Own!: 15-minute presenter script
 
-Use slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The number and its sampling assumptions stay together. Calibration uses the always-pass confusion matrix.
+Clock: **13:35 scripted speech + 01:25 interaction/reserved story = 15:00**. [Per-slide budget](pacing.md).
+
+Use slides 1, 3, 4, 5, 6, 7, 8, 9, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. The Story slot is omitted in this route. Timings are rehearsal targets without Q&A. The number and its sampling assumptions stay together. Calibration uses the always-pass confusion matrix.
 
 ## 00:00 to 01:30: slide 1, Tuxedo of Benchmarks
 
@@ -9,14 +11,15 @@ On screen:
 > A · 89.7
 > B · 88.9
 > C · 84.3
+> You built a test to grade the model, and nobody has graded the test.
 
 Every new model arrives wearing a tuxedo of benchmarks. Here are three scores. Pick the model you would try first.
 
-One scope statement: the model names and workload numbers in this fixture are invented. The arithmetic and cited research are checkable. We are choosing a support system, not measuring general intelligence.
+The model scores and workload are invented. The arithmetic and research are checkable. A won the displayed competition. Which tasks, whose answers, what scorer, and how much uncertainty? The decimal point has persuaded us without answering any of those questions.
 
-A won the displayed competition. Before buying the result, ask what competition it was. Which tasks, whose answers, what scorer, and how much uncertainty? The decimal point has done a lot of persuasion without answering any of those questions.
+You built a test to grade the model, and nobody has graded the test.
 
-Delivery: Take one show of hands. Do not ask the room to vote again on the next slide.
+Delivery: Allow 15 seconds for one show of hands.
 
 Bridge: our cancellation workload reverses the fictional leaderboard. The scoring question changed.
 
@@ -27,13 +30,11 @@ On screen:
 > Reward a proxy and behavior changes
 > Credit Strathern for the familiar Goodhart wording
 
-Goodhart described statistical regularities breaking under pressure from their use in control. Campbell described the pressure that social decision-making puts on indicators and on the processes they measure. The familiar sentence about a measure becoming a target comes through Marilyn Strathern.
+Goodhart described regularities breaking under pressure from their use in control. Campbell described what social decision-making does to indicators and the processes they measure. Credit Strathern for the familiar measure-becomes-target wording.
 
-The practical question is the same. What behavior improves the number without improving the thing we care about? A support assistant can shorten handling time by closing the conversation before it solves the problem. A judge can reward confident prose while the backend state stays wrong.
+What improves the number without improving the service? Close the conversation before solving the problem. Reward confident prose while the backend stays wrong. Write that exploit before optimizing. If your evaluator applauds it, you found work worth doing.
 
-Write that loophole down before optimizing. Then add a case that exploits it. If your evaluator applauds the exploit, you found work worth doing.
-
-Source: Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981). Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321. Formulations above are attributed paraphrases, not claims that every optimized benchmark has stopped measuring anything.
+Source: Goodhart (1975), Problems of Monetary Management: The U.K. Experience, Reserve Bank of Australia conference paper (reprinted 1981). Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X). Strathern (1997), [Improving ratings](https://gwern.net/doc/statistics/decision/1997-strathern.pdf), European Review 5(3), 305–321.
 
 ## 03:00 to 04:15: slide 4, Your Eval Suite Needs Therapy
 
@@ -42,13 +43,11 @@ On screen:
 > The suite needs an eval
 > A green run is an inference, not a warranty
 
-Your eval suite is a psychometric instrument somebody checked into Git. It produces scores from tasks and judgments, then we use those scores to make decisions. Where is its validation?
+Your eval suite is a psychometric instrument somebody checked into Git. It produces scores from tasks and judgments. We use those scores to make decisions. Where is its validation?
 
-Try a response that sounds excellent but leaves the account active. Try a correct cancellation with awkward wording. Try an unauthorized cancellation with a perfect explanation. The instrument should distinguish those for the reasons you intended.
+Try a response that sounds excellent but leaves the account active. Try a correct cancellation with awkward wording. Try an unauthorized cancellation with a perfect explanation.
 
-Nobody needs another dashboard to discover that the grader rewards tone. We need a counterexample and the nerve to keep it after it ruins the chart.
-
-Story: The green eval run followed by a production failure. Bring the case, the score, the observed state, and the assumption the scorer missed.
+We need a counterexample and the nerve to keep it after it ruins the chart.
 
 ## 04:15 to 05:45: slide 5, One number is a comforting fiction
 
@@ -57,11 +56,9 @@ On screen:
 > What is the score a score of?
 > Construct validity: evidence for the interpretation
 
-Cronbach and Meehl gave us construct validity. What property does this test actually measure, and what evidence supports that interpretation? Messick puts interpretation and use at the center of validation. A score used to shortlist a model and the same score used to authorize refunds are different claims.
+Cronbach and Meehl ask what evidence supports a construct claim. Messick asks what interpretation and use the score supports. Raji and colleagues bring that problem to broad AI benchmarks: tasks do not automatically justify general capability claims.
 
-Raji and colleagues make the problem explicit for broad AI benchmarks. A collection of tasks does not automatically justify a claim about everything the model can do.
-
-For cancellation, separate constraints from preferences. The correct account and authorized state change are constraints. Tone is a preference after those pass. Averaging them together lets an unauthorized action buy its way out with a nice paragraph.
+Cancellation is easier: an authorized state change has an observable criterion. Read the account. Keep state and authority separate from tone. Otherwise an unauthorized action can buy its way out with a nice paragraph.
 
 Source: Cronbach and Meehl (1955), [Construct validity in psychological tests](https://psychclassics.yorku.ca/Cronbach/construct.htm). Messick (1990), [Validity of Test Interpretation and Use](https://www.ets.org/research/policy_research_reports/publications/report/1990/ihmy.html). Raji et al. (2021), [AI and the Everything in the Whole Wide World Benchmark](https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/084b6fbb10729ed4da8c3d3f5a3ae7c9-Abstract-round2.html).
 
@@ -72,13 +69,13 @@ On screen:
 > Right account. Applicable policy. Authorized action.
 > Verify state. Include the refusal path.
 
-A customer asks to cancel. Identify the account through an authenticated context. Resolve the applicable policy. Check authority. Execute the allowed operation and read the resulting state. The response must match what happened.
+A customer asks to cancel. Identify the account through authenticated context, resolve policy, check authority, execute the allowed operation, and read the resulting state.
 
-Now vary one thing at a time. Wrong tenant. Expired session. Cancellation already completed. A tool times out after accepting the request. An account type that requires another approval. Each case names the expected state and what the assistant should tell the customer.
+Now the tool times out after accepting the request. Did cancellation fail, or did we lose its response? Which state read distinguishes those cases?
 
-A trace becomes a test when it answers a specific question. A transcript without an acceptance criterion is only a souvenir. Keep enough context to reproduce the failure, and strip the customer's secrets before it enters the corpus.
+That question becomes an acceptance criterion. Wrong tenant, expired session, and already-cancelled state need their own expected outcomes. A transcript without an acceptance criterion is only a souvenir.
 
-Delivery: Walk through timeout-after-acceptance using the contracts handout. Ask which backend read distinguishes a failed cancellation from a lost response.
+Delivery: Give 15 seconds for one answer about the state read; no extended walkthrough.
 
 ## 07:15 to 09:00: slide 7, Run the Judges
 
@@ -86,67 +83,67 @@ On screen:
 
 > 94, 82, 91, 97, 89
 > 78, 79, 81, 82, 80 · pass at ≥ 80
-> Majority disagreement: 2 / 5 = 40%
+> Majority disagreement: ? / 5
 
-Your judge scores ninety-four, then eighty-two, then ninety-one, then ninety-seven, then eighty-nine. Same case, different answers. Noise wearing a lab coat.
+Your judge scores ninety-four, eighty-two, ninety-one, ninety-seven, eighty-nine. Same case. Noise wearing a lab coat.
 
-A narrower spread can still change a decision. Use seventy-eight, seventy-nine, eighty-one, eighty-two, eighty. Pass at eighty or above. That gives fail, fail, pass, pass, pass. Two of five verdicts disagree with the majority. Forty percent. There is one change between adjacent runs; do not confuse that with majority disagreement.
+Now use seventy-eight, seventy-nine, eighty-one, eighty-two, eighty. Pass at eighty. Which verdicts disagree with the majority?
 
-In Auto-Tune Your LLM Judge I call majority disagreement the decision flip rate. Keep the definition beside the result. An always-pass judge has zero flips. A stable liar is still a liar, so check correctness against independent labels too.
+Fail, fail, pass, pass, pass: two of five, forty percent. One adjacent transition. I wrote three in the post. I will take the correction.
 
-Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-llm-judge/), danlevy.net, 11 August 2026. The sequence is reused as a teaching fixture, not a fresh measurement.
+My decision flip rate means majority disagreement. Keep that definition beside the result. An always-pass judge has zero flips. A stable liar is still a liar. Check correctness against independent labels.
 
-Delivery: Ask who reruns a fixed case. Reveal the five verdicts and do the 2/5 calculation aloud. Use the saved sequence; do not claim a live model run.
+Source: Dan Levy, [Auto-Tune Your LLM Judge](https://danlevy.net/auto-tune-your-llm-judge/), danlevy.net, 11 August 2026.
 
-## 09:00 to 11:30: slide 8, Twenty for Twenty, One in Seven
+Delivery: Give 10 seconds to count before writing 2/5. Use the saved sequence.
+
+## 09:00 to 11:30: slide 8, Twenty Green Tests
 
 On screen:
 
 > Zero failures in 20 independent representative trials
-> 95% upper bound: 3 / 20 ≈ 15%; exact 13.9%
+> (1 − p)^20 = 0.05 · solve for p
 
-Twenty for twenty feels finished. Here is what it buys under independent, identically distributed sampling from the population you care about.
+Twenty for twenty feels finished. What failure rate can we rule out? Assume independent, identically distributed trials from the population we care about.
 
-With no failures, the chance of that observation at failure probability p is one minus p, raised to twenty. Set it to five percent. Solve for p. The exact one-sided ninety-five-percent upper bound is about thirteen point nine percent. Hanley and Lippman-Hand's rule of three gives the quick approximation: three divided by twenty, fifteen percent. About one in seven is the scale we still have not excluded.
+The chance of no failures is one minus p raised to twenty. Set that to five percent and solve. The exact one-sided ninety-five-percent upper bound is thirteen point nine percent. One in seven point two. Three over twenty gives the approximate fifteen percent bound.
 
-Now the uncomfortable part. Twenty cases hand-picked from your favorite incidents are not a random sample. The confidence statement does not transfer to that set. They can catch known mechanisms. They cannot certify the population failure rate.
+Twenty handpicked incidents do not meet that sampling design. They specify behaviors and acceptance criteria; they do not certify a population rate. More decimal places do not create more observations.
 
-Card and colleagues examined statistical power in NLP comparisons. Small tests also miss real differences. More decimal places do not create more observations.
+Source: James A. Hanley and Abby Lippman-Hand (1983), [If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators](https://jhanley.biostat.mcgill.ca/c607/ch08/zero_numerator.pdf), JAMA 249(13), 1743–1745. Card et al. (2020), [With Little Power Comes Great Responsibility](https://aclanthology.org/2020.emnlp-main.745/).
 
-Source: James A. Hanley and Abby Lippman-Hand (1983), [If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators](https://www.medicine.mcgill.ca/epidemiology/hanley/c607/ch08/zero_numerator.pdf), JAMA 249(13), 1743–1745. Card et al. (2020), [With Little Power Comes Great Responsibility](https://aclanthology.org/2020.emnlp-main.745/).
+Delivery: Keep the answer hidden. Give 15 seconds for a prediction, derive (1 − p)^20 = 0.05 aloud, then write 13.91% and the 15% approximation. Take 15 seconds for the sampling objection. The minute at the board includes spoken explanation.
 
-Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection would make the bound inapplicable.
-
-## 11:30 to 13:45: slide 9, Agreeable to a Fault (κ = 0)
+## 11:30 to 13:45: slide 9, Agreeable to a Fault
 
 On screen:
 
 > 90 expert passes. Ten expert failures.
-> Always-pass judge: 90% agreement, κ = 0
+> Always-pass judge: agreement = ?; κ = ?
 
-Take a hundred cases. Experts pass ninety and fail ten. Our judge passes everything. Ninety-percent agreement. Congratulations, we have calibrated a button.
+Experts pass ninety cases and fail ten. The judge passes everything. What agreement does it get?
 
-Cohen's kappa compares observed agreement with agreement expected from the marginal label rates. Here both are point nine, so kappa is zero. But kappa also changes with prevalence. Do not replace blind faith in raw agreement with blind faith in a kappa threshold. Keep the confusion matrix and inspect the disagreements.
+Ninety percent. Congratulations, we have calibrated a button. Expected agreement from the marginal rates is also point nine. Kappa is point nine minus point nine, divided by one minus point nine: zero.
 
-Blind model identity. Swap A/B answer order. Position bias and self-preference have published evidence behind them. Repeat these checks on the judge you actually use. When experts disagree, inspect the rubric and case before blaming the model for failing to find a truth you never agreed on.
+Kappa also changes with prevalence. Keep the confusion matrix and inspect the missed failures. Blind model identity, swap answer order, and repeat on your own judge. Where experts disagree, inspect the rubric before blaming the model.
 
-Source: Cohen (1960), [A Coefficient of Agreement for Nominal Scales](https://journals.sagepub.com/doi/abs/10.1177/001316446002000104). Feinstein and Cicchetti (1990), [High agreement but low kappa](https://pubmed.ncbi.nlm.nih.gov/2348207/). Shi et al. (2024), [Judging the Judges: position bias in pairwise LLM comparisons](https://arxiv.org/abs/2406.07791). Wataoka et al. (2024), [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819).
+Source: Cohen (1960), [A Coefficient of Agreement for Nominal Scales](https://journals.sagepub.com/doi/abs/10.1177/001316446002000104). Feinstein and Cicchetti (1990), [High agreement but low kappa](https://pubmed.ncbi.nlm.nih.gov/2348207/). Shi et al. (2025), [Judging the Judges: A Systematic Study of Position Bias in LLM-as-a-Judge](https://aclanthology.org/2025.ijcnlp-long.18/). Wataoka et al. (2024), [Self-Preference Bias in LLM-as-a-Judge](https://arxiv.org/abs/2410.21819).
 
-Delivery: Write the 90/10 confusion matrix. Compute (0.9 − 0.9)/(1 − 0.9). Allow 45 seconds to inspect the ten missed failures.
+Delivery: Give 15 seconds for agreement, then calculate kappa aloud. Omit the 45-second inspection in this route.
 
-Bridge: separate held-out evidence, report slices and counts, version the scorer, set the rejection rule before viewing the candidate, and use code for state and schema, graders for language, people for disputed policy.
+Bridge: record holdout exposure, slices, scorer version, and the rejection rule on your certificate.
 
 ## 13:45 to 15:00: slide 15, What does good mean here?
 
 On screen:
 
-> Validity · reliability · agreement
-> Power · contamination · Goodhart
+> Calibration Certificate
+> Six questions, evidence, limitations, owner
 
-Start with twenty cases tomorrow. Attach the acceptance criterion, the source, and the reason each case belongs. Then attach the honest limitation: twenty green cases do not establish broad reliability.
+Take the Calibration Certificate with you. Six questions: validity, reliability, agreement, power, contamination, Goodhart. Each gets evidence, a limitation, and an owner.
 
-Validity asks what inference the score supports. Reliability asks whether the measurement is repeatable enough for its use. Agreement asks where graders differ. Power asks whether the experiment can detect the difference we care about. Contamination asks what the system has already seen. Goodhart asks what optimizing the score will break.
+Start with twenty regressions tomorrow. Each specifies an expected behavior. Fresh representative sampling answers the population question. Before seeing the candidate, write the rejection rule and the state that triggers it.
 
-The suite is an instrument. Test the instrument.
+Go grade the test.
 
 Delivery: Stop talking.

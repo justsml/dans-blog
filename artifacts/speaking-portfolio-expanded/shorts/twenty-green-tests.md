@@ -10,7 +10,7 @@ Twenty cases. All green. Ship it? Here is what twenty green cases actually estab
 
 ## Beat: the math, on camera
 
-If the true failure probability is p, the chance of seeing zero failures in twenty independent draws is (1 − p)²⁰. Set that to 5% and solve. p ≈ 13.9%. The quick version is Hanley and Lippman-Hand's rule of three: 3/20 = 15%. So after twenty clean runs, the honest statement is "we have not ruled out failing about one time in seven."
+If the true failure probability is p, the chance of seeing zero failures in twenty independent draws is (1 − p)²⁰. Set that to 5% and solve. p ≈ 13.9%. The quick version is Hanley and Lippman-Hand's rule of three: 3/20 = 15%. So after twenty clean runs, the honest statement is "the exact upper bound is one in 7.2; about one in seven describes the scale, not the estimated rate."
 
 ## Beat: and that's the good case
 
@@ -22,7 +22,7 @@ Twenty green cases is where a test suite starts, not where confidence does. Atta
 
 ## On screen
 
-(1 − p)²⁰ = 0.05 → p = 13.9%. Rule of three: 3/20 = 15%. Big text: **about one in seven**.
+Start with (1 − p)²⁰ = 0.05 and p = ?. Reveal p = 13.9% only after solving. Then show the rule of three: 3/20 = 15%, and **one in 7.2** as the exact-bound scale.
 
 ## Source
 

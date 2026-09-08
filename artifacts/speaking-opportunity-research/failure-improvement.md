@@ -1,11 +1,11 @@
-# Deep research prompt: Automating Improvement From Failure
+# Deep research prompt: The Pager Cried Wolf
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `failure-improvement`
-- Title: Automating Improvement From Failure
+- Title: The Pager Cried Wolf
 - Audience: AI engineers, SREs, platform engineers, developer tooling builders, and engineering leads.
 - Thesis: Hand an agent your production logs, then grow its access and authority one failure class at a time into a scheduled loop that distills, classifies, files guarded tickets and PRs, and answers customer feedback.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.

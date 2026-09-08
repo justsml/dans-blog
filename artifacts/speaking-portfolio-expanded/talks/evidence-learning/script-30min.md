@@ -6,6 +6,7 @@ Read prose; perform delivery notes. Sources and screen text are not extra spoken
 
 > Horse out of the barn. Cat out of the bag.
 > Math class survived the Casio watch.
+> You think you’re running the detector; the detector is writing your curriculum.
 
 Math class survived the Casio calculator watch. The kid next to its owner didn't even need one.
 
@@ -79,7 +80,7 @@ Delivery: The worked-example notes contain the five scripted turns. If the room 
 > "Which price does the discount use?" Learner: "The original $100."
 > Clarify → conceptual hint → missing step → part of an example → full explanation → fresh reconstruction
 
-Two scripted turns. The diagnostic question finds where the base got lost. Tutor A says, "Great point!" Tutor B asks, "Older than what?" That is the history version: one rewards confidence, the other finds the missing comparison. Our percentage tutor asks which price. Attempt-first can't punish a kid who can't begin; clarifying a term or offering a parallel example may be the right first move.
+The diagnostic question found the lost base. In history, Tutor A says "Great point!" Tutor B asks "Older than what?" One rewards confidence, the other finds the missing comparison. Clarification can help a learner who cannot begin.
 
 Here is what we just did, in order: the ladder. Clarification: the second change acts on the new price. Conceptual hint: find the current base. Missing step: the price after the increase. Partial example: the same discount on a different amount. Full explanation, then a fresh reconstruction later. Write down which rung you gave, because supported and independent performance are different evidence. Never as a moral failure.
 
@@ -134,9 +135,9 @@ Bridge: access belongs inside the design too. A friend discovered they were a ta
 > Minutes to review a class set
 > Neighbor challenges one hidden assumption
 
-Pairs, one minute. Write the capability, the task, the smudge that makes verification feel like cheating, one purposeful follow-up, the help you'll permit, and the interpretation you could defend to a parent. Then estimate the minutes to review a class set, because a richer assessment nobody has time to read is a worse assessment. Let the model draft the follow-ups and summarize with links to the excerpt; grading, accusations and anything sensitive stay with you.
+Write the capability, task, smudge, permitted help, purposeful follow-up, and defensible interpretation. Estimate class-set review minutes: a richer assessment nobody has time to read is a worse assessment.
 
-Then your neighbor challenges one hidden assumption: does this also measure fluency, paid-tool access, or comfort speaking under pressure? TEQSA's guidance backs contextual, multiple approaches. This worksheet is our version of it. Output: a sketch you can review, then a small pilot.
+Your neighbor challenges one assumption: fluency, paid access, or comfort speaking? TEQSA's 2023 guidance supports contextual, multiple approaches. This worksheet is our proposed implementation.
 
 Source: TEQSA (2023), [Assessment reform for the age of artificial intelligence](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence).
 
@@ -147,11 +148,10 @@ Delivery: One minute setup, one minute writing, one minute of challenge. Call bo
 > Explain it. Challenge it. Change it. Apply it. Defend it.
 > Too much power to hold casually. Prove the value constantly.
 
-Stop trying to prove who typed the sentence. Ask whether the student can explain it, challenge it, change it, apply it, and defend it. That means teaching changes: how we put agents in the room, how we model using them, how we design group work around them.
+Stop trying to prove who typed the sentence. Ask whether the student can explain it, challenge it, change it, apply it, and defend it. Build those moves into the checkpoint.
 
 The kid next to the Casio owner didn't need a watch. The kid with no car never touched the clay. The same tool that lets Johnny phone it in is the one that can hand a sculptor the clay. Which one happens is a design decision, and it's ours.
 
 This is a great deal of data and a great deal of power. Too much to hold casually. The value has to be proven, constantly, for educators and students, or the data should not exist. No ambling through conversations dispensing answers. A purpose-built machine. AI scales instruction more easily than it scales wisdom. There are technical ways to build one; come find me after. Don't let the detector write your curriculum.
 
-Delivery: Land on "come find me after." Stop.
-
+Delivery: Land on "Don't let the detector write your curriculum." Stop talking.

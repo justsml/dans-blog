@@ -7,9 +7,9 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Talk ID: `product-engineering`
 - Title: Break the Mirror on Purpose
 - Audience: Product engineers, engineering leaders, product managers, founders, and experimentation teams.
-- Thesis: Use faster generation to build shorter learning loops while preserving product promises, evaluation standards, and human decisions about acceptable tradeoffs.
-- Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/product-engineering/CFP.md)
+- Thesis: Cheaper execution changes coordination costs. Decide which product functions to automate, keep accountable interfaces, and test proposed changes against product constraints before adopting an activation winner.
+- Available formats: Prepared 15-, 30-, and 40-minute scripts; 45 minutes uses 40 plus five minutes Q&A. See the current packet for deck availability.
+- Source material: [Current CFP](../speaking-portfolio-expanded/talks/product-engineering/CFP.md)
 
 ## Search focus
 

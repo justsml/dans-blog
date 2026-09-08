@@ -2,7 +2,7 @@
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
-Outline: [40 min](index.md). 
+Outline: [40 min](index.md).
 
 ## Titles
 

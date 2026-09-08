@@ -7,9 +7,9 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Talk ID: `adaptive-systems`
 - Title: Conjure Exactly Enough
 - Audience: Staff engineers, AI architects, platform teams, and developers building agent orchestration.
-- Thesis: Investigate unfamiliar integration failures, validate versioned repairs, and recover within externally enforced authority, cost and data boundaries.
-- Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/talks/adaptive-systems/CFP.md)
+- Thesis: The assistant with broad access creates multiplying read-to-action pathways. Conjure a narrow agent per job and prove repairs within externally enforced tool, cost and data boundaries.
+- Available formats: Prepared 15-, 30-, and 40-minute scripts; 45 minutes uses 40 plus five minutes Q&A. See the current packet for deck availability.
+- Source material: [Current CFP](../speaking-portfolio-expanded/talks/adaptive-systems/CFP.md)
 
 ## Search focus
 

@@ -10,7 +10,7 @@
 
 | Slide | Prompt |
 | --- | --- |
-| 10 | The fan-out you found on a bill before a dashboard: maximum 40 words / 25 seconds, included in walkthrough spoken time. |
+| 10 | The fan-out you found on a bill before a dashboard: maximum 30 words / 25 seconds, substituting existing walkthrough speech. |
 | 2 | Replace up to 40 words of per-job economics with the capacity-planning example; never add time. |
 
 ## Vendors on slide 3, refreshed 2026-09-08

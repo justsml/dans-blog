@@ -1,16 +1,16 @@
-# Automating Improvement From Failure: 15-minute adaptation
+# The Pager Cried Wolf: 15-minute adaptation
 
-Keep slides 1, 2, 4, 6, 8, 9, 13, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
+Keep slides 1, 2, 6, 4, 8, 9, 14, 15 in this order. [Distinct talk track](script-15min.md). The worked example gets four minutes, including two audience decisions and the reveal.
 
-| Time | Slide | Beat |
+| Clock | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:45 | 1 | Nobody reads the scroll |
-| 01:45 to 03:15 | 2 | Step one: hand an agent the logs |
-| 03:15 to 04:45 | 4 | The out-of-band check |
-| 04:45 to 06:15 | 6 | The retry that hid the auth failure |
-| 06:15 to 09:45 | 8 | Nothing leaves without evidence |
-| 09:45 to 12:00 | 9 | Who reviews the robot's PRs? |
-| 12:00 to 13:45 | 13 | The metrics that will lie to you |
-| 13:45 to 15:00 | 15 | Fail to win |
+| 00:00–02:00 | 1 | Nobody reads the scroll |
+| 02:00–03:30 | 2 | Step one: hand an agent the logs |
+| 03:30–05:00 | 6 | The retry that hid the auth failure |
+| 05:00–06:45 | 4 | The out-of-band check |
+| 06:45–10:45 | 8 | Nothing leaves without evidence |
+| 10:45–12:45 | 9 | Who reviews the robot's PRs? |
+| 12:45–14:15 | 14 | Start Monday |
+| 14:15–15:00 | 15 | Fail to win |
 
-The worked example gets four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Slides 3, 5 and 7 fold into the introduction and bookmark explanation. The reviewer owns the cost/metrics condition. Compilation and customer-feedback examples are omitted without later references. The Monday writing beat gets 45 seconds, and the peak gets four minutes.

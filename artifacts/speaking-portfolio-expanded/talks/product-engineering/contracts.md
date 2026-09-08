@@ -6,4 +6,4 @@ A person owns each interface, including malformed or misleading inputs and recov
 
 Approval boundaries include expanding a cohort, spending beyond the run budget, creating infrastructure, removing infrastructure, sending customer messages, and deleting customer records. The tool layer enforces those boundaries before execution.
 
-Worked example: full-deck slide 11 shows only A/B/C activation. After the vote, reveal that B is Pressure copy and C is Clearer first step. Support <=5% and no fabricated urgency are the fixed synthetic policy. Passing means eligible for human review. The sequence gets 5:00 for 40/30 and 3:30 for 15.
+Worked example: full-deck slide 11 shows only A/B/C activation. After the vote, reveal that B is Pressure copy and C is Clearer first step. Support <=5% and no fabricated urgency are the fixed synthetic policy. Passing means eligible for human review. The sequence gets 4:30 for 40,4:00 for 30 and 3:00 for 15, including the interaction budget in demo.md.

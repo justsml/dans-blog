@@ -1,10 +1,10 @@
-# Evidence and editorial boundaries: Adaptive, agentic apps
+# Evidence and editorial boundaries: Conjure Exactly Enough
 
 ## What is first-hand
 
 - **The agent generator (slides 4, 5, 12).** Dan's working prototype: an orchestrator that writes a per-job contract, generates an agent with a tailored prompt and a minimum tool list, gates tool-search requests through policy, logs every grant and denial, and loops on the result. Say "prototype on my own integrations." Do not quote a success rate until one exists that you would defend in Q&A.
 - **The client with local models (slide 5).** A client processed sensitive data with local models while a frontier orchestrator passed access references. Dan's recollection includes signed URLs passing through orchestration. Tell it as "what was built" and then "the stronger boundary I would build now" (the dispatcher design). Confirm disclosure permission before naming anything identifiable.
-- **Council of Guards and the barrel-of-monkeys maneuver (companion talk).** Cheap parallel judges measure disagreement; they do not vote on correctness. The barrel-of-monkeys maneuver leads with cheap parallel generation on purpose and hands the chaos to a next stage. Both live in Dynamic Scaling, slide 12.
+- **Council of Guards and the barrel-of-monkeys maneuver (companion talk).** Cheap parallel judges measure disagreement; they do not vote on correctness. The barrel-of-monkeys maneuver leads with cheap parallel generation on purpose and hands the chaos to a next stage. Both live in Compute, Please (and a Receipt): barrel on slide 12, Council on slide 13.
 
 ## Story slots to fill before delivery
 
@@ -49,3 +49,17 @@ The working-memory / observational-memory split on slide 14 is a proposed applic
 ## Portfolio boundary
 
 Adaptive owns per-job agent generation, repair authority, tool risk classes, the data boundary and the smaller execution-memory pattern. Dynamic Scaling owns admission, ledgers, durable jobs, the compute substrate, the Council of Guards and the barrel-of-monkeys maneuver. Improvement From Failure owns the scheduled improvement loop.
+
+## Audit verification, 2026-09-08
+
+**Combinations.** Assume five disjoint read endpoints and five write endpoints, with every read permitted to feed every write: R × W = 25 potential directed pairs. A new integration contributes six of each: 11 × 11 = 121, a difference of 96. This is an illustrative upper bound before policy filtering, not a measured attack-surface size or exploit count. Endpoints with both capabilities require explicit graph modeling; unordered pairs count a different object.
+
+**One fixture.** ingest-1042 contains 900 records: 882 eligible/mapped and 18 quarantined, 98%/2%. The 100 canary records are a subset. Provider verification status is tracked separately. The 120-second compute request is capped by the remaining 120-second job deadline; $1.50 compute reservation is inside the $2 total cap. These are authored policy fixtures, not observed outcomes.
+
+**WebMCP.** [Current draft](https://webmachinelearning.github.io/webmcp/) is a Draft Community Group Report dated 4 September 2026, newer than the audit's February date. [Chrome origin-trial announcement](https://developer.chrome.com/blog/ai-webmcp-origin-trial) confirms trial starting in Chrome 149. This is an opt-in experimental browser API, not a shipped cross-browser standard. The CLI --no-agent default remains Dan's prediction. Search retrieved the official trial announcement; direct fetch timed out, so no unverified trial end version is quoted.
+
+**Research.** [Saltzer/Schroeder author-hosted text](https://web.mit.edu/Saltzer/www/publications/protection/Basic.html) states least privilege as principle (f). [Bainbridge's 1983 paper](https://gwern.net/doc/sociology/technology/1983-bainbridge.pdf), sections 1.1.1–1.1.3, supports the exception-handling and practice problem. The digest recommendation is an application of that argument, not a measured result for AI review. [Skitka et al. publisher abstract](https://www.sciencedirect.com/science/article/pii/S1071581999902525) confirms simulated-flight omission and commission errors; the talk retains its erroneous-aid-event qualifier. Full PDF fetch timed out, so no new effect-size claim is made. [Vaughan publisher description](https://press.uchicago.edu/ucp/books/book/chicago/C/bo22781921.html) supports normalization of deviance; that page describes the enlarged edition, while the talk cites the original 1996 study.
+
+**First-hand limits.** The existing “I have had this exact morning” statement and prototype/client recollections are Dan's supplied claims, not independently verified by this audit pass. Before delivery, he must fill five Story substitutions from his records, up to 35 existing words / 20 seconds each. They must preserve each slide's numerical and policy claims. Do not invent dates, clients, incident costs, success rates or disclosure permission. Keep sensitive client identities omitted.
+
+**Review decisions.** Slide 8 stays as the separate-control boundary for tests, now paid off by a real lossy candidate in the walkthrough. Slide 14 is compressed to 2.5 minutes in the full route and serves as the closing on-ramp. Slide 13's energy is build rather than a premature landing. No new deck or live implementation result is claimed.

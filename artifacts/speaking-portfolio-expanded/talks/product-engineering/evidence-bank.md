@@ -1,4 +1,4 @@
-# Evidence bank: The Future of Product Engineering
+# Evidence bank: Break the Mirror on Purpose
 
 Firsthand examples the talk can draw on. Fill every field from your own records before use. Candidate contexts come from the resume; details, measurements, and permissions are yours to supply. Do not publish numbers you cannot reproduce.
 
@@ -50,23 +50,14 @@ Resume basis: Hotel Engine, continuous feedback rituals while scaling.
 
 ## Already public, citable today
 
-- [Fight Evils with Evals!](../../../../src/content/posts/2026-05-06--llm-evals-are-broken/index.mdx): deterministic versus model-graded versus human evaluation. Support for the taste-as-mixed-system slide.
-- [One Weird Trick to Speed Up Feature Teams](../../../../src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx): feature-team throughput and service boundaries. Support for the smallest-trustworthy-loop slide.
+- [Fight Evils with Evals!](../../../../src/content/posts/2026-05-06--llm-evals-are-broken/index.mdx): deterministic versus model-graded versus human evaluation. Related work on evaluation choices; not a current slide title.
+- [One Weird Trick to Speed Up Feature Teams](../../../../src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx): feature-team throughput and service boundaries. Related work on service boundaries; not a current slide title.
 
-## Story slots in the outlines that these entries feed
+## Current claims and story map, checked 8 September 2026
 
-| Deck | Slide | Slot |
-| --- | --- | --- |
-| 40 min | 1 | A system whose architecture you could read off the org chart |
-| 40 min | 6 | A feedback cluster that changed what the team built that quarter |
-| 40 min | 11 | The customer who became a collaborator after one beta invitation |
-| 30 min | 1 | A system whose architecture you could read off the org chart |
-| 30 min | 4 | A feedback cluster that changed what the team built that quarter |
-| 30 min | 7 | The customer who became a collaborator after one beta invitation |
-| 15 min | 1 | Thirty seconds: a system whose architecture you could read off the org chart |
-
-## Current claims and story map, checked 6 September 2026
-
-Slides 1, 6, and 9 request the org-chart handoff, the misleading feedback cluster, and the badly chosen beta cohort. These are prompts, not supplied personal evidence. Slide 7 preserves the existing first-person estimation observation and requires reconfirmation before delivery; the audience count must be taken live.
+Slides 1,6,9,14 request the org-chart handoff, misleading cluster, badly chosen beta cohort and unbudgeted recurring agent cost. These are prompts, not supplied personal evidence. Slide 7 starts with a question. The former first-person estimation observation is optional only after reconfirmation; audience counts must be taken live.
 
 Colfer and Baldwin reviewed 142 studies. Their industry/firm descriptive subset shows 70% strong, 22% partial, and 8% no support; do not describe the remaining 30% as mirror-breaking firms. Graicunas’s maximum-basis formula gives 6 × (32 + 5) = 222 possible relationships, not an observed agent interaction count or a span-of-control limit. Sources and engineering applications are distinguished in the [outline](index.md). Microsoft’s pre-experiment article is dated July 31, 2020.
+
+
+The 50-study descriptive subset comprises 35 strong,11 partial and4 no-support studies. Ten poorly performing unmirrored cases are reported separately in the normative table. They do not prove every mirror-breaking attempt fails, and the 8% descriptive exceptions are not a cohort of deliberate successful reorganizations. See evidence.md for source boundaries and the qualitative prediction checks.

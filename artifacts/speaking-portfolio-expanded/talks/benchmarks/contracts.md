@@ -6,7 +6,7 @@ Judge these separately: resulting state, authorization, policy, and response acc
 
 ## Arithmetic reproduction
 
-The saved score sequence (78, 79, 81, 82, 80) gives two majority disagreements out of five at a threshold of >=80. There is one adjacent verdict transition, not three. This corrects the prose in the source article for this talk without editing that article.
+The saved score sequence (78, 79, 81, 82, 80) gives two majority disagreements out of five at a threshold of >=80. There is one adjacent verdict transition, not three. Slide 7 explicitly acknowledges the source article’s erroneous “three” wording. The article remains outside this talk correction; use the definition and arithmetic here.
 
 The exact one-sided 95% zero-event upper bound is 1 − 0.05^(1/n). The rule of three is its approximation. Both require independent identical sampling from the target population. Hand-selected incident regressions do not meet that design by default.
 

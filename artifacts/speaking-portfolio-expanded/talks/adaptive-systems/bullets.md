@@ -1,39 +1,39 @@
-# Adaptive, agentic apps: bullet outline
+# Conjure Exactly Enough: bullet outline
 
-Give each job exactly enough agent, prove every repair, and let the app ask for its own scale.
+Your integration list decides what your assistant can reach before you review the combinations.
 
-Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
+Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no Q&A. Every Story line substitutes up to 35 existing words / 20 seconds with Dan's record; never append it. Preserve the numerical and policy claims. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
 ## Spine
 
-1. **The vendor renamed a field** — 00:00 · warm · 02:00
-2. **The Bar Is a Pager** — 02:00 · warm · 02:00
-3. **Sorry, You're Building It** — 04:00 · build · 04:30
-4. **Conjure the agent the job needs** — 08:30 · peak · 03:30
-5. **Guard the tools that can hurt** — 12:00 · build · 03:00
-6. **Repair syntax; prove meaning** — 15:00 · build · 02:00
-7. **The repair is a versioned artifact** — 17:00 · steady · 01:30
-8. **The agent does not write its own exam** — 18:30 · steady · 01:30
-9. **A lost response leaves a question** — 20:00 · steady · 01:30
-10. **Walkthrough: one ingest, three decisions** — 21:30 · peak · 04:30
-11. **Compute Is a Tool Too** — 26:00 · build · 02:30
-12. **Ironies of Automation** — 28:30 · steady · 03:00
-13. **Widen Per Class, Never Per Streak** — 31:30 · land · 02:30
-14. **Start smaller: remember what happened** — 34:00 · steady · 03:30
+1. **The vendor renamed a field** — 00:00 · warm · 02:30
+2. **The Bar Is a Pager** — 02:30 · warm · 02:00
+3. **Sorry, You're Building It** — 04:30 · build · 04:30
+4. **Conjure the agent the job needs** — 09:00 · peak · 03:30
+5. **Guard the tools that can hurt** — 12:30 · build · 03:00
+6. **Repair syntax; prove meaning** — 15:30 · build · 02:00
+7. **The repair is a versioned artifact** — 17:30 · steady · 01:30
+8. **The agent does not write its own exam** — 19:00 · steady · 01:30
+9. **A lost response leaves a question** — 20:30 · steady · 01:30
+10. **Walkthrough: one ingest, three decisions** — 22:00 · peak · 05:00
+11. **Compute Is a Tool Too** — 27:00 · build · 02:30
+12. **Ironies of Automation** — 29:30 · steady · 03:00
+13. **Widen Per Class, Never Per Streak** — 32:30 · build · 02:30
+14. **Start smaller: remember what happened** — 35:00 · steady · 02:30
 15. **The next surprise should cost less** — 37:30 · land · 02:30
 
 ## Slides
 
 ### 1. The vendor renamed a field
 
-00:00–02:00 · warm · 02:00
+00:00–02:30 · warm · 02:30
 
 > Yesterday: zip
 > Today: postal_code
 > Your ingest stops. The status page is green.
 
 - The API still returns 200. Authentication works.
-- Here is the promise of this talk. An application can notice that, investigate it, propose a fix, prove the fix, and keep the other ninety-eight percent of records flowing, all before you wake up.
+- Here is the promise of this talk. An application can notice that, investigate it, propose a fix, prove the fix, and keep 882 of 900 records moving while eighteen stay quarantined, all before you wake up.
 - The design is mine. The incidents are composites; I have had this exact morning more than once.
 - Diagram — HTTP success does not establish that the payload still matches your contract.
 - Story — The vendor rename you actually lived through. Name the field, the hour you noticed, and what it cost.
@@ -41,7 +41,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 2. The Bar Is a Pager
 
-02:00–04:00 · warm · 02:00
+02:30–04:30 · warm · 02:00
 
 > Baseline: alert, wait for a person, replay
 > Agent: investigate, propose, prove, continue
@@ -54,24 +54,24 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 3. Sorry, You're Building It
 
-04:00–08:30 · build · 04:30
+04:30–09:00 · build · 04:30
 
 > Browsers, CLIs, every SaaS: an agent layer you opt out of with --no-agent
-> Ten tools is forty-five pairs. One more integration is not one more path.
+> 5 reads × 5 writes = 25; add 6 of each: 11 × 11 = 121.
 > Accidents first. Then people who mean it.
 
 - Zoom out from the ingest job. The assistant with every customer's data and a toolbox that can send email, issue refunds, delete records and ship code is not a design we get to decline.
 - Browsers ship a chat that drives the page.
-- Here is the hazard, and it applies to the small systems too.
+- 5 reads × 5 writes = 25; add six of each = 121. 96 new potential pairings before filtering, not 96 proven exploits.
 - Most of the damage will be accidents: a confident mapping, a helpful cleanup, a tool called with the wrong ID.
 - So the question is not whether to grant access.
 - Diagram — Every integration multiplies the pathways from something the agent can read to something it can do; nobody reviews the combinations.
 - Story — Your own near miss with an over-permissioned agent, or the tool pairing you only noticed after it fired.
-- Do — Write 10 → 45 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
+- Do — Write 5 × 5 = 25 → 11 × 11 = 121 on the board. Ask who could list every read-to-write pathway in the agent they run today. Pause on the third line; let the room feel that the accident case is the common one.
 
 ### 4. Conjure the agent the job needs
 
-08:30–12:00 · peak · 03:30
+09:00–12:30 · peak · 03:30
 
 > Tailored prompt, minimum tools, hard budget
 > Tool search on request, policy decides, request logged
@@ -80,14 +80,14 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - Here is the shape. An orchestrator reads the failure and writes a job: goal, evidence it may read, actions it may take, deadline, spend, and the conditions that end it.
 - If the agent needs something else, it asks.
 - The orchestrator loops on the result: done, needs another specialist, or must stop.
-- This is a prototype on my own integrations.
+- Prototype: planner has no operational credentials. Trusted dispatcher validates a server-owned job class, tools recheck authorization, job/policy/decision are logged.
 - Diagram — The orchestrator writes a tailored prompt, selects the minimum tools from a catalog, and loops until the job is done or must stop.
 - Story — What the prototype's first denied tool request was, and what it revealed.
 - Do — Draw the three boxes: orchestrator, generated agent, tool catalog with policy gate. Show one request crossing the gate and being refused.
 
 ### 5. Guard the tools that can hurt
 
-12:00–15:00 · build · 03:00
+12:30–15:30 · build · 03:00
 
 > High-risk classes: write, send, pay, delete, deploy, export
 > Reads customer data? Then it never posts to a vendor.
@@ -99,12 +99,12 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - For sensitive processing the planner gets an opaque job reference.
 - Diagram — Proposed boundary: the dispatcher grants worker access; only allowlisted status returns to the planner.
 - Story — The client setup with local models for sensitive data and a frontier orchestrator. Say which parts were real and which are the stronger design you would build now.
-- Do — Point at the filter between worker and planner. Ask what else crosses it: prompts, traces, error bodies, notification previews.
+- Do — Point at the filter between worker and planner. Name prompts, traces, error bodies and notification previews; no response pause.
 - Source — Saltzer and Schroeder (1975), [The Protection of Information in Computer Systems](https://doi.org/10.1109/PROC.1975.9939), Proceedings of the IEEE 63(9), 1278 to 1308. Least privilege is their principle (f).
 
 ### 6. Repair syntax; prove meaning
 
-15:00–17:00 · build · 02:00
+15:30–17:30 · build · 02:00
 
 > zip → postal_code: investigate
 > status: true → pending: stop
@@ -117,7 +117,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 7. The repair is a versioned artifact
 
-17:00–18:30 · steady · 01:30
+17:30–19:00 · steady · 01:30
 
 > Input fingerprint + mapping version
 > Evidence + fixtures + rollback
@@ -130,7 +130,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 8. The agent does not write its own exam
 
-18:30–20:00 · steady · 01:30
+19:00–20:30 · steady · 01:30
 
 > Held-out fixtures under separate control
 > Conflicting old and new fields
@@ -142,7 +142,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 9. A lost response leaves a question
 
-20:00–21:30 · steady · 01:30
+20:30–22:00 · steady · 01:30
 
 > Did it fail?
 > Or did the answer disappear?
@@ -154,13 +154,13 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 10. Walkthrough: one ingest, three decisions
 
-21:30–26:00 · peak · 04:30
+22:00–27:00 · peak · 05:00
 
-> Rename → validated mapping, canary
-> Unknown status → quarantine, owner
-> Lost response → reconcile, hold the reservation
+> Rename: what did the green check prove?
+> Unknown status: who knows what it means?
+> Lost response: retry or reconcile?
 
-- Run the design. The rename has contract evidence.
+- Show String(Number(value)) and the string-only validator. Ask what green proves. Reveal 02108 → 2108; accept early rejection rather than scripting audience approval. Corrected copy-string reruns every fixture.
 - The status change has no semantic evidence.
 - The provider timeout has an uncertain outcome.
 - Three events, three different right answers, none of them success or failure.
@@ -169,7 +169,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 11. Compute Is a Tool Too
 
-26:00–28:30 · build · 02:30
+27:00–29:30 · build · 02:30
 
 > Old: ops sizes the fleet for everyone
 > New: the job describes its shape and asks
@@ -180,11 +180,11 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - The guard is the tool guard. The agent chooses from a catalog of approved instance classes, the scheduler enforces leases and teardown, and an unapproved faster region is not a candidate no matter how good the latency looks.
 - Diagram — The orchestrator requests shape, size and duration inside a per-customer ceiling; the scheduler resolves it against a catalog and issues a lease.
 - Story — A job where per-customer compute would have changed the pricing conversation.
-- Do — Contrast one autoscaler threshold with one job request. Ask which one a customer could be billed for.
+- Do — Contrast one autoscaler threshold with one job request. Name which one a customer could be billed for; no response pause.
 
 ### 12. Ironies of Automation
 
-28:30–31:30 · steady · 03:00
+29:30–32:30 · steady · 03:00
 
 > Promoted changes and scope
 > Quarantined records and reasons
@@ -193,19 +193,19 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 - The daily report should tell an engineer where to look.
 - Log decisions and artifacts, not private reasoning: policy inputs, validator result, executed action.
-- One warning about that report, and it is the warning for this whole talk.
+- Bainbridge: routine work disappears, but the operator inherits exceptions and needs practice. Skitka: on events the aid got wrong, the aided group did worse.
 - Do — Read the sample report in contracts.md. Find the one item that needs an owner today.
 - Source — Bainbridge (1983), [Ironies of Automation](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6), 775 to 779. Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
 
 ### 13. Widen Per Class, Never Per Streak
 
-31:30–34:00 · land · 02:30
+32:30–35:00 · build · 02:30
 
 > Shadow: propose, apply nothing
 > Canary: one reversible change class
 > Expand: from correct recoveries, false repairs, cost, interventions
 
-- Compare the design with the static mapping and the pager on the same recorded incidents.
+- Compare on the same incidents, including stopped work. Fan-out tuning belongs only to recurring evaluated classes where acceptance gains exceed added review costs; human ceilings and fan-out-one override remain.
 - Start in shadow mode: the conjured agents propose artifacts and apply none.
 - Watch for the failure Diane Vaughan documented at NASA before Challenger and named normalization of deviance.
 - Do — Thirty seconds on the recovery card in contracts.md. Take one answer and name the evidence needed to widen that authority.
@@ -213,7 +213,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ### 14. Start smaller: remember what happened
 
-34:00–37:30 · steady · 03:30
+35:00–37:30 · steady · 02:30
 
 > Before returning: check relevant memory and correct known mistakes
 > After execution: record checks, outcome, correction and frequency
@@ -236,5 +236,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 - Return to the field that changed overnight.
 - And return to the assistant with everything.
-- Pick one integration that already costs your team mornings.
+- Pick one integration that costs mornings. Count the routes you opened. Conjure exactly enough.
 - Do — Land on the third line. Stop talking.
+
+Follow [pacing.md](pacing.md) for six timed audience-response beats and shorter-route limits. Slide 10 has 900 inputs, 882 eligible/mapped, 18 quarantined; its 100-record canary is a subset. The compute request cannot outlive the remaining 120-second deadline. Slide 6: diff agent cannot write. Slide 7: proposing agent cannot promote. Slide 9: reconciliation agent cannot pay or submit.

@@ -10,7 +10,7 @@ The detector says 87% AI-generated. What do you actually know?
 
 ## Beat: what the evidence says
 
-Liang and colleagues tested the detectors on the market and found them flagging non-native English writers at alarming rates, and easily fooled by a rewrite. That's evidence about tested tools, not a prophecy about every future detector. It's enough to say: no disciplinary consequence gets automated from a score.
+Liang's 2023 study tested seven detectors on 91 human-written TOEFL essays: about 61% were falsely flagged, on average, falling to about 12% after a vocabulary-enhancing rewrite. That's evidence about tested tools, not a prophecy about every future detector. It's enough to say: no disciplinary consequence gets automated from a score.
 
 ## Beat: the wrong question
 

@@ -1,16 +1,16 @@
-# Three Search Methods in a Fundable Trenchcoat: 15-minute adaptation
+# Retrieval: 15-minute route
 
-Keep slides 1, 2, 8, 9, 10, 11, 12, 15. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
+[Full script](script-15min.md). Open the browser deck with `?route=15`; the deck uses these slide IDs, order, durations and notes. Pairs get 60 seconds before labels. Protect the F prediction and separate score reveals.
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:30 | 1 | The sentence |
-| 01:30 to 03:15 | 2 | The bet, and the eight words |
-| 03:15 to 05:15 | 8 | Judge these five documents |
-| 05:15 to 06:45 | 9 | Cranfield, Bedfordshire, 1966 |
-| 06:45 to 09:45 | 10 | Fool's Golden Dataset |
-| 09:45 to 11:30 | 11 | Assessors disagree. Rankings can survive. |
-| 11:30 to 13:30 | 12 | The Reader Stopped Being a Person |
-| 13:30 to 15:00 | 15 | Eight words. Sixty years. One instruction. |
+| 00:00 to 01:20 | 1 | The sentence |
+| 01:20 to 02:45 | 2 | You are joining an old field late |
+| 02:45 to 04:55 | 8 | Judge these five documents |
+| 04:55 to 06:10 | 9 | Cranfield, Bedfordshire, 1966 |
+| 06:10 to 09:10 | 10 | Fool's Golden Dataset |
+| 09:10 to 10:45 | 11 | Assessors disagree. Rankings can survive. |
+| 10:45 to 12:50 | 12 | The Reader Stopped Being a Person |
+| 12:50 to 15:00 | 15 | Eight words. Sixty years. One instruction. |
 
-Pairs get 60 seconds. Keep the missing schedule hidden until the pooling demonstration. The opening survives. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Title setup survives on slide 2. Sources only appear with spoken claims. Longer historical diagnoses are bridged in the short route. The optional Story substitutes within the speech budget after verification.

@@ -2,6 +2,8 @@
 
 Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
 
+Budget: 27.25 spoken minutes including bounded Story substitutions and bridges + 2.75 interaction minutes = 30. [Per-slide spoken-time checks](pacing.md) include exercise narration.
+
 | Time | Slide | Beat |
 | --- | --- | --- |
 | 00:00 to 02:30 | 1 | These go to eleven |

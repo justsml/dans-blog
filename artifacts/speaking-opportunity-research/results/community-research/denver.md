@@ -6,7 +6,7 @@ Verified: 2026-09-05. This is a local discovery and preparation scan; no organiz
 
 The strongest low-friction route is the Rocky Mountain AI Interest Group network: it is large, active, explicitly uses community presenters, and has subgroups for Denver, engineering, education, product, ethics, and startups. For a full conference talk, the most actionable current options are ACM Mile-High Video 2027, CITA 2027 for the retrieval/education language angle, and fintech_devcon 2027 if a genuine fintech case can be supplied. Denver Dev Day and DevOpsDays Rockies are strong annual monitoring targets, but their 2026 CFPs are closed.
 
-Topic shorthand used below: **Education** = the two education talks; **Failure** = Automating Improvement From Failure; **Adaptive** = Conjure Exactly Enough; **Free tier**; **Product** = Break the Mirror on Purpose; **Retrieval**; **Benchmarks**; **Parallelization**; **Judgment**.
+Topic shorthand used below: **Education** = the two education talks; **Failure** = The Pager Cried Wolf; **Adaptive** = Conjure Exactly Enough; **Free tier**; **Product** = Break the Mirror on Purpose; **Retrieval**; **Benchmarks**; **Parallelization**; **Judgment**.
 
 Ease is an evidence-based estimate of the route, not acceptance probability: 1 means an organizer message, lightning talk, demo, or discussion is openly invited; 5 means a selective conference or a strong domain/firsthand-evidence requirement.
 

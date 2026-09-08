@@ -1,12 +1,14 @@
-# Automating Improvement From Failure
+# The Pager Cried Wolf
 
 ## 50-word abstract
 
-Your production logs already contain next month's engineering work, and nobody is reading them. This talk shows how to hand them to an agent, which access to add next, and how to grow a loop that distills failures, files tickets, opens guarded PRs, and answers customer feedback. Actionable Monday.
+An agent can turn unread logs into another unread queue. This talk builds an offline improvement loop that carries evidence, stops on uncertainty, and counts the reviewer’s time. A fresh cancellation case puts regression, holdout, scope and human review to work before you choose one failure class to start Monday.
 
 ## 150-word abstract
 
-Every failure in production is a queued improvement that nobody works. Step one is smaller than teams expect: give a coding agent read access to the logs and ask what broke since yesterday. The talk then builds the loop in order — access added as individual grants, not a graduation ceremony; a scheduled out-of-band check that distills and classifies, with a real unknown category; tickets that carry evidence instead of a confident diagnosis. A worked example follows a candidate fix that removes the visible failure, passes regression, and fails the held-out authorization case: the retry that made the error go away was a 403 that somebody else's credential answered. Regression, holdout, scope, and a person. The back half asks what the queue does to the reviewer (Bainbridge, 1983), compiles repeated work into tested scripts, and measures honestly — a hundred tickets, ninety closed as wrong, is a ten percent useful rate. You leave with one failure class to start Monday.
+An agent can turn unread logs into another unread queue. This talk builds an offline improvement loop that carries evidence, stops on uncertainty, and counts the reviewer’s time. A fresh cancellation case puts regression, holdout, scope and human review to work before you choose one failure class to start Monday.
+
+Every green suggestion can teach you to stop reading the next one. The Pager Cried Wolf starts with that risk, then builds an offline improvement loop around it. Give an agent sanitized logs, add individual access grants, persist a bounded artifact, and classify without inventing a cause. The audience decides an unseen cancellation case before the holdout and scope evidence appear. A missing trace earns an unknown result. The back half asks what automation leaves for the reviewer, when repeated work should become a tested script, and whether the avoided failures justify the review burden. Start with one failure class.
 
 ## Audience
 
@@ -20,4 +22,4 @@ AI engineers, SREs, platform engineers, DevEx teams, and technical leaders who o
 
 ## Reviewer notes
 
-40 minutes, 15 slides. Intermediate engineering depth; familiarity with a CI scheduler and one observability platform helps. Distinct from a general observability or eval talk: the focus is the order in which to grant an agent access and authority, and the guardrails at each step. No vendor pitch; agents and platforms are named as examples of a category. The speculation slide is cut. The argument includes normalization of deviance, jidoka, reviewer skill and attention, and misleading ticket metrics. A separate supporting repository will contain the incident fixture, gate code, and captured test output referenced by the talk.
+40 minutes, 15 slides. Intermediate engineering depth; familiarity with a CI scheduler and one observability platform helps. Distinct from a general observability or eval talk: the focus is the order in which to grant an agent access and authority, and the guardrails at each step. No vendor pitch; agents and platforms are named as examples of a category. The argument includes normalization of deviance, jidoka, reviewer skill and attention, and misleading ticket metrics. Authored case cards make the slide walkthrough self-contained. A separately implemented integration and captured output remain unverified recording prerequisites.

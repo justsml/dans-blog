@@ -1,13 +1,11 @@
 # Three Search Methods in a Fundable Trenchcoat: 40-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A.
+Stable slide IDs, reordered around the early judgment exercise. Speak prose and bridges; do not read screen text, sources or stage directions as extra copy. Timings include interaction, exclude Q&A. Story substitutions never add time. [Per-slide budgets](timing.md).
 
 ## 00:00 to 02:30: slide 1, The sentence
 
-On screen:
-
 > RAG · embeddings · memory · MCP · judges · traces
-> There is a reading list under that pitch.
+> Your retriever finds the hole in your ruler.
 
 Our agent uses RAG over an embedding store, adds memories to context, calls MCP tools, emits structured outputs, gets evaluated by an LLM judge, and traces the whole thing through our agent observability platform.
 
@@ -15,11 +13,9 @@ That sentence used to be the talk. Translate the nouns and everybody feels less 
 
 We spent years calling it search. Then we called it a vector database and raised a round. The product category changed. The problem of deciding whether the returned material is useful did not wait for the funding announcement.
 
-Delivery: Read the opening sentence quickly and straight-faced. Pause after it. Keep this hook in every route.
+Stage direction: Read the opening sentence quickly and straight-faced. Pause after it. Keep this hook in every route.
 
-## 02:30 to 04:30: slide 2, The bet, and the eight words
-
-On screen:
+## 02:30 to 04:30: slide 2, You are joining an old field late
 
 > You are joining an old field late
 > Term specificity → assessor disagreement
@@ -28,92 +24,11 @@ This is an engineer's reading of information retrieval, with synthetic exercises
 
 Eight words will do the work: term specificity, vector space model, vocabulary problem, passage retrieval, relevance judgment, the Cranfield paradigm, pooling, and assessor disagreement.
 
-By the end we will use them to find a hole in a golden dataset. The hole will make a better retriever look worse. Then we will ask whether that happens in a collection built by people who knew to look for it.
+Lexical, dense, hybrid: those are the three search methods in the trenchcoat. Before the reading list, judge five documents. Then we will ask how the field learned to catch the failure you just saw.
 
-Story: The retrieval improvement your eval rejected because it found evidence outside the original expected set. Bring the query, old labels, new document, and rejudgment.
+Story: Optional verified retrieval improvement outside the expected set; replace at most 35 words of existing prose, never add time. Bring query, labels, result and rejudgment.
 
-## 04:30 to 07:30: slide 3, 1972: rare words matter more
-
-On screen:
-
-> Karen Spärck Jones · term specificity
-> 1972 → 2026 = 54 years
-
-Karen Spärck Jones published a statistical interpretation of term specificity in 1972. A word that appears in almost every document tells you less about which document you want than a rare term does.
-
-Think of an error code in a support query. The words "application error" occur everywhere. The exact identifier narrows the search. That is a concrete reason to keep lexical evidence in a retrieval system that also understands paraphrases.
-
-Fifty-four years. We have had time to put her name on the slide. The point is that corpus frequency supplies evidence, and the evidence has a history and assumptions you can inspect.
-
-Source: Karen Spärck Jones (1972), A statistical interpretation of term specificity and its application in retrieval, Journal of Documentation 28(1), 11–21. [Author’s publication archive](https://www.cl.cam.ac.uk/archive/ksj21/ksjdigipapers/ksjbib3.html).
-
-Delivery: Compare a generic support phrase with an exact error identifier. Ask the room which term it would retain in a hybrid query.
-
-## 07:30 to 10:00: slide 4, Vector Database, 1975
-
-On screen:
-
-> Salton, Wong, Yang · vector space model · 1975
-> Deerwester and colleagues · latent semantic analysis · 1990
-
-Salton, Wong, and Yang described a vector space model for automatic indexing in 1975. Documents become weighted representations that support comparisons. In 1990, Deerwester and colleagues described latent semantic analysis using a low-rank representation of term-document structure.
-
-Modern neural embeddings differ in how they learn and what they represent. The useful continuity is representing text numerically so related material can be retrieved despite imperfect word matching.
-
-A vector store gives you a place to search those representations. It does not choose the right relevance definition. It does not tell you that a highly similar contract governs this customer. That work is still ours.
-
-Source: Salton, Wong, and Yang (1975), [A vector space model for automatic indexing](https://doi.org/10.1145/361219.361220), Communications of the ACM 18(11), 613–620. Deerwester, Dumais, Furnas, Landauer, and Harshman (1990), [Indexing by Latent Semantic Analysis](https://www.cs.csustan.edu/~mmartin/LDS/Deerwester-et-al.pdf), JASIS 41(6), 391–407.
-
-## 10:00 to 12:30: slide 5, The vocabulary problem
-
-On screen:
-
-> The customer says “stop billing”
-> The document says “terminate renewal”
-
-Two people can refer to the same thing using different words. Furnas, Landauer, Gomez, and Dumais studied that vocabulary problem in human-system communication in 1987.
-
-Our customer says stop billing. The policy says terminate renewal. Exact matching has a problem. A semantic representation is one answer. So are aliases, expansion, and better indexing. An embedding is a method, not the reason the problem exists.
-
-Now reverse it. Two documents both say cancel, but one cancels a meeting and one cancels a subscription. Shared words do not establish shared intent. Evaluation needs cases for both vocabulary mismatch and misleading overlap.
-
-Source: Furnas, Landauer, Gomez, and Dumais (1987), [The vocabulary problem in human-system communication](https://doi.org/10.1145/32206.32212), Communications of the ACM 30(11), 964–971.
-
-Delivery: Ask for two phrases a customer uses that never appear in the internal docs. Allow 30 seconds.
-
-## 12:30 to 14:30: slide 6, Chunking is passage retrieval
-
-On screen:
-
-> Salton, Allan, Buckley · 1993
-> The useful passage may cross your boundary
-
-Passage retrieval was being studied before our chunk-size arguments acquired a token budget. Salton, Allan, and Buckley compared approaches in 1993. Chunk size was an open research question in 1993 and a forum thread in 2024. One of those had a control group.
-
-Take a policy paragraph that says cancellation is allowed, followed by an exception for annual contracts. Split between those paragraphs and the first chunk becomes a very persuasive wrong answer. Make the chunk enormous and the exception competes with a page of irrelevant material.
-
-The old papers do not contain the perfect chunk size for your current generator. They give you experimental questions. What unit are we retrieving? What counts as enough evidence? Are we measuring the passage, the document, or the answer produced from it? Change one and the score may mean something else.
-
-Source: Salton, Allan, and Buckley (1993), [Approaches to passage retrieval in full text information systems](https://doi.org/10.1145/160688.160693), SIGIR, 49–58.
-
-## 14:30 to 16:30: slide 7, BM25 is still standing there
-
-On screen:
-
-> BEIR, 2021: a robust lexical baseline
-> Compare lexical, dense, and hybrid on your task
-
-BEIR's 2021 experiments found BM25 a robust baseline across heterogeneous retrieval tasks. Reranking and late-interaction models performed best on average in that study, at higher computational cost.
-
-That is a dated experimental result, not a claim that BM25 wins in 2026. It is a reason to include a cheap lexical baseline when measuring a new retriever. Exact identifiers and unfamiliar domain language are places where a semantic-looking system can disappoint you.
-
-Lexical, dense, hybrid. Those are the three search methods in the trenchcoat, and the pitch usually names one of them. Run the comparison on the same corpus, queries, and judgments. Otherwise you have compared two demonstrations and called the difference a model improvement.
-
-Source: Thakur et al. (2021), [BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://openreview.net/pdf?id=wCu6T5xFjeJ), NeurIPS Datasets and Benchmarks. This slide reports the 2021 experiment.
-
-## 16:30 to 20:00: slide 8, Judge these five documents
-
-On screen:
+## 04:30 to 08:30: slide 8, Judge these five documents
 
 > A · current generic policy; 30-day notice
 > B · signed Acme addendum; “see Schedule R”
@@ -125,13 +40,13 @@ Acme asks whether it can cancel today without a fee. Which documents belong in t
 
 A is current but generic. B is signed and specific, but refers to a schedule we have not supplied. C has the answer we might like and is expired. D is about somebody else. E is an employee's guess.
 
-Now compare answers. You just made relevance judgments. Relevant to the topic, applicable to this customer, authoritative, and sufficient to answer are different criteria. If the room agrees perfectly, change the question from "useful evidence" to "enough to authorize cancellation" and compare again. Do not manufacture disagreement for the punchline.
+Now compare answers. Topical relevance, applicability, authority, and sufficiency are different criteria. For our score, a positive label means current evidence that governs Acme: generic policy or executed customer terms. A and B qualify; C is expired, D is another customer, E is an unchecked guess. This is an applicability rubric, not a topical-relevance rubric. A positive label still does not mean we have enough to answer.
 
-Delivery: Give 60 seconds in pairs and collect two judgments with reasons. Do not reveal the missing schedule until slide 10. Use contracts.md for the full synthetic fixture.
+Stage direction: Give 60 seconds in pairs and collect two judgments with reasons, before showing stamps or labels. If everyone agrees, ask whether the set is sufficient to authorize cancellation. Do not manufacture disagreement for the punchline. Do not reveal the missing schedule until slide 10. Use contracts.md for the full synthetic fixture.
 
-## 20:00 to 23:00: slide 9, Cranfield, Bedfordshire, 1966
+## 08:30 to 11:30: slide 9, Cranfield, Bedfordshire, 1966
 
-On screen:
+![Controlled comparison loop](visuals/cranfield-loop.svg)
 
 > Corpus + queries + relevance judgments
 > 1966 → 2026 = 60 years
@@ -144,29 +59,96 @@ Your golden dataset is a test collection with a flattering filename. Write down 
 
 Source: Cleverdon, Mills, and Keen (1966), [Factors Determining the Performance of Indexing Systems, Volume I, Design, Part 2, front matter](https://sigir.org/files/museum/Factors%20Determining%20the%20Performance%20of%20Indexing%20Systems%20Volume%20I.%20Design%20-%20Part%202.%20Appendices/pdfs/frontmatter.pdf).
 
-## 23:00 to 27:00: slide 10, Fool's Golden Dataset
-
-On screen:
+## 11:30 to 16:30: slide 10, Fool's Golden Dataset
 
 > Old pool: A, B, C, D, E
 > New result: F · signed Schedule R
 > Unjudged is not a relevance judgment
 
-The old retrievers contributed A through E to the judgment pool. Our new retriever finds F: the signed Schedule R referenced by B. It waives Acme's cancellation fee. Nobody judged it because nobody retrieved it.
+The old retrievers contributed A through E to the judgment pool. Our new retriever finds F: the signed Schedule R referenced by B. It permits Acme to cancel immediately without a fee. Nobody judged it because nobody retrieved it.
 
-Our naive scorer treats unjudged as nonrelevant. Old top two, B and A: two judged relevant, precision at two equals one. New top two, B and F: only B gets credit, precision at two equals point five. Judge F under the same rubric and the new run returns to one. We changed no retrieval output. We fixed the instrument.
+Before the scores: does the new run score higher, lower, or the same? Commit with a hand. Our scorer treats unjudged as negative. Old top two: B and A. New top two: B and F. Calculate both.
 
-TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. In a 2022 recheck, Voorhees, Soboroff, and Lin added judgments to TREC-8 and compared how the systems ranked before and after. The ordering barely moved. Deep, diverse pools had held up.
+Two out of two: one. One out of two: point five. Now label F positive under the same applicability rubric. The new score is two out of two: one. No retrieval output changed. The evidence is more useful for answering, while this coarse metric only returns to a tie. Your retriever found the hole in your ruler.
+
+TREC used pooling because judging every document for every query was impractical. Zobel investigated reliability with incomplete judgments. The risk is real; universal failure is not. Voorhees, Soboroff, and Lin's 2022 TREC-8 ad hoc recheck expanded the judgments using new runs, including three transformer models and two BM25 baselines. Rankings of all runs by mean evaluation score had Kendall's tau correlations above 0.99 between the official and expanded judgments. Deep, diverse pools held up. That is rank correlation, not a percentage of scores that changed.
 
 That is the lesson we missed. They tested whether the shortcut damaged the comparison. We called our first results golden.
 
+Stage direction: Reveal F first. Collect the higher/lower/same prediction before showing numbers. Walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged positive. Explain that the metric uses our applicability labels, not answer sufficiency or action permission.
+
 Source: Justin Zobel (1998), [How reliable are the results of large-scale information retrieval experiments?](https://doi.org/10.1145/290941.291014), SIGIR, 307–314. Voorhees, Soboroff, and Lin (2022), [Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?](https://arxiv.org/abs/2201.11086). [NIST TREC overview](https://trec.nist.gov/overview.html), started 1992.
 
-Delivery: After revealing F, walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged relevant. Explain that the metric measures topical relevance, not sufficiency or permission.
+## 16:30 to 19:30: slide 3, 1972: rare words matter more
 
-## 27:00 to 30:00: slide 11, Assessors disagree. Rankings can survive.
+> Karen Spärck Jones · term specificity
+> 1972 → 2026 = 54 years
 
-On screen:
+Karen Spärck Jones published a statistical interpretation of term specificity in 1972. A word that appears in almost every document tells you less about which document you want than a rare term does.
+
+Think of an error code in a support query. The words "application error" occur everywhere. The exact identifier narrows the search. That is a concrete reason to keep lexical evidence in a retrieval system that also understands paraphrases.
+
+Fifty-four years. We have had time to put her name on the slide. The point is that corpus frequency supplies evidence, and the evidence has a history and assumptions you can inspect.
+
+Stage direction: Compare a generic support phrase with an exact error identifier. Ask the room which term it would retain in a hybrid query.
+
+Source: Karen Spärck Jones (1972), A statistical interpretation of term specificity and its application in retrieval, Journal of Documentation 28(1), 11–21. [Paper](https://doi.org/10.1108/eb026526).
+
+## 19:30 to 22:00: slide 4, Vector Database, 1975
+
+> Salton, Wong, Yang · vector space model · 1975
+> Deerwester and colleagues · latent semantic analysis · 1990
+
+Salton, Wong, and Yang described a vector space model for automatic indexing in 1975. Documents become weighted representations that support comparisons. In 1990, Deerwester and colleagues described latent semantic analysis using a low-rank representation of term-document structure.
+
+Modern neural embeddings differ in how they learn and what they represent. The useful continuity is representing text numerically so related material can be retrieved despite imperfect word matching.
+
+A vector store gives you a place to search those representations. It does not choose the right relevance definition. It does not tell you that a highly similar contract governs this customer. That work is still ours.
+
+Source: Salton, Wong, and Yang (1975), [A vector space model for automatic indexing](https://doi.org/10.1145/361219.361220), Communications of the ACM 18(11), 613–620. Deerwester, Dumais, Furnas, Landauer, and Harshman (1990), [Indexing by Latent Semantic Analysis](https://www.cs.csustan.edu/~mmartin/LDS/Deerwester-et-al.pdf), JASIS 41(6), 391–407.
+
+## 22:00 to 24:30: slide 5, The vocabulary problem, both ways
+
+> The customer says “stop billing”
+> The document says “terminate renewal”
+
+Two people can refer to the same thing using different words. Furnas, Landauer, Gomez, and Dumais studied that vocabulary problem in human-system communication in 1987.
+
+Our customer says stop billing. The policy says terminate renewal. Exact matching has a problem. A semantic representation is one answer. So are aliases, expansion, and better indexing. An embedding is a method, not the reason the problem exists.
+
+Now reverse it. Two documents both say cancel, but one cancels a meeting and one cancels a subscription. Shared words do not establish shared intent. Evaluation needs cases for both vocabulary mismatch and misleading overlap.
+
+Stage direction: Ask for two phrases a customer uses that never appear in the internal docs. Allow 30 seconds.
+
+Source: Furnas, Landauer, Gomez, and Dumais (1987), [The vocabulary problem in human-system communication](https://doi.org/10.1145/32206.32212), Communications of the ACM 30(11), 964–971.
+
+## 24:30 to 26:30: slide 6, Chunking is passage retrieval
+
+> Salton, Allan, Buckley · 1993
+> The useful passage may cross your boundary
+
+Passage retrieval was being studied before our chunk-size arguments acquired a token budget. Salton, Allan, and Buckley compared approaches in 1993. Chunk size was an open research question in 1993 and a forum thread in 2024. One of those had a control group.
+
+Take a policy paragraph that says cancellation is allowed, followed by an exception for annual contracts. Split between those paragraphs and the first chunk becomes a very persuasive wrong answer. Make the chunk enormous and the exception competes with a page of irrelevant material.
+
+The old papers do not contain the perfect chunk size for your current generator. They give you experimental questions. What unit are we retrieving? What counts as enough evidence? Are we measuring the passage, the document, or the answer produced from it? Change one and the score may mean something else.
+
+Source: Salton, Allan, and Buckley (1993), [Approaches to passage retrieval in full text information systems](https://doi.org/10.1145/160688.160693), SIGIR, 49–58.
+
+## 26:30 to 28:30: slide 7, BM25 is still standing there
+
+> BEIR, 2021: a robust lexical baseline
+> Compare lexical, dense, and hybrid on your task
+
+BEIR's 2021 experiments found BM25 a robust baseline across heterogeneous retrieval tasks. Reranking and late-interaction models performed best on average in that study, at higher computational cost.
+
+That is a dated experimental result, not a claim that BM25 wins in 2026. It is a reason to include a cheap lexical baseline when measuring a new retriever. Exact identifiers and unfamiliar domain language are places where a semantic-looking system can disappoint you.
+
+Run the comparison on the same corpus, queries, and judgments. Otherwise you have compared two demonstrations and called the difference a model improvement.
+
+Source: Thakur et al. (2021), [BEIR: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models](https://arxiv.org/abs/2104.08663), NeurIPS Datasets and Benchmarks.
+
+## 28:30 to 31:30: slide 11, Assessors disagree. Rankings can survive.
 
 > Voorhees, 2000: changed judgments, stable comparisons
 > Test your comparison under more than one assessor
@@ -175,26 +157,24 @@ Voorhees varied relevance judgments and examined the resulting system rankings. 
 
 An absolute score and an A-versus-B ordering make different demands on the labels. That does not mean a model judge is trustworthy because it ranks two answers. It means we have a specific test to run: relabel a sample independently, then see which conclusions survive.
 
+The twelve marks on screen are an authored illustration, not a population disagreement estimate or data from Voorhees. Four positions differ. They show where to investigate; they do not measure how often assessors disagree.
+
 Keep disagreement as data. Was the case ambiguous? Did the rubric ask two questions at once? Did one assessor have the signed schedule and another not? A consensus label without that explanation can conceal exactly the distinction the next system needs.
 
 Source: Ellen M. Voorhees (2000), [Variations in Relevance Judgments and the Measurement of Retrieval Effectiveness](https://www.nist.gov/publications/variations-relevance-judgments-and-measurement-retrieval-effectiveness), Information Processing & Management 36(5), 697–716.
 
-## 30:00 to 33:00: slide 12, The Reader Stopped Being a Person
-
-On screen:
+## 31:30 to 34:30: slide 12, The Reader Stopped Being a Person
 
 > Useful to inspect ≠ sufficient to answer
 > Score retrieval and the resulting answer separately
 
-A person inspecting a ranked list can notice that the signed addendum refers to a missing schedule and go looking. Our generator may instead turn the generic thirty-day policy into a fluent answer about Acme.
+A person inspecting a ranked list can notice that the signed addendum refers to a missing schedule and go looking. A missing schedule is not a creative-writing prompt. Our generator may instead turn the generic thirty-day policy into a fluent answer about Acme.
 
 We can build abstention and verification into that system. We cannot infer that it will use them from a good retrieval score. The retrieved material must be applicable, sufficiently complete, and represented with the qualifiers the answer needs.
 
-Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model.
+Evaluate the handoff. Did retrieval find B and F? Did context assembly keep their relationship? Did the answer cite the actual exception? If the answer is wrong, those checks locate the failure instead of blaming the nearest model. Then name who updates Schedule R and what invalidates a cached answer when it changes.
 
-## 33:00 to 35:30: slide 13, Retrieved text now sits beside instructions
-
-On screen:
+## 34:30 to 37:00: slide 13, Retrieved text now sits beside instructions
 
 > Relevance gives evidence, not authority
 > A document cannot grant a tool permission
@@ -205,34 +185,28 @@ The ranking score answers how well the content matches a retrieval objective. It
 
 Keep this boundary in the end-to-end evaluation. Retrieval success, answer correctness, and action authorization are separate results. A useful citation does not turn a document into a supervisor.
 
-Delivery: Use a harmless printed instruction in the synthetic support note. Do not connect the exercise to live tools.
+Stage direction: Use a harmless printed instruction in the synthetic support note. Do not connect the exercise to live tools.
 
-## 35:30 to 38:00: slide 14, The old cost of keeping knowledge current
-
-On screen:
+## 37:00 to 38:00: slide 14, Who updates Schedule R?
 
 > McDermott’s R1: a real configuration system
 > Who updates the knowledge when the product changes?
 
-McDermott's R1 configured computer systems at DEC. The journal paper is from 1982. This was working software.
+McDermott's R1 configured computer systems at DEC; the paper is from 1982. Working software still needed maintained domain knowledge.
 
-The useful question is who supplies and maintains the domain knowledge. Our retrieved policies and signed schedules have the same operational obligation: somebody must know when they change, what supersedes them, and which decisions depend on them.
-
-A model does not remove that obligation. It makes stale knowledge easier to turn into a confident sentence. Name the owner of the corpus and the invalidation path. We do not need a grand theory of why expert systems declined to ask who updates Schedule R.
+Who owns Schedule R when it changes? Name the owner, what supersedes it, and which answers must be invalidated. A model makes stale knowledge easier to turn into a confident sentence. Put the update path beside the retrieval path.
 
 Source: John McDermott (1982), [R1: A rule-based configurer of computer systems](https://www.sciencedirect.com/science/article/abs/pii/0004370282900212), Artificial Intelligence 19(1), 39–88.
 
 ## 38:00 to 40:00: slide 15, Eight words. Sixty years. One instruction.
 
-On screen:
-
 > Three search methods. One instrument nobody checked.
-> Find the documents your eval never judged.
+> Go find the documents your eval never judged.
 
 Term specificity. Vector space model. Vocabulary problem. Passage retrieval. Relevance judgment. The Cranfield paradigm. Pooling. Assessor disagreement.
 
 Those words tell us why rare identifiers matter, why synonyms are hard, why a passage needs its exception, and why the score depends on who judged which documents. They are tools for investigating a failure, not a history quiz.
 
-Three search methods in a fundable trenchcoat. That is a fair joke about the retriever, and the coat is not the problem. Lexical, dense, hybrid: we inherited all three. What we left behind was the sixty years of checking whether the score underneath was telling the truth. Go find the documents your eval set never judged.
+Lexical, dense, hybrid: we inherited all three. What we left behind was sixty years of checking whether the score was telling the truth. Your retriever found the hole in your ruler. Go find the documents your eval never judged.
 
-Delivery: Say the title line once, flat, then drop to the instruction. Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.
+Stage direction: Leave the B/F example up during questions. Land on the instruction. Stop talking. Leave the B/F example up during questions. Keep all eight terms in the notes; the screen closes on the instruction.

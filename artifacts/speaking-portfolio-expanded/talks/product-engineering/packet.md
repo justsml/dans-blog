@@ -1,4 +1,4 @@
-# Talk packet: The Future of Product Engineering
+# Talk packet: Break the Mirror on Purpose
 
 Browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) · [Presenter script](script-40min.md)
 
@@ -6,9 +6,7 @@ Outlines: [40 min, canonical](index.md) · [30 min](adaptation-30min.md) · [15 
 
 ## Titles
 
-- **Primary:** The Future of Product Engineering
-- Break the Mirror on Purpose
-- Your Org Chart Is a Fossil of Coordination Cost
+- **Primary:** Break the Mirror on Purpose
 - Automate the Right Things. Keep the Taste.
 
 ## Abstracts
@@ -27,11 +25,11 @@ Conway describes communication structures, not a row of boxes with robots in the
 
 This talk follows one product decision through sourced research, customer-feedback clusters, product review, a candidate build, and an opt-in beta. Each handoff has an artifact and an owner. The review stays because the evidence can disagree. A cluster that merges two different complaints is a product mistake even when its JSON validates.
 
-The example comes before the rules. The audience sees three activation figures and chooses a candidate. Only then do support contacts and fabricated urgency appear. The highest activation result fails the saved policy. A quieter candidate becomes eligible for review, not automatically shipped. The numbers are synthetic; supporting code will live in a separate repository.
+The example comes before the rules. The audience sees three activation figures and chooses a candidate. Only then do support contacts and fabricated urgency appear. The highest activation result fails the saved policy. A quieter candidate becomes eligible for review, not automatically shipped. The numbers are synthetic and the slide table is the complete exercise; no supporting application is implied.
 
 The back half prices the human work. Graicunas’s maximum relationship count gives 222 possibilities for six reports, an illustration of combinatorial growth rather than a staffing limit. Bainbridge asks what happens to the person left monitoring automation and handling its exceptions. Ownership needs time and recovery practice, not just a name in a config file.
 
-The closing artifact is one redesigned handoff: what arrives, what leaves, who decides, what would stop it, and how the experiment reports its result. Agents do not erase the cost of coordination. They change where we need to look for it.
+Two labelled forecasts extend the ownership question to continuing token costs and generated software interfaces. Builders outside frontier labs can rethink product categories; the channel is not reserved for the largest providers. The closing artifact is one redesigned handoff: what arrives, what leaves, who decides, what would stop it, and how the experiment reports its result. Agents do not erase the cost of coordination. They change where we need to look for it.
 
 ## Learning outcomes
 
@@ -53,7 +51,7 @@ Product engineers, engineering leaders, founders, and product managers building 
 
 ## Not a product pitch
 
-The talk cites Conway's 1968 paper and Microsoft's experimentation guidance. It names no experimentation platform, analytics tool, warehouse, or agent framework; tools mentioned in speaker notes are examples.
+The talk cites organization research, human-factors work, practitioner interface guidance and Microsoft experimentation guidance. It names no experimentation platform, analytics tool, warehouse, or agent framework; tools mentioned in speaker notes are examples.
 
 ## References
 
@@ -61,7 +59,13 @@ The talk cites Conway's 1968 paper and Microsoft's experimentation guidance. It 
 - Microsoft ExP (2020). [Patterns of trustworthy experimentation: pre-experiment stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/).
 - Coase (1937). [The Nature of the Firm](https://onlinelibrary.wiley.com/doi/10.1111/j.1468-0335.1937.tb00002.x).
 - Colfer and Baldwin (2016). [The mirroring hypothesis](https://doi.org/10.1093/icc/dtw027).
-- Bainbridge (1983). [Ironies of automation](https://www.sciencedirect.com/science/article/pii/0005109883900468).
+- Bainbridge (1983). [Ironies of automation](https://doi.org/10.1016/0005-1098(83)90046-8).
+
+- Campbell (1979). [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1),67–90.
+- Graicunas (1933; reprinted 1937). [Relationship in Organization](https://nickols.us/relationship.pdf).
+- MacCormack, Rusnak and Baldwin (2012). [Exploring the duality between product and organizational architectures](https://www.hbs.edu/ris/Publication%20Files/Research%20Policy%2041%20%282012%29%201309%E2%80%93%201324_c5c2350e-013c-4065-a2f9-d95eb32177d5.pdf), Research Policy 41(8),1309–1324.
+- Thoughtworks (2014/2015). [Inverse Conway Maneuver](https://www.thoughtworks.com/en-br/radar/techniques/inverse-conway-maneuver).
+- Skelton and Pais. [Team Topologies interaction modes](https://teamtopologies.com/key-concepts).
 
 ## Audience adaptation
 

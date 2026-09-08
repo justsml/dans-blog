@@ -1,5 +1,7 @@
 # Deep research prompt: A Skeptic’s Guide to Surviving AI in Education
 
+Retired brief. For a new opportunity, use [Show Me the Misconception](../speaking-portfolio-expanded/talks/evidence-learning/procurement-route.md) and reassess fit. This file preserves the old research instructions.
+
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match

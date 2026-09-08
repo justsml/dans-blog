@@ -1,27 +1,24 @@
-# The Future of Product Engineering: evidence and claim boundaries
+# Break the Mirror on Purpose: evidence and claim boundaries
 
-Verified 2026-09-04; Free Tier section reverified 2026-09-06. The user’s six-concept brief controls the argument. The material below supports factual claims; proposed architectures, principles, synthetic fixtures, and conditional market mechanisms are labelled as such.
+Rechecked or narrowed 8 September 2026. Repricing a handoff and specifying its artifact contract is a proposed operating model, not a measured organizational result. The evidence does not prescribe one agent per existing job or department.
 
-| Claim | Primary evidence | Scope and stage wording |
-|---|---|---|
-| A system's structure copies the communication structure of the organization that built it. | Melvin E. Conway, [How Do Committees Invent?](http://www.melconway.com/Home/Committees_Paper.html), Datamation, 1968. | Quote the thesis as Conway's observation. The extension to agent rosters is the speaker's argument, not Conway's claim. |
-| Experiment design needs a clear hypothesis and a complementary metric set. | [Microsoft Research: Pre-Experiment Stage](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/), 2020. | Supports the "every experiment carries a hypothesis" slide. It does not validate the proposed agent roster or the synthetic onboarding treatment. |
-| Guardrail metrics track product properties that should not degrade. | [Microsoft Research: During-Experiment Stage](https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/patterns-of-trustworthy-experimentation-during-experiment-stage/), 2020. | Background for the support ceiling in the demo. Cited in the evidence notes, not on a slide in the current outlines. |
-| Effort estimation has largely left engineering planning conversations. | **Speaker's firsthand observation**, stated as such ("I have not heard a team discuss level of effort in months"). | Do not present as an industry measurement. Invite the room to disagree. |
-| Every function of a product group can be mimicked as an agent with a human owner; guards belong where risk spikes. | **Proposed operating model.** | Describe the roster, owners, targeted beta enrollment, and guards as design choices. Do not claim a production deployment or measured organizational improvement. Tools named in notes are examples. |
-| Customers become more forthcoming once they see a response to their feedback. | **Speaker's firsthand observation.** | State as experience, not as a measured effect. Fill the evidence-bank story slot before using a specific example. |
-| A locally better activation number can violate another objective. | **Synthetic policy replay**, detailed in demo.md. | Control 40% activation / 3% support; pressure 48% / 9% plus false urgency; clearer step 45% / 4%. The 5% ceiling is fictional policy. Passing gates means eligible for human review, never automatic shipping. No causal or significance claim. |
+| Claim | Primary evidence | Boundary |
+| --- | --- | --- |
+| Communication structures constrain system designs | [Conway 1968](https://melconway.com/Home/pdf/committees.pdf), Datamation, April,28–31 | Extension to agent interfaces is the speaker's argument. |
+| Mirroring has descriptive support and important exceptions | [Colfer/Baldwin 2016 full paper](https://www.hbs.edu/ris/Publication%20Files/Colfer%20Baldwin%20Mirroring%20Hypothesis%20Ind%20Corp%20Change-2016_8aa320ff-6aa6-42ef-b259-d139012faaf6.pdf), ICC 25(5),709–738,§4.3 and Tables 4/5 |70/22/8 applies to 50 industry/firm descriptive studies, not all 142 reviewed and not companies. Ten poor unmirrored cases belong to a separate normative sample. Partial mirroring can retain knowledge beyond operational boundaries. |
+| Organizational arrangements and product modularity can be associated | [MacCormack/Rusnak/Baldwin 2012](https://www.hbs.edu/ris/Publication%20Files/Research%20Policy%2041%20%282012%29%201309%E2%80%93%201324_c5c2350e-013c-4065-a2f9-d95eb32177d5.pdf), Research Policy 41(8),1309–1324 | Not a randomized test of this agent operating model. |
+| Firm boundaries involve market and internal organization costs | [Coase 1937](https://onlinelibrary.wiley.com/doi/10.1111/j.1468-0335.1937.tb00002.x), Economica 4(16),386–405 | Coase does not prescribe deleting departments. The proposed change is cheaper evidence collection/transmission, to be compared with added verification, permissions and maintenance. |
+| Organize communication deliberately | [Thoughtworks](https://www.thoughtworks.com/en-br/radar/techniques/inverse-conway-maneuver); [Team Topologies](https://teamtopologies.com/key-concepts) | Practitioner guidance. Thoughtworks popularized the term; no claim of coinage. |
+| Decision pressure can distort quantitative indicators and the work they measure | [Campbell 1979](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1),67–90 | Named only after the vote. Does not prove every metric target will be gamed. |
+| Maximum relationship count grows combinatorially | [Graicunas reprint](https://nickols.us/relationship.pdf) | Six times(32+5)=222 possible relationships, not observed traffic or a validated span-of-control limit. Original 1933 citation is documented in historical bibliography; the primary text inspected is the 1937 reprint. |
+| Automation can leave humans monitoring and handling exceptional interventions | [Bainbridge 1983](https://doi.org/10.1016/0005-1098(83)90046-8), Automatica 19(6),775–779 | Recovery drills and reserved review time are the speaker's design response, not a measured treatment effect established by this paper. |
+| Experiments need hypotheses and a complementary metric set | [Microsoft ExP, July 31,2020](https://www.microsoft.com/en-us/research/articles/patterns-of-trustworthy-experimentation-pre-experiment-stage/) | Verified live. The article addresses metrics, randomization, engineering bias and gradual rollout. It does not validate the synthetic fixture. The companion during-experiment article is dated January 25,2021, not 2020. |
+| B fails a fixed policy despite 48% activation | [Authored scorecard](demo.md) | Support 9% exceeds 5%, and false urgency is prohibited. C 45%/4% is eligible for human review only. No customer dataset, significance test, measured manipulation detector or causal result. |
 
-## Claims intentionally removed or narrowed
+## Predictions and observations
 
-- No estimate of vendor loss per query, hidden subsidy, sustainable margin, or a date when subsidies end.
-- No assertion that customer willingness to pay necessarily tends to zero.
-- No claim that cloud credits prove the economics of all AI services.
-- No assertion that faster experimentation guarantees better learning or product quality.
-- No implication that support percentages establish a causal experiment result; the demo has no randomized user-level data or sampling uncertainty.
-- No equation that lets a metric win compensate for a prohibited pattern.
-- No claim that model confidence authorizes exposure, pricing changes, or external communications.
+Fuel and generated interfaces remain explicitly labelled forecasts. A continuing 2-dollar daily agent costs 730 dollars over 365 days in the synthetic illustration; this is not a vendor quote or measured deployment cost. The forecast is weakened by maintained software needing no continuing inference. The channel forecast is weakened by users returning to stable specialist apps rather than using generated task interfaces repeatedly. These are observable counterexamples, not a dated market-share forecast or a claimed validation.
 
-## Source upkeep before a booking
+The audit's proposed 2029/2031 deadlines,1% hosting-cost threshold and top 20-app test were not adopted: those add arbitrary forecasts and measurement populations absent from Dan's stated position. Any later quantitative forecast needs a frozen sample, metric, comparison period and agreed failure threshold before observation. The product experiments themselves still require a falsifiable hypothesis.
 
-Recheck offer terms immediately before presenting a named credit program. Preserve dates on historical research. If adding a current model price example, verify the model, token categories, currency, region, and date; keep it distinct from provider cost. If replacing synthetic product fixtures with real experiments, obtain an authorized, de-identified dataset and document assignment, observation window, design, analysis, uncertainty, and decision history.
+The former first-person effort-estimation statement is no longer required spoken prose. Dan may use it only after reconfirming it. Current Story slots 1,6,9,14 require records. No customer willingness-to-share effect or deployed organizational outcome is asserted.

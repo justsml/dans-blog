@@ -1,23 +1,20 @@
-# Automating Improvement From Failure: 30-minute adaptation
+# The Pager Cried Wolf: 30-minute adaptation
 
-Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
+Keep slides 1, 2, 6, 3, 4, 7, 8, 9, 10, 13, 14, 15 in this order. [Distinct talk track](script-30min.md). The worked example gets four minutes, including two audience decisions and the reveal.
 
-| Time | Slide | Beat |
+| Clock | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:30 | 1 | Nobody reads the scroll |
-| 01:30 to 02:30 | 2 | Step one: hand an agent the logs |
-| 02:30 to 04:30 | 3 | Enrichment earns the next step |
-| 04:30 to 06:30 | 4 | The out-of-band check |
-| 06:30 to 08:00 | 5 | Distill, then classify |
-| 08:00 to 10:00 | 6 | The retry that hid the auth failure |
-| 10:00 to 11:30 | 7 | Tickets are cheap. Review is not. |
-| 11:30 to 17:00 | 8 | Nothing leaves without evidence |
-| 17:00 to 19:30 | 9 | Who reviews the robot's PRs? |
-| 19:30 to 22:00 | 10 | Compile what repeats |
-| 22:00 to 23:30 | 11 | Feedback is the same loop |
-| 23:30 to 26:00 | 12 | Correlate, escalate, and the money gate |
-| 26:00 to 27:30 | 13 | The metrics that will lie to you |
-| 27:30 to 29:00 | 14 | Start Monday |
-| 29:00 to 30:00 | 15 | Fail to win |
+| 00:00–02:30 | 1 | Nobody reads the scroll |
+| 02:30–04:15 | 2 | Step one: hand an agent the logs |
+| 04:15–06:10 | 6 | The retry that hid the auth failure |
+| 06:10–08:10 | 3 | Enrichment earns the next step |
+| 08:10–10:40 | 4 | The out-of-band check |
+| 10:40–13:40 | 7 | Tickets are cheap. Review is not. |
+| 13:40–17:40 | 8 | Nothing leaves without evidence |
+| 17:40–21:00 | 9 | Who reviews the robot's PRs? |
+| 21:00–24:00 | 10 | Compile what repeats |
+| 24:00–26:15 | 13 | The metrics that will lie to you |
+| 26:15–28:30 | 14 | Start Monday |
+| 28:30–30:00 | 15 | Fail to win |
 
-The worked example stays at 5:30. The 25-minute recording drops 10 and 12; see recording-plan.md. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Slides 5, 11 and 12 are omitted: classification moves into the slide-3 bridge; feedback and consent into slide 7; the money rule remains with the proposal gate. The canonical authorization workaround comes early; the peak presents an unseen cancellation and missing-trace case.

@@ -7,9 +7,9 @@ Copy this entire file into a Deep Research task. This is an instruction brief, n
 - Talk ID: `parallelization`
 - Title: Compute, Please (and a Receipt)
 - Audience: Staff and principal engineers, distributed-systems practitioners, AI architects, platform teams, and engineering leaders.
-- Thesis: Expose hidden tool fan-out, enforce shared limits, recover durable jobs, and compare independent solution attempts against fixed requirements.
-- Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.
-- Source material: [CFP or outline](../speaking-portfolio-expanded/outlines/parallelization-40min.md)
+- Thesis: Agents can request compute, while admission, aggregate budgets, expiring leases and durable recovery constrain execution. Cheap generation and disagreement-based judging require explicit economics.
+- Available formats: Prepared 15-, 30-, and 40-minute scripts; 45 minutes uses 40 plus five minutes Q&A. See the current packet for deck availability.
+- Source material: [Current CFP](../speaking-portfolio-expanded/talks/dynamic-scaling/CFP.md)
 
 ## Search focus
 

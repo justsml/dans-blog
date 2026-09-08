@@ -1,5 +1,7 @@
 # Compute, Please (and a Receipt): 15-minute presenter script
 
+Budget: 13 spoken minutes (including bounded stories and bridges) + 2 interaction minutes = 15. See [per-slide counts and reveal limits](pacing.md).
+
 Use slides 1, 2, 3, 6, 10, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill the bounded Story slots before delivery; their allowances are included, never added. [Spoken and interaction budgets](pacing.md) sum to this slot. Timings are rehearsal targets without Q&A. Lightning route: the multiplication, the inversion, the ecosystem, one admission rule, then a compressed restart walkthrough.
 
 ## 00:00 to 02:00: slide 1, Four callers, forty images, one customer
@@ -75,15 +77,15 @@ On screen:
 > lease-88f1 expires mid-batch
 > One response lost, one email fails
 
-Two callers want distinct batches against one entitlement. Seven items reserve $1.40 of the $1.50 provider cap; three are refused. The second batch queues. Duplicate calls for the first batch get its existing job ID. Dispatch uses slide 2's lease-88f1, eight sandbox-small workers. Six minutes into the job its TTL expires: the sandboxes stop, the provider keeps rendering, the reservations stay charged.
+Seven items reserve $1.40 of the $1.50 cap; three are refused. The next batch queues. Duplicate calls get the existing job ID.
 
-A new worker reloads the job, checks provider status for every submitted item, and collects what finished. One item's response never arrived; it stays unresolved with its reservation held, and the worker asks the provider rather than resubmitting. All seven accepted outputs land. The email fails. The delivery worker retries the email against the completed job, and the expensive generation is untouched.
+Lease-88f1 expires after six minutes. The sandboxes stop; the provider keeps rendering and reservations stay held. A new worker reloads the job and queries saved provider IDs. A missing response remains unresolved until reconciled; nobody resubmits it blindly. All seven outputs eventually land. The email fails. Retry notification, never generation.
 
-One job, a recoverable lifecycle, honest accounting, and a compute substrate that was allowed to disappear under it. That is the abstraction the batch tool owed us.
+The batch survives its caller and its compute. One lifecycle owns the reservations, provider identities and delivery state. The disappearing box never owned the truth.
 
 Delivery: The trace in demo.md; compress rows 1 and 2 on the short routes. Ask the room for each next transition before revealing it.
 
-Bridge: two more scaling axes have names. The barrel-of-monkeys maneuver leads with cheap parallel generation on purpose and hands the barrel to the next stage. The Council of Guards is cheap judges from different models, and the number you want back is the disagreement. Gate every candidate; a synthesis is a new candidate.
+Bridge: parallel candidates need the same budget, plus independent gates and disagreement review. More attempts do not create a correctness vote.
 
 ## 13:00 to 15:00: slide 14, Put the limit where the work begins
 

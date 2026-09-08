@@ -1,12 +1,12 @@
-# Adaptive, agentic apps
+# Conjure Exactly Enough
 
 ## Short abstract (50 words)
 
-A vendor renames a field at 2 a.m. Can your app investigate, propose a fix, prove it, and keep records moving, without holding a permission you'd be scared to give it? This talk shows how: conjure a narrow agent per job, guard the dangerous tools, prove every repair, and let the app ask for its own scale.
+A vendor renames a field. Conjure a narrow agent to investigate, propose and test the repair. Keep ambiguous records quarantined and the planner away from operational credentials. Follow one ingest through a rename, a semantic change and a lost response, with scoped tools, a deadline and an accountable owner.
 
 ## Standard abstract (100 words)
 
-The assistant with every customer record and tools that can email, refund, delete and deploy is not a design we get to decline; it arrives one integration at a time. The hazard is not the tool count, it is the pathways between them. Ten tools is forty-five pairs before you count chains, nobody reviews the combinations, and the dangerous pairing is never on the roadmap — it gets discovered. This talk is a strategy for granting that access anyway: an orchestrator that generates a narrowly scoped agent per job, so the assistant still exists but never has all of its hands full at once.
+Your integration list decides what your assistant can reach before you review the combinations. Five reads and five writes permit 25 potential pairings; adding six of each makes 121. Conjure Exactly Enough gives each job a narrow agent, server-owned policy and a logged path to request tools. One address ingest demonstrates the boundary: a documented rename earns a tested mapping, ambiguous meaning goes to an owner, and a lost response requires reconciliation. We follow versioned repairs, scoped compute and reports a human can inspect, then start smaller with one agent that remembers execution evidence without treating memory as permission.
 
 ## Outcomes
 

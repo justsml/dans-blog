@@ -12,15 +12,15 @@ Outline: [40 min](index.md). Presenter routes are indexed in [formats.md](format
 
 ## Abstracts
 
-### 50 words
+### Up to 50 words
 
-Math class survived the calculator watch. Your class can survive chatbots without building a curriculum around catching anyone. This session shows ways to out-design students instead: an assignment where verification feels like cheating, a four-minute reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
+Math class survived the calculator watch. This session makes verification feel like cheating: a smudged worksheet, a spoken reconstruction, and a transcript view across 300 students. Teachers score reasoning, record help separately, protect access, and budget review time. Integrity processes stay in place; the checkpoint starts measuring what students understand.
 
-### 100 words
+### Up to 100 words
 
 Proctoring fails, detectors flag the wrong kids, and the pop quiz only proves what you already knew. This session stops trying to catch students and starts out-designing them. Three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group explanation with purposeful follow-ups and a written alternative, and a qualitative pass over every transcript that surfaces the five students who found a path worth showing the room. Around them: a four-minute live reconstruction, a rubric that scores reasoning and logs help separately, and a record that never hardens into a label.
 
-### 250 words
+### Up to 250 words
 
 The historical parallels have been beaten to death, so one and done: math class survived the Casio calculator watch, and the speaker may have used one on an assessment. The panic is familiar. So is the doom loop that follows it: proctoring fails, detectors flag non-native writers, and the pop quiz proves the student can't hit the first rung of Bloom's taxonomy. Getting away with it becomes the reward.
 
@@ -73,7 +73,7 @@ If you build assessment or tutoring features, this session shows what evidence o
 
 ### Engineering leadership and product
 
-Detector features are a liability; evidence features are a product. This session preserves integrity processes and changes assessment design and shows the artifacts a product should produce: an assignment pattern where verification feels like cheating, a hint ladder with recorded help, a reconstruction task with a transfer item, a rubric with a separate assistance column, and observation records that support the next teaching decision. It covers what a transcript view across 300 students can surface, the care voice data demands, and the staff-minutes question every pilot must answer. The speaker has built AI systems at an education technology company and names no product.
+Detector features are a liability; evidence features are a product. This session preserves integrity processes, changes assessment design, and shows artifacts a product should produce: an assignment pattern where verification feels like cheating, a hint ladder with recorded help, a reconstruction task with a transfer item, a rubric with a separate assistance column, and observation records that support the next teaching decision. It covers what a transcript view across 300 students can surface, the care voice data demands, and the staff-minutes question every pilot must answer. The speaker has built AI systems at an education technology company and names no product.
 
 ### Education and instructional design
 
