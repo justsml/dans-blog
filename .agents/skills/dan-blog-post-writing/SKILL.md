@@ -1,6 +1,6 @@
 ---
 name: dan-blog-post-writing
-description: Write DanLevy.net articles and blog posts in Dan Levy's voice, structure, humor, technical taste, and Astro MDX conventions. Use when Codex needs to draft, rewrite, expand, polish, or create non-quiz posts for this blog; create matching frontmatter, title/subtitle/tag/category metadata, post directory naming, image concepts, and social/cover image variants. For quiz posts, use the quiz-writing skill instead.
+description: Write DanLevy.net articles and blog posts in Dan Levy's voice, structure, humor, technical taste, and Astro MDX conventions. Use when drafting, rewriting, expanding, polishing, or creating non-quiz posts for this blog; create matching frontmatter, title/subtitle/tag/category metadata, post directory naming, image concepts, and social/cover image variants. For quiz posts, use the quiz-writing skill instead.
 ---
 
 # Dan Blog Post Writing

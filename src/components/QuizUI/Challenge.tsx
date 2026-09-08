@@ -57,7 +57,14 @@ export default function Challenge({
   question: string;
   options: Option[];
   explanation?: string;
-  difficulty?: "easy" | "medium" | "hard" | "expert" | string;
+  /**
+   * Metadata props below are not rendered by this component. They are authored in
+   * MDX and consumed by tooling: the i18n pipeline parses and preserves them across
+   * translations (`src/scripts/i18n/quiz-parser.ts`), and validation asserts they
+   * survive round-trips. Declared here so MDX authoring stays type-documented.
+   */
+  /** Difficulty on a 1-5 scale: 1 warmup, 3 intermediate, 5 expert. */
+  difficulty?: 1 | 2 | 3 | 4 | 5;
   objectives?: string[];
   standards?: string[];
 }) {

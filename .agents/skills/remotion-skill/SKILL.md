@@ -1,6 +1,6 @@
 ---
 name: remotion-skill
-description: Best practices for Remotion - Video creation in React
+description: Build and render Remotion videos in React — compositions, sequencing, timing and interpolation, captions and subtitles, audio, transitions, and ffmpeg. Use when working in src/remotion, running the video:render / video:still / video:studio scripts, or creating any programmatic video or animated still for this blog.
 metadata:
   tags: remotion, video, react, animation, composition
 ---

@@ -1,6 +1,6 @@
 ---
 name: quiz-writing
-description: Write engaging, educational quiz posts for DanLevy.net
+description: Write and edit DanLevy.net quiz posts — Challenge/QuizUI MDX structure, options with isAnswer, question/explanation/hints slots, per-option hints, group and difficulty progression, quiz frontmatter and cover images. Use when creating a quiz post, adding or rewording questions, fixing quiz numbering or hydration, or reviewing an existing quiz. For non-quiz posts use dan-blog-post-writing.
 ---
 # Quiz Writing Skill
 
@@ -32,7 +32,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <QuizUI>
 
 <Challenge
-  client:load
+  client:visible={{rootMargin: "150px"}}
   index={0}
   group="Warmup"
   title="Question Title"
@@ -115,7 +115,7 @@ cover_credit: Photo by <a href="https://unsplash.com/@photographer">Name</a> on 
 
 ```tsx
 <Challenge
-  client:load          // Required: Astro React hydration directive
+  client:visible={{rootMargin: "150px"}} // Required: hydration directive (lazy)
   index={0}            // Required: Zero-based question number
   group="Warmup"       // Required: Category grouping for this question
   title="Question Title" // Required: Short descriptive title
@@ -132,7 +132,7 @@ cover_credit: Photo by <a href="https://unsplash.com/@photographer">Name</a> on 
 >
 ```
 
-**Note on `client:load`**: The vast majority of quizzes use `client:load`. Only the oldest quiz (JavaScript Promises, 2019) uses `client:only="react"` on some Challenges. Always use `client:load` for new quizzes.
+**Note on hydration**: The vast majority of quizzes use `client:visible={{rootMargin: "150px"}}` — roughly 2900 Challenges across the content tree, versus ~22 on `client:load` and ~39 on legacy `client:only="react"`. Lazy hydration is a deliberate performance choice on quiz posts, which are long and Challenge-heavy. Use `client:visible={{rootMargin: "150px"}}` for new quizzes, and preserve it on existing ones unless the user explicitly asks for eager hydration.
 
 ### Option Type
 
@@ -597,7 +597,7 @@ Used in Rust and AWS quizzes for pedagogical structure:
 
 ```mdx
 <Challenge
-  client:load
+  client:visible={{rootMargin: "150px"}}
   index={0}
   group="Ownership"
   title="Basic Move Semantics"
@@ -789,7 +789,7 @@ After writing a quiz, verify:
 
 ### 2. Challenge Structure
 
-- [ ] Every Challenge has `client:load` directive (NOT `client:only`)
+- [ ] Every Challenge has a hydration directive — `client:visible={{rootMargin: "150px"}}` (NOT `client:only`)
 - [ ] `index` values are sequential starting from 0
 - [ ] Every Challenge has exactly ONE `isAnswer: true` option (unless intentionally multi-answer)
 - [ ] Every Challenge has both `question` and `explanation` slots
@@ -847,11 +847,12 @@ bun run screenshots
 - ❌ Write explanations that just repeat the question
 - ❌ Make wrong answers obviously wrong
 - ❌ Use emojis excessively (1-3 per section max)
-- ❌ Forget the `client:load` directive on Challenges
+- ❌ Forget the hydration directive on Challenges
 - ❌ Skip the warmup questions
 - ❌ Write code that doesn't actually work as described
 - ❌ Use `class` in JSX — use `className` instead
-- ❌ Use `client:only="react"` (legacy, use `client:load`)
+- ❌ Use `client:only="react"` (legacy, use `client:visible={{rootMargin: "150px"}}`)
+- ❌ Convert existing `client:visible` Challenges to `client:load` — lazy hydration is intentional
 
 ### DO
 
@@ -925,7 +926,7 @@ For structured learning quizzes, add `difficulty` and `objectives`:
 
 ```mdx
 <Challenge
-  client:load
+  client:visible={{rootMargin: "150px"}}
   index={0}
   group="Ownership"
   title="Basic Move Semantics"
