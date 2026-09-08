@@ -1,4 +1,4 @@
-# Dynamic Scaling of Agentic Workloads: 30-minute adaptation
+# Compute, Please (and a Receipt): 30-minute adaptation
 
 Keep slides 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14. Hide the others in presenter preparation. [Complete talk track](script-30min.md).
 
@@ -17,4 +17,4 @@ Keep slides 1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13, 14. Hide the others in presente
 | 24:30 to 28:00 | 13 | Council of Guards |
 | 28:00 to 30:00 | 14 | Put the limit where the work begins |
 
-Slides 4 and 9 are cut with bridges. Keep the spot-interruption event in the walkthrough. Slide 11 drops its three-decisions opener; slides 12 and 13 keep every paragraph, including the hedge and the full candidate exercise. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+Slides 4 and 9 are cut with bridges. Keep the lease-expiry event in the walkthrough. Slide 11 drops its three-decisions opener; slide 12 keeps its hedge; slide 13 uses one candidate only, the maintainer, because the split is the point. The exercise takes one minute and precedes the climax. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

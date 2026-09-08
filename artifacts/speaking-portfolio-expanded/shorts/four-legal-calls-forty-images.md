@@ -1,6 +1,6 @@
 # Buy Ten, Get Forty
 
-2 min · video · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/index.md), slides 1, 5, 6
+2 min · video · parent: [Compute, Please (and a Receipt)](../talks/dynamic-scaling/index.md), slides 1, 5, 6
 
 The whole talk in one multiplication. Numbers are fixtures; the mechanism is not.
 

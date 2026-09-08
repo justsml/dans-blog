@@ -1,11 +1,11 @@
-# Deep research prompt: Rethinking Parallelization in the Agentic Era
+# Deep research prompt: Compute, Please (and a Receipt)
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `parallelization`
-- Title: Rethinking Parallelization in the Agentic Era
+- Title: Compute, Please (and a Receipt)
 - Audience: Staff and principal engineers, distributed-systems practitioners, AI architects, platform teams, and engineering leaders.
 - Thesis: Expose hidden tool fan-out, enforce shared limits, recover durable jobs, and compare independent solution attempts against fixed requirements.
 - Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.

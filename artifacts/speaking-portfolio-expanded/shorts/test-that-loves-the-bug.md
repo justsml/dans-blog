@@ -1,6 +1,6 @@
 # The Test Who Loved Me
 
-2 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slide 9, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/index.md) on 7 September 2026. The fixture travels with the short.
+2 min · video · standalone. Retired parent: *Code Is Cheap. Judgment Is Expensive.*, slide 9, reworked into [Turn Your Thinkin' Tokens Up to 11](../talks/judgment/index.md) on 7 September 2026. The illustrative code is printed below; no runnable fixture accompanies this short.
 
 Two confident artifacts, identically wrong, and a green check between them.
 
@@ -35,4 +35,4 @@ Bainbridge (1983), Ironies of automation, Automatica 19(6). Skitka, Mosier and B
 
 ## Demo
 
-Type the three lines, assert that a tenant-A admin can edit tenant A, show PASS. Then add the tenant-B assertion and watch it fail.
+Reveal the printed tenant-A case and PASS label, then reveal the tenant-B counterexample. Walk the missing tenant comparison on the board; this is an illustrative walkthrough, not a live execution.

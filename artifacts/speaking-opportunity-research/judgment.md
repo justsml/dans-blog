@@ -1,11 +1,11 @@
-# Deep research prompt: Code Is Cheap. Judgment Is Expensive.
+# Deep research prompt: Turn Your Thinkin' Tokens Up to 11
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `judgment`
-- Title: Code Is Cheap. Judgment Is Expensive.
+- Title: Turn Your Thinkin' Tokens Up to 11
 - Audience: Engineering leaders, CTOs, senior engineers, founders, and DevEx/platform audiences.
 - Thesis: As code generation becomes less costly, deciding what to build, validating behavior, controlling complexity, and reviewing tradeoffs become stronger constraints.
 - Available formats: Existing 15- and 40-minute decks; 30-minute adaptation possible; 45-minute slot with 5 minutes Q&A.

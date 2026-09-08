@@ -1,4 +1,4 @@
-# Research evidence packet: The Future of Product Engineering
+# Research evidence packet: Break the Mirror on Purpose
 
 Research run date: 2026-09-04  
 Horizon: 2026-09-04 through 2028-03-04  

@@ -1,16 +1,18 @@
 # Five-minute paper walkthrough: restart the batch
 
-Slide 10. Paper trace, no provider calls. Five minutes on the 40-minute route; on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the spot reclaim. Ask the room for each transition before revealing it. Arithmetic comes from the $2 ledger in contracts.md.
+Slide 10. Paper trace, no provider calls. Five minutes on the 40-minute route (1.5 spoken, including a 40-word story; 3.5 interaction); on the 15- and 30-minute routes compress rows 1 and 2 into one beat and keep the lease expiry. Ask the room for each transition before revealing it. Arithmetic comes from the $1.50 ledger in contracts.md.
 
 | Time | Event | Ask | Expected behavior |
 | --- | --- | --- | --- |
 | 0:00 to 1:00 | Chat turn, retry, cron and second tab each request the batch | How many provider jobs could start? | Forty without shared admission; one job ID with it |
-| 1:00 to 2:00 | Tenant has a ten-image entitlement and a $2 cap | Can two callers each read $2 and start? | One atomic reservation wins; the other queues with a reason |
-| 2:00 to 3:00 | Spot worker reclaimed with two minutes' notice mid-batch | Does the render stop when the box does? | No; lease expires, reservations stay held, a new worker reloads the job |
+| 1:00 to 2:00 | Tenant has a ten-image entitlement and a $1.50 provider cap | Do ten two-attempt allowances fit? | Seven fit at $1.40; three refused. Duplicate logical calls get the same job; distinct batches queue |
+| 2:00 to 3:00 | Slide 2's sandbox-small lease-88f1 reaches its six-minute TTL mid-batch | Does the render stop when the box does? | No; lease expires, reservations stay held, a new worker reloads the job |
 | 3:00 to 4:00 | One provider response never arrives | Is a missing local result a failed generation? | No; keep it unresolved, query the saved provider ID, do not resubmit |
-| 4:00 to 5:00 | All outputs stored; email fails | Which operation is retried? | Notification only; the customer sees per-item state and delivery status |
+| 4:00 to 5:00 | All seven accepted outputs stored; email fails | Which operation is retried? | Notification only; the customer sees per-item state and delivery status |
 
 ## Candidate review exercise, slide 13
+
+40 route: two minutes, three 25-second gate reveals plus 45 seconds for the split. 30 route: one minute, maintainer only. Show design text alone first; cover the Failed gate and Keep columns until the room responds. Read the climax paragraph only after the exercise.
 
 Invented candidates with stipulated findings. Every candidate fails at least one gate; that is the exercise. The room finds the failure before you reveal it.
 
@@ -24,4 +26,4 @@ Synthesis: small interface, persisted per-item state, shared admission, deadline
 
 There is no automatic winner from a persona label, and the judge may reject the room.
 
-Council split (stipulated, for the reveal after the gates): three judges from different models score each candidate. Minimalist: all three name the lost provider IDs, near-total overlap. Security/performance: all three name the duplicate replay. Maintainer: one judge catches the deadline gap, one flags the outbox ordering, one passes it. Low overlap is the signal; the maintainer candidate is the one that gets the human's afternoon, not because it scored worst but because the council could not agree on why.
+Council split (stipulated, for the reveal after the gates): five judges from different models score each candidate. Minimalist: all five name the lost provider IDs, near-total overlap. Security/performance: all five name the duplicate replay. Maintainer: two judges catch the deadline gap, two flag the outbox ordering, one passes it. Low overlap is the signal; the maintainer candidate is the one that gets the human's afternoon, not because it scored worst but because the council could not agree on why.

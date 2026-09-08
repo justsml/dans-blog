@@ -2,7 +2,7 @@
 
 Research run: 2026-09-04  
 Horizon: 2026-09-04 through 2028-03-04  
-Talk: **Cry Me a Free Tier**  
+Talk: **Buy Me a Free Tier**  
 Default CFP title: **Building AI Products That Survive the End of the Free Tier**
 
 This packet supports discovery and preparation only. No organizer was contacted and no proposal, registration, payment, publication, or reminder was created.

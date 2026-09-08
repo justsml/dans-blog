@@ -1,6 +1,6 @@
 # Buy Me a Free Tier: evidence and claim boundaries
 
-Verified 2026-09-04; Free Tier section reverified 2026-09-06. The user’s six-concept brief controls the argument. The material below supports factual claims; proposed architectures, principles, synthetic fixtures, and conditional market mechanisms are labelled as such.
+Claims rechecked or narrowed 2026-09-08; see the [finding-by-finding correction record](../../reviews/corrections-2026-09-08-free-tier.md). No public Anthropic prospectus was verified; check the live filing record before using new contract detail. The material below supports factual claims; proposed architectures, principles, synthetic fixtures, and conditional market mechanisms are labelled as such.
 
 Rewritten and retitled 2026-09-06. The full claim ledger, including every economic concept with its primary source and its stated boundary, lives in the [evidence bank](evidence-bank.md) — that file is authoritative and this section no longer duplicates its table. Also there: the slide-4 dated announcements and their recheck note, and the slide 10, 11 and 13 arithmetic worked out for a challenge from the floor.
 

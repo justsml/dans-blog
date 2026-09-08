@@ -44,13 +44,13 @@ TALK_NAMES = {
     "skeptic-education": "A Skeptic's Guide to Surviving AI in Education",
     "evidence-learning": "Outsmart Your Lying, Cheating Students",
     "failure-improvement": "Automating Improvement From Failure",
-    "adaptive-systems": "Adaptive, agentic apps",
-    "free-tier": "Cry Me a Free Tier",
-    "product-engineering": "The Future of Product Engineering",
-    "retrieval": "From RAGs to Retrievals",
-    "benchmarks": "Stop Looking at My Benchmarks",
-    "parallelization": "Rethinking Parallelization in the Agentic Era",
-    "judgment": "Code Is Cheap. Judgment Is Expensive.",
+    "adaptive-systems": "Conjure Exactly Enough",
+    "free-tier": "Buy Me a Free Tier",
+    "product-engineering": "Break the Mirror on Purpose",
+    "retrieval": "Three Search Methods in a Fundable Trenchcoat",
+    "benchmarks": "Stop Looking at My Benchmarks… Get Your Own!",
+    "parallelization": "Compute, Please (and a Receipt)",
+    "judgment": "Turn Your Thinkin' Tokens Up to 11",
 }
 
 

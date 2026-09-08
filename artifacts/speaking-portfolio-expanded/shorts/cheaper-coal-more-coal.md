@@ -2,7 +2,7 @@
 
 3 min · video · parent: [Buy Me a Free Tier](../talks/free-tier/index.md), slide 6
 
-Token prices fell off a cliff. Your invoice climbed one. You're not being gouged; you're being efficient, in the way that ends with more smokestacks.
+Token prices fell off a cliff. Your invoice climbed one. The price alone cannot tell you why. Start with the consumption terms.
 
 ## Hook
 
@@ -10,11 +10,11 @@ Token prices fell off a cliff. Your invoice climbed one. You're not being gouged
 
 ## Beat: the paradox, and the highway
 
-Efficiency made coal useful for more things, so people used it for more things. The transport version: add a lane to a congested highway and you get more traffic. Duranton and Turner measured it across US cities; elasticity roughly one. Ten percent more road, ten percent more driving. Induced demand.
+Efficiency made coal useful for more things, so people used it for more things. Backfire is possible, not a law; the coal example does not establish a token elasticity. Backfire is possible, not a law; the coal example does not establish a token elasticity. The transport version: add a lane to a congested highway and you get more traffic. Duranton and Turner measured it across US cities; elasticity roughly one. Ten percent more road, ten percent more driving. Induced demand.
 
 ## Beat: your bill
 
-Spend = price × jobs × calls per job × tokens per call. The price fell. Cheapness moved every other term on the right: longer context, more retries, three parallel branches, frontier by default. Everyone here has lost that conversation with a CFO. You didn't do anything wrong. Falling price and rising bill coexist fine, as long as customer value grows faster, and almost nobody measures that ratio.
+Spend = price × jobs × calls per job × tokens per call. The price fell. Cheapness can move every other term on the right: longer context, more retries, three parallel branches, frontier by default. Measure the terms before assigning a cause. Falling price and rising bill coexist fine, as long as customer value grows faster, and almost nobody measures that ratio.
 
 ## Landing
 
@@ -26,4 +26,4 @@ Two ribbons crossing: price falling, consumption rising. Under it: `spend = pric
 
 ## Source
 
-Jevons (1865), The Coal Question, ch. VII. Duranton and Turner (2011), The Fundamental Law of Road Congestion, AER 101(6). Epoch AI (2025), LLM inference price trends; recheck before delivery.
+Jevons (1865), The Coal Question, ch. VII. Duranton and Turner (2011), The Fundamental Law of Road Congestion, AER 101(6). Epoch AI (March 2025, data ending February 2025), LLM inference price trends; recheck before delivery.

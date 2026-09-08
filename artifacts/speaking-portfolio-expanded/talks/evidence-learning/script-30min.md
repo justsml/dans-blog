@@ -1,19 +1,19 @@
 # Outsmart Your Lying, Cheating Students: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The sculptor (slide 12) is cut; its bookend line survives in the close. Reconstruction runs at four minutes with the kit. Slide 11 needs three minutes: both of its paragraphs are long.
+Read prose; perform delivery notes. Sources and screen text are not extra spoken copy. Timings include interactions and transitions, exclude Q&A. Story prompts are optional substitutions within the spoken budget, never additions. Slide IDs stay stable; reconstruct on 7 before debriefing on 6. See [timing verification](timing.md).
 
 ## 00:00 to 02:00: slide 1, The cat is out of the bag
-
-On screen:
 
 > Horse out of the barn. Cat out of the bag.
 > Math class survived the Casio watch.
 
-The historical parallels have been beaten to death, so one and done: the calculator panic. Specifically the Casio calculator watch. Math class was dead. The kid sitting next to the Casio owner didn't even need one.
+Math class survived the Casio calculator watch. The kid next to its owner didn't even need one.
 
-Confession: I may have used one or two on an assessment. But we're not here for that. What I did was wholesome. These kids are phoning it in. Not even trying. Infuriating, right?
+Confession: I may have used a calculator watch on an assessment. But we're not here for that. What I did was wholesome. These kids are phoning it in. Infuriating, right?
 
-Our calculator-clutching ancestors had to write a real trajectory into the curriculum. So do we. Everything today is authored fixtures, a rubric I'm proposing, and one exercise that shows evidence being collected. Here's the plan: what we stop doing, what we protect, what we teach, and three ways to actually outsmart them.
+Nothing here drops an integrity case. Keep your integrity process; just don't let it do your lesson planning. These are authored examples and a proposed rubric, not measured learning gains.
+
+We have to teach independent competence and competent tool use, then say which one each checkpoint measures.
 
 Story: The submission that made you realize the grade and the understanding had come apart.
 
@@ -21,38 +21,26 @@ Delivery: Let the confession land before the pivot. The laugh is the title doing
 
 ## 02:00 to 04:00: slide 2, The doom loop
 
-On screen:
-
 > Proctoring fails. The pop quiz proves what you already knew.
 > Getting away with it is the reward.
 > Students are the original adversarial actors.
 
-It can feel like you've lost. The proctoring tools fail readily. What still works is the cold call or the pop quiz, and all it proves is that the student can't hit the first rung of Bloom's taxonomy. Can't recall it. Can't spell it. That crushes you, and it cements the loop: the student learns they can cheat through, and the reward is getting away with it. Even when caught, there's no stigma for using something as common as a phone.
+It can feel like you've lost. The cold call proves the student cannot recall it. The reward for the last assignment was getting away with it. Block the chatbot and they share a VPN from a phone. Life finds a way. Students are the original adversarial actors.
 
-Pummeling them with gotcha quizzes proves what you already knew: Johnny ain't learning too good. Block the chatbot on the network and they share a VPN from a phone. Life finds a way. Students are the original adversarial actors.
-
-The detector is the same trap in software. Liang and colleagues found the detectors they tested flagged non-native English writers at alarming rates. And even if a detector were perfect, it answers the wrong question. Who typed the sentence is not whether the kid can do the thing. And if your assessment depends on knowing who typed a paragraph, the detector has become part of your curriculum.
+In Liang's 2023 study, seven detectors falsely flagged about 61% of 91 human-written TOEFL essays, on average. A vocabulary-enhancing rewrite cut that to about 12%. Historical tools and essays, not today's product accuracy. If your assessment depends on who typed a paragraph, the detector has become part of your curriculum.
 
 Source: Liang et al. (2023), [GPT detectors are biased against non-native English writers](https://doi.org/10.1016/j.patter.2023.100779), Patterns.
 
-## 04:00 to 05:30: slide 3, Pencil first. Then the tool
+## 04:00 to 05:30: slide 3, Delegate. Augment. Preserve.
 
-On screen:
+> Delegate the busywork. Augment the practice. Preserve the target capability.
+> The same task can change category with the objective.
 
-> Pencil, paper, whiteboard, peers: in the curriculum, with the reason
-> Then, same document: "and we are going to teach you the tool"
+Write three verbs beside the checkpoint. Delegate: let the model format the table when formatting is not the skill. Augment: let it ask a diagnostic question while the learner works. Preserve: ask for an independent explanation when independent reasoning is the objective.
 
-Write the trajectory down. Where does handwriting live, and why: the spatial and motor work a pencil activates, the argument you have out loud with a peer, the cohort you find by talking through a problem. Build the environment where those foundations still happen with no model in the room.
-
-Then, in the same document, tell students you're going to teach them the tool. On purpose. Independent competence and competent tool use both belong in a course. They need different evidence, and every checkpoint should say which one it's measuring.
-
-Source: Koedinger and Aleven (2007), [Exploring the Assistance Dilemma in Experiments with Cognitive Tutors](https://doi.org/10.1007/s10648-007-9049-0), Educational Psychology Review 19(3), 239 to 264.
-
-Bridge: Koedinger and Aleven called this the assistance dilemma in 2007 - too much help and they coast, too little and they flounder - and nobody has closed it.
+These are choices about this learner at this stage, not permanent labels for activities. The calculator can be delegated in a source-analysis lesson and withheld in an arithmetic checkpoint. Pencil, whiteboard, and peers still belong in the curriculum; say why. Then promise to teach the tool on purpose. Otherwise students learn the policy from whoever knows the best workaround.
 
 ## 05:30 to 07:00: slide 4, The polished answer with a hole in it
-
-On screen:
 
 > "A 20% rise and a 20% fall cancel."
 > The prose is clean. The denominator is wrong.
@@ -65,131 +53,96 @@ Delivery: Ask the room what the final answer alone would have told you. One answ
 
 ## 07:00 to 09:30: slide 5, Outsmart move one: make verification feel like cheating
 
-On screen:
-
 > "Take a picture of these hundred problems and make the model do them."
 > A 1 that looks like a 7. A smudge that turns an 8 into a 9.
 > "You didn't check the results? Johnny, you're not gonna make it."
 
 The highest-leverage assignment I know lets students feel like they're cheating. Photograph the sheet, feed it to the model, submit. The trap is in the sheet: a stroke that reads as either digit, a smudge. The wrong answers come back and the lesson teaches itself. You were supposed to check.
 
-That one experience beats every ban, filter and lockdown. Hand the prompt out like a worksheet: "paste these instructions as your first message." Expect a recorded screen or an exported session. Older students get to experiment as the objective itself: the writing challenge, the rhyming challenge, whatever riddles the English teachers love. The constraint that keeps it honest is personalization. Narrate it from summer camp. Reference this week's unit. Meet a criterion the model can't know.
-
-Privacy rides along for free. If you share Lake Tahoe, maybe not the photo of your grandparents' place on the water that any model can geolocate. Nobody is teaching students how these systems actually work. This assignment does.
+That experience teaches the checking step a ban never gets to rehearse. Hand the prompt out like a worksheet: "paste these instructions as your first message." Expect a recorded screen or an exported session. Older students get to experiment as the objective itself: the writing challenge, the rhyming challenge, whatever riddles the English teachers love. The constraint that keeps it honest is personalization. Narrate it from summer camp. Reference this week's unit. Meet a criterion the model can't know.
 
 Delivery: Thirty seconds: what would the smudge be in your subject? Take two.
 
-## 09:30 to 11:00: slide 6, Ration the help
+## 09:30 to 13:30: slide 7, Reconstruct the mistake
 
-On screen:
+> $100 → +20% → −20%. Which base does the discount use?
+> Now: $80 → +25% → −20%
+
+Reveal the wrong argument and let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it. Then write 1.2 × 0.8 = 0.96: a 4% loss at any starting price.
+
+Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.25 times 0.8 is 1. That breaks the shortcut the room just formed, "opposite changes never cancel," and that's the point. A transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example.
+
+Delivery: The worked-example notes contain the five scripted turns. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: state the $100 answer, then run the $80 transfer item live.
+
+## 13:30 to 15:00: slide 6, Ration the help
 
 > "Which price does the discount use?" Learner: "The original $100."
 > Clarify → conceptual hint → missing step → part of an example → full explanation → fresh reconstruction
 
-Two scripted turns. The diagnostic question finds where the base got lost. The tutor neither praises the error nor dumps the solution. Attempt-first can't punish a kid who can't begin; clarifying a term or offering a parallel example may be the right first move.
+Two scripted turns. The diagnostic question finds where the base got lost. Tutor A says, "Great point!" Tutor B asks, "Older than what?" That is the history version: one rewards confidence, the other finds the missing comparison. Our percentage tutor asks which price. Attempt-first can't punish a kid who can't begin; clarifying a term or offering a parallel example may be the right first move.
 
-Then the ladder. Clarification: the second change acts on the new price. Conceptual hint: find the current base. Missing step: the intermediate $120. Partial example: multiply a different amount by 0.8. Full explanation, then a fresh reconstruction later. Write down which rung you gave, because supported and independent performance are different evidence. Never as a moral failure.
-
-## 11:00 to 15:00: slide 7, Reconstruct the mistake
-
-On screen:
-
-> $100 → $120 → $96. Why does the second base change?
-> Now: $80 → +25% → −20%
-
-Run the scripted tutor turns — from the kit or read off the card — then go live. Reveal the wrong argument. Let the room find the base. Reveal $120 only after the diagnostic question. Ask for $96 and one sentence explaining it.
-
-Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.25 times 0.8 is 1. That breaks the shortcut the room just formed, "opposite changes never cancel," and that's the point. A transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example.
-
-Delivery: The worked-example notes have the five scripted turns. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: use only the $100 sequence and state the $80 item.
+Here is what we just did, in order: the ladder. Clarification: the second change acts on the new price. Conceptual hint: find the current base. Missing step: the price after the increase. Partial example: the same discount on a different amount. Full explanation, then a fresh reconstruction later. Write down which rung you gave, because supported and independent performance are different evidence. Never as a moral failure.
 
 ## 15:00 to 17:30: slide 8, Score the reasoning. Write it down
 
-On screen:
+> Base identified 0–2 · Calculation justified 0–2 · Transfer explained 0–2
+> Help in its own column. Record: concept · observed words · support · next check.
 
-> Base identified 0–2 · Calculation justified 0–2 · Transfer explained 0–2 · Help in its own column
-> Record: concept · what they said · what help they got · next check
-> Never "weak at reasoning." Never "likely cheated."
+Zero: the wrong base persists. One: the right number without explanation. Two: the learner explains the current amount. Help goes in its own column. Asking a question costs nothing.
 
-Zero: the wrong base persists. One: the right number, no explanation. Two: the learner explains the current amount. Help goes in its own column so a human can read it, and asking a question costs nothing.
+Write four lines: changing percentage base; used the original amount; conceptual hint; new item after practice. Keep what they said separate from what a model inferred.
 
-The record is four lines. Concept: changing percentage base. Observed: used the original amount for the second change. Support: conceptual hint. Next check: a new item after practice. Keep what the learner said separate from what a model inferred. Follow-ups come from a blueprint, not chatbot curiosity: "does reversing the multipliers change the result?" probes structure; a harder question is not a fair comparison.
+Bastani's 2025 high-school maths trial found unrestricted GPT improved practice but hurt later unaided performance. Teacher-designed safeguards mitigated the harm. Kestin's 2025 Harvard physics crossover, with 194 students over two weeks, found a designed at-home GPT-4 tutor beat active learning on immediate tests. No delayed retention test. Record the conditions; these studies tested different instruction.
 
-Bastani and colleagues found supported performance and later unaided performance can diverge, and the safeguards that matter come from teachers. So record the conditions, and include an independent check when independence is the objective. A mismatch needs a human to interpret it.
-
-Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. The [correction](https://doi.org/10.1073/pnas.2518204122) (August 2025) fixes an author affiliation; no result changed.
-
-Source: Soderstrom and Bjork (2015), [Learning versus performance: an integrative review](https://doi.org/10.1177/1745691615569000), Perspectives on Psychological Science 10(2), 176 to 199.
-
-Bridge: Soderstrom and Bjork reviewed fifty years of evidence that performance during practice and learning that lasts come apart routinely; supported and unaided go in separate columns.
+Source: [Bastani (2025)](https://doi.org/10.1073/pnas.2422633122); [Kestin (2025)](https://pmc.ncbi.nlm.nih.gov/articles/PMC12179260/).
 
 ## 17:30 to 20:00: slide 9, Outsmart move two: make them say it out loud
-
-On screen:
 
 > Recall errors and reading errors are different animals
 > Small groups, speaking: the incentives reset
 > Voice is biometric. Offline. Zero retention. Age-appropriate. Written alternative.
 
-Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Spoken language carries enough tells to sort likely from unlikely.
+Answering from memory and reading a model's output aloud produce different mistakes. The reader falls behind as the text wraps and jumps. They mispronounce a word they'd never have chosen. Those mistakes give you a follow-up question, not a reliable authorship test; language fluency and disability also affect delivery.
 
 Small groups, speaking, in class: that resets the table. It adds social pressure against cheating and hands you knobs on an incentive structure that today is a magical cheating genie. Not foolproof. A student can build an agent told to seem dumb at first and then learn. Fine. We're changing incentives, not buying certainty.
 
-Now the care, and it's real. A student's voice identifies them and can be cloned. Fingerprinting voices is plausible technology; that's a reason for caution, not a feature. Newer offline models claim to detect frustration and distress in speech, and offline is what lets them meet zero-retention, no-sharing district rules on modest hardware. Any student-facing voice tool gets maximum privacy, a written alternative, age-appropriate use only, and a retention rule written before the first recording. A replay is context, never proof.
+Now the care, and it's real. A student's voice identifies them and can be cloned. Fingerprinting voices is plausible technology; that's a reason for caution, not a feature. Running locally can reduce transmission, but does not establish zero retention: check recordings, logs, backups, and access before use. Any student-facing voice tool gets maximum privacy, a written alternative, age-appropriate use only, and a retention rule written before the first recording. A replay is context, never proof.
 
 ## 20:00 to 22:00: slide 10, Outsmart move three: read all 300 transcripts
 
-On screen:
+> AI time: guided by you, or alone with the model?
+> Five linked excerpts; two random checks; ten teacher minutes.
 
-> Teacher talk · student talk · think time · AI time
-> Guided by you, or alone with the model?
-> "Show me five students who took a path worth showing the room."
+Count AI time alongside teacher talk, student talk, and think time. A model pass across 300 transcripts can nominate paths worth showing tomorrow. Give the teacher links to five excerpts and two randomly selected transcripts to check what the summary missed. Budget ten teacher minutes, and time the model pass separately. This is a proposed pilot budget, not measured throughput. If review exceeds it, sample less or fund the work.
 
-You already count who's talking, how much silence there is, whose engagement it is. Add one factor: AI time. How much of it did you guide, and how much was a student alone with the model.
-
-Then the view you have never had. Every transcript from a class of 30 or a course of 300, and a qualitative pass run by the model. Show me the five students who opened a line of inquiry I didn't teach. Show me the one who reached the answer by a path worth putting on the board tomorrow. The same pass surfaces the kid who typed exactly the right terms, or pasted a big block from somewhere. Before you conclude anything: a big block also looks like voice-to-text. Look first.
-
-Source: Skitka, Mosier and Burdick (1999), [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252), International Journal of Human-Computer Studies 51(5), 991 to 1006.
-
-Story: A transcript that showed you a path to the answer you would not have taught.
-
-Bridge: know what you are up against when you read a model's summary instead of the transcripts.
+A pasted block may be voice-to-text. Look before concluding. A summary that is right often enough can make you stop checking. It tells you where to start looking, never where to stop.
 
 ## 22:00 to 25:00: slide 11, Write the objective to the agent
 
-On screen:
-
-> "You're my tutor. Don't give me answers. I'm here with three classmates."
-> Photograph the whiteboard; the objective is the system prompt
+> Photograph the whiteboard; the objective is the system prompt.
 > Push the practice run first. Then reward the kid who asks for it.
 
-Seen in the wild: students telling a voice assistant not to give them answers, then arguing about Lincoln with it for twenty minutes. So give it the objective. Have them photograph the whiteboard. My prediction is that we end up writing objectives on the board addressed to the agent: "Tutor bot, help my students with..." It holds the rigor you set, explores the stretch goals, fills the remedial gaps, and tells you, the aides and the parents what it saw. Write it in whatever objective process you already use; Lemov's 4Ms work fine.
+Here is a proposed history exercise: "You're my tutor. Don't give me answers. I'm here with three classmates, talking about Lincoln." Give it the objective by photographing the whiteboard. My prediction: teachers will write objectives addressed to the agent. The prompt should preserve the work the learner needs to do; test that it does.
 
-The other half is discipline. At first, the agent pushes: want a practice run, flashcards, a pop quiz? Then it rewards the student who asks before the test unprompted, and it names the connection distracted students miss: "five flashcards an hour before produced a 98; your last three tests had no prep." Made-up numbers, real mechanism. As someone with ADHD, an assistant that reorders my day and says "you bombed the section quizzes after that reading, take a twenty-minute walk" is not a luxury. It's applied cognitive science with a channel toward wellbeing.
+The other half is study discipline. First offer the practice run. Then notice when the student asks for it unprompted. A message connecting flashcards to a better result might help the student plan tomorrow, but one good score does not establish what caused it.
 
-Story: The student who told the tutor not to give answers.
-
-Bridge: the same tool that lets a kid phone it in is the one that hands a sculptor the clay; that story is in the long version.
+Bridge: access belongs inside the design too. A friend discovered they were a talented sculptor after school; no car at home meant never carrying wet clay on the bus. Check devices, paid access, language needs, and a written alternative.
 
 ## 25:00 to 28:00: slide 13, Redesign one checkpoint this week
-
-On screen:
 
 > Capability → task → the smudge → follow-up → permitted help → rubric
 > Minutes to review a class set
 > Neighbor challenges one hidden assumption
 
-Pairs, three minutes. Write the capability, the task, the smudge that makes verification feel like cheating, one purposeful follow-up, the help you'll permit, and the interpretation you could defend to a parent. Then estimate the minutes to review a class set, because a richer assessment nobody has time to read is a worse assessment. Let the model draft the follow-ups and summarize with links to the excerpt; grading, accusations and anything sensitive stay with you.
+Pairs, one minute. Write the capability, the task, the smudge that makes verification feel like cheating, one purposeful follow-up, the help you'll permit, and the interpretation you could defend to a parent. Then estimate the minutes to review a class set, because a richer assessment nobody has time to read is a worse assessment. Let the model draft the follow-ups and summarize with links to the excerpt; grading, accusations and anything sensitive stay with you.
 
 Then your neighbor challenges one hidden assumption: does this also measure fluency, paid-tool access, or comfort speaking under pressure? TEQSA's guidance backs contextual, multiple approaches. This worksheet is our version of it. Output: a sketch you can review, then a small pilot.
 
 Source: TEQSA (2023), [Assessment reform for the age of artificial intelligence](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence).
 
-Delivery: Three minutes writing, one minute of challenge. Call time on the challenge, not the writing.
+Delivery: One minute setup, one minute writing, one minute of challenge. Call both transitions; the four-minute slot includes the setup.
 
 ## 28:00 to 30:00: slide 14, A purpose-built machine
-
-On screen:
 
 > Explain it. Challenge it. Change it. Apply it. Defend it.
 > Too much power to hold casually. Prove the value constantly.
@@ -198,6 +151,7 @@ Stop trying to prove who typed the sentence. Ask whether the student can explain
 
 The kid next to the Casio owner didn't need a watch. The kid with no car never touched the clay. The same tool that lets Johnny phone it in is the one that can hand a sculptor the clay. Which one happens is a design decision, and it's ours.
 
-This is a great deal of data and a great deal of power. Too much to hold casually. The value has to be proven, constantly, for educators and students, or the data should not exist. No ambling through conversations dispensing answers. A purpose-built machine. There are technical ways to build one; come find me after.
+This is a great deal of data and a great deal of power. Too much to hold casually. The value has to be proven, constantly, for educators and students, or the data should not exist. No ambling through conversations dispensing answers. A purpose-built machine. AI scales instruction more easily than it scales wisdom. There are technical ways to build one; come find me after. Don't let the detector write your curriculum.
 
 Delivery: Land on "come find me after." Stop.
+

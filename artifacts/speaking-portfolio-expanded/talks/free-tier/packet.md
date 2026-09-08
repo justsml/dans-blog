@@ -2,7 +2,7 @@
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
-Outline: [40 min](index.md). Current screen and handout PowerPoints are linked from the [deck index](../README.md).
+Outline: [40 min](index.md). 
 
 ## Titles
 
@@ -13,29 +13,27 @@ Outline: [40 min](index.md). Current screen and handout PowerPoints are linked f
 
 ### 50 words
 
-Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have described your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
+Cheap inference rewards habits before anyone measures their value. This talk follows those incentives from a design review to an invoice, using MoviePass, economics and a synthetic workload. Learn to compute cost per accepted outcome, inventory expensive dependencies, and bring three prices to the next decision about what to build.
 
 ### 100 words
 
-Engineers lose the cost argument in budget meetings because the strongest thing we can say is "it feels wasteful," and the invoice looks fine. Economics has precise names for it. This talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option. Along the way it separates four legitimate reasons a price can sit below cost and the observation that distinguishes them, reframes enormous compute commitments as moves in a war of attrition rather than disclosures about margin, and runs a synthetic workload through a price sweep with the volume caveat attached.
+Cheap inference rewards habits before anyone measures their value. A frontier call replaces a lookup; another retry becomes the default; a customer receives an unlimited promise. This talk asks what those decisions bought. MoviePass opens the case, followed by eight economic terms for the budget meeting. A synthetic workload shows how declining acceptance can erase a cheaper input, and why optimization depends on volume. The close inventories provider-specific assets and prices the work of keeping an alternative usable. Bring three prices to the next design review: today, without the offer, and the highest price the product can survive paying profitably.
 
 ### 250 words
 
-In 2017 MoviePass sold one movie a day for $9.95 while tickets averaged $9.11. What did that build, and what survived the offer? The habit did; the company did not. Swap the ticket for a token.
+In 2017 MoviePass offered one movie a day for $9.95 while the average ticket cost $8.97. Cheap access made another visit easy. In software, cheap inference can make another call, retry or unlimited promise easy. Don't fear training the model, worry how it's training you.
 
-Nobody outside a provider knows its margins, and this talk never guesses one. It borrows instead from a century and a half of economists who worked on the same structure in coal, parking, highways and car factories, and hands the room their vocabulary.
+This talk treats that training as an incentive analogy and asks what the repeated decisions bought. Eight economic terms supply vocabulary without pretending that a vendor's price discloses its margins. The worked example is a synthetic workload: a lower acceptance rate can cost exactly as much as doubling inference prices, under a stated cost split. The arithmetic fits on one slide.
 
-Four respectable explanations exist for a price below cost: penetration pricing, a loss leader inside a two-sided bundle, predation (which in US law requires a real probability of recoupment), and genuine efficiency. The price cannot tell you which. What happens at renewal can. The enormous compute commitments everyone quotes are not cost disclosures; they are Schelling commitments, moves in a war of attrition in which the customer is not a player but the terrain.
+Then inventory the prompts, evals, fine-tunes and customer promises that make switching expensive. Price the work of keeping an alternative usable against the exposure. Leave with three prices for the next design review: today, without the offer, and the highest rate you can survive.
 
-Shoup's parking supplies the mechanism: a hidden price makes demand look infinite, the environment reorganizes, and repealing the rule does not remove the asphalt. Jevons and induced demand explain why a falling unit price and a rising bill are expected rather than paradoxical. Moral hazard explains why the engineer choosing the architecture never sees the meter.
-
-The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. The close prices reversibility as a real option and leaves three numbers for the next design review.
+The room does the division before discussing architecture. Failed attempts still consume resources, and recovery work belongs in the numerator. A four-row price sweep holds acceptance fixed, then asks which assumption deserves testing first. At low volume, the sensible answer may be to keep the existing system and cancel the optimization project. At high volume, the same change may pay for itself quickly. Neither answer requires guessing when an offer ends. Participants identify one dependency to replace, estimate the hours, and locate the person who owns that decision. The goal is a better design review, with costs visible while choosing.
 
 ## Learning outcomes
 
 Attendees will be able to:
 
-1. Name the four explanations for a below-cost price and the observation that distinguishes them, instead of arguing about vendor margins.
+1. Name four explanations for a low price and observations that help distinguish them, instead of arguing about vendor margins.
 2. Compute cost per accepted outcome, convert an acceptance rate into a price multiplier, and state the volume at which an optimization is worth funding.
 3. Inventory their relationship-specific assets and price reversibility as an option against their measured exposure.
 
@@ -52,7 +50,7 @@ Engineering leaders, architects, and founders making build decisions on top of L
 
 ## Not a product pitch
 
-The talk names AWS credit terms, Epoch AI's public data, and dated Microsoft and Amazon announcements as sources. It recommends no provider, no cost tool, and no consulting service. The calculator is offline and vendor-free.
+The talk uses historical research, a dated Microsoft commitment and a synthetic workload. Optional AWS credit and Amazon references remain in the evidence bank. It recommends no provider, no cost tool, and no consulting service. The sweep is a four-row table on a slide; no tool or vendor data is required.
 
 ## References
 
@@ -66,10 +64,10 @@ The talk names AWS credit terms, Epoch AI's public data, and dated Microsoft and
 - Rochet, J-C. and Tirole, J. (2003). Platform Competition in Two-Sided Markets. *Journal of the European Economic Association* 1(4).
 - Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (1993).
 - Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025). [LLM inference prices have fallen rapidly but unequally across tasks](https://epoch.ai/data-insights/llm-inference-price-trends).
-- Amazon Web Services. [AWS Activate credits](https://aws.amazon.com/startups/credits/) (the offer shown on slide 4) and [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/).
+- Amazon Web Services. [AWS Activate credits](https://aws.amazon.com/startups/credits/) (optional evidence-bank reference) and [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/).
 - Microsoft, [The next chapter of the Microsoft–OpenAI partnership](https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/), 28 October 2025. Amazon, [Amazon invests an additional $5 billion in Anthropic](https://www.aboutamazon.com/news/company-news/amazon-invests-additional-5-billion-anthropic-ai), April 2026.
 
-## Audience-specific abstracts (100 words each)
+## Audience-specific abstracts (approximately 100 words each)
 
 ### Engineering practitioner
 
@@ -77,12 +75,12 @@ Your architecture already learned what inference costs, and it learned from a pr
 
 ### Engineering leadership and product
 
-Nobody outside a provider knows its margins, and this talk does not guess. It asks a sharper question: what kind of counterparty are you dealing with, and what have you posted as collateral? Four legitimate explanations for a below-cost price, and the observation at renewal that distinguishes them. The enormous compute commitments as Schelling commitments rather than cost disclosures. Then Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem. The close prices reversibility as a real option against measured exposure and gives leaders three numbers to demand in any AI investment review.
+Nobody outside a provider knows its margins, and this talk does not guess. It asks a sharper question: what kind of counterparty are you dealing with, and what have you posted as collateral? Four possible explanations for a low price, and observations at renewal that help distinguish them. The enormous compute commitments as Schelling commitments rather than cost disclosures. Then Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem. The close prices reversibility as a real option against measured exposure and gives leaders three numbers to demand in any AI investment review.
 
 ### Education and instructional design
 
-Schools and edtech products are adopting AI tools priced at promotional rates. This adaptation asks what happens to a curriculum, a procurement decision, or a student expectation built on a price that may not hold. It supplies the mechanism without jargon: a hidden cost does not vanish, it relocates; cheaper access produces more usage rather than less; and an environment reorganized around a free input does not snap back when the price returns. Then a simple cost-per-successful-outcome model any program office can run. No engineering background needed. You leave with three prices to ask a vendor for, before signing.
+Schools and edtech products are adopting AI tools priced at promotional rates. This adaptation asks what happens to a curriculum, a procurement decision, or a student expectation built on a price that may not hold. It supplies the mechanism without jargon: a hidden cost does not vanish, it relocates; cheaper access can encourage more usage; and an environment reorganized around a free input does not snap back when the price returns. Then a simple cost-per-successful-outcome model any program office can run. No engineering background needed. You leave with three prices to ask a vendor for, before signing.
 
 ### Executive and general technology
 
-Free parking was never free; its cost moved into rents, land, and the businesses that never opened. Something similar is happening in software, and it shows up in architecture, contracts and hiring plans long before it shows up on an invoice. This talk explains the mechanism without code and without a price forecast, distinguishes four legitimate reasons a price can sit below cost, and reframes the industry's headline compute commitments as strategic moves rather than accounting disclosures. Leaders leave with three numbers for any AI investment review: what we pay today, what we pay without the offer, and what we could survive paying.
+Free parking was never free; its cost moved into rents, land, and the businesses that never opened. Something similar is happening in software, and it shows up in architecture, contracts and hiring plans long before it shows up on an invoice. This talk explains the mechanism without code and without a price forecast, distinguishes four possible explanations for a low price, and reframes the industry's headline compute commitments as strategic moves rather than accounting disclosures. Leaders leave with three numbers for any AI investment review: what we pay today, what we pay without the offer, and what we could survive paying.

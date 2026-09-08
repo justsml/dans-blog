@@ -1,4 +1,4 @@
-# Research evidence packet: Code Is Cheap. Judgment Is Expensive.
+# Research evidence packet: Turn Your Thinkin' Tokens Up to 11
 
 Research run date: 2026-09-04  
 Horizon: 2026-09-04 through 2028-03-04  

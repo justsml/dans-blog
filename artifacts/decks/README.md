@@ -2,6 +2,8 @@
 
 Hand-authored reveal.js decks, one per talk, in [`public/decks/<talk>/index.html`](../../public/decks/). Every slide is a diagram, a comparison, or an illustration built for that idea. No generator, no template, no build step: the file you edit is the file you present. Speaker notes sit in each slide's `<aside class="notes">`, copied from the talk's outline.
 
+Runtime files live in [`public/decks/vendor/reveal/`](../../public/decks/vendor/reveal/README.md), independently of the retired generated-deck assets. A hand-authored deck must not import the old `public/talks/assets/deck.js` or `deck.css` wrappers. When a deck improves a heading or a claim, back-port it to the canonical outline in the same edit; record every diagram-only number in that talk’s evidence bank.
+
 ## Each deck gets its own design
 
 Before writing a deck, write its design brief and keep it at the top of the deck file as a comment. The brief names, for this talk and this audience:
@@ -16,7 +18,7 @@ No bullet lists, no numbered rows, no eyebrow labels, no meta strings joined wit
 
 ## Present and check
 
-`bun run dev`, then <http://localhost:4242/decks/index.html>. Decks also open from disk. `?all` shows every fragment at once. S opens speaker view.
+Check <http://localhost:4242/decks/index.html> first; start `bun run dev` only if no server is responding. Decks also open from disk. `?all` shows every fragment at once. S opens speaker view.
 
 Shorter routes: do not build separate 15- and 30-minute decks. The cut lists are in each talk's adaptation files; hide the skipped slides in speaker preparation.
 

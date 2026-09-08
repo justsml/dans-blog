@@ -1,6 +1,6 @@
 # The Barrel-of-Monkeys Maneuver
 
-7 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/index.md), slide 12 · pairs with [The Council of Guards](council-of-guards.md)
+7 min · lightning · parent: [Compute, Please (and a Receipt)](../talks/dynamic-scaling/index.md), slide 12 · pairs with [The Council of Guards](council-of-guards.md)
 
 Lead with parallel generation on purpose. You are adding a controlled section of chaos, and the next stage has to handle it. That's the design, not the bug.
 
@@ -10,11 +10,11 @@ Yesterday's axiom: don't do the work twice. Today: a second draft costs cents, i
 
 ## Beat: why you'd want the chaos (0:45)
 
-Four reasons, and they're different architectures. **Race:** you want the fastest acceptable answer, so fan out and take the first one that passes the gate. **Synthesize:** you want the best parts of several, so a frontier model reads all the drafts (input, cheap) and writes one coherent output (output, expensive, once). **Rank:** you want more candidates for the judges so the best whole answer goes downstream. **Catch:** in law, medicine, anything with extensive specific rules, the mistake you fear appears in one output out of ten, and the only way to see it is to have ten.
+Four reasons, and they're different architectures. **Race:** you want the fastest acceptable answer, so fan out and take the first one that passes the gate. **Synthesize:** you want the best parts of several, so a frontier model reads all the drafts (input, cheap) and writes one coherent output (output, expensive, once). **Rank:** you want more candidates for the judges so the best whole answer goes downstream. **Catch:** in law, medicine, anything with extensive specific rules, the mistake you fear appears in one output out of ten, and sampling more drafts gives you more chances to see it, without a guarantee.
 
 ## Beat: the monkeys are cheap (2:00)
 
-Models at a hundredth or a thousandth the price of the frontier can generate alternatives in a loop. Some of them need a tool-calling agent with file operations, search, chunked reads, edits, git, which means a sandbox and somebody's cloud. Others single-shot it fine. That's your first architecture decision: how much effort do you want in a system that keeps improving over time, versus one you can retune at runtime without touching the codebase. Neither is wrong. Both cost something different.
+Choose cheaper models against an explicit generation budget, then price the entire loop. Some of them need a tool-calling agent with file operations, search, chunked reads, edits, git, which means a sandbox and somebody's cloud. Others single-shot it fine. That's your first architecture decision: how much effort do you want in a system that keeps improving over time, versus one you can retune at runtime without touching the codebase. Neither is wrong. Both cost something different.
 
 ## Beat: single-shot generations are tools (3:15)
 
@@ -22,7 +22,7 @@ A one-shot prompt is a perfectly good tool in another workflow, and fan-out is s
 
 ## Beat: what handles the barrel (4:15)
 
-Something has to. A revision loop that takes the synthesis back through the gates. A router that picks by measured outcome. The council of guards, reading cheaply and reporting disagreement. Or your users, in an A/B test, doing the labeling for you. Generation without a next stage is just a bigger bill with more opinions in it.
+Something has to. A revision loop that takes the synthesis back through the gates. A router that picks by measured outcome. The Council of Guards, pricing its reading and reporting disagreement. Or your users, in an A/B test, doing the labeling for you. Generation without a next stage is just a bigger bill with more opinions in it.
 
 ## Beat: is this speculative optimization in a lab coat? (5:15)
 
@@ -30,7 +30,7 @@ Yes, possibly. Probably sometimes. We'll find out. So: never ship any of this wi
 
 ## Landing (6:15)
 
-Cheaper, safer and faster now sometimes come from spending exactly where yesterday's wisdom told you not to. I'm not a shill for Big Token. I just noticed that a barrel of cheap monkeys plus one honest judge beats one careful monkey more often than my engineering instincts want to admit.
+Cheaper, safer and faster now sometimes come from spending exactly where yesterday's wisdom told you not to. I'm not a shill for Big Token. I want the accepted-outcome ledger to decide whether the barrel earned its keep.
 
 ## On screen
 

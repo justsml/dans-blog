@@ -1,4 +1,4 @@
-# Dynamic Scaling of Agentic Workloads: implementation handout
+# Compute, Please (and a Receipt): implementation handout
 
 Proposed interfaces and paper fixtures. Prices are invented; vendor behavior on the ecosystem slide was checked against public docs on 2026-09-06.
 
@@ -12,7 +12,7 @@ Proposed interfaces and paper fixtures. Prices are invented; vendor behavior on 
   "maxItems": 10,
   "maxProviderConcurrency": 5,
   "maxAttemptsPerItem": 2,
-  "maxRunSpendUsd": 2,
+  "maxRunSpendUsd": 1.5,
   "deadlineSeconds": 600,
   "return": ["jobId", "acceptedItemIds", "rejectedItems"],
   "status": ["queued", "submitted", "waiting", "completed", "failed", "unresolved"],
@@ -50,7 +50,7 @@ The scheduler resolves the request against a catalog of approved classes, the te
 }
 ```
 
-The agent chooses within the catalog. It cannot name a class, region or egress domain that the catalog does not list. Lease expiry proves the worker is gone; it does not prove remote work stopped, so reservations outlive leases until reconciliation.
+The agent chooses within the catalog. It cannot name a class, region or egress domain that the catalog does not list. A fenced lease expiry revokes dispatch authority; confirm teardown separately. It does not prove remote work stopped, so reservations outlive leases until reconciliation.
 
 ## Admission protocol
 
@@ -64,22 +64,23 @@ The agent chooses within the catalog. It cannot name a class, region or egress d
 
 A lock around reading the budget is insufficient if work starts after the lock is released without a reservation. A lease cannot fence an already-issued external request.
 
-## Illustrative $2 ledger
+## Illustrative $1.50 provider ledger
 
-Assume $0.10 per attempt, ten items, two attempts each. Infrastructure cost is excluded only to keep the arithmetic visible.
+Assume $0.10 per provider attempt, ten requested items, two attempts allowed per item. The separate compute lease has its own $1.50 ceiling; this provider ledger does not include infrastructure charges. The tenant parent budget must reserve both ceilings before either grant: up to $3.00 combined, not $1.50 all-in. No price or utilization benefit is measured by this fixture.
 
 | Event | Settled | Reserved | Available | Explanation |
 | --- | ---: | ---: | ---: | --- |
-| Start | $0.00 | $0.00 | $2.00 | No work admitted |
-| Caller A reserves 10 items × 2 attempts | $0.00 | $2.00 | $0.00 | Full allowance reserved |
-| Caller B asks for the same capacity | $0.00 | $2.00 | $0.00 | Queued with reason: reserved by batch-1042 |
-| Nine items succeed on first attempt | $0.90 | $0.20 | $0.90 | Nine unused retry allowances released |
-| Last item has an uncertain first attempt | $0.90 | $0.20 | $0.90 | Its allowance is held |
-| Reconciliation confirms one completion | $1.00 | $0.00 | $1.00 | Settle $0.10, release the unused retry |
+| Start | $0.00 | $0.00 | $1.50 | No work admitted |
+| Caller A requests ten; seven admitted | $0.00 | $1.40 | $0.10 | Seven × two × $0.10; three explicitly refused for insufficient reservation capacity |
+| Caller B requests same logical batch | $0.00 | $1.40 | $0.10 | Same job ID and accepted/rejected item set, no second dispatch |
+| Caller B requests a distinct batch | $0.00 | $1.40 | $0.10 | Queued: even one item's $0.20 allowance does not fit |
+| Six items succeed first try | $0.60 | $0.20 | $0.70 | Six unused retry allowances released |
+| Seventh outcome uncertain | $0.60 | $0.20 | $0.70 | Hold allowance; expiry is not a refund |
+| Reconciliation confirms completion | $0.70 | $0.00 | $0.80 | Settle final $0.10 and release unused retry |
 
-Invariant: settled plus reserved never exceeds $2.
+Invariant: settled + reserved + available = $1.50; settled + reserved never exceeds $1.50. Rejected items require a new admission decision if the caller later requests them; they are not silently dispatched when money frees up.
 
-**Reservation tightness.** This ledger reserves pessimistically, so caller B waited behind money that was never spent ($0.90 released at row four, $1.00 by the end of the run). The alternative reserves one attempt per item and grants retries lazily from the remaining balance; it admits more real work and can overshoot when many retries land at once. Pick one, name it in the policy, and show the queued caller why it is waiting.
+**Reservation tightness.** Pessimistic reservation admits seven items. Reserving only the first attempt admits ten for $1.00, then atomically admitting retries can fund at most five more attempts. Both policies enforce the ceiling. Lazy reservation risks refusing a needed retry, not overspending when correctly implemented. The scheduler may lower pressure within its approved range; it cannot raise the budget or deadline.
 
 ## Durable state and notification
 

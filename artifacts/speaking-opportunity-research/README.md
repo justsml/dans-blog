@@ -1,6 +1,6 @@
 # Speaking opportunity research instructions
 
-Ten self-contained Deep Research prompts cover the six new concepts and four original flagship talks. Each prompt can run independently. These files are research instructions; no event availability or deadline has been verified in this package.
+Nine active talks and one retired brief are indexed here. The retired education brief is retained as research history; its current procurement route lives under Outsmart. Each prompt can run independently. These files are research instructions; no event availability or deadline has been verified in this package.
 
 ## Run a research task
 
@@ -10,16 +10,16 @@ The default horizon is the next 18 months from execution, internationally, inclu
 
 ## Talk briefs
 
-- [A Skeptic’s Guide to Surviving AI in Education](skeptic-education.md)
+- Retired: [A Skeptic’s Guide to Surviving AI in Education](skeptic-education.md); use [Show Me the Misconception](../speaking-portfolio-expanded/talks/evidence-learning/procurement-route.md) for current procurement copy.
 - [Outsmart Your Lying, Cheating Students](evidence-learning.md)
 - [Automating Improvement From Failure](failure-improvement.md)
-- [Adaptive, agentic apps](adaptive-systems.md)
-- [Cry Me a Free Tier](free-tier.md)
-- [The Future of Product Engineering](product-engineering.md)
-- [From RAGs to Retrievals: Learn the New Engineering Speak](retrieval.md)
+- [Conjure Exactly Enough](adaptive-systems.md)
+- [Buy Me a Free Tier](free-tier.md)
+- [Break the Mirror on Purpose](product-engineering.md)
+- [Three Search Methods in a Fundable Trenchcoat](retrieval.md)
 - [Stop Looking at My Benchmarks… Get Your Own!](benchmarks.md)
-- [Rethinking Parallelization in the Agentic Era](parallelization.md)
-- [Code Is Cheap. Judgment Is Expensive.](judgment.md)
+- [Compute, Please (and a Receipt)](parallelization.md)
+- [Turn Your Thinkin' Tokens Up to 11](judgment.md)
 
 ## Shared collection format
 
@@ -43,4 +43,4 @@ The researcher should deliver a top-10 shortlist per talk where the evidence sup
 
 ## Talk versions in research results
 
-Saved research results retain the talk names and positioning evaluated on their recorded dates. Use the current [adaptive packet](../speaking-portfolio-expanded/talks/adaptive-systems/packet.md) and [dynamic-scaling packet](../speaking-portfolio-expanded/talks/dynamic-scaling/packet.md) for submission copy. Historical fit scores have not been recomputed for the revised talks.
+Talk display names were corrected on 8 September 2026 in the briefs, ranking source, and saved outputs. Stable talk IDs, recorded research dates, event evidence, and historical fit scores are unchanged; this is not a fresh verification of deadlines or fit. Use the [current submission packets](../speaking-portfolio-expanded/README.md#submission-packets) before submitting. The legacy `parallelization` ID maps to Dynamic Scaling; the retired `skeptic-education` results require reassessment against the procurement route, not an automatic substitution.

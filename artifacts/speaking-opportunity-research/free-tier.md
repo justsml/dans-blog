@@ -1,11 +1,11 @@
-# Deep research prompt: Cry Me a Free Tier
+# Deep research prompt: Buy Me a Free Tier
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `free-tier`
-- Title: Cry Me a Free Tier
+- Title: Buy Me a Free Tier
 - Audience: Engineering leaders, founders, platform teams, FinOps practitioners, and technical product managers.
 - Thesis: Expose assumptions tied to today’s AI pricing and evaluate cost per successful outcome, price sensitivity, and dependencies before making durable commitments.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.

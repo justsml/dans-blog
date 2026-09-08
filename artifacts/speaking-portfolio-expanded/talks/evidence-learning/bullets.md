@@ -1,6 +1,6 @@
 # Outsmart Your Lying, Cheating Students: bullet outline
 
-Outsmart Your Lying, Cheating Students (or: Stop Trying to Catch Students Using AI): stop catching, start out-designing; collect evidence of understanding.
+Outsmart Your Lying, Cheating Students (or: Make Verification Feel Like Cheating): stop catching, start out-designing; collect evidence of understanding.
 
 Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no Q&A. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
@@ -81,7 +81,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 > "You didn't check the results? Johnny, you're not gonna make it."
 
 - The highest-leverage assignment I know lets students feel like they're cheating.
-- That one experience beats every ban, filter and lockdown.
+- That experience teaches the checking step a ban never gets to rehearse.
 - Privacy rides along for free. If you share Lake Tahoe, maybe not the photo of your grandparents' place on the water that any model can geolocate.
 - Do — Thirty seconds: what would the smudge be in your subject? Take two.
 
@@ -99,12 +99,12 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 
 14:00–19:00 · peak · 05:00
 
-> $100 → $120 → $96. Why does the second base change?
+> $100 → +20% → −20%. Which base does the discount use?
 > Now: $80 → +25% → −20%
 
-- Run the scripted tutor turns — from the kit or read off the card — then go live.
+- Read the scripted tutor turns off the card, then invite the room to respond.
 - Then change the numbers: $80, up 25%, down 20%.
-- Do — The worked-example notes have the five scripted turns. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: use only the $100 sequence and state the $80 item.
+- Do — The worked-example notes have the five scripted turns. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: state the $100 answer, then run the $80 transfer item live.
 
 ### 8. Score the reasoning. Write it down
 
@@ -155,7 +155,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 > Photograph the whiteboard; the objective is the system prompt
 > Push the practice run first. Then reward the kid who asks for it.
 
-- Seen in the wild: students telling a voice assistant not to give them answers, then arguing about Lincoln with it for twenty minutes.
+- Here is a proposed history exercise: students tell a voice assistant not to give them answers, then argue about Lincoln with it.
 - The other half is discipline. At first, the agent pushes: want a practice run, flashcards, a pop quiz?
 - Story — The student who told the tutor not to give answers.
 

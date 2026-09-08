@@ -1,6 +1,6 @@
 # Education CFP package
 
-Prepared 4 September 2026; revised 6 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
+Prepared 4 September 2026; revised 8 September 2026. Abstract lengths use whitespace-separated words. No biography, affiliation, or speaking history is asserted.
 
 The education portfolio is **one 40-minute talk and one 15-minute route**, not two talks. Submit Outsmart for teaching audiences and Show Me the Misconception for procurement, curriculum-committee and administrator audiences. They pair as a double-header: one is for the people who teach, the other for the people who sign.
 
@@ -14,7 +14,7 @@ Two sales pitches arrive with every AI tool and neither is a plan. This route ha
 
 ### 100-word abstract
 
-Educators are asked to choose between miracle tutors and cheating machines when they need a defensible purchasing decision. This route starts elsewhere. Skepticism is a method, not a mood: what is the claim, what would count as evidence, who benefits if we believe it? Bastani and Kestin are used to make the room curious about instructional design rather than eager to pick a winner, and Soderstrom and Bjork explain why supported and unaided performance must be recorded separately. A four-card local eval set costs nothing and no benchmark can replace it. It closes on four questions for the next vendor demo.
+Educators are asked to choose between miracle tutors and cheating machines when they need a defensible purchasing decision. This route starts elsewhere. Skepticism is a method, not a mood: what is the claim, what would count as evidence, who benefits if we believe it? Bastani and Kestin are used to make the room curious about instructional design rather than eager to pick a winner, and supported and unaided performance are recorded separately. A four-card local eval set requires staff time and no benchmark can replace it. It closes on four questions for the next vendor demo.
 
 ### Audience
 
@@ -34,11 +34,11 @@ Retired as a standalone 40-minute talk ("A Skeptic's Guide to Surviving AI in Ed
 
 ### 50-word abstract
 
-Math class survived the calculator watch. Your class will survive the chatbot, but not by catching anyone. This session shows three ways to out-design students instead: an assignment where verification feels like cheating, a four-minute spoken reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
+Math class survived the calculator watch. Your class can survive chatbots without building a curriculum around catching anyone. This session shows ways to out-design students instead: an assignment where verification feels like cheating, a four-minute reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
 
 ### 150-word abstract
 
-Proctoring fails, detectors flag non-native writers, and the pop quiz only proves what you already knew. If your assessment depends on knowing who typed a paragraph, the detector has become part of your curriculum. This session stops trying to catch students and starts out-designing them. It writes down where the foundations happen without a model, promises in the same document to teach the tool, and then makes three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group speaking where reading a model aloud and recalling from memory produce different mistakes, and a qualitative pass across every transcript in a course. A worked percentage task carries the middle: a hint ladder, a live four-minute reconstruction with a transfer item, a rubric that scores reasoning and logs help separately, and a four-line record that never becomes a label. Participants leave with one checkpoint redesigned and the minutes it costs to review.
+Proctoring fails, detectors flag non-native writers, and the pop quiz only proves what you already knew. If your assessment depends on knowing who typed a paragraph, the detector has become part of your curriculum. This session stops trying to catch students and starts out-designing them. It names what to delegate, augment, and preserve, promises to teach the tool, and then makes three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group explanation with purposeful follow-ups and a written alternative, and a qualitative pass across every transcript in a course. A worked percentage task carries the middle: a hint ladder, a live four-minute reconstruction with a transfer item, a rubric that scores reasoning and logs help separately, and a four-line record that never becomes a label. Participants leave with one checkpoint redesigned and the minutes it costs to review.
 
 ### Audience
 
@@ -52,6 +52,6 @@ Faculty, assessment leads, instructional designers, learning-platform builders, 
 
 ### Reviewer notes
 
-The title is self-aware: the speaker confesses to the calculator watch in the first minute, and the target is a brittle measurement strategy, not students. For educator-heavy committees, use "Stop Trying to Catch Students Using AI." Distinct from Show Me the Misconception, which is the buying decision; this one designs the assessment and the classroom moves. No live learner data, no detector stunt, no automated misconduct judgment. The stage exercise is scripted and mathematically checkable; the fixtures are authored and the rubric is proposed.
+The title is self-aware: the speaker confesses to the calculator watch in the first minute, and the target is a brittle measurement strategy, not students. For educator-heavy committees, use "Make Verification Feel Like Cheating." Distinct from Show Me the Misconception, which is the buying decision; this one designs the assessment and the classroom moves. No live learner data, no detector stunt, no automated misconduct judgment. The stage exercise is scripted and mathematically checkable; the fixtures are authored and the rubric is proposed.
 
-**Format:** 40 minutes, 14 slides, including a five-minute live reconstruction and a four-minute pairs worksheet. 15- and 30-minute routes and a 60-minute workshop are prepared.
+**Format:** 40 minutes, 14 slides, including a four-minute live reconstruction inside a five-minute slide and a four-minute pairs worksheet. 15- and 30-minute routes and a 60-minute workshop are prepared.

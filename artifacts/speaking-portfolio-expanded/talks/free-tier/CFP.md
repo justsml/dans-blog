@@ -1,6 +1,6 @@
 # Buy Me a Free Tier
 
-Abstracts are exact 50- and 150-word versions by whitespace count; titles and labels are excluded. Split out of the former joint economics/product submission package on 7 September 2026; Free Tier copy revised 6 September 2026.
+Abstracts are 50 and 153 words by whitespace count, excluding labels. Revised 8 September 2026.
 
 **Subtitle:** Eight words for the budget meeting
 
@@ -10,29 +10,29 @@ Abstracts are exact 50- and 150-word versions by whitespace count; titles and la
 
 ### 50-word abstract
 
-Your token price fell and your bill went up. That is not a contradiction, it is the Jevons paradox, and economists have described your situation since 1865. This talk hands engineers eight words from economics and game theory that turn "it feels wasteful" into an argument finance cannot wave off.
+Cheap inference rewards habits before anyone measures their value. This talk follows those incentives from a design review to an invoice, using MoviePass, economics and a synthetic workload. Learn to compute cost per accepted outcome, inventory expensive dependencies, and bring three prices to the next decision about what to build.
 
 ### 150-word abstract
 
-In 2017 MoviePass sold one movie a day for $9.95 while tickets averaged $9.11. What did that price build, and what survived when the offer ended? The habit did; the company did not. Swap the ticket for a token.
+In 2017 MoviePass offered one movie a day for $9.95 while the average ticket cost $8.97. Cheap access made another visit easy. In software, cheap inference can make another call, retry or unlimited promise easy. Don't fear training the model, worry how it's training you.
 
-Engineers lose this argument in budget meetings because the strongest thing we can say is "it feels wasteful." Economics has precise names for it, and this talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option.
+This talk treats that training as an incentive analogy and asks what the repeated decisions bought. Eight economic terms supply vocabulary without pretending that a vendor's price discloses its margins. The worked example is a synthetic workload: a lower acceptance rate can cost exactly as much as doubling inference prices, under a stated cost split. The arithmetic fits on one slide.
 
-It separates four legitimate reasons a price sits below cost and the observation at renewal that distinguishes them, reframes enormous compute commitments as Schelling moves rather than cost disclosures, and uses Shoup's parking for the mechanism. The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. A synthetic price sweep closes it.
+Then inventory the prompts, evals, fine-tunes and customer promises that make switching expensive. Price the work of keeping an alternative usable against the exposure. Leave with three prices for the next design review: today, without the offer, and the highest rate you can survive.
 
 ### Three audience outcomes
 
-1. Name the four explanations for a below-cost price and the observation that distinguishes them, instead of arguing about a vendor's margins.
+1. Name four explanations for a low price and observations that help distinguish them, instead of arguing about a vendor's margins.
 2. Compute cost per accepted outcome, convert an acceptance rate into a multiplier on sticker price, and state the volume at which an optimization is worth funding.
 3. Inventory relationship-specific assets and price reversibility as a real option against measured exposure.
 
 ### Notes for reviewers
 
-The talk makes no claim about any named provider's margins, alleges no predatory pricing, and forecasts no price cliff. Every economic concept is cited to its primary source and used as a frame rather than a measurement; where the canonical example is contested, as with QWERTY and path dependence, the talk says so on stage. The counterargument, that prices are falling because the engineering is genuinely improving, appears in the first ten minutes rather than as a late concession, with Epoch AI's public data. The four-minute demo is offline and synthetic, and the talk explicitly tells small-volume teams not to optimize.
+The talk makes no claim about any named provider's margins, alleges no predatory pricing, and forecasts no price cliff. Every economic concept is cited to its primary source and used as a frame rather than a measurement; where the canonical example is contested, as with QWERTY and path dependence, the talk says so on stage. The counterargument, that prices are falling because the engineering is genuinely improving, appears in the first ten minutes rather than as a late concession, with Epoch AI's public data. The two-minute worked table is offline and synthetic, and the talk explicitly tells small-volume teams not to optimize.
 
 ## Portfolio fit
 
-Buy Me a Free Tier owns cost per accepted outcome. Product Engineering owns coordination and human ownership. Judgment owns review queues. Do not book the three lengths of Product Engineering as independent talks.
+Buy Me a Free Tier owns cost per accepted outcome. Product Engineering owns coordination and human ownership. Judgment owns feature selection and release pacing. Do not book the three lengths of Product Engineering as independent talks.
 
 ## Submission integrity
 

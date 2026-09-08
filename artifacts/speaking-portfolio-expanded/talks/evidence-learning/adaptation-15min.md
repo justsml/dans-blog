@@ -1,11 +1,11 @@
-# Outsmart Your Lying, Cheating Students: 15-minute adaptation
+# Outsmart: 15-minute route
 
-Keep slides 1, 2, 4, 5, 7, 8, 9, 14. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
+[Complete talk track](script-15min.md). Hide slides absent below. Stable slide IDs place reconstruction 7 before ladder debrief 6. Budgets include speech and interaction; see [timing](timing.md).
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 01:00 | 1 | The cat is out of the bag |
-| 01:00 to 03:00 | 2 | The doom loop |
+| 00:00 to 01:15 | 1 | The cat is out of the bag |
+| 01:15 to 03:00 | 2 | The doom loop |
 | 03:00 to 04:15 | 4 | The polished answer with a hole in it |
 | 04:15 to 06:15 | 5 | Outsmart move one: make verification feel like cheating |
 | 06:15 to 09:15 | 7 | Reconstruct the mistake |
@@ -13,4 +13,4 @@ Keep slides 1, 2, 4, 5, 7, 8, 9, 14. Hide the others in presenter preparation. [
 | 10:45 to 13:15 | 9 | Outsmart move two: make them say it out loud |
 | 13:15 to 15:00 | 14 | A purpose-built machine |
 
-Lightning route: the confession, the doom loop, the fixture, the smudge, the live reconstruction without the kit, rubric and record, voice, and the close. Slide 9 keeps the consent and identifiability paragraph — never cut that one for time in front of educators. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+The integrity boundary stays in the opening. Protect the $80 transfer item. The sculptor is bridged before the close. The full reconstruction is four minutes inside the five-minute 40-minute-route slide; this route uses its own budget above.

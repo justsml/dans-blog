@@ -1,11 +1,11 @@
-# Deep research prompt: Adaptive, agentic apps
+# Deep research prompt: Conjure Exactly Enough
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `adaptive-systems`
-- Title: Adaptive, agentic apps
+- Title: Conjure Exactly Enough
 - Audience: Staff engineers, AI architects, platform teams, and developers building agent orchestration.
 - Thesis: Investigate unfamiliar integration failures, validate versioned repairs, and recover within externally enforced authority, cost and data boundaries.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.

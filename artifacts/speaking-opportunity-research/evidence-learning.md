@@ -26,7 +26,7 @@ Search assessment associations, academic-integrity networks, teaching-and-learni
 
 ## Positioning and fit boundaries
 
-Default educator-facing pitch: “Stop Trying to Catch Students Using AI: Designing Better Evidence of Learning.” Preserve the original title as an option. Target brittle assessment design, not student character; never imply cheating-proof assessment or automated misconduct determination.
+Default educator-facing pitch: “Make Verification Feel Like Cheating.” Preserve the original title as an option. Target brittle assessment design, not student character; never imply cheating-proof assessment or automated misconduct determination.
 
 ## Research assignment
 

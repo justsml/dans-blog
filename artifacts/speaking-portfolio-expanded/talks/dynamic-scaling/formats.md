@@ -1,4 +1,4 @@
-# Formats: Dynamic Scaling of Agentic Workloads
+# Formats: Compute, Please (and a Receipt)
 
 The 14-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)) follows the [40-minute outline](index.md). Scripts and adaptations are plain files; edit the outline first, then bring them into line by hand.
 

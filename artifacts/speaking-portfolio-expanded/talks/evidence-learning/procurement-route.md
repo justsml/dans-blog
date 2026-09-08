@@ -4,16 +4,20 @@
 
 The Skeptic's Guide was retired on 6 September 2026. Its three load-bearing beats — skepticism as a method, a local eval set, and the questions to ask a vendor — survive here as a separate route for the room that buys the tool rather than teaches with it. The retired outline stays at [retired/skeptic-education/index.md](../../retired/skeptic-education/index.md) for reference; nothing generates from it.
 
-Scope, once, at the top: research stays attached to its setting, the eval cases are authored, and the rubric is proposed. Then stop qualifying.
+Spoken scope, included in section 1 budget: research stays attached to its setting, the eval cases are authored, and the rubric is proposed. Then stop qualifying.
 
-## 1. Assume access. Demand evidence. (0:00–2:00)
+## 1. Assume access. Demand evidence. (0:00–2:30)
 
 > Every student gets a private genius. Every assignment is worthless.
 > Neither one tells you what to do on Monday.
 
 Two promises arrive with every pitch and neither is a plan. Assume access persists; design around it. Hold one real assignment in mind for the next fifteen minutes.
 
-## 2. Skepticism is a method, not a mood (2:00–5:00)
+Before you ask about features, write the purchasing decision: who uses this, for which task, with whose supervision? A tool that helps a teacher prepare a lesson and a tool that guides a child through one need different evidence. Keep those two contracts separate. Otherwise preparation savings become a claim about learning somewhere between the demo and the purchase order.
+
+Delivery: Forty-five seconds: write the assignment and the decision on a card. Ten seconds for a neighbor to check whether you named a task.
+
+## 2. Skepticism is a method, not a mood (2:30–5:00)
 
 > What is the claim?
 > What would count as evidence?
@@ -25,6 +29,8 @@ Write the claim so it could fail: "students using this hint sequence will explai
 
 Two failures you will hear about this year: the confident wrong answer that got an A, and the pilot that improved scores and nothing else. Both are design failures. Both can be anticipated, which is the whole point of the next ten minutes.
 
+Delivery: Forty-five seconds: turn "improves learning" into an observable claim on the card. Thirty seconds: ask a neighbor what observation would make them reject it.
+
 ## 3. What the research does and does not license (5:00–8:00)
 
 > Bastani: assisted practice up, unaided performance down; teacher-designed safeguards mitigated it
@@ -33,20 +39,22 @@ Two failures you will hear about this year: the confident wrong answer that got 
 
 Bastani and colleagues ran a high-school mathematics trial: unrestricted GPT access improved practice and worsened later unaided performance, and a version with teacher-designed safeguards mitigated the harm. One intervention, one setting. Reuse the design lesson, not the headline percentage. The published correction fixes an author affiliation; no result changed.
 
-Kestin and colleagues found a carefully engineered AI tutor outperformed the active-learning comparison in a university physics course on immediate outcomes. Keep the treatment attached to the finding.
+Kestin and colleagues found a carefully engineered AI tutor outperformed the active-learning comparison in a university physics course on immediate outcomes. At Harvard, 194 participating physics students used an at-home GPT-4 tutor in a randomized crossover across two weeks. Tests were immediate; there was no delayed retention test. Keep that design attached to the finding.
 
-Together they should make you curious about instructional design rather than eager to pick a winner. Ask what the tutor makes the learner *do*: attempt, expose an assumption, check a new example. And record supported and independent performance separately, because Soderstrom and Bjork reviewed fifty years of evidence that those two come apart routinely.
+Together they should make you curious about instructional design rather than eager to pick a winner. Ask what the tutor makes the learner *do*: attempt, expose an assumption, check a new example. For your pilot, decide before purchase when assistance stops and what students must do afterward. Usage cannot answer that question.
 
-Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. Kestin et al. (2025), [AI tutoring outperforms in-class active learning](https://www.nature.com/articles/s41598-025-97652-6), Scientific Reports. Soderstrom and Bjork (2015), [Learning versus performance](https://doi.org/10.1177/1745691615569000).
+Source: Bastani et al. (2025), [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122), PNAS. Kestin et al. (2025), [AI tutoring outperforms in-class active learning](https://www.nature.com/articles/s41598-025-97652-6), Scientific Reports.
 
 ## 4. Four cases before any pilot (8:00–11:00)
 
 > A confident wrong answer · a right answer with faulty reasoning
 > A request for the solution · a learner the tutor misunderstands
 
-This is your local eval set, and it is four index cards, not a platform. For the percentage example: the tutor must not affirm "a 20% rise and a 20% fall cancel." For a history seminar: it must not affirm "the diary is more reliable because it is older."
+This is your local eval set, and it is four index cards, not a platform. For a history seminar: it must not affirm "the diary is more reliable because it is older."
 
 Two educators score the teaching moves, with factual errors counted separately from pacing and tone. A benchmark score cannot certify your lesson, and a vendor whose tutor has the help level exactly right is selling you a solved version of an open problem. Koedinger and Aleven named that open problem the assistance dilemma in 2007 and nobody has closed it since.
+
+Delivery: Sixty seconds in pairs: one writes "the diary is more reliable because it is older," the other writes the next tutor question. Compare "Great point" with "Older than what?" Spend thirty seconds identifying which response leaves source evaluation to the learner.
 
 Then proportional evidence. Add one question that improves the inference: "which source did you trust more, and what would change your mind?" Collect enough to support a decision, not enough to reconstruct a student's life.
 
@@ -61,6 +69,8 @@ Liang and colleagues found the detectors they tested produced false positives on
 
 And if assisted practice is permitted, provide comparable access or a usable alternative. If oral explanation is chosen, plan accommodations and language needs so you are not grading speaking ease by accident. State what is retained and who sees it, before the first recording.
 
+Delivery: Forty seconds: circle one access assumption in your proposed purchase. Twenty seconds: write the alternative that preserves the objective.
+
 Source: Liang et al. (2023), [GPT detectors are biased against non-native English writers](https://doi.org/10.1016/j.patter.2023.100779), Patterns.
 
 ## 6. Show me the misconception (13:00–15:00)
@@ -69,7 +79,7 @@ Source: Liang et al. (2023), [GPT detectors are biased against non-native Englis
 > What was measured after assistance stopped?
 > What happens when the tutor is wrong? What falls back on staff?
 
-Four questions for the next demo, and they are the whole route. Make them walk one misconception end to end: what the learner said, what the tutor did, what it did *not* do. Ask what was measured after the assistance stopped, because that is where the Bastani result lives. Ask what happens when the tutor is confidently wrong, because it will be. Ask what work falls back onto staff, because a richer assessment nobody has time to read is a worse assessment.
+Four questions for the next demo, and they are the whole route. Make them walk one misconception end to end: what the learner said, what the tutor did, what it did *not* do. Ask what was measured after the assistance stopped, because that is where the Bastani result lives. Ask what happens when the tutor is confidently wrong, because it will be. Ask what work falls back onto staff, and ask for a staffing estimate that includes reviewing errors, accommodations, and exports. The license is only one line on the bill.
 
 A tool that saves preparation time without improving learning may still be worth buying. It just has to be sold that way.
 
@@ -81,6 +91,8 @@ Story: a pilot you ran or watched — what surprised you, what you kept.
 
 ## Delivery notes
 
-Runs standalone for a procurement, curriculum-committee or administrator audience. Pairs with the [Outsmart](index.md) 40-minute talk for a conference double-header: Outsmart is for the people who teach, this is for the people who sign. The history-essay example is available as an alternate to the percentage fixture when the room is not quantitative; the percentage fixture belongs to Outsmart and should not be run twice in one booking.
+Runs standalone for a procurement, curriculum-committee or administrator audience. Pairs with the [Outsmart](index.md) 40-minute talk for a conference double-header: Outsmart is for the people who teach, this is for the people who sign. Use the history-essay case in [demo.md](demo.md); the percentage fixture belongs only to Outsmart.
 
-No demo kit. If the room wants a live moment, use the four index cards and have them write the confident wrong answer for their own subject.
+No demo kit. The card writing and paired scoring are scheduled parts of this route. Story prompts may replace existing prose, never extend the slot.
+
+See [per-section speech and interaction budgets](timing.md). This is a 15-minute facilitated route; its writing and scoring time is explicit, not empty speaking time.

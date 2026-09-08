@@ -1,8 +1,8 @@
 # Stage demonstration: what survives the price assumption?
 
-Both demonstrations use fixed, synthetic fixtures and deterministic rules. Nothing is sent to customers or providers. The presenter must call them simulations before revealing results.
+This worked example uses a fixed, synthetic fixture. No application, network request or provider account is required. The opening slide identifies the synthetic workload.
 
-**Duration:** 4:00. Use the price sensitivity panel. The 40-minute deck reserves slide 11 for this run.
+**Duration:** 2:00, walked off the slide-11 table. There is no interactive panel.
 
 **Question:** “If inference stopped feeling free, which architecture decision would you revisit first?”
 
@@ -23,20 +23,19 @@ Both demonstrations use fixed, synthetic fixtures and deterministic rules. Nothi
 | 5× | $110 | 750 | $0.1467 |
 | 10× | $210 | 750 | $0.2800 |
 
-### Stage sequence
+### Two-minute stage sequence
 
-| Clock | Action and exact teaching beat |
-|---|---|
-| 0:00–0:30 | Show the fixture. Say: “Invented workload. Real arithmetic. These are not vendor prices.” Ask the opening question. |
-| 0:30–1:00 | Reveal 750 accepted outcomes. Explain that failed attempts still consume money. Baseline batch cost is $30, therefore 4¢ per accepted outcome. |
-| 1:00–1:45 | Select 2×, 5×, then 10×. Pause at 28¢ per accepted outcome. Say: “That is exposure, not a forecast.” |
-| 1:45–2:15 | Restore 1× and drop acceptance from 75% to 45%. Cost per accepted outcome goes to $0.0667 — identical to the 2× row, at unchanged prices. Say: “A thirty-point acceptance drop costs what doubling every token price costs. One of those is on the front page.” |
-| 2:15–2:30 | Ask the audience to choose a response: remove repeated calls, improve acceptance, route work, or accept the cost because the outcome is valuable. Do not announce a universal winner. |
-| 2:30–3:15 | Restore 75%. At 10×, set baseline inference per attempt to $0.01, leaving other cost and acceptance unchanged. The result is $110 per batch and about 14.7¢ per accepted outcome. Say: “The assumption that quality stayed equal needs an eval.” |
-| 3:15–4:00 | Restore the baseline. State the counterargument: useful inference may continue getting cheaper, and engineering work has its own cost. Close: “Measure what the architecture depends on before deciding what to optimize.” |
+| Clock | Action |
+| --- | --- |
+| 0:00–0:45 | Speak the slide-11 prose. Point to $30 / $0.040, then $210 / $0.280. Only inference price changes. |
+| 0:45–1:00 | Allow fifteen seconds to read the intervening rows in silence. |
+| 1:00–1:45 | Ask for 45 seconds: which assumption would you test before funding optimization? Participants write one assumption; no report-back. |
+| 1:45–2:00 | Finish the volume warning. Advance to the asset inventory. |
+
+The acceptance comparison was already computed on slide 10. For a separate five-minute workshop walkthrough, use the extra three minutes to recompute acceptance at 45% and discuss a router that halves inference at unchanged acceptance: at 10×, $110 / 750 = $0.1467. This extension is not part of the 40-minute route.
 
 **Expected outcome:** The audience sees why cost per call, net invoice, and cost per accepted outcome answer different questions. Halving usage can reduce sensitivity, but the teaching example does not establish that a real optimization preserves quality or is worth building.
 
 **Honest limits:** No revenue, taxes, fixed overhead, recovery labor, uncertainty, demand response, or provider profitability model. The 75% rate is a fixture, not a measured pass rate. Multipliers are stress cases, not forecasts. The assumed 50% consumption reduction is unmeasured. If acceptance or costs vary with load, this one-variable calculation is incomplete.
 
-**Fallback:** Keep the four-row table above as a local screenshot or use deck slide 11. Read the same sequence and do the last arithmetic verbally. No live provider request is needed.
+**Presentation:** The printed table is the primary artifact. Keep a local copy for projection or handout; there is no separate tool to fall back from.

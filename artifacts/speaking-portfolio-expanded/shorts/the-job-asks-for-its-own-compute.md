@@ -1,8 +1,8 @@
 # Compute, Please (and a Receipt)
 
-6 min · lightning · parent: [Dynamic Scaling of Agentic Workloads](../talks/dynamic-scaling/index.md), slides 2, 3
+6 min · lightning · parent: [Compute, Please (and a Receipt)](../talks/dynamic-scaling/index.md), slides 2, 3
 
-For twenty years ops guessed a fleet size for everyone. The workload never got a vote. Now it can.
+For twenty years ops guessed a fleet size for everyone. The workload never got a say. Now it does.
 
 ## Hook (0:00)
 
@@ -14,11 +14,11 @@ The job asks for compute the way it asks for a tool. Eight sandboxes, six minute
 
 ## Beat: what you get (2:00)
 
-Per-job economics. A customer can buy a faster turnaround. Finance can cap one workflow instead of one environment. Nobody pays for a warm fleet sized for the worst Tuesday of the year. And least privilege stops being a project: an instance that lives six minutes, reaches three domains and holds one scoped credential is hard to abuse even when the agent inside it is confused.
+Per-job economics. A customer can buy a faster turnaround. Finance can cap one workflow instead of one environment. Nobody pays for a warm fleet sized for the worst Tuesday of the year. And short lifetimes help limit exposure: an instance that lives six minutes, reaches three domains and holds one scoped credential limits the reach of a confused agent.
 
 ## Beat: the substrate already exists (3:00)
 
-Fly.io Sprites: hardware-isolated VMs, created in a second or two, egress policy set from outside so the agent can't loosen it. Depot sandboxes: per-second billing for exactly this. Modal for functions and GPUs that scale to zero; Vast.ai for a cheap spare GPU. Cloudflare Durable Objects and Workflows for the state that survives everything else being torn down. EC2 Spot is the old version of the same idea. Common thread: create in seconds, pay per second, torn down unless someone says otherwise. What none of them give you is the ledger. That's still yours.
+Fly.io Sprites: hardware-isolated VMs, with a stated creation target under a second, egress policy set from outside so the agent can't loosen it. Depot sandboxes: per-second billing for exactly this. Modal for functions and GPUs that scale to zero; Vast.ai for a cheap spare GPU. Cloudflare Durable Objects and Workflows for the state that survives everything else being torn down. EC2 Spot is the old version of the same idea. Common thread: create in seconds, pay per second, torn down unless someone says otherwise. What none of them give you is the ledger. That's still yours.
 
 ## Beat: what you risk (4:15)
 

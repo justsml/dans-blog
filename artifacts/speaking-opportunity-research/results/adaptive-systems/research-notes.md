@@ -1,4 +1,4 @@
-# Research evidence packet: Building Adaptive & Dynamic AI Systems
+# Research evidence packet: Conjure Exactly Enough
 
 Research run date: 2026-09-04  
 Search horizon: 2026-09-04 through 2028-03-04  

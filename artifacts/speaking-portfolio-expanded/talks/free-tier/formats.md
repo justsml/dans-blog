@@ -4,33 +4,25 @@ The 15-slide browser deck (deck not yet rebuilt; see [decks](../../../decks/READ
 
 | Slot | Preparation |
 | --- | --- |
-| 7 minutes | Lightning script below; slides 1, 5, 6, 12, 15 |
-| 5 to 10 minute live demo | AI Tinkerers format, below |
+| 7 minutes | Acceptance multiplier short plus application and questions, below |
+| 5 to 10 minutes | Printed worked example, below |
 | 15 minutes | [Script](script-15min.md) and [route](adaptation-15min.md) |
-| 25 minutes | 30-minute route with slide 11's sweep compressed to two rows |
+| 25 minutes | 15-minute route plus ten minutes of questions |
 | 30 minutes | [Script](script-30min.md) and [route](adaptation-30min.md) |
 | 40 minutes | [Script](script-40min.md) and [outline](index.md) |
 | 45 minutes | 40-minute route plus five minutes of Q&A |
 | 60 minutes | Workshop below |
 | 75 minutes | Workshop plus 15-minute peer review |
 
-Recheck the three dated items on slide 4 the week of any delivery.
+Recheck the dated commitment on slide 4 before delivery; optional Amazon and AWS credit references are in the evidence bank.
 
-## Seven-minute lightning script
+## Seven-minute lightning route
 
-0:00 to 1:00, slide 1. August 2017: MoviePass sells one movie a day for $9.95 while the average ticket costs $9.11. Pay for one movie, see thirty. Three million subscribers in eighteen months, $40M lost in May 2018 alone, dead by 2019. What did the cheap price build, and what survived when the offer ended? The habit survived. The company did not. Swap the ticket for a token.
+Use the standalone [acceptance multiplier short](../../shorts/acceptance-rate-is-a-price-multiplier.md), followed by two minutes applying the acceptance rule to the room's workload and two minutes of questions. The short owns the full fixture; do not read seven slides at full-route density. This is a different cut from the 15-minute script.
 
-1:00 to 2:15, slide 5. Free parking was never free. Nobody paid at the meter, so the cost moved into rents, retail prices and land, and because drivers saw no price, demand looked infinite. That is an externality: a real cost, paid, but not by the person deciding. Then the environment reorganized around it, and each step was locally reasonable.
+## Five to ten minute worked example
 
-2:15 to 3:30, slide 6. In 1865 Jevons noticed that more efficient steam engines made Britain burn more coal, not less. Duranton and Turner measured the same thing on highways in 2011: add ten percent more road, get ten percent more driving. So your token price fell and your bill went up, and that is the prediction, not a contradiction. Spend is price times consumption, and cheapness moved every term.
-
-3:30 to 5:30, slide 12. Here is the reframe. Williamson won a Nobel for what happens when you make an investment that is worth a lot inside one relationship and little outside it. Your prompts, your evals, your fine-tunes, your unlimited-usage clause. That is asset specificity, and the trouble it produces is called hold-up. You are not shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral.
-
-5:30 to 7:00, slide 15. Back to MoviePass: cinema subscriptions exist and work today, shipped by the chains that owned the screens and never paid retail. Ask which of those two you are. Eight words: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, real option. Three prices for your next design review: what you pay today, what you pay without the offer, and the most you could survive paying. Cheap intelligence changes incentives before it changes organizations.
-
-## Five to ten minute live demo (AI Tinkerers)
-
-The calculator alone is not a system you built. A qualifying demo runs the sensitivity model against real usage: pull last month's token consumption from a provider dashboard or a Langfuse or Helicone export, define a real acceptance rule, compute cost per accepted outcome, and sweep the price live. Five minutes: import, define acceptance, sweep, then show which assumption moved the number most, which is usually the acceptance rate rather than the price. Requires an exported dataset you are permitted to show.
+Walk the printed table in [demo.md](demo.md). It is a synthetic arithmetic demonstration. There is no interactive application or live production demo in this packet. A venue requiring a working system needs a separately prepared, authorized example; do not submit this table as that system.
 
 ## Sixty-minute workshop
 
@@ -40,15 +32,15 @@ Participants bring one product or feature and leave with its three prices, a sen
 
 | Time | Block | What happens |
 | --- | --- | --- |
-| 0:00 to 0:10 | Opening | Slides 1 and 2. Each participant fills the four boxes for one feature. Most leave two blank. |
-| 0:10 to 0:22 | Why is it cheap? | Slides 3 and 4. Pairs argue which of the four explanations fits their provider, and name the observation at renewal that would settle it. |
-| 0:22 to 0:35 | Parking and Jevons | Slides 5 to 7. List second-order effects of free parking, then match each to something in your own stack. Everyone names one frontier call where a lookup would do. |
-| 0:35 to 0:45 | Lock-in and the meter | Slides 8 and 9. Pick one model call and estimate the hours to remove it. Then check whether anyone in the room can see per-feature cost without filing a ticket. |
-| 0:45 to 1:00 | Denominator and sweep | Slides 10 and 11 with the kit. Write the acceptance rule in one sentence, compute cost per accepted outcome, convert the acceptance rate to a multiplier, then sweep and multiply by real volume. |
-| 1:00 to 1:15 | Specific assets | Slide 12. Inventory the assets worth more inside this relationship than outside it. Rank by hours to replace. |
-| 1:15 to 1:28 | Three prices | Slides 13 and 14. Fill the worksheet, estimate the option premium, assign an owner and a review date. |
-| 1:28 to 1:35 | Close | Slide 15. |
+| 0:00 to 0:06 | Opening | Slide 1 and the incentive question; name one feature. |
+| 0:06 to 0:12 | What did the offer reward? | Slides 3 and 7. Pairs identify one repeated design decision. Do not infer vendor motives. |
+| 0:12 to 0:18 | The missing meter | Slides 2, 5 and 9. Locate spend, recovery work and the person choosing. |
+| 0:18 to 0:30 | Denominator | Slide 10. Write an acceptance rule and compute the baseline; this block gets twelve minutes. |
+| 0:30 to 0:40 | Sensitivity | Slide 11 printed table. Sweep inference and acceptance separately using each participant's volume. |
+| 0:40 to 0:48 | Specific assets | Slide 12. Inventory dependencies and estimate replacement hours. |
+| 0:48 to 0:57 | Three prices | Slides 13 and 14. Price the option, assign an owner and a review date. |
+| 0:57 to 1:00 | Close | Slide 15 and the next design-review decision. |
 
 **Facilitation notes.** The denominator block is where most participants discover they cannot define an accepted outcome; let it run long and shorten the specific-asset block if needed. The volume caveat on slide 11 matters more than anything else in the room: several participants will be about to optimize a thirty-dollar bill.
 
-**Participants leave with:** the four-boxes card, the parking-to-software mapping, their sensitivity table, the specific-asset inventory, the three-price worksheet.
+**Participants leave with:** the four-boxes card, their sensitivity table, the specific-asset inventory, the three-price worksheet.

@@ -1,4 +1,4 @@
-# Dynamic Scaling of Agentic Workloads: 15-minute adaptation
+# Compute, Please (and a Receipt): 15-minute adaptation
 
 Keep slides 1, 2, 3, 6, 10, 14. Hide the others in presenter preparation. [Complete talk track](script-15min.md).
 

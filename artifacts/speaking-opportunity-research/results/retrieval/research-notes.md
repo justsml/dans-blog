@@ -2,7 +2,7 @@
 
 Research run: 2026-09-04  
 Horizon: 2026-09-04 through 2028-03-04  
-Talk: `retrieval` — *From RAGs to Retrievals: Learn the New Engineering Speak*
+Talk: `retrieval` — *Three Search Methods in a Fundable Trenchcoat*
 
 ## Decision summary
 

@@ -20,13 +20,13 @@ Every concept in this talk is a named, published idea used as a **frame**, not a
 | Real option | Dixit and Pindyck (1994), *Investment Under Uncertainty* | Flexibility has a computable value and a recurring premium | The talk gives a payback formula, not a valuation model |
 | Price declines | Cottier, Snodin, Owen, Adamczewski (Epoch AI, March 2025), [inference price trends](https://epoch.ai/data-insights/llm-inference-price-trends) | Prices for fixed benchmark milestones fell fast and unevenly by task | Benchmarks are not a production workload; offered prices are not provider cost. Check for a newer edition each delivery |
 | Credits expire | [AWS Activate credit offer](https://aws.amazon.com/startups/credits/) (the URL slide 4 shows); [AWS Promotional Credit terms](https://aws.amazon.com/awscredits/) | One documented example of temporary customer pricing | Do not generalize the terms to other providers or treat promotional treatment as proof of a loss |
-| MoviePass (running case, slides 1, 3, 9, 12, 15) | [FTC press release and complaint, 7 June 2021](https://www.ftc.gov/news-events/news/press-releases/2021/06/operators-moviepass-subscription-service-agree-settle-ftc-allegations-they-limited-usage-failed) for password invalidation of the 75,000 heaviest users, ticket verification and undisclosed caps; contemporaneous press for the $9.95 August 2017 price, the 20,000-to-3M subscriber run, the $40M May 2018 loss, and the September 2019 shutdown; NATO annual average US ticket price $9.11 (2017) | A completed, documented case of an unlimited promise priced against an input the seller bought at retail, and of terms tightening on heavy users before any announced price rise | The FTC matter was **settled without admission of liability** and without monetary relief, both companies having filed bankruptcy — say "alleged" for the password and cap conduct. This is one company's history, not a prediction about any AI provider, and no inference vendor is being compared to it by name. The subscriber and loss figures are press-reported, not audited |
+| MoviePass (running case, slides 1, 3, 9, 12, 15) | [FTC press release and complaint, 7 June 2021](https://www.ftc.gov/news-events/news/press-releases/2021/06/operators-moviepass-subscription-service-agree-settle-ftc-allegations-they-limited-usage-failed) for password invalidation of the 75,000 heaviest users, ticket verification and undisclosed caps; contemporaneous press for the $9.95 August 2017 price, the 20,000-to-3M subscriber run, the $40M May 2018 cash burn, and the September 2019 shutdown; [NATO annual average US ticket price $8.97 (2017)](https://cinemaunited.org/wp-content/uploads/2018/01/2017-Q4-and-Annual-Average-Ticket-Price.pdf) | A completed, documented case of an unlimited promise priced against an input the seller bought at retail, and of terms tightening on heavy users during the original service | The FTC matter was **settled without admission of liability** and without monetary relief, both companies having filed bankruptcy — say "alleged" for the password and cap conduct. This is one company's history, not a prediction about any AI provider, and no inference vendor is being compared to it by name. The retained 3M subscriber figure is supported by the June 2018 SEC filing; the 20K starting figure and $40M monthly cash-burn detail are omitted from stage prose. See the correction record for primary links |
 
 ## Arithmetic in the talk
 
 All synthetic. One thousand attempts a month, two cents inference plus one cent other cost per attempt, seventy-five percent accepted. Thirty dollars, seven hundred fifty accepted, four cents each. The acceptance multiplier is 1 ÷ 0.75 = 1.33 and 1 ÷ 0.45 = 2.22. The equivalence on slide 10 is exact: 3¢ ÷ 0.45 = 6.67¢, and doubling inference gives (4 + 1)¢ ÷ 0.75 = 6.67¢. Check it live if a room challenges it.
 
-Two caveats belong here rather than on a slide. **Slide 11 sweep:** it is sensitivity, not prediction, and quality is held fixed across every row, which is itself an assumption; only an eval can tell you whether a cheaper configuration held acceptance. **Slide 13 payback:** the halved-inference example assumes acceptance is preserved, which is the same unproven assumption. Say either one out loud only if a room asks; the script no longer carries them.
+Two caveats belong here rather than on a slide. **Slide 11 sweep:** it is sensitivity, not prediction, and quality is held fixed across every row, which is itself an assumption; only an eval can tell you whether a cheaper configuration held acceptance. **Slide 13 payback:** the halved-inference example assumes acceptance is preserved, which is the same unproven assumption. The table introduction states fixed acceptance; the router example states preserved acceptance. These are assumptions, not observed quality results.
 
 Slide 13 payback arithmetic, checkable on stage. A cache or router that halves inference per attempt saves 1¢ per attempt at 1× ($0.02 → $0.01) and 10¢ per attempt at 10× ($0.20 → $0.10). At 1,000,000 attempts a month that 10¢ saving is $100,000 a month. At 1,000 attempts a month it is $100 — and $10 at today's 1× price. Identical project, two different answers.
 
@@ -35,7 +35,6 @@ Slide 13 payback arithmetic, checkable on stage. A cache or router that halves i
 | Slide | Slot |
 | --- | --- |
 | 1 | The first time a bill, quota, or rate change broke an assumption in something you built |
-| 4 | Recheck the three dated items; not a personal story |
 | 7 | A design review where "inference is basically free" ended the discussion |
 
 ## Candidate firsthand entries
@@ -60,7 +59,7 @@ Resume basis: shipping fine-tuned VLMs with Unsloth for ultra-low-cost document 
 - **Problem and operating context:** [what the frontier-model version cost per document; volume]
 - **What I personally built or changed:** [the fine-tune, the acceptance suite]
 - **Before and after measurements:** [cost per accepted document; accuracy against the suite]
-- **Hours to replace if the provider changed:** [this number is the slide-8 lock-in measurement]
+- **Hours to replace if the provider changed:** [this number is the slide-12 replacement-work estimate]
 - **Organization may be named publicly:** [ ]
 
 ### Candidate 3: a design review where "inference is free" ended the discussion
@@ -78,6 +77,10 @@ Consulting catalogue basis (`src/data/consultingServices.ts`). Strong firsthand 
 
 ## Before presenting
 
-Recheck the three dated items on slide 4 and the Epoch edition on slide 6. If a figure has moved, say the new figure; the argument on slide 4 is about what a commitment signals, so it survives a number change.
+Recheck the slide-4 commitment and optional dated references here and the Epoch edition on slide 6. If a figure has moved, say the new figure; the argument on slide 4 is about what a commitment signals, so it survives a number change.
 
-**Live recheck as of 2026-09-06:** Anthropic's IPO prospectus is expected late September 2026 and coverage suggests it may disclose contract detail behind the "more than $100B over ten years" AWS commitment. Treat that figure as the most likely of the three to move, and re-read the Amazon announcement page before any delivery after the filing. Keep it separate from the adjacent Microsoft/OpenAI restructuring figures, which are easy to misquote into this slide. Do not add a provider-specific margin estimate, a price forecast, or a date when subsidies end.
+**Live recheck, 2026-09-08:** Microsoft still states the incremental $250B Azure purchase commitment; Amazon still states more than $100B over ten years; AWS Activate still advertises up to $200K for eligible startups. Only the Microsoft figure remains on slide 4. These are announcements and an offer, not verified future payments or margin disclosures. A public Anthropic prospectus was not verified in this correction pass. Remove the speculative late-September timetable; check EDGAR and the original announcement before any future delivery that uses Anthropic contract detail. No filing date or new contract interpretation is asserted here.
+
+## Incentive analogy
+
+Training, curriculum, reps and habit describe a proposed mechanism: cheap choices are easy to repeat, and contracts or defaults can survive a price change. No clinical reward-schedule study, measured persistence of MoviePass habits, or causal estimate of inference-driven behavior is claimed. The closing sentence says the habit **can** outlive the offer.

@@ -2,32 +2,31 @@
 
 [Formats](formats.md) · [40-minute script](script-40min.md) · [Evidence](evidence-bank.md) · [Working notes](notes-2026-09-05.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
-Outline: [40 min](index.md). Current PPTX and browser editions are indexed in [formats.md](formats.md).
+Outline: [40 min](index.md). Presenter routes are indexed in [formats.md](formats.md); a current PPTX or browser edition is not available.
 
 ## Titles
 
 - **Primary:** Outsmart Your Lying, Cheating Students
-- **Event-friendly:** Stop Trying to Catch Students Using AI
+- **Event-friendly:** Make Verification Feel Like Cheating
 - Stop Asking Who Typed the Sentence
-- Make Verification Feel Like Cheating
 
 ## Abstracts
 
 ### 50 words
 
-Math class survived the calculator watch. Your class will survive the chatbot, but not by catching anyone. This session shows three ways to out-design students instead: an assignment where verification feels like cheating, a four-minute spoken reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
+Math class survived the calculator watch. Your class can survive chatbots without building a curriculum around catching anyone. This session shows ways to out-design students instead: an assignment where verification feels like cheating, a four-minute reconstruction, and a transcript view across 300 students. Plus a rubric that scores reasoning, not typing.
 
 ### 100 words
 
-Proctoring fails, detectors flag the wrong kids, and the pop quiz only proves what you already knew. This session stops trying to catch students and starts out-designing them. Three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group speaking where reading a model aloud and recalling from memory produce different mistakes, and a qualitative pass over every transcript that surfaces the five students who found a path worth showing the room. Around them: a four-minute live reconstruction, a rubric that scores reasoning and logs help separately, and a record that never hardens into a label.
+Proctoring fails, detectors flag the wrong kids, and the pop quiz only proves what you already knew. This session stops trying to catch students and starts out-designing them. Three moves: an arithmetic sheet with a smudged digit that teaches verification better than any ban, small-group explanation with purposeful follow-ups and a written alternative, and a qualitative pass over every transcript that surfaces the five students who found a path worth showing the room. Around them: a four-minute live reconstruction, a rubric that scores reasoning and logs help separately, and a record that never hardens into a label.
 
 ### 250 words
 
 The historical parallels have been beaten to death, so one and done: math class survived the Casio calculator watch, and the speaker may have used one on an assessment. The panic is familiar. So is the doom loop that follows it: proctoring fails, detectors flag non-native writers, and the pop quiz proves the student can't hit the first rung of Bloom's taxonomy. Getting away with it becomes the reward.
 
-This session stops trying to catch students and starts out-designing them. It opens by writing down where the foundations happen without a model (pencil, whiteboard, peers) and, in the same document, promising to teach the tool on purpose.
+The session names what to delegate, augment, and preserve, then promises to teach the tool on purpose.
 
-Then three moves. First, an assignment where verification feels like cheating: photograph a sheet of a hundred problems, feed it to the model, and discover the smudged 8 that came back as a 9. Second, speaking: small groups out loud, where reading a model's output and answering from memory produce different classes of error, with the biometric care that voice demands. Third, counting AI time the way teachers already count talk time, then running a qualitative pass across every transcript in a course.
+Then three moves. First, an assignment where verification feels like cheating: photograph a sheet of a hundred problems, feed it to the model, and discover the smudged 8 that came back as a 9. Second, speaking: small groups out loud, with purposeful follow-ups and a written alternative, with the biometric care that voice demands. Third, counting AI time the way teachers already count talk time, then running a qualitative pass across every transcript in a course.
 
 The worked example is small enough to inspect: a price rises 20% and falls 20%, and a clean sentence argues the changes cancel. A hint ladder, a live four-minute reconstruction with a transfer item that breaks the shortcut, a rubric that scores reasoning and logs help separately, and a four-line observation record carry the middle of the talk. It ends with a sculptor who never touched the clay, a pairs worksheet, and five verbs: explain it, challenge it, change it, apply it, defend it.
 
@@ -57,11 +56,16 @@ The speaker has built AI systems at an education technology company. The session
 ## References
 
 - Liang et al. (2023). [GPT detectors are biased against non-native English writers](https://doi.org/10.1016/j.patter.2023.100779). Patterns.
-- Bastani et al. (2025). [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122). PNAS. A [correction](https://doi.org/10.1073/pnas.2518204122) exists; check before quoting figures.
+- Bastani et al. (2025). [Generative AI without guardrails can harm learning](https://doi.org/10.1073/pnas.2422633122). PNAS. The August 2025 [correction](https://doi.org/10.1073/pnas.2518204122) fixes one author's departmental affiliation; no result changed.
 - TEQSA (2023). [Assessment reform for the age of artificial intelligence](https://www.teqsa.gov.au/guides-resources/resources/corporate-publications/assessment-reform-age-artificial-intelligence).
+- Koedinger and Aleven (2007). [Exploring the Assistance Dilemma](https://doi.org/10.1007/s10648-007-9049-0). Procurement route section 4.
+- Soderstrom and Bjork (2015). [Learning versus performance](https://doi.org/10.1177/1745691615569000). Slide 8; a learning review, not an AI trial.
+- Skitka, Mosier and Burdick (1999). [Does automation bias decision-making?](https://doi.org/10.1006/ijhc.1999.0252). Simulated flight task; slide 10 is an analogy.
+- Kestin et al. (2025). [AI tutoring outperforms in-class active learning](https://pmc.ncbi.nlm.nih.gov/articles/PMC12179260/). Harvard physics, two-week crossover, immediate outcomes.
+- VanLehn (2011). [Relative effectiveness of tutoring](https://doi.org/10.1080/00461520.2011.611369). Q&A; historical means, not a chatbot result.
 - Lemov, D. Teach Like a Champion: the 4Ms objective criteria (manageable, measurable, made first, most important), cited on slide 11.
 
-## Audience-specific abstracts (100 words each)
+## Audience-specific abstracts (at most 100 words each)
 
 ### Engineering practitioner
 
@@ -69,7 +73,7 @@ If you build assessment or tutoring features, this session shows what evidence o
 
 ### Engineering leadership and product
 
-Detector features are a liability; evidence features are a product. This session reframes integrity as assessment design and shows the artifacts a product should produce: an assignment pattern where verification feels like cheating, a hint ladder with recorded help, a reconstruction task with a transfer item, a rubric with a separate assistance column, and observation records that support the next teaching decision. It covers what a transcript view across 300 students can surface, the care voice data demands, and the staff-minutes question every pilot must answer. The speaker has built AI systems at an education technology company and names no product.
+Detector features are a liability; evidence features are a product. This session preserves integrity processes and changes assessment design and shows the artifacts a product should produce: an assignment pattern where verification feels like cheating, a hint ladder with recorded help, a reconstruction task with a transfer item, a rubric with a separate assistance column, and observation records that support the next teaching decision. It covers what a transcript view across 300 students can surface, the care voice data demands, and the staff-minutes question every pilot must answer. The speaker has built AI systems at an education technology company and names no product.
 
 ### Education and instructional design
 

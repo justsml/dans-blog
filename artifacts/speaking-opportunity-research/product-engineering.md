@@ -1,11 +1,11 @@
-# Deep research prompt: The Future of Product Engineering
+# Deep research prompt: Break the Mirror on Purpose
 
 Copy this entire file into a Deep Research task. This is an instruction brief, not a researched event list.
 
 ## Talk to match
 
 - Talk ID: `product-engineering`
-- Title: The Future of Product Engineering
+- Title: Break the Mirror on Purpose
 - Audience: Product engineers, engineering leaders, product managers, founders, and experimentation teams.
 - Thesis: Use faster generation to build shorter learning loops while preserving product promises, evaluation standards, and human decisions about acceptable tradeoffs.
 - Available formats: 15, 30, and 40 minutes; 45-minute slot with 5 minutes Q&A.

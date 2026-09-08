@@ -1,4 +1,4 @@
-# Visual inventory: Dynamic Scaling of Agentic Workloads
+# Visual inventory: Compute, Please (and a Receipt)
 
 Matches the 14-slide outline. Diagrams are editable SVG in `public/talks/assets/dynamic-scaling/` and render offline. Slides without a diagram use typography on purpose.
 
@@ -19,4 +19,4 @@ Matches the 14-slide outline. Diagrams are editable SVG in `public/talks/assets/
 | 13 | Typography: the council, the gates, the candidate table |
 | 14 | Typography |
 
-The synthesis diagram (13-synthesis-must-pass-the-gates-again.svg) and the scaling taxonomy (02-horizontal-vertical-self-directed.svg) are retained in assets for the workshop but no longer have slides; the taxonomy folded into slide 2 on 2026-09-07. File numbers on reused assets reflect their original positions, not the current order.
+The scaling taxonomy (02-horizontal-vertical-self-directed.svg) remains available for the workshop; the synthesis exercise uses demo.md and has no separate retained SVG; the taxonomy folded into slide 2 on 2026-09-07. File numbers on reused assets reflect their original positions, not the current order.

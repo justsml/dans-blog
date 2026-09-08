@@ -1,26 +1,25 @@
-# Talk packet: Dynamic Scaling of Agentic Workloads
+# Talk packet: Compute, Please (and a Receipt)
 
 [Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Supporting code](https://github.com/justsml/scaling-ai-agents) · [Evidence](evidence-bank.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
 ## Titles
 
-- Dynamic Scaling of Agentic Workloads
-- Put the limit where the work begins
-- Four callers, forty images, one customer
+- Compute, Please (and a Receipt)
+- Descriptive subtitle: Dynamic scaling of agentic workloads
 
 ## Short abstract (50 words)
 
-Four legitimate callers launch forty image jobs for a customer who bought ten. Every local limit passed. Now the same orchestrator can ask for its own compute: sandboxes and spot capacity that live minutes, inside a per-customer budget. This talk shows the inversion first, then builds the ledger that makes it safe.
+Four callers launch forty image jobs for a customer who bought ten. Now their orchestrator can request compute too. We follow its request into a catalog, lease and shared ledger, recover a batch after the lease expires, and price the disagreement reported by a Council of Guards.
 
 ## Standard abstract (100 words)
 
-Scaling used to be an infra decision made once for everyone. Agentic workloads invert it: the job says it is waiting on a provider, needs a GPU for ninety seconds, or wants a sandbox, and asks for exactly that, resolved against a catalog into a lease with a teardown. The substrate already exists (Fly.io Sprites, Depot, Modal, Vast.ai, Cloudflare Durable Objects, EC2 Spot); what none of it ships is the ledger. We build one: hidden fan-out, shared admission, a $2 reservation ledger, a job that survives a reclaimed spot worker and a lost response. Then the third scaling axis, attempts, with gates before preferences.
+Four legitimate callers launch forty image jobs for a customer who bought ten. Now that orchestrator can request its own compute. Follow one request through a catalog, lease, shared admission and a $1.50 provider ledger that refuses three items. The lease expires mid-batch; durable state preserves accepted work and unresolved charges. Then we price the third scaling axis: attempts. The barrel-of-monkeys maneuver produces competing drafts; a Council of Guards reports disagreement and can reject every candidate. Five judges can cost more than the draft they review. The workload chooses what to request. Your ledger decides what it gets.
 
 ## Extended abstract (230 words)
 
-Scaling used to be an infra decision made once for everyone: add replicas, buy a bigger box, let an autoscaler watch CPU. Agentic workloads invert it. The orchestrator knows the shape of each job at the moment it starts and can ask for compute the way it asks for a tool: shape, size, duration, region and a cost cap, resolved against a catalog into a lease with a teardown. Least privilege stops being a project when the box lives six minutes and reaches three domains. The substrate that already works this way is real (Fly.io Sprites, Depot sandboxes, Modal, Vast.ai, Cloudflare Workers and Durable Objects, EC2 Spot). None of it ships the ledger.
+Scaling used to be an infra decision made once for everyone: add replicas, buy a bigger box, let an autoscaler watch CPU. Agentic workloads invert it. The orchestrator knows the shape of each job at the moment it starts and can ask for compute the way it asks for a tool: shape, size, duration, region and a cost cap, resolved against a catalog into a lease with a teardown. Short lifetimes and scoped network access limit exposure. The substrate that already works this way is real (Fly.io Sprites, Depot sandboxes, Modal, Vast.ai, Cloudflare Workers and Durable Objects, EC2 Spot). None of it ships the ledger.
 
-So the middle of the talk builds one, around a worked example. Four legitimate callers (a chat turn, a retry, a cron job, a second browser tab) launch forty provider jobs for a customer who bought ten. We put admission below every caller, separate money from concurrency from rate, walk a $2 ledger with its reservation-tightness trade, and persist the job so it survives a reclaimed spot worker and a lost response without resubmitting.
+So the middle of the talk builds one, around a worked example. Four legitimate callers (a chat turn, a retry, a cron job, a second browser tab) launch forty provider jobs for a customer who bought ten. We put admission below every caller, separate money from concurrency from rate, walk a $1.50 ledger with its reservation-tightness trade, and persist the job so it survives an expired compute lease and a lost response without resubmitting.
 
 Then the third scaling axis, attempts. Amdahl prices speed and is unkind about it; the barrel-of-monkeys maneuver buys something else, and a Council of Guards of cheap multi-model judges reports disagreement rather than an average. Close where the talk began: put the limit where the work begins.
 

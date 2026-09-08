@@ -112,13 +112,13 @@ Each packet contains its own top-10 shortlist where the evidence supports ten, t
 | A Skeptic's Guide to Surviving AI in Education | 32 | [Open packet](../skeptic-education/research-notes.md) |
 | Outsmart Your Lying, Cheating Students | 28 | [Open packet](../evidence-learning/research-notes.md) |
 | Automating Improvement From Failure | 20 | [Open packet](../failure-improvement/research-notes.md) |
-| Building Adaptive & Dynamic AI Systems | 30 | [Open packet](../adaptive-systems/research-notes.md) |
-| Cry Me a Free Tier | 25 | [Open packet](../free-tier/research-notes.md) |
-| The Future of Product Engineering | 20 | [Open packet](../product-engineering/research-notes.md) |
-| From RAGs to Retrievals | 28 | [Open packet](../retrieval/research-notes.md) |
+| Conjure Exactly Enough | 30 | [Open packet](../adaptive-systems/research-notes.md) |
+| Buy Me a Free Tier | 25 | [Open packet](../free-tier/research-notes.md) |
+| Break the Mirror on Purpose | 20 | [Open packet](../product-engineering/research-notes.md) |
+| Three Search Methods in a Fundable Trenchcoat | 28 | [Open packet](../retrieval/research-notes.md) |
 | Stop Looking at My Benchmarks | 27 | [Open packet](../benchmarks/research-notes.md) |
-| Rethinking Parallelization in the Agentic Era | 20 | [Open packet](../parallelization/research-notes.md) |
-| Code Is Cheap. Judgment Is Expensive. | 20 | [Open packet](../judgment/research-notes.md) |
+| Compute, Please (and a Receipt) | 20 | [Open packet](../parallelization/research-notes.md) |
+| Turn Your Thinkin' Tokens Up to 11 | 20 | [Open packet](../judgment/research-notes.md) |
 
 ## Data guide
 

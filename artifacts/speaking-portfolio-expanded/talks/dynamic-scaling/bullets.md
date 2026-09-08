@@ -1,6 +1,6 @@
-# Dynamic Scaling of Agentic Workloads: bullet outline
+# Compute, Please (and a Receipt): bullet outline
 
-Agents now direct their own compute; put the limits where the work begins.
+Your agent chooses the compute, and the bill still has your name on it.
 
 Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no Q&A. Hand-written beats, not extracted sentences: each line is the thing to say next, in order. Every Story line needs Dan's own record before delivery. Shorter routes: [15](adaptation-15min.md) · [30](adaptation-30min.md).
 
@@ -41,7 +41,7 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 - Turn: the system that hid the fan-out can now ask for its own compute. Decide what that is allowed to mean.
 - Scope, once: numbers are fixtures, vendors are real.
 - Diagram — 4 × 10 = 40, before retries.
-- Story — The fan-out you found on a bill before you found it in a dashboard.
+- Story — Moved to slide 10; no extra anecdote on the opener.
 - Do — Let the room multiply before showing forty. Ask which component knew the entitlement. Silence.
 
 ### 2. Infra Is a Tool Call
@@ -60,7 +60,7 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 - What you risk: an agent that can provision is an agent that can spend. Catalog, lease, teardown, enforced outside the model. The agent chooses; it does not grant.
 - Bridge: everything the lease is enforced against is still yours to build. That is the middle of the talk. First, proof the substrate exists.
 - Diagram — Request (shape, size, duration, cap) → catalog + tenant budget → lease.
-- Story — The moment an agent-sized request would have replaced a capacity-planning meeting.
+- Story — Replace up to 40 words of per-job economics with Dan's example; do not append it.
 - Do — One autoscaler threshold beside one job request. Ask which one you could put on an invoice.
 
 ### 3. Torn Down by Default
@@ -136,11 +136,11 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 
 - You can satisfy any one of the three and blow the other two.
 - Reserve a defensible maximum per operation. Reconcile against the bill when the answer arrives. Keep unresolved provider jobs charged until you know.
-- A worker lease expiring proves the worker died. It does not prove the remote render stopped.
-- The trade: reserve the full retry allowance up front and a second legitimate caller queues behind money that may never be spent. Reserve lazily and you can overshoot.
+- A worker lease expiring revokes its dispatch authority. It does not prove the remote render stopped.
+- The trade: reserve the full retry allowance up front and a second legitimate caller queues behind money that may never be spent. Reserve each retry atomically and the cap still holds, but a retry may be refused.
 - Pick a tightness on purpose and write it down.
-- Diagram — $2 run cap: settled + reserved ≤ $2. Fixture prices.
-- Do — Walk the $2 ledger. Settled plus reserved never passes $2. Ask what the second caller should have seen.
+- Diagram — $1.50 provider cap: seven × $0.20 = $1.40; three refused.
+- Do — Walk the $1.50 ledger. Settled plus reserved stays within $1.50; ask why ten cents cannot fund another allowance.
 
 ### 8. A durable job survives the caller
 
@@ -180,14 +180,14 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 22:00–27:00 · peak · 05:00
 
 > Two callers, one entitlement
-> Spot instance reclaimed mid-batch
+> lease-88f1 expires mid-batch
 > One response lost, one email fails
 
 - Two callers want a full batch. First reserves the entitlement; second queues with an explicit reason.
-- Dispatch on a spot worker. Halfway: reclaimed with two minutes' notice. Lease expires, provider keeps rendering, reservations stay charged.
+- Dispatch on lease-88f1: eight sandbox-small workers, six-minute TTL. Lease expires; provider keeps rendering and reservations stay held.
 - New worker reloads the job, checks provider status per submitted item, collects what finished.
 - One response never arrived. Stays unresolved, reservation held, worker asks the provider instead of resubmitting.
-- All outputs land. Email fails. Delivery worker retries the email against the completed job; generation untouched.
+- All seven accepted outputs land. Email fails. Delivery worker retries the email against the completed job; generation untouched.
 - Land: one job, a recoverable lifecycle, honest accounting, and a substrate that was allowed to disappear under it. The abstraction the batch tool owed us.
 - Do — Trace from demo.md, row by row. Ask the room for each next transition before revealing it. Compress rows 1 and 2 on short routes.
 
@@ -218,7 +218,7 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 
 - Change the unit of work from images to whole designs. Same batch API, three competing designs, three cheap models, three different priorities.
 - Pre-empt: Knight and Leveson, 1986. Twenty-seven programmers, one spec, a million tests, separately written versions failed together. About N-version programming as a correctness strategy. Not this. I am not voting three models toward the truth.
-- Name it: the barrel-of-monkeys maneuver. Cheap parallel generation on purpose, monkeys at a hundredth of the frontier's price, hand the barrel to the next stage.
+- Name it: the barrel-of-monkeys maneuver. Cheap parallel generation on purpose, models chosen against a declared generation budget, hand the barrel to the next stage.
 - Race: first draft that passes the gate. Synthesize: frontier model reads them all (input is cheap), writes one. Rank: more candidates for the judges. Catch: law or medicine, the mistake shows up in one output of ten, and you only see it if you have ten.
 - Hedge, in the open: speculative optimization in a lab coat? Possibly. Ship behind an env var that sets fan-out to one; ideally the system tunes that knob itself. That is the companion talk.
 - Bridge: something still has to handle the barrel.
@@ -230,18 +230,18 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 
 33:00–37:30 · peak · 04:30
 
-> A judge reads a thousand tokens and writes fifty
+> Five judges at $1/$5 per million: 1.025¢ per candidate
 > Five judges, different models. Report the disagreement, not the average.
 > Gates before preferences; the council may reject the room
 
-- The cheap half is judging. A judge reads a thousand tokens, writes fifty. Output is what costs, so five judges from different models on every candidate is affordable.
+- At Haiku 4.5 rates ($1 input / $5 output per million), 300 input + 1,500 output costs 0.78¢. Five judges × (1,800 input + 50 output) cost 1.025¢: 131% of the draft. Reading dominates.
 - Not the average score. The disagreement. Judges that split, or whose reasons barely overlap, have found territory nobody understands. That candidate does not ship on autopilot.
-- Name it: the Council of Guards. Reads everything, writes almost nothing, costs a fraction of what it guards.
+- Council of Guards: sum the actual rates of the five different models. The same-rate calculation is a benchmark, not a multi-model quote; assume no shared cache.
 - Gates before you read the candidates: no duplicate dispatch after restart, no cross-tenant spend, no regeneration on notification retry, no dispatch after deadline.
 - Every candidate fails one, including the careful one. The council may reject the room. A synthesis is a new candidate. Stop at the review budget.
+- Do — Score the three candidates in demo.md. Room finds each failed gate before the reveal. Then the council split: high agreement on the minimalist's failure, low overlap on the maintainer's. Ask which one deserves the human's afternoon. Two minutes total; one minute and maintainer only on the 30 route.
 - Climax: none of this looks like the engineering we were raised on. Don't do the work twice, don't spend speculatively, one right answer per ticket. Axioms when the expensive thing was the engineer.
 - When the expensive thing is being wrong and a second draft costs cents, doing it three times and reading what disagrees is the frugal move. Not a shill for Big Token. Cheaper, safer, faster now sometimes come from spending exactly where yesterday's wisdom said not to.
-- Do — Score the three candidates in demo.md. Room finds each failed gate before the reveal. Then the council split: high agreement on the minimalist's failure, low overlap on the maintainer's. Ask which one deserves the human's afternoon.
 
 ### 14. Put the limit where the work begins
 
@@ -253,6 +253,8 @@ Act 3, the third axis (27:00 to 37:30): attempts, with Amdahl as the brake befor
 
 - Back to the four callers. Forty jobs, legal by four local counters. Missing: one shared account of what was promised and what was already started.
 - The inversion is real. The workload describes its own shape and asks for its own compute; the substrate grants it in seconds. Better than a warm fleet and a guess.
-- Only safe because the agent chooses from a catalog, spends from a ledger, and runs on boxes that expire.
-- Inspect one expensive tool in your system. Count the work it can launch underneath itself. Put the limit where that work actually begins.
+- Catalog, ledger and expiring boxes limit what a mistaken request can spend or reach.
+- Inspect one expensive tool in your system. Count the work it can launch underneath itself. Put the limit where the work begins.
 - Do — Close on the multiplication and the shared admission line. No new vendor. Stop talking.
+
+Delivery limits: follow [pacing.md](pacing.md). Seven audience-response beats; all other diagrams are guided explanation. Admission unavailable: durably queue or explicitly reject, never fail open. Slide 10 uses lease-88f1 (sandbox-small, eight workers, six-minute TTL), with a 40-word/25-second story allowance. Amdahl assumes fixed work, perfect parallel division and free coordination.

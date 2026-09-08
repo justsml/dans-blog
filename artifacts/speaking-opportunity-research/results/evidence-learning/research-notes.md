@@ -3,7 +3,7 @@
 Research run: 2026-09-04  
 Horizon: 2026-09-04 through 2028-03-04  
 Talk: **Outsmart Your Lying, Cheating Students**  
-Default educator-facing title: **Stop Trying to Catch Students Using AI: Designing Better Evidence of Learning**
+Default educator-facing title: **Make Verification Feel Like Cheating**
 
 This is a research evidence packet, not a submission plan or polished final report. No organizer was contacted and no proposal, registration, payment, publication, or reminder was created.
 

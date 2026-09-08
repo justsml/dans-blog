@@ -1,4 +1,4 @@
-# Research evidence packet: Rethinking Parallelization in the Agentic Era
+# Research evidence packet: Compute, Please (and a Receipt)
 
 Research run date: 2026-09-04  
 Horizon: 2026-09-04 through 2028-03-04  
