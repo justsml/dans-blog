@@ -1,20 +1,14 @@
 # Plan-space fixture
 
-The demo is arithmetic, not a simulation. It is offline, deterministic, and makes no model calls. Every constant is visible at the top of the file and is meant to be changed on stage if the room supplies better ones.
+The demo is arithmetic on the board, not a simulation. The constants are six features, three cohorts, 12,000 weekly actives over four weeks, an 8% baseline and a 2-point lift; swap in the room's numbers if it supplies better ones.
 
-```ts
-const FEATURES = 6, COHORTS = 3;
-const WEEKLY_ACTIVE = 12_000, WEEKS = 4;
-const BASELINE = 0.08, LIFT = 0.02;
-```
-
-Run `bun artifacts/speaking-portfolio-expanded/talks/judgment/demo.ts` for the plan count:
+The plan count:
 
 - 6! = 720 orderings
 - 3⁶ = 729 cohort assignments
 - 720 × 729 = 524,880 distinct plans, before batching and before dates
 
-Then run it with `--evidence`:
+The arm count:
 
 - 12,000 × 4 = 48,000 exposures in the window
 - 16 × 0.08 × 0.92 ÷ 0.02² = 2,944 per arm

@@ -35,4 +35,4 @@ Bainbridge (1983), Ironies of automation, Automatica 19(6). Skitka, Mosier and B
 
 ## Demo
 
-`bun artifacts/speaking-portfolio-expanded/shorts/fixtures/rubber-stamp.ts` for PASS, then `--holdout` for the failing assertion.
+Type the three lines, assert that a tenant-A admin can edit tenant A, show PASS. Then add the tenant-B assertion and watch it fail.

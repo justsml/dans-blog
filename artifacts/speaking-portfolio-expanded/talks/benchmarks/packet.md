@@ -9,4 +9,3 @@ Presenter scripts for all three lengths are listed in [formats.md](formats.md).
 | [contracts.md](contracts.md) | Cancellation acceptance criteria, the decision-flip fixture, the 90/10 confusion matrix |
 | [evidence-bank.md](evidence-bank.md) | Claim boundaries, fixture provenance, the unfilled story slot |
 | [visuals.md](visuals.md) | Slide 8's `bound.svg` |
-| [arithmetic.ts](arithmetic.ts) | Recomputes the flip rate, the zero-failure bound and kappa |

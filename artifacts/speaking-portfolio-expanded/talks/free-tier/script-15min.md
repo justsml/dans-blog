@@ -1,23 +1,29 @@
 # Buy Me a Free Tier: 15-minute presenter script
 
-Use slides 1, 3, 6, 7, 10, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the electricity question, the four explanations for a low price and the terrain line that names the talk, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words. Slide 5 is cut; Shoup and path dependence ride in the slide-3 bridge.
+Use slides 1, 3, 6, 7, 10, 12, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Lightning route: the MoviePass question, the four explanations for a low price and the terrain line that names the talk, Jevons, the software map, the acceptance multiplier, the hold-up problem, and the eight words. Slide 5 is cut; Shoup and path dependence ride in the slide-3 bridge.
 
-## 00:00 to 02:30: slide 1, Free electricity for a year
+## 00:00 to 02:30: slide 1, Unlimited for $9.95
 
 On screen:
 
-> A startup gets free electricity for a year.
-> What does it build? What survives when the offer ends?
+> August 2017: one movie a day, $9.95 a month. Average US ticket that year: $9.11.
+> What survived the offer? The habit. Not the company.
 
-A startup gets free electricity for a year. What does it build? Sit with that for five seconds, because the answer is not "the same thing, but cheaper." It builds a different company. Now: what survives when the offer ends?
+August 2017. MoviePass drops to nine ninety-five a month for one movie a day. The average American ticket cost nine dollars and eleven cents, and MoviePass paid full retail every time. Pay for one movie, see thirty.
 
-Swap electricity for inference and that is the whole talk. Here is my one disclaimer, and then I am done qualifying: nobody outside a provider knows its margins, I am not going to guess at one, and every dollar figure in my arithmetic is invented. What I do have is a hundred and fifty years of economists working on exactly this problem in coal, parking, highways and car factories, and they gave it names.
+Twenty thousand subscribers became three million in eighteen months. May 2018 lost forty million dollars in that month alone. By September 2019 it was gone.
 
-That is what you are getting today. Eight words. Engineers lose this argument in budget meetings because the best we can say is "it feels wasteful," and finance says "the bill looks fine." These eight words are how you say it so it lands.
+What did the cheap price build? An audience that drove across town on a Tuesday for films it had never heard of. And what survived the offer? The habit did. The company did not.
+
+Swap the ticket for a token. One disclaimer, then I stop qualifying: nobody outside a provider knows its margins, and every dollar figure here is invented. What I have is a hundred and fifty years of economists on this problem, and the names they gave it.
+
+Eight words. Engineers lose this argument in budget meetings because the best we can say is "it feels wasteful," and finance says "the bill looks fine."
+
+Source: MoviePass subscriber and loss figures are widely reported contemporaneous press; the litigated detail comes from the FTC action cited on slide 3. Average US ticket price $9.11 (2017) is the National Association of Theatre Owners annual average.
 
 Story: The first time a bill, a quota, or a rate change broke an assumption in something you built.
 
-Delivery: Take the five seconds. Actually take them. The silence is the slide.
+Delivery: Let "pay for one movie, see thirty" sit for a beat before the collapse numbers. The room does the arithmetic faster than you can say it.
 
 Bridge: four boxes on one invoice - price paid, resources consumed, cost allocated, value delivered - and the gap between the last two is why nobody is measuring.
 
@@ -28,15 +34,19 @@ On screen:
 > Penetration pricing · Loss leader in a bundle · Predation · It is genuinely cheap
 > The price cannot tell you which. What happens next can.
 
-Penetration pricing: buy the market now, raise later. Standard, legal, taught in every business school. Loss leader in a bundle: the cheap thing funds the expensive thing next to it, which is what a two-sided market does for a living. Predation: below cost specifically to remove rivals. In US law that is not a vibe, it is a test. Brooke Group, 1993: you need below-cost pricing and a dangerous probability of recoupment. And the fourth explanation, the one that keeps me honest: it is genuinely cheap, and getting cheaper, because the engineering is real.
+Penetration pricing: buy the market now, raise later. Loss leader in a bundle: the cheap thing funds the expensive thing next to it, which is what a two-sided market does for a living. Predation: below cost specifically to remove rivals — in US law a test, not a vibe. Brooke Group, 1993: below-cost pricing plus a dangerous probability of recoupment. And the fourth, the one that keeps me honest: it is genuinely cheap, and getting cheaper, because the engineering is real.
 
-Here is the useful part. You cannot distinguish these from the price. You can distinguish them from what happens next. Penetration predicts prices rise at renewal, after switching gets hard. Predation predicts a rival disappears and then prices rise. Genuine efficiency predicts prices keep falling without anyone tightening the terms. So watch renewal terms, watch rate limits, watch what happens to the free tier, and stop trying to read a margin off a token rate.
+You cannot tell which from the price, only from what happens next: penetration raises prices at renewal once switching is hard, predation waits for a rival to die, genuine efficiency keeps cutting without tightening the terms.
+
+MoviePass already ran that experiment. The FTC's 2021 complaint records what happened next: passwords invalidated for the seventy-five thousand heaviest users under a false fraud claim, a photograph-your-ticket step, undisclosed caps. No announced price rise — the product just got harder to use, heaviest users first. That is rate limiting, and it is the tell.
 
 Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (1993), on the recoupment requirement in predatory-pricing claims.
 
+Source: [FTC, 7 June 2021](https://www.ftc.gov/news-events/news/press-releases/2021/06/operators-moviepass-subscription-service-agree-settle-ftc-allegations-they-limited-usage-failed), settlement with MoviePass Inc., Helios and Matheson Analytics, Lowe and Farnsworth, on password invalidation, ticket verification and undisclosed caps. Allegations settled without monetary relief; both companies were already bankrupt.
+
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-Bridge: those commitments are credible commitments in Schelling's sense, moves in a war of attrition. Note who is not a player. Somebody is buying your free tier, and it is not you. You are not a combatant, you are the terrain. And the terrain keeps its asphalt: repealing a parking minimum does not remove a lot, which is path dependence.
+Bridge: those commitments are Schelling moves in a war of attrition. Note who is not a player. Somebody is buying your free tier, and it is not you. You are not a combatant, you are the terrain. And the terrain keeps its asphalt: repealing a parking minimum does not remove the lot — path dependence.
 
 ## 05:15 to 07:15: slide 6, Jevons, coal, and the extra lane
 
@@ -113,9 +123,11 @@ On screen:
 > Moral hazard · Credible commitment · Asset specificity · Real option
 > Build for more than one price.
 
-Back to the electricity. Use the cheap input. It is genuinely great and I am not asking anyone to be miserable about it. Just understand what it encouraged you to build, and keep the expensive decisions reversible while you find out.
+Back to MoviePass. Cinema subscriptions work today, shipped by the chains that owned the screens and never paid retail. The company that died promised unlimited access to something it bought at full price from somebody else. Ask which you are.
 
-There are your eight words. Externality, because the cost moved rather than vanished. Induced demand and Jevons, because cheaper made you use more, not less. Path dependence, because the lots stay built. Moral hazard, because whoever chooses is not whoever pays. Credible commitment, because those contracts are moves in a game and not disclosures about it. Asset specificity, because your architecture is worth more here than anywhere else. And real option, because reversibility is something you buy, not something you feel.
+So use the cheap input. Just understand what it encouraged you to build, and keep the big decisions reversible.
+
+There are your eight words. Externality, because the cost moved rather than vanished. Induced demand and Jevons, because cheaper made you use more, not less. Path dependence, because the lots stay built. Moral hazard, because whoever chooses is not whoever pays. Credible commitment, because those contracts are moves in a game, not disclosures. Asset specificity, because your architecture is worth more here than anywhere else. And real option, because reversibility is something you buy, not something you feel.
 
 Cheap intelligence changes incentives before it changes organizations.
 

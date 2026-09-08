@@ -4,7 +4,7 @@ Keep slides 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15. Hide the others in presente
 
 | Time | Slide | Beat |
 | --- | --- | --- |
-| 00:00 to 02:00 | 1 | Free electricity for a year |
+| 00:00 to 02:00 | 1 | Unlimited for $9.95 |
 | 02:00 to 04:00 | 2 | Four boxes, one invoice |
 | 04:00 to 07:00 | 3 | Why would anyone sell below cost? |
 | 07:00 to 09:00 | 5 | Free parking was never free |

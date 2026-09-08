@@ -4,7 +4,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 
 ## Recording 1: the 25-minute talk
 
-**Pick:** Automating Improvement From Failure. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), its live demo is specified in [demo.md](../talks/failure-improvement/demo.md) and not yet built, and it is the talk most engineering programs will ask to preview.
+**Pick:** Automating Improvement From Failure. It ranks first on the research shortlist (San Diego Python, Denver DevOps, DeveloperWeek), its supporting example is specified in [demo.md](../talks/failure-improvement/demo.md) and not yet built, and it is the talk most engineering programs will ask to preview.
 
 **Cut:** Use the [30-minute adaptation](../talks/failure-improvement/adaptation-30min.md) and drop slides 10 and 12, each allocated 2:30 in that route, to land at 25 minutes. Keep slide 8 at 5:30 and keep 6, 9, and 13. After slide 9, bridge to feedback: "The same queue takes customer feedback; people still approve messages, money, and deletion." After slide 11: "The queue now needs a measure of whether its work was worth reading."
 
@@ -21,7 +21,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 
 ## Recording 2: the five-minute demo reel
 
-**Constraint:** AI Tinkerers requires a genuine working demo of something you built, no slides, no pitch. The offline kit is a deterministic replay and does not qualify on its own.
+**Constraint:** AI Tinkerers requires a genuine working demonstration of something you built, with no slides or pitch. This is a separate submission format built from the supporting repository.
 
 **Candidate demo:** the fail-to-win loop from the failure-improvement talk, run live against a sanitized log export. Show a scheduled agent distilling everything since the last check, classifying the result, filing a ticket with the trace, and proposing a PR that the guardrails hold in review until the holdout passes. Five minutes, one terminal, one browser tab.
 
@@ -35,7 +35,7 @@ Two recordings cover most application requirements: one 15–30 minute talk with
 | 2:30–4:00 | The proposed PR and the three gates. Regression passes, holdout fails, held in review. Fix the candidate to satisfy the unchanged holdout; rerun before promotion. |
 | 4:00–5:00 | Rerun the check. The failure is now a known case. One sentence on what changed and what did not, and what a person still has to approve. |
 
-**Build required before recording:** a scheduled agent invocation with a distill skill and a classify skill, a sanitized log export, write access to a ticket tracker, and the gate script. This is a small project, not a slide edit. The kit's `demo-logic.js` documents the intended gate behavior.
+**Supporting repository required before recording:** a scheduled agent invocation with distill and classify steps, a sanitized log fixture, an isolated ticket fixture, and the gate script. The talk references captured output from that repository.
 
 ## What each recording satisfies
 

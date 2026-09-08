@@ -4,4 +4,4 @@ This packet indexes the talk's editions. Presenter scripts: [15 min](script-15mi
 
 The edition table is generated; see [formats.md](formats.md) for every browser deck, PPTX export and presenter script.
 
-Hand-written companions: [evidence-bank.md](evidence-bank.md), [contracts.md](contracts.md) for the plan-space fixture, [visuals.md](visuals.md), [demo.ts](demo.ts).
+Hand-written companions: [evidence-bank.md](evidence-bank.md), [contracts.md](contracts.md) for the plan-space fixture, [visuals.md](visuals.md).

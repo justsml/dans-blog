@@ -18,7 +18,7 @@ Recheck the three dated items on slide 4 the week of any delivery.
 
 ## Seven-minute lightning script
 
-0:00 to 1:00, slide 1. A startup gets free electricity for a year. What does it build? Take the five seconds. It does not build the same company more cheaply, it builds a different company. Now: what survives when the offer ends? Swap electricity for inference.
+0:00 to 1:00, slide 1. August 2017: MoviePass sells one movie a day for $9.95 while the average ticket costs $9.11. Pay for one movie, see thirty. Three million subscribers in eighteen months, $40M lost in May 2018 alone, dead by 2019. What did the cheap price build, and what survived when the offer ended? The habit survived. The company did not. Swap the ticket for a token.
 
 1:00 to 2:15, slide 5. Free parking was never free. Nobody paid at the meter, so the cost moved into rents, retail prices and land, and because drivers saw no price, demand looked infinite. That is an externality: a real cost, paid, but not by the person deciding. Then the environment reorganized around it, and each step was locally reasonable.
 
@@ -26,7 +26,7 @@ Recheck the three dated items on slide 4 the week of any delivery.
 
 3:30 to 5:30, slide 12. Here is the reframe. Williamson won a Nobel for what happens when you make an investment that is worth a lot inside one relationship and little outside it. Your prompts, your evals, your fine-tunes, your unlimited-usage clause. That is asset specificity, and the trouble it produces is called hold-up. You are not shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral.
 
-5:30 to 7:00, slide 15. Eight words: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, real option. Three prices for your next design review: what you pay today, what you pay without the offer, and the most you could survive paying. Cheap intelligence changes incentives before it changes organizations.
+5:30 to 7:00, slide 15. Back to MoviePass: cinema subscriptions exist and work today, shipped by the chains that owned the screens and never paid retail. Ask which of those two you are. Eight words: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, real option. Three prices for your next design review: what you pay today, what you pay without the offer, and the most you could survive paying. Cheap intelligence changes incentives before it changes organizations.
 
 ## Five to ten minute live demo (AI Tinkerers)
 

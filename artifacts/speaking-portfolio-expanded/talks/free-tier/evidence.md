@@ -15,6 +15,7 @@ The counterargument is part of the thesis and now appears in the first ten minut
 - No implication that support percentages establish a causal experiment result; the demo has no randomized user-level data or sampling uncertainty.
 - No equation that lets a metric win compensate for a prohibited pattern.
 - No claim that model confidence authorizes exposure, pricing changes, or external communications.
+- No claim that any AI provider resembles MoviePass, is subsidizing at a loss, or will tighten terms. MoviePass is used as a completed case with a documented ending, never as an analogy to a named vendor. State the FTC allegations as allegations; the 2021 matter settled without admission of liability and without monetary relief.
 
 ## Source upkeep before a booking
 

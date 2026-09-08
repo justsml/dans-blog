@@ -18,6 +18,6 @@ F is Acme’s signed, current Schedule R. It permits immediate cancellation with
 
 For this toy topical-relevance rubric, A and B are relevant, C/D/E are not. Old run: B,A. New run: B,F. A naive precision@2 scorer treating unjudged as nonrelevant gives 1.0 versus 0.5. Judge F relevant under the same rubric and both score 1.0. The new evidence is more useful for answering even though this coarse metric only returns to a tie. Relevance alone does not establish sufficiency, authority, or a better ranking overall.
 
-Run `bun artifacts/speaking-portfolio-expanded/talks/retrieval/pooling.ts`. Scores are arithmetic over fixed IDs, not a measured retrieval benchmark.
+Scores are arithmetic over fixed IDs, not a measured retrieval benchmark.
 
 The example demonstrates a possible incomplete-pool failure, not a universal property of TREC. Voorhees, Soboroff, and Lin’s 2022 recheck found TREC-8 run rankings almost identical after expanded judgments. Collection quality and diversity matter. Do not quote a Kendall’s tau figure on stage until the exact value has been read off arXiv 2201.11086 and confirmed to refer to the TREC-8 ad hoc runs; the qualitative finding is what the slide needs.

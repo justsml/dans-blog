@@ -6,7 +6,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ## Spine
 
-1. **Free electricity for a year** — 00:00 · warm · 02:15
+1. **Unlimited for $9.95** — 00:00 · warm · 02:15
 2. **Four boxes, one invoice** — 02:15 · warm · 01:45
 3. **Why would anyone sell below cost?** — 04:00 · steady · 02:45
 4. **Burn the boats** — 06:45 · build · 02:45
@@ -24,18 +24,19 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 ## Slides
 
-### 1. Free electricity for a year
+### 1. Unlimited for $9.95
 
 00:00–02:15 · warm · 02:15
 
-> A startup gets free electricity for a year.
-> What does it build? What survives when the offer ends?
+> August 2017: one movie a day, $9.95 a month. Average US ticket that year: $9.11.
+> What survived the offer? The habit. Not the company.
 
-- A startup gets free electricity for a year.
-- Swap electricity for inference and that is the whole talk.
-- That is what you are getting today. Eight words.
+- August 2017. MoviePass drops to $9.95 a month for one movie a day; the average ticket costs $9.11.
+- 20,000 subscribers to three million in eighteen months. May 2018 alone lost $40M. Gone by September 2019.
+- What did the cheap price build? What survived when the offer ended? The habit did. The company did not.
+- Swap the ticket for a token. One disclaimer, then eight words.
 - Story — The first time a bill, a quota, or a rate change broke an assumption in something you built.
-- Do — Take the five seconds. Actually take them. The silence is the slide.
+- Do — Let "pay for one movie, see thirty" sit for a beat before the collapse numbers.
 
 ### 2. Four boxes, one invoice
 
@@ -58,9 +59,11 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 
 - There are four respectable explanations for a low price, and an engineer arguing about this in a meeting should be able to name all four.
 - Penetration pricing: buy the market now, raise later.
-- Here is the useful part. You cannot distinguish these from the price.
+- Here is the useful part. You cannot distinguish these from the price, only from what happens next.
+- MoviePass already ran that experiment: passwords invalidated for the 75,000 heaviest users, photograph-your-ticket verification, undisclosed caps. No announced price rise — just rate limiting.
 - Source — Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (1993), on the recoupment requirement in predatory-pricing claims.
 - Source — Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
+- Source — FTC, 7 June 2021, settlement with MoviePass Inc. and Helios and Matheson Analytics, on password invalidation, ticket verification and undisclosed caps.
 
 ### 4. Burn the boats
 
@@ -141,6 +144,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 > Shoup's fix was never a ban. It was a meter.
 
 - Word five, and this one is about your org chart, not your vendor.
+- The MoviePass subscriber was not the villain: teenagers, parents home with kids, retirees. Handed a card saying one movie a day, they used it one movie a day. Not their fault; they responded to a price.
 - An engineer picks the architecture in a design review on a Tuesday.
 - And notice what Shoup actually recommended, because everyone gets this wrong.
 - Do — Ask who can see a per-feature inference cost without filing a ticket. Very few hands. That is the slide.
@@ -169,7 +173,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - Read the one-times row, then the ten-times row.
 - Then multiply by your own volume, because the table is meaningless without it.
 - Table — Inference price · Monthly cost · Cost / accepted outcome, 4 rows
-- Do — Runbook section 4. Two-minute compression: the 1× and 10× rows only. Ask for 45 seconds: which assumption would you attack first before funding an optimization project?
+- Do — Walk the 1× and 10× rows, then change the acceptance assumption. Ask which assumption the room would test before funding an optimization project.
 
 ### 12. You are not shopping, you are contracting
 
@@ -182,6 +186,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - This is the slide I would keep if you cut every other one.
 - The shape is always the same. You make an investment that is worth a great deal here and very little anywhere else.
 - Now inventory your specific assets. Prompts tuned against one model's quirks.
+- An unlimited-usage promise priced against an input you cannot cap is the entire MoviePass balance sheet.
 - So stop thinking of this as shopping, where the customer holds the power because they can leave.
 
 ### 13. Reversible is a line item
@@ -217,7 +222,8 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 > Moral hazard · Credible commitment · Asset specificity · Real option
 > Build for more than one price.
 
-- Back to the electricity. Use the cheap input.
+- Back to MoviePass, and the ending that gets left off: the chains shipped the sustainable version because they owned the screens and never paid retail. Ask which of those two you are.
+- So use the cheap input.
 - There are your eight words. Externality, because the cost moved rather than vanished.
 - Some low prices are temporary. Some are a preview of genuinely cheaper production.
 - Cheap intelligence changes incentives before it changes organizations.

@@ -103,16 +103,16 @@ Adaptive and Dynamic Scaling use actual SVG diagrams linked from their outlines,
 
 The two education talks use different worked examples so they can be booked together.
 
-## Evidence and demo details
+## Evidence and worked-example details
 
 - [Education research and claim boundaries](talks/evidence-learning/evidence.md) and [worked assessment exercises](talks/evidence-learning/demo.md).
-- [Failure-improvement evidence](talks/failure-improvement/evidence.md) and [stage sequence](talks/failure-improvement/demo.md).
+- [Failure-improvement evidence](talks/failure-improvement/evidence.md) and [supporting example](talks/failure-improvement/demo.md).
 - Adaptive-systems evidence and stage sequence.
-- [Free Tier evidence](talks/free-tier/evidence.md) and [stage sequence](talks/free-tier/demo.md).
-- [Product Engineering evidence](talks/product-engineering/evidence.md) and [stage sequence](talks/product-engineering/demo.md).
+- [Free Tier evidence](talks/free-tier/evidence.md) and [worked example](talks/free-tier/demo.md).
+- [Product Engineering evidence](talks/product-engineering/evidence.md) and [worked example](talks/product-engineering/demo.md).
 
 
-The offline kit uses scripted or deterministic fixtures. It makes no model calls, estimates no provider subsidy, grades no student, and deploys no experiment. The adaptive and dynamic-scaling talks use paper walkthroughs with fixtures. Their recovery scenarios are documented in the packet walkthroughs; the offline resource-policy exercise demonstrates only strategy selection and caps.
+The talks use authored fixtures and saved output where a concrete example helps. Runnable implementations live in separate supporting repositories. The slide decks do not depend on an interactive application.
 
 ## Topic ownership
 

@@ -13,7 +13,7 @@ Four features shipped before lunch. All four work. All four have tests. Your bes
 
 Here is the line this talk has to earn. Don't count what the feature cost you to build, count what it costs them to relearn.
 
-The title is a Spinal Tap joke and it is load-bearing. Turn the reasoning budget up to eleven. More tokens buy more consideration of situations the model has already seen. They do not buy taste, and they do not tell you which Tuesday.
+The title is a Spinal Tap joke and it is load-bearing. Turn the reasoning budget up to eleven. More tokens buy more consideration of situations the model has already seen. They do not buy taste, and they do not tell you which features to launch & when.
 
 Scope, once. The arithmetic later is counting, not a measurement of your team, and the two futures at the end are labeled predictions I have not measured.
 
@@ -141,7 +141,7 @@ There is a paper about exactly this: the Apple group's Illusion of Thinking, 202
 
 My claim is weaker and safer. The model has not met your users. More tokens do not fix that, and neither does more of you, because your judgment is biased too. The difference is that you can write your prediction down before the release and check it afterward.
 
-Stage direction: Run `bun artifacts/speaking-portfolio-expanded/talks/judgment/demo.ts` for the plan count, then add `--evidence` for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
+Stage direction: Do 6! × 3⁶ on the board for the plan count, then exposures over the per-arm sample size for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
 
 Source: François Chollet (2019), [On the Measure of Intelligence](https://arxiv.org/abs/1911.01547), arXiv:1911.01547. Parshin Shojaee and colleagues (2025), [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking), Apple Machine Learning Research; and the rebuttal, [The Illusion of the Illusion of Thinking](https://arxiv.org/abs/2506.09250), arXiv:2506.09250. Present as a contested exchange, not a settled result.
 

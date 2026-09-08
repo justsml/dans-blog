@@ -1,6 +1,6 @@
 # Automating Improvement From Failure: 15-minute presenter script
 
-Use slides 1, 2, 4, 6, 8, 9, 13, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Demo compressed to four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration.
+Use slides 1, 2, 4, 6, 8, 9, 13, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The worked example gets four minutes: regression, red holdout, unknown. Rehearse the shortened explanation; do not narrate every integration.
 
 ## 00:00 to 01:45: slide 1, Nobody reads the scroll
 
@@ -75,14 +75,14 @@ Delivery: Take two short answers about fixes that hid a problem. Budget 45 secon
 
 Bridge: tickets and PRs carry evidence into a bounded review queue.
 
-## 06:15 to 09:45: slide 8, Demo: nothing leaves without evidence
+## 06:15 to 09:45: slide 8, Nothing leaves without evidence
 
 On screen:
 
 > Regression · holdout · scope · human
 > The useful result is permission denied
 
-The candidate removes the visible failure. That is the beginning of the demo, not the result.
+The candidate removes the visible failure. That is the beginning of the review, not the result.
 
 Run the regression. Now run the held-out authorization case. It fails. The proposed retry used authority that belonged to somebody else. The gate holds the change without asking the agent whether it feels finished.
 
@@ -92,7 +92,7 @@ Now give the classifier the case it cannot explain. Unknown is an output. It lan
 
 Source: Toyota, [Toyota Production System](https://global.toyota/en/company/vision-and-philosophy/production-system/), jidoka and the andon response.
 
-Delivery: Use the live sequence in engineering/failure-improvement/demo.md. Full slot 5:30. Run real tests; never substitute the checkbox kit for execution. Recording remains blocked until a sanitized production export, working tracker integration, and captured gate run exist.
+Delivery: Walk through the captured output from the supporting repository: passing regression, failed authorization holdout, and unknown classification. Link the repository for the implementation.
 
 ## 09:45 to 12:00: slide 9, Who reviews the robot's PRs?
 

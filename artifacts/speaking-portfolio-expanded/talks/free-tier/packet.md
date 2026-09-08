@@ -21,13 +21,13 @@ Engineers lose the cost argument in budget meetings because the strongest thing 
 
 ### 250 words
 
-A startup gets free electricity for a year. What does it build, and what survives when the offer ends? Swap electricity for inference and that is the question.
+In 2017 MoviePass sold one movie a day for $9.95 while tickets averaged $9.11. What did that build, and what survived the offer? The habit did; the company did not. Swap the ticket for a token.
 
-Nobody outside a provider knows its margins, and this talk never guesses one. It borrows instead from a century and a half of economists who worked on the same structure in coal, parking, highways and car factories, and it hands the room their vocabulary.
+Nobody outside a provider knows its margins, and this talk never guesses one. It borrows instead from a century and a half of economists who worked on the same structure in coal, parking, highways and car factories, and hands the room their vocabulary.
 
-Four respectable explanations exist for a price below cost: penetration pricing, a loss leader inside a two-sided bundle, predation (which in US law requires a real probability of recoupment), and genuine efficiency. The price cannot tell you which. What happens at renewal can. The enormous compute commitments everyone quotes are not cost disclosures; they are credible commitments in Schelling's sense, moves in a war of attrition in which the customer is not a player but the terrain.
+Four respectable explanations exist for a price below cost: penetration pricing, a loss leader inside a two-sided bundle, predation (which in US law requires a real probability of recoupment), and genuine efficiency. The price cannot tell you which. What happens at renewal can. The enormous compute commitments everyone quotes are not cost disclosures; they are Schelling commitments, moves in a war of attrition in which the customer is not a player but the terrain.
 
-Then Shoup's parking argument supplies the mechanism: a hidden price makes demand look infinite, the environment reorganizes, and repealing the rule does not remove the asphalt. Jevons and induced demand explain why a falling unit price and a rising bill are the expected outcome rather than a paradox. Moral hazard explains why the engineer choosing the architecture never sees the meter.
+Shoup's parking supplies the mechanism: a hidden price makes demand look infinite, the environment reorganizes, and repealing the rule does not remove the asphalt. Jevons and induced demand explain why a falling unit price and a rising bill are expected rather than paradoxical. Moral hazard explains why the engineer choosing the architecture never sees the meter.
 
 The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. The close prices reversibility as a real option and leaves three numbers for the next design review.
 

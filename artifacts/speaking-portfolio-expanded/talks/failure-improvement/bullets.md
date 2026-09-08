@@ -13,7 +13,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 5. **Distill, then classify** — 10:30 · build · 02:30
 6. **The retry that hid the auth failure** — 13:00 · build · 03:00
 7. **Tickets are cheap. Review is not.** — 16:00 · build · 02:30
-8. **Demo: nothing leaves without evidence** — 18:30 · peak · 05:30
+8. **Nothing leaves without evidence** — 18:30 · peak · 05:30
 9. **Who reviews the robot's PRs?** — 24:00 · build · 03:00
 10. **Compile what repeats** — 27:00 · build · 03:00
 11. **Feedback is the same loop** — 30:00 · build · 02:30
@@ -112,7 +112,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - Opening a PR spends somebody else's attention.
 - Match ceremony to consequence. A documentation correction and a payment retry do not get the same permissions because they happen to arrive through the same agent.
 
-### 8. Demo: nothing leaves without evidence
+### 8. Nothing leaves without evidence
 
 18:30–24:00 · peak · 05:30
 
@@ -123,7 +123,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 15 slides, 40 minutes, no
 - Run the regression. Now run the held-out authorization case.
 - Toyota calls stopping at an abnormality jidoka.
 - Now give the classifier the case it cannot explain.
-- Do — Use the live sequence in engineering/failure-improvement/demo.md. Full slot 5:30. Run real tests; never substitute the checkbox kit for execution. Recording remains blocked until a sanitized production export, working tracker integration, and captured gate run exist.
+- Do — Walk through the captured output from the supporting repository: passing regression, failed authorization holdout, and unknown classification. Link the repository for the implementation.
 - Source — Toyota, [Toyota Production System](https://global.toyota/en/company/vision-and-philosophy/production-system/), jidoka and the andon response.
 
 ### 9. Who reviews the robot's PRs?

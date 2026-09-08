@@ -11,7 +11,7 @@ Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Hide the others i
 | 06:30 to 08:00 | 5 | Distill, then classify |
 | 08:00 to 10:00 | 6 | The retry that hid the auth failure |
 | 10:00 to 11:30 | 7 | Tickets are cheap. Review is not. |
-| 11:30 to 17:00 | 8 | Demo: nothing leaves without evidence |
+| 11:30 to 17:00 | 8 | Nothing leaves without evidence |
 | 17:00 to 19:30 | 9 | Who reviews the robot's PRs? |
 | 19:30 to 22:00 | 10 | Compile what repeats |
 | 22:00 to 23:30 | 11 | Feedback is the same loop |
@@ -20,4 +20,4 @@ Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Hide the others i
 | 27:30 to 29:00 | 14 | Start Monday |
 | 29:00 to 30:00 | 15 | Fail to win |
 
-The demo stays at 5:30. The 25-minute recording drops 10 and 12; see recording-plan.md. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.
+The worked example stays at 5:30. The 25-minute recording drops 10 and 12; see recording-plan.md. Bridge sentences for every cut are in the script. End on the closing slide, not on a tour of what was skipped.

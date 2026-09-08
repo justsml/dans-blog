@@ -4,7 +4,7 @@ Split out of the former joint economics/product submission package on 7 Septembe
 
 **Subtitle:** Break the Mirror on Purpose
 
-**Formats:** One canonical 40-minute, 17-slide outline. Generated 30- and 15-minute routes use the same deck and retain the demo-before-guards order. The demo gets 4:30 in the 40, 4:00 in the 30 and 3:00 in the 15. Slides 14 and 15 are the two closing predictions; the 30- and 15-minute routes cut slide 14 and carry its prediction in the slide-12 bridge, which must introduce it as the first of two.
+**Formats:** One canonical 40-minute, 17-slide outline. The 30- and 15-minute routes use the same deck and retain the worked-example-before-guards order. The example gets 4:30 in the 40, 4:00 in the 30 and 3:00 in the 15. Slides 14 and 15 are the two closing predictions; the 30- and 15-minute routes cut slide 14 and carry its prediction in the slide-12 bridge, which must introduce it as the first of two.
 
 **Audience:** Product engineers and the leaders responsible for product handoffs and review capacity. Familiarity with feature flags is useful.
 
@@ -31,4 +31,4 @@ Buy Me a Free Tier owns cost per accepted outcome. Product Engineering owns coor
 
 ## Submission integrity
 
-Use the speaker’s real biography separately; none is invented here. Do not describe the demonstrations as live production results, statistically significant experiments, measured ROI, or a customer case study. Source and uncertainty details are in [evidence.md](evidence.md); exact stage sequences and fallback plans are in [demo.md](demo.md).
+Use the speaker’s real biography separately; none is invented here. Do not describe the worked examples as production results, statistically significant experiments, measured ROI, or a customer case study. Source and uncertainty details are in [evidence.md](evidence.md); the reveal order is in [demo.md](demo.md).

@@ -16,7 +16,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 17 slides, 40 minutes, no
 8. **Gap analysis, past engineering** — 12:45 · build · 01:45
 9. **Targeted beta enrollment, and the deluge** — 14:30 · build · 02:00
 10. **Campbell's law arrives on schedule** — 16:30 · build · 01:30
-11. **Demo: run it before you know the rule** — 18:00 · peak · 04:30
+11. **The metric winner fails the product** — 18:00 · peak · 04:30
 12. **Where guards go, including the two we forgot** — 22:30 · build · 02:00
 13. **How many agents can one person own?** — 24:30 · build · 02:00
 14. **Software Runs on Petrol Now** — 26:30 · build · 04:00
@@ -34,7 +34,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 17 slides, 40 minutes, no
 > Which of those boundaries still earns its keep?
 
 - " Constrained. Communication structures.
-- This is a proposed operating model. The demo uses synthetic numbers to execute a policy, not measure customer benefit.
+- This is a proposed operating model. The worked example uses synthetic numbers to explain a policy, not measure customer benefit.
 - Look at the handoffs in a product you own.
 - Story — A system whose API boundaries reproduced the team handoffs, and the change that got stuck between them.
 - Source — Melvin E. Conway (1968), [How Do Committees Invent?](https://melconway.com/Home/pdf/committees.pdf), Datamation, April, 28–31.
@@ -147,7 +147,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 17 slides, 40 minutes, no
 - The interesting question is what the winning candidate did to earn the number.
 - Source — Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
-### 11. Demo: run it before you know the rule
+### 11. The metric winner fails the product
 
 18:00–22:30 · peak · 04:30
 
@@ -159,7 +159,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 17 slides, 40 minutes, no
 - Support contacts rose to nine percent, against a five-percent ceiling.
 - C has forty-five percent activation, four percent support, and no fabricated urgency.
 - Write the rule you wish you had before the first vote.
-- Do — Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow demo.md. Allow 45 seconds to write the rule.
+- Do — Begin with the three activation figures and take the vote. Then reveal the support and copy evidence from the worked-example notes. Allow 45 seconds to write the rule.
 
 ### 12. Where guards go, including the two we forgot
 
@@ -168,7 +168,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 17 slides, 40 minutes, no
 > Wider rollout · expensive runs · infrastructure changes
 > Customer messaging · customer data deletion
 
-- The demo gave us a reason for the guard.
+- The example gave us a reason for the guard.
 - Widening a cohort spends more customer exposure.
 - Then add the two missing from the old list.
 

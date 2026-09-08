@@ -12,7 +12,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 4. **The polished answer with a hole in it** — 07:00 · steady · 02:00
 5. **Outsmart move one: make verification feel like cheating** — 09:00 · build · 03:00
 6. **Ration the help** — 12:00 · steady · 02:00
-7. **Demo: four minutes inside a five-minute slide** — 14:00 · peak · 05:00
+7. **Reconstruct the mistake** — 14:00 · peak · 05:00
 8. **Score the reasoning. Write it down** — 19:00 · steady · 03:30
 9. **Outsmart move two: make them say it out loud** — 22:30 · build · 03:00
 10. **Outsmart move three: read all 300 transcripts** — 25:30 · build · 02:30
@@ -95,7 +95,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 - Two scripted turns. The diagnostic question finds where the base got lost.
 - Then the ladder. Clarification: the second change acts on the new price.
 
-### 7. Demo: four minutes inside a five-minute slide
+### 7. Reconstruct the mistake
 
 14:00–19:00 · peak · 05:00
 
@@ -104,7 +104,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 
 - Run the scripted tutor turns — from the kit or read off the card — then go live.
 - Then change the numbers: $80, up 25%, down 20%.
-- Do — Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
+- Do — The worked-example notes have the five scripted turns. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: use only the $100 sequence and state the $80 item.
 
 ### 8. Score the reasoning. Write it down
 

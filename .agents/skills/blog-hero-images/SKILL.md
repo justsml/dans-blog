@@ -7,7 +7,7 @@ description: Art-direct and generate DanLevy.net blog hero images plus compositi
 
 Create an image family that explains the post's idea at a glance. Treat the wide hero and square thumbnail as two compositions of the same concept, not an arbitrary crop and not unrelated artwork.
 
-Use the built-in `imagegen` skill and image generation tool for raster generation. Read `references/visual-language.md` before writing prompts. Read the target `index.mdx` in full and inspect its existing images before generating anything.
+Use the requested image generation tool, or the best available one, for raster generation. If the user named a tool or model, use it. Otherwise pick the strongest image generator available in the current environment, and say which one you chose before generating. Read `references/visual-language.md` before writing prompts. Read the target `index.mdx` in full and inspect its existing images before generating anything.
 
 ## Workflow
 
@@ -18,7 +18,7 @@ Use the built-in `imagegen` skill and image generation tool for raster generatio
    - 2-4 tensions, failures, or surprising reversals
    - visual cliches to avoid
    - any layout, palette, or subject constraints from existing assets
-3. Inspect 2-4 relevant post image families. Prefer recent posts with similar subject matter or rhetorical shape. Use `view_image` on contact sheets or individual images. Do not imitate one image closely.
+3. Inspect 2-4 relevant post image families. Prefer recent posts with similar subject matter or rhetorical shape. View contact sheets or individual images with whatever image-viewing tool the environment provides. Do not imitate one image closely.
 4. Develop 3-5 candidate concepts before generation. Default to five when the user asks for a range. Each candidate must use a different metaphor, setting, or image-making mode. Color changes do not count as variation.
 5. For each candidate, record a short concept name, the connection to the thesis, the image-generation prompt, and square-composition notes. Avoid a long pitch deck.
 6. Generate each wide candidate with a separate image-generation call. Do not ask the model for a contact sheet. Generate art without baked-in title text, logos, watermarks, fake UI copy, or illegible labels.

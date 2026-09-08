@@ -1,6 +1,6 @@
 # Automating Improvement From Failure: 30-minute presenter script
 
-Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The demo stays at 5:30. The 25-minute recording drops 10 and 12; see recording-plan.md.
+Use slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The worked example stays at 5:30. The 25-minute recording drops 10 and 12; see recording-plan.md.
 
 ## 00:00 to 01:30: slide 1, Nobody reads the scroll
 
@@ -110,14 +110,14 @@ Opening a PR spends somebody else's attention. Require a reproduction, a bounded
 
 Match ceremony to consequence. A documentation correction and a payment retry do not get the same permissions because they happen to arrive through the same agent.
 
-## 11:30 to 17:00: slide 8, Demo: nothing leaves without evidence
+## 11:30 to 17:00: slide 8, Nothing leaves without evidence
 
 On screen:
 
 > Regression · holdout · scope · human
 > The useful result is permission denied
 
-The candidate removes the visible failure. That is the beginning of the demo, not the result.
+The candidate removes the visible failure. That is the beginning of the review, not the result.
 
 Run the regression. Now run the held-out authorization case. It fails. The proposed retry used authority that belonged to somebody else. The gate holds the change without asking the agent whether it feels finished.
 
@@ -127,7 +127,7 @@ Now give the classifier the case it cannot explain. Unknown is an output. It lan
 
 Source: Toyota, [Toyota Production System](https://global.toyota/en/company/vision-and-philosophy/production-system/), jidoka and the andon response.
 
-Delivery: Use the live sequence in engineering/failure-improvement/demo.md. Full slot 5:30. Run real tests; never substitute the checkbox kit for execution. Recording remains blocked until a sanitized production export, working tracker integration, and captured gate run exist.
+Delivery: Walk through the captured output from the supporting repository: passing regression, failed authorization holdout, and unknown classification. Link the repository for the implementation.
 
 ## 17:00 to 19:30: slide 9, Who reviews the robot's PRs?
 

@@ -12,6 +12,6 @@ The scheduled job reads a bookmark, collects a bounded overlap window, deduplica
 
 Promotion requires a reproducing regression, held-out cases controlled separately, an allowed diff scope, and a named reviewer. Money movement, data deletion, customer messaging, and widening customer exposure require a person. The repair agent cannot edit the acceptance policy or held-out fixtures.
 
-## Demo acceptance
+## Supporting-example acceptance
 
 The supporting repository runs the regression and holdout as actual commands and retains their output and exit status. It shows a held change after the holdout fails, then an unknown classification held for a person. Fix the candidate, never the holdout to obtain green. Any tracker integration uses an isolated fixture project.

@@ -10,7 +10,7 @@ Keep slides 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14. Hide the others in presen
 | 05:30 to 07:00 | 4 | The polished answer with a hole in it |
 | 07:00 to 09:30 | 5 | Outsmart move one: make verification feel like cheating |
 | 09:30 to 11:00 | 6 | Ration the help |
-| 11:00 to 15:00 | 7 | Demo: four minutes inside a five-minute slide |
+| 11:00 to 15:00 | 7 | Reconstruct the mistake |
 | 15:00 to 17:30 | 8 | Score the reasoning. Write it down |
 | 17:30 to 20:00 | 9 | Outsmart move two: make them say it out loud |
 | 20:00 to 22:00 | 10 | Outsmart move three: read all 300 transcripts |

@@ -6,7 +6,7 @@ Browser deck (deck not yet rebuilt; see [decks](../../../decks/README.md)).
 | --- | --- | --- |
 | 5–10 min | Lightning or live demo | Below |
 | 15 min | Lightning talk | [15-minute adaptation](adaptation-15min.md) |
-| 25–30 min | Standard session | [30-minute adaptation](adaptation-30min.md); drop slides 10 and 12 for 25; retain the 5:30 demo |
+| 25–30 min | Standard session | [30-minute adaptation](adaptation-30min.md); drop slides 10 and 12 for 25; retain the 5:30 worked example |
 | 40–45 min | Conference talk | [40-minute outline](index.md) plus five minutes of questions |
 | 90 min | Workshop | Below |
 
@@ -23,7 +23,7 @@ Seven minutes, four slides from the full deck: 1, 2, 8, 15.
 
 ## 5–10 minute live demo (AI Tinkerers format)
 
-No slides, no pitch, a system you built. The offline kit is a deterministic replay and does not qualify. The live version needs a real scheduled agent reading real (or realistic sanitized) logs; see the [recording plan](../../speaker/recording-plan.md) for the build list and the five-minute script. Bring a fallback recording in case of network failure.
+This separate meetup format uses the supporting repository directly. It is not part of the slide talk. See the [recording plan](../../speaker/recording-plan.md) for the build list.
 
 ## 90 minute workshop
 

@@ -191,13 +191,33 @@ Implementation: `src/scripts/redirectManager.tsx`
 
    ```mdx
    <Challenge
+     client:visible={{rootMargin: "150px"}}
      index={0}
-     question="What is the output?"
-     options={["A", "B", "C"]}
-     answer={0}
-     explanation="Because..."
-   />
+     group="Warmup"
+     title="Role of `<ul>`"
+     options={[
+       {text: 'Unordered List', isAnswer: true},
+       {text: 'Unique List'},
+       {text: 'Universal List'},
+     ]}
+   >
+     <slot name="question">
+     <div className="question">
+       What is the primary role of the `<ul>` element in HTML?
+     </div>
+     </slot>
+
+     <slot name='explanation'>
+     <div className="explanation">
+       The `<ul>` tag creates an unordered list.
+     </div>
+     </slot>
+   </Challenge>
    ```
+   Required props: `index` (zero-based), `group`, `title`, `options`. Each option is
+   `{text: string, isAnswer?: boolean, hint?: string}` — exactly one carries `isAnswer`.
+   Optional: `difficulty` (`"easy" | "medium" | "hard" | "expert"`), `objectives`, `standards`.
+   Slots: `question` (required), `explanation`, `hints`.
 3. Run `bun run fix-quizzes` to validate
 4. Preserve existing `client:visible` directives on `<Challenge>` unless eager hydration is intentional
 5. Run `bun run screenshots` for social images

@@ -2,22 +2,28 @@
 
 Use slides 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 14, 15. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. Slides 4, 8 and 13 are cut with bridges. The slide-3 bridge carries the title: slide 4 owns 'you are the terrain' and no shorter route keeps slide 4. Keep the acceptance-multiplier arithmetic and the volume caveat in the demo.
 
-## 00:00 to 02:00: slide 1, Free electricity for a year
+## 00:00 to 02:00: slide 1, Unlimited for $9.95
 
 On screen:
 
-> A startup gets free electricity for a year.
-> What does it build? What survives when the offer ends?
+> August 2017: one movie a day, $9.95 a month. Average US ticket that year: $9.11.
+> What survived the offer? The habit. Not the company.
 
-A startup gets free electricity for a year. What does it build? Sit with that for five seconds, because the answer is not "the same thing, but cheaper." It builds a different company. Now: what survives when the offer ends?
+August 2017. MoviePass drops to nine ninety-five a month for one movie a day. The average American ticket cost nine dollars and eleven cents, and MoviePass paid full retail every time. Pay for one movie, see thirty.
 
-Swap electricity for inference and that is the whole talk. Here is my one disclaimer, and then I am done qualifying: nobody outside a provider knows its margins, I am not going to guess at one, and every dollar figure in my arithmetic is invented. What I do have is a hundred and fifty years of economists working on exactly this problem in coal, parking, highways and car factories, and they gave it names.
+Twenty thousand subscribers became three million in eighteen months. May 2018 lost forty million dollars in that month alone. By September 2019 it was gone.
 
-That is what you are getting today. Eight words. Engineers lose this argument in budget meetings because the best we can say is "it feels wasteful," and finance says "the bill looks fine." These eight words are how you say it so it lands.
+What did the cheap price build? An audience that drove across town on a Tuesday for films it had never heard of. And what survived the offer? The habit did. The company did not.
+
+Swap the ticket for a token. One disclaimer, then I stop qualifying: nobody outside a provider knows its margins, and every dollar figure here is invented. What I have is a hundred and fifty years of economists on this problem, and the names they gave it.
+
+Eight words. Engineers lose this argument in budget meetings because the best we can say is "it feels wasteful," and finance says "the bill looks fine."
+
+Source: MoviePass subscriber and loss figures are widely reported contemporaneous press; the litigated detail comes from the FTC action cited on slide 3. Average US ticket price $9.11 (2017) is the National Association of Theatre Owners annual average.
 
 Story: The first time a bill, a quota, or a rate change broke an assumption in something you built.
 
-Delivery: Take the five seconds. Actually take them. The silence is the slide.
+Delivery: Let "pay for one movie, see thirty" sit for a beat before the collapse numbers. The room does the arithmetic faster than you can say it.
 
 ## 02:00 to 04:00: slide 2, Four boxes, one invoice
 
@@ -41,17 +47,21 @@ On screen:
 > Penetration pricing · Loss leader in a bundle · Predation · It is genuinely cheap
 > The price cannot tell you which. What happens next can.
 
-There are four respectable explanations for a low price, and an engineer arguing about this in a meeting should be able to name all four.
+Four respectable explanations for a low price. Name all four.
 
-Penetration pricing: buy the market now, raise later. Standard, legal, taught in every business school. Loss leader in a bundle: the cheap thing funds the expensive thing next to it, which is what a two-sided market does for a living. Predation: below cost specifically to remove rivals. In US law that is not a vibe, it is a test. Brooke Group, 1993: you need below-cost pricing and a dangerous probability of recoupment. And the fourth explanation, the one that keeps me honest: it is genuinely cheap, and getting cheaper, because the engineering is real.
+Penetration pricing: buy the market now, raise later. Standard, legal, taught in every business school. Loss leader in a bundle: the cheap thing funds the expensive thing next to it, which is what a two-sided market does for a living. Predation: below cost specifically to remove rivals — in US law a test, not a vibe. Brooke Group, 1993: below-cost pricing plus a dangerous probability of recoupment. And the fourth, the one that keeps me honest: it is genuinely cheap, and getting cheaper, because the engineering is real.
 
-Here is the useful part. You cannot distinguish these from the price. You can distinguish them from what happens next. Penetration predicts prices rise at renewal, after switching gets hard. Predation predicts a rival disappears and then prices rise. Genuine efficiency predicts prices keep falling without anyone tightening the terms. So watch renewal terms, watch rate limits, watch what happens to the free tier, and stop trying to read a margin off a token rate.
+You cannot tell which from the price, only from what happens next: penetration raises prices at renewal once switching is hard, predation waits for a rival to die, genuine efficiency keeps cutting without tightening the terms.
+
+MoviePass already ran that experiment. The FTC's 2021 complaint records what happened next: passwords invalidated for the seventy-five thousand heaviest users under a false fraud claim, a photograph-your-ticket step, undisclosed caps. No announced price rise — the product just got harder to use, heaviest users first. That is rate limiting. Watch renewal terms, watch rate limits, watch the free tier.
 
 Source: Brooke Group Ltd. v. Brown & Williamson Tobacco Corp., 509 U.S. 209 (1993), on the recoupment requirement in predatory-pricing claims.
 
+Source: [FTC, 7 June 2021](https://www.ftc.gov/news-events/news/press-releases/2021/06/operators-moviepass-subscription-service-agree-settle-ftc-allegations-they-limited-usage-failed), settlement with MoviePass Inc., Helios and Matheson Analytics, Lowe and Farnsworth, on password invalidation, ticket verification and undisclosed caps. Allegations settled without monetary relief; both companies were already bankrupt.
+
 Source: Rochet and Tirole (2003), Platform Competition in Two-Sided Markets, Journal of the European Economic Association, on cross-subsidy between sides of a market.
 
-Bridge: the enormous compute commitments everyone quotes are credible commitments in Schelling's sense, moves in a war of attrition, not disclosures about cost. And note who is not a player in that game. Somebody is buying your free tier, and it is not you. You are not a combatant. You are the terrain.
+Bridge: the enormous compute commitments everyone quotes are Schelling commitments, moves in a war of attrition, not disclosures about cost. And note who is not a player. Somebody is buying your free tier, and it is not you. You are not a combatant. You are the terrain.
 
 ## 07:00 to 09:00: slide 5, Free parking was never free
 
@@ -114,11 +124,13 @@ On screen:
 > The architecture is chosen in a design review. The bill arrives 60 days later, somewhere else.
 > Shoup's fix was never a ban. It was a meter.
 
-Word five, and this one is about your org chart, not your vendor. Moral hazard: when the person making a decision does not bear its cost, they make a different decision. Not a worse person. A different decision.
+Word five, and this one is about your org chart, not your vendor. Moral hazard: when the person deciding does not bear the cost, they make a different decision. Not a worse person. A different decision.
 
-An engineer picks the architecture in a design review on a Tuesday. Finance sees the consequence in an aggregated line item sixty days later, in a different building, attributed to nothing in particular. Nobody in that loop is behaving badly. The meter is invisible at the moment of choice, so consumption is not a moral failure, it is the equilibrium. This is the same structure as the parking lot, running inside your company.
+Everyone wants the MoviePass subscriber to be the villain. It was teenagers, parents home with kids, retirees on a Wednesday, handed a card that said one movie a day and using it one movie a day. That is not abuse, that is reading. When the caps landed they were ready to burn down a theater lobby — the wrong lobby, and a reasonable mistake. It was never their fault. They answered a price.
 
-And notice what Shoup actually recommended, because everyone gets this wrong. He never said ban parking. He said charge the right price and give the money back to the neighborhood. Same here. The fix is not austerity or a policy forbidding the model. It is putting the number in front of the person choosing, at the moment they choose: estimated cost per accepted outcome, in the design doc, next to the latency budget.
+An engineer picks the architecture on a Tuesday. Finance sees it sixty days later, in a different building, in a line item attributed to nothing. Nobody there is behaving badly. The meter is invisible at the moment of choice, so consumption is not a moral failure, it is the equilibrium.
+
+And notice what Shoup recommended. He never said ban parking. He said charge the right price and give the money back. The fix is not austerity. It is putting the number in front of the person choosing, at the moment they choose: cost per accepted outcome, in the design doc, next to the latency budget.
 
 Source: Holmstrom (1979), Moral Hazard and Observability, Bell Journal of Economics 10(1), 74 to 91. Nobel 2016.
 
@@ -158,7 +170,7 @@ Then multiply by your own volume, because the table is meaningless without it. A
 | 5× | $110 | $0.147 |
 | 10× | $210 | $0.280 |
 
-Delivery: Runbook section 4. Two-minute compression: the 1× and 10× rows only. Ask for 45 seconds: which assumption would you attack first before funding an optimization project?
+Delivery: Walk the 1× and 10× rows, then change the acceptance assumption. Ask which assumption the room would test before funding an optimization project.
 
 ## 22:00 to 25:00: slide 12, You are not shopping, you are contracting
 
@@ -170,7 +182,7 @@ On screen:
 
 This is the slide I would keep if you cut every other one. Oliver Williamson won a Nobel in 2009 for working out what happens when two parties make investments that only pay off inside their relationship. He called it asset specificity, and the trouble it produces is called hold-up.
 
-Now inventory your specific assets. Prompts tuned against one model's quirks. An eval suite that only means anything against one provider's outputs. A fine-tune. A latency budget that assumes one serving stack. And the sharpest one, an unlimited-usage promise you made to your customers, priced against an input you do not control and cannot cap. Every one of those is worth more inside the relationship than outside it.
+Now inventory your specific assets. Prompts tuned against one model's quirks. An eval suite that only means anything against one provider's outputs. A fine-tune. A latency budget that assumes one serving stack. And the sharpest one, an unlimited-usage promise you made to your customers, priced against an input you do not control and cannot cap. That sentence is the entire MoviePass balance sheet. Every one of those is worth more inside the relationship than outside it.
 
 So stop thinking of this as shopping, where the customer holds the power because they can leave. You are contracting, with a much better capitalized counterparty, and your architecture is the collateral. That reframe is the whole talk, and everything after this is just a way of reducing specificity or pricing the exposure.
 
@@ -198,7 +210,9 @@ On screen:
 > Moral hazard · Credible commitment · Asset specificity · Real option
 > Build for more than one price.
 
-Back to the electricity. Use the cheap input. It is genuinely great and I am not asking anyone to be miserable about it. Just understand what it encouraged you to build, and keep the expensive decisions reversible while you find out.
+Back to MoviePass, and the ending that gets left off. The idea was never the problem. Cinema subscriptions exist today and work — AMC, Regal, Cinemark, millions of subscribers. The chains shipped the sustainable version because they owned the screens and never paid retail for their own tickets. The company that died promised unlimited access to something it bought at full price from somebody else. Ask which of those two you are.
+
+So use the cheap input. It is genuinely great and I am not asking anyone to be miserable about it. Just understand what it encouraged you to build, and keep the expensive decisions reversible while you find out.
 
 There are your eight words. Externality, because the cost moved rather than vanished. Induced demand and Jevons, because cheaper made you use more, not less. Path dependence, because the lots stay built. Moral hazard, because whoever chooses is not whoever pays. Credible commitment, because those contracts are moves in a game and not disclosures about it. Asset specificity, because your architecture is worth more here than anywhere else. And real option, because reversibility is something you buy, not something you feel.
 

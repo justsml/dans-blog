@@ -126,7 +126,7 @@ Rehearsal sheet for [the 40-minute outline](index.md). 14 slides, 40 minutes, no
 - So turn the thinkin' tokens up. Chollet's 2019 definition treats intelligence as skill acquisition over novel tasks, and a system that has already seen the situation is not demonstrating that.
 - There is a paper about exactly this: the Apple group's Illusion of Thinking, 2025, reporting that reasoning models collapse past a complexity threshold and spend fewer tokens as problems get harder.
 - My claim is weaker and safer. The model has not met your users.
-- Do — Run `bun artifacts/speaking-portfolio-expanded/talks/judgment/demo.ts` for the plan count, then add `--evidence` for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
+- Do — Do 6! × 3⁶ on the board for the plan count, then exposures over the per-arm sample size for the arm count. Do the final division on the board rather than reading it. Say once that the numbers are six features and three cohorts, not their company.
 - Source — François Chollet (2019), [On the Measure of Intelligence](https://arxiv.org/abs/1911.01547), arXiv:1911.01547. Parshin Shojaee and colleagues (2025), [The Illusion of Thinking](https://machinelearning.apple.com/research/illusion-of-thinking), Apple Machine Learning Research; and the rebuttal, [The Illusion of the Illusion of Thinking](https://arxiv.org/abs/2506.09250), arXiv:2506.09250. Present as a contested exchange, not a settled result.
 
 ### 9. What the machine is actually for

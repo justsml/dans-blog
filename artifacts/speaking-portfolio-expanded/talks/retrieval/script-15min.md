@@ -85,7 +85,7 @@ That is the lesson we missed. They tested whether the shortcut damaged the compa
 
 Source: Justin Zobel (1998), [How reliable are the results of large-scale information retrieval experiments?](https://doi.org/10.1145/290941.291014), SIGIR, 307–314. Voorhees, Soboroff, and Lin (2022), [Can Old TREC Collections Reliably Evaluate Modern Neural Retrieval Models?](https://arxiv.org/abs/2201.11086). [NIST TREC overview](https://trec.nist.gov/overview.html), started 1992.
 
-Delivery: Run `bun artifacts/speaking-portfolio-expanded/talks/retrieval/pooling.ts` after revealing F. Walk through 2/2, 1/2, then 2/2. Explain that the metric measures topical relevance, not sufficiency or permission.
+Delivery: After revealing F, walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged relevant. Explain that the metric measures topical relevance, not sufficiency or permission.
 
 ## 09:45 to 11:30: slide 11, Assessors disagree. Rankings can survive.
 

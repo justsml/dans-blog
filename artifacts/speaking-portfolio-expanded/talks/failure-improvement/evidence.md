@@ -16,9 +16,9 @@ Revised 2026-09-06 for the fail-to-win-loop arc. The loop's ordering (logs, enri
 - **Agent-opened PRs merging.** Say "into a review queue," not "merged automatically," unless candidate 1 or 4 supplies a merged example.
 - **Proactive notices and credits.** Described as what the loop can do. Do not imply a deployed system issued credits.
 
-## Demo boundaries
+## Supporting-example boundaries
 
-The offline kit normalizes two connection errors, proposes a scoped readiness check, and requires regression, holdout, and scope before promotion. Permission denied stays unknown. All cases are authored fixtures. The kit does not read logs, schedule anything, classify anything, or file anything.
+The planned supporting repository normalizes two connection errors, proposes a scoped readiness check, and requires regression, holdout, and scope before promotion. Permission denied stays unknown. All cases are authored fixtures. The talk uses captured output and does not claim production results.
 
 ## Claim hygiene
 

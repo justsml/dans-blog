@@ -18,7 +18,7 @@ Your production logs already contain next month's engineering work, and nobody i
 
 ### 100 words
 
-Every failure in production is a queued improvement, and most teams never work the queue. This talk builds the loop in order: read access to logs and one question, an enrichment ladder where access is a set of individual grants, a scheduled out-of-band check that distills a bounded window and classifies it with a real unknown category, and tickets and PRs that travel with their evidence. The peak is a live gate holding a candidate fix when the held-out authorization case fails — the retry had hidden a 403. Then the harder half: what the queue does to the reviewer, what to compile into scripts, and which metrics will lie to you.
+Every failure in production is a queued improvement, and most teams never work the queue. This talk builds the loop in order: read access to logs and one question, an enrichment ladder where access is a set of individual grants, a scheduled out-of-band check that distills a bounded window and classifies it with a real unknown category, and tickets and PRs that travel with their evidence. The central example follows a gate holding a candidate fix when the held-out authorization case fails because the retry had hidden a 403. Then the harder half: what the queue does to the reviewer, what to compile into scripts, and which metrics will lie to you.
 
 ### 250 words
 
@@ -26,7 +26,7 @@ Teams pay for observability and read it only when a pager goes off. Meanwhile th
 
 From there the talk is an ordering. Add the integration that answers the next question: the code to locate the branch, a trace to say what happened before it, a reproduction to test whether the explanation survives. Read access to code does not require write access to production. Access is a set of individual grants, not a graduation ceremony. The mechanism is a scheduled out-of-band check that reads a bookmark, distills a bounded window into distinct failure families with counts and evidence links, and classifies them — including an unknown result and a queue that receives it.
 
-The peak is a live gate. A candidate fix removes the visible failure and passes regression, then fails the held-out authorization case: the retry that made the error disappear was a 403 a second credential happened to answer. A successful workaround is not a repaired system, and jidoka gives the stop a job.
+The central example follows a candidate fix that removes the visible failure and passes regression, then fails the held-out authorization case: the retry that made the error disappear was a 403 a second credential happened to answer. A successful workaround is not a repaired system, and jidoka gives the stop a job.
 
 The back half is the part build guides skip. What a month of green pull requests does to the reviewer. When to compile repeated work into a tested, versioned script. The money gate: detect, recommend, draft, and a person presses the button. And why a hundred tickets with ninety closed as wrong is a ten percent useful rate, whatever time-to-ticket says. It ends on Monday: one failure class, one integration, one place the loop must stop.
 

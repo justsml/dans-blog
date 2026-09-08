@@ -14,11 +14,11 @@ Your token price fell and your bill went up. That is not a contradiction, it is 
 
 ### 150-word abstract
 
-A startup gets free electricity for a year. What does it build, and what survives when the offer ends? Swap electricity for inference and that is the question.
+In 2017 MoviePass sold one movie a day for $9.95 while tickets averaged $9.11. What did that price build, and what survived when the offer ended? The habit did; the company did not. Swap the ticket for a token.
 
 Engineers lose this argument in budget meetings because the strongest thing we can say is "it feels wasteful." Economics has precise names for it, and this talk supplies eight: externality, induced demand, Jevons paradox, path dependence, moral hazard, credible commitment, asset specificity, and real option.
 
-Along the way it separates four legitimate reasons a price can sit below cost and the observation at renewal that distinguishes them, reframes the industry's enormous compute commitments as Schelling commitments rather than cost disclosures, and uses Shoup's parking argument for the mechanism. The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. A synthetic price sweep closes it, with the volume caveat.
+It separates four legitimate reasons a price sits below cost and the observation at renewal that distinguishes them, reframes enormous compute commitments as Schelling moves rather than cost disclosures, and uses Shoup's parking for the mechanism. The turn is Williamson: your prompts, evals, fine-tunes and unlimited-usage clauses are relationship-specific assets, which makes this a contracting problem, not a shopping problem. A synthetic price sweep closes it.
 
 ### Three audience outcomes
 

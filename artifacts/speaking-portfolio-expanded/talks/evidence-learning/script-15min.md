@@ -62,7 +62,7 @@ Delivery: Thirty seconds: what would the smudge be in your subject? Take two.
 
 Bridge: ask for an attempt first, then ration help rung by rung, and write down which rung you gave.
 
-## 06:15 to 09:15: slide 7, Demo: four minutes inside a five-minute slide
+## 06:15 to 09:15: slide 7, Reconstruct the mistake
 
 On screen:
 
@@ -73,7 +73,7 @@ Run the scripted tutor turns — from the kit or read off the card — then go l
 
 Then change the numbers: $80, up 25%, down 20%. It comes back to $80, because 1.25 times 0.8 is 1. That breaks the shortcut the room just formed, "opposite changes never cancel," and that's the point. A transfer item with the same invariant and different numbers is where you find out whether they learned the rule or memorized the example.
 
-Delivery: Runbook section 5 has the five scripted turns and the same table in print. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: skip the kit, run only the $100 sequence, state the $80 item.
+Delivery: The worked-example notes have the five scripted turns. If the room is quiet, present the prepared learner response; never pressure an individual into a public assessment. Two-minute compression: use only the $100 sequence and state the $80 item.
 
 ## 09:15 to 10:45: slide 8, Score the reasoning. Write it down
 

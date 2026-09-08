@@ -26,7 +26,7 @@ Pool: `A B C D E`. New result: `B F`. P@2: **1.0 → 0.5 → 1.0** with "judge F
 
 ## Demo
 
-`bun artifacts/speaking-portfolio-expanded/talks/retrieval/pooling.ts` after revealing F.
+After revealing F, walk precision@2 on the board: 2/2, 1/2, then 2/2 once F is judged relevant.
 
 ## Source
 

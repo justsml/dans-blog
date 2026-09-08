@@ -1,6 +1,6 @@
 # The Future of Product Engineering: 15-minute presenter script
 
-Use slides 1, 3, 5, 10, 11, 12, 15, 17. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The demo is 3:00. Show activation before opening the kit. Preserve the vote and the written rule. Slide 14 is cut; its fuel prediction and slide 15's channel question both ride in the slide-12 bridge, so slide 15 opens on the Minority Report image and lands on the AI-native opportunity.
+Use slides 1, 3, 5, 10, 11, 12, 15, 17. Read the prose as the talk track; perform the delivery notes instead of reading them aloud. Fill every Story line before delivery. Timings are rehearsal targets without Q&A. The worked example gets 3:00. Show activation first, then reveal support and copy evidence. Preserve the vote and the written rule. Slide 14 is cut; its fuel prediction and slide 15's channel question both ride in the slide-12 bridge, so slide 15 opens on the Minority Report image and lands on the AI-native opportunity.
 
 ## 00:00 to 01:45: slide 1, The architecture you could read off the org chart
 
@@ -11,7 +11,7 @@ On screen:
 
 Conway said organizations designing systems "are constrained to produce designs which are copies of the communication structures of these organizations." Constrained. Communication structures. The wires matter more than the boxes.
 
-This is a proposed operating model. The demo uses synthetic numbers to execute a policy, not measure customer benefit. My bet is that cheaper coordination makes some of our current boundaries obsolete. We should find those boundaries before we photocopy them onto agents.
+This is a proposed operating model. The worked example uses synthetic numbers to explain a policy, not measure customer benefit. My bet is that cheaper coordination makes some of our current boundaries obsolete. We should find those boundaries before we photocopy them onto agents.
 
 Look at the handoffs in a product you own. Research writes a brief. Product translates it into tickets. Engineering translates the tickets into software. Support translates the software back into complaints. Which translations carry judgment, and which just carry the same sentence into another tool?
 
@@ -63,7 +63,7 @@ Our target is onboarding activation. The next screen has three candidates. Befor
 
 Source: Donald T. Campbell (1979), [Assessing the impact of planned social change](https://doi.org/10.1016/0149-7189%2879%2990048-X), Evaluation and Program Planning 2(1), 67–90.
 
-## 05:45 to 08:45: slide 11, Demo: run it before you know the rule
+## 05:45 to 08:45: slide 11, The metric winner fails the product
 
 On screen:
 
@@ -79,7 +79,7 @@ C has forty-five percent activation, four percent support, and no fabricated urg
 
 Write the rule you wish you had before the first vote. Compare it with the policy we saved before opening the scorecard. The gap is what this exercise was for.
 
-Delivery: Four and a half minutes in the 40/30 routes, 3:30 in the 15. Begin with only this slide, never the answer-labelled kit. After the vote open the kit and map B to Pressure copy, C to Clearer first step. Follow demo.md. Allow 45 seconds to write the rule.
+Delivery: Begin with the three activation figures and take the vote. Then reveal the support and copy evidence from the worked-example notes. Allow 45 seconds to write the rule.
 
 ## 08:45 to 10:45: slide 12, Where guards go, including the two we forgot
 
@@ -88,7 +88,7 @@ On screen:
 > Wider rollout · expensive runs · infrastructure changes
 > Customer messaging · customer data deletion
 
-The demo gave us a reason for the guard. Put it where the consequence changes, before the action happens.
+The example gave us a reason for the guard. Put it where the consequence changes, before the action happens.
 
 Widening a cohort spends more customer exposure. An expensive run spends money. Creating infrastructure adds ongoing obligations; tearing it down may remove somebody's recovery path. Name the budget, the owner, and the evidence needed at each crossing.
 

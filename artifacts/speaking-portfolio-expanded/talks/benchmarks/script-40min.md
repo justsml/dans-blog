@@ -127,7 +127,7 @@ Card and colleagues examined statistical power in NLP comparisons. Small tests a
 
 Source: James A. Hanley and Abby Lippman-Hand (1983), [If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators](https://www.medicine.mcgill.ca/epidemiology/hanley/c607/ch08/zero_numerator.pdf), JAMA 249(13), 1743–1745. Card et al. (2020), [With Little Power Comes Great Responsibility](https://aclanthology.org/2020.emnlp-main.745/).
 
-Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection would make the bound inapplicable. Run arithmetic.ts if a calculator helps.
+Delivery: Spend one minute on (1 − p)^20 = 0.05. Ask what sample selection would make the bound inapplicable.
 
 ## 21:30 to 25:00: slide 9, Agreeable to a Fault (κ = 0)
 
