@@ -2,7 +2,9 @@
 
 Hand-authored reveal.js decks, one per talk, in [`public/decks/<talk>/index.html`](../../public/decks/). Every slide is a diagram, a comparison, or an illustration built for that idea. No generator, no template, no build step: the file you edit is the file you present. Speaker notes sit in each slide's `<aside class="notes">`, copied from the talk's outline.
 
-Runtime files live in [`public/decks/vendor/reveal/`](../../public/decks/vendor/reveal/README.md), independently of the retired generated-deck assets. A hand-authored deck must not import the old `public/talks/assets/deck.js` or `deck.css` wrappers. When a deck improves a heading or a claim, back-port it to the canonical outline in the same edit; record every diagram-only number in that talk’s evidence bank.
+Runtime files live in [`public/decks/vendor/reveal/`](../../public/decks/vendor/reveal/README.md). That is the only deck runtime; the generated-deck pipeline and its wrappers were deleted on 2026-09-08. When a deck improves a heading or a claim, back-port it to the canonical outline in the same edit; record every diagram-only number in that talk’s evidence bank.
+
+[`public/talks/assets/<talk>/`](../../public/talks/assets/) now holds nothing but per-talk diagram SVGs, kept as editable source material for these decks. Nothing there is a runtime and nothing there is presentable on its own.
 
 ## Each deck gets its own design
 
@@ -27,4 +29,6 @@ Shorter routes: do not build separate 15- and 30-minute decks. The cut lists are
 | Talk | Deck |
 | --- | --- |
 | retrieval | done, 15 slides |
-| benchmarks, judgment, product-engineering, failure-improvement, adaptive-systems, evidence-learning, free-tier, dynamic-scaling | not started |
+| benchmarks, judgment, product-engineering, failure-improvement, adaptive-systems, evidence-learning, free-tier, dynamic-scaling, llm-uri | not started |
+
+`llm-uri` had three generated cuts (5/10/15 min) under `public/talks/`. They were deleted with the rest of the pipeline on 2026-09-08 and it needs a hand-authored deck like every other talk.
