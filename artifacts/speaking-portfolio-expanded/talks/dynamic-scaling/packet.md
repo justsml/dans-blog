@@ -1,6 +1,6 @@
 # Talk packet: Compute, Please (and a Receipt)
 
-[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · [Supporting code](https://github.com/justsml/scaling-ai-agents) · [Evidence](evidence-bank.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
+[Formats](formats.md) · [Visuals](visuals.md) · [40-minute script](script-40min.md) · [Contracts](contracts.md) · Supporting code: [08 durable admission](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/08-durable-admission.ts), [10 council reliability](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/10-council-of-guards.ts), [11 bounded fan-out](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/11-fanout-node.ts) · [Evidence](evidence-bank.md) · Deck (deck not yet rebuilt; see [decks](../../../decks/README.md))
 
 ## Titles
 

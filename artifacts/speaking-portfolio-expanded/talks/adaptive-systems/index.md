@@ -6,7 +6,7 @@ Budget: 34.5 spoken minutes (including story substitutions and bridges) + 5.5 au
 
 Rewritten 2026-09-06 from Dan's notes. 40 minutes, 15 slides, six audience-response beats (slides 1, 3, 6, 10, 13 and 14), no Q&A. Add five minutes for a 45-minute booking. The design is Dan's; the incidents are composites of real integrations with the names filed off. Say that once, on slide 1, and never apologize for it again.
 
-[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Memory pattern and prompt](memory-pattern.md) · [Walkthrough](demo.md) · [Evidence](evidence-bank.md)
+[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Memory pattern and prompt](memory-pattern.md) · [Walkthrough](demo.md) · Supporting code: [07 scoped repair](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/07-scoped-repair.ts), [09 execution memory](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/09-execution-memory.ts) · [Evidence](evidence-bank.md)
 
 
 

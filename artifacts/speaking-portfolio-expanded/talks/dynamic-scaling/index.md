@@ -6,7 +6,7 @@ Rewritten 2026-09-06 from Dan's notes; arc rebuilt 2026-09-07. 40 minutes, 14 sl
 
 The arc in three acts: the inversion (slides 1 to 4, the new thing and its real substrate), the ledger (slides 5 to 10, everything the lease is enforced against, paid off by the walkthrough), and the third axis (slides 11 to 13, attempts, with Amdahl as the brake before the barrel and the council). Slide 14 lands.
 
-[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Worked example](demo.md) · [Supporting code](https://github.com/justsml/scaling-ai-agents) · [Evidence](evidence-bank.md)
+[Presenter scripts](script-40min.md) · [Contracts](contracts.md) · [Worked example](demo.md) · Supporting code: [08 durable admission](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/08-durable-admission.ts), [10 council reliability](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/10-council-of-guards.ts), [11 bounded fan-out](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/11-fanout-node.ts) · [Evidence](evidence-bank.md)
 
 ## 1. Four callers, forty images, one customer
 

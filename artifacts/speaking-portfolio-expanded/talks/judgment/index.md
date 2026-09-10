@@ -2,7 +2,7 @@
 
 40 minutes. Timings include the exercise, the arithmetic and delivery pauses, without Q&A. Sources checked 7 September 2026. Story prompts belong in speaker notes and require Dan's own records before delivery.
 
-Budget: 37.25 spoken minutes including bounded Story substitutions and bridges + 2.75 interaction minutes = 40. [Per-slide spoken-time checks](pacing.md) include exercise narration.
+Budget: 37.25 spoken minutes including bounded Story substitutions and bridges + 2.75 interaction minutes = 40. [Per-slide spoken-time checks](pacing.md) include exercise narration. Supporting code: [10 council reliability](https://github.com/justsml/scaling-ai-agents/blob/main/examples/src/10-council-of-guards.ts) and [12 select or synthesize](https://github.com/justsml/scaling-ai-agents/blob/main/ai-sdk/src/snippets/12-business-advice.ts).
 
 ## 1. These go to eleven
 
