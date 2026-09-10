@@ -26,12 +26,12 @@ Facts below come from the 2026 resumes and the site config. Bracketed fields nee
 | Mar 2025–Apr 2026 | Sr. AI Staff Engineer | MagicSchool.ai |
 | Jul 2021–Jul 2024 | Principal Engineer / Senior Engineering Manager | Hotel Engine |
 | Mar 2020–Dec 2020 | Sr. Lead Engineer | Quizlet |
-| Dec 2013–Dec 2018 | Founding Engineer & CTO | Property X-Ray / Core Title Co. |
-| 2019 | Director | Lambda School |
+| Jan 2019-Dec 2019 | Director | Lambda School |
 | Sep 2017–Feb 2019 | Lead Instructor | Galvanize |
+| Dec 2013–Dec 2018 | Founding Engineer & CTO | Property X-Ray / Core Title Co. |
 | Mar 1999–Sep 2014 | Co-owner / VP Engineering | Hillside Software |
 
-The independent consulting practice and MagicSchool.ai overlapped for about a year; MagicSchool.ai ended April 2026 and the independent practice is the current primary role.
+The independent consulting practice and MagicSchool.ai overlapped for about a year; MagicSchool.ai ended April 2026 and the independent practice is the current primary role, at **17th Street Labs** in Denver.
 
 ## 50-word bio
 
@@ -49,14 +49,25 @@ As an independent consultant he advises enterprise teams on agent architecture, 
 
 He authored the llm:// URI scheme Internet-Draft and contributes to Mastra, LanceDB, Node.js, PostGIS, and Docker.
 
-## Past speaking
+## Broad-appeal bio (CES and general-audience applications, under 2,000 characters)
 
-No public list exists in the repo. Fill from memory; organizers ask for two or three with links.
+Dan Levy has spent 25 years building software that ships, and the last few making sure AI systems behave when nobody is watching.
+
+He is the creator of ExploitHunter.app, an open-source workbench that hands AI agents real tools and real permissions, then records what they do with them. Its public benchmark covers 173 model profiles, more than 400 million evaluated tokens, and roughly 23,000 tool calls, and it scores judgment, cost, speed, and security separately — because a model that is fast, cheap, and reckless is not a bargain.
+
+Before going independent, Dan was Sr. AI Staff Engineer at MagicSchool.ai, leading memory, retrieval, and evaluation for classroom AI tools and running more than 250 billion tokens through production evaluations. Earlier he helped grow Hotel Engine's engineering team from six to sixty in under a year, directed a 2,500-student education program across five countries, and spent fifteen years running his own software company.
+
+Today he advises enterprise teams on agent architecture, evaluation, and AI security from Denver, Colorado. He wrote the llm:// URI Internet-Draft — a proposed standard for how software addresses AI models — and contributes to Mastra, LanceDB, Node.js, PostGIS, and Docker. His teaching has reached more than 4,000 engineers.
+
+On stage, Dan works the gap between the AI demo and the AI product: why the thing that dazzles in a keynote falls apart in a customer's hands, what closing that gap actually costs, and how the teams getting it right are measuring things their competitors have not thought to measure yet. He writes at danlevy.net.
+
+## Past speaking
 
 | Year | Event | Talk | Format | Link (video or slides) |
 | --- | --- | --- | --- | --- |
-| [ ] | [ ] | [ ] | [ ] | [ ] |
-| [ ] | [ ] | [ ] | [ ] | [ ] |
+| 2018 | Event not documented | *f(p) Functional Promises: A Compositional Library* — January 26 | Recorded talk | [Video](https://www.youtube.com/watch?v=TelXmMkMX6o) |
+| 2018 | React Denver | *Heroic Refactoring* — with Scott Tolinski, April 17 | Recorded talk | [Video](https://www.youtube.com/watch?v=X79oCNqandc&t=51m44s) |
+| 2018 | Denver Node.js Meetup | *3 Reasons Promises Beat Async/Await* — August 15 | Recorded talk | [Video](https://youtu.be/IO68Ld_noLs) |
 
 Adjacent evidence already documented: 100+ hours of recorded instruction at Galvanize (2017–2019); presentation coaching at Quizlet (2020); Docker Mentor at local meetups; the site's claim of talks "from graduations to the board room." Cite these only where a link or a named event exists.
 
@@ -82,6 +93,6 @@ Adjacent evidence already documented: 100+ hours of recorded instruction at Galv
 - **General:** Denver-based principal AI engineer, technical founder, and engineering leader with 25 years of production experience; builds ExploitHunter.app and advises enterprise teams on agents, evaluation, and AI security.
 - **Engineering events:** Founder of ExploitHunter.app, an open-source agent security and evaluation workbench; formerly led agentic memory, retrieval, and evaluation at MagicSchool.ai.
 - **Security events:** Builds the controls around tool-using agents: authorization, approval gates, sandboxed execution, evidence capture, and regression-driven improvement; author of ExploitHunter.app.
-- **Education events:** Former director of a 2,500-student program across five countries and former lead bootcamp instructor; built AI systems for an education technology company; teaching and enablement reaching 4,000+ engineers.
+- **Education events:** Former director of a 2,500-student program across five countries and former lead bootcamp instructor; built AI systems for an education technology company. Corporate training increases the reach to 4,000+ engineers.
 - **Leadership events:** Former principal engineer and senior engineering manager who helped scale Hotel Engine from 6 to 60+ engineers in under a year; founder of multiple companies including fifteen years running Hillside Software.
 - **Standards and open source:** Author of the llm:// URI scheme Internet-Draft; contributor to Mastra core, OpenRouter, LanceDB, Node.js, PostGIS, Docker, React Router, and Angular; maintainer of Functional Promises.
