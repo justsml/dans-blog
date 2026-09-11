@@ -131,7 +131,7 @@ function checkHtmlComments(contents: string, targetPath: string): IntegrityIssue
 function checkHtmlMarkup(contents: string, targetPath: string): IntegrityIssue[] {
   const issues: IntegrityIssue[] = [];
   const stack: Array<{ tag: string; lineNumber: number }> = [];
-  const comparable = stripInlineCodeSpans(maskFrontmatter(contents));
+  const comparable = stripInlineCodeSpans(stripQuizOptionsBlocks(maskFrontmatter(contents)));
 
   for (const { line, lineNumber } of iterNonFenceLines(stripMdxComments(comparable))) {
     for (const match of line.matchAll(/<\/?([a-z][a-z0-9:-]*)(?:\s[^<>]*)?>/gi)) {
@@ -898,6 +898,50 @@ function stripMdxComments(contents: string) {
   return contents
     .replace(/\{\/\*[\s\S]*?\*\/}/g, "")
     .replace(/<!--[\s\S]*?-->/g, "");
+}
+
+// Quiz `options={[...]}` props hold literal answer text, sometimes deliberately containing
+// "broken" HTML (e.g. `<newsletter>`, `<legend>`) that the quiz is testing the reader's
+// recognition of. That text must never be treated as real markup to balance-check or fix.
+function stripQuizOptionsBlocks(contents: string) {
+  const marker = "options={[";
+  let result = "";
+  let index = 0;
+
+  while (index < contents.length) {
+    const start = contents.indexOf(marker, index);
+    if (start === -1) {
+      result += contents.slice(index);
+      break;
+    }
+    result += contents.slice(index, start);
+
+    let depth = 0;
+    let end = -1;
+    for (let i = start + "options={".length; i < contents.length; i += 1) {
+      if (contents[i] === "[") depth += 1;
+      else if (contents[i] === "]") {
+        depth -= 1;
+        if (depth === 0) {
+          end = i;
+          break;
+        }
+      }
+    }
+
+    if (end === -1) {
+      result += contents.slice(start);
+      break;
+    }
+
+    let blockEnd = end + 1;
+    if (contents[blockEnd] === "}") blockEnd += 1;
+
+    result += contents.slice(start, blockEnd).replace(/[^\n]/g, " ");
+    index = blockEnd;
+  }
+
+  return result;
 }
 
 function stripInlineCodeSpans(contents: string) {

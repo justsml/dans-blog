@@ -403,6 +403,28 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code.startsWith("html-"))).toBe(false);
   });
 
+  test("ignores literal unclosed tags inside quiz options text", () => {
+    const target = [
+      "<Challenge",
+      "  index={0}",
+      '  group="Warmup"',
+      '  title="Test"',
+      "  options={[",
+      "    {text: 'Part of a <newsletter>'},",
+      "    {text: 'A standalone content section', isAnswer: true },",
+      "  ]}",
+      ">",
+      "</Challenge>",
+    ].join("\n");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: target,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    expect(issues.some((issue) => issue.code.startsWith("html-"))).toBe(false);
+  });
+
   test("flags invalid inherited asset paths in locale files", () => {
     const issues = analyzeTranslationIntegrity({
       sourceContents: source,
