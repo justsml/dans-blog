@@ -1,0 +1,72 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Кавычки для имен столбцов",
+  "translation": {
+    "title": "Кавычки для имен столбцов",
+    "group": "Кавычки 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Как указать **имя столбца, содержащее точку?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL использует двойные кавычки для кавычек идентификаторов:\n    - Двойные кавычки `\"...\"` для идентификаторов (имена столбцов, имена таблиц)\n    - Одинарные кавычки `'...'` для строковых литералов\n    - Запись `first.name` интерпретируется как `table_name.column_name`\n\n    Без кавычек точка в имени столбца будет восприниматься как разделитель схемы/таблицы! Кроме того, все некавыченные идентификаторы по умолчанию приводятся к нижнему регистру.\n\n    Чтобы избежать сюрпризов, лучше использовать `snake_case` и избегать специальных символов."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Кавычки для имен столбцов\",\n  \"group\": \"Кавычки 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"\\\\\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"[first.name]\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"[first].[name]\",\n      \"preserveText\": false\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Как указать **имя столбца, содержащее точку?**\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL использует двойные кавычки для кавычек идентификаторов:\\n    - Двойные кавычки `\\\"...\\\"` для идентификаторов (имена столбцов, имена таблиц)\\n    - Одинарные кавычки `'...'` для строковых литералов\\n    - Запись `first.name` интерпретируется как `table_name.column_name`\\n\\n    Без кавычек точка в имени столбца будет восприниматься как разделитель схемы/таблицы! Кроме того, все некавыченные идентификаторы по умолчанию приводятся к нижнему регистру.\\n\\n    Чтобы избежать сюрпризов, лучше использовать `snake_case` и избегать специальных символов.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1042,
+    "outputTokens": 923,
+    "totalTokens": 1965,
+    "reasoningTokens": 513,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 956,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00105695,
+    "providerUpstreamCostUsd": 0.00105695,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1042,
+      "promptTokensDetails": {
+        "cachedTokens": 640
+      },
+      "completionTokens": 923,
+      "completionTokensDetails": {
+        "reasoningTokens": 513
+      },
+      "totalTokens": 1965,
+      "cost": 0.00105695,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00105695
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000040638,
+    "outputUsd": 0.00016614,
+    "totalUsd": 0.00020677800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

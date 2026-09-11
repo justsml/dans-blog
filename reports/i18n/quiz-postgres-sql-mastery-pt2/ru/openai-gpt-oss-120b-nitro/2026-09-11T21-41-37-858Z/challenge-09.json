@@ -1,0 +1,82 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "Синтаксис TABLESAMPLE",
+  "translation": {
+    "title": "Синтаксис TABLESAMPLE",
+    "group": "Отбор данных",
+    "options": [
+      {
+        "text": "...students SAMPLETABLE BERNOULLI (0.10)"
+      },
+      {
+        "text": "...students TABLESAMPLE USER (10)"
+      },
+      {
+        "text": "...students TABLESAMPLE RANDOM (10)"
+      },
+      {
+        "text": "...students SAMPLE 10 PERCENT"
+      },
+      {
+        "text": "ROW_NUMBER() OVER (ORDER BY RAND())"
+      },
+      {
+        "text": "ORDER BY RANDOM() >= 10"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.1"
+      },
+      {
+        "text": "WHERE RANDOM() >= 0.9"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Какой синтаксис корректен для **случайного отбора 10 %** студентов?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Это один из сложных вопросов! В нём примерно шесть ловушек, среди которых:\n\n    1. Высокоуровневое описание + фрагменты синтаксиса. Проверяется, как вы собираете неполную информацию.\n    2. Требуется знание синтаксиса `TABLESAMPLE`, потому что ни один из вариантов `TABLESAMPLE` не использует правильный синтаксис! (Зловеще! Я знаю! Держитесь, я верю в вас!!! ❤️)\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` и `ORDER BY RANDOM() > 10` — это лишь отвлекающие детали. Они выглядят правдоподобно, но неверны: `RAND()` не существует, а `RANDOM() > 10` всегда ложь, поскольку `RANDOM()` возвращает значение в диапазоне `0.0‑1.0`.\n    Ещё одна проблема: `ORDER BY RANDOM() > 10` сортирует по булевому значению, а не по случайному числу. Но `> 10` кажется процентом, правда?\n    4. `BERNOULLI` — корректный метод, однако `SAMPLETABLE` неверен.\n    5. `WHERE RANDOM() >= 0.1` — ловушка! `RANDOM()` даёт значение от `0.0` до `<1.0`, так что условие `>= 0.1` отбирает около 90 % строк, а не 10 %.\n\n    Что касается метода `TABLESAMPLE`, PostgreSQL поддерживает два способа отбора:\n    - `BERNOULLI`: каждая строка имеет одинаковую вероятность\n    - `SYSTEM`: отбор на уровне блоков (быстрее, но менее случайный)\n\n    Чтобы узнать больше о выборке, посмотрите статью от [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    Пример:",
+      "Также стоит упомянуть, что `TABLESAMPLE` [сообщалось](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) как недостаточно случайный. Если нужен _более_ случайный фиксированный набор, используйте `ORDER BY RANDOM() LIMIT 10`. Учтите, что это вернёт 10 строк, а не 10 %, и может быть медленно на больших таблицах.\n\n    Существуют сторонние расширения с лучшими методами случайной выборки, но они выходят за рамки данного задания! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Синтаксис TABLESAMPLE\",\n  \"group\": \"Отбор данных\",\n  \"options\": [\n    {\n      \"text\": \"...students SAMPLETABLE BERNOULLI (0.10)\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"...students TABLESAMPLE USER (10)\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"...students TABLESAMPLE RANDOM (10)\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"...students SAMPLE 10 PERCENT\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"ROW_NUMBER() OVER (ORDER BY RAND())\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"ORDER BY RANDOM() >= 10\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.1\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"WHERE RANDOM() >= 0.9\",\n      \"preserveText\": true\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Какой синтаксис корректен для **случайного отбора 10 %** студентов?\"\n  ],\n  \"questionCode\": [],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Это один из сложных вопросов! В нём примерно шесть ловушек, среди которых:\\n\\n    1. Высокоуровневое описание + фрагменты синтаксиса. Проверяется, как вы собираете неполную информацию.\\n    2. Требуется знание синтаксиса `TABLESAMPLE`, потому что ни один из вариантов `TABLESAMPLE` не использует правильный синтаксис! (Зловеще! Я знаю! Держитесь, я верю в вас!!! ❤️)\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` и `ORDER BY RANDOM() > 10` — это лишь отвлекающие детали. Они выглядят правдоподобно, но неверны: `RAND()` не существует, а `RANDOM() > 10` всегда ложь, поскольку `RANDOM()` возвращает значение в диапазоне `0.0‑1.0`.\\n    Ещё одна проблема: `ORDER BY RANDOM() > 10` сортирует по булевому значению, а не по случайному числу. Но `> 10` кажется процентом, правда?\\n    4. `BERNOULLI` — корректный метод, однако `SAMPLETABLE` неверен.\\n    5. `WHERE RANDOM() >= 0.1` — ловушка! `RANDOM()` даёт значение от `0.0` до `<1.0`, так что условие `>= 0.1` отбирает около 90 % строк, а не 10 %.\\n\\n    Что касается метода `TABLESAMPLE`, PostgreSQL поддерживает два способа отбора:\\n    - `BERNOULLI`: каждая строка имеет одинаковую вероятность\\n    - `SYSTEM`: отбор на уровне блоков (быстрее, но менее случайный)\\n\\n    Чтобы узнать больше о выборке, посмотрите статью от [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    Пример:\",\n    \"Также стоит упомянуть, что `TABLESAMPLE` [сообщалось](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) как недостаточно случайный. Если нужен _более_ случайный фиксированный набор, используйте `ORDER BY RANDOM() LIMIT 10`. Учтите, что это вернёт 10 строк, а не 10 %, и может быть медленно на больших таблицах.\\n\\n    Существуют сторонние расширения с лучшими методами случайной выборки, но они выходят за рамки данного задания! 😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1550,
+    "outputTokens": 1254,
+    "totalTokens": 2804,
+    "reasoningTokens": 331,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 1061,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.001483,
+    "providerUpstreamCostUsd": 0.001483,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1550,
+      "promptTokensDetails": {
+        "cachedTokens": 640
+      },
+      "completionTokens": 1254,
+      "completionTokensDetails": {
+        "reasoningTokens": 331
+      },
+      "totalTokens": 2804,
+      "cost": 0.001483,
+      "costDetails": {
+        "upstreamInferenceCost": 0.001483
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000060450000000000006,
+    "outputUsd": 0.00022571999999999997,
+    "totalUsd": 0.00028617,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

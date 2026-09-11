@@ -1,0 +1,72 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Частичные индексы",
+  "translation": {
+    "title": "Частичные индексы",
+    "group": "Индексация",
+    "options": [
+      {
+        "text": "Недопустимый синтаксис"
+      },
+      {
+        "text": "Создаёт дублирующие индексы"
+      },
+      {
+        "text": "Индексирует только активных студентов"
+      },
+      {
+        "text": "Сначала индексирует активных студентов"
+      },
+      {
+        "text": "Предоставляет подсказку планировщику запросов"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает это заклинание?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Этот приём называется `Partial Index`.\n\n    Они полезны для уменьшения использования диска и ускорения запросов, когда обычно запрашивается только подмножество строк.\n\n    Postgres будет использовать индекс только когда в запросе присутствует условие `status = 'active'`.\n\n    **Напоминание:** Postgres не поддерживает 'query hints' как другие СУБД. Планировщик запросов решит, когда использовать любой подходящий индекс(ы)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Частичные индексы\",\n  \"group\": \"Индексация\",\n  \"options\": [\n    {\n      \"text\": \"Недопустимый синтаксис\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"Создаёт дублирующие индексы\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"Индексирует только активных студентов\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"Сначала индексирует активных студентов\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"Предоставляет подсказку планировщику запросов\",\n      \"preserveText\": false\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что делает это заклинание?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Этот приём называется `Partial Index`.\\n\\n    Они полезны для уменьшения использования диска и ускорения запросов, когда обычно запрашивается только подмножество строк.\\n\\n    Postgres будет использовать индекс только когда в запросе присутствует условие `status = 'active'`.\\n\\n    **Напоминание:** Postgres не поддерживает 'query hints' как другие СУБД. Планировщик запросов решит, когда использовать любой подходящий индекс(ы).\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1022,
+    "outputTokens": 879,
+    "totalTokens": 1901,
+    "reasoningTokens": 509,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 908,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00101695,
+    "providerUpstreamCostUsd": 0.00101695,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1022,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 879,
+      "completionTokensDetails": {
+        "reasoningTokens": 509
+      },
+      "totalTokens": 1901,
+      "cost": 0.00101695,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00101695
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000039858,
+    "outputUsd": 0.00015821999999999999,
+    "totalUsd": 0.00019807799999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

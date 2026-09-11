@@ -1,0 +1,72 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT и NULL",
+  "translation": {
+    "title": "COUNT и NULL",
+    "group": "Поведение NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Сколько *строк* вернёт этот запрос?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Ок, это было немного хитро. Подводный камень в том, что `x = NULL` никогда не совпадёт ни с одной строкой, и ВСЕГДА вернёт одну строку с подсчётом `0`.\n\n    Поскольку `NULL` — неизвестное значение, его нельзя сравнивать ни с чем, даже с самим собой.\n    \n    Правильный способ проверить значения `NULL` — использовать `IS NULL`.\n\n    Пример:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT и NULL\",\n  \"group\": \"Поведение NULL\",\n  \"options\": [\n    {\n      \"text\": \"100\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"90\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"10\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"1\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"0\",\n      \"preserveText\": false\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Сколько *строк* вернёт этот запрос?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Ок, это было немного хитро. Подводный камень в том, что `x = NULL` никогда не совпадёт ни с одной строкой, и ВСЕГДА вернёт одну строку с подсчётом `0`.\\n\\n    Поскольку `NULL` — неизвестное значение, его нельзя сравнивать ни с чем, даже с самим собой.\\n    \\n    Правильный способ проверить значения `NULL` — использовать `IS NULL`.\\n\\n    Пример:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1029,
+    "outputTokens": 740,
+    "totalTokens": 1769,
+    "reasoningTokens": 379,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 703,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00091515,
+    "providerUpstreamCostUsd": 0.00091515,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1029,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 740,
+      "completionTokensDetails": {
+        "reasoningTokens": 379
+      },
+      "totalTokens": 1769,
+      "cost": 0.00091515,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00091515
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000040131,
+    "outputUsd": 0.00013319999999999999,
+    "totalUsd": 0.00017333099999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

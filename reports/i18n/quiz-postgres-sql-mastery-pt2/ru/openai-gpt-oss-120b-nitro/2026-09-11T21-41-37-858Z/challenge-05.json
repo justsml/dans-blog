@@ -1,0 +1,69 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Допустимость хеш‑соединения",
+  "translation": {
+    "title": "Допустимость хеш‑соединения",
+    "group": "Внутреннее устройство SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Какое условие `ON` может использовать PostgreSQL для `HASH JOIN`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Хеш‑соединение возможно при условии равенства (`=`) в клаузе `ON`.\n\n    - `=` — ключевая форма предиката для хеш‑соединений\n    - `>` и `>=` не являются предикатами хеш‑соединения\n    - `HASH JOIN` не является допустимым синтаксисом в PostgreSQL\n\n    Планировщик всё равно может выбрать вложенный цикл или merge join в зависимости от размера таблиц, статистики, индексов и настроек памяти."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Допустимость хеш‑соединения\",\n  \"group\": \"Внутреннее устройство SQL\",\n  \"options\": [\n    {\n      \"text\": \"ON a.id = b.id\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"ON a.id > b.id\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"ON a.id >= b.id\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"HASH JOIN ON a.id = b.id ...\",\n      \"preserveText\": true\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Какое условие `ON` может использовать PostgreSQL для `HASH JOIN`?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Хеш‑соединение возможно при условии равенства (`=`) в клаузе `ON`.\\n\\n    - `=` — ключевая форма предиката для хеш‑соединений\\n    - `>` и `>=` не являются предикатами хеш‑соединения\\n    - `HASH JOIN` не является допустимым синтаксисом в PostgreSQL\\n\\n    Планировщик всё равно может выбрать вложенный цикл или merge join в зависимости от размера таблиц, статистики, индексов и настроек памяти.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1016,
+    "outputTokens": 727,
+    "totalTokens": 1743,
+    "reasoningTokens": 363,
+    "cacheReadTokens": 640,
+    "cacheWriteTokens": 0,
+    "durationMs": 670,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00090085,
+    "providerUpstreamCostUsd": 0.00090085,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1016,
+      "promptTokensDetails": {
+        "cachedTokens": 640
+      },
+      "completionTokens": 727,
+      "completionTokensDetails": {
+        "reasoningTokens": 363
+      },
+      "totalTokens": 1743,
+      "cost": 0.00090085,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00090085
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000039624,
+    "outputUsd": 0.00013086,
+    "totalUsd": 0.000170484,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

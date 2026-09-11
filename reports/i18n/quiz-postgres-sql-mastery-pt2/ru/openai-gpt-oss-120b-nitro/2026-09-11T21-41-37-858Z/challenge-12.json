@@ -1,0 +1,69 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE Подводный камень",
+  "translation": {
+    "title": "EXPLAIN ANALYZE Подводный камень",
+    "group": "Производительность",
+    "options": [
+      {
+        "text": "Лёгкая оценка плана"
+      },
+      {
+        "text": "Работает только с SELECT"
+      },
+      {
+        "text": "Modifies data & emits plan"
+      },
+      {
+        "text": "Имитирует выполнение, чтобы получить план"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` фактически исполняет запрос! Будьте осторожны при анализе операции записи, особенно операторов `UPDATE`, `DELETE` и `INSERT`. Возможно, после каждого `EXPLAIN ANALYZE` придётся выполнять операции очистки, чтобы получить повторяемые результаты.\n\n    Лучшие практики:\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\n    - Оборачивайте изменения в транзакции:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE Подводный камень\",\n  \"group\": \"Производительность\",\n  \"options\": [\n    {\n      \"text\": \"Лёгкая оценка плана\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"Работает только с SELECT\",\n      \"preserveText\": false\n    },\n    {\n      \"text\": \"Modifies data & emits plan\",\n      \"preserveText\": true\n    },\n    {\n      \"text\": \"Имитирует выполнение, чтобы получить план\",\n      \"preserveText\": false\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` фактически исполняет запрос! Будьте осторожны при анализе операции записи, особенно операторов `UPDATE`, `DELETE` и `INSERT`. Возможно, после каждого `EXPLAIN ANALYZE` придётся выполнять операции очистки, чтобы получить повторяемые результаты.\\n\\n    Лучшие практики:\\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\\n    - Оборачивайте изменения в транзакции:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1039,
+    "outputTokens": 839,
+    "totalTokens": 1878,
+    "reasoningTokens": 462,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 980,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0009929,
+    "providerUpstreamCostUsd": 0.0009929,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1039,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 839,
+      "completionTokensDetails": {
+        "reasoningTokens": 462
+      },
+      "totalTokens": 1878,
+      "cost": 0.0009929,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0009929
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.000040521,
+    "outputUsd": 0.00015102,
+    "totalUsd": 0.000191541,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
