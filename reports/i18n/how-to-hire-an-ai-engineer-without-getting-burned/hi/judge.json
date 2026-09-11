@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "1cd41f845512d3f19985c35924d837b8d1447abc",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "current",
+  "selectedModel": "current",
   "scores": {
-    "readability": 92,
+    "readability": 90,
     "technicalAccuracy": 93,
-    "coherence": 94,
+    "coherence": 92,
     "relevance": 95,
-    "translationQuality": 93,
-    "mdxPreservation": 95,
-    "culturalAdaptation": 90,
+    "translationQuality": 91,
+    "mdxPreservation": 96,
+    "culturalAdaptation": 89,
     "languagePurity": 92
   },
   "suggestions": [],
-  "rationale": "Pass 1 successfully applied the high-priority fix translating the English paragraphs under question 3 into natural Hindi. The current document preserves all Markdown structure, frontmatter, tables, blockquotes, insets, and heading hierarchy faithfully with no remaining medium- or high-priority defects.",
+  "rationale": "Candidate 'current' is well-translated, fluent, and structurally solid. Among the new candidate commits, 58403aeeeb63004a3aa53b8485f69c72b23e1ed7 has an incomplete/truncated title ('AI इंजीनियर को बिना जले') and empty subTitle/cover_alt; deabc38df79aea3d587bd50d099fc88ed11193f0 left English untranslated prose in the scorecard instructions and table headers ('Copy this into the interview doc...', 'Dimension', 'Evidence that earns a 3', etc.) and in section 1; and 5f7e68f3742fd9d29453d9a220d3ae8a509629f5 left table headers and numerous full English sentences untranslated. Hence, the pre-existing translation ('current') is the most complete, idiomatic, and cleanly preserved.",
   "confidence": "high",
-  "confidenceScore": 0.869,
+  "confidenceScore": 0.865,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,20 +27,11 @@
   "slug": "how-to-hire-an-ai-engineer-without-getting-burned",
   "locale": "hi",
   "candidateCommits": [
-    "1cd41f845512d3f19985c35924d837b8d1447abc",
-    "58403aeeeb63004a3aa53b8485f69c72b23e1ed7"
+    "58403aeeeb63004a3aa53b8485f69c72b23e1ed7",
+    "deabc38df79aea3d587bd50d099fc88ed11193f0",
+    "5f7e68f3742fd9d29453d9a220d3ae8a509629f5"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "Ask for the boundary: which records it can read, which actions it can take, where a human has to approve, and what stops a loop from running all night on your credit card.\n\nThen ask where that boundary is enforced. A prompt telling the model to be careful is a firewall made of policy text — the intent is there, the enforcement is not. Have them draw the boundary and propose a test that tries to cross it.\n\nInclude data exposure while you are there: what leaves for the model provider, what gets written to logs, and who can read those logs. \"We log everything\" is a compliance conversation waiting to happen.",
-      "replacement": "सीमा के बारे में पूछें: यह कौन से रिकॉर्ड पढ़ सकता है, कौन सी कार्रवाइयां कर सकता है, मानव अनुमोदन कहाँ आवश्यक है, और आपके क्रेडिट कार्ड पर रात भर किसी लूप को चलने से क्या रोकता है।\n\nफिर पूछें कि वह सीमा कहाँ लागू होती है। मॉडल को सावधान रहने का निर्देश देने वाला प्रॉम्प्ट नीति पाठ से बनी फ़ायरवॉल की तरह है — मंशा मौजूद है, प्रवर्तन नहीं। उनसे सीमा खींचने और उसे पार करने की कोशिश करने वाला एक टेस्ट प्रस्तावित करने को कहें।\n\nसाथ ही डेटा एक्सपोज़र की भी जाँच करें: मॉडल प्रदाता के पास क्या जाता है, लॉग्स में क्या लिखा जाता है, और उन लॉग्स को कौन पढ़ सकता है। \"हम सब कुछ लॉग करते हैं\" एक ऐसा बयान है जो सीधे कम्प्लायंस की समस्या बन सकता है।",
-      "reason": "Section 3 left three full paragraphs entirely in untranslated English prose.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": true,
     "scope": "local",
