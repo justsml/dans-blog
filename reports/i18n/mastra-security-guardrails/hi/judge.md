@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 6fb193478654892168da1982bf4b01a1e5835f7c
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.872)
+- Selected candidate: fca989108b2b0915546251c1361d84b10b8b5ace
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.885)
 
-The judge report claims that 50% of the prose was left in English, but upon manual inspection of the provided 'hi/index.mdx' file, the entire document is actually fully translated into Hindi. The judge appears to have hallucinated the presence of English text in the candidate file. The translation is high quality, maintains technical terms correctly, and preserves all MDX structures and code blocks. No further fixes are required.
+The pre-publish fix to the frontmatter subtitle was already applied successfully. The document has full heading and code block parity, preserved links, natural Hindi technical terminology, clean MDX structure, and no remaining medium or high priority issues.
