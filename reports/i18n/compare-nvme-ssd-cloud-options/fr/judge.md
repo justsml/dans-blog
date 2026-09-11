@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 1a04ed3968f2edf3cfdd102d41c3e8f30d71f610
-- Selected model: openrouter/qwen/qwen3-32b:nitro
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 81fdb36a47d197c228308a61b37616986926f4d8
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.884)
 
-The selected candidate (1a04ed39) is the only one that correctly translated the entire body text, including the technical paragraph starting with 'Note the i3.*xlarge...', which was left in English by other candidates. The frontmatter title and subtitle are already correctly populated in the provided MDX file, so no further suggestions are required.
+Pass 1 successfully applied the blockquote cleanup fix. The document is cleanly formatted, faithfully translated, preserves all relative asset paths, HTML elements, and anchors properly, leaving no remaining medium or high priority issues.

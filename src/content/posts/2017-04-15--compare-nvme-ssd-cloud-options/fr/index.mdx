@@ -1,7 +1,7 @@
 ---
 social_image: ../desktop-social.webp
-title: 'Comparer les options de cloud NVMe SSD'
-subTitle: 'NVMe SSD Face à Face : AWS, DigitalOcean, Packet.net'
+title: Comparer les options de cloud avec SSD NVMe
+subTitle: 'Comparatif direct des SSD NVMe : AWS, DigitalOcean et Packet.net'
 modified: '2020-01-30'
 category: DevOps
 subCategory: programming
@@ -22,9 +22,9 @@ cover: ../solaiman-hossen-553024-unsplash.webp
 cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp
 cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
 ---
-## Améliorer les performances du cloud jusqu'à 70%
+## Augmenter les performances du cloud jusqu’à 70 %
 
-> Notes générales et sections pour certains fournisseurs d'hébergement ci-dessous (mi-2017).
+> Notes générales et sections consacrées à certains fournisseurs d’hébergement ci-dessous (mi-2017).
 
 - [AWS (Amazon Web Services), EC2 (Elastic Compute Cloud), EBS (Elastic Block Storage), etc.](#aws_tips)
 - [Digital Ocean](#do_tips)
@@ -34,32 +34,30 @@ cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
 
 ### Amazon Web Services / EC2 / EBS / S3
 
-> TLDR; Bien que AWS propose généralement un matériel restreint et des échelons tarifaires intimidants, le **i3.large** (et les tailles supérieures) offre le meilleur rapport prix/performances d'E/S, ET est le plus rapide en termes de performance globale.
+> TLDR ; alors qu’AWS propose généralement du matériel aux contraintes restrictives et des paliers tarifaires intimidants, le matériel **i3.large** (et les modèles supérieurs) offre le meilleur compromis entre prix et performances d’E/S, ET les meilleures performances globales.
 
-> L'instance **i3.large** avec un **SSD NVMe de 475 Go** coûte généralement environ **110 $/mois !**  
-> <br />  
-> Une instance **i3.2xlarge avec 1,9 To NVMe** coûte environ **450 $/mois** *  
-> <br />  
-> \_*États-Unis/2018_  
+> EC2 **i3.large** avec un **SSD NVMe de 475 Go** coûte généralement environ **110 $/mois !** <br />
+> Un **i3.2xlarge avec 1,9 To de NVMe** coûte environ **450 $/mois** * <br />
+> \_*USA/2018\_
 
-<br />  
-<br />  
+<br />
+<br />
 
-### Comparaison directe  
+### Comparaison directe
 
-\[[vue en plein écran des données](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]  
+\[[vue des données en plein écran](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
 
-<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>  
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
 
 [Voir les prix sur EC2](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
 
 ![ec2instances.info](../ec2-updated-prices-2018.webp)
 
-Notez que le **i3.\*xlarge** est le seul matériel à offrir un stockage NVMe à prix compétitif (vitesses ultra-rapides >1 Go/s). Le principal facteur limitant que j'ai constaté était la vitesse réseau réelle. Les serveurs annoncés avec des vitesses « jusqu'à 10 Gb/s » peinaient à atteindre 1 Gb/s (60-80 Mo/s).
+Notez que le **i3.\*xlarge** est le seul matériel à proposer un stockage NVMe à un prix compétitif (des vitesses ultra-rapides de plus de 1 Go/s). Le principal facteur limitant que j’ai trouvé était le débit réseau réel. Les serveurs affichant des débits « jusqu’à 10/Gb/s » peinaient à approcher 1/Gb/s (60–80 Mo/s).
 
-Les tests réseau ont utilisé jusqu'à 9 instances supplémentaires dans la même zone de disponibilité. J'ai remplacé tous les points de données erronés par 0. Des tests supplémentaires sont nécessaires, car seuls 1 à 2 échantillons ont été collectés.
+Les tests réseau ont utilisé jusqu’à 9 instances supplémentaires dans la même zone de disponibilité. J’ai remplacé par 0 tous les points de données erronés. Des tests supplémentaires sont nécessaires, car seuls 1 à 2 échantillons ont été collectés.
 
-[Vue en plein écran des données](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)
+\[[vue des données en plein écran](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)\]
 
 <iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
 
