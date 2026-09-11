@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "8a76d8863529630c14e31f9b1353a1d2ca73d8f4",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 98,
+    "technicalAccuracy": 98,
+    "coherence": 98,
+    "relevance": 98,
+    "translationQuality": 98,
+    "mdxPreservation": 99,
+    "culturalAdaptation": 97,
+    "languagePurity": 97
+  },
+  "suggestions": [],
+  "rationale": "All suggested improvements from pass 1 and pass 2 have been correctly applied to the MDX. The German translation is idiomatic, faithful to Dan's direct voice, technically accurate, and retains all structural elements and markdown formatting without lingering issues.",
+  "confidence": "high",
+  "confidenceScore": 0.89,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "how-to-hire-an-ai-engineer-without-getting-burned",
+  "locale": "de",
+  "candidateCommits": [
+    "9f04a8be417df9f935e0c1c0158edb7dc713f983",
+    "8a76d8863529630c14e31f9b1353a1d2ca73d8f4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Ein Gremium, das diese nicht beantworten kann, steht kurz vor einem vierzigminütigen Gespräch über Führungspräsenz.",
+      "replacement": "Ein Panel, das diese nicht beantworten kann, steht kurz vor einem vierzigminütigen Gespräch über Führungspräsenz.",
+      "reason": "Maintain consistent terminology with the earlier mention of 'Panel'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Sie wollen die Person, die Ihnen zeigen kann, warum das System bereit ist – und die Ihnen laut ins Gesicht sagt, an dem Tag, an dem es das nicht ist.",
+      "replacement": "Sie wollen die Person, die Ihnen zeigen kann, warum das System bereit ist – und die es Ihnen laut sagt an dem Tag, an dem es das nicht ist.",
+      "reason": "Smooth out slightly clunky phrasing in the closing sentence.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Ein Kandidat, der sich weigert, Kundendaten eines früheren Arbeitgebers herauszugeben, besteht den Test, nicht durchzufallen.",
+      "replacement": "Ein Kandidat, der sich weigert, Kundendaten eines früheren Arbeitgebers herauszugeben, besteht den Test – er fällt nicht durch.",
+      "reason": "Fix mistranslation of 'is passing the test, not failing it'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Was sind wir noch unsicher?",
+      "replacement": "Worüber sind wir uns noch unsicher?",
+      "reason": "Fix ungrammatical German phrasing ('Was sind wir noch unsicher?').",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug how-to-hire-an-ai-engineer-without-getting-burned --locale de --skip-global",
+    "output": ""
+  }
+}
