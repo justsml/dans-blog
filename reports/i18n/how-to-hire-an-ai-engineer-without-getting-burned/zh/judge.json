@@ -1,0 +1,50 @@
+{
+  "selectedCommit": "4d0465e33d759d60ee7b89f60927575bf8e5a1f6",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 94,
+    "languagePurity": 96
+  },
+  "suggestions": [],
+  "rationale": "The pre-publish fix successfully resolved the markdown link syntax error. The document is structurally intact, all code/table/blockquote counts match the source, tone and technical terminology are clean and punchy, and no high or medium priority issues remain.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "how-to-hire-an-ai-engineer-without-getting-burned",
+  "locale": "zh",
+  "candidateCommits": [
+    "d6d2a0737e3e02498fcec1725b4a37795d6d9874",
+    "4d0465e33d759d60ee7b89f60927575bf8e5a1f6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[\"若周二重跑同样的任务只得82分，'94%的得分'就不是一个有效的度量。](/auto-tune-your-llm-judge)",
+      "replacement": "[“得分 94%”并不是度量，如果同一次运行在周二得分 82%。](/auto-tune-your-llm-judge)",
+      "reason": "The markdown link syntax was broken with mismatched quotes inside brackets, leading to malformed markdown text.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug how-to-hire-an-ai-engineer-without-getting-burned --locale zh --skip-global",
+    "output": ""
+  }
+}
