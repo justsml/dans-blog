@@ -1,0 +1,86 @@
+{
+  "selectedCommit": "803c0ccc675e88bf33e0cc39af4f19002f7e7f37",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 98,
+    "technicalAccuracy": 98,
+    "coherence": 98,
+    "relevance": 98,
+    "translationQuality": 98,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 96,
+    "languagePurity": 98
+  },
+  "suggestions": [],
+  "rationale": "Pass 2 applied all remaining fixes. Headings, markdown links, frontmatter, blockquotes, and prose are now flawless and match the English structure exactly.",
+  "confidence": "high",
+  "confidenceScore": 0.891,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "how-to-hire-an-ai-engineer-without-getting-burned",
+  "locale": "fr",
+  "candidateCommits": [
+    "803c0ccc675e88bf33e0cc39af4f19002f7e7f37",
+    "b8867515df0120946853d940fe47084e7f222975"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "**« Il a obtenu 94 % » n’est pas une mesure si la même exécution donne 82 % mardi.**[/auto-tune-your-llm-judge]",
+      "replacement": "[« Il a obtenu 94 % » n’est pas une mesure si la même exécution donne 82 % mardi.](/auto-tune-your-llm-judge)",
+      "reason": "Fix malformed markdown link syntax where opening bracket and bolding broke the hyperlink.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Le démonstration fonctionne.",
+      "replacement": "La démonstration fonctionne.",
+      "reason": "Fix gender agreement error ('démonstration' is feminine in French).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Rien ne indique si le système respecte les permissions, survive à un timeout,",
+      "replacement": "Rien n'indique si le système respecte les permissions, survit à un timeout,",
+      "reason": "Fix elision ('n'indique') and mood/conjugation ('survit').",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Accordez du crédit lorsqu’une personne corrige sa propre erreur en plein réponse.",
+      "replacement": "Accordez du crédit lorsqu’une personne corrige sa propre erreur en pleine réponse.",
+      "reason": "Fix gender agreement error ('en pleine réponse' since 'réponse' is feminine).",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Parlez‑moi d’une approche que vous avez abandonnée ?",
+      "replacement": "Parlez‑moi d’une approche que vous avez abandonnée.",
+      "reason": "Match the original declarative imperative sentence ending in a period rather than an inappropriate question mark.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug how-to-hire-an-ai-engineer-without-getting-burned --locale fr --skip-global",
+    "output": ""
+  }
+}
