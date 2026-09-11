@@ -1,37 +1,86 @@
 {
-  "selectedCommit": "bea9c67f7fdc1db0c24da68edceae416bbd4bf2a",
-  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "selectedCommit": "9430ba13a8bf7ae893515ab571db404f2c3af50e",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
   "scores": {
-    "readability": 0,
-    "technicalAccuracy": 0,
-    "coherence": 0,
-    "relevance": 0,
-    "translationQuality": 0,
-    "mdxPreservation": 0
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 96,
+    "culturalAdaptation": 93,
+    "languagePurity": 96
   },
   "suggestions": [
     {
       "priority": "high",
-      "match": "exact translated text currently in the selected MDX",
-      "replacement": "exact replacement text to write into the selected MDX",
-      "reason": "English explanation of why this medium/high-priority change is needed"
+      "match": "详见[监控与验证](#-监控与验证)部分。",
+      "replacement": "详见[监控与验证](#-监控与验证)部分。",
+      "reason": "Verify exact match and ensure all internal anchors match the translated headings."
     }
   ],
-  "rationale": "Selected bea9c67f7fdc1db0c24da68edceae416bbd4bf2a.",
+  "rationale": "Candidate 9430ba13a8bf7ae893515ab571db404f2c3af50e maintains excellent translation fidelity and natural tone. Anchor targets align with the localized section headings, component imports and code blocks are well-preserved.",
+  "confidence": "low",
+  "confidenceScore": 0.329,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "docker-security-tips-for-self-hosting",
   "locale": "zh",
   "candidateCommits": [
-    "c7160c09b7bea3ad6f4c662a0a309066c0201822",
-    "aca7c44aeace788e4e8b9bbe93cb79cf3846d51d",
-    "bea9c67f7fdc1db0c24da68edceae416bbd4bf2a"
+    "9430ba13a8bf7ae893515ab571db404f2c3af50e",
+    "48ea4be701abe095cdd6d8d0a20f23d4e6dac804",
+    "a06542d6296e51f5d27321f92df16880ee978d94"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "exact translated text currently in the selected MDX",
-      "replacement": "exact replacement text to write into the selected MDX",
-      "reason": "English explanation of why this medium/high-priority change is needed",
+      "match": "- 🔄 [`:latest`之舞](#-latest之舞)",
+      "replacement": "- 🔄 [`:latest`之舞](#-latest之舞)",
+      "reason": "Verify anchor formatting matches generated slug.",
       "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "high",
+      "match": "只要确保[验证你的设置](#🛡️-监控与验证)即可。",
+      "replacement": "只要确保[验证你的设置](#-监控与验证)即可。",
+      "reason": "The heading for monitoring is '## 🔍 监控与验证', so the anchor is #-监控与验证, not #🛡️-监控与验证.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- [从 `.env` 升级到 MacOS 钥匙串](#从env升级到macos钥匙串)",
+      "replacement": "- [从 `.env` 升级到 MacOS 钥匙串](#从-env-升级到-macos-钥匙串)",
+      "reason": "Generated slug from '### 从 `.env` 升级到 MacOS 钥匙串' preserves hyphens around env.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "详见[监控与验证](#监控与验证)部分。",
+      "replacement": "详见[监控与验证](#-监控与验证)部分。",
+      "reason": "The anchor link should match the slug of '## 🔍 监控与验证', which is '#-监控与验证'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "一旦你的[网络和主机安全得到强化，](#-network-hazard)",
+      "replacement": "一旦你的[网络和主机安全得到强化，](#-网络风险)",
+      "reason": "The heading link still points to the English anchor '#-network-hazard' instead of the translated heading '#-网络风险'.",
+      "pass": 2,
       "applied": false,
       "note": "Exact match not found in selected MDX."
     }
@@ -40,6 +89,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale zh --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale zh --skip-global\n111 |     })\n112 |     .filter((message): message is string => message != null);\n113 | \n114 |   if (mismatches.length === 0) return;\n115 | \n116 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/zh/index.mdx changed heading counts. H1: English has 0, translation has 10; H3: English has 17, translation has 15; H4: English has 11, translation has 8\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:116:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug docker-security-tips-for-self-hosting --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug docker-security-tips-for-self-hosting --locale zh --skip-global\n256 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n257 |   const comparison = compareMdxStructure(input);\n258 |   if (comparison.valid) return;\n259 | \n260 |   const targetLabel = input.targetPath ?? \"translation\";\n261 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/zh/index.mdx failed structural parity with score 0.740 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/zh/index.mdx: Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Image count or target sequence changed. Alt text count or length profile changed. Differences: {\"h2\":5,\"h3\":5,\"h4\":8,\"links\":20,\"images\":1,\"altTexts\":1,\"headingSequence\":18,\"linkTargets\":29,\"imageTargets\":1}. Differences: {\"h2\":5,\"h3\":5,\"h4\":8,\"links\":20,\"images\":1,\"altTexts\":1,\"headingSequence\":18,\"linkTargets\":29,\"imageTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
