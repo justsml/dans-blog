@@ -1,86 +1,58 @@
 {
-  "selectedCommit": "477816f229e103f2785c7dc697b078584f34a27f",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "5858ad2b373c9fa3db615f05e6b6f5b57684ac2d",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 90,
+    "readability": 95,
     "technicalAccuracy": 95,
-    "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 90,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "coherence": 94,
+    "relevance": 95,
+    "translationQuality": 94,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 92,
+    "languagePurity": 98
   },
-  "suggestions": [],
-  "rationale": "The selected candidate (477816f) is excellent. The judge report mentions issues like missing '../' in asset paths and untranslated words like 'fortunate', but upon inspecting the provided ja/index.mdx content for this candidate, those fixes are already present (e.g., '幸運な勘違い' is used, and asset paths already have '../'). The candidate captures Dan's direct style well and maintains all MDX structures perfectly. No further pre-publish fixes are required.",
-  "confidence": "high",
-  "confidenceScore": 0.875,
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "date: 2021-01-01\nmodified: '2023-01-25'",
+      "replacement": "date: 2021-01-01\nmodified: 2023-01-25",
+      "reason": "Keep date format consistent with source frontmatter and preserve date field."
+    }
+  ],
+  "rationale": "5858ad2b373c9fa3db615f05e6b6f5b57684ac2d provides the most natural and polished Japanese translation, faithfully capturing Dan's direct tone. In comparison, current has untranslated English fragments ('fortunateな勘違い', 'upcoming ピッチ会議'), c236a leaves 'Collaborative Culture' in raw English, and ae44 inserts unnecessary English glosses in headings.",
+  "confidence": "medium",
+  "confidenceScore": 0.656,
   "confidenceSignals": [
-    "no high/medium issues",
+    "low blocking-issue rate",
     "single judge"
   ],
   "issueCounts": {
     "high": 0,
-    "medium": 0,
+    "medium": 1,
     "low": 0
   },
   "slug": "creating-collaborative-culture",
   "locale": "ja",
   "candidateCommits": [
-    "477816f229e103f2785c7dc697b078584f34a27f",
-    "ff67310d3d27dcfcfb78ff529dfb6d1db4c088b6"
+    "5858ad2b373c9fa3db615f05e6b6f5b57684ac2d",
+    "c236a75d8d7ee0cf970ecbc183011c7fde811093",
+    "ae4461c40e2073118fb22a8bf69fd9d8796582ff"
   ],
   "suggestionLog": [
     {
-      "priority": "high",
-      "match": "cover: pexels-photo-3184431--cropped.webp",
-      "replacement": "cover: ../pexels-photo-3184431--cropped.webp",
-      "reason": "Asset paths in locale files must start with ../ to resolve correctly from the subfolder.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "cover_mobile: w300_pexels-photo-3184431--cropped.webp",
-      "replacement": "cover_mobile: ../w300_pexels-photo-3184431--cropped.webp",
-      "reason": "Asset paths in locale files must start with ../ to resolve correctly from the subfolder.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "cover_icon: icon_pexels-photo-3184431--cropped.webp",
-      "replacement": "cover_icon: ../icon_pexels-photo-3184431--cropped.webp",
-      "reason": "Asset paths in locale files must start with ../ to resolve correctly from the subfolder.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
       "priority": "medium",
-      "match": "fortunateな勘違い",
-      "replacement": "幸運な勘違い",
-      "reason": "The word 'fortunate' was left untranslated in the middle of a Japanese sentence.",
+      "match": "date: 2021-01-01\nmodified: '2023-01-25'",
+      "replacement": "date: 2021-01-01\nmodified: 2023-01-25",
+      "reason": "Keep date format consistent with source frontmatter and preserve date field.",
       "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "upcoming ピッチ会議",
-      "replacement": "今度のピッチ会議",
-      "reason": "The word 'upcoming' was left untranslated.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug creating-collaborative-culture --locale ja --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug creating-collaborative-culture --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug creating-collaborative-culture --locale ja --skip-global\n210 |     ]\n211 |     : [];\n212 | \n213 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n214 | \n215 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--creating-collaborative-culture/ja/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:215:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug creating-collaborative-culture --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug creating-collaborative-culture --locale ja --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--creating-collaborative-culture/ja/index.mdx failed translation integrity checks:\n- [high] html-comment-outside-code: /Users/dan/code/oss/dans-blog/src/content/posts/2021-03-03--creating-collaborative-culture/ja/index.mdx:27 uses an HTML comment. Use MDX comments ({/* ... */}) outside code fences.\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:38:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

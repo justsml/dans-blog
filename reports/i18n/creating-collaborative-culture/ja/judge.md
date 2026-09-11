@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 477816f229e103f2785c7dc697b078584f34a27f
-- Selected model: openrouter/qwen/qwen3.6-plus
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.875)
+- Selected candidate: 5858ad2b373c9fa3db615f05e6b6f5b57684ac2d
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: medium (0.656)
 
-The selected candidate (477816f) is excellent. The judge report mentions issues like missing '../' in asset paths and untranslated words like 'fortunate', but upon inspecting the provided ja/index.mdx content for this candidate, those fixes are already present (e.g., '幸運な勘違い' is used, and asset paths already have '../'). The candidate captures Dan's direct style well and maintains all MDX structures perfectly. No further pre-publish fixes are required.
+5858ad2b373c9fa3db615f05e6b6f5b57684ac2d provides the most natural and polished Japanese translation, faithfully capturing Dan's direct tone. In comparison, current has untranslated English fragments ('fortunateな勘違い', 'upcoming ピッチ会議'), c236a leaves 'Collaborative Culture' in raw English, and ae44 inserts unnecessary English glosses in headings.
