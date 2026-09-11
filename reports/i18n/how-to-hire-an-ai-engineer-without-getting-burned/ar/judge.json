@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "3ba92687804b27980aa79ee0262b7935d8e69609",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 94,
+    "technicalAccuracy": 95,
+    "coherence": 94,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 96,
+    "culturalAdaptation": 92,
+    "languagePurity": 96
+  },
+  "suggestions": [],
+  "rationale": "All previous suggestions from pass 1 have been accurately applied to the Arabic translation. The text is complete, technically precise, matches English structural elements and headings, and retains natural Arabic phrasing matching Dan's direct writing style.",
+  "confidence": "high",
+  "confidenceScore": 0.876,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "how-to-hire-an-ai-engineer-without-getting-burned",
+  "locale": "ar",
+  "candidateCommits": [
+    "334dd4c166f533a4c9bea006353f570e93e8031c",
+    "3ba92687804b27980aa79ee0262b7935d8e69609"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "للمرشح في بداية مسيرته المهنية، الأدلة أصغر وهذا جيد. قم بمواءمة النطاق المتوقع والإشراف مع الدور.",
+      "replacement": "للمرشح في بداية مسيرته المهنية، الأدلة أصغر وهذا جيد. قم بمواءمة النطاق المتوقع والإشراف مع الدور. أنت تختبر الفهم والملكية، وليس الوصول إلى علامات تجارية مشهورة.",
+      "reason": "Candidate missed the final sentence of the paragraph in English: 'You are testing understanding and ownership, not access to famous logos.'",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "امنح الموظف الجديد الإذن بخيبة أمل خارطة الطريق",
+      "replacement": "امنح الموظف الجديد الإذن بتخييب آمال خارطة الطريق",
+      "reason": "More natural and grammatically correct Arabic phrasing for 'Give the hire permission to disappoint the roadmap'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug how-to-hire-an-ai-engineer-without-getting-burned --locale ar --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug how-to-hire-an-ai-engineer-without-getting-burned --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug how-to-hire-an-ai-engineer-without-getting-burned --locale ar --skip-global\n256 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n257 |   const comparison = compareMdxStructure(input);\n258 |   if (comparison.valid) return;\n259 | \n260 |   const targetLabel = input.targetPath ?? \"translation\";\n261 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-09-09--how-to-hire-an-ai-engineer-without-getting-burned/ar/index.mdx failed structural parity with score 0.983 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-09-09--how-to-hire-an-ai-engineer-without-getting-burned/ar/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":1}. Differences: {\"linkTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
