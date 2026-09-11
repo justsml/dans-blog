@@ -1,0 +1,192 @@
+---
+title: Come assumere un ingegnere AI senza scottarsi
+subTitle: Assumi per il giudizio che non manca mai
+modified: '2026-09-11'
+tags:
+  - ai
+  - hiring
+  - leadership
+  - engineering-management
+  - evals
+  - production
+  - security
+  - agents
+category: Leadership
+subCategory: Hiring
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+cover_alt: >-
+  Un ponte in miniatura in acciaio che sostiene tre pesi arancioni, con una
+  sonda di misura sotto la sua campata.
+related:
+  - llm-evals-are-broken
+  - dont-fear-the-model-router
+  - evidence-is-the-product
+---
+Il demo funziona. Il curriculum è impressionante. Tutti escono dal colloquio entusiasti.
+
+Poi qualcuno chiede cosa succede se il sistema emette due volte lo stesso rimborso.
+
+Il silenzio è una risposta costosa.
+
+Assumere nel campo dell'IA è difficile perché la parte visibile del lavoro finisce presto. Una finestra di chat che risponde in paragrafi fluidi sembra completa. Niente di questo ti dice se il sistema rispetta i permessi, sopravvive a un timeout o costa più per ticket dell'umano che doveva aiutare.
+
+Non serve vincere una discussione sugli attention head. Ti servono abbastanza prove per decidere a chi affidare quelle decisioni per tuo conto.
+
+<blockquote class="breakout">
+  <p>Assumi per il giudizio dietro il demo. Rendi quel giudizio osservabile prima di fare l'offerta.</p>
+</blockquote>
+
+Ecco il processo che seguirei per un ingegnere che integra l'IA in un prodotto: scrivi l'obiettivo, apri un lavoro reale, paga una sessione di lavoro breve e valuta ciò che hai effettivamente visto. I ruoli di ricerca e infrastruttura richiedono esercizi diversi. Inizia dal lavoro.
+
+---
+
+## Scrivi il lavoro prima di comprare il curriculum
+
+«Ci serve un ingegnere IA» è utile più o meno quanto «ci serve qualcuno che sappia gestire i soldi». Commercialista? CFO? Quello che dice al fondatore di smetterla di comprare domini?
+
+Scegli il problema per cui stai assumendo qualcuno.
+
+| Il lavoro che ti serve | Prove da cercare |
+| --- | --- |
+| Ricerca o sviluppo di modelli | Esperimenti, baseline, scelte sui dati e un resoconto onesto di ciò che non ha funzionato |
+| Ingegneria di applicazioni IA | Un workflow utile, integrazioni, valutazione e gestione dei fallimenti |
+| Infrastruttura IA | Deployment, capacità, monitoraggio, controllo dei costi e ripristino sotto carico |
+| Valutazione e qualità | Casi test rappresentativi, punteggi difendibili e diagnosi delle regressioni |
+| Ingegneria del prodotto IA | Ricerca utente, progettazione del workflow, adozione e prova che la funzionalità ha migliorato il lavoro |
+
+Una persona può coprire più righe. Aspettarsi uguale profondità in tutte e cinque significa trasformare una job description in una lista dei desideri con uno stipendio allegato.
+
+Scrivi l'obiettivo dei primi novanta giorni prima di iniziare i colloqui. Per esempio:
+
+> Stabilire se un assistente per la stesura delle risposte riduce i tempi di gestione senza aumentare gli errori di policy. Fornire un pilota misurato, un percorso di revisione umana e una raccomandazione per espandere, rivedere o fermare.
+
+Questo dà al candidato qualcosa su cui obiettare, ed è proprio questo il punto. Un candidato forte chiederà come viene misurato il tempo di gestione, chi possiede la policy e se qualcuno ha mai verificato quanto sono buone le risposte umane correnti. Uno debole dirà che sembra interessante.
+
+Se nessuno nel tuo team è in grado di valutare le prove tecniche, porta un professionista esterno per la valutazione — e chiedigli se spera di venderti l'implementazione dopo. Altrimenti il candidato finisce per fare da referente tecnico a sé stesso, un conflitto d'interessi con una postura migliore.
+
+## Chiedi loro di aprire il cofano
+
+Un datore di lavoro famoso ti dice dove qualcuno ha lavorato. Una demo ti dice che qualcosa ha funzionato una volta, su un portatile, di buon umore. Nessuno dei due ti dice cosa questa persona possa gestire nel tuo team.
+
+Chiedi un progetto di cui possano parlare fino in fondo:
+
+**"Raccontami qualcosa che hai rilasciato tu stesso. Di cosa eri responsabile, cosa è andato storto e cosa è cambiato grazie ai dati?"**
+
+Poi segui una decisione lungo tutto l'arco. Qual è stato il primo approccio? Cosa hanno misurato? Quale alternativa hanno scartato e perché? Cosa ha contribuito un collega? Cosa farebbero diversamente ora?
+
+Chiedi un artefatto: una traccia ripulita da un'esecuzione fallita, un report di valutazione, un documento di design, un test, un breve walkthrough del codice. Una traccia è semplicemente la registrazione di ciò che il sistema ha fatto per arrivare alla risposta — ogni chiamata a uno strumento, ogni tentativo, ogni inghiottimento silenzioso. È la differenza tra leggere il saggio e vedere il lavoro.
+
+<p class="inset">
+Un candidato che si rifiuta di consegnare i dati dei clienti di un ex datore di lavoro sta superando il test, non fallendolo.
+</p>
+
+Prendi invece un esempio ricostruito, o usa l'esercizio condiviso qui sotto. "Mostrami le prove" non deve mai diventare "portaci i segreti di qualcun altro".
+
+Per un'assunzione a inizio carriera, le prove sono più piccole e va bene così. Scala l'ambito atteso e la supervisione al ruolo. Stai testando comprensione e senso di responsabilità, non l'accesso a loghi famosi.
+
+## Cinque domande che valgono il tempo del colloquio
+
+Queste sono provocazioni per indagare, non quiz. Se memorizzare la risposta è sufficiente per superare la domanda, la domanda non serve a nulla.
+
+### 1. "Come faresti a sapere se questo agente è migliorato?"
+
+Ascolta se il successo è definito nel linguaggio del lavoro: ticket risolti correttamente, bozze che un agente effettivamente invia, escalation che non avrebbero dovuto accadere. Poi chiedi quali fallimenti nasconderebbe un punteggio medio e a cosa confronterebbero la nuova versione.
+
+Una buona risposta rende la misurazione ispezionabile. Chiedi loro di abbozzare tre casi di test sul momento e di dire chi decide se ciascuno è superato. Se un modello valuta le risposte, chiedi come controllano il valutatore. ["Ha ottenuto il 94%" non è una misurazione se la stessa esecuzione ottiene l'82% di martedì.](/auto-tune-your-llm-judge)
+
+La [guida alle valutazioni degli agenti](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) di Anthropic traccia la distinzione che appartiene al tuo colloquio: la registrazione di ciò che un agente ha fatto non è la stessa cosa del risultato. Un agente che riferisce "Ho emesso il rimborso" è una frase, non un rimborso.
+
+### 2. "Lo strumento è andato in timeout dopo aver inviato un rimborso. E adesso?"
+
+"Riprova" è il riflesso sbagliato. I soldi potrebbero già essere spariti.
+
+Ascolta se controllano lo stato della transazione prima di agire, una chiave di idempotenza in modo che il secondo tentativo cada sul primo, e un percorso di escalation per quando lo stato è veramente sconosciuto. Chiedi chi vede il fallimento e come il lavoro riprende dopo. Il vocabolario conta meno del fatto che il loro design possa addebitare due volte un cliente per un singolo errore.
+
+### 3. "Cosa può leggere, modificare e spendere questo sistema?"
+
+Chiedi del confine: quali record può leggere, quali azioni può intraprendere, dove un umano deve approvare, e cosa impedisce a un loop di funzionare tutta la notte a tue spese.
+
+Poi chiedi dove quel confine viene applicato. Un prompt che dice al modello di stare attento è un firewall fatto di testo di policy — l'intenzione c'è, l'applicazione no. Chiedi di disegnare il confine e proporre un test che tenti di oltrepassarlo.
+
+Includi anche l'esposizione dei dati: cosa esce verso il fornitore del modello, cosa viene scritto nei log, e chi può leggere quei log. "Registriamo tutto" è una conversazione sulla conformità che aspetta solo di esplodere.
+
+### 4. "Quale parte costruiresti senza un LLM?"
+
+Un ingegnere capace può togliere l'AI da parte della propria proposta. Regole di eleggibilità, aritmetica e controlli di permesso hanno implementazioni noiose che non allucinano mai. Interpretare cosa intendeva un cliente frustrato no.
+
+Chiedi cosa ti compra il modello in questo specifico flusso di lavoro e quali prove giustificherebbero la superficie di errore aggiuntiva. Se ogni riquadro nel diagramma ha bisogno di un agente, chiedi un diagramma più piccolo.
+
+### 5. "Parlami di un approccio che hai abbandonato."
+
+Ascolta l'osservazione che ha cambiato la loro opinione. Gli utenti volevano la ricerca, non la chat. Il modello più costoso ha ridotto il costo totale di gestione. La funzionalità non valeva la pena di essere rilasciata e lo hanno detto.
+
+Un risultato negativo sincero batte una storia di successo lucidata, perché una storia di successo raramente rivela una regola decisionale. Chiedi cosa hanno smesso di fare, e quanto tempo ci hanno messo a smettere.
+
+## Paga per una piccola sessione di lavoro
+
+Usa un esercizio limitato e pagato su dati sintetici. Invia il briefing e i criteri di valutazione in anticipo — stai assumendo per il giudizio, non per la capacità di essere colti di sorpresa. Lascia che le persone usino gli strumenti che userebbero sul lavoro, AI inclusa, e poi chiedi loro di spiegare e verificare ciò che è uscito.
+
+Un esempio illustrativo di sessione di 90 minuti per un ingegnere applicativo:
+
+> Hai ereditato un assistente di supporto che scrive risposte e propone rimborsi. Ecco dodici ticket sintetici, un breve documento di policy e quattro esecuzioni registrate. Una risposta cita una policy che abbiamo ritirato a marzo. Una richiesta di rimborso va in timeout. Un ticket chiede informazioni di un altro cliente. Raccomanda se espandere il pilota, e mostrami un piccolo miglioramento o test.
+
+Quindici minuti per chiarire l'obiettivo, quarantacinque per approfondire, trenta per spiegare la raccomandazione. Fornisci un ambiente preparato in modo che l'esercizio non sia segretamente un test di `npm install`. Soddisfa le esigenze di accessibilità e mantieni condizioni equivalenti tra i candidati.
+
+Stai osservando quali domande fanno, quali prove aprono e quale rischio cercano per primo. Notano che dodici ticket non possono stabilire l'affidabilità? Sono in grado di rilasciare una correzione mirata senza affermare che il sistema ora è a posto? Sanno dire cosa dovrebbe succedere la settimana prossima?
+
+Il candidato che aggiunge un test che fallisce per il rimborso duplicato potrebbe averti detto più di quello che ha rilasciato una bella interfaccia chat.
+
+Usa le stesse domande chiave e gli stessi criteri di valutazione per tutti nel ruolo — questa è la struttura di base dietro la [guida ai colloqui strutturati](https://www.opm.gov/policy-data-oversight/assessment-and-selection/structured-interviews/) dell'U.S. Office of Personnel Management, e esiste affinché il tuo panel confronti i candidati invece delle sensazioni. Mantieni l'esercizio vicino al lavoro reale. Il confine tra un campione di lavoro e una consulenza gratuita è più sottile di quanto la maggior parte dei manager pensi, e i candidati lo vedono dall'altra parte della stanza.
+
+## La scheda di valutazione per l'assunzione
+
+Copia questo nel documento del colloquio. Concorda il livello richiesto per ogni dimensione **prima** di incontrare qualcuno, perché la soglia si sposta una volta che una persona ti piace. Ogni intervistatore valuta in modo indipendente prima del debrief e allega un'osservazione concreta a ogni valutazione.
+
+Usa **1 = non supportato o materialmente lacunoso**, **2 = funzionante con guida sostanziale**, **3 = solido nell'ambito del ruolo**, **4 = giudizio solido più verifica dimostrata**. Usa **N/O = non osservato** quando il colloquio non ha prodotto prove. N/O è un vuoto da colmare, non uno zero da mediare.
+
+| Dimensione | Prova che giustifica un 3 | Punteggio / prova osservata |
+| --- | --- | --- |
+| Giudizio tecnico | Sceglie un progetto proporzionato e spiega un'alternativa scartata | ___ / ___ |
+| Giudizio di prodotto | Definisce un risultato per l'utente, una baseline e un motivo per fermarsi | ___ / ___ |
+| Valutazione | Propone casi rappresentativi e verifica i risultati, non solo risposte fluenti | ___ / ___ |
+| Disciplina di produzione | Gestisce guasti parziali, recupero, monitoraggio, costo e latenza | ___ / ___ |
+| Sicurezza | Identifica dati sensibili e spiega limiti di accesso e spesa applicabili | ___ / ___ |
+| Comunicazione | Esprime l'incertezza in modo chiaro e spiega la conseguenza a un decisore | ___ / ___ |
+| Proprietà | Separa il proprio lavoro da quello del team e segue i guasti fino alla risoluzione | ___ / ___ |
+
+Questo è un aiuto decisionale, non un predittore validato di performance lavorativa. Adattalo al tuo ruolo e verificalo con ciò che accade realmente dopo l'ingresso — altrimenti stai mettendo a punto un giudice che non hai mai valutato.
+
+Per chi gestirà la produzione da solo, voglio prove solide in ogni dimensione essenziale. Un totale forte non dovrebbe mai nascondere una debolezza irrisolta in permessi o recupero; sono quelli che ti faranno pagare dopo. Per un ingegnere in crescita, scrivi il supporto di cui avrà bisogno e il nome della persona che lo fornisce.
+
+Concludi il debrief con tre frasi: **Cosa può gestire questa persona? Di quale supporto avrà bisogno? Di cosa non siamo ancora sicuri?** Un panel che non riesce a rispondere sta per avere una conversazione di quaranta minuti sulla presenza esecutiva.
+
+## Le bandiere rosse meritano un'altra domanda
+
+Fai attenzione quando un candidato non riesce a separare il proprio contributo da quello del team, tratta ogni progetto passato come un successo ininterrotto o risponde a domande sulla misurazione con aggettivi. "Altamente accurato" ha bisogno di un denominatore.
+
+Altri segnali: gli agenti appaiono nel progetto prima che il problema sia compreso; il costo operativo non ha un tetto; il recupero dai guasti è di competenza di un altro team; la sicurezza risiede interamente nel prompt.
+
+Indaga una volta con uno scenario concreto prima di concludere qualcosa. Un termine sconosciuto non è un concetto mancante, e molti ingegneri validi hanno appreso le idee con nomi diversi. Dai credito quando qualcuno coglie il proprio errore a metà risposta. Rifiutarsi di aggiornare la propria posizione dopo aver visto prove contrarie è la mossa squalificante — aver bisogno di un momento di silenzio per pensare non lo è.
+
+## Già preoccupato per l'assunzione? Prima verifica il lavoro
+
+Un progetto AI in difficoltà non prova che hai assunto l'ingegnere sbagliato. Il brief potrebbe essere stato impossibile, i dati inutilizzabili, o la direzione potrebbe aver promesso piena autonomia in un keynote prima che qualcuno misurasse la qualità.
+
+Prima di commissionare una riscrittura, preserva il codice, la configurazione, i risultati della valutazione e i log pertinenti sotto i controlli di accesso appropriati. Poi stabilisci quali account, servizi e chiavi API l'azienda controlla effettivamente — è qui che i team scoprono che l'intera pipeline gira sul conto di fatturazione personale di una persona.
+
+Ottieni una lettura indipendente su alcuni flussi di lavoro rappresentativi. Cosa funziona? Cosa fallisce? Quali affermazioni sono riproducibili? Limita le azioni rischiose mentre il comportamento incerto è sotto indagine, e suddivide il lavoro in conservare, riparare e sostituire.
+
+Chiedi un breve piano di recupero con test di accettazione, responsabili nominati e una data decisionale. "Abbiamo bisogno di un nuovo framework" è una proposta da esaminare, non una diagnosi.
+
+## Dai all'assunzione il permesso di deludere la roadmap
+
+Niente di tutto questo funziona se la tua azienda punisce il giudizio che ha appena passato sei settimane a selezionare.
+
+L'ingegnere che dice "l'approvazione umana resta su questo passo" o "il pilota non giustifica ancora un'espansione" ha bisogno di un leader che sappia ascoltarlo davanti ad altre persone. Assumi basandoti sulle prove e poi seppellisci i risultati scomodi, e avrai costruito una macchina costosa per produrre le risposte che già volevi.
+
+Quindi per il prossimo ruolo AI: scrivi il risultato, usa la scorecard, e guarda il candidato scavare in qualcosa di imperfetto.
+
+Vuoi la persona che sa mostrarti perché il sistema è pronto — e che ti dirà, ad alta voce, il giorno in cui non lo è.

@@ -1,0 +1,59 @@
+{
+  "selectedCommit": "a787a86e158a12bfcdffbc4395ecccaa53695402",
+  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 96,
+    "culturalAdaptation": 94,
+    "languagePurity": 94
+  },
+  "suggestions": [],
+  "rationale": "The pass 1 fixes successfully applied the internal link route correction, translated the link text, and improved 'test fallimentare' to 'test che fallisce'. MDX structure, frontmatter, heading counts, tables, blockquotes, and terminology are fully preserved and clean.",
+  "confidence": "high",
+  "confidenceScore": 0.878,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "how-to-hire-an-ai-engineer-without-getting-burned",
+  "locale": "it",
+  "candidateCommits": [
+    "3a18d181e4e53122f34f71637f1d7220f4722526",
+    "a787a86e158a12bfcdffbc4395ecccaa53695402"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[\"It scored 94%\" non è una misurazione se la stessa esecuzione ottiene l'82% martedì.](../auto-tune-your-llm-judge)",
+      "replacement": "[\"Ha ottenuto il 94%\" non è una misurazione se la stessa esecuzione ottiene l'82% di martedì.](/auto-tune-your-llm-judge)",
+      "reason": "Translates the English sentence fragment inside the link and fixes the internal route link from relative '../' to root-relative '/' like the English source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "test fallimentare",
+      "replacement": "test che fallisce",
+      "reason": "In Italian software terminology, 'test fallimentare' means related to bankruptcy or doomed to fail, whereas 'test che fallisce' accurately captures a 'failing test'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug how-to-hire-an-ai-engineer-without-getting-burned --locale it --skip-global",
+    "output": ""
+  }
+}
