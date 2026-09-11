@@ -1,0 +1,57 @@
+{
+  "runId": "deepseek-deepseek-v4-flash@2026-09-11T21-34-25-510Z",
+  "slug": "mastra-security-guardrails",
+  "locale": "de",
+  "model": "deepseek/deepseek-v4-flash",
+  "modelPath": "deepseek-deepseek-v4-flash",
+  "createdAt": "2026-09-11T21:35:32.670Z",
+  "sourcePath": "src/content/posts/2026-01-03--mastra-security-guardrails/index.mdx",
+  "targetPath": "src/content/posts/2026-01-03--mastra-security-guardrails/de/index.mdx",
+  "candidatePath": "reports/i18n/mastra-security-guardrails/de/deepseek-deepseek-v4-flash/2026-09-11T21-34-25-510Z/candidate.mdx",
+  "sourceHash": "cc675b0771cec66846d32953e3dd0d03e9d88a40369ad22b6e4567dc3c734a35",
+  "outputHash": "0a421f503e6ffbb7d63ff14a6cacdbcf4633e57d3bc999a586d215ddbafc5540",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article argues that raw LLMs are inherently unsafe in production due to their malleable nature, and that the gap between a demo and a secure deployment is dangerously wide. It presents a solution via the Mastra framework, which enforces safety through a processor pipeline acting as middleware: input processors (e.g., `UnicodeNormalizer`, `PromptInjectionDetector`) sanitize prompts, while output processors (e.g., `PIIDetector`, `ModerationProcessor`) filter responses. Specific techniques include detecting prompt injection, redacting PII (credit cards, SSNs), and moderating harmful content, with configurable thresholds and strategies (block, redact, rewrite). The tone is a technical tutorial with an urgent, cautionary undercurrent, framing guardrails as non-optional layers built into agent architecture rather than afterthoughts. The intended audience is developers deploying LLM agents in production environments.",
+  "totalInputTokens": 4622,
+  "totalOutputTokens": 7496,
+  "totalCacheReadTokens": 1024,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 55293,
+  "totalCostUsd": 0.0026054672000000003,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "deepseek/deepseek-v4-flash",
+    "chunkSize": "18p",
+    "totalChunks": 2,
+    "totalInputTokens": 4622,
+    "totalOutputTokens": 7496,
+    "totalCacheReadTokens": 1024,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 55293,
+    "totalCostUsd": 0.0026054672000000003,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 2378,
+        "outputTokens": 2861,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 21297,
+        "costUsd": 0.001134
+      },
+      {
+        "index": 1,
+        "inputTokens": 2244,
+        "outputTokens": 4635,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 33996,
+        "costUsd": 0.0014714672000000002
+      }
+    ]
+  }
+}
