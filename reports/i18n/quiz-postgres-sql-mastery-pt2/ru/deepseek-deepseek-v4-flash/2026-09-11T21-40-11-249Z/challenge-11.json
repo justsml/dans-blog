@@ -1,0 +1,72 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT и NULL",
+  "translation": {
+    "title": "COUNT и NULL",
+    "group": "Поведение NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Сколько *строк* вернёт этот запрос?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Ok, это было немного хитро. Загвоздка в том, что `x = NULL` никогда не найдёт ни одной строки и ВСЕГДА вернёт одну строку с количеством `0`.\n\n    Поскольку `NULL` — это неизвестное значение, его нельзя сравнить ни с чем, даже с самим собой.\n    \n    Правильный способ проверки на `NULL` — это использовать `IS NULL`.\n\n    Пример:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT и NULL\",\n  \"group\": \"Поведение NULL\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Сколько *строк* вернёт этот запрос?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Ok, это было немного хитро. Загвоздка в том, что `x = NULL` никогда не найдёт ни одной строки и ВСЕГДА вернёт одну строку с количеством `0`.\\n\\n    Поскольку `NULL` — это неизвестное значение, его нельзя сравнить ни с чем, даже с самим собой.\\n    \\n    Правильный способ проверки на `NULL` — это использовать `IS NULL`.\\n\\n    Пример:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 980,
+    "outputTokens": 1190,
+    "totalTokens": 2170,
+    "reasoningTokens": 872,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10007,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.00045024,
+    "providerUpstreamCostUsd": 0.00045024,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 980,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 1190,
+      "completionTokensDetails": {
+        "reasoningTokens": 872
+      },
+      "totalTokens": 2170,
+      "cost": 0.00045024,
+      "costDetails": {
+        "upstreamInferenceCost": 0.00045024
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.0001372,
+    "outputUsd": 0.0003332000000000001,
+    "totalUsd": 0.00047040000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

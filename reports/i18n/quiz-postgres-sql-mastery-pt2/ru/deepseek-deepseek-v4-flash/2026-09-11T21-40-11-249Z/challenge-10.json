@@ -1,0 +1,72 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Частичные индексы",
+  "translation": {
+    "title": "Частичные индексы",
+    "group": "Индексирование",
+    "options": [
+      {
+        "text": "Неверный синтаксис"
+      },
+      {
+        "text": "Создает дублирующиеся индексы"
+      },
+      {
+        "text": "Индексирует только активных студентов"
+      },
+      {
+        "text": "Сначала индексирует активных студентов"
+      },
+      {
+        "text": "Дает подсказку планировщику запросов"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает это заклинание?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Этот трюк называется `частичный индекс`.\n\n    Они полезны для уменьшения использования диска и ускорения запросов, когда обычно запрашивается лишь подмножество строк.\n\n    Postgres будет использовать индекс только тогда, когда условие `status = 'active'` присутствует в запросе.\n\n    **Напоминание:** Postgres не поддерживает 'подсказки запроса' (query hints) в отличие от других СУБД. Планировщик запросов сам решает, когда использовать подходящие индексы."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Частичные индексы\",\n  \"group\": \"Индексирование\",\n  \"options\": [\n    {\n      \"text\": \"Неверный синтаксис\"\n    },\n    {\n      \"text\": \"Создает дублирующиеся индексы\"\n    },\n    {\n      \"text\": \"Индексирует только активных студентов\"\n    },\n    {\n      \"text\": \"Сначала индексирует активных студентов\"\n    },\n    {\n      \"text\": \"Дает подсказку планировщику запросов\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что делает это заклинание?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"Этот трюк называется `частичный индекс`.\\n\\n    Они полезны для уменьшения использования диска и ускорения запросов, когда обычно запрашивается лишь подмножество строк.\\n\\n    Postgres будет использовать индекс только тогда, когда условие `status = 'active'` присутствует в запросе.\\n\\n    **Напоминание:** Postgres не поддерживает 'подсказки запроса' (query hints) в отличие от других СУБД. Планировщик запросов сам решает, когда использовать подходящие индексы.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 974,
+    "outputTokens": 822,
+    "totalTokens": 1796,
+    "reasoningTokens": 516,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6737,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.000350812,
+    "providerUpstreamCostUsd": 0.000350812,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 974,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 822,
+      "completionTokensDetails": {
+        "reasoningTokens": 516
+      },
+      "totalTokens": 1796,
+      "cost": 0.000350812,
+      "costDetails": {
+        "upstreamInferenceCost": 0.000350812
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00013636000000000003,
+    "outputUsd": 0.00023016000000000003,
+    "totalUsd": 0.00036652000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

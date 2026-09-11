@@ -1,0 +1,69 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "Порядок столбцов в составном индексе",
+  "translation": {
+    "title": "Порядок столбцов в составном индексе",
+    "group": "Индексация",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Какой индекс лучше подходит для этого запроса?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Меня, честно говоря, удивляет то, что составной индекс может быть использован, даже если порядок столбцов в тексте запроса не совпадает с определением индекса.\n\n    **Примечание:** В B-деревьях ведущий столбец имеет значение. Поскольку этот запрос фильтрует по `grade_level` и `last_name`, индекс, начинающийся с `grade_level`, а затем `last_name`, подходит хорошо.\n\n    Чем быстрее SQL может отобрать наименьшее количество строк, тем лучше производительность.\n\n    Например, если у вас есть таблица `task`, и вы знаете, что `status` более селективен, чем `created_at`, вы можете выбрать индекс, начинающийся с `status`, для запроса вида `status = 'done' AND created_at > '2024-01-01'`. Порядок условий в тексте `WHERE` не имеет значения; важны порядок столбцов индекса и форма предикатов.\n\n    B+Tree индекс может использоваться для:\n    - Ведущего столбца или самого левого префикса столбцов.\n    - Операторов, таких как `=`, `>`, `<`, `BETWEEN` и `IN`, в зависимости от формы запроса.\n    - Префиксного сравнения, `LIKE 'prefix%'`.\n\n    Спасибо [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) за указание на ошибку в предыдущей версии этого объяснения!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Порядок столбцов в составном индексе\",\n  \"group\": \"Индексация\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Какой индекс лучше подходит для этого запроса?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"Меня, честно говоря, удивляет то, что составной индекс может быть использован, даже если порядок столбцов в тексте запроса не совпадает с определением индекса.\\n\\n    **Примечание:** В B-деревьях ведущий столбец имеет значение. Поскольку этот запрос фильтрует по `grade_level` и `last_name`, индекс, начинающийся с `grade_level`, а затем `last_name`, подходит хорошо.\\n\\n    Чем быстрее SQL может отобрать наименьшее количество строк, тем лучше производительность.\\n\\n    Например, если у вас есть таблица `task`, и вы знаете, что `status` более селективен, чем `created_at`, вы можете выбрать индекс, начинающийся с `status`, для запроса вида `status = 'done' AND created_at > '2024-01-01'`. Порядок условий в тексте `WHERE` не имеет значения; важны порядок столбцов индекса и форма предикатов.\\n\\n    B+Tree индекс может использоваться для:\\n    - Ведущего столбца или самого левого префикса столбцов.\\n    - Операторов, таких как `=`, `>`, `<`, `BETWEEN` и `IN`, в зависимости от формы запроса.\\n    - Префиксного сравнения, `LIKE 'prefix%'`.\\n\\n    Спасибо [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) за указание на ошибку в предыдущей версии этого объяснения!\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1219,
+    "outputTokens": 2715,
+    "totalTokens": 3934,
+    "reasoningTokens": 2094,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 21499,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.000890966,
+    "providerUpstreamCostUsd": 0.000890966,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1219,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 2715,
+      "completionTokensDetails": {
+        "reasoningTokens": 2094
+      },
+      "totalTokens": 3934,
+      "cost": 0.000890966,
+      "costDetails": {
+        "upstreamInferenceCost": 0.000890966
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00017066000000000002,
+    "outputUsd": 0.0007602,
+    "totalUsd": 0.00093086,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

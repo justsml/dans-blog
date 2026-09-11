@@ -1,0 +1,69 @@
+{
+  "index": 11,
+  "attempt": 2,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Ловушка EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Ловушка EXPLAIN ANALYZE",
+    "group": "Производительность",
+    "options": [
+      {
+        "text": "Легкая оценка плана"
+      },
+      {
+        "text": "Работает только с SELECT"
+      },
+      {
+        "text": "Modifies data & emits plan"
+      },
+      {
+        "text": "Имитирует выполнение для получения плана"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` на самом деле выполняет запрос! Будьте осторожны при анализе операций записи, особенно `UPDATE`, `DELETE` и `INSERT`. Возможно, вам придется выполнять операции очистки после каждого `EXPLAIN ANALYZE`, чтобы получить повторяемые результаты.\n\n    Лучшие практики:\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\n    - Оборачивайте изменения в транзакции:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ловушка EXPLAIN ANALYZE\",\n  \"group\": \"Производительность\",\n  \"options\": [\n    {\n      \"text\": \"Легкая оценка плана\"\n    },\n    {\n      \"text\": \"Работает только с SELECT\"\n    },\n    {\n      \"text\": \"Modifies data & emits plan\"\n    },\n    {\n      \"text\": \"Имитирует выполнение для получения плана\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` на самом деле выполняет запрос! Будьте осторожны при анализе операций записи, особенно `UPDATE`, `DELETE` и `INSERT`. Возможно, вам придется выполнять операции очистки после каждого `EXPLAIN ANALYZE`, чтобы получить повторяемые результаты.\\n\\n    Лучшие практики:\\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\\n    - Оборачивайте изменения в транзакции:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 991,
+    "outputTokens": 516,
+    "totalTokens": 1507,
+    "reasoningTokens": 240,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 4569,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.0002161956,
+    "providerUpstreamCostUsd": 0.0002161956,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 991,
+      "promptTokensDetails": {
+        "cachedTokens": 512
+      },
+      "completionTokens": 516,
+      "completionTokensDetails": {
+        "reasoningTokens": 240
+      },
+      "totalTokens": 1507,
+      "cost": 0.0002161956,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0002161956
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.0000684936,
+    "outputUsd": 0.00014448,
+    "totalUsd": 0.0002129736,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

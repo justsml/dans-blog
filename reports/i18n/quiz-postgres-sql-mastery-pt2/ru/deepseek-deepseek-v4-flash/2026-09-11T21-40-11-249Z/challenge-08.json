@@ -1,0 +1,72 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Кавычки в именах столбцов",
+  "translation": {
+    "title": "Кавычки в именах столбцов",
+    "group": "Кавычки 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Как указать **имя столбца, содержащее точку?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL использует двойные кавычки для идентификаторов:\n    - Двойные кавычки `\"...\"` для идентификаторов (имен столбцов, таблиц)\n    - Одинарные кавычки `'...'` для строковых литералов\n    - Форма `first.name` интерпретируется как `имя_таблицы.имя_столбца`\n\n    Без кавычек точка в имени столбца была бы воспринята как разделитель схемы/таблицы! Кроме того, все некавыченные идентификаторы по умолчанию приводятся к нижнему регистру.\n\n    Чтобы избежать неожиданностей, лучше использовать `snake_case` и избегать специальных символов."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Кавычки в именах столбцов\",\n  \"group\": \"Кавычки 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"Как указать **имя столбца, содержащее точку?**\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"hintsProse\": [],\n  \"hintsCode\": [],\n  \"explanationProse\": [\n    \"PostgreSQL использует двойные кавычки для идентификаторов:\\n    - Двойные кавычки `\\\"...\\\"` для идентификаторов (имен столбцов, таблиц)\\n    - Одинарные кавычки `'...'` для строковых литералов\\n    - Форма `first.name` интерпретируется как `имя_таблицы.имя_столбца`\\n\\n    Без кавычек точка в имени столбца была бы воспринята как разделитель схемы/таблицы! Кроме того, все некавыченные идентификаторы по умолчанию приводятся к нижнему регистру.\\n\\n    Чтобы избежать неожиданностей, лучше использовать `snake_case` и избегать специальных символов.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1000,
+    "outputTokens": 1357,
+    "totalTokens": 2357,
+    "reasoningTokens": 980,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12264,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0.000497676,
+    "providerUpstreamCostUsd": 0.000497676,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 1000,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 1357,
+      "completionTokensDetails": {
+        "reasoningTokens": 980
+      },
+      "totalTokens": 2357,
+      "cost": 0.000497676,
+      "costDetails": {
+        "upstreamInferenceCost": 0.000497676
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00014000000000000001,
+    "outputUsd": 0.00037996,
+    "totalUsd": 0.00051996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
