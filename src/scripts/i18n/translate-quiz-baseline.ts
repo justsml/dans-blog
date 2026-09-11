@@ -10,6 +10,7 @@ const DEFAULT_MODELS = [
   "openrouter/qwen/qwen3.8-max",
   "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/openai/gpt-5.6-luna",
   "openrouter/qwen/qwen3-32b:nitro",
 ];
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;

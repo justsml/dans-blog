@@ -109,6 +109,7 @@ const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/minimax/minimax-m2.5",
   "openrouter/minimax/minimax-m2.7",
   "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/openai/gpt-5.6-luna",
   "openrouter/qwen/qwen3-32b:nitro",
   "openrouter/qwen/qwen3.8-max",
   "openrouter/z-ai/glm-5.3-flash",

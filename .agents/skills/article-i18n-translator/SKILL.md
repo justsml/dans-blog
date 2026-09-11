@@ -32,6 +32,7 @@ Current low-cost OpenRouter candidates:
 - `openrouter/qwen/qwen3.8-max`
 - `openrouter/deepseek/deepseek-v4-flash`
 - `openrouter/openai/gpt-oss-120b:nitro`
+- `openrouter/openai/gpt-5.6-luna` (low reasoning effort)
 - `openrouter/qwen/qwen3-32b:nitro`
 - `openrouter/z-ai/glm-5.3-flash`
 - `openrouter/minimax/minimax-m2.5`
