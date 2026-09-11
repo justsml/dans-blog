@@ -863,7 +863,10 @@ function extractMarkdownReferenceDefinitions(contents: string) {
 }
 
 function isCodeLikeQuizOption(value: string) {
-  const trimmed = value.trim();
+  // Literal HTML tag mentions (e.g. "Part of a <newsletter>") are handled by their own
+  // tag-only preservation check, so they're removed here to avoid also tripping the
+  // generic operator/bracket heuristics below and forcing the whole option untranslated.
+  const trimmed = value.trim().replace(/<\/?[A-Za-z][^>]*>/g, " ").trim();
   return (
     /^(?:NaN|null|undefined|TypeError|RangeError|ReferenceError|SyntaxError)(?::|$)/.test(trimmed)
     || /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|::|[;]|\\|\\'|\\")/.test(trimmed)

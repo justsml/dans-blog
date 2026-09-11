@@ -652,10 +652,21 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code === "quiz-code-option-preservation")).toBe(true);
   });
 
+  const sourceWithTagOption = [
+    "<Challenge",
+    "  index={0}",
+    "  options={[",
+    "    { text: 'Part of a <newsletter>' },",
+    "    { text: 'A standalone content section', isAnswer: true },",
+    "  ]}",
+    ">",
+    "</Challenge>",
+  ].join("\n");
+
   test("allows translated prose around a preserved literal HTML tag mention", () => {
-    const target = source.replace("Part of a <newsletter>", "Parte de un <newsletter>");
+    const target = sourceWithTagOption.replace("Part of a <newsletter>", "Parte de un <newsletter>");
     const issues = analyzeTranslationIntegrity({
-      sourceContents: source,
+      sourceContents: sourceWithTagOption,
       targetContents: target,
       targetPath: "/repo/src/content/posts/test/es/index.mdx",
       locale: "es",
@@ -665,9 +676,9 @@ describe("analyzeTranslationIntegrity", () => {
   });
 
   test("flags a quiz option that drops a literal HTML tag mention during translation", () => {
-    const target = source.replace("Part of a <newsletter>", "Parte de un boletín");
+    const target = sourceWithTagOption.replace("Part of a <newsletter>", "Parte de un boletín");
     const issues = analyzeTranslationIntegrity({
-      sourceContents: source,
+      sourceContents: sourceWithTagOption,
       targetContents: target,
       targetPath: "/repo/src/content/posts/test/es/index.mdx",
       locale: "es",
