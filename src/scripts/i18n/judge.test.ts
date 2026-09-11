@@ -652,6 +652,30 @@ describe("analyzeTranslationIntegrity", () => {
     expect(issues.some((issue) => issue.code === "quiz-code-option-preservation")).toBe(true);
   });
 
+  test("allows translated prose around a preserved literal HTML tag mention", () => {
+    const target = source.replace("Part of a <newsletter>", "Parte de un <newsletter>");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    expect(issues.some((issue) => issue.code === "quiz-option-html-tag-preservation")).toBe(false);
+    expect(issues.some((issue) => issue.code === "quiz-code-option-preservation")).toBe(false);
+  });
+
+  test("flags a quiz option that drops a literal HTML tag mention during translation", () => {
+    const target = source.replace("Part of a <newsletter>", "Parte de un boletín");
+    const issues = analyzeTranslationIntegrity({
+      sourceContents: source,
+      targetContents: target,
+      targetPath: "/repo/src/content/posts/test/es/index.mdx",
+      locale: "es",
+    });
+    const issue = issues.find((item) => item.code === "quiz-option-html-tag-preservation");
+    expect(issue?.message).toContain("<newsletter>");
+  });
+
   test("flags quiz challenges with options but no correct answer", () => {
     const target = source.replace("isAnswer: true", "hint: 'not the answer'");
     const issues = analyzeTranslationIntegrity({

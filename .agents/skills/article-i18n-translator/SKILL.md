@@ -31,7 +31,6 @@ Current low-cost OpenRouter candidates:
 
 - `openrouter/qwen/qwen3.8-max`
 - `openrouter/deepseek/deepseek-v4-flash`
-- `openrouter/openai/gpt-oss-120b:nitro`
 - `openrouter/openai/gpt-5.6-luna` (low reasoning effort)
 - `openrouter/qwen/qwen3-32b:nitro`
 - `openrouter/z-ai/glm-5.3-flash`
@@ -59,7 +58,7 @@ Judge with Gemini Flash by default:
 
 Recent high-throughput coverage runs used this focused cheap candidate pair:
 
-- `openrouter/openai/gpt-oss-120b:nitro`
+- `openrouter/openai/gpt-5.6-luna`
 - `openrouter/deepseek/deepseek-v4-flash`
 
 Use `openrouter/google/gemini-3.8-flash` as the current default merge/judge model unless the user asks otherwise. OpenRouter's catalog on 2026-09-04 listed Gemini 3.8 as the latest Flash model and Gemini 3.5 as the latest Flash Lite model.

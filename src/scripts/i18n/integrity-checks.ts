@@ -445,6 +445,16 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
           message: `${targetPath} Challenge ${sourceChallenge.index} option ${optionIndex} adds a hint that is not present in English.`,
         });
       }
+
+      const requiredTags = extractHtmlTagMentions(sourceOption.text);
+      const missingTags = requiredTags.filter((tag) => !targetOption.text.includes(tag));
+      if (missingTags.length > 0) {
+        issues.push({
+          code: "quiz-option-html-tag-preservation",
+          severity: "high",
+          message: `${targetPath} Challenge ${sourceChallenge.index} option ${optionIndex} dropped literal HTML tag mention(s) ${missingTags.map((tag) => JSON.stringify(tag)).join(", ")} that must stay untranslated.`,
+        });
+      }
     }
 
     for (const sourceOption of sourceOptions.filter((option) => isCodeLikeQuizOption(option.text))) {
@@ -859,13 +869,19 @@ function isCodeLikeQuizOption(value: string) {
     || /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|::|[;]|\\|\\'|\\")/.test(trimmed)
     || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>!=]=?|&&|\|\|)/.test(trimmed)
     || /(?:^|\s)\.[A-Za-z][\w-]*\b/.test(trimmed)
-    || /<\/?[A-Za-z][^>]*>/.test(trimmed)
     || /^(?:cat|grep|sed|awk|curl|bun|npm|node|git|docker|pnpm)\s+\S+/.test(trimmed)
     || /(?:^|[\s/])[-a-z0-9_]+\.(?:js|jsx|ts|tsx|mjs|cjs|css|scss|html|json|mdx?|ya?ml|sql)\b/.test(trimmed)
     || /(?:^|[\s])\/[^/\n]+\/[a-z]*\b/i.test(trimmed)
     || /['"`][^'"`]*(?:\(|\)|::|\\|[{}[\];]|=>)[^'"`]*['"`]/.test(trimmed)
     || /^[A-Za-z][\w -]{0,24}:\s*[-#.$%()\w]+$/.test(trimmed)
   );
+}
+
+// Quiz answers sometimes embed a literal HTML tag mention (e.g. "Part of a <newsletter>")
+// as the thing being tested. Only the tag itself must survive translation unchanged;
+// the surrounding prose should translate normally, unlike fully code-like options.
+function extractHtmlTagMentions(value: string): string[] {
+  return [...value.matchAll(/<\/?[A-Za-z][^>]*>/g)].map((match) => match[0]);
 }
 
 function getComparableText(contents: string) {
