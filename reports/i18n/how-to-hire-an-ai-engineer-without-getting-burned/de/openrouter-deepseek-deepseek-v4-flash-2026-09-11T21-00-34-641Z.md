@@ -1,0 +1,213 @@
+# Translation Candidate
+- Slug: how-to-hire-an-ai-engineer-without-getting-burned
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-09-09--how-to-hire-an-ai-engineer-without-getting-burned/de/index.mdx
+- Validation: deferred
+- Runtime seconds: 108.72
+- Input tokens: 9290
+- Output tokens: 14184
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.004710
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'Wie man einen KI-Ingenieur einstellt, ohne sich die Finger zu verbrennen'
+subTitle: Stelle nach beständigem Urteilsvermögen ein.
+modified: '2026-09-11'
+tags:
+  - ai
+  - hiring
+  - leadership
+  - engineering-management
+  - evals
+  - production
+  - security
+  - agents
+category: Leadership
+subCategory: Hiring
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+cover_alt: >-
+  Eine Miniatur-Stahlbrücke, die drei orangefarbene Gewichte trägt, mit einer
+  Messsonde unter ihrer Spannweite.
+related:
+  - llm-evals-are-broken
+  - dont-fear-the-model-router
+  - evidence-is-the-product
+---
+Die Demo funktioniert. Der Lebenslauf ist beeindruckend. Alle verlassen das Vorstellungsgespräch begeistert.
+
+Dann fragt jemand, was passiert, wenn das System zweimal dieselbe Rückerstattung ausstellt.
+
+Schweigen ist eine teure Antwort.
+
+Die Einstellung im KI-Bereich ist schwierig, weil der sichtbare Teil der Arbeit früh abgeschlossen ist. Ein Chatfenster, das in fließenden Absätzen antwortet, sieht fertig aus. Nichts daran verrät Ihnen, ob das System Berechtigungen respektiert, ein Timeout übersteht oder pro Ticket mehr kostet als der Mensch, dem es eigentlich helfen sollte.
+
+Sie müssen keinen Streit über Attention Heads gewinnen. Sie brauchen genügend Anhaltspunkte, um zu entscheiden, wer diese Entscheidungen in Ihrem Namen treffen darf.
+
+<blockquote class="breakout">
+  <p>Stellen Sie für die Urteilsfähigkeit hinter der Demo ein. Sorgen Sie dafür, dass diese Entscheidungsfähigkeit sichtbar wird, bevor Sie das Angebot unterbreiten.</p>
+</blockquote>
+
+Hier ist der Prozess, den ich für einen Ingenieur durchführen würde, der KI in ein Produkt einbringt: Schreiben Sie das Ergebnis, öffnen Sie ein Stück echter Arbeit, bezahlen Sie eine kurze Arbeitssitzung und bewerten Sie, was Sie tatsächlich gesehen haben. Forschungs- und Infrastrukturrollen benötigen andere Übungen. Beginnen Sie mit der Stelle.
+
+---
+
+## Schreiben Sie die Stelle, bevor Sie den Lebenslauf kaufen
+
+„Wir brauchen einen KI-Ingenieur“ ist etwa so nützlich wie „wir brauchen jemanden, der gut mit Geld umgehen kann.“ Buchhalter? CFO? Die Person, die dem Gründer sagt, er solle aufhören, Domains zu kaufen?
+
+Wählen Sie das Problem, für das Sie jemanden einstellen, der es in die Hand nimmt.
+
+| Die erforderliche Arbeit | Auf welche Hinweise achten |
+| --- | --- |
+| Forschung oder Modellentwicklung | Experimente, Baselines, Datenauswahl und eine ehrliche Darstellung dessen, was nicht funktioniert hat |
+| KI-Anwendungs-Engineering | Ein nützlicher Workflow, Integrationen, Evaluierung und Fehlerbehandlung |
+| KI-Infrastruktur | Bereitstellung, Kapazität, Überwachung, Kostenkontrolle und Wiederherstellung unter Last |
+| Evaluierung und Qualität | Repräsentative Testfälle, verteidigbare Bewertung und Diagnose von Regressionen |
+| KI-Produkt-Engineering | Nutzerforschung, Workflow-Design, Akzeptanz und Nachweis, dass die Funktion die Arbeit verbessert hat |
+
+Eine Person kann mehrere Zeilen abdecken. Von gleich tiefer Expertise in allen fünf zu erwarten, ist der Weg, wie aus einer Stellenbeschreibung eine Wunschliste mit einem Gehalt wird.
+
+Schreiben Sie das 90-Tage-Ergebnis auf, bevor Sie mit Vorstellungsgesprächen beginnen. Zum Beispiel:
+
+> Stellen Sie fest, ob ein Entwurfsassistent für den Support die Bearbeitungszeit verkürzt, ohne die Richtlinienfehler zu erhöhen. Liefern Sie einen gemessenen Pilotversuch, einen menschlichen Überprüfungspfad und eine Empfehlung zur Ausweitung, Überarbeitung oder Einstellung.
+
+Das gibt einem Kandidaten etwas, woran er sich reiben kann, und das ist der Sinn. Ein starker wird fragen, wie die Bearbeitungszeit gemessen wird, wem die Richtlinie gehört und ob schon jemand überprüft hat, wie gut die aktuellen menschlichen Antworten sind. Ein schwacher wird sagen, dass es aufregend klingt.
+
+Wenn niemand in Ihrem Team die technischen Belege beurteilen kann, holen Sie einen externen Praktiker für die Bewertung hinzu – und fragen Sie, ob er Ihnen danach die Implementierung verkaufen möchte. Andernfalls wird der Kandidat zu seiner eigenen technischen Referenz, was ein Interessenkonflikt mit besserer Haltung ist.
+
+## Bitten Sie sie, die Motorhaube zu öffnen
+
+Ein bekannter Arbeitgeber verrät Ihnen, wo jemand gearbeitet hat. Eine Demo zeigt Ihnen, dass etwas einmal funktioniert hat – auf einem Laptop, in guter Laune. Keins von beidem sagt Ihnen, was diese Person in Ihrem Team verantworten kann.
+
+Bitten Sie um ein Projekt, über das sie vollständig sprechen kann:
+
+**„Gehen Sie mit mir etwas durch, das Sie persönlich ausgeliefert haben. Was haben Sie verantwortet, was ist schiefgegangen, und was hat sich aufgrund der Fakten geändert?“**
+
+Folgen Sie dann einer Entscheidung durch den gesamten Bogen. Was war der erste Ansatz? Was haben sie gemessen? Welche Alternative wurde verworfen und warum? Was hat ein Teammitglied beigetragen? Was würden Sie heute anders machen?
+
+Bitten Sie um ein Artefakt: eine bereinigte Ablaufverfolgung eines fehlgeschlagenen Durchlaufs, einen Eval-Bericht, ein Entwurfsdokument, einen Test, eine kurze Code-Durchsprache. Eine Ablaufverfolgung ist die Aufzeichnung dessen, was das System auf dem Weg zu seiner Antwort getan hat – jeder Tool-Aufruf, jeder erneute Versuch, jedes stille Verschweigen. Das ist der Unterschied zwischen dem Lesen des Aufsatzes und dem Ansehen der Arbeit.
+
+<p class="inset">
+Ein Kandidat, der sich weigert, Kundendaten eines früheren Arbeitgebers herauszugeben, besteht den Test, nicht durchzufallen.
+</p>
+
+Nehmen Sie stattdessen ein rekonstruiertes Beispiel oder verwenden Sie die unten stehende gemeinsame Übung. „Zeigen Sie mir Belege“ darf nie bedeuten: „Bringen Sie uns die Geheimnisse eines anderen.“
+
+Bei einer frühen Karrierestufe sind die Belege kleiner, und das ist in Ordnung. Skalieren Sie den erwarteten Umfang und die Aufsicht auf die Rolle. Sie testen Verständnis und Eigenverantwortung, nicht den Zugang zu berühmten Logos.
+
+## Fünf Fragen, die die Interviewzeit wert sind
+
+Dies sind Impulse zur Untersuchung, keine Quizfragen. Wenn das Auswendiglernen der Antwort ausreicht, um zu bestehen, taugt die Frage nichts.
+
+### 1. „Wie würden Sie feststellen, ob dieser Agent besser geworden ist?“
+
+Achten Sie auf Erfolg, der in der Sprache der Aufgabe definiert ist: korrekt gelöste Tickets, Entwürfe, die ein Agent tatsächlich versendet, Eskalationen, die nicht hätten passieren müssen. Fragen Sie dann, welche Fehlschläge eine durchschnittliche Punktzahl verbergen würde und womit sie die neue Version vergleichen würden.
+
+Eine gute Antwort macht die Messung überprüfbar. Bitten Sie sie, drei Testfälle spontan zu skizzieren und zu sagen, wer entscheidet, ob jeder bestanden hat. Wenn ein Modell die Antworten bewertet, fragen Sie, wie sie den Bewerter prüfen. [„Es hat 94 % erreicht“ ist keine Messung, wenn derselbe Durchlauf am Dienstag 82 % ergibt.](/auto-tune-your-llm-judge)
+
+Anthropics [Leitfaden für Agentenevaluierungen](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) zieht die Unterscheidung, die in Ihr Interview gehört: Die Aufzeichnung dessen, was ein Agent getan hat, ist nicht das Gleiche wie das Ergebnis. Wenn ein Agent meldet „Ich habe die Rückerstattung ausgestellt“, ist das ein Satz, keine Rückerstattung.
+
+### 2. „Das Tool hat nach dem Absenden einer Rückerstattung eine Zeitüberschreitung gemeldet. Was nun?“
+
+„Wiederholen“ ist der falsche Reflex. Das Geld könnte bereits weg sein.
+
+Achten Sie darauf, dass der Status der Transaktion vor dem Handeln überprüft wird, ein Idempotenzschlüssel vorhanden ist, damit der zweite Versuch auf den ersten aufsetzt, und ein Eskalationspfad für den Fall, dass der Zustand wirklich unbekannt ist. Fragen Sie, wer den Fehler sieht und wie die Arbeit anschließend fortgesetzt wird. Die Vokabeln sind weniger wichtig als die Frage, ob ihr Entwurf einen Kunden für einen Fehler zweimal belasten kann.
+
+### 3. „Was kann dieses System lesen, ändern und ausgeben?“
+
+Fragen Sie nach der Grenze: welche Datensätze gelesen werden können, welche Aktionen ausgeführt werden können, wo ein Mensch zustimmen muss und was verhindert, dass eine Schleife die ganze Nacht auf Ihre Kreditkarte läuft.
+
+Fragen Sie dann, wo diese Grenze durchgesetzt wird. Ein Prompt, der das Modell anweist, vorsichtig zu sein, ist eine Firewall aus Policy-Text – die Absicht ist da, die Durchsetzung nicht. Lassen Sie sie die Grenze zeichnen und einen Test vorschlagen, der versucht, sie zu überschreiten.
+
+Bedenken Sie dabei auch die Datenexposition: was zum Modellanbieter abfließt, was in Logs geschrieben wird und wer diese Logs lesen kann. „Wir loggen alles“ ist ein Compliance-Gespräch, das nur darauf wartet, zu passieren.
+
+### 4. „Welchen Teil würden Sie ohne ein LLM bauen?“
+
+Ein fähiger Ingenieur kann die KI aus einem Teil seines eigenen Vorschlags herausnehmen. Berechtigungsregeln, Arithmetik und Berechtigungsprüfungen haben langweilige Implementierungen, die nie hallucinieren. Die Interpretation dessen, was ein frustrierter Kunde meinte, tut das nicht.
+
+Fragen Sie, was das Modell in diesem spezifischen Workflow bringt und welche Evidenz die zusätzliche Fehleroberfläche rechtfertigen würde. Wenn jede Box im Diagramm einen Agenten braucht, fragen Sie nach einem kleineren Diagramm.
+
+### 5. „Erzählen Sie mir von einem Ansatz, den Sie aufgegeben haben.“
+
+Achten Sie auf die Beobachtung, die ihre Meinung geändert hat. Nutzer wollten Suche, nicht Chat. Das teurere Modell senkte die Gesamtbearbeitungskosten. Die Funktion war es nicht wert, ausgeliefert zu werden, und sie sagten das.
+
+Ein ehrliches negatives Ergebnis schlägt eine polierte Erfolgsgeschichte, denn eine Erfolgsgeschichte offenbart selten eine Entscheidungsregel. Fragen Sie, was sie aufgehört haben zu tun und wie lange sie brauchten, um aufzuhören.
+
+## Bezahlen Sie für eine kleine Arbeitssitzung
+
+Verwenden Sie eine begrenzte, bezahlte Übung mit synthetischen Daten. Senden Sie die Aufgabenstellung und die Bewertungskriterien im Voraus – Sie stellen für Urteilsvermögen ein, nicht für die Fähigkeit, überfallen zu werden. Lassen Sie die Leute die Werkzeuge verwenden, die sie im Job nutzen würden, inklusive KI, und bitten Sie sie dann, das Ergebnis zu erklären und zu verifizieren.
+
+Eine illustrative 90-minütige Sitzung für einen Anwendungsentwickler:
+
+> Sie erben einen Support-Assistenten, der Antworten entwirft und Rückerstattungen vorschlägt. Hier sind zwölf synthetische Tickets, ein kurzes Richtliniendokument und vier aufgezeichnete Durchläufe. Eine Antwort zitiert eine Richtlinie, die wir im März zurückgezogen haben. Eine Rückerstattungsanfrage führt zu einem Timeout. Ein Ticket fragt nach den Informationen eines anderen Kunden. Empfehlen Sie, ob wir den Piloten ausweiten, und zeigen Sie mir eine kleine Verbesserung oder einen Test.
+
+Fünfzehn Minuten, um das Ziel zu klären, fünfundvierzig zum Eintauchen, dreißig, um die Empfehlung zu erklären. Geben Sie ihnen eine vorbereitete Umgebung, damit die Übung nicht heimlich ein Test von `npm install` ist. Berücksichtigen Sie Zugänglichkeitsbedürfnisse und halten Sie die Bedingungen für alle Kandidaten gleich.
+
+Sie beobachten, welche Fragen sie stellen, welche Belege sie öffnen und welches Risiko sie zuerst anpacken. Merken sie, dass zwölf Tickets keine Zuverlässigkeit belegen können? Können sie eine enge Korrektur ausliefern, ohne zu behaupten, das System sei jetzt in Ordnung? Können sie sagen, was nächste Woche passieren sollte?
+
+Der Kandidat, der einen fehlschlagenden Test für die doppelte Rückerstattung hinzufügt, hat Ihnen möglicherweise mehr gesagt als derjenige, der eine schöne Chat-Oberfläche ausgeliefert hat.
+
+Verwenden Sie für alle Kandidaten in der Rolle die gleichen Kernfragen und die gleichen Bewertungskriterien – das ist die grundlegende Struktur hinter dem [Leitfaden für strukturierte Interviews](https://www.opm.gov/policy-data-oversight/assessment-and-selection/structured-interviews/) des U.S. Office of Personnel Management, und sie existiert, damit Ihr Gremium Kandidaten vergleicht und nicht Bauchgefühle.
+
+Halten Sie die Übung nah am echten Job. Die Grenze zwischen einer Arbeitsprobe und kostenloser Beratung ist dünner, als die meisten Einstellungsmanager denken, und Kandidaten können sie von der anderen Seite des Raums sehen.
+
+## Die Einstellungs-Bewertungstabelle
+
+Kopieren Sie dies in das Interview-Dokument. Einigen Sie sich auf das erforderliche Niveau für jede Dimension, **bevor** Sie jemanden treffen, denn die Messlatte verschiebt sich, sobald Ihnen jemand gefällt. Jeder Interviewer bewertet unabhängig vor dem Debrief und fügt jeder Bewertung eine konkrete Beobachtung bei.
+
+Verwenden Sie **1 = nicht gestützt oder materiell fehlerhaft**, **2 = mit erheblicher Anleitung arbeitsfähig**, **3 = fundiert im Rahmen der Rolle**, **4 = fundiertes Urteilsvermögen plus nachgewiesene Verifikation**. Verwenden Sie **N/O = nicht beobachtet**, wenn das Interview keine Hinweise lieferte. N/O ist eine Lücke, die gefüllt werden muss, keine Null, die verrechnet wird.
+
+| Dimension | Belege für eine 3 | Punktzahl / beobachtete Belege |
+| --- | --- | --- |
+| Technisches Urteilsvermögen | Wählt ein angemessenes Design und erläutert eine verworfene Alternative | ___ / ___ |
+| Produkturteilsvermögen | Definiert ein Benutzerziel, eine Baseline und einen Grund zum Anhalten | ___ / ___ |
+| Evaluierung | Schlägt repräsentative Fälle vor und prüft Ergebnisse, nicht nur flüssige Antworten | ___ / ___ |
+| Produktionsdisziplin | Behandelt Teilausfälle, Wiederherstellung, Überwachung, Kosten und Latenz | ___ / ___ |
+| Sicherheit | Identifiziert sensible Daten und erläutert durchsetzbare Zugriffs- und Ausgabenlimits | ___ / ___ |
+| Kommunikation | Benennt Unsicherheit klar und erläutert die Konsequenz für Entscheidungsträger | ___ / ___ |
+| Eigenverantwortung | Trennt die eigene Arbeit von der des Teams und verfolgt Fehler bis zur Lösung | ___ / ___ |
+
+Dies ist eine Entscheidungshilfe, kein validierter Prädiktor der Arbeitsleistung. Kalibrieren Sie es auf Ihre Rolle und überprüfen Sie es anhand dessen, was tatsächlich passiert, nachdem Leute beigetreten sind – andernfalls justieren Sie einen Richter, den Sie nie bewertet haben.
+
+Für jemanden, der die Produktion allein verantwortet, möchte ich solide Belege in jeder wesentlichen Dimension. Eine starke Gesamtzahl sollte niemals eine ungelöste Schwäche bei Berechtigungen oder Wiederherstellung überdecken; das sind die beiden, die später zu Buche schlagen. Bei einem sich entwickelnden Ingenieur notieren Sie die Unterstützung, die er benötigt, und den Namen der Person, die sie bereitstellt.
+
+Schließen Sie das Debrief mit drei Sätzen: **Was kann diese Person verantworten? Welche Unterstützung wird sie benötigen? Was sind wir noch unsicher?** Ein Gremium, das diese nicht beantworten kann, steht kurz vor einem vierzigminütigen Gespräch über Führungspräsenz.
+
+## Red Flags verdienen eine weitere Frage
+
+Seien Sie vorsichtig, wenn ein Kandidat seinen eigenen Beitrag nicht vom Team trennen kann, jedes vergangene Projekt als ununterbrochenen Erfolg betrachtet oder Messfragen mit Adjektiven beantwortet. „Sehr genau“ braucht einen Nenner.
+
+Weitere Warnsignale: Agenten tauchen im Design auf, bevor das Problem verstanden ist; Betriebskosten haben keine Obergrenze; Fehlerbehebung gehört zu einem anderen Team; Sicherheit existiert ausschließlich im Prompt.
+
+Testen Sie einmal mit einem konkreten Szenario, bevor Sie etwas schlussfolgern. Ein unbekannter Begriff ist kein fehlendes Konzept, und viele starke Ingenieure haben die Ideen unter anderen Namen gelernt. Geben Sie Anerkennung, wenn jemand mitten in der Antwort seinen eigenen Fehler bemerkt. Sich weigern, nach widersprüchlichen Beweisen zu aktualisieren, ist der disqualifizierende Zug – einen ruhigen Moment zum Nachdenken zu brauchen, ist es nicht.
+
+## Bereits besorgt um die Einstellung? Prüfen Sie zuerst die Arbeit
+
+Ein kämpfendes KI-Projekt beweist nicht, dass Sie den falschen Ingenieur eingestellt haben. Das Briefing war vielleicht unmöglich, die Daten unbrauchbar, oder die Führungsebene hat in einer Keynote volle Autonomie versprochen, bevor irgendjemand Qualität gemessen hat.
+
+Bevor Sie eine Neufassung in Auftrag geben, bewahren Sie den Code, die Konfiguration, Eval-Ergebnisse und relevante Logs unter geeigneten Zugriffskontrollen auf. Stellen Sie dann fest, welche Konten, Dienste und API-Schlüssel das Unternehmen tatsächlich kontrolliert – hier entdecken Teams, dass die gesamte Pipeline auf dem persönlichen Abrechnungskonto einer Person läuft.
+
+Holen Sie sich eine unabhängige Einschätzung zu einigen repräsentativen Workflows. Was funktioniert? Was schlägt fehl? Welche Behauptungen reproduzieren sich? Beschränken Sie die riskanten Aktionen, während das unsichere Verhalten untersucht wird, und sortieren Sie die Arbeit in behalten, reparieren und ersetzen.
+
+Fordern Sie einen kurzen Wiederherstellungsplan mit Abnahmetests, benannten Verantwortlichen und einem Entscheidungsdatum an. „Wir brauchen ein neues Framework“ ist ein zu prüfender Vorschlag, keine Diagnose.
+
+## Geben Sie dem Neueingestellten die Erlaubnis, die Roadmap zu enttäuschen
+
+Nichts davon funktioniert, wenn Ihr Unternehmen das Urteilsvermögen bestraft, das es gerade sechs Wochen lang ausgewählt hat.
+
+Der Ingenieur, der sagt „Menschliche Genehmigung bleibt auf diesem Schritt“ oder „Der Pilot rechtfertigt noch keine Ausweitung“, braucht eine Führungskraft, die das vor anderen Leuten hören kann. Stellen Sie aufgrund von Beweisen ein und vergraben Sie dann die unbequemen Erkenntnisse, und Sie haben eine teure Maschine gebaut, die die Antworten produziert, die Sie bereits wollten.
+
+Also bei der nächsten KI-Stelle: Definieren Sie das Ergebnis, verwenden Sie die Bewertungstabelle und beobachten Sie, wie der Kandidat sich mit etwas Unvollkommenem auseinandersetzt.
+
+Sie wollen die Person, die Ihnen zeigen kann, warum das System bereit ist – und die Ihnen laut ins Gesicht sagt, an dem Tag, an dem es das nicht ist.
+````
