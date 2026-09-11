@@ -196,17 +196,20 @@ export function getComparablePostLength(contents: string) {
 
 export function assertNestedAssetPaths(targetContents: string, targetPath: string) {
   const isLocalePost = /\/[a-z]{2}\/index\.mdx?$/.test(targetPath);
+  // Illustrative code samples (e.g. `<img src="image.jpg">` inside a Challenge explanation)
+  // are not real asset references, so they're excluded before scanning for bad asset paths.
+  const scannable = stripHtmlPreCodeBlocks(stripFencedCodeBlocks(targetContents));
   const nestedAssetReferences = [
-    ...targetContents.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
-    ...targetContents.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
-    ...targetContents.matchAll(/:\s*\.\/(?!\.)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/g),
-    ...targetContents.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
+    ...scannable.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
+    ...scannable.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
+    ...scannable.matchAll(/:\s*\.\/(?!\.)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/g),
+    ...scannable.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
   ];
   const bareAssetReferences = isLocalePost
     ? [
-      ...targetContents.matchAll(/!\[[^\]]*]\((?!\.\.\/|\/|https?:\/\/|#)[^)]+\.(?:avif|gif|jpe?g|png|svg|webp)\)/gi),
-      ...targetContents.matchAll(/(?:src|image|cover|icon|thumbnail)=["'](?!\.\.\/|\/|https?:\/\/)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/gi),
-      ...targetContents.matchAll(/^\s*[A-Za-z0-9_-]*(?:image|cover|icon|hero|thumbnail)[A-Za-z0-9_-]*:\s*(?!\.\.\/|\/|https?:\/\/)[^\s]+\.(?:avif|gif|jpe?g|png|svg|webp)\b/gim),
+      ...scannable.matchAll(/!\[[^\]]*]\((?!\.\.\/|\/|https?:\/\/|#)[^)]+\.(?:avif|gif|jpe?g|png|svg|webp)\)/gi),
+      ...scannable.matchAll(/(?:src|image|cover|icon|thumbnail)=["'](?!\.\.\/|\/|https?:\/\/)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/gi),
+      ...scannable.matchAll(/^\s*[A-Za-z0-9_-]*(?:image|cover|icon|hero|thumbnail)[A-Za-z0-9_-]*:\s*(?!\.\.\/|\/|https?:\/\/)[^\s]+\.(?:avif|gif|jpe?g|png|svg|webp)\b/gim),
     ]
     : [];
 
@@ -265,7 +268,7 @@ function stripImportLines(contents: string) {
     .join("\n");
 }
 
-function stripFencedCodeBlocks(contents: string) {
+export function stripFencedCodeBlocks(contents: string) {
   const lines = contents.split(/\r?\n/);
   const result: string[] = [];
   let fence: string | undefined;
@@ -290,7 +293,7 @@ function stripFencedCodeBlocks(contents: string) {
   return result.join("\n");
 }
 
-function stripHtmlPreCodeBlocks(contents: string) {
+export function stripHtmlPreCodeBlocks(contents: string) {
   return contents.replace(/<pre\b[\s\S]*?<\/pre>/gi, "");
 }
 

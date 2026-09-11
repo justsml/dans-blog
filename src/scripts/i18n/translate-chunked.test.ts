@@ -143,6 +143,24 @@ describe("assertNestedAssetPaths", () => {
       '<img src="../inline.webp" />',
     ].join("\n"), "src/content/posts/example/zh/index.mdx")).not.toThrow();
   });
+
+  test("ignores illustrative asset filenames inside fenced code blocks", () => {
+    expect(() => assertNestedAssetPaths([
+      "Some explanation text.",
+      "```html",
+      '<img src="image.jpg" alt="Description of image">',
+      "```",
+    ].join("\n"), "src/content/posts/example/ja/index.mdx")).not.toThrow();
+  });
+
+  test("still rejects bare inherited assets outside fenced code blocks", () => {
+    expect(() => assertNestedAssetPaths([
+      '<img src="inline.webp" />',
+      "```html",
+      '<img src="image.jpg" alt="Description of image">',
+      "```",
+    ].join("\n"), "src/content/posts/example/ja/index.mdx")).toThrow(/Use \.\.\//);
+  });
 });
 
 describe("normalizeLocalizedCandidateFile", () => {

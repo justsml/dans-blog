@@ -1,5 +1,6 @@
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { analyzeHeadingAnchorLinks } from "./heading-link-validation.ts";
+import { stripFencedCodeBlocks, stripHtmlPreCodeBlocks } from "./localized-mdx.ts";
 
 export type IntegritySeverity = "high" | "medium" | "low";
 
@@ -200,6 +201,10 @@ function checkFenceLanguages(contents: string, targetPath: string): IntegrityIss
 
 function checkAssetPaths(sourceContents: string, contents: string, targetPath: string): IntegrityIssue[] {
   if (!/\/[a-z]{2}\/index\.mdx?$/.test(targetPath)) return [];
+
+  // Illustrative code samples (e.g. `<img src="image.jpg">` inside a Challenge explanation)
+  // are not real asset references, so they're excluded before scanning for bad asset paths.
+  contents = stripHtmlPreCodeBlocks(stripFencedCodeBlocks(contents));
 
   const badReferences = [
     ...contents.matchAll(/]\(\.\/(?!\.)[^)]*\)/g),
@@ -887,22 +892,6 @@ function maskFrontmatter(contents: string) {
   if (frontmatterEnd === -1) return contents;
   const frontmatter = contents.slice(0, frontmatterEnd + 4);
   return frontmatter.replace(/[^\n]/g, "") + contents.slice(frontmatterEnd + 4);
-}
-
-function stripFencedCodeBlocks(contents: string) {
-  const lines = contents.split(/\r?\n/);
-  const result: string[] = [];
-  let fence: string | undefined;
-  for (const line of lines) {
-    const fenceMatch = line.match(/^\s{0,3}(```+|~~~+)/);
-    if (fenceMatch != null) {
-      const marker = fenceMatch[1][0];
-      fence = fence == null ? marker : fence === marker ? undefined : fence;
-      continue;
-    }
-    if (fence == null) result.push(line);
-  }
-  return result.join("\n");
 }
 
 function stripMdxComments(contents: string) {
