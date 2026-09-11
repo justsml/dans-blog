@@ -65,7 +65,7 @@ On stage, Dan works the gap between the AI demo and the AI product: why the thin
 
 | Year | Event | Talk | Format | Link (video or slides) |
 | --- | --- | --- | --- | --- |
-| 2018 | Event not documented | *f(p) Functional Promises: A Compositional Library* — January 26 | Recorded talk | [Video](https://www.youtube.com/watch?v=TelXmMkMX6o) |
+| 2018 | Denver Script | *f(p) Functional Promises: A Compositional Library* — January 26 | Recorded talk | [Video](https://www.youtube.com/watch?v=TelXmMkMX6o) |
 | 2018 | React Denver | *Heroic Refactoring* — with Scott Tolinski, April 17 | Recorded talk | [Video](https://www.youtube.com/watch?v=X79oCNqandc&t=51m44s) |
 | 2018 | Denver Node.js Meetup | *3 Reasons Promises Beat Async/Await* — August 15 | Recorded talk | [Video](https://youtu.be/IO68Ld_noLs) |
 

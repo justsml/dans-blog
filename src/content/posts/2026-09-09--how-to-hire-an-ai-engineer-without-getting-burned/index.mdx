@@ -1,0 +1,179 @@
+---
+title: "How to Hire an AI Engineer Without Getting Burned"
+subTitle: "The questions, paid work session, and scorecard that help leaders separate a convincing demo from production judgment."
+date: 2026-09-09
+modified: 2026-09-09
+tags: [ai, hiring, leadership, engineering-management, evals, production, security]
+category: Leadership
+subCategory: Engineering Management
+draft: true
+unlisted: true
+hidden: true
+publish: false
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+cover_alt: "A miniature steel bridge supporting three orange weights, with a measurement probe beneath its span."
+related:
+  - llm-evals-are-broken
+  - dont-fear-the-model-router
+---
+
+The demo works. The résumé is impressive. Everybody leaves the interview excited.
+
+Then somebody asks what happens if the system issues the same refund twice.
+
+Silence is an expensive answer.
+
+Hiring an AI engineer is difficult because the visible part of the work can look finished long before the hard decisions have been made. A polished conversation tells you very little about whether the system respects permissions, recovers from failures, or costs more to operate than the problem it solves.
+
+As a leader, you do not need to win an argument about model architecture. You need enough evidence to decide who should own those decisions.
+
+**Hire for the judgment behind the demo. Make that judgment observable before you make the offer.**
+
+Here is the process I would use for an engineer responsible for shipping AI into a product: define the business outcome, examine one piece of work, run a small paid session, and score the evidence. Research and infrastructure roles need different exercises. Start there.
+
+## Write the job before you buy the résumé
+
+“We need an AI engineer” is about as useful as “we need someone good with money.” Accountant? CFO? Person who tells the founder to stop buying domains?
+
+Decide which problem you are hiring someone to own.
+
+| The work you need | Evidence to look for |
+| --- | --- |
+| Research or model development | Experiments, baselines, data choices, and explanations of negative results |
+| AI application engineering | A useful workflow, integrations, evaluation, and failure handling |
+| AI infrastructure | Deployment, capacity, monitoring, cost control, and recovery under load |
+| Evaluation and quality | Representative test cases, defensible scoring, and diagnosis of regressions |
+| AI product engineering | User research, workflow design, adoption, and evidence the feature improves the job |
+
+One person can cover several rows. Expecting equal depth in all five is how a job description becomes a wish list with a salary attached.
+
+Write a first-90-days outcome before opening interviews. For example:
+
+> Establish whether a support-drafting assistant reduces handling time without increasing policy errors. Deliver a measured pilot, a human review path, and a recommendation to expand, revise, or stop.
+
+That gives the candidate something concrete to challenge. They should ask how handling time is measured, who owns the policy, and whether anyone has checked the quality of the existing answers.
+
+If nobody on your team can assess the technical evidence, bring in an independent practitioner for the assessment. Agree on their remit and disclose any interest they have in selling the eventual implementation. A confident candidate should not have to serve as their own technical reference.
+
+## Ask them to open the hood
+
+A prestigious employer establishes where someone worked. A demo establishes that something worked once. Neither tells you what this person can own on your team.
+
+Ask for one project they can discuss in depth:
+
+**“Walk me through something you personally shipped. What did you own, what failed, and what changed because of the evidence?”**
+
+Follow the answer through a specific decision. What was the original approach? What did they measure? What alternative did they reject? What did another engineer contribute? What would they change now?
+
+Look for an artifact: a sanitized trace of a failed run, an evaluation report, a design decision, a test, or a small code walkthrough. A trace is simply the record of what the system did along the way. It lets you examine the work behind the answer.
+
+Respect confidentiality. A candidate who refuses to expose a former employer's customer data is demonstrating judgment. Accept a reconstructed example or the shared exercise below. Do not turn “show evidence” into “bring us somebody else's secrets.”
+
+For an earlier-career hire, the evidence may come from a smaller project. Adjust the expected scope and supervision to the role. You are testing understanding and ownership, not access to famous employers.
+
+## Five questions worth the interview time
+
+These questions are prompts for investigation. Memorizing the answers should not be enough to pass.
+
+### 1. “How would you tell whether this agent improved?”
+
+Listen for a definition of success tied to the job: correct resolution, useful drafts, fewer unnecessary escalations. Ask which failures would be hidden by an average score and what they would compare the new version against.
+
+A strong answer makes the measurement inspectable. Ask them to sketch three test cases and explain who decides whether each passes. If another model grades the answers, how do they check that grader?
+
+Anthropic's [guide to agent evaluations](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) makes a useful distinction between the record of an agent's actions and the actual outcome. An agent saying it completed a task does not establish that the task happened. That distinction belongs in your interview.
+
+### 2. “The tool timed out after submitting a refund. Now what?”
+
+“Retry” is incomplete. The refund might already have happened.
+
+Listen for checking the transaction's status, preventing duplicate actions, and escalating when the state is uncertain. Ask who can see the failure and how work resumes. The vocabulary matters less than whether their design could charge you twice for the same mistake.
+
+### 3. “What can this system access, change, and spend?”
+
+Ask for boundaries: which records it can read, which actions it can take, where approval is required, and what stops a runaway loop.
+
+Then ask where those limits are enforced. Instructions telling a model to behave are insufficient evidence that the surrounding software will enforce access restrictions or a spending limit. Have the candidate draw the boundary and propose a test that tries to cross it.
+
+Include data exposure: what reaches the model provider, what gets logged, and who can read those logs? “We log everything” deserves a follow-up.
+
+### 4. “Which part would you build without an LLM?”
+
+A capable engineer should be able to remove AI from part of the proposal. Fixed eligibility rules, calculations, and permission checks often have clear software implementations. Language interpretation may benefit from a model.
+
+Ask what you gain from the model in this particular workflow and what evidence would justify the added complexity. If every box in the diagram needs an agent, ask for a smaller diagram.
+
+### 5. “Tell me about an approach you abandoned.”
+
+Listen for the observation that changed their mind. Maybe users needed search instead of chat. Maybe a more expensive model reduced total handling cost. Maybe the feature was not worth shipping.
+
+A candid negative result can be more useful than a polished success story. Ask what they stopped doing and how quickly they acted on what they learned.
+
+## Pay for a small working session
+
+Use a bounded, paid exercise with synthetic data. Share the brief and scoring criteria in advance. Allow the tools people would use on the job, including AI, and ask them to explain and verify the resulting work.
+
+Here is an illustrative 90-minute session for an application engineer:
+
+> You inherit a support assistant that drafts replies and proposes refunds. Here are twelve synthetic tickets, a short policy document, and four recorded runs. One answer cites an outdated policy. One refund request times out. One ticket asks for another customer's information. Recommend whether we should expand the pilot, and demonstrate one small improvement or test.
+
+Give them 15 minutes to clarify the objective, 45 to investigate and work, and 30 to explain the recommendation. Provide a prepared environment so setup does not consume the exercise. Accommodate access needs and use equivalent conditions across candidates.
+
+You are looking for the questions they ask, the evidence they inspect, and the risks they prioritize. Do they notice that twelve tickets cannot establish broad reliability? Can they demonstrate a narrow improvement without claiming the whole system is fixed? Can they explain what should happen next?
+
+A candidate who adds a test exposing a duplicate-refund risk may have shown you more than one who finishes a beautiful chat interface.
+
+Use the same core questions and rating criteria for everyone applying to the role. That follows the basic structure described in the U.S. Office of Personnel Management's [structured interview guidance](https://www.opm.gov/policy-data-oversight/assessment-and-selection/structured-interviews/). Keep the exercise relevant to the actual job; this should not become free consulting or a surprise weekend assignment.
+
+## The hiring scorecard
+
+Copy this into the interview document. Agree on the required level for each dimension **before** meeting candidates. Each interviewer should score independently before the debrief and attach a concrete observation to every rating.
+
+Use **1 = unsupported or materially flawed**, **2 = workable with substantial guidance**, **3 = sound within the role's scope**, and **4 = sound judgment plus demonstrated verification**. Use **N/O = not observed** when the interview failed to produce evidence. That is a gap to resolve, not a zero to average away.
+
+| Dimension | Evidence that earns a 3 | Score / observed evidence |
+| --- | --- | --- |
+| Technical judgment | Chooses a proportionate design and explains a rejected alternative | ___ / ___ |
+| Product judgment | Defines a user outcome, a baseline, and a reason to stop | ___ / ___ |
+| Evaluation | Proposes representative cases and checks outcomes beyond fluent answers | ___ / ___ |
+| Production discipline | Handles partial failure, recovery, monitoring, cost, and latency | ___ / ___ |
+| Security | Identifies sensitive data and explains enforceable access and action limits | ___ / ___ |
+| Communication | States uncertainty clearly and explains consequences to a decision-maker | ___ / ___ |
+| Ownership | Separates personal contribution from team work and follows failures through to resolution | ___ / ___ |
+
+This is a proposed decision aid, not a validated predictor of job performance. Calibrate it to your role and compare your hiring expectations with what happens after people join.
+
+For someone expected to own production independently, I would require sound evidence in every essential dimension. A high total should never conceal an unresolved weakness in permissions or recovery. For a developing engineer, record the support they will need and name who will provide it.
+
+Finish the debrief with three sentences: **What can this person own? What support will they need? What material uncertainty remains?** If the panel cannot answer those, another discussion about “executive presence” will not help.
+
+## Red flags need a follow-up
+
+Be cautious when a candidate cannot explain their contribution, treats every project as an uncomplicated success, or answers questions about measurement with adjectives. “Highly accurate” needs a denominator.
+
+Other warning signs: agents appear before the problem is understood; operating costs have no limits; failure recovery is somebody else's problem; security lives entirely in the prompt.
+
+Probe once with a concrete scenario. Distinguish an unfamiliar term from a missing concept. Give credit when someone spots an error and corrects it. Refusing to update an answer after seeing contradictory evidence is more concerning than needing a moment to think.
+
+## Already worried about the hire? Audit the work first
+
+A struggling AI project does not automatically establish an incompetent engineer. The brief may be impossible, the data unusable, or leadership may have promised autonomy before anyone measured quality.
+
+Before commissioning a rewrite, preserve the code, configuration, evaluation results, and relevant logs with appropriate access controls. Establish which accounts, services, and credentials the company actually controls.
+
+Then get an independent assessment of a few representative workflows. What works? What fails? Which claims can be reproduced? Restrict risky actions while uncertain behavior is investigated, and separate work worth keeping from work that needs repair or replacement.
+
+Ask for a short recovery plan with acceptance tests, owners, and a decision date. “We need a new framework” is a proposal to examine, not a diagnosis.
+
+## Give the hire permission to disappoint the roadmap
+
+The interview only helps if your company rewards the judgment it selects for.
+
+An engineer who says “we should keep human approval here” or “the pilot does not justify expansion yet” needs a leader willing to hear it. Hire for evidence, then punish inconvenient findings, and you have designed a very expensive way to get the answers you wanted.
+
+For the next AI role, write the outcome, use the scorecard, and watch the candidate investigate something imperfect.
+
+You want someone who can show you why the system is ready—and tell you when it isn't.
