@@ -1,100 +1,60 @@
 {
   "selectedCommit": "current",
-  "selectedModel": "gpt-4o",
+  "selectedModel": "current",
   "scores": {
-    "readability": 8,
-    "technicalAccuracy": 7,
-    "coherence": 9,
-    "relevance": 10,
-    "translationQuality": 7,
-    "mdxPreservation": 8
+    "readability": 98,
+    "technicalAccuracy": 99,
+    "coherence": 98,
+    "relevance": 99,
+    "translationQuality": 98,
+    "mdxPreservation": 99,
+    "culturalAdaptation": 96,
+    "languagePurity": 98
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true}\n  ]}",
-      "replacement": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
-      "reason": "Challenge 4 (Hash Join) currently has the wrong options (it has the options for Challenge 8). This restores the correct technical content for the Hash Join question."
-    },
-    {
-      "priority": "high",
-      "match": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
-      "replacement": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true}\n  ]}",
-      "reason": "Challenge 8 (Data Sampling) currently has the wrong options (it has the options for Challenge 4). This restores the correct technical content for the Data Sampling question."
-    },
-    {
-      "priority": "high",
-      "match": "- `ПОЛНОЕ СОЕДИНЕНИЕ` (декартово произведение, если не используется `WHERE`)",
-      "replacement": "- `CROSS JOIN` (декартово произведение, если не используется `WHERE`)",
-      "reason": "The explanation for Challenge 0 incorrectly translates CROSS JOIN as ПОЛНОЕ СОЕДИНЕНИЕ (FULL JOIN) in the bullet points, which is technically incorrect and confusing."
-    }
+  "suggestions": [],
+  "rationale": "The current translation is already clean, structurally identical to the original MDX, preserves all Challenge components and properties accurately, correctly formats quotes and JS object options, and has no remaining medium or high priority issues.",
+  "confidence": "high",
+  "confidenceScore": 0.892,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
   ],
-  "rationale": "The current translation has swapped the options for Challenge 4 and Challenge 8, making both questions technically incorrect. It also has a translation error in the explanation of JOIN types where CROSS JOIN was mislabeled. The candidate commit 38027a0b has broken relative paths for imports (../../../../ instead of ../../../), so 'current' is the better base to fix.",
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "quiz-postgres-sql-mastery-pt2",
   "locale": "ru",
   "candidateCommits": [
-    "38027a0b38bfe5365d724145e73de2071dbf09a5"
+    "1818e718a0004d8ecaaf196d2c19d66aa2b1c2b1",
+    "f1ff75c4712b3b8612eea0854cc0c27fe4cfc303",
+    "67af1b0d935ced901a93d7d11b3777845ae55c62"
   ],
   "suggestionLog": [
     {
-      "priority": "high",
-      "match": "{text: '\\'}",
-      "replacement": "{text: '\\'first.name\\''}",
-      "reason": "The current translation has a broken string literal in the options for Challenge 7.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "options={[\n  ]}",
-      "replacement": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},\n  ]}",
-      "reason": "The options for Challenge 8 (Data Sampling) are missing in the current translation.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "options={[\n  ]}",
-      "replacement": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
-      "reason": "The options for Challenge 4 (Hash Join) are missing in the current translation.",
+      "priority": "medium",
+      "match": "Хочется еще? Загляните в мою [коллекцию квизов](../challenges/) за порцией бесконечного* веселья!",
+      "replacement": "Хочется еще? Загляните в мою [коллекцию квизов](/challenges/) за порцией бесконечного* веселья!",
+      "reason": "Root-relative URL /challenges/ matches the original English post and avoids incorrect relative path resolution.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     },
     {
       "priority": "medium",
-      "match": "title=\"ПиткаПо EXPLAIN ANALYZE\"",
-      "replacement": "title=\"Ловушка EXPLAIN ANALYZE\"",
-      "reason": "'ПиткаПо' is a hallucination/typo; 'Ловушка' (Trap) or 'Особенности' (Features) is better.",
+      "match": "---\nОтлично! Вы глубоко погрузились в нюансы PostgreSQL! 🐘\n\nНадеюсь, вы узнали что-то новое или хотя бы набрали достаточно баллов, чтобы было чем похвастаться! 🏆\n\nХочется еще? Загляните в мою [коллекцию квизов](../challenges/) за порцией бесконечного* веселья!\n---",
+      "replacement": "Отлично! Вы глубоко погрузились в нюансы PostgreSQL! 🐘\n\nНадеюсь, вы узнали что-то новое или хотя бы набрали достаточно баллов, чтобы было чем похвастаться! 🏆\n\nХочется еще? Загляните в мою [коллекцию квизов](/challenges/) за порцией бесконечного* веселья!",
+      "reason": "Remove extraneous thematic break markers around concluding text that do not exist in the source document.",
       "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
     },
     {
-      "priority": "high",
-      "match": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},\n  ]}",
-      "replacement": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
-      "reason": "Challenge 4 (Hash Join) currently has the wrong options (it has the options for Challenge 8). This restores the correct technical content for the Hash Join question.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
-      "replacement": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true}\n  ]}",
-      "reason": "Challenge 8 (Data Sampling) currently has the wrong options (it has the options for Challenge 4). This restores the correct technical content for the Data Sampling question.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- `ПОЛНОЕ СОЕДИНЕНИЕ` (декартово произведение, если не используется `WHERE`)",
-      "replacement": "- `CROSS JOIN` (декартово произведение, если не используется `WHERE`)",
-      "reason": "The explanation for Challenge 0 incorrectly translates CROSS JOIN as ПОЛНОЕ СОЕДИНЕНИЕ (FULL JOIN) in the bullet points, which is technically incorrect and confusing.",
+      "priority": "medium",
+      "match": "---\nОтлично! Вы глубоко погрузились в нюансы PostgreSQL! 🐘\n\nНадеюсь, вы узнали что-то новое или хотя бы набрали достаточно баллов, чтобы было чем похвастаться! 🏆\n\nХочется еще? Загляните в мою [коллекцию квизов](/challenges/) за порцией бесконечного* веселья!\n---",
+      "replacement": "Отлично! Вы глубоко погрузились в нюансы PostgreSQL! 🐘\n\nНадеюсь, вы узнали что-то новое или хотя бы набрали достаточно баллов, чтобы было чем похвастаться! 🏆\n\nХочется еще? Загляните в мою [коллекцию квизов](/challenges/) за порцией бесконечного* веселья!",
+      "reason": "Remove extraneous thematic break markers around concluding text that do not exist in the source document.",
       "pass": 2,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
@@ -104,6 +64,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale ru --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt2\" --locale ru --skip-global\n81 |   }\n82 | \n83 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;\n84 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;\n85 |   if (sourceFences !== targetFences) {\n86 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/ru/index.mdx changed fenced code block count from 26 to 28\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:86:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale ru --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt2\" --locale ru --skip-global\n103 | \n104 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {\n105 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== \"low\");\n106 |   if (issues.length === 0) return;\n107 | \n108 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/ru/index.mdx failed translation integrity checks:\n- [high] quiz-option-missing-field: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/ru/index.mdx Challenge 6 option 3 is missing expected field(s): error.\n- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/ru/index.mdx Challenge 11 changed code-like quiz option \"Modifies data & emits plan\".\n      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:108:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:38:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
