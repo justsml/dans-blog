@@ -1,0 +1,69 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Ловушка EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Ловушка EXPLAIN ANALYZE",
+    "group": "Производительность",
+    "options": [
+      {
+        "text": "Оценка для облегчённого плана"
+      },
+      {
+        "text": "Работает только с SELECT"
+      },
+      {
+        "text": "Modifies data & emits plan"
+      },
+      {
+        "text": "Имитирует выполнение, чтобы получить план"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает `EXPLAIN ANALYZE` с операторами `UPDATE`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` действительно выполняет запрос! Будьте осторожны при анализе операций записи, особенно операторов `UPDATE`, `DELETE` и `INSERT`. После каждого `EXPLAIN ANALYZE` может понадобиться выполнить очистку, чтобы получать воспроизводимые результаты.\n\n    Лучшие практики:\n    - Используйте `EXPLAIN` (без ANALYZE) для `UPDATE`/`DELETE`/`INSERT`\n    - Оборачивайте изменения в транзакции:"
+    ]
+  },
+  "rawText": "{\"title\":\"Ловушка EXPLAIN ANALYZE\",\"group\":\"Производительность\",\"options\":[{\"text\":\"Оценка для облегчённого плана\"},{\"text\":\"Работает только с SELECT\"},{\"text\":\"Modifies data & emits plan\"},{\"text\":\"Имитирует выполнение, чтобы получить план\"}],\"objectives\":[],\"questionProse\":[\"Что делает `EXPLAIN ANALYZE` с операторами `UPDATE`?\"],\"hintsProse\":[],\"explanationProse\":[\"`EXPLAIN ANALYZE` действительно выполняет запрос! Будьте осторожны при анализе операций записи, особенно операторов `UPDATE`, `DELETE` и `INSERT`. После каждого `EXPLAIN ANALYZE` может понадобиться выполнить очистку, чтобы получать воспроизводимые результаты.\\n\\n    Лучшие практики:\\n    - Используйте `EXPLAIN` (без ANALYZE) для `UPDATE`/`DELETE`/`INSERT`\\n    - Оборачивайте изменения в транзакции:\"]}",
+  "telemetry": {
+    "inputTokens": 984,
+    "outputTokens": 217,
+    "totalTokens": 1201,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2807,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0,
+    "providerUpstreamCostUsd": 0.0004572,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 984,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 217,
+      "completionTokensDetails": {
+        "reasoningTokens": 0
+      },
+      "totalTokens": 1201,
+      "cost": 0,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0004572
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.0001968,
+    "outputUsd": 0.0002604,
+    "totalUsd": 0.0004572,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Частичные индексы",
+  "translation": {
+    "title": "Частичные индексы",
+    "group": "Индексация",
+    "options": [
+      {
+        "text": "Недопустимый синтаксис"
+      },
+      {
+        "text": "Создаёт дубликаты индексов"
+      },
+      {
+        "text": "Индексирует только активных студентов"
+      },
+      {
+        "text": "Сначала индексирует активных студентов"
+      },
+      {
+        "text": "Даёт подсказку планировщику запросов"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Что делает это заклинание?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Этот трюк называется `Partial Index`.\n\n    Они полезны для уменьшения использования диска и ускорения запросов, когда обычно выполняется поиск только по подмножеству строк.\n\n    Postgres будет использовать индекс только при наличии в запросе условия `status = 'active'`.\n\n    **Напоминание:** Postgres не поддерживает «подсказки для запросов», как другие СУБД. Планировщик запросов сам решает, когда использовать подходящий индекс или индексы."
+    ]
+  },
+  "rawText": "{\"title\":\"Частичные индексы\",\"group\":\"Индексация\",\"options\":[{\"text\":\"Недопустимый синтаксис\"},{\"text\":\"Создаёт дубликаты индексов\"},{\"text\":\"Индексирует только активных студентов\"},{\"text\":\"Сначала индексирует активных студентов\"},{\"text\":\"Даёт подсказку планировщику запросов\"}],\"objectives\":[],\"questionProse\":[\"Что делает это заклинание?\"],\"hintsProse\":[],\"explanationProse\":[\"Этот трюк называется `Partial Index`.\\n\\n    Они полезны для уменьшения использования диска и ускорения запросов, когда обычно выполняется поиск только по подмножеству строк.\\n\\n    Postgres будет использовать индекс только при наличии в запросе условия `status = 'active'`.\\n\\n    **Напоминание:** Postgres не поддерживает «подсказки для запросов», как другие СУБД. Планировщик запросов сам решает, когда использовать подходящий индекс или индексы.\"]}",
+  "telemetry": {
+    "inputTokens": 967,
+    "outputTokens": 221,
+    "totalTokens": 1188,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3858,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0,
+    "providerUpstreamCostUsd": 0.0004586,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 967,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 221,
+      "completionTokensDetails": {
+        "reasoningTokens": 0
+      },
+      "totalTokens": 1188,
+      "cost": 0,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0004586
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.0001934,
+    "outputUsd": 0.0002652,
+    "totalUsd": 0.0004586,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

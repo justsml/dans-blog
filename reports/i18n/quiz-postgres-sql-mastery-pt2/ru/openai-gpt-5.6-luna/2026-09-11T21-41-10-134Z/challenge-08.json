@@ -1,0 +1,72 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Заключение имени столбца в кавычки",
+  "translation": {
+    "title": "Заключение имени столбца в кавычки",
+    "group": "Заключение в кавычки 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Как указать **имя столбца, содержащее точку?**"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "PostgreSQL использует двойные кавычки для заключения идентификаторов:\n    - Двойные кавычки `\"...\"` — для идентификаторов (имён столбцов и таблиц)\n    - Одинарные кавычки `'...'` — для строковых литералов\n    - Форма `first.name` интерпретируется как `table_name.column_name`\n\n    Без кавычек точка в имени столбца будет интерпретирована как разделитель схемы и таблицы! Кроме того, все идентификаторы без кавычек по умолчанию преобразуются в нижний регистр.\n\n    Чтобы избежать неожиданностей, лучше использовать `snake_case` и не применять специальные символы."
+    ]
+  },
+  "rawText": "{\"title\":\"Заключение имени столбца в кавычки\",\"group\":\"Заключение в кавычки 2\",\"options\":[{\"text\":\"first.name\"},{\"text\":\"\\\"first.name\\\"\"},{\"text\":\"\\\\\"},{\"text\":\"[first.name]\"},{\"text\":\"[first].[name]\"}],\"objectives\":[],\"questionProse\":[\"Как указать **имя столбца, содержащее точку?**\"],\"hintsProse\":[],\"explanationProse\":[\"PostgreSQL использует двойные кавычки для заключения идентификаторов:\\n    - Двойные кавычки `\\\"...\\\"` — для идентификаторов (имён столбцов и таблиц)\\n    - Одинарные кавычки `'...'` — для строковых литералов\\n    - Форма `first.name` интерпретируется как `table_name.column_name`\\n\\n    Без кавычек точка в имени столбца будет интерпретирована как разделитель схемы и таблицы! Кроме того, все идентификаторы без кавычек по умолчанию преобразуются в нижний регистр.\\n\\n    Чтобы избежать неожиданностей, лучше использовать `snake_case` и не применять специальные символы.\"]}",
+  "telemetry": {
+    "inputTokens": 987,
+    "outputTokens": 341,
+    "totalTokens": 1328,
+    "reasoningTokens": 76,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3692,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0,
+    "providerUpstreamCostUsd": 0.0006066,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 987,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 341,
+      "completionTokensDetails": {
+        "reasoningTokens": 76
+      },
+      "totalTokens": 1328,
+      "cost": 0,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0006066
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00019740000000000003,
+    "outputUsd": 0.00040919999999999997,
+    "totalUsd": 0.0006066,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

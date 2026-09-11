@@ -1,0 +1,72 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT и NULL",
+  "translation": {
+    "title": "COUNT и NULL",
+    "group": "Поведение NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Сколько *строк* вернёт этот запрос?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Ладно, здесь была небольшая ловушка. Дело в том, что `x = NULL` никогда не сопоставится ни с одной строкой, но ВСЕГДА вернёт одну строку со значением `0` в результате `COUNT`.\n\nПоскольку `NULL` — это неизвестное значение, его нельзя сравнить ни с чем, даже с ним самим.\n\nПравильный способ проверить значения `NULL` — использовать `IS NULL`.\n\nПример:"
+    ]
+  },
+  "rawText": "{\"title\":\"COUNT и NULL\",\"group\":\"Поведение NULL\",\"options\":[{\"text\":\"100\"},{\"text\":\"90\"},{\"text\":\"10\"},{\"text\":\"1\"},{\"text\":\"0\"}],\"objectives\":[],\"questionProse\":[\"Сколько *строк* вернёт этот запрос?\"],\"hintsProse\":[],\"explanationProse\":[\"Ладно, здесь была небольшая ловушка. Дело в том, что `x = NULL` никогда не сопоставится ни с одной строкой, но ВСЕГДА вернёт одну строку со значением `0` в результате `COUNT`.\\n\\nПоскольку `NULL` — это неизвестное значение, его нельзя сравнить ни с чем, даже с ним самим.\\n\\nПравильный способ проверить значения `NULL` — использовать `IS NULL`.\\n\\nПример:\"]}",
+  "telemetry": {
+    "inputTokens": 974,
+    "outputTokens": 180,
+    "totalTokens": 1154,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2052,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0,
+    "providerUpstreamCostUsd": 0.0004108,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 974,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 180,
+      "completionTokensDetails": {
+        "reasoningTokens": 0
+      },
+      "totalTokens": 1154,
+      "cost": 0,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0004108
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00019480000000000002,
+    "outputUsd": 0.00021600000000000002,
+    "totalUsd": 0.0004108,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

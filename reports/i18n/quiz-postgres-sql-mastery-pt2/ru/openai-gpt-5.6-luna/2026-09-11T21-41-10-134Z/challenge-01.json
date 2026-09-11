@@ -1,0 +1,72 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Many JOINs of PostgreSQL",
+  "translatedTitle": "Многообразие JOIN в PostgreSQL",
+  "translation": {
+    "title": "Многообразие JOIN в PostgreSQL",
+    "group": "Разминка: JOIN",
+    "options": [
+      {
+        "text": "JOIN ALL"
+      },
+      {
+        "text": "INNER JOIN"
+      },
+      {
+        "text": "CROSS JOIN"
+      },
+      {
+        "text": "LEFT OUTER JOIN"
+      },
+      {
+        "text": "FULL OUTER JOIN"
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Какое выражение JOIN не является ❌ допустимым в PostgreSQL?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Вы ведь знали про `CROSS JOIN`, правда?\n\n    А `JOIN ALL` не навёл вас на мысль о другой операции — `UNION ALL`?\n\n    Правильный ответ — `JOIN ALL` ❌.\n\n    Допустимые типы JOIN:\n    - `INNER JOIN` (JOIN по умолчанию)\n    - `LEFT JOIN` (или `LEFT OUTER JOIN`)\n    - `RIGHT JOIN` (или `RIGHT OUTER JOIN`)\n    - `FULL JOIN` (или `FULL OUTER JOIN`)\n    - `CROSS JOIN` (декартово произведение, если последующее предложение `WHERE` его не отфильтрует)"
+    ]
+  },
+  "rawText": "{\"title\":\"Многообразие JOIN в PostgreSQL\",\"group\":\"Разминка: JOIN\",\"options\":[{\"text\":\"JOIN ALL\"},{\"text\":\"INNER JOIN\"},{\"text\":\"CROSS JOIN\"},{\"text\":\"LEFT OUTER JOIN\"},{\"text\":\"FULL OUTER JOIN\"}],\"objectives\":[],\"questionProse\":[\"Какое выражение JOIN не является ❌ допустимым в PostgreSQL?\"],\"hintsProse\":[],\"explanationProse\":[\"Вы ведь знали про `CROSS JOIN`, правда?\\n\\n    А `JOIN ALL` не навёл вас на мысль о другой операции — `UNION ALL`?\\n\\n    Правильный ответ — `JOIN ALL` ❌.\\n\\n    Допустимые типы JOIN:\\n    - `INNER JOIN` (JOIN по умолчанию)\\n    - `LEFT JOIN` (или `LEFT OUTER JOIN`)\\n    - `RIGHT JOIN` (или `RIGHT OUTER JOIN`)\\n    - `FULL JOIN` (или `FULL OUTER JOIN`)\\n    - `CROSS JOIN` (декартово произведение, если последующее предложение `WHERE` его не отфильтрует)\"]}",
+  "telemetry": {
+    "inputTokens": 990,
+    "outputTokens": 252,
+    "totalTokens": 1242,
+    "reasoningTokens": 0,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2577,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0,
+    "providerUpstreamCostUsd": 0.0005004,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 990,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 252,
+      "completionTokensDetails": {
+        "reasoningTokens": 0
+      },
+      "totalTokens": 1242,
+      "cost": 0,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0005004
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.00019800000000000002,
+    "outputUsd": 0.0003024,
+    "totalUsd": 0.0005004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

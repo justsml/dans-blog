@@ -1,0 +1,69 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Условия для Hash Join",
+  "translation": {
+    "title": "Условия для Hash Join",
+    "group": "Внутреннее устройство SQL",
+    "options": [
+      {
+        "text": "ON a.id = b.id"
+      },
+      {
+        "text": "ON a.id > b.id"
+      },
+      {
+        "text": "ON a.id >= b.id"
+      },
+      {
+        "text": "HASH JOIN ON a.id = b.id ..."
+      }
+    ],
+    "objectives": [],
+    "questionProse": [
+      "Какое условие `ON` PostgreSQL может использовать для `HASH JOIN`?"
+    ],
+    "hintsProse": [],
+    "explanationProse": [
+      "Хеш-соединение возможно при условии равенства (`=`) в предложении `ON`.\n\n    - `=` — это ключевая форма предиката для хеш-соединений\n    - `>` и `>=` не подходят для хеш-соединений\n    - `HASH JOIN` — недопустимый синтаксис в PostgreSQL\n\n    Планировщик всё равно может выбрать вложенный цикл или соединение слиянием — в зависимости от размера таблиц, статистики, индексов и настроек памяти."
+    ]
+  },
+  "rawText": "{\"title\":\"Условия для Hash Join\",\"group\":\"Внутреннее устройство SQL\",\"options\":[{\"text\":\"ON a.id = b.id\"},{\"text\":\"ON a.id > b.id\"},{\"text\":\"ON a.id >= b.id\"},{\"text\":\"HASH JOIN ON a.id = b.id ...\"}],\"objectives\":[],\"questionProse\":[\"Какое условие `ON` PostgreSQL может использовать для `HASH JOIN`?\"],\"hintsProse\":[],\"explanationProse\":[\"Хеш-соединение возможно при условии равенства (`=`) в предложении `ON`.\\n\\n    - `=` — это ключевая форма предиката для хеш-соединений\\n    - `>` и `>=` не подходят для хеш-соединений\\n    - `HASH JOIN` — недопустимый синтаксис в PostgreSQL\\n\\n    Планировщик всё равно может выбрать вложенный цикл или соединение слиянием — в зависимости от размера таблиц, статистики, индексов и настроек памяти.\" ]}",
+  "telemetry": {
+    "inputTokens": 961,
+    "outputTokens": 253,
+    "totalTokens": 1214,
+    "reasoningTokens": 30,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2811,
+    "finishReason": "stop",
+    "rawFinishReason": "stop",
+    "warnings": [],
+    "providerCostUsd": 0,
+    "providerUpstreamCostUsd": 0.0004958,
+    "pricingSource": "openrouter-usage-accounting",
+    "openRouterUsage": {
+      "promptTokens": 961,
+      "promptTokensDetails": {
+        "cachedTokens": 0
+      },
+      "completionTokens": 253,
+      "completionTokensDetails": {
+        "reasoningTokens": 30
+      },
+      "totalTokens": 1214,
+      "cost": 0,
+      "costDetails": {
+        "upstreamInferenceCost": 0.0004958
+      }
+    }
+  },
+  "cost": {
+    "inputUsd": 0.0001922,
+    "outputUsd": 0.0003036,
+    "totalUsd": 0.0004958,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
