@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: c52cb0dbeaa8e46c44e4575bc23c557aeeedbc39
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: low (0.118)
+- Selected candidate: 5a91d007c2358bde5dec8aef3008d7ec0d701cee
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.880)
 
-The translation is generally good but has a few critical MDX issues: the subTitle is missing, a heading is duplicated, and the series links use relative paths instead of the root-relative paths found in the source. The judge report mentioned typos that seem to have been partially addressed in the provided text, but the structural issues remain.
+The suggested fix from pass 1 has been applied successfully. The document has matching structure, correct relative asset paths, well-preserved code blocks, accurate Hebrew terminology, and natural phrasing matching Dan's direct tone. No high or medium priority issues remain.
