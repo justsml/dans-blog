@@ -408,7 +408,9 @@ function withDeterministicRouting<T extends Record<string, any>>(providerOptions
 // so give the deeper settings room to actually answer.
 function judgeMaxOutputTokens(modelId: string) {
   const effort = judgeReasoningEffort(modelId);
-  return effort === "high" || effort === "medium" ? 12_000 : 2500;
+  // Observed non-reasoning judge output runs 700-1600 tokens, so 2500 left almost
+  // no headroom and truncated responses surfaced as JSON parse failures.
+  return effort === "high" || effort === "medium" ? 12_000 : 6000;
 }
 
 function judgeReasoningEffort(modelId: string) {
