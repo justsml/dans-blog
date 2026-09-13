@@ -46,7 +46,7 @@ describe("resolveCheapFastTranslationModel", () => {
   });
 
   test("resolves loose substrings to the first cheap/fast model match", () => {
-    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/openai/gpt-oss-120b:nitro");
+    expect(resolveCheapFastTranslationModel("nitro")).toBe("openrouter/openai/gpt-5.6-luna");
     expect(resolveCheapFastTranslationModel("32b")).toBe("openrouter/qwen/qwen3-32b:nitro");
     expect(resolveCheapFastTranslationModel("deepseek")).toBe("openrouter/deepseek/deepseek-v4-flash");
     expect(resolveCheapFastTranslationModel("luna")).toBe("openrouter/openai/gpt-5.6-luna");

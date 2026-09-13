@@ -5,7 +5,7 @@ import { spawn } from "node:child_process";
 import "dotenv/config";
 import matter from "gray-matter";
 import { generateText } from "./braintrust.ts";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createOpenRouterChatModel, resolveLlmConfig } from "./core/model-config.ts";
 import { jsonrepair } from "jsonrepair";
 import { ACTIVE_LOCALES, LOCALE_LABELS, type ActiveLocale } from "../../shared/i18n.ts";
 import {
@@ -19,7 +19,7 @@ import {
   parseList,
   relativeToRepo,
 } from "./utils.ts";
-import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
+import { usageFromResult } from "./llm-telemetry.ts";
 import { estimateTokenCost } from "./translation-costs.ts";
 import { deriveJudgeConfidence, type JudgeConfidenceLevel, type JudgeIssueCounts } from "./judge-utils.ts";
 import { normalizeModelId } from "./model-id.ts";
@@ -99,6 +99,9 @@ type ScoredTranslationRecord = {
 };
 
 const DEFAULT_MODEL = "openrouter/google/gemini-3.8-flash";
+// Fixed seed so repeat runs over unchanged content reproduce. Providers treat
+// seed as best-effort, not a guarantee, but it removes the avoidable variance.
+const JUDGE_SEED = 20260913;
 const DEFAULT_TASK_CONCURRENCY = 16;
 const DEFAULT_TIMEOUT_MS = 200_000;
 const DEFAULT_MAX_SOURCE_CHARS = 120_000;
@@ -289,7 +292,6 @@ async function scoreTranslation({
   sourceStats: ReturnType<typeof collectStats>;
   translationStats: ReturnType<typeof collectStats>;
 }) {
-  const provider = createOpenRouter({});
   const language = LOCALE_LABELS[locale];
   const prompt = [
     `Score the ${language} translation for DanLevy.net article slug "${slug}".`,
@@ -344,24 +346,29 @@ async function scoreTranslation({
   ].join("\n");
 
   const startedAt = Date.now();
+  // Judging must be as reproducible as we can make it: greedy decoding, a fixed
+  // seed, and the lowest reasoning effort each model accepts. `openai/<model>`
+  // routes first-party; `openrouter/...` keeps going through OpenRouter.
+  const llmConfig = resolveLlmConfig(model, {
+    reasoningEffort: judgeReasoningEffort(model),
+    maxTokens: 2500,
+    timeoutMs,
+  });
   const result = await generateText({
-    model: provider.chat(model.replace(/^openrouter\//, ""), OPENROUTER_USAGE_ACCOUNTING),
+    model: createOpenRouterChatModel(llmConfig),
     system: [
       "You are a strict technical translation quality analyst.",
       "You understand MDX, code-heavy articles, technical quizzes, and localization quality.",
       "Return parseable JSON only.",
     ].join(" "),
     prompt,
-    temperature: 0.1,
+    // gpt-5.x reasoning models reject temperature/top_p; resolveLlmConfig
+    // returns undefined for those and the AI SDK omits the field.
+    ...(llmConfig.temperature == null ? {} : { temperature: 0, topP: 1 }),
+    seed: JUDGE_SEED,
     maxOutputTokens: 2500,
     timeout: { totalMs: timeoutMs },
-    providerOptions: {
-      openrouter: {
-        reasoning: {
-          effort: model.includes("gemini-3") ? "minimal" : "low",
-        },
-      },
-    },
+    providerOptions: withDeterministicRouting(llmConfig.providerOptions),
   });
 
   return {
@@ -371,6 +378,33 @@ async function scoreTranslation({
     providerMetadata: result.providerMetadata,
     durationMs: Date.now() - startedAt,
   };
+}
+
+// OpenRouter load-balances across backends, and a different backend ignores our
+// seed and re-rolls the score. Pin to one provider that honors seed/temperature
+// so repeat runs land on the same machine.
+function withDeterministicRouting<T extends Record<string, any>>(providerOptions: T): T {
+  const openrouter = providerOptions.openrouter as Record<string, unknown> | undefined;
+  if (openrouter == null) return providerOptions;
+  return {
+    ...providerOptions,
+    openrouter: {
+      ...openrouter,
+      provider: {
+        require_parameters: true,
+        allow_fallbacks: false,
+        sort: "price",
+      },
+    },
+  };
+}
+
+// Lowest reasoning effort each judge accepts, to cut sampling variance.
+// Gemini 3 supports "minimal"; gpt-5.6 rejects "minimal" but supports "none".
+function judgeReasoningEffort(modelId: string) {
+  if (modelId.includes("gemini-3")) return "minimal";
+  if (modelId.includes("gpt-5.6")) return "none";
+  return "low";
 }
 
 function getScoreTasks() {

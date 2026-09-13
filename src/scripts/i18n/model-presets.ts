@@ -1,8 +1,8 @@
 export const CHEAP_FAST_TRANSLATION_MODELS = [
-  "openrouter/qwen/qwen3.8-max",
+  "openrouter/openai/gpt-5.6-luna",
   "openrouter/z-ai/glm-5.3-flash",
   "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/openai/gpt-5.6-luna",
+  "openrouter/qwen/qwen3.8-max",
   "openrouter/google/gemini-3.8-flash",
   "openrouter/google/gemini-3.5-flash-lite",
   "openrouter/deepseek/deepseek-v3.2",
@@ -16,11 +16,21 @@ export const CHEAP_FAST_TRANSLATION_MODELS = [
   "openrouter/minimax/minimax-m2.5",
 ] as const;
 
+// Shorthands for models that were retired; they resolve to the replacement we
+// swapped in, so existing --models flags and scripts keep working.
+const DEPRECATED_MODEL_ALIASES: Record<string, (typeof CHEAP_FAST_TRANSLATION_MODELS)[number]> = {
+  // openrouter/openai/gpt-oss-120b:nitro
+  nitro: "openrouter/openai/gpt-5.6-luna",
+};
+
 export function resolveCheapFastTranslationModel(input: string) {
   const trimmed = input.trim();
   if (trimmed === "") return trimmed;
 
   const normalized = normalizeModelSearchText(trimmed);
+  const aliased = DEPRECATED_MODEL_ALIASES[normalized];
+  if (aliased) return aliased;
+
   return CHEAP_FAST_TRANSLATION_MODELS.find((model) => {
     const normalizedModel = normalizeModelSearchText(model);
     const normalizedWithoutProvider = normalizeModelSearchText(model.replace(/^openrouter\//, ""));
