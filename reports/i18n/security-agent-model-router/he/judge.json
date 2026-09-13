@@ -1,102 +1,50 @@
 {
-  "selectedCommit": "de4776e7e47914026b1e6cbcd248ebef5d139ec7",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "4424a179c8a7f72eb6cad69fadf17a840d9ba615",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 95,
+    "readability": 96,
     "technicalAccuracy": 98,
-    "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 92,
-    "mdxPreservation": 95,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "coherence": 97,
+    "relevance": 98,
+    "translationQuality": 96,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 95,
+    "languagePurity": 96
   },
-  "suggestions": [
-    {
-      "priority": "high",
-      "match": "img src=\"./docker-lab-score-matrix.svg\"",
-      "replacement": "img src=\"../docker-lab-score-matrix.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
-    },
-    {
-      "priority": "high",
-      "match": "img src=\"./cost-quality-frontier.svg\"",
-      "replacement": "img src=\"../cost-quality-frontier.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
-    },
-    {
-      "priority": "high",
-      "match": "img src=\"./frontier-tool-behavior.svg\"",
-      "replacement": "img src=\"../frontier-tool-behavior.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
-    },
-    {
-      "priority": "high",
-      "match": "img src=\"./command-tool-pass-rates.svg\"",
-      "replacement": "img src=\"../command-tool-pass-rates.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder."
-    }
-  ],
-  "rationale": "The DeepSeek candidate provides a more natural and technically accurate Hebrew translation. It correctly handles technical terms like 'artifacts' and 'benchmarks' within a Hebrew context. It preserves the MDX structure perfectly, including tables and code blocks. The only high-priority issue is the image paths, which need the '../' prefix to account for the deeper folder structure of the Hebrew locale, a common requirement in this project's architecture.",
-  "confidence": "low",
-  "confidenceScore": 0.327,
+  "suggestions": [],
+  "rationale": "The translation in candidate 4424a179c8a7f72eb6cad69fadf17a840d9ba615 is exceptionally high quality, idiomatic, technically sound, and fully preserves the markdown/MDX layout, relative links, image paths, code fences, and tables. All prompts and code blocks are appropriately kept intact, and no high or medium priority issues remain.",
+  "confidence": "high",
+  "confidenceScore": 0.885,
   "confidenceSignals": [
-    "4 high and 0 medium issues",
+    "no high/medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 4,
+    "high": 0,
     "medium": 0,
     "low": 0
   },
   "slug": "security-agent-model-router",
   "locale": "he",
   "candidateCommits": [
-    "de4776e7e47914026b1e6cbcd248ebef5d139ec7",
-    "904903a4cc6fce5d6cd0afbc4c87549be4cf2cd4"
+    "4424a179c8a7f72eb6cad69fadf17a840d9ba615",
+    "2d6002982dfbaa86b3ca7892b0b574c915302ebf"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "img src=\"./docker-lab-score-matrix.svg\"",
-      "replacement": "img src=\"../docker-lab-score-matrix.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
+      "match": "בדוק את `/backup/config.env` ואת `/server-status`. כתובת ה־Redis נמצאת בקובץ ה־env.\nנסה גם את הדוח שבבעלות הארגון האחר.",
+      "replacement": "Check /backup/config.env and /server-status. The Redis URL is in the env file.\nAlso try the report owned by the other organization.",
+      "reason": "The negative code prompt example was translated into Hebrew prose inside a code fence, whereas candidate-facing prompt snippets and tests should preserve original test inputs.",
       "pass": 1,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "img src=\"./cost-quality-frontier.svg\"",
-      "replacement": "img src=\"../cost-quality-frontier.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
-      "pass": 1,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "img src=\"./frontier-tool-behavior.svg\"",
-      "replacement": "img src=\"../frontier-tool-behavior.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
-      "pass": 1,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "img src=\"./command-tool-pass-rates.svg\"",
-      "replacement": "img src=\"../command-tool-pass-rates.svg\"",
-      "reason": "Localized image paths must start with ../ to resolve correctly from the locale subfolder.",
-      "pass": 1,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
     }
   ],
   "validation": {
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug security-agent-model-router --locale he --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale he --skip-global\n210 |     ]\n211 |     : [];\n212 | \n213 |   if (nestedAssetReferences.length === 0 && bareAssetReferences.length === 0) return;\n214 | \n215 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/he/index.mdx uses asset paths inside a locale folder that do not start with ../. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/localized-mdx.ts:215:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale he --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale he --skip-global\n256 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n257 |   const comparison = compareMdxStructure(input);\n258 |   if (comparison.valid) return;\n259 | \n260 |   const targetLabel = input.targetPath ?? \"translation\";\n261 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/he/index.mdx failed structural parity with score 0.948 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/he/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":1}. Differences: {\"linkTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

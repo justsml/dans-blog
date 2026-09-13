@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: de4776e7e47914026b1e6cbcd248ebef5d139ec7
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: low (0.327)
+- Selected candidate: 4424a179c8a7f72eb6cad69fadf17a840d9ba615
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.885)
 
-The DeepSeek candidate provides a more natural and technically accurate Hebrew translation. It correctly handles technical terms like 'artifacts' and 'benchmarks' within a Hebrew context. It preserves the MDX structure perfectly, including tables and code blocks. The only high-priority issue is the image paths, which need the '../' prefix to account for the deeper folder structure of the Hebrew locale, a common requirement in this project's architecture.
+The translation in candidate 4424a179c8a7f72eb6cad69fadf17a840d9ba615 is exceptionally high quality, idiomatic, technically sound, and fully preserves the markdown/MDX layout, relative links, image paths, code fences, and tables. All prompts and code blocks are appropriately kept intact, and no high or medium priority issues remain.
