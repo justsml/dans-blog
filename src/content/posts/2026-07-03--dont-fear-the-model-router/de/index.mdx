@@ -1,7 +1,7 @@
 ---
-title: Keine Angst vor dem Model‑Router
-subTitle: Zum besten Modell mit Vertrauen navigieren.
-modified: '2026-07-03'
+title: Keine Angst vor dem Modell-Router
+subTitle: Leite Anfragen zuverlässig an das beste Modell weiter.
+modified: '2026-09-04'
 tags:
   - ai
   - llm
@@ -21,69 +21,67 @@ related:
   - llm-routing-mastra-ai
   - llm-evals-are-broken
   - mastra-workflows-memory
-sourceHash: "101c104c013b"
+sourceHash: 9599850328a0
 ---
-Dieerste Version von [Don’t Marry Your Model](/llm-routing-mastra-ai) brachte das einfache Argument vor: Hör auf, jede Aufgabe an dasselbe Modell zu schicken, nur weil es beim letzten Vergleich gewonnen hat.
+[Heirate dein Modell nicht](/llm-routing-mastra-ai) brachte das einfache Argument: Schick nicht jede Aufgabe an dasselbe Modell, nur weil es den letzten Bake-off gewonnen hat.
 
-Nutze ein günstiges Modell für günstige Arbeit. Nutze ein stärkeres Modell, wenn die Aufgabe tatsächlich schwierig ist. Halte die Routing‑Schicht flexibel genug, damit du Anbieter austauschen kannst, ohne dass dein Code‑Base zu einem Schrein wird.
+Verwende ein günstiges Modell für günstige Arbeit. Verwende ein leistungsfähigeres Modell, wenn die Arbeit tatsächlich schwierig ist. Halte die Routing-Schicht so lose gekoppelt, dass ein Provider-Wechsel deine Codebasis nicht in einen Schrein verwandelt.
 
 Das war richtig.
 
-Es war jedoch unvollständig.
+Es war aber unvollständig.
 
-Denn sobald du einen Router hinzufügst, hast du ein neues Systemverhalten, das getestet werden muss. Die Frage lautet nicht mehr „Welches Modell ist das beste?“. Die Frage lautet „Hat das System die richtige Route gewählt, die richtigen Werkzeuge eingesetzt, die richtigen Beweise erhalten und zum richtigen Zeitpunkt gestoppt?“
+Sobald du einen Router hinzufügst, hast du ein neues Systemverhalten, das getestet werden muss. Die Frage lautet dann nicht mehr „welches Modell ist das beste?“, sondern „hat das System die richtige Route gewählt, die richtigen Tools verwendet, die richtigen Belege bewahrt und zum richtigen Zeitpunkt aufgehört?“
 
-Wenn du das nicht misst, ist dein Model‑Router nur ein Vibe mit einer Dispatch‑Tabelle.
+Wenn du das nicht misst, ist dein Model-Router Bauchgefühl mit Dispatch-Tabelle.
 
 <p class="inset">
 Der Router ist nicht die Antwort. Der Router ist eine Hypothese darüber, wie sich dein System verhalten sollte.
 </p>
 
-Mastra liefert uns nützliche Ansatzpunkte, um diese Hypothese in etwas Testbares zu verwandeln: [scorers](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [datasets](https://mastra.ai/docs/evals/datasets/overview) und [experiments](https://mastra.ai/docs/evals/datasets/running-experiments). Die API‑Namen klingen nach Evaluations‑Infrastruktur, was sie auch sind, aber der eigentliche Nutzen ist einfacher:
-
-Sie machen das Agenten‑Verhalten sichtbar genug, um darüber zu diskutieren.
+Mastra bietet die Schnittstellen, um diese Hypothese testbar zu machen: [Scorer](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [Datasets](https://mastra.ai/docs/evals/datasets/overview) und [Experimente](https://mastra.ai/docs/evals/datasets/running-experiments). Die Namen klingen nach Evaluierungsinfrastruktur, und genau das sind sie. Der eigentliche Wert ist einfacher: Sie machen Agentenverhalten sichtbar genug, um darüber zu streiten.
 
 ## Was testen wir?
 
-Der Model‑Router aus dem vorherigen Beitrag hat drei offensichtliche Spezialisten‑Routen:
+Der Router aus dem vorherigen Beitrag hat drei spezialisierte Routen:
 
-| Route | Was sollte dort hin | Was wäre eine schlechte Route |
+| Route | Was dorthin gehört | Was eine schlechte Route wäre |
 |---|---|---|
-| `code` | Implementierung, Refactoring, Debugging, Code‑Review | Zusammenfassung von langen Kontexten, einfache Klassifizierung |
-| `long-context` | Unordentliche Dokumente, Transkripte, Policy‑Synthese, viele Dateien | Kurze mechanische Formatierung |
-| `general` | Klassifizierung, Formatierung, einfache Q&A, langweilige Extraktion | Komplexe Code‑ oder Beweis‑intensive Analyse |
+| `code` | Implementierung, Refactoring, Debugging, Code-Review | Zusammenfassung langer Kontexte, einfache Klassifizierung |
+| `long-context` | unübersichtliche Dokumente, Transkripte, Synthese von Richtlinien, viele Dateien | kurze mechanische Formatierung |
+| `general` | Klassifizierung, Formatierung, einfache Fragen und Antworten, langweilige Extraktion | anspruchsvoller Code oder beweisintensive Analyse |
 
-Diese Tabelle ist ein Anfang, aber sie ist kein Eval.
+Diese Tabelle ist ein Anfang. Sie ist noch keine Evaluierung.
 
-Ein Eval benötigt Beispiele und Scorer:
+Eine Evaluierung braucht Beispiele und Scorer:
 
-| Stück | Aufgabe |
+| Bestandteil | Aufgabe |
 |---|---|
-| Datensatz‑Eintrag | „Hier ist eine repräsentative Anfrage.“ |
-| Ground Truth | „Hier ist die Route oder das Verhalten, das wir erwartet haben.“ |
-| Scorer | „Hier ist, wie wir entscheiden, ob die Ausgabe bestanden hat.“ |
-| Experiment | „Hier ist der Lauf, den wir mit zukünftigen Läufen vergleichen können.“ |
+| Dataset-Element | „Hier ist eine repräsentative Anfrage.“ |
+| Ground Truth | „Das ist die erwartete Route oder das erwartete Verhalten.“ |
+| Scorer | „So entscheiden wir, ob die Ausgabe bestanden hat.“ |
+| Experiment | „Das ist der Lauf, den wir mit zukünftigen Läufen vergleichen können.“ |
 
-Der entscheidende Schritt ist, das Verhalten zu testen, nicht nur die Textqualität.
+Der entscheidende Schritt besteht darin, Verhalten zu testen, nicht nur die Qualität der Prosa.
 
-Ein Modell kann eine schöne Antwort schreiben, nachdem es den falschen Spezialisten gewählt hat. Ein Sicherheits‑Agent kann einen plausiblen Bericht erzeugen, ohne Beweise zu erhalten. Ein Support‑Agent kann einfühlsam klingen, während er die Prüfung der Rückerstattungs‑Richtlinie überspringt. Der Absatz ist der sichtbare Teil. Die Trajektorie ist dort, wo die Bugs leben.
+Ein Modell kann eine hervorragende Antwort schreiben, nachdem es den falschen Spezialisten ausgewählt hat. Ein Security-Agent kann einen plausiblen Bericht erzeugen, ohne Belege zu bewahren. Ein Support-Agent kann empathisch klingen und dabei die Prüfung der Erstattungsrichtlinie überspringen. Der Absatz ist der sichtbare Teil. Die Fehler stecken im Ablauf.
 
-Für einen Router beginne ich normalerweise mit vier Achsen:
+Bei einem Router beginne ich mit vier Achsen:
 
-| Achse | Frage | Beispiel‑Scorer |
+| Achse | Frage | Beispiel-Scorer |
 |---|---|---|
-| Qualität | Hat es die richtige Route gewählt und ein nützliches Ergebnis geliefert? | Routen‑Genauigkeit, Antwort‑Vollständigkeit, Treue |
-| Kosten | Hat es teure Modelle für triviale Aufgaben vermieden? | ausgewählte Routen‑Kostenklasse, Token‑Budget |
-| Geschwindigkeit | Hat es innerhalb des Latenz‑Budgets des Produkts abgeschlossen? | Laufzeit‑ oder Timeout‑Scorer |
-| Sonstiges | Hat es Sicherheits‑, Datenschutz‑ und Beobachtbarkeits‑Constraints eingehalten? | Tool‑Allowlist, Beweis‑Erhaltung, Ablehnungs‑Verhalten |
+| Qualität | Hat er die richtige Route gewählt und ein brauchbares Ergebnis erzeugt? | Routengenauigkeit, Vollständigkeit der Antwort, Faithfulness |
+| Kosten | Hat er Premium-Modelle für langweilige Arbeit vermieden? | Kostenklasse der gewählten Route, Token-Budget |
+| Geschwindigkeit | War er innerhalb des Latenzbudgets des Produkts fertig? | Laufzeit- oder Timeout-Scorer |
+| Sonstiges | Hat er Sicherheits-, Datenschutz- und Observability-Vorgaben eingehalten? | Tool-Allowlist, Bewahrung von Belegen, Verweigerungsverhalten |
 
-Die letzte Spalte ist entscheidend. „Sonstiges“ ist dort, wo das Produktions‑Narbengewebe sitzt.
+Diese letzte Zeile ist wichtig. In „Sonstiges“ steckt die ganze Narbe aus dem Produktionsbetrieb.
 
-## Router‑Entscheidung bewertbar machen
+## Die Router-Entscheidung bewertbar machen
 
-Wenn der Router nur eine Endantwort liefert, ist es schwer nachzuvollziehen, warum er sich so verhalten hat. Man kann die Ausgabe noch bewerten, aber man rät dann über die Entscheidung.
+Wenn der Router nur eine finale Antwort liefert, raten Sie über die eigentliche Entscheidung. Sie können den Output bewerten, aber nicht feststellen, ob die gewählte Route richtig war.
 
-Für Evaluierungen geben Sie dem Routing‑Schritt einen kleinen strukturierten Vertrag:
+Geben Sie dem Routing-Schritt daher einen kleinen strukturierten Vertrag:
 
 ```typescript
 type RouterDecision = {
@@ -93,9 +91,9 @@ type RouterDecision = {
 };
 ```
 
-Das Produktionssystem muss dieses JSON nicht den Nutzern zeigen. Es kann ein interner Schritt, ein Workflow‑Übergabe‑Punkt oder ein Trace‑Span sein. Der Scorer benötigt lediglich die Oberfläche.
+Diese JSON-Struktur muss kein Nutzer jemals sehen. Sie kann ein interner Schritt, eine Workflow-Übergabe oder ein Trace-Span sein. Der Scorer muss lediglich darauf zugreifen können.
 
-Hier ein bewusst kleiner Mastra‑Agent, der eine Route wählt:
+Hier ist ein absichtlich kleiner Mastra-Agent, der nichts weiter tut, als eine Route auszuwählen:
 
 ```typescript
 // src/mastra/agents/router-decision-agent.ts
@@ -123,15 +121,15 @@ Do not answer the user request. Only choose the route.`,
 });
 ```
 
-Ja, das ist ein wenig künstlich. Gut. Evaluierungen belohnen langweilige Nahtstellen.
+Ja, das ist ein wenig künstlich. Gut so. Evals belohnen langweilige Schnittstellen.
 
-Wenn die Router‑Entscheidung explizit ist, können Sie die Route testen, bevor Sie den nachgelagerten Spezialisten prüfen. So finden Sie heraus, ob das Problem beim Router, beim ausgewählten Modell, beim Prompt, an der Tool‑Oberfläche oder beim finalen Antwort‑Scorer liegt.
+Sobald die Entscheidung explizit vorliegt, können Sie die Route testen, bevor der nachgelagerte Spezialist startet. Router-Fehler verstecken sich dann nicht mehr hinter Fehlern im ausgewählten Modell, in seinem Prompt, seinen Tools oder im Scorer für die finale Antwort.
 
-## Einen Scorer schreiben, der das langweilige Versagen auffängt
+## Einen Scorer schreiben, der den langweiligen Fehler findet
 
-Mastras [`createScorer`](https://mastra.ai/reference/evals/create-scorer) kann JavaScript‑Funktionen, LLM‑Judge‑Prompts oder beides verwenden. Beginnen Sie mit Funktionen, wenn das Versagen deterministisch ist. Sie sind günstiger, schneller und weniger mysteriös.
+Mastras [`createScorer`](https://mastra.ai/reference/evals/create-scorer) akzeptiert einfache JavaScript-Funktionen, Prompts für LLM-Judges oder beides. Beginnen Sie immer mit Funktionen, wenn der Fehler deterministisch ist. Sie sind günstiger, schneller und weniger undurchsichtig.
 
-Für Routen‑Genauigkeit benötigen wir kein Judge‑Modell. Wir müssen nur JSON parsen und ein Feld vergleichen.
+Die Routengenauigkeit braucht kein Judge-Modell. Sie muss JSON parsen und ein Feld vergleichen.
 
 ```typescript
 // src/mastra/scorers/route-accuracy.ts
@@ -201,13 +199,13 @@ export const routeAccuracyScorer = createScorer({
   });
 ```
 
-Dieser Scorer ist nicht glamourös – das ist beabsichtigt.
+Dieser Scorer ist nicht glamourös. Genau darum geht es.
 
-Wenn der Router nicht konsequent gültiges JSON erzeugt und nicht konsequent den offensichtlichen Spezialisten auf einem winzigen Testset auswählt, gibt es keinen Grund, ihm Produktions‑Traffic zu vertrauen. Sie benötigen keine philosophische Modell‑Bewertungs‑Ontologie. Sie brauchen das Äquivalent zu einem Rauchmelder mit Batterie.
+Wenn der Router nicht zuverlässig valides JSON erzeugen und auf einem winzigen Testsatz den offensichtlichen Spezialisten auswählen kann, gibt es keinen Grund, ihm Produktionsverkehr anzuvertrauen. Sie brauchen kein Philosophenmodell, das Ontologien bewertet. Sie brauchen einen Rauchmelder mit eingelegter Batterie.
 
-## Die kleine Evaluations‑Schleife zuerst ausführen
+## Zuerst die kleine Eval-Schleife ausführen
 
-Mastras [`runEvals`](https://mastra.ai/reference/evals/run-evals) ist die schnelle Schleife. Geben Sie ein Ziel, Testfälle, Scorer und ein Parallelitäts‑Limit an. Sie führt das Ziel gegen die Daten aus und liefert aggregierte Scores.
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) ist die schnelle Schleife. Übergeben Sie ihr ein Ziel, Testfälle, Scorer und ein Nebenläufigkeitslimit. Sie führt das Ziel mit den Daten aus und liefert aggregierte Scores zurück.
 
 ```typescript
 // src/mastra/evals/router.eval.ts
@@ -263,30 +261,23 @@ if (result.scores["route-accuracy"] < 0.9) {
 }
 ```
 
-Das ist die Schleife, die Sie ausführen, während Sie den Prompt anpassen, eine neue Route hinzufügen oder ein günstigeres Router‑Modell testen.
+Das ist die Schleife, die Sie ausführen, während Sie den Prompt ändern, eine Route hinzufügen oder ein günstigeres Router-Modell ausprobieren.
 
-Sie reicht nicht für ein ausgereiftes System, aber sie reicht aus, um die peinlichste Regression zu verhindern: „Wir haben den Router‑Prompt geändert und plötzlich werden Klassifizierungs‑Aufgaben an das Premium‑Code‑Modell gesendet.“
+Für ein ausgereiftes System reicht das nicht. Es reicht aber, um die peinlichste Regression zu verhindern: „Wir haben den Router-Prompt geändert, und plötzlich schickt er Klassifikationsaufgaben an das Premium-Code-Modell.“
 
-Kosten, Geschwindigkeit, Qualität und weitere Aspekte tauchen hier auf:
+Halten Sie die Achsen getrennt. Routengenauigkeit und Qualität der finalen Antwort sind unterschiedliche Scores. JSON-Validität, erlaubte Tools und Nachvollziehbarkeit bekommen jeweils eigene Prüfungen. Fassen Sie sie nicht zu einer einzigen „Qualitätszahl“ zusammen. In Durchschnittswerten gehen nützliche Fehler in Rente.
 
-- **Kosten**: Das Router‑Modell kann günstig bleiben, solange die Genauigkeit stimmt.
-- **Geschwindigkeit**: Die Auswertung kann Time‑outs erzwingen oder die Latenz im Harness protokollieren.
-- **Qualität**: Die Routen‑Genauigkeit und die End‑Antwort‑Qualität sind getrennte Scores.
-- **Sonstiges**: JSON‑Gültigkeit, erlaubte Werkzeuge, Sicherheit und Nachvollziehbarkeit erhalten eigene Prüfungen.
+## Einen LLM-Judge nur dort einsetzen, wo er seinen Aufwand rechtfertigt
 
-Packen Sie das nicht alles in einen einzigen „Qualitäts‑Score“. Durchschnitte sind dort, wo nützliche Fehlermeldungen in den Ruhestand gehen.
-
-## Nur dort einen LLM‑Judge einsetzen, wo er sich lohnt
-
-Manches Router‑Verhalten ist subjektiv. Eine Anfrage kann berechtigt mehrdeutig sein:
+Manche Routing-Entscheidungen sind legitimerweise mehrdeutig:
 
 ```text
 Read these logs and tell me why the deploy failed.
 ```
 
-Ist das `code`, weil Debugging? `long-context`, weil Logs? `general`, weil Zusammenfassung? Die richtige Route hängt von der Werkzeug‑Oberfläche und Ihrem Produktversprechen ab.
+Ist das `code`, weil es um Debugging geht? `long-context` wegen der Logs? `general`, weil der Nutzer um eine Zusammenfassung gebeten hat? Die richtige Route hängt von den verfügbaren Tools und davon ab, was Ihr Produkt verspricht.
 
-Hier kann ein LLM‑Judge helfen – jedoch nur mit einer engen Rubrik. Mastra‑Scorer können Funktions‑Schritte und Prompt‑Objekt‑Schritte kombinieren. Nutzen Sie Funktionen für die Struktur, dann einen Judge für den Teil, der tatsächlich Beurteilung erfordert.
+Hier hilft ein LLM-Judge – aber nur mit einer engen Bewertungsrichtlinie. Mastra-Scorer können Funktionsschritte und Prompt-Objekt-Schritte kombinieren. Verwenden Sie Funktionen für die Struktur und einen Judge für den Teil, der tatsächlich Beurteilung erfordert.
 
 ```typescript
 // src/mastra/scorers/route-reasonableness.ts
@@ -328,19 +319,19 @@ Return JSON with { "score": number, "rationale": string }.
   .generateReason(({ results }) => results.analyzeStepResult.rationale);
 ```
 
-Dieser Scorer kostet Geld, weil er ein Judge‑Modell aufruft. Das ist in Ordnung, wenn das Urteil den Aufwand rechtfertigt.
+Dieser Scorer kostet Geld, weil er ein Judge-Modell aufruft. Das ist in Ordnung, wenn die Beurteilung den Aufwand wert ist.
 
 Verwenden Sie ihn nicht, um zu prüfen, ob JSON geparst werden kann.
 
-## Gute Fälle in ein Dataset aufnehmen
+## Gute Fälle in ein Dataset übernehmen
 
-Hartkodierte Evaluierungs‑Arrays sind zu Beginn in Ordnung. Auf lange Sicht werden Ihre Beispiele zu Produkt‑Assets: das fehlgeschlagene Kundenticket, das seltsame Support‑Gespräch, der Prompt‑Injection‑Versuch, die Anfrage, die bis letzten Donnerstag korrekt geroutet wurde.
+Hart codierte Eval-Arrays sind am Anfang völlig in Ordnung. Irgendwann werden Ihre Beispiele zu Produkt-Assets: das fehlgeschlagene Kundenticket, die seltsame Support-Konversation, der Prompt-Injection-Versuch, die Anfrage, die bis letzten Donnerstag korrekt geroutet wurde.
 
-Das gehört in ein Dataset.
+Diese Fälle gehören in ein Dataset.
 
-Mastra‑Datasets sind versionierte Sammlungen von Testfällen. Jede Mutation erzeugt eine neue Version, sodass Sie ein Experiment gegen exakt die Fall‑Menge wiederholen können, die zum Zeitpunkt Ihrer Modell‑Entscheidung existierte.
+Mastra-Datasets sind versionierte Sammlungen von Testfällen. Jede Änderung erzeugt eine neue Version. So können Sie ein Experiment erneut gegen genau den Fallsatz ausführen, der zu dem Zeitpunkt existierte, als Sie eine Modellentscheidung getroffen haben.
 
-Zuerst Speicher konfigurieren, weil Datasets Persistenz benötigen:
+Datasets benötigen Persistenz, konfigurieren Sie also zuerst den Storage:
 
 ```typescript
 // src/mastra/index.ts
@@ -367,7 +358,7 @@ export const mastra = new Mastra({
 });
 ```
 
-Dann ein Dataset erstellen und Fälle hinzufügen:
+Erstellen Sie anschließend das Dataset und fügen Sie Fälle hinzu:
 
 ```typescript
 // src/mastra/evals/create-router-dataset.ts
@@ -402,13 +393,13 @@ await dataset.addItems({
 });
 ```
 
-Im Moment, in dem Sie ein Dataset besitzen, können Sie aufhören, Evaluierungs‑Fälle als Wegwerf‑Skriptdaten zu behandeln. Sie erhalten IDs, Versionen, Historie und Experiment‑Ergebnisse.
+Sobald Sie ein Dataset haben, sind Eval-Fälle keine Wegwerf-Daten aus einem Skript mehr. Sie haben IDs, Versionen, eine Historie und Experimentergebnisse.
 
-Das ist der Punkt, an dem Evaluierungen weniger wie „Test‑Dateien für Prompts“ und mehr wie Produkt‑Gedächtnis wirken.
+Ab diesem Punkt fühlen sich Evals nicht mehr wie „Testdateien für Prompts“ an, sondern wie das Gedächtnis des Produkts.
 
-## Experimente gegen den Router ausführen
+## Experimente mit dem Router ausführen
 
-Sobald das Dataset existiert, verwenden Sie [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment), um es gegen einen registrierten Agenten, Workflow oder Scorer auszuführen.
+Mit dem Dataset [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) können Sie es gegen einen registrierten Agenten, Workflow oder Scorer ausführen.
 
 ```typescript
 // src/mastra/evals/run-router-experiment.ts
@@ -442,24 +433,25 @@ for (const item of summary.results) {
 }
 ```
 
-Jetzt ändert sich die Unterhaltung.
+Jetzt ändert sich die Diskussion.
 
-Statt „der neue Router scheint besser zu sein“ können Sie sagen:
+Statt „Der neue Router scheint besser zu sein“ können Sie sagen:
 
-- Der alte Router erzielte `0.94` bei der Routen‑Genauigkeit.  
-- Der neue Router erzielte insgesamt `0.98`.  
-- Er verbesserte das Routing für lange Kontexte.  
-- Er verschlechterte zwei Code‑Review‑Fälle.  
-- Er reduzierte die Übergaben an Premium‑Modelle um 18 %.  
-- Er fügte 300 ms Router‑Latenz hinzu.
 
-Das ist eine ingenieurtechnische Diskussion. Es gibt Trade‑offs. Sie können entscheiden, ob der Aufwand gerechtfertigt ist.
+- Der alte Router erzielte eine Routenpräzision von `0.94`.
+- Der neue Router erzielte `0.98`.
+- Das Routing von Anfragen mit langem Kontext wurde verbessert.
+- Zwei Code-Review-Fälle wurden schlechter.
+- Übergaben an Premium-Modelle gingen um 18 % zurück.
+- Die Latenz des Routers stieg um 300 ms.
 
-## Live‑Verhalten bewerten, aber nicht mit Ground Truth verwechseln
+Das ist ein Engineering-Gespräch. Die Zielkonflikte liegen auf dem Tisch, und Sie können entscheiden, ob sich dieser Tausch lohnt.
 
-Mastra kann Scorer auch direkt an Agenten und Workflow‑Schritte anhängen. Live‑Scorer laufen asynchron und speichern Ergebnis‑Scores in Ihrer konfigurierten Datenbank, mit Sampling‑Steuerungen, sodass Sie nicht jede Produktionsantwort bewerten, sofern Sie das nicht wollen.
+## Laufzeitverhalten bewerten, aber nicht mit der Ground Truth verwechseln
 
-Das ist nützlich, aber es ist ein anderer Anwendungsfall.
+Mastra kann Scorer auch direkt an Agents und Workflow-Schritte hängen. Live-Scorer laufen asynchron, speichern ihre Ergebnisse in der konfigurierten Datenbank und unterstützen Sampling. Sie müssen also nicht jede Produktionsantwort bewerten, wenn Sie das nicht ausdrücklich wollen.
+
+Nützlich. Aber es ist eine andere Aufgabe.
 
 ```typescript
 import { Agent } from "@mastra/core/agent";
@@ -478,29 +470,29 @@ export const routerDecisionAgent = new Agent({
 });
 ```
 
-Live‑Scoring kann Ihnen zeigen, dass der Router weiterhin gültige Entscheidungen ausgibt. Es kann fehlerhafte Ausgaben, toxischen Inhalt, verbotene Tool‑Aufrufe, fehlende Evidenz‑Marker oder verdächtig niedriges Vertrauen auffangen.
+Live-Scoring zeigt Ihnen, dass der Router weiterhin gültige Entscheidungen ausgibt. Es erkennt fehlerhaftes Output-Format, toxische Inhalte, unzulässige Tool-Aufrufe, fehlende Evidenzmarker und verdächtig niedrige Konfidenz.
 
-In der Regel kann es die Routen‑Genauigkeit nicht bestimmen, weil Produktionsverkehr nicht mit Ground‑Truth‑Daten versehen ist.
+Die Routenpräzision kann es normalerweise nicht feststellen, weil Produktionsdaten nicht mit angehefteter Ground Truth eintreffen.
 
-Dieser Unterschied ist wichtig. Live‑Scoring ist Monitoring. Dataset‑Experimente sind kontrollierte Tests. Sie benötigen beides, aber sie beantworten unterschiedliche Fragen.
+Live-Scoring ist Monitoring. Dataset-Experimente sind kontrollierte Tests. Sie brauchen beides. Die beiden beantworten unterschiedliche Fragen.
 
-## Was nach der Routen‑Genauigkeit zu messen ist
+## Was nach der Routenpräzision zu messen ist
 
-Routen‑Genauigkeit ist die erste Stufe. Sie sagt, ob die Anfrage zum erwarteten Spezialisten gelangt ist. Sie sagt nicht, ob der Spezialist gute Arbeit geleistet hat.
+Die Routenpräzision ist die erste Stufe. Sie zeigt, dass die Anfrage beim erwarteten Spezialisten angekommen ist. Ob dieser Spezialist gute Arbeit geleistet hat, sagt sie nicht.
 
-Nachdem der Router die Grundlagen bestanden hat, bewerten Sie das System schichtweise:
+Sobald der Router die Grundlagen beherrscht, bewerten Sie das System in Schichten:
 
-| Ebene | Was zu bewerten | Warum es wichtig ist |
+| Schicht | Was bewertet wird | Warum es wichtig ist |
 |---|---|---|
-| Router‑Entscheidung | ausgewählte Route, Vertrauen, Begründung | Fängt Fehlklassifikationen und schlechte Eskalationsregeln ab |
-| Trajektorie | erwartete Tool‑ oder Agenten‑Sequenz | Erkennt „richtige Antwort, falscher Pfad“-Verhalten |
-| Spezialisten‑Ausgabe | Korrektheit, Treue, Nützlichkeit | Erkennt minderwertige Arbeit nach korrektem Routing |
-| Kosten und Latenz | Modellwahl, Tokens, Laufzeit | Erkennt teure oder langsame Ergebnisse |
-| Sicherheit und Umfang | erlaubte Tools, Ablehnungsgrenzen, Evidenz | Erkennt produktbezogene Risiko‑Fehler |
+| Router-Entscheidung | ausgewählte Route, Konfidenz, Begründung | Erkennt Fehlklassifizierungen und fehlerhafte Eskalationsregeln |
+| Trajektorie | erwartete Tool- oder Agent-Sequenz | Erkennt Verhalten nach dem Muster „richtige Antwort, falscher Weg“ |
+| Spezialisten-Output | Korrektheit, Faithfulness, Nützlichkeit | Erkennt minderwertige Arbeit trotz korrektem Routing |
+| Kosten und Latenz | Modellauswahl, Tokens, Laufzeit | Erkennt teure oder langsame Erfolge |
+| Sicherheit und Scope | erlaubte Tools, Verweigerungsgrenzen, Evidenz | Erkennt Fehler mit Produktrisiko |
 
-Mastras `runEvals`‑API unterstützt Scorer‑Konfigurationen auf Agenten‑, Workflow‑, Schritt‑ und Trajektorien‑Ebene. Das bedeutet, Sie müssen nicht vortäuschen, dass die finale Antwort das einzige Artefakt ist.
+`runEvals` unterstützt Scorer-Konfigurationen auf Agent-, Workflow-, Schritt- und Trajektorienebene. Sie müssen also nicht so tun, als wäre die finale Antwort das einzige relevante Artefakt.
 
-Für einen Workflow kann die Struktur so aussehen:
+Für einen Workflow sieht das ungefähr so aus:
 
 ```typescript
 const result = await runEvals({
@@ -517,56 +509,54 @@ const result = await runEvals({
 });
 ```
 
-Das ist das mentale Modell, das ich für Agenten in der Produktion habe.
+Das ist das mentale Modell, das ich für Agents in Produktion haben will:
 
-Score die Entscheidung. Score den Pfad. Score die Antwort.
+Bewerten Sie die Entscheidung. Bewerten Sie den Weg. Bewerten Sie die Antwort.
 
-Wenn dunur die Antwort bewertest, kann das Modell zufällig bestehen.
+Wenn Sie nur die Antwort bewerten, kann das Modell zufällig bestehen.
 
 ## Der Router sollte mit der Zeit langweiliger werden
 
-Der erste Routing‑Prompt besteht meist aus einem Absatz voller Beurteilungen. Das ist für einen Prototypen in Ordnung.
+Die erste Routing-Eingabeaufforderung besteht normalerweise aus einem Absatz voller Abwägungen. Für einen Prototypen ist das in Ordnung.
 
-Wenn du aus den Evaluierungen lernst, sollten Teile des Routers weniger „magisch“ werden:
+Wenn die Evals Ihnen Erkenntnisse liefern, sollten Teile des Routers weniger magisch werden:
 
-- Klar erkennbare lexikalische Fälle können zu deterministischen Regeln werden.
-- Risikoreiche Aufgaben können eine explizite Genehmigung oder einen Workflow‑Zweig erfordern.
-- Mehrdeutige Aufgaben können eine Klärungsfrage stellen, anstatt zu raten.
-- Kostenintensive Routen können eine höhere Sicherheit oder ein zweites Signal verlangen.
-- Bekannte Fehlerszenarien können zu Datensatz‑Einträgen werden.
+- Eindeutige lexikalische Fälle werden zu deterministischen Regeln.
+- Riskante Aufgaben erfordern eine explizite Freigabe oder einen Workflow-Zweig.
+- Mehrdeutige Aufgaben stellen eine Rückfrage, statt zu raten.
+- Teure Routen erfordern höhere Konfidenz oder ein zweites Signal.
+- Bekannte Fehlerfälle werden zu Dataset-Items.
 
-Ziel ist nicht, den Router für immer „intelligenter“ zu machen. Ziel ist, das System leichter nachvollziehbar zu machen.
+Das Ziel ist nicht, den Router für immer „smarter“ zu machen. Das Ziel ist, das System leichter nachvollziehbar zu machen.
 
-Manchmal bedeutet das ein besseres Modell. Manchmal ein strafferes Prompt. Manchmal ein zusätzlicher Workflow‑Schritt, ein Scorer, ein hartes Limit oder ein langweiliger `if`‑Block, der dir vierstellige Kosten pro Monat spart.
+Manchmal bedeutet das ein besseres Modell. Manchmal einen präziseren Prompt. Manchmal einen Workflow-Schritt, einen Scorer, ein hartes Limit oder eine langweilige `if`-Anweisung, die Ihnen vierstellige monatliche Kosten erspart.
 
-Genau das ist der Sinn, das Verhalten zu messen. Du hörst auf, aus Geschmack zu argumentieren, und beginnst, aus Evidenz zu argumentieren.
+Genau darum geht es beim Messen von Verhalten. Sie hören auf, aus dem Bauch heraus zu argumentieren, und beginnen, mit Evidenz zu argumentieren.
 
-## Praktische Checkliste zum Einstieg
+## Eine praktische Checkliste für den Einstieg
 
-Wenn du heute einen Mastra‑Router baust, würde ich hier beginnen:
+Wenn Sie heute einen Mastra-Router bauen, beginnen Sie hier:
 
-1. Strukturierte Routing‑Entscheidung erzeugen, selbst wenn Nutzer sie nie sehen.
-2. Deterministische Scorer für gültiges JSON, erwartete Route und verbotene Routen schreiben.
-3. `runEvals` mit 10‑20 Fällen ausführen, bevor du Prompt‑ oder Modell‑Änderungen am Router vornimmst.
-4. Reale Fehlfälle in einen versionierten Datensatz aufnehmen.
-5. Datensatz‑Experimente für sinnvolle Änderungen an Prompt, Modell, Route oder Workflow durchführen.
-6. Live‑Scorer für günstige Produktions‑Invarianten hinzufügen.
-7. Experimente nach Route vergleichen, nicht nur nach Durchschnittsscore.
+1. Machen Sie die Routing-Entscheidung strukturiert, auch wenn Nutzer sie nie sehen.
+2. Schreiben Sie deterministische Scorer für gültiges JSON, die erwartete Route und verbotene Routen.
+3. Verwenden Sie `runEvals` mit 10 bis 20 Fällen, bevor Sie Router-Prompts oder Modelle ändern.
+4. Überführen Sie echte Fehler in ein versioniertes Dataset.
+5. Führen Sie Dataset-Experimente für relevante Änderungen an Prompt, Modell, Route oder Workflow durch.
+6. Ergänzen Sie Live-Scorer für kostengünstige Invarianten in der Produktion.
+7. Vergleichen Sie Experimente nach Route, nicht nur anhand des Durchschnittsscores.
 
-Der Durchschnitt ist weniger wichtig als das Fehlermuster.
+Der Durchschnitt ist weniger wichtig als das Fehlercluster.
 
-Wenn jede Regression in der Langkontext‑Policy‑Synthese auftritt, hast du keinen „schlechteren Router“. Du hast ein Problem mit der Routen‑Grenze. Wenn jeder fehlgeschlagene Fall ein bestimmtes Tool verwendet, hast du ein Problem mit dem Tool‑Vertrag. Wenn jedes günstige Modell dieselben beiden mehrdeutigen Fälle misslingt, brauchst du möglicherweise Eskalationslogik statt eines teureren Standard‑Modells.
+Wenn jede Regression bei der Policy-Synthese mit langem Kontext auftritt, haben Sie keinen „schlechteren Router“. Sie haben ein Problem mit der Routengrenze. Wenn jeder fehlgeschlagene Fall dasselbe Tool verwendet, haben Sie ein Problem mit dem Tool-Vertrag. Wenn jedes günstige Modell bei denselben zwei mehrdeutigen Fällen scheitert, brauchen Sie Eskalationslogik und keinen teureren Standard.
 
-Hier werden Evaluierungen nützlich. Nicht als Zeremonie. Nicht als Dashboard, das alle kurzzeitig erwachsen fühlen lässt.
-
-Sondern als Methode, die Form des Systems zu erkennen.
+Hier werden Evals nützlich. Sie sind weder eine Zeremonie noch ein Dashboard, das allen vorübergehend das Gefühl gibt, erwachsen zu sein. Sie zeigen, welcher Teil des Systems versagt, damit Sie genau diesen Teil reparieren können, statt alles umzubauen.
 
 ## Ressourcen
 
-- [Mastra Scorer‑Übersicht](https://mastra.ai/docs/evals/overview)
-- [Mastra `createScorer` Referenz](https://mastra.ai/reference/evals/create-scorer)
-- [Mastra `runEvals` Referenz](https://mastra.ai/reference/evals/run-evals)
-- [Mastra Datensatz‑Übersicht](https://mastra.ai/docs/evals/datasets/overview)
-- [Mastra Datensatz‑Experimente](https://mastra.ai/docs/evals/datasets/running-experiments)
-- [Don’t Marry Your Model](/llm-routing-mastra-ai)
-- [Fight Evils with Evals!](/llm-evals-are-broken)
+- [Überblick zu Mastra-Scorern](https://mastra.ai/docs/evals/overview)
+- [Mastra-Referenz zu `createScorer`](https://mastra.ai/reference/evals/create-scorer)
+- [Mastra-Referenz zu `runEvals`](https://mastra.ai/reference/evals/run-evals)
+- [Überblick zu Mastra-Datasets](https://mastra.ai/docs/evals/datasets/overview)
+- [Mastra-Dataset-Experimente](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [Heirate dein Modell nicht](/llm-routing-mastra-ai)
+- [Bekämpfe Übel mit Evals!](/llm-evals-are-broken)

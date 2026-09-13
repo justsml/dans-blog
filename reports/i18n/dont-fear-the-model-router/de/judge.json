@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "30598d1f136235c377170966a7f6c3421e7a4d94",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "9deff1841944a1503bf506619937591fc378f255",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
     "readability": 95,
-    "technicalAccuracy": 100,
+    "technicalAccuracy": 96,
     "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 98,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 95,
-    "languagePurity": 98
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 93,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The candidate translation is excellent and actually does not contain the typos mentioned in the previous judge report (the text in the provided MDX block for the candidate is correct: 'Die erste Version' and 'Wenn du nur'). It maintains Dan's direct style, preserves all technical structures, and correctly localizes the content while keeping technical terms appropriate for a German developer audience.",
+  "rationale": "Pass 1 applied the medium-priority consistency fix for the post link title ('Heirate dein Modell nicht'). The translation in 9deff1841944a1503bf506619937591fc378f255 is precise, keeps code and frontmatter intact, preserves all table/code block structures, and maintains Dan's punchy engineering tone without any remaining high/medium issues.",
   "confidence": "high",
-  "confidenceScore": 0.889,
+  "confidenceScore": 0.88,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,23 +27,15 @@
   "slug": "dont-fear-the-model-router",
   "locale": "de",
   "candidateCommits": [
-    "30598d1f136235c377170966a7f6c3421e7a4d94"
+    "9deff1841944a1503bf506619937591fc378f255",
+    "2bfdadb9a00b1acc4a9eb0ab8ee18025674cf306"
   ],
   "suggestionLog": [
     {
-      "priority": "high",
-      "match": "Dieerste Version",
-      "replacement": "Die erste Version",
-      "reason": "Missing space between words.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
       "priority": "medium",
-      "match": "Wenn dunur die Antwort bewertest",
-      "replacement": "Wenn du nur die Antwort bewertest",
-      "reason": "Missing space between words.",
+      "match": "- [Verheirate dein Modell nicht](/llm-routing-mastra-ai)",
+      "replacement": "- [Heirate dein Modell nicht](/llm-routing-mastra-ai)",
+      "reason": "Align the link title in the Resources section with the translation used in the opening paragraph.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
