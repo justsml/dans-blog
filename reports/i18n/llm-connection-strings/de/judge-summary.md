@@ -2,7 +2,7 @@
 
 - Slug: llm-connection-strings
 - Locale: de
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3.8-flash
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
@@ -10,42 +10,22 @@
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-
-## Batch Judge Telemetry
-### Round 1, Batch 1
-- Runtime seconds: 2.10
-- Input tokens: 9713
-- Output tokens: 175
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.005381
-
-### Round 1, Batch 2
-- Runtime seconds: 2.60
-- Input tokens: 7911
-- Output tokens: 268
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004759
+- Confidence: high (0.887)
+- Confidence signals: no high/medium issues; single judge
+- High/medium/low issue counts: 0/0/0
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.20
-- Input tokens: 7898
-- Output tokens: 200
+- Runtime seconds: 4.65
+- Input tokens: 8959
+- Output tokens: 309
 - Thinking tokens: unknown
-- Cached input tokens: 0
+- Cached input tokens: 4070
 - Cache write tokens: 0
-- OpenRouter cost credits: unknown
-- Estimated cost: $0.004549
+- OpenRouter cost credits: 0.005131
+- Estimated cost: $0.005131
 
 ## Candidates
 - current src/content/posts/2026-01-30--llm-connection-strings/de/index.mdx
-- fb200df184e8e238adf97455d50b2234f27951c9 i18n candidate(de): llm-connection-strings via openrouter/qwen/qwen3.6-plus
-- 710471faf96d740c1d092cdcc458580ee0c427ba i18n candidate(de): llm-connection-strings via openrouter/deepseek/deepseek-v4-flash
-- fbd9f9e3c336d7024b0bdcb9cb59198eac354e6c i18n candidate(de): llm-connection-strings via openrouter/minimax/minimax-m2.7
-- 876f84127c9303868ad7c8bfda2675058c19fb31 i18n candidate(de): llm-connection-strings via openrouter/openai/gpt-oss-120b:nitro
-- fe3e27f8cf36088219f79e7efdfdb2e59963abc0 i18n candidate(de): llm-connection-strings via openrouter/qwen/qwen3-32b:nitro
+- f94e3bee8e161cf9a48fae63794798f742401336 i18n candidate(de): llm-connection-strings via openrouter/minimax/minimax-m2.7
+- dde8d71a38bb99557a175226284096dafb0c72c9 i18n candidate(de): llm-connection-strings via openrouter/deepseek/deepseek-v4-flash
+- d6ac2eedcf322b4d3abdb20b9aaf0260d65016ae i18n candidate(de): llm-connection-strings via openrouter/openai/gpt-5.6-luna

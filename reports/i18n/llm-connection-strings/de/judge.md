@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: fb200df184e8e238adf97455d50b2234f27951c9
-- Selected model: openrouter/qwen/qwen3.6-plus
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: d6ac2eedcf322b4d3abdb20b9aaf0260d65016ae
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.887)
 
-The candidate fb200df184e8e238adf97455d50b2234f27951c9 provides the most natural and direct translation, capturing Dan's informal yet technical style (e.g., using 'du' and 'klauen'). It correctly handles MDX paths and preserves all headings. It also correctly translates the 'touch grass' idiom into a culturally appropriate German equivalent ('berühr etwas Gras').
+Candidate d6ac2eedcf322b4d3abdb20b9aaf0260d65016ae delivers an outstanding German translation that captures Dan's direct, punchy tone and idioms naturally. In contrast, candidate f94e3bee8e161cf9a48fae63794798f742401336 left the title blank in frontmatter and had a broken image path (`./../hero-concept-8-drawers.webp`), while candidate dde8d71a38bb99557a175226284096dafb0c72c9 suffered from severe hallucinations, typos, and corrupted code snippets (e.g. `olaama://lokalhost`, `versel://`, `&&cacheControl=ephmeral`).
