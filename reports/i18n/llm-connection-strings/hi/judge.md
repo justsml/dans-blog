@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 30b0bf3c0b05c35cf28669009416bd5470a9da0f
-- Selected model: openrouter/qwen/qwen3.6-plus
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 4c3212ce8a532e91038f61a2a654ba2a986b3855
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.872)
 
-Candidate 30b0bf3c is the strongest overall, capturing Dan's conversational yet technical tone well. It avoids the awkward phrasing found in the 'current' version (which had issues like 'क्या आपने पुराने दिनों की याद नहीं है'). However, it contains a critical mistranslation of 'undeniable' as 'unacceptable' (अस्वीकार्य), which must be fixed to preserve the author's meaning.
+Candidate 4c3212ce8a532e91038f61a2a654ba2a986b3855 delivers a remarkably fluent, natural Hindi translation with Dan's punchy developer tone. Candidate 702b3da48f9bbf9a6c75eb5029be15312cd14307 suffered from multiple egregious spelling errors and corrupted CSS class names (such as `ai-responce insett`, `बढयिया`, `परमाणीकरण क सीधे इसमें बेक कर सकत हैं`, `जोखम ह सकत है`, and `देतें`).
