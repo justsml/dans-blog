@@ -1,0 +1,580 @@
+# Translation Candidate
+- Slug: dont-fear-the-model-router
+- Locale: zh
+- Model: openrouter/openai/gpt-5.6-luna
+- Target: src/content/posts/2026-07-03--dont-fear-the-model-router/zh/index.mdx
+- Validation: deferred
+- Runtime seconds: 62.07
+- Input tokens: 11529
+- Output tokens: 5602
+- Thinking tokens: unknown
+- Cached input tokens: 4312
+- Cache write tokens: 7202
+- Estimated cost: $0.008252
+- Pricing source: openrouter-2026-09-13
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 别怕模型路由器
+subTitle: 自信地将请求路由至最合适的模型。
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - agents
+  - mastra
+  - evals
+  - model-routing
+  - testing
+  - observability
+  - production
+category: AI
+subCategory: AI Infrastructure
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - mastra-workflows-memory
+sourceHash: 9599850328a0
+---
+[别和你的模型结婚](/llm-routing-mastra-ai)已经把最容易讲的道理说清楚了：别因为某个模型在上次评测中赢了，就把每个任务都发给它。
+
+便宜的工作用便宜的模型。真正困难的工作才用更强的模型。路由层要保持足够松耦合，不能因为更换供应商，就把代码库变成一座供奉模型的神龛。
+
+这个判断没错。
+
+但它并不完整。
+
+一旦加入路由器，你就有了一种新的系统行为需要测试。问题不再是“哪个模型最好”，而变成了“系统是否选择了正确的路由，使用了正确的工具，保留了正确的证据，并在正确的时间停止？”
+
+如果你不测量这些东西，你的模型路由器就只是带着一张调度表的凭感觉行事。
+
+<p class="inset">
+路由器不是答案。路由器只是关于系统应如何运行的一条假设。
+</p>
+
+Mastra 提供了把这条假设变成可测试对象所需的接口：[scorers](https://mastra.ai/docs/evals/overview)、[`runEvals`](https://mastra.ai/reference/evals/run-evals)、[datasets](https://mastra.ai/docs/evals/datasets/overview) 和 [experiments](https://mastra.ai/docs/evals/datasets/running-experiments)。这些名字听起来像评测基础设施，而它们确实是。真正的价值更简单：它们让 agent 的行为变得足够可见，足以让人提出质疑。
+
+## 我们在测试什么？
+
+前一篇文章中的路由器有三条专家路由：
+
+| 路由 | 哪些任务应该走这里 | 哪些任务走这里就是坏路由 |
+|---|---|---|
+| `code` | 实现、重构、调试、代码审查 | 长上下文摘要、简单分类 |
+| `long-context` | 杂乱文档、转录文本、策略综合、多文件处理 | 短小的机械式格式化 |
+| `general` | 分类、格式化、简单问答、无聊的数据提取 | 困难的代码任务或证据密集型分析 |
+
+这张表是个起点。它还不是评测。
+
+评测需要样例和评分器：
+
+| 组成部分 | 作用 |
+|---|---|
+| 数据集条目 | “这是一个有代表性的请求。” |
+| 真实标签 | “这是我们预期的路由或行为。” |
+| 评分器 | “这是我们判断输出是否通过的方式。” |
+| 实验 | “这是一次可以与未来运行结果进行比较的运行。” |
+
+关键的一步，是测试行为，而不只是测试文字质量。
+
+模型选错了专家，也可能写出漂亮的答案。安全 agent 可能在没有保留证据的情况下，生成一份看似合理的报告。客服 agent 可能听起来很有同理心，却跳过退款政策检查。段落只是可见的部分。真正的 bug 藏在整个轨迹里。
+
+对于路由器，我会从四个维度开始：
+
+| 维度 | 问题 | 示例评分器 |
+|---|---|---|
+| 质量 | 它是否选择了正确的路由，并产出了有用的结果？ | 路由准确率、答案完整性、忠实度 |
+| 成本 | 它是否避免把无聊的工作交给高价模型？ | 所选路由的成本等级、token 预算 |
+| 速度 | 它是否在产品的延迟预算内完成？ | 运行时间或超时评分器 |
+| 其他 | 它是否遵守安全、隐私和可观测性约束？ | 工具允许列表、证据保留、拒答行为 |
+
+最后一行很重要。“其他”正是生产环境伤痕累累的地方。
+
+## 让路由器的决策可评分
+
+如果路由器只产出最终答案，你其实是在猜它做了什么决策。你可以给输出打分，但无法判断路由是否正确。
+
+所以，给路由步骤一个小型的结构化契约：
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+用户永远不需要看到这段 JSON。它可以是内部步骤、工作流交接信息，或者 trace span。评分器只需要能访问它。
+
+下面是一个刻意保持精简的 Mastra agent：它什么都不做，只负责选择路由：
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+是的，这有点人为。很好。评测喜欢这种无聊但边界清晰的接缝。
+
+把决策显式化之后，你就可以在下游专家运行之前测试路由。路由器的失败不再会隐藏在被选模型、它的 prompt、它的工具，或者最终答案评分器的失败后面。
+
+## 编写一个能抓住无聊故障的评分器
+
+Mastra 的 [`createScorer`](https://mastra.ai/reference/evals/create-scorer) 接受普通 JavaScript 函数、LLM 评判 prompt，或者两者都接受。如果故障是确定性的，就从函数开始。它们更便宜、更快，也没那么神秘。
+
+路由准确率不需要评判模型。它需要解析 JSON，然后比较一个字段。
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id: "route-accuracy",
+  description: "Checks whether the selected route matches ground truth.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route: ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+这个评分器并不光鲜。重点就在这里。
+
+如果路由器连有效 JSON 都无法稳定产出，也无法在一个很小的测试集上为显而易见的任务选中正确专家，那就没有理由让它接触生产流量。你不需要一个哲学家模型来给本体论打分。你需要的是一个装好电池的烟雾报警器。
+
+## 先运行一轮小型评测
+
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) 是快速循环。给它一个目标、测试用例、评分器和并发限制。它会让目标针对数据运行，并返回聚合后的分数。
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scorers/route-accuracy";
+
+const routingCases = [
+  {
+    input: "Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input: "Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input: "Debug a failing Playwright test that only breaks in CI.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+这是你在修改 prompt、添加路由，或者尝试更便宜的路由器模型时要运行的循环。
+
+对于成熟系统来说，这还不够。但它足以阻止最丢脸的回归：“我们改了路由器 prompt，结果它开始把分类任务发给高价 code 模型。”
+
+把各个维度分开。路由准确率和最终答案质量是不同的分数。JSON 有效性、允许使用的工具和可追溯性也各自进行检查。不要把它们揉成一个“质量”数字。平均值是有用故障退休养老的地方。
+
+## 只在确实值得的地方加入 LLM 评审器
+
+有些路由确实存在歧义：
+
+```text
+Read these logs and tell me why the deploy failed.
+```
+
+这是因为属于调试任务而走 `code`？因为有日志而走 `long-context`？还是因为用户要求总结，所以走 `general`？正确的路由取决于可用工具以及产品做出的承诺。
+
+这正是 LLM 评审器能派上用场的地方，但前提是要配合严格的评分标准。Mastra scorer 可以混合使用函数步骤和 prompt-object 步骤。结构检查交给函数，真正需要判断的部分再交给评审器。
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description: "Judges whether the route explanation matches the request.",
+  type: "agent",
+  judge: {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+这个 scorer 会产生费用，因为它要调用评审模型。当这项判断确实值得付费时，这没问题。
+
+不要用它来检查 JSON 是否能解析。
+
+## 把好的案例沉淀到数据集中
+
+一开始，硬编码的 eval 数组完全够用。最终，你的示例会变成产品资产：失败的客户工单、奇怪的支持对话、提示注入尝试、直到上周四还一直正确路由的请求。
+
+这些都应该进入数据集。
+
+Mastra 数据集是测试案例的版本化集合。每次修改都会创建新版本，因此你可以针对做出模型决策时实际存在的那组精确案例，重新运行实验。
+
+数据集需要持久化，因此先配置存储：
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+然后创建数据集并添加案例：
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+有了数据集之后，eval 案例就不再是用完即弃的脚本数据。它们拥有 ID、版本、历史记录和实验结果。
+
+这时，eval 不再像“给 prompt 写的测试文件”，而更像产品记忆。
+
+## 针对路由器运行实验
+
+数据集就绪后，[`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) 会针对已注册的 agent、workflow 或 scorer 运行它。
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+现在，讨论方式变了。
+
+你不再只能说“新路由器看起来更好”，而是可以说：
+
+- 旧路由器的路由准确率得分为 `0.94`。
+- 新路由器的得分为 `0.98`。
+- 它改进了长上下文请求的路由。
+- 但在两个代码审查案例上出现了回退。
+- 它将转交高级模型的次数减少了 18%。
+- 同时增加了 300ms 的路由器延迟。
+
+这才是工程讨论。权衡摆在桌面上，你可以决定这笔交易是否值得。
+
+## 评估线上行为，但不要把它和真值混为一谈
+
+Mastra 也可以直接将评分器附加到 agent 和工作流步骤上。线上评分器会异步运行，将结果存储在你配置的数据库中，并支持采样。因此，除非你确实有意这么做，否则不必为每个生产响应都评分。
+
+这很有用。但它解决的是另一类问题。
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+线上评分能告诉你路由器是否仍在输出有效决策。它可以捕获格式错误的输出、有害内容、被禁止的工具调用、缺失的证据标记，以及低得可疑的置信度。
+
+但它通常无法告诉你路由是否准确，因为生产流量不会自带一张真值标签贴在上面。
+
+线上评分是监控。数据集实验是受控测试。两者都要有。它们回答的是不同的问题。
+
+## 路由准确率之后要测什么
+
+路由准确率只是第一层。它能告诉你请求是否到达了预期的专家，但完全不能说明这个专家是否做得好。
+
+路由器通过基础检查后，按层次评估整个系统：
+
+| 层次 | 评估内容 | 重要原因 |
+|---|---|---|
+| 路由器决策 | 选定的路由、置信度、原因 | 捕获错误分类和不当的升级规则 |
+| 执行轨迹 | 预期的工具或 agent 序列 | 捕获“答案对了，但路径错了”的行为 |
+| 专家输出 | 正确性、忠实性、实用性 | 捕获正确路由之后仍然产出低质量结果的情况 |
+| 成本与延迟 | 模型选择、token 数量、运行时间 | 捕获昂贵或缓慢的“胜利” |
+| 安全与范围 | 允许使用的工具、拒答边界、证据 | 捕获产品风险问题 |
+
+`runEvals` 支持 agent 级、工作流级、步骤级和轨迹评分器配置，因此你不必假装最终答案是唯一值得关注的产物。
+
+对于工作流，结构大致如下：
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+这就是我希望生产环境中的 agent 遵循的思维模型：
+
+评估决策。评估路径。评估答案。
+
+如果你只评估答案，模型可能只是碰巧通过了检查。
+
+## 路由器应该随着时间推移变得更无聊
+
+最初的路由提示词通常是一段充满判断取舍的文字。拿来做原型没问题。
+
+随着评估逐渐告诉你更多信息，路由器中的一部分逻辑应该变得不那么神秘：
+
+- 明确的词法模式交给确定性规则处理。
+- 高风险任务要求显式批准，或进入专门的工作流分支。
+- 模棱两可的任务先追问澄清，而不是猜。
+- 成本高的路由需要更高置信度，或第二个信号进行确认。
+- 已知的失败案例沉淀为数据集条目。
+
+目标不是让路由器永远变得“更聪明”。目标是让系统更容易推理和排查。
+
+有时这意味着换一个更好的模型。有时是收紧提示词。有时是增加一个工作流步骤、一个 scorer、一个硬上限，或者一条无聊的 `if` 语句——它每个月能替你省下几千美元。
+
+这就是测量行为的全部意义。你不再凭品味争论，而是开始拿证据说话。
+
+## 一个实用的起步清单
+
+如果你今天正在构建 Mastra 路由器，可以从这里开始：
+
+1. 让路由决策采用结构化格式，即使用户永远看不到它。
+2. 为有效 JSON、预期路由和禁止路由编写确定性 scorer。
+3. 在修改路由提示词或模型之前，先用 10 到 20 个案例运行 `runEvals`。
+4. 将真实失败案例纳入版本化数据集。
+5. 对有意义的提示词、模型、路由或工作流变更运行数据集实验。
+6. 为生产环境中成本低廉的不变量添加实时 scorer。
+7. 按路由比较实验结果，而不只是比较平均分。
+
+平均值没有失败集群重要。
+
+如果每次回归都出现在长上下文策略综合任务中，那你没有“一个更差的路由器”，而是遇到了路由边界问题。如果每个失败案例都使用某个特定工具，那是工具契约问题。如果每个便宜模型都在同两个模糊案例上失败，你需要的是升级逻辑，而不是把默认模型换得更贵。
+
+这正是评估发挥作用的地方。评估不是走过场，也不是一个让所有人短暂产生“我们终于像个成熟团队了”错觉的仪表盘。它会告诉你系统的哪一部分出了问题，让你可以修那一部分，而不是把整个系统都推倒重来。
+
+## 资源
+
+- [Mastra scorer 概览](https://mastra.ai/docs/evals/overview)
+- [Mastra `createScorer` 参考](https://mastra.ai/reference/evals/create-scorer)
+- [Mastra `runEvals` 参考](https://mastra.ai/reference/evals/run-evals)
+- [Mastra 数据集概览](https://mastra.ai/docs/evals/datasets/overview)
+- [Mastra 数据集实验](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [不要和你的模型结婚](/llm-routing-mastra-ai)
+- [用评估对抗邪恶！](/llm-evals-are-broken)
+````
