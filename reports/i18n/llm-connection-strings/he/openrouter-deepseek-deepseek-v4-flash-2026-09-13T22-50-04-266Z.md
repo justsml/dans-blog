@@ -1,0 +1,134 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: he
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-30--llm-connection-strings/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 72.03
+- Input tokens: 4136
+- Output tokens: 11133
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.001177
+- Pricing source: openrouter-2026-09-13
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'הגיע הזמן למחרוזות חיבור llm://'
+subTitle: 'פשט תצורת מודל וספק עם `llm://` URLs'
+modified: '2026-06-30'
+tags:
+  - ai
+  - llm
+  - api
+  - developer-experience
+  - standards
+category: AI
+social_image: ../desktop-social.webp
+cover_full_width: ../hero-wide.webp
+cover_mobile: ../square-200.webp
+cover_icon: ../square-200.webp
+sourceHash: 88892a247d5c
+---
+<blockquote class="inset">
+**עדכון:** מאמר זה הוביל ל[טיוטת אינטרנט לסכמת ה־`llm://` URI](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/) ו[לחבילת ה־`llm-strings` npm](https://www.npmjs.com/package/llm-strings). המימוש נמצא גם [ב־GitHub](https://github.com/justsml/llm-strings).
+</blockquote>
+
+זוכרים את הימים הרעים ההם, שבהם התחברות למסד נתונים פירושה טיפול בערימה מבולבלת של משתני סביבה?
+
+זה היה מגדל של תצורה עדינה. `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`… או רגע, אולי זה `DB_USERNAME`? האם זה `DB_PASS` או `DB_PWD`? האם אני צריך את התחיליות `PG_*` הפעם? ואיפה לעזאזל מכניסים את ה‑timeout?
+
+זה היה בית קלפים שביר, מוכן למוטט את ה‑build הייצור שלך כי שכחת לעשות `HOST` באותיות רישיות.
+
+ואז, למישהו היה רעיון מבריק – פשוט להשתמש ב‑URL¹:
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+מחרוזת אחת. כל מה שצריך. ניתנת לפרסינג אוניברסלי. ניידת. אולי אעז לומר… יפה?
+
+אז למה אנחנו מתייחסים ל‑LLMs כאילו אנחנו בשנת 1999?
+
+## התפוצצות ה‑Env Var
+
+כרגע, קובץ `.env` שלי נראה כמו בית קברות של מפתחות API נטושים. `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`. ואל תתנו לי להתחיל עם Azure – אתם צריכים endpoint, שם deployment, גרסת API ומפתח רק כדי להגיד "שלום".
+
+זה לא רק מכוער; זה חיכוך. בכל פעם שאני רוצה להחליף מודל או לבדוק ספק חדש, אני משכתב קוד אתחול, מחפש תיעוד על שמות פרמטרים ספציפיים, ומוסיף שלוש שורות נוספות לקובץ התצורה שלי.
+
+מה אם פשוט… ~~נגנוב~~ נשאיל את הרעיון של URL למסדי נתונים?
+
+## היכרות עם מחרוזות חיבור LLM
+
+דמיינו לעצמכם מגדירים את כל ממשק המודל שלכם בשורה אחת:
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+
+<br />
+
+### אנטומיה של מחרוזת חיבור LLM
+
+![החלקים של מחרוזת חיבור LLM](../inline-url-diagram-dark.svg)
+
+הסכמה היא `llm://`. המארח הוא ה‑URL הבסיסי של ה‑API של הספק. ה‑path הוא שם המודל. ופרמטרי השאילתה מטפלים בכל אפשרויות הריצה שבדרך כלל מבלבלות את הקוד.
+
+## צריך אימות? מעולה, תוסיף.
+
+בדיוק כמו `postgres://`, אפשר להטמיע אימות ישירות:
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*הערה: כן, הכנסת פרטי אימות לכתובות URL עלולה להוות סיכון אבטחתי אם אתה מדביק אותן בלוגים ציבוריים. אבל שירות לוגינג מודרניים די טובים בניקוי תבניות כאלה, ובכנות, אתח מתיחש לקובץ `.env` שלך הרב יה טוב יותר? אמת, נטר, והשתמש בזהרות.*
+
+## עמידות? למה לא, לעזאזל.
+
+הרבות ספריות של מסדי נתונים תומכות ב-failover round-robin על ידי ציון מספר שרתים. למה לאח גם סוכני ה-AI שלנו יזכו לאותה אמינות?
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=-9
+```
+
+ה-`s` ב-`llms://` אינה טעות הקלדה. היא מסמנת רבים. אם `primary.gpt` נתקע, הלקוח מנסה אוטומטית את `backup.gpt`. אין צורך בלוגיקת ניתוב מורכבת.
+
+<blockquote class="inset">מחרוזת אחת עם הכל, מה-**אימות** שלך ועד ה-**endpoint** שלך ועד ה-**hyperparameters** שלך.</blockquote>
+
+## פורמטים חלופיים
+
+אני לא כבול ל-`llm://`. הסכימה הספציפית חשובה פחות מהתקן עצמו.
+
+אני יכול לדמיין עולם שבו משתמשים בסכימות ספציפיות לספק לקיצור, תוך שמירה על המבנה הסטנדרטי:
+
+```bash
+ollama://localhost:11434/llama3
+vercel://anthoprc/sonnets-4ispers?temp=-8&web_seach={"maxUses":3}
+bedrock://swest-2.aws/anthropc/sonnet-4.5?temp=-8&cabheControl=ephemeral
+```
+
+ללא קשר לתחביר המדויק, הייתרנות המרכזיים אינם ניתנים להכחשה:
+
+1.  **ניידות:** העתק-הדבק את כל תצורה שלך מסקריפט מקומי לעובד ענן.
+2.  **ידידותי ל-CLI:** העבר ארגומנט יחיד לסקריפטים שלך. `my-agent --model "llm://..."` מנצח את `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...`.
+3.  **אגנוסטי לשפה:** לכל שפת תכנות יש מפענח URL חזק. אנחנו מקבלים אימות, פיענוח וניקוי חינם.
+
+<blockquote class="ai-response inset">עולם מסדי הנתונים לקח עשורים להבין את זה.<br /><b>חדשות טובות, בציר הזמן של AI, זה רק לפני בערך חצי שנת וייב.</b></blockquote>
+
+## פסק הדין
+
+אנחנו לא צריכים עוד תקן תצורה מורכב או קובץ מניפסט מבוסס YAML חדש. אנוחנ רק צריכים להשתמש בכלי האחד שעבד עבור שאר האינטרנט ב-30 השנים האחרונות.
+
+בואו נפסיק להמציא את הגלגל מחדש ונתחיל להתיחחש לחיבורי ה-LLM שלינו באותה הכבודשאנחנו נותנים למסדי הנתונימ שלנו. קובץ `.env` שלך (והשפיות שלך) יודו לך.
+
+![מגירת משתני סביבה מבולגנת](../hero-concept-8-drawers.webp)
+
+{/* ¹ כן, אני יודע ש-`URI` נכון יותר מ-`URL`. אם אתה קפדן מספיק כדי באמת להתעניין בהבחנה הזאת, בבקשה לך לגעת בדשא. */}
+````
