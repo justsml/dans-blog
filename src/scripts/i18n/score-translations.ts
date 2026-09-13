@@ -119,6 +119,8 @@ const isTaskWorker = options["task-worker"] === true;
 const shouldOverwrite = options.overwrite === true;
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"), "limit");
 const outputLogPath = optionalString(options, "log") ?? GLOBAL_LOG_PATH;
+// Override the per-model reasoning floor, to compare judge depth against cost.
+const reasoningEffortOverride = optionalString(options, "reasoning-effort");
 const requestedSlug = optionalString(options, "slug");
 const requestedSlugs = parseList(optionalString(options, "slugs"), requestedSlug == null ? [] : [requestedSlug]);
 const slugs = requestedSlugs.length > 0 ? requestedSlugs : getAllPostSlugs();
@@ -351,7 +353,7 @@ async function scoreTranslation({
   // routes first-party; `openrouter/...` keeps going through OpenRouter.
   const llmConfig = resolveLlmConfig(model, {
     reasoningEffort: judgeReasoningEffort(model),
-    maxTokens: 2500,
+    maxTokens: judgeMaxOutputTokens(model),
     timeoutMs,
   });
   const result = await generateText({
@@ -366,7 +368,7 @@ async function scoreTranslation({
     // returns undefined for those and the AI SDK omits the field.
     ...(llmConfig.temperature == null ? {} : { temperature: 0, topP: 1 }),
     seed: JUDGE_SEED,
-    maxOutputTokens: 2500,
+    maxOutputTokens: judgeMaxOutputTokens(model),
     timeout: { totalMs: timeoutMs },
     providerOptions: withDeterministicRouting(llmConfig.providerOptions),
   });
@@ -401,8 +403,17 @@ function withDeterministicRouting<T extends Record<string, any>>(providerOptions
 
 // Lowest reasoning effort each judge accepts, to cut sampling variance.
 // Gemini 3 supports "minimal"; gpt-5.6 rejects "minimal" but supports "none".
+// Reasoning tokens are billed against maxOutputTokens. At medium/high effort a
+// 2500 budget gets fully consumed by thinking and the model returns empty text,
+// so give the deeper settings room to actually answer.
+function judgeMaxOutputTokens(modelId: string) {
+  const effort = judgeReasoningEffort(modelId);
+  return effort === "high" || effort === "medium" ? 12_000 : 2500;
+}
+
 function judgeReasoningEffort(modelId: string) {
-  if (modelId.includes("gemini-3")) return "minimal";
+  if (reasoningEffortOverride != null) return reasoningEffortOverride;
+  if (modelId.includes("gemini-3") || modelId.includes("glm-5")) return "minimal";
   if (modelId.includes("gpt-5.6")) return "none";
   return "low";
 }
@@ -483,6 +494,7 @@ function runTaskWorker(task: TranslationTask) {
     String(maxTranslationChars),
     "--log",
     outputLogPath,
+    ...(reasoningEffortOverride == null ? [] : ["--reasoning-effort", reasoningEffortOverride]),
     ...optionalFlag("--overwrite", shouldOverwrite),
   ];
 
@@ -836,7 +848,12 @@ function parseOptionalPositiveInteger(value: string | undefined, name: string) {
 // Cheap judges only. GPT models are allowed one at a time via this allowlist so
 // the guard keeps blocking the expensive frontier tiers.
 function validateScoringModel(modelId: string) {
-  const allowedGptJudgeModels = ["openai/gpt-5.6-luna", "openrouter/openai/gpt-5.6-luna"];
+  const allowedGptJudgeModels = [
+    "openai/gpt-5.6-luna",
+    "openrouter/openai/gpt-5.6-luna",
+    "openai/gpt-5.6-sol",
+    "openrouter/openai/gpt-5.6-sol",
+  ];
   if (allowedGptJudgeModels.includes(modelId)) return;
 
   const forbidden = modelId.includes("-fast")
