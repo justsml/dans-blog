@@ -1,31 +1,41 @@
 {
-  "selectedCommit": "ac2d8bbc5949d18eeedd120a4c064697146330eb",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "59516570e876e96fdc5971123388c1a510b08f86",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 98,
+    "technicalAccuracy": 98,
+    "coherence": 98,
+    "relevance": 98,
+    "translationQuality": 98,
+    "mdxPreservation": 99,
+    "culturalAdaptation": 96,
+    "languagePurity": 98
   },
   "suggestions": [],
-  "rationale": "The selected commit already contains the fix suggested in the previous judge report ('routage' instead of 'router'). The translation is high quality, captures Dan's informal tone perfectly ('allez donc toucher de l'herbe'), and maintains all MDX structures and relative image paths correctly.",
+  "rationale": "Pass 1 successfully applied the French word order suggestion in the update block ('package npm `llm-strings`'). The current translation is remarkably accurate, natural, preserves Dan's punchy voice, and maintains all structural and MDX elements flawlessly.",
+  "confidence": "high",
+  "confidenceScore": 0.89,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "llm-connection-strings",
   "locale": "fr",
   "candidateCommits": [
-    "ac2d8bbc5949d18eeedd120a4c064697146330eb",
-    "b004138eb9f2422af44633607fea6556a14ec1bb",
-    "d74b5bc630be3c3bfd1be354956fa9f54d7adec5",
-    "348bf9a879a45148afdc5a96f853788bdb53a8b3",
-    "148c4389c07019d305db83edbbcc0601b2a6344e"
+    "6b470e40b193b531dc333917eb563ebd9c56202e",
+    "59516570e876e96fdc5971123388c1a510b08f86"
   ],
   "suggestionLog": [
     {
-      "priority": "high",
-      "match": "Aucune logique de router complexe requise.",
-      "replacement": "Aucune logique de routage complexe requise.",
-      "reason": "The word 'router' is used as a noun in English; in French, the process is 'routage'.",
+      "priority": "medium",
+      "match": "[`llm-strings` package npm](https://www.npmjs.com/package/llm-strings)",
+      "replacement": "[package npm `llm-strings`](https://www.npmjs.com/package/llm-strings)",
+      "reason": "Natural French noun-first order ('package npm llm-strings' rather than English word order 'llm-strings package npm').",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
