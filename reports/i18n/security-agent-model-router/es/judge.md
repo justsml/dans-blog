@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 5c5692cbd6fb05d6dca5530d12f823713e821c9f
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.885)
+- Selected candidate: 8570df6118e95df26fe9e52758e01ececd9e83e3
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.883)
 
-The candidate 5c5692cbd6fb05d6dca5530d12f823713e821c9f is the best choice. It correctly handles the image path adjustments (../ instead of ./) which is a requirement for localized files in this project structure. It maintains all MDX structures, including tables and code blocks, and provides a natural, technically accurate Spanish translation that preserves Dan's direct tone. The other candidate failed to adjust image paths correctly.
+Candidate 8570df6118e95df26fe9e52758e01ececd9e83e3 is cleanly formatted, faithfully preserves all tables, figures, image asset paths, code fences, and frontmatter, and delivers natural, punchy Spanish prose that captures Dan's direct technical tone. The MDX comment closures have been verified and are properly closed with no remaining issues.

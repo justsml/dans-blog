@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "5c5692cbd6fb05d6dca5530d12f823713e821c9f",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "8570df6118e95df26fe9e52758e01ececd9e83e3",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 98,
-    "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 95,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 92,
-    "languagePurity": 98
+    "readability": 96,
+    "technicalAccuracy": 96,
+    "coherence": 96,
+    "relevance": 96,
+    "translationQuality": 96,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 95,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The candidate 5c5692cbd6fb05d6dca5530d12f823713e821c9f is the best choice. It correctly handles the image path adjustments (../ instead of ./) which is a requirement for localized files in this project structure. It maintains all MDX structures, including tables and code blocks, and provides a natural, technically accurate Spanish translation that preserves Dan's direct tone. The other candidate failed to adjust image paths correctly.",
+  "rationale": "Candidate 8570df6118e95df26fe9e52758e01ececd9e83e3 is cleanly formatted, faithfully preserves all tables, figures, image asset paths, code fences, and frontmatter, and delivers natural, punchy Spanish prose that captures Dan's direct technical tone. The MDX comment closures have been verified and are properly closed with no remaining issues.",
   "confidence": "high",
-  "confidenceScore": 0.885,
+  "confidenceScore": 0.883,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,14 +27,42 @@
   "slug": "security-agent-model-router",
   "locale": "es",
   "candidateCommits": [
-    "5c5692cbd6fb05d6dca5530d12f823713e821c9f",
-    "0684b78b9b9937317d3292a6488e8a3d6d4356ba"
+    "0e7c995d4f49cdfe3a2e7aefdc5dcbd2fdcd96dc",
+    "8570df6118e95df26fe9e52758e01ececd9e83e3"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "*/",
+      "replacement": "*/}",
+      "reason": "Fix MDX comment closer that was corrupted into an unclosed MDX comment tag",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "*/}}",
+      "replacement": "*/}",
+      "reason": "Fix malformed double closing brace on the Image plan MDX comment.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md\n*/",
+      "replacement": "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md\n*/}",
+      "reason": "Close trailing MDX comment properly with */}",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug security-agent-model-router --locale es --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale es --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/es/index.mdx failed structural parity with score 0.981 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/es/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":2,\"tableShapes\":2}. Differences: {\"tableColumns\":2,\"tableShapes\":2}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }
