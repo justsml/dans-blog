@@ -2,46 +2,43 @@
 
 - Slug: security-agent-model-router
 - Locale: zh
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3.8-flash
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
-- Validation: failed
+- Validation: passed
 - Validation scope: local
-- Confidence: high (0.885)
+- Confidence: high (0.879)
 - Confidence signals: no high/medium issues; single judge
 - High/medium/low issue counts: 0/0/0
-- Validation error: Command failed: bun run i18n:validate --slug security-agent-model-router --locale zh --skip-global
-$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale zh --skip-global
-224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
-225 |   const comparison = compareMdxStructure(input);
-226 |   if (comparison.valid) return;
-227 | 
-228 |   const targetLabel = input.targetPath ?? "translation";
-229 |   throw new Error(
-                  ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/zh/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/zh/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {"tableColumns":1,"tableShapes":1}. Differences: {"tableColumns":1,"tableShapes":1}
-      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
-      at loadAndEvaluateModule (2:1)
-
-Bun v1.3.1 (macOS arm64)
-error: script "i18n:validate" exited with code 1
-
 
 ## Primary Judge Telemetry
-- Runtime seconds: 2.58
-- Input tokens: 24803
-- Output tokens: 203
+- Runtime seconds: 3.94
+- Input tokens: 24209
+- Output tokens: 347
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.013010
-- Estimated cost: $0.013010
+- OpenRouter cost credits: 0.019458
+- Estimated cost: $0.019458
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 2.77
+- Input tokens: 24010
+- Output tokens: 208
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.018787
+- Estimated cost: $0.018787
+
+## Judge Suggestions
+1. Pass 1: applied medium priority suggestion. Match: "| 模型路由 | 评审分数 | 成本 | 运行时间 | 工具调用 |" Replacement: "| 模型路由 | 裁判评分 | 成本 | 运行时间 | 工具调用 |" Reason: Align terminology with 'judge score' context in the article and keep it natural. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
-- current not present
-- 8ca4ef24b8509371b8b60a016402f2a97d902e0e i18n candidate(zh): security-agent-model-router via openrouter/deepseek/deepseek-v4-flash
-- a718b469689c58c3f596051525663fa3d8d53450 i18n candidate(zh): security-agent-model-router via openrouter/openai/gpt-oss-120b:nitro
+- current src/content/posts/2026-06-30--security-agent-model-router/zh/index.mdx
+- fddd8e6e41c0d4e4c64e42a1ed9c33680df9fea0 i18n candidate(zh): security-agent-model-router via openrouter/openai/gpt-5.6-luna
+- 1f21e188be7f4e0cb73c71f983a52df02189da6d i18n candidate(zh): security-agent-model-router via openrouter/deepseek/deepseek-v4-flash

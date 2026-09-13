@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "8ca4ef24b8509371b8b60a016402f2a97d902e0e",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "fddd8e6e41c0d4e4c64e42a1ed9c33680df9fea0",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
     "readability": 95,
-    "technicalAccuracy": 98,
+    "technicalAccuracy": 96,
     "coherence": 95,
-    "relevance": 100,
+    "relevance": 96,
     "translationQuality": 95,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 92,
-    "languagePurity": 98
+    "mdxPreservation": 96,
+    "culturalAdaptation": 93,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The DeepSeek candidate is superior because it correctly handles the frontmatter (unlike the GPT-OSS candidate which added a redundant nested title block) and maintains the correct relative paths for images (../ instead of ./). The translation is technically accurate, using appropriate Chinese terminology for security and AI concepts while preserving Dan's direct, punchy style. It also correctly handles the MDX structure and heading counts.",
+  "rationale": "Pass 1 fixes have been applied cleanly. The MDX structural integrity, table layouts, heading counts, and code fences match the original. No further medium or high priority issues remain.",
   "confidence": "high",
-  "confidenceScore": 0.885,
+  "confidenceScore": 0.879,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,14 +27,24 @@
   "slug": "security-agent-model-router",
   "locale": "zh",
   "candidateCommits": [
-    "8ca4ef24b8509371b8b60a016402f2a97d902e0e",
-    "a718b469689c58c3f596051525663fa3d8d53450"
+    "fddd8e6e41c0d4e4c64e42a1ed9c33680df9fea0",
+    "1f21e188be7f4e0cb73c71f983a52df02189da6d"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "| 模型路由 | 评审分数 | 成本 | 运行时间 | 工具调用 |",
+      "replacement": "| 模型路由 | 裁判评分 | 成本 | 运行时间 | 工具调用 |",
+      "reason": "Align terminology with 'judge score' context in the article and keep it natural.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug security-agent-model-router --locale zh --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale zh --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/zh/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/zh/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":1,\"tableShapes\":1}. Differences: {\"tableColumns\":1,\"tableShapes\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }
