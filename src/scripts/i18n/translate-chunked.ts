@@ -36,6 +36,7 @@ import {
   normalizeFrontmatterAssetPaths,
   normalizeLocalizedCandidateBody,
 } from "./localized-mdx.ts";
+import { SOURCE_HASH_KEY, hashPostSource } from "./source-hash.ts";
 import {
   parseChunkSize,
   extractSegments,
@@ -1166,6 +1167,9 @@ async function main() {
   // Build frontmatter
   const frontmatter: Record<string, unknown> = { ...parsed.data };
   const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz, promptTuning);
+  // Record which English source this was translated from, so a later source
+  // edit makes the translation detectably stale.
+  translatedFrontmatter[SOURCE_HASH_KEY] = hashPostSource(sourceRaw);
   assertActiveRun();
   const frontmatterYaml = matter.stringify("", translatedFrontmatter).trim();
 

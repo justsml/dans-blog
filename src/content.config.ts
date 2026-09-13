@@ -24,6 +24,13 @@ export const posts = defineCollection({
 
       date: z.coerce.string().optional(),
       modified: z.coerce.string().optional(),
+
+      /**
+       * Translations only: short hash of the English source this file was
+       * translated from. When it stops matching the current source hash, the
+       * translation is stale. See `src/scripts/i18n/source-hash.ts`.
+       */
+      sourceHash: z.string().optional(),
       minReleaseDate: z.coerce.date().optional(),
 
       cover: image().optional(), // z.string().optional(),
