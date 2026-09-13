@@ -1,0 +1,68 @@
+{
+  "selectedCommit": "c92355c6ca4f5807e3e4c8fa93538815c9d05b2c",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
+  "scores": {
+    "readability": 96,
+    "technicalAccuracy": 98,
+    "coherence": 97,
+    "relevance": 98,
+    "translationQuality": 97,
+    "mdxPreservation": 99,
+    "culturalAdaptation": 95,
+    "languagePurity": 98
+  },
+  "suggestions": [],
+  "rationale": "The pre-publish fix harmonizing the internal link anchor for 'Don't Marry Your Model' to '[モデルと心中するな](/llm-routing-mastra-ai)' has already been applied. The translation is clean, technically accurate, preserves all code blocks and MDX structural constraints, and no outstanding issues remain.",
+  "confidence": "high",
+  "confidenceScore": 0.888,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "dont-fear-the-model-router",
+  "locale": "ja",
+  "candidateCommits": [
+    "ed523e9a7834724a751920a305ec7c086242cf0f",
+    "c92355c6ca4f5807e3e4c8fa93538815c9d05b2c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "[Mastra `createScorer`リファレンス](https://mastra.ai/reference/evals/create-scorer)",
+      "replacement": "[Mastra `createScorer` リファレンス](https://mastra.ai/reference/evals/create-scorer)",
+      "reason": "Formatting consistency with surrounding link texts",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[Mastra `runEvals`リファレンス](https://mastra.ai/reference/evals/run-evals)",
+      "replacement": "[Mastra `runEvals` リファレンス](https://mastra.ai/reference/evals/run-evals)",
+      "reason": "Formatting consistency with surrounding link texts",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "[モデルに縛られない](/llm-routing-mastra-ai)",
+      "replacement": "[モデルと心中するな](/llm-routing-mastra-ai)",
+      "reason": "Align internal link anchor text with the Japanese translated title used in the Resources section and the related post title.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug dont-fear-the-model-router --locale ja --skip-global",
+    "output": ""
+  }
+}
