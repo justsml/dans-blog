@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 4dd576f5afbd132fcc67df574601e7475d98f69e
-- Selected model: openrouter/openai/gpt-oss-120b:nitro
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 904eddb228b3fbe8597026fe2073ecca9a029107
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.888)
 
-The candidate translation is excellent. It captures Dan's informal and direct style perfectly, including the strikethrough joke ('~~سرقنا~~ استعارنا') which is often lost in translations. It uses appropriate technical Arabic terminology while maintaining readability. The MDX structure, asset paths, and code blocks are correctly preserved. The footnote comment was already translated in the provided candidate text, contrary to the previous judge's suggestion, so no further fixes are required.
+The pre-publish fix has already been applied accurately. The current Arabic translation retains full MDX formatting, heading counts, and code structures while conveying Dan's punchy developer-focused tone naturally and accurately.
