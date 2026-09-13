@@ -1,0 +1,50 @@
+{
+  "selectedCommit": "f05320905eeda6604ffd04ac7228278403936989",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 93,
+    "languagePurity": 96
+  },
+  "suggestions": [],
+  "rationale": "The previous suggestion to fix the root-relative path '/llm-routing-mastra-ai' has been cleanly applied in pass 1. The Hebrew translation is idiomatic, technically precise, preserves all code blocks, frontmatter, and structural elements accurately, and requires no further medium- or high-priority adjustments.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "dont-fear-the-model-router",
+  "locale": "he",
+  "candidateCommits": [
+    "69f0911a488bb04588a42c96aae9dd961e68fa5f",
+    "f05320905eeda6604ffd04ac7228278403936989"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[אל תתחתן עם המודל שלך](../llm-routing-mastra-ai) טען את הטיעון הפשוט",
+      "replacement": "[אל תתחתן עם המודל שלך](/llm-routing-mastra-ai) טען את הטיעון הפשוט",
+      "reason": "Root-relative URL was incorrectly modified to a relative path ('../llm-routing-mastra-ai') in the lead sentence.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug dont-fear-the-model-router --locale he --skip-global",
+    "output": ""
+  }
+}
