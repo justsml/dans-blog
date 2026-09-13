@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "47f02a15cf3e8f26f3525260d6199669c8e520e8",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "31de95345bc7078b2b626eab6b5b25e9ed6d389f",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 98,
-    "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 92,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "readability": 94,
+    "technicalAccuracy": 95,
+    "coherence": 94,
+    "relevance": 96,
+    "translationQuality": 94,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 92,
+    "languagePurity": 93
   },
   "suggestions": [],
-  "rationale": "This candidate provided a much more complete translation, including the frontmatter subTitle and the introductory prose which the other candidate left in English. It maintains Dan's direct technical voice well in Hindi and preserves all MDX structures and heading counts perfectly. The terminology used for technical concepts like 'routing' and 'evidence-backed' is natural and accurate.",
+  "rationale": "The pre-publish fix correctly restored the absolute link `/announcing-exploithunter-app`. MDX structure, frontmatter, table formats, code blocks, asset links (`../*.svg`), and technical terminology are completely intact and well-rendered. No remaining medium- or high-priority defects.",
   "confidence": "high",
-  "confidenceScore": 0.88,
+  "confidenceScore": 0.875,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,10 +27,20 @@
   "slug": "security-agent-model-router",
   "locale": "hi",
   "candidateCommits": [
-    "f4b4e30eb59f82e1aa44ffdb43a94b68347bb49f",
-    "47f02a15cf3e8f26f3525260d6199669c8e520e8"
+    "31de95345bc7078b2b626eab6b5b25e9ed6d389f",
+    "41c9c278dc1206bc9b1d36ebd655fa4ee645ddd5"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "इसका उत्तर [ExploitHunter.app](../announcing-exploithunter-app) के लिए पाने के लिए",
+      "replacement": "इसका उत्तर [ExploitHunter.app](/announcing-exploithunter-app) के लिए पाने के लिए",
+      "reason": "Preserve the absolute post link /announcing-exploithunter-app as in the English source, rather than converting it to a relative link",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
