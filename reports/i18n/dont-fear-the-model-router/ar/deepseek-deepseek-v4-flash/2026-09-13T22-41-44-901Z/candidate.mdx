@@ -1,0 +1,559 @@
+---
+title: لا تخف من موجه النموذج
+subTitle: الطريق الواثق إلى أفضل نموذج
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - agents
+  - mastra
+  - evals
+  - model-routing
+  - testing
+  - observability
+  - production
+category: AI
+subCategory: AI Infrastructure
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - mastra-workflows-memory
+sourceHash: 9599850328a0
+---
+[لا تتزوج نموذجك](/llm-routing-mastra-ai) قدمت الحجة السهلة: توقف عن إرسال كل مهمة إلى نفس النموذج لمجرد أنه فاز في آخر مسابقة.
+
+استخدم نموذجًا رخيصًا للأعمال الرخيصة. استخدم نموذجًا أقوى حيث تكون المهمة صعبة حقًا. اجعل طبقة التوجيه مرنة بما يكفي بحيث لا يحول تبديل المزودين قاعدة الكود الخاصة بك إلى مزار.
+
+كان ذلك صوابًا.
+
+وكان أيضًا غير مكتمل.
+
+اللحظة التي تضيف فيها موجهًا، يصبح لديك سلوك نظام جديد لاختباره. تتوقف الأسئلة عن كونها "أي نموذج أفضل؟" وتصبح "هل اختار النظام المسار الصحيح، واستخدم الأدوات الصحيحة، واحتفظ بالأدلة الصحيحة، وتوقف في الوقت المناسب؟"
+
+إذا لم تقم بقياس ذلك، فإن موجه النموذج الخاص بك ليس أكثر من حدس مع جدول توجيه.
+
+<p class="inset">الموجه ليس الإجابة. الموجه هو فرضية حول كيفية تصرف نظامك.</p>
+
+تمتلك ماسترا الواجهات لتحويل تلك الفرضية إلى شيء قابل للاختبار: [المقيمون](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [مجموعات البيانات](https://mastra.ai/docs/evals/datasets/overview), و [التجارب](https://mastra.ai/docs/evals/datasets/running-experiments). الأسماء تبدو وكأنها بنية تحتية للتقييم، وهي كذلك. القيمة الحقيقية أبسط: إنها تجعل سلوك الوكيل مرئيًا بما يكفي ليمكن مناقشته.
+
+## ماذا نختبر؟
+
+يملك الموجه من المقالة السابقة ثلاثة مسارات متخصصة:
+
+| المسار | ما الذي يجب أن يذهب هناك | ما الذي سيكون مسارًا سيئًا |
+|---|---|---|
+| `code` | التنفيذ، إعادة الهيكلة، التصحيح، مراجعة الكود | تلخيص السياق الطويل، تصنيف بسيط |
+| `long-context` | مستندات فوضوية، نصوص محادثات، تركيب سياسات، ملفات متعددة | تنسيق آلي قصير |
+| `general` | تصنيف، تنسيق، أسئلة وأجوبة بسيطة، استخراج ممل | كود معقد أو تحليل كثيف الأدلة |
+
+ذلك الجدول بداية. إنه ليس تقييمًا.
+
+يحتاج التقييم إلى أمثلة ومقيمين:
+
+| المكون | الوظيفة |
+|---|---|
+| عنصر مجموعة البيانات | "هذا طلب تمثيلي." |
+| الحقيقة الأساسية | "هذا هو المسار أو السلوك الذي توقعناه." |
+| المقيم | "هذه هي كيفية تقرير ما إذا كان المخرجة قد اجتاز." |
+| التجربة | "هذا هو التشغيل الذي يمكننا مقارنته بالتشغيلات المستقبلية." |
+
+الخطوة المهمة هي اختبار السلوك، وليس جودة النص فقط.
+
+يمكن للنموذج كتابة إجابة جميلة بعد اختيار المتخصص الخطأ. يمكن لعامل الأمان إنتاج تقرير معقول دون حفظ الأدلة. يمكن لعامل الدعم أن يبدو متعاطفًا بينما يتخطى فحص سياسة الاسترداد. الفقرة هي الجزء المرئي. المسار (التراجيكتوري) هو حيث تعيش الأخطاء.
+
+بالنسبة للموجه، أبدأ بأربعة محاور:
+
+| المحور | السؤال | مثال على المقيم |
+|---|---|---|
+| الجودة | هل اختار المسار الصحيح وأنتج نتيجة مفيدة؟ | دقة المسار، اكتمال الإجابة، الإخلاص للسياق |
+| التكلفة | هل تجنب النماذج المتميزة للأعمال المملة؟ | فئة تكلفة المسار المختار، ميزانية الرموز |
+| السرعة | هل انتهى داخل ميزانية زمن الاستجابة للمنتج؟ | مقيم وقت التشغيل أو المهلة |
+| أخرى | هل امتثل لقيود السلامة والخصوصية وقابلية المراقبة؟| قائمة الأدوات المسموح بها، حفظ الأدلة، سلوك الرفض |
+
+ذلك الصف الأخير مهم. "أخرى" هي حيث تتكز الندوب الإنتاجية.
+
+ذلك الصف الأخير مهم. "أخرى" هي حيث تتكدس الندوب الإنتاجية.
+
+## اجعل قرار الموجّه قابلاً للتقييم
+
+إذا كان الموجّه ينتج فقط إجابة نهائية، فأنت تخمّن بشأن القرار. يمكنك تقييم المخرجات، لكن لا يمكنك معرفة ما إذا كان المسار صحيحًا.
+
+لذا، أعطِ خطوة التوجيه عقدًا منظمًا صغيرًا:
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+المستخدمون لا يحتاجون أبدًا لرؤية هذا JSON. يمكن أن يكون خطوة داخلية، أو تسليم سير عمل، أو سبان تتبع. المُسجّل يحتاج فقط إلى الوصول إليه.
+
+إليك وكيل Mastra صغير عمدًا لا يفعل شيئًا سوى اختيار مسار:
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+نعم، هذا مصطنع قليلاً. جيد. التقييمات تكافئ اللحامات المملة.
+
+بعد أن أصبح القرار صريحًا، يمكنك اختبار المسار قبل أن يعمل المختص اللاحق. تتوقف فشلات الموجّه عن الاختباء خلف فشلات في النموذج المختار، أو تعليماته البرمجية، أو أدواته، أو مُسجّل الإجابة النهائية.
+
+## اكتب مُسجّلاً يلتقط الفشل الممل
+
+يقبل [`createScorer`](https://mastra.ai/reference/evals/create-scorer) الخاص بـ Mastra دوال JavaScript العادية، واستفسارات قاضي LLM، أو كليهما. ابدأ بالدوال عندما يكون الفشل حتميًا. إنها أرخص وأسرع وأقل غموضة.
+
+دقة المسار ل تحتاج إلى نموذج قاضي. إنها تحتاج إلى تحليل JSON ومقارنة حقل واحد.
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id： "route-accuracy",
+  description："Checks whether the selected route matches ground truth.",
+  type: "agent"，
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route： ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+هذا المُسجّل ليس أنيقًا. هذا هو المغزى.
+
+إذا كان الموجّه لا يمكنه باستمرار إنتاج JSON صحيح واختيار المختص الواضح على مجموعة اختبار صغيرة، فلا يوجد سبب للثقة به في حركة الإنتاج. لا تحتاج إلى نموذج فيلسوف يصنف الأنطولوجيا. تحتاج إلى جهاز إنذار دخان ببطارية فيه.
+
+## شغّل حلقة التقييم الصغيرة أولاً
+
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) هي الحلقة السريعة. اعطها هدفًا، وحالات اختبار، ومُسجّلات، وحدًا للتزامن. تشغل الهدف ضد البيانات وتعود بنتائج مجمعة.
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scores/route-accuracy";
+
+const routingCases = [
+  {
+    input："Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input："Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input："Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input："Debug a failing Playwright test that only breaks in CI.",
+    groundTruth： { route: "code" },
+  },
+  {
+    input："Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+هذه هي الحلقة التي تشغلها أثناء تغيير التعليمات البرمجية، أو إضافة مسار، أو تجربة نموذج موجّه أرخص.
+
+إنها ليست كافية لنظام ناضج. لكنها كافية لمنع الانحدار الأكثر إحراجًا: "قمنا بتغيير تعليمات الموجّه وبدأ بإرسال مهام التصنيف إلى نموذج الكود المتميز".
+
+أبقِ المحاور منفصلة. دقة المسار وجودة الإجابة النهائية هما درجتان مختلفتان. صحة JSON، والأدوات المسموح بها، وقابلية التتبع تحصل على فحوصاتها الخاصة. لا تدمجها في رقم "جودة" واحد. المتوسطات هي حيث تذهب الإخفاقات المفيدة لتتقاعد.
+
+## أضف قاضيًا من LLM فقط حيث يكون مجديًا
+
+بعض التوجيهات غامضة بشكل مشروع:
+
+```text
+Read these logs and tell me why the deploy failed.
+```
+
+هل هذا `code` لأنه تصحيح أخطاء؟ أم `long-context` بسبب السجلات؟ أم `general` لأن المستخدم طلب ملخصًا؟ يعتمد المسار الصحيح على الأدوات المتاحة وما يعد به منتجك.
+
+هنا يساعد قاضي LLM، ولكن فقط مع معايير صارمة. يمكن لمقيمي ماسترا مزج خطوات الدوال وخطوات كائنات الموجه. استخدم الدوال للهيكل، ثم قاضيًا للجزء الذي يحتاج فعلاً إلى حكم.
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description": "Judges whether the route explanation matches the request.",
+  type": "agent",
+  judge": {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+هذا المُقَيِّم يكلف مالًا لأنه يستدعي نموذج قاضي. هذا مقبول عندما يكون الحكم يستحق ذلك.
+
+لا تستخدمه للتحقق من تحليل JSON.
+
+## رفع الحالات الجيدة إلى مجموعة بيانات
+
+مصفوفات التقييم المشفرة بشكل ثابت مقبولة في البداية. في النهاية تصبح أمثلتك أصولًا للمنتج: تذكرة العميل الفاشلة، محادثة الدعم الغريبة، محاولة حقن الموجه، الطلب الذي تم توجيهه بشكل صحيح حتى الخميس الماضي.
+
+تلك تنتمي إلى مجموعة بيانات.
+
+مجموعات بيانات ماسترا هي مجموعات مُرقمة الإصدارات من حالات الاختبار. كل تغيير يؤدي إلى إصدار جديد، لذا يمكنك إعادة تشغيل تجربة ضد نفس مجموعة الحالات التي كانت موجودة عندما اتخذت قرار النموذج.
+
+تحتاج مجموعات البيانات إلى استمرارية، لذا قم بتكوين التخزين أولاً:
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-Evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+ثم أنشئ مجموعة البيانات وأضف الحالات:
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+بمجرد أن تحصل على مجموعة بيانات، تتوقف حالات التقييم عن كونها بيانات نصية يمكن التخلص منها. لها معرفات، إصدارات، تاريخ، ونتائج تجارب.
+
+عندها تتوقف التقييمات عن أن تبدو مثل 'ملفات اختبار للموجِّهات' وتبدأ في أن تشبه ذاكرة المنتج.
+
+## تشغيل التجارب ضد المُوجِّه
+
+مع وجود مجموعة البيانات، يقوم [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) بتشغيلها مقابل وكيل أو سير عمل أو مُقَيِّم مسجل.
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+الآن يتغير الحديث. بدلاً من 'يبدو أن المُوجِّه الجديد أفضل،' يمكنك القول:
+
+- المُوجِّه القديم سجّل `0.94` في دقة التوجيه.
+- المُوجِّه الجديد سجّل `0.98`.
+- حسَّن توجيه السياقات الطويلة.
+- تراجع في حالتَي مراجعة كود.
+- قلَّل حالات التحويل للنماذج المتميزة بنسبة 18%.
+- أضاف 300 مللي ثانية من زمن انتقال المُوجِّه.
+
+هذه محادثة هندسية. هناك مقايضات مطروحة على الطاولة، ويمكنك أن تقرر ما إذا كانت المقايضة تستحق العناء.
+
+## قيّم السلوك الحي، لكن لا تخلط بينه وبين الحقيقة الأساسية
+
+يمكن لـ Mastra أيضًا إرفاق المقيمين مباشرةً بالوكيل وخطوات سير العمل. تعمل المقيمات الحية بشكل غير متزامن، وتخزّن النتائج في قاعدة البيانات التي قمت بتكوينها، وتدعم أخذ العينات بحيث لا تحتاج إلى تقييم كل استجابة إنتاجية ما لم تقصد ذلك.
+
+مفيد. ولكنه مهمة مختلفة.
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+يخبرك التقييم الحي أن المُوجِّه ما زال يُصدر قرارات صالحة. يكتشف المخرجات غير الصحيحة هيكليًا، والمحتوى السام، واستدعاءات الأدوات المحظورة، وعلامات الأدلة المفقودة، والثقة المنخفضة بشكل مريب.
+
+لكنه عادةً لا يستطيع إخبارك بدقة التوجيه، لأن حركة الإنتاج لا تصل مثبتًا معها حقيقة أساسية.
+
+التقييم الحي هو مراقبة. تجارب البيانات هي اختبارات محكومة. أنت بحاجة لكليهما. يجيبان على أسئلة مختلفة.
+
+## ما الذي تقيسه بعد دقة التوجيه
+
+دقة التوجيه هي أول درجة سُلَّم. تخبرك أن الطلب وصل إلى الأخصائي المتوقع. لا تقول شيئًا عما إذا كان الأخصائي قد قام بعمل جيد.
+
+بمجرد أن يجتاز المُوجِّه الأساسيات، قم بتقييم النظام في طبقات:
+
+| الطبقة | ما الذي تقيّمه | لماذا يهم |
+|---|---|---|
+| قرار المُوجِّه | المسار المُختار، درجة الثقة، السبب | يكتشف سوء التصنيف وقواعد التصعيد السيئة |
+| المسار | تسلسل الأداة أو الوكيل المتوقع | يكتشف سلوك "الإجابة الصحيحة عبر المسار الخطأ" |
+| مخرجات الأخصائي | الصحة، الدقة للمصدر، الفائدة | يكتشف العمل منخفض الجودة بعد التوجيه الصحيح |
+| التكلفة وزمن الاستجابة | اختيار النموذج، عدد الرموز، وقت التشغيل | يكتشف المكاسب باهظة الثمن أو البطيئة |
+| الأمان والنطاق | الأدوات المسموح بها، حدود الرفض، الأدلة | يكتشف الإخفاقات التي تشكل خطرًا على المنتج |
+
+يدعم `runEvals` تكوينات مقيمات على مستوى الوكيل وسير العمل والخطوة والمسار، لذلك لا تحتاج إلى التظاهر بأن الإجابة النهائية هي الأثر الوحيد.
+
+بالنسبة لسير العمل، يبدو الشكل كالتالي:
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+هذا هو النموذج الذهني الذي أريده للوكلاء في الإنتاج:
+
+قيّم القرار. قيّم المسار. قيّم الإجابة.
+
+إذا قيّمت الإجابة فقط، يمكن للنموذج أن ينجح بالصدفة.
+
+## يجب أن يصبح المُوجِّه أكثر مللاً مع الوقت
+
+عادةً ما يكون أول مُوجِّه توجيهٍ فقرةً من الأحكام التخمينية. هذا جيد للنموذج الأولي.
+
+مع تعلّمك من التقييمات، يجب أن تصبح أجزاء من المُوجِّه أقلّ سحرية:
+
+- الحالات المعجمية الواضحة تتحول إلى قواعد حتمية.
+- المهام الخطيرة تتطلب موافقة صريحة أو فرعًا من سير العمل.
+- المهام الغامضة تطرح سؤالًا توضيحيًا بدلًا من التخمين.
+- المسارات المُكلفة تتطلب ثقة أعلى أو إشارة ثانية.
+- حالات الفشل المعروفة تصبح بنودًا في مجموعة البيانات.
+
+الهدف ليس جعل المُوجِّه "أذكى" إلى الأبد. الهدف هو جعل النظام أسهل في الاستدلال عليه.
+
+أحيانًا يعني ذلك نموذجًا أفضل. وأحيانًا يعني ذلك مُوجِّهًا أكثر إحكامًا. وأحيانًا خطوة في سير العمل، أو مُسجِّلًا، أو سقفًا صلبًا، أو عبارة `if` مملة تُوفّر لك أربعة أرقام شهريًا.
+
+هذا هو بيت القصيد من قياس السلوك. تتوقف عن الجدال بناءً على الذوق وتبدأ الجدال بناءً على الدليل.
+
+## قائمة تحقق عملية للبدء
+
+إذا كنت تبني مُوجِّهًا في Mastra اليوم، ابدأ من هنا:
+
+1. اجعل قرار التوجيه منظمًا، حتى لو لم يره المستخدمون أبدًا.
+2. اكتب مُسجِّلات حتمية للتحقق من JSON الصحيح، والمسار المتوقع، والمسارات المحظورة.
+3. استخدم `runEvals` مع 10 إلى 20 حالة قبل تغيير مُوجِّهات أو نماذج التوجيه.
+4. رقّي حالات الفشل الحقيقية إلى مجموعة بيانات مُرقَّمة.
+5. شغّل تجارب مجموعات البيانات لتغييرات ذات مغزى في المُوجِّه أو النموذج أو المسار أو سير العمل.
+6. أضف مُسجِّلات حية للثوابت (invariants) الرخيصة في الإنتاج.
+7. قارن التجارب حسب المسار، وليس فقط حسب متوسط الدرجة.
+
+المتوسط أقل أهمية من مجموعة حالات الفشل (failure cluster).
+
+إذا كان كل انحدار (regression) في تركيب السياسات الطويلة السياق، فليس لديك "مُوجِّه أسوأ." بل لديك مشكلة حدود مسار. إذا كانت كل حالة فاشلة تستخدم أداة محددة، فلديك مشكلة عقد أداة. إذا فشل كل نموذج رخيص في نفس الحالتين الغامضين، فأنت بحاجة إلى منطق تصعيد، وليس إلى افتراضي أكثر تكلفة.
+
+هنا تصبح التقييمات مفيدة. إنها ليست طقسًا، أو لوحة تحكم تجعل الجميع يشعرون وكأنهم بالغون مؤقتًا. إنها تُظهر لك أي جزء من النظام يفشل، حتى تتمكن من إصلاح ذلك الجزء بدلًا من إصلاح النظام بأكمله.
+
+## الموارد
+
+- [نظرة عامة على مُسجِّلات Mastra](https://mastra.ai/docs/evals/overview)
+- [مرجع `createScorer` في Mastra](https://mastra.ai/reference/evals/create-scorer)
+- [مرجع `runEvals` في Mastra](https://mastra.ai/reference/evals/run-evals)
+- [نظرة عامة على مجموعات بيانات Mastra](https://mastra.ai/docs/evals/datasets/overview)
+- [تجارب مجموعات بيانات Mastra](https://mast.ar/docs/evals/datasets/running-experiments)
+- [لا تتزوج من نموذجك](/llm-routing-mastra-ai)
+- [حارب الشرور بالتقييمات!](/llm-evals-are-broken)
