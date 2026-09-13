@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 44680a9aad4f34fb1581730c0e4635cefb991329
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: low (0.330)
+- Selected candidate: 5ea343a4a6da4279ef65b4d45bb197584fd186b8
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.882)
 
-The candidate 44680a9aad4f34fb1581730c0e4635cefb991329 provided a high-quality translation that respects the technical nuances of security agent evaluation. It correctly handled the MDX structure, including the complex tables and figure captions. It followed the pathing requirements for images (../) and maintained the direct, technical tone of the original author. The other candidate (d6df16436cd086fb332a97d35004955c0d7344cf) introduced an incorrect path format '.././' for images which is redundant and potentially problematic.
+All prior suggestions regarding relative image paths and root links have been cleanly applied in pass 1. The French translation in src/content/posts/2026-06-30--security-agent-model-router/fr/index.mdx is faithful, technically precise, and matches all MDX structural elements and asset paths.
