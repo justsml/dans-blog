@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 6cb3d40bac6f8d7f9717a9f1a438dfb399fe0cbc
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.885)
+- Selected candidate: 0b42b257a5f41749a983ffed3ea34e3cd20c4136
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.892)
 
-The current translation in the provided RU file already includes the fix suggested by the previous judge (the sentence 'The product answer is a router:' is already translated as 'Ответ для продукта — это маршрутизатор:'). The translation is technically accurate, preserves all MDX structures, heading counts, and image paths correctly. It maintains Dan's direct style and handles complex technical tables and code blocks without leaking English prose or instructions.
+The MDX comment syntax issues and formatting fixes have already been successfully applied to the file. The Russian translation is technically accurate, natural, and adheres strictly to MDX formatting and structural integrity. No medium or high priority issues remain.
