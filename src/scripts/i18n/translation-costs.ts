@@ -198,5 +198,8 @@ export function estimateTokenCost(
 }
 
 function normalizeProviderCost(value: number | undefined) {
-  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
+  // A reported cost of exactly 0 means the provider sent no usage accounting
+  // (first-party OpenAI does not), not that the call was free. Treat it as
+  // absent so we fall back to the local pricing table.
+  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : undefined;
 }

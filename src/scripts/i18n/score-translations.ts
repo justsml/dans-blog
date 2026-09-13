@@ -799,8 +799,14 @@ function parseOptionalPositiveInteger(value: string | undefined, name: string) {
   return parsePositiveInteger(value, 1, name);
 }
 
+// Cheap judges only. GPT models are allowed one at a time via this allowlist so
+// the guard keeps blocking the expensive frontier tiers.
 function validateScoringModel(modelId: string) {
+  const allowedGptJudgeModels = ["openai/gpt-5.6-luna", "openrouter/openai/gpt-5.6-luna"];
+  if (allowedGptJudgeModels.includes(modelId)) return;
+
   const forbidden = modelId.includes("-fast")
+    || modelId.startsWith("openai/")
     || modelId.startsWith("openrouter/openai/")
     || modelId.startsWith("openrouter/anthropic/");
 

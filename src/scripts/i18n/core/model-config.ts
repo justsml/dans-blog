@@ -1,4 +1,5 @@
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
+import { createOpenAI } from "@ai-sdk/openai";
 import type { ProviderOptions } from "@ai-sdk/provider-utils";
 import { parse as parseLlmString } from "llm-strings";
 import { normalize } from "llm-strings/normalize";
@@ -46,6 +47,11 @@ export function resolveLlmConfig(
   if (source === "") throw new Error("Model config cannot be empty.");
 
   if (!source.startsWith("llm://")) {
+    // A bare `openai/<model>` means first-party OpenAI. `openrouter/openai/<model>`
+    // still routes through OpenRouter.
+    if (source.startsWith("openai/")) {
+      return resolveDirectOpenAiConfig(source, defaults);
+    }
     const modelId = source.replace(/^openrouter\//, "");
     const reasoningEffort = defaults.reasoningEffort ?? DEFAULT_REASONING_EFFORT;
     return {
@@ -151,7 +157,40 @@ function openRouterBaseUrl(host: string | undefined) {
   return `https://${host}`;
 }
 
+function resolveDirectOpenAiConfig(
+  source: string,
+  defaults: {
+    temperature?: number;
+    maxTokens?: number;
+    timeoutMs?: number;
+    reasoningEffort?: string;
+  },
+): ResolvedLlmConfig {
+  const modelId = source.replace(/^openai\//, "");
+  const reasoningEffort = defaults.reasoningEffort ?? DEFAULT_REASONING_EFFORT;
+  return {
+    source,
+    provider: "openai",
+    modelId,
+    mastraModel: `openai/${modelId}`,
+    providerSettings: {},
+    providerOptions: {
+      openai: { reasoningEffort },
+      // Kept so callers that read `.openrouter.reasoning.effort` still work.
+      openrouter: { reasoning: { effort: reasoningEffort } },
+    } as OpenRouterProviderOptions,
+    reasoningEffort,
+    temperature: defaults.temperature ?? defaultTemperatureForModel(modelId),
+    maxTokens: defaults.maxTokens ?? 16_000,
+    timeoutMs: defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS,
+  };
+}
+
 export function createOpenRouterChatModel(config: ResolvedLlmConfig): LanguageModel {
+  if (config.provider === "openai") {
+    const openai = createOpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    return openai.chat(config.modelId);
+  }
   const provider = createOpenRouter(config.providerSettings);
   return provider.chat(config.modelId, OPENROUTER_USAGE_ACCOUNTING);
 }
