@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "ea524ebbc1b1c54fd7d001ddfef3f6002e722e58",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "1878c999ebf8fad5fe7563f87e8eca7a8de360cc",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 95,
+    "readability": 96,
     "technicalAccuracy": 98,
-    "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 95,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 92,
-    "languagePurity": 98
+    "coherence": 97,
+    "relevance": 98,
+    "translationQuality": 97,
+    "mdxPreservation": 99,
+    "culturalAdaptation": 95,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The candidate ea524ebbc1b1c54fd7d001ddfef3f6002e722e58 is selected because it provides a complete and natural German translation while strictly adhering to all MDX structural requirements. It correctly handles the asset paths (using ../), preserves all technical tables and code blocks, and maintains Dan's direct, technical tone. The other candidate (e357a8e36e5db4c31e6bbb357844728f896dbb75) left several large sections of prose in English, which is a major language purity failure.",
+  "rationale": "The previous MDX comment closing errors (*}} and unclosed */) have already been cleanly fixed in the current file. Heading structure, tables, image tags, code blocks, frontmatter, and technical terminology are completely preserved and accurately translated into idiomatic German.",
   "confidence": "high",
-  "confidenceScore": 0.885,
+  "confidenceScore": 0.887,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,14 +27,42 @@
   "slug": "security-agent-model-router",
   "locale": "de",
   "candidateCommits": [
-    "ea524ebbc1b1c54fd7d001ddfef3f6002e722e58",
-    "e357a8e36e5db4c31e6bbb357844728f896dbb75"
+    "072743a950c4e1ae73d9feda359abb3947d5025a",
+    "1878c999ebf8fad5fe7563f87e8eca7a8de360cc"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "*/",
+      "replacement": "*/}",
+      "reason": "Fix unclosed MDX comment marker at the end of the file; MDX requires */}.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "*/}}",
+      "replacement": "*/}",
+      "reason": "Fix malformed MDX comment closing brace on Image plan comment block.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md\n*/",
+      "replacement": "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md\n*/}",
+      "reason": "Fix unclosed MDX comment marker at the end of the file; MDX requires */}.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug security-agent-model-router --locale de --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale de --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/de/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/de/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":1,\"tableShapes\":1}. Differences: {\"tableColumns\":1,\"tableShapes\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }

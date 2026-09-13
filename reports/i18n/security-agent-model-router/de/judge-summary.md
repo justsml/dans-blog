@@ -2,46 +2,55 @@
 
 - Slug: security-agent-model-router
 - Locale: de
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Judge model: openrouter/google/gemini-3.8-flash
 - Second judge model: not run
 - Escalation judge model: not run
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
-- Validation: failed
+- Validation: passed
 - Validation scope: local
-- Confidence: high (0.885)
+- Confidence: high (0.887)
 - Confidence signals: no high/medium issues; single judge
 - High/medium/low issue counts: 0/0/0
-- Validation error: Command failed: bun run i18n:validate --slug security-agent-model-router --locale de --skip-global
-$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale de --skip-global
-224 | export function assertStructuralParity(input: CompareMdxStructureInput) {
-225 |   const comparison = compareMdxStructure(input);
-226 |   if (comparison.valid) return;
-227 | 
-228 |   const targetLabel = input.targetPath ?? "translation";
-229 |   throw new Error(
-                  ^
-error: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/de/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/de/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {"tableColumns":1,"tableShapes":1}. Differences: {"tableColumns":1,"tableShapes":1}
-      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)
-      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1
-      at loadAndEvaluateModule (2:1)
-
-Bun v1.3.1 (macOS arm64)
-error: script "i18n:validate" exited with code 1
-
 
 ## Primary Judge Telemetry
-- Runtime seconds: 3.17
-- Input tokens: 27408
-- Output tokens: 262
+- Runtime seconds: 11.29
+- Input tokens: 26057
+- Output tokens: 374
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.014490
-- Estimated cost: $0.014490
+- OpenRouter cost credits: 0.020945
+- Estimated cost: $0.020945
+
+## Pre-Publish Rescore Telemetry
+### Pass 1
+- Runtime seconds: 7.08
+- Input tokens: 25036
+- Output tokens: 377
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.020191
+- Estimated cost: $0.020191
+
+### Pass 2
+- Runtime seconds: 14.41
+- Input tokens: 24918
+- Output tokens: 167
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- OpenRouter cost credits: 0.019315
+- Estimated cost: $0.019315
+
+## Judge Suggestions
+1. Pass 1: applied high priority suggestion. Match: "*/" Replacement: "*/}" Reason: Fix unclosed MDX comment marker at the end of the file; MDX requires */}. Note: Applied exact replacement to selected MDX.
+2. Pass 2: applied high priority suggestion. Match: "*/}}" Replacement: "*/}" Reason: Fix malformed MDX comment closing brace on Image plan comment block. Note: Applied exact replacement to selected MDX.
+3. Pass 2: applied high priority suggestion. Match: "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md */" Replacement: "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md */}" Reason: Fix unclosed MDX comment marker at the end of the file; MDX requires */}. Note: Applied exact replacement to selected MDX.
 
 ## Candidates
-- current not present
-- ea524ebbc1b1c54fd7d001ddfef3f6002e722e58 i18n candidate(de): security-agent-model-router via openrouter/deepseek/deepseek-v4-flash
-- e357a8e36e5db4c31e6bbb357844728f896dbb75 i18n candidate(de): security-agent-model-router via openrouter/openai/gpt-oss-120b:nitro
+- current src/content/posts/2026-06-30--security-agent-model-router/de/index.mdx
+- 072743a950c4e1ae73d9feda359abb3947d5025a i18n candidate(de): security-agent-model-router via openrouter/deepseek/deepseek-v4-flash
+- 1878c999ebf8fad5fe7563f87e8eca7a8de360cc i18n candidate(de): security-agent-model-router via openrouter/openai/gpt-5.6-luna

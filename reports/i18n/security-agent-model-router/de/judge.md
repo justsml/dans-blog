@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: ea524ebbc1b1c54fd7d001ddfef3f6002e722e58
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.885)
+- Selected candidate: 1878c999ebf8fad5fe7563f87e8eca7a8de360cc
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.887)
 
-The candidate ea524ebbc1b1c54fd7d001ddfef3f6002e722e58 is selected because it provides a complete and natural German translation while strictly adhering to all MDX structural requirements. It correctly handles the asset paths (using ../), preserves all technical tables and code blocks, and maintains Dan's direct, technical tone. The other candidate (e357a8e36e5db4c31e6bbb357844728f896dbb75) left several large sections of prose in English, which is a major language purity failure.
+The previous MDX comment closing errors (*}} and unclosed */) have already been cleanly fixed in the current file. Heading structure, tables, image tags, code blocks, frontmatter, and technical terminology are completely preserved and accurately translated into idiomatic German.
