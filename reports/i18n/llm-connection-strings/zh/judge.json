@@ -1,28 +1,40 @@
 {
-  "selectedCommit": "current",
-  "selectedModel": "current",
+  "selectedCommit": "e4c48c370b9b01a9ee57ed7e46a438cf9d0c11d6",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 96,
+    "relevance": 98,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 93,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The current translation is excellent. It captures the technical nuances (e.g., 'vibe-year' as 'vibe-year', 'touch grass' as '触摸一下草地') while maintaining a natural, punchy developer-centric tone. The other candidates are also good but offer no significant improvement over the existing high-quality version. Candidate 139a7e49 uses '流行语年' for 'vibe-year' which is a bit literal and loses the slang feel. Candidate 049ee315 has a typo in the title ('连接字符串 了' with an extra space).",
+  "rationale": "Candidate e4c48c370b9b01a9ee57ed7e46a438cf9d0c11d6 is chosen because it maintains complete MDX syntax and structure with flawless Markdown rendering. Candidate f7cb9dcc9db0f240a1d59c26a4f03c43da44b461 has critical syntax corruptions: a broken class name in `<blockquote class=\"ai-response ins et\">`, an invalid full-width exclamation mark and mangled path in `！[一个杂乱的环境变量抽屉](./../hero-concept-8-drawers.webp)`. Candidate e4c48c37 captures Dan's sharp, direct voice smoothly in natural Chinese.",
+  "confidence": "high",
+  "confidenceScore": 0.881,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "llm-connection-strings",
   "locale": "zh",
   "candidateCommits": [
-    "139a7e497012114f03cc7668880036b77cede19a",
-    "5b7bdbdb9535fbe41aa809152afa48f32c2184c0",
-    "049ee31585641a7e24a88b2672f6562c4b16b723"
+    "e4c48c370b9b01a9ee57ed7e46a438cf9d0c11d6",
+    "f7cb9dcc9db0f240a1d59c26a4f03c43da44b461"
   ],
   "suggestionLog": [],
   "validation": {
-    "ok": true,
+    "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug llm-connection-strings --locale zh --skip-global",
-    "output": ""
+    "error": "Command failed: bun run i18n:validate --slug llm-connection-strings --locale zh --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug llm-connection-strings --locale zh --skip-global\n256 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n257 |   const comparison = compareMdxStructure(input);\n258 |   if (comparison.valid) return;\n259 | \n260 |   const targetLabel = input.targetPath ?? \"translation\";\n261 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-30--llm-connection-strings/zh/index.mdx failed structural parity with score 0.950 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-30--llm-connection-strings/zh/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"links\":1,\"linkTargets\":3}. Differences: {\"links\":1,\"linkTargets\":3}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }

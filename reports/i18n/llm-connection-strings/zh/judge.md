@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: current
-- Selected model: current
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: e4c48c370b9b01a9ee57ed7e46a438cf9d0c11d6
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.881)
 
-The current translation is excellent. It captures the technical nuances (e.g., 'vibe-year' as 'vibe-year', 'touch grass' as '触摸一下草地') while maintaining a natural, punchy developer-centric tone. The other candidates are also good but offer no significant improvement over the existing high-quality version. Candidate 139a7e49 uses '流行语年' for 'vibe-year' which is a bit literal and loses the slang feel. Candidate 049ee315 has a typo in the title ('连接字符串 了' with an extra space).
+Candidate e4c48c370b9b01a9ee57ed7e46a438cf9d0c11d6 is chosen because it maintains complete MDX syntax and structure with flawless Markdown rendering. Candidate f7cb9dcc9db0f240a1d59c26a4f03c43da44b461 has critical syntax corruptions: a broken class name in `<blockquote class="ai-response ins et">`, an invalid full-width exclamation mark and mangled path in `！[一个杂乱的环境变量抽屉](./../hero-concept-8-drawers.webp)`. Candidate e4c48c37 captures Dan's sharp, direct voice smoothly in natural Chinese.
