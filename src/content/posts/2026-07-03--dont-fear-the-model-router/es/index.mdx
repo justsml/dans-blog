@@ -1,7 +1,7 @@
 ---
 title: No temas al enrutador de modelos
-subTitle: Ruta al mejor modelo con confianza.
-modified: '2026-07-03'
+subTitle: Dirige cada solicitud al mejor modelo con confianza.
+modified: '2026-09-04'
 tags:
   - ai
   - llm
@@ -21,69 +21,67 @@ related:
   - llm-routing-mastra-ai
   - llm-evals-are-broken
   - mastra-workflows-memory
-sourceHash: "101c104c013b"
+sourceHash: 9599850328a0
 ---
-La primera versión de [Don’t Marry Your Model](/llm-routing-mastra-ai) presentó el argumento sencillo: dejar de enviar cada tarea al mismo modelo solo porque ganó la última competencia.
+[No te cases con tu modelo](/llm-routing-mastra-ai) planteaba el argumento fácil: deja de enviar cada tarea al mismo modelo solo porque ganó la última comparativa.
 
-Usa un modelo barato para trabajo barato. Usa un modelo más potente donde el trabajo es realmente difícil. Mantén la capa de enrutamiento lo suficientemente flexible como para que puedas cambiar de proveedor sin convertir tu base de código en un santuario.
+Usa un modelo barato para el trabajo barato. Usa uno más potente cuando el trabajo sea realmente difícil. Mantén la capa de enrutamiento lo bastante desacoplada como para que cambiar de proveedor no convierta tu base de código en un santuario.
 
 Eso era correcto.
 
-También estaba incompleto.
+También era incompleto.
 
-Porque una vez que añades un router, tienes un nuevo comportamiento del sistema que probar. La pregunta ya no es “¿qué modelo es el mejor?” La pregunta es “¿el sistema eligió la ruta correcta, usó las herramientas adecuadas, preservó la evidencia correcta y se detuvo en el momento preciso?”
+En cuanto añades un router, introduces un nuevo comportamiento del sistema que debes probar. La pregunta deja de ser «¿qué modelo es el mejor?» y pasa a ser «¿el sistema eligió la ruta correcta, usó las herramientas adecuadas, conservó las pruebas correctas y terminó en el momento adecuado?».
 
-Si no mides eso, tu router de modelo es solo una sensación con una tabla de despacho.
+Si no mides eso, tu router de modelos no es más que intuición con una tabla de despacho.
 
 <p class="inset">
-El router no es la solución. El router es una hipótesis sobre cómo debería comportarse tu sistema.
+El router no es la respuesta. El router es una hipótesis sobre cómo debería comportarse tu sistema.
 </p>
 
-Mastra nos brinda superficies útiles para convertir esa hipótesis en algo verificable: [scorers](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [datasets](https://mastra.ai/docs/evals/datasets/overview) y [experiments](https://mastra.ai/docs/evals/datasets/running-experiments). Los nombres de la API suenan a infraestructura de evaluación, lo que son, pero el valor real es más sencillo:
+Mastra proporciona las interfaces necesarias para convertir esa hipótesis en algo comprobable: [scorers](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [datasets](https://mastra.ai/docs/evals/datasets/overview) y [experiments](https://mastra.ai/docs/evals/datasets/running-experiments). Los nombres suenan a infraestructura de evaluación, y eso es exactamente lo que son. Su valor real es más sencillo: hacen que el comportamiento de los agentes sea lo bastante visible como para poder discutirlo.
 
-Hacen que el comportamiento del agente sea lo suficientemente visible como para debatir.
+## ¿Qué estamos probando?
 
-## ¿Qué Estamos Probando?
+El router del artículo anterior tiene tres rutas especializadas:
 
-El router de modelo del artículo anterior tiene tres rutas de especialista evidentes:
-
-| Ruta | Qué debería ir allí | Qué sería una ruta incorrecta |
+| Ruta | Qué debería ir ahí | Qué sería una mala ruta |
 |---|---|---|
-| `code` | implementación, refactorización, depuración, revisión de código | resumen de contexto largo, clasificación simple |
-| `long-context` | documentos desordenados, transcripciones, síntesis de políticas, muchos archivos | formato mecánico corto |
-| `general` | clasificación, formato, preguntas‑respuesta simples, extracción aburrida | código complejo o análisis con mucha evidencia |
+| `code` | implementación, refactorización, depuración, revisión de código | resúmenes de contexto largo, clasificación simple |
+| `long-context` | documentos desordenados, transcripciones, síntesis de políticas, muchos archivos | formato mecánico y breve |
+| `general` | clasificación, formato, preguntas y respuestas sencillas, extracción rutinaria | código difícil o análisis con muchas pruebas |
 
-Esa tabla es un punto de partida, pero no es una evaluación.
+Esa tabla es un comienzo. No es una evaluación.
 
 Una evaluación necesita ejemplos y scorers:
 
 | Elemento | Función |
 |---|---|
-| Ítem del dataset | “Aquí hay una solicitud representativa.” |
-| Verdad de base | “Esta es la ruta o comportamiento que esperábamos.” |
-| Scorer | “Así decidimos si la salida pasó.” |
-| Experimento | “Esta es la ejecución que podemos comparar con ejecuciones futuras.” |
+| Elemento del dataset | «Esta es una solicitud representativa». |
+| Verdad de referencia | «Esta es la ruta o el comportamiento que esperábamos». |
+| Scorer | «Así decidimos si la salida ha superado la prueba». |
+| Experimento | «Esta es la ejecución que podemos comparar con ejecuciones futuras». |
 
-El movimiento importante es probar el comportamiento, no solo la calidad del texto.
+El paso importante es probar el comportamiento, no solo la calidad de la prosa.
 
-Un modelo puede redactar una respuesta hermosa después de elegir al especialista equivocado. Un agente de seguridad puede producir un informe plausible sin preservar la evidencia. Un agente de soporte puede sonar empático mientras omite la verificación de la política de reembolso. El párrafo es la parte visible. La trayectoria es donde viven los errores.
+Un modelo puede escribir una respuesta excelente después de elegir al especialista equivocado. Un agente de seguridad puede generar un informe verosímil sin conservar las pruebas. Un agente de soporte puede sonar empático mientras se salta la comprobación de la política de reembolsos. El párrafo es la parte visible. Los errores viven en la trayectoria.
 
-Para un router, normalmente comienzo con cuatro ejes:
+Para un router, empiezo con cuatro ejes:
 
 | Eje | Pregunta | Ejemplo de scorer |
 |---|---|---|
-| Calidad | ¿Eligió la ruta correcta y produjo un resultado útil? | precisión de ruta, completitud de respuesta, fidelidad |
-| Coste | ¿Evitó modelos premium para trabajo aburrido? | clase de coste de la ruta seleccionada, presupuesto de tokens |
-| Velocidad | ¿Terminó dentro del presupuesto de latencia del producto? | scorer de tiempo de ejecución o timeout |
-| Otros | ¿Obedeció las restricciones de seguridad, privacidad y observabilidad? | lista blanca de herramientas, preservación de evidencia, comportamiento de rechazo |
+| Calidad | ¿Eligió la ruta correcta y produjo un resultado útil? | precisión de la ruta, completitud de la respuesta, fidelidad |
+| Coste | ¿Evitó usar modelos premium para trabajo rutinario? | clase de coste de la ruta seleccionada, presupuesto de tokens |
+| Velocidad | ¿Terminó dentro del presupuesto de latencia del producto? | scorer de tiempo de ejecución o de timeout |
+| Otros | ¿Respetó las restricciones de seguridad, privacidad y observabilidad? | lista de herramientas permitidas, conservación de pruebas, comportamiento de rechazo |
 
-Esa última columna importa. “Otros” es donde vive la cicatriz de producción.
+Esa última fila importa. «Otros» es donde vive la cicatriz de producción.
 
-## Hacer que la Decisión del Router sea Evaluable
+## Haz que la decisión del router se pueda puntuar
 
-Si el router solo produce una respuesta final, es difícil saber por qué se comportó de esa forma. aún puedes puntuar la salida, pero estarás adivinando la decisión.
+Si el router solo produce una respuesta final, estás adivinando qué decisión tomó. Puedes puntuar la salida, pero no puedes saber si la ruta era la correcta.
 
-Para las evaluaciones, da al paso de enrutamiento un contrato estructurado pequeño:
+Así que dale al paso de enrutamiento un contrato estructurado pequeño:
 
 ```typescript
 type RouterDecision = {
@@ -93,9 +91,9 @@ type RouterDecision = {
 };
 ```
 
-El sistema de producción no necesita mostrar este JSON a los usuarios. Puede ser un paso interno, una entrega de flujo de trabajo o un span de trazado. El scorer solo necesita una superficie.
+Los usuarios nunca necesitan ver este JSON. Puede ser un paso interno, una transferencia dentro del workflow o un span de traza. El scorer solo necesita tener acceso a él.
 
-Aquí hay un agente Mastra deliberadamente pequeño que elige una ruta:
+Este es un agente de Mastra deliberadamente pequeño que no hace otra cosa que elegir una ruta:
 
 ```typescript
 // src/mastra/agents/router-decision-agent.ts
@@ -123,15 +121,15 @@ Do not answer the user request. Only choose the route.`,
 });
 ```
 
-Sí, esto es un poco artificial. Bien. Las evaluaciones recompensan las costuras aburridas.
+Sí, esto es un poco artificial. Bien. Los evals premian las uniones aburridas.
 
-Cuando la decisión del router es explícita, puedes probar la ruta antes de probar el especialista downstream. Así descubres si el problema está en el router, el modelo seleccionado, el prompt, la superficie de la herramienta o el scorer de la respuesta final.
+Con la decisión explícita, puedes probar la ruta antes de que se ejecute el especialista posterior. Los fallos del router dejan de esconderse detrás de fallos del modelo seleccionado, de su prompt, de sus herramientas o del scorer de la respuesta final.
 
-## Escribir un Scorer que Capture el Fallo Aburrido
+## Escribe un scorer que detecte el fallo aburrido
 
-[`createScorer`](https://mastra.ai/reference/evals/create-scorer) de Mastra  puede usar funciones JavaScript, prompts de juez LLM o ambos. Comienza con funciones siempre que el fallo sea determinista. Son más baratas, rápidas y menos misteriosas.
+El [`createScorer`](https://mastra.ai/reference/evals/create-scorer) de Mastra acepta funciones JavaScript normales, prompts para un juez basado en un LLM o ambas cosas. Empieza por funciones siempre que el fallo sea determinista. Son más baratas, más rápidas y menos misteriosas.
 
-Para la precisión de ruta, no necesitamos un modelo juez. Necesitamos parsear JSON y comparar un campo.
+La precisión de la ruta no necesita un modelo juez. Necesita analizar el JSON y comparar un campo.
 
 ```typescript
 // src/mastra/scorers/route-accuracy.ts
@@ -201,13 +199,13 @@ export const routeAccuracyScorer = createScorer({
   });
 ```
 
-Ese scorer no es glamoroso. Ese es el punto.
+Ese scorer no tiene glamour. Ese es el objetivo.
 
-Si el router no puede producir consistentemente JSON válido y elegir el especialista obvio en un conjunto de pruebas diminuto, no hay razón para confiar en él con tráfico de producción. No necesitas una ontología de calificación filosófica. Necesitas el equivalente a un detector de humo con batería.
+Si el router no puede producir JSON válido de forma consistente y elegir el especialista obvio en un conjunto de pruebas pequeño, no hay razón para confiarle tráfico de producción. No necesitas un modelo filósofo que califique una ontología. Necesitas una alarma de humo con la pila puesta.
 
-## Ejecutar Primero el Pequeño Bucle de Evaluación
+## Ejecuta primero el ciclo de eval pequeño
 
-[`runEvals`](https://mastra.ai/reference/evals/run-evals) de Mastra  es el bucle rápido. Dale un objetivo, casos de prueba, scorers y un límite de concurrencia. Ejecuta el objetivo contra los datos y devuelve puntuaciones agregadas.
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) es el ciclo rápido. Dale un objetivo, casos de prueba, scorers y un límite de concurrencia. Ejecuta el objetivo contra los datos y devuelve puntuaciones agregadas.
 
 ```typescript
 // src/mastra/evals/router.eval.ts
@@ -263,30 +261,23 @@ if (result.scores["route-accuracy"] < 0.9) {
 }
 ```
 
-Este es el bucle que ejecutas mientras cambias el prompt, añades una nueva ruta o pruebas un modelo de router más barato.
+Este es el ciclo que ejecutas mientras cambias el prompt, añades una ruta o pruebas un modelo de router más barato.
 
-No es suficiente para un sistema maduro, pero basta para evitar la regresión más embarazosa: “cambiamos el prompt del router y empezó a enviar tareas de clasificación al modelo premium de código”.
+No basta para un sistema maduro. Sí basta para evitar la regresión más bochornosa: «cambiamos el prompt del router y empezó a enviar las tareas de clasificación al modelo de código premium».
 
-Cost, velocidad, calidad y los demás aparecen aquí:
+Mantén los ejes separados. La precisión de la ruta y la calidad de la respuesta final son puntuaciones distintas. La validez del JSON, las herramientas permitidas y la trazabilidad deben tener sus propias comprobaciones. No las mezcles en un único número de «calidad». Los promedios son el lugar al que van a jubilarse los fallos útiles.
 
-- **Costo**: el modelo del router puede seguir siendo barato siempre que mantenga la precisión.
-- **Velocidad**: la evaluación puede imponer límites de tiempo o registrar la latencia en el harness.
-- **Calidad**: la exactitud de la ruta y la calidad de la respuesta final son puntuaciones independientes.
-- **Otros**: la validez del JSON, las herramientas permitidas, la seguridad y la trazabilidad tienen sus propias verificaciones.
+## Añade un juez LLM solo cuando realmente aporte valor
 
-No combines todo eso en una única puntuación de “calidad”. Los promedios son donde los fallos útiles van a retirarse.
-
-## Añade un Juez LLM Sólo Cuando Vale la Pena
-
-Algunos comportamientos del router son subjetivos. Una solicitud puede ser legítimamente ambigua:
+Algunas decisiones de enrutamiento son legítimamente ambiguas:
 
 ```text
 Read these logs and tell me why the deploy failed.
 ```
 
-¿Es `code` porque es depuración? ¿`long-context` porque son logs? ¿`general` porque se trata de un resumen? La ruta correcta depende de la superficie de herramientas y de la promesa de tu producto.
+¿Es `code` porque se trata de depuración? ¿`long-context` por los logs? ¿`general` porque el usuario pidió un resumen? La ruta correcta depende de las herramientas disponibles y de lo que prometa tu producto.
 
-Aquí es donde un juez LLM puede ayudar, pero sólo con una rúbrica estricta. Los evaluadores de Mastra pueden mezclar pasos de función y pasos de prompt‑objeto. Usa funciones para la estructura y luego un juez para la parte que realmente necesita juicio.
+Aquí es donde ayuda un juez LLM, pero solo con una rúbrica bien delimitada. Los scorers de Mastra pueden combinar pasos de función y pasos basados en objetos de prompt. Usa funciones para la estructura y reserva el juez para la parte que realmente requiere criterio.
 
 ```typescript
 // src/mastra/scorers/route-reasonableness.ts
@@ -328,19 +319,19 @@ Return JSON with { "score": number, "rationale": string }.
   .generateReason(({ results }) => results.analyzeStepResult.rationale);
 ```
 
-Este evaluador cuesta dinero porque llama a un modelo juez. Eso está bien cuando el juicio lo justifica.
+Este scorer cuesta dinero porque llama a un modelo juez. No pasa nada cuando el criterio lo merece.
 
-No lo uses para comprobar si el JSON se parsea.
+No lo uses para comprobar si el JSON se puede analizar.
 
-## Promueve los Casos Buenos a un Conjunto de Datos
+## Convierte los casos buenos en un dataset
 
-Los arreglos de evaluación codificados a mano están bien al principio. Con el tiempo, tus ejemplos se convierten en activos del producto: el ticket de cliente fallido, la conversación de soporte extraña, el intento de inyección de prompt, la solicitud que antes se enrutaba correctamente antes del pasado jueves.
+Al principio, los arrays de evals codificados a mano están bien. Con el tiempo, tus ejemplos se convierten en activos del producto: el ticket fallido de un cliente, la conversación extraña de soporte, el intento de prompt injection, la solicitud que se enrutó correctamente hasta el jueves pasado.
 
-Eso pertenece a un conjunto de datos.
+Esos casos deben estar en un dataset.
 
-Los conjuntos de datos de Mastra son colecciones versionadas de casos de prueba. Cada mutación crea una nueva versión, lo que significa que puedes volver a ejecutar un experimento contra el conjunto exacto de casos que existía cuando tomaste una decisión de modelo.
+Los datasets de Mastra son colecciones versionadas de casos de prueba. Cada mutación crea una versión nueva, así que puedes volver a ejecutar un experimento contra el conjunto exacto de casos que existía cuando tomaste una decisión sobre el modelo.
 
-Primero configura el almacenamiento, porque los conjuntos de datos necesitan persistencia:
+Los datasets necesitan persistencia, así que configura primero el almacenamiento:
 
 ```typescript
 // src/mastra/index.ts
@@ -367,7 +358,7 @@ export const mastra = new Mastra({
 });
 ```
 
-Luego crea un conjunto de datos y añade casos:
+Después, crea el dataset y añade casos:
 
 ```typescript
 // src/mastra/evals/create-router-dataset.ts
@@ -402,13 +393,13 @@ await dataset.addItems({
 });
 ```
 
-En el momento en que tienes un conjunto de datos, puedes dejar de tratar los casos de evaluación como datos de script desechables. Ahora tienen IDs, versiones, historial y resultados de experimentos.
+Cuando tienes un dataset, los casos de eval dejan de ser datos desechables de un script. Tienen identificadores, versiones, historial y resultados de experimentos.
 
-Eso es cuando las evaluaciones empiezan a sentirse menos como “archivos de prueba para prompts” y más como memoria del producto.
+Ahí es cuando las evals dejan de parecer «archivos de prueba para prompts» y empiezan a parecer memoria del producto.
 
-## Ejecuta Experimentos Contra el Router
+## Ejecuta experimentos contra el router
 
-Una vez que el conjunto de datos existe, usa [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) para ejecutarlo contra un agente, flujo de trabajo o evaluador registrado.
+Con el dataset listo, [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) lo ejecuta contra un agente, workflow o scorer registrado.
 
 ```typescript
 // src/mastra/evals/run-router-experiment.ts
@@ -442,24 +433,24 @@ for (const item of summary.results) {
 }
 ```
 
-Ahora la conversación cambia.
+Ahora cambia la conversación.
 
-En lugar de “el nuevo router parece mejor”, puedes decir:
+En lugar de «el router nuevo parece mejor», puedes decir:
 
-- El router anterior obtuvo `0.94` en precisión de ruta.  
-- El router nuevo obtuvo `0.98` en general.  
-- Mejoró el enrutamiento de contexto largo.  
-- Retrocedió en dos casos de revisión de código.  
-- Redujo en un 18 % los traspasos a modelos premium.  
-- Añadió 300 ms de latencia al router.
+- El router antiguo obtuvo `0.94` en precisión de enrutamiento.
+- El nuevo obtuvo `0.98`.
+- Mejoró el enrutamiento de contextos largos.
+- Empeoró en dos casos de revisión de código.
+- Redujo en un 18 % las derivaciones a modelos premium.
+- Añadió 300 ms de latencia al router.
 
-Eso es una conversación de ingeniería. Hay compensaciones. Puedes decidir si la compensación vale la pena.
+Eso sí es una conversación de ingeniería. Hay compensaciones concretas sobre la mesa y puedes decidir si el intercambio merece la pena.
 
-## Puntuar el comportamiento en vivo, pero no confundirlo con la verdad de referencia
+## Evalúa el comportamiento en producción, pero no lo confundas con la verdad de referencia
 
-Mastra también puede adjuntar evaluadores directamente a agentes y pasos de flujo de trabajo. Los evaluadores en vivo se ejecutan de forma asíncrona y almacenan los resultados en la base de datos configurada, con controles de muestreo para que no se puntúe cada respuesta de producción a menos que así lo desees.
+Mastra también puede asociar evaluadores directamente a agentes y pasos de workflows. Los evaluadores en producción se ejecutan de forma asíncrona, almacenan los resultados en la base de datos configurada y admiten muestreo, para que no tengas que evaluar cada respuesta de producción salvo que realmente quieras hacerlo.
 
-Eso es útil, pero es una tarea distinta.
+Es útil. También cumple una función distinta.
 
 ```typescript
 import { Agent } from "@mastra/core/agent";
@@ -478,29 +469,29 @@ export const routerDecisionAgent = new Agent({
 });
 ```
 
-El puntaje en vivo puede indicarte que el router sigue emitiendo decisiones válidas. Puede detectar salidas mal formadas, contenido tóxico, llamadas a herramientas prohibidas, marcadores de evidencia ausentes o una confianza sospechosamente baja.
+La evaluación en producción te indica si el router sigue emitiendo decisiones válidas. Detecta salidas malformadas, contenido tóxico, llamadas a herramientas prohibidas, marcadores de evidencia ausentes y niveles de confianza sospechosamente bajos.
 
-Usualmente no puede decirte la precisión de ruta, porque el tráfico de producción no llega con la verdad de referencia adjunta.
+Normalmente no puede decirte si la ruta es correcta, porque el tráfico de producción no llega con la verdad de referencia cosida con grapas.
 
-Esa distinción importa. El puntaje en vivo es monitoreo. Los experimentos con conjuntos de datos son pruebas controladas. Necesitas ambos, pero responden a preguntas diferentes.
+La evaluación en producción es monitorización. Los experimentos con datasets son pruebas controladas. Necesitas ambas cosas. Responden a preguntas distintas.
 
-## Qué medir después de la precisión de ruta
+## Qué medir después de la precisión de enrutamiento
 
-La precisión de ruta es el primer peldaño. Indica si la solicitud llegó al especialista esperado. No indica si el especialista realizó un buen trabajo.
+La precisión de enrutamiento es el primer peldaño. Te dice que la solicitud llegó al especialista esperado. No dice nada sobre si el especialista hizo un buen trabajo.
 
-Una vez que el router supera lo básico, puntúa el sistema en capas:
+Cuando el router supere lo básico, evalúa el sistema por capas:
 
-| Capa | Qué puntuar | Por qué importa |
+| Capa | Qué evaluar | Por qué importa |
 |---|---|---|
-| Decisión del router | ruta seleccionada, confianza, razón | Detecta errores de clasificación y reglas de escalado deficientes |
-| Trayectoria | secuencia esperada de herramienta o agente | Detecta comportamiento “respuesta correcta, camino equivocado” |
-| Salida del especialista | corrección, fidelidad, utilidad | Detecta trabajo de baja calidad tras un enrutamiento correcto |
-| Coste y latencia | elección del modelo, tokens, tiempo de ejecución | Detecta ganancias costosas o lentas |
-| Seguridad y alcance | herramientas permitidas, límites de rechazo, evidencia | Detecta fallos que ponen en riesgo el producto |
+| Decisión del router | ruta seleccionada, confianza, motivo | Detecta clasificaciones erróneas y reglas de escalado deficientes |
+| Trayectoria | secuencia esperada de herramientas o agentes | Detecta comportamientos de «respuesta correcta, camino equivocado» |
+| Salida del especialista | corrección, fidelidad, utilidad | Detecta trabajo de baja calidad después de un enrutamiento correcto |
+| Coste y latencia | elección del modelo, tokens, tiempo de ejecución | Detecta victorias caras o lentas |
+| Seguridad y alcance | herramientas permitidas, límites de rechazo, evidencia | Detecta fallos con riesgo para el producto |
 
-La API `runEvals` de Mastra admite configuraciones de evaluadores a nivel de agente, flujo de trabajo, paso y trayectoria. Eso significa que no tienes que fingir que la respuesta final es el único artefacto.
+`runEvals` admite configuraciones de evaluadores a nivel de agente, workflow, paso y trayectoria, así que no tienes que fingir que la respuesta final es el único artefacto que importa.
 
-Para un flujo de trabajo, la forma puede ser así:
+Para un workflow, la estructura es esta:
 
 ```typescript
 const result = await runEvals({
@@ -517,56 +508,54 @@ const result = await runEvals({
 });
 ```
 
-Ese es el modelo mental que quiero para los agentes en producción.
+Este es el modelo mental que quiero para los agentes en producción:
 
-Puntúa la decisión. Puntúa la ruta. Puntúa la respuesta.
+Evalúa la decisión. Evalúa el camino. Evalúa la respuesta.
 
-Si solo puntúas la respuesta, el modelo puede pasar por accidente.
+Si solo evalúas la respuesta, el modelo puede aprobar por accidente.
 
 ## El router debería volverse más aburrido con el tiempo
 
-El primer prompt de enrutamiento suele ser un párrafo de juicios. Eso está bien para un prototipo.
+El primer prompt de enrutamiento suele ser un párrafo lleno de decisiones de criterio. Está bien para un prototipo.
 
-A medida que aprendes de las evaluaciones, partes del router deberían dejar de ser mágicas:
+A medida que las evaluaciones te enseñan cosas, algunas partes del router deberían volverse menos mágicas:
 
-- Los casos léxicos claros pueden convertirse en reglas determinísticas.  
-- Las tareas riesgosas pueden requerir aprobación explícita o una rama del flujo de trabajo.  
-- Las tareas ambiguas pueden formular una pregunta de aclaración en lugar de adivinar.  
-- Las rutas costosas pueden requerir mayor confianza o una segunda señal.  
-- Los casos de falla conocidos pueden convertirse en ítems del conjunto de datos.
+- Los casos léxicos claros se convierten en reglas deterministas.
+- Las tareas arriesgadas requieren aprobación explícita o una rama del flujo de trabajo.
+- Las tareas ambiguas hacen una pregunta aclaratoria en lugar de adivinar.
+- Las rutas costosas requieren mayor confianza o una segunda señal.
+- Los casos de fallo conocidos se convierten en elementos del dataset.
 
-El objetivo no es que el router sea “más inteligente” para siempre. El objetivo es que el sistema sea más fácil de razonar.
+El objetivo no es que el router sea «más inteligente» para siempre. El objetivo es que el sistema sea más fácil de razonar.
 
-A veces eso implica un modelo mejor. A veces implica un prompt más ajustado. A veces implica un paso del flujo de trabajo, un scorer, un límite rígido o una aburrida sentencia `if` que te ahorre cuatro cifras al mes.
+A veces eso significa un modelo mejor. A veces, un prompt más preciso. A veces, un paso del flujo de trabajo, un scorer, un límite estricto o un aburrido `if` que te ahorra cuatro cifras al mes.
 
-Ese es el punto de medir el comportamiento. Dejas de argumentar desde la preferencia y comienzas a argumentar desde la evidencia.
+Ese es precisamente el objetivo de medir el comportamiento. Dejas de discutir desde el gusto y empiezas a discutir desde la evidencia.
 
-## Lista de verificación práctica para comenzar
+## Una lista de comprobación práctica para empezar
 
-Si hoy vas a construir un router Mastra, empezaría así:
+Si hoy estás construyendo un router con Mastra, empieza por aquí:
 
-1. Haz que la decisión de enrutamiento sea estructurada, aunque los usuarios nunca la vean.  
-2. Escribe scorers determinísticos para JSON válido, ruta esperada y rutas prohibidas.  
-3. Usa `runEvals` con 10‑20 casos antes de cambiar los prompts o los modelos del router.  
-4. Promociona los fallos reales a un conjunto de datos versionado.  
-5. Ejecuta experimentos de conjuntos de datos para cambios significativos de prompt, modelo, ruta o flujo de trabajo.  
-6. Añade scorers en vivo para invariantes de producción de bajo costo.  
-7. Compara experimentos por ruta, no solo por puntuación promedio.
+1. Haz que la decisión de enrutamiento tenga una estructura, aunque los usuarios nunca la vean.
+2. Escribe scorers deterministas para JSON válido, la ruta esperada y las rutas prohibidas.
+3. Usa `runEvals` con entre 10 y 20 casos antes de cambiar los prompts o los modelos del router.
+4. Convierte los fallos reales en elementos de un dataset versionado.
+5. Ejecuta experimentos con datasets para cambios relevantes en prompts, modelos, rutas o flujos de trabajo.
+6. Añade scorers en producción para invariantes baratos.
+7. Compara los experimentos por ruta, no solo por puntuación media.
 
-El promedio importa menos que el clúster de fallos.
+La media importa menos que el conjunto de fallos.
 
-Si cada regresión ocurre en la síntesis de políticas de contexto largo, no tienes “un router peor”. Tienes un problema de límite de ruta. Si cada caso fallido usa una herramienta específica, tienes un problema de contrato de herramienta. Si cada modelo barato falla en los mismos dos casos ambiguos, quizá necesites lógica de escalamiento en lugar de un modelo predeterminado más caro.
+Si todas las regresiones aparecen en la síntesis de políticas con contexto largo, no tienes «un router peor». Tienes un problema en los límites entre rutas. Si todos los casos fallidos usan una herramienta concreta, tienes un problema con el contrato de esa herramienta. Si el modelo barato falla siempre en los mismos dos casos ambiguos, necesitas lógica de escalado, no un valor predeterminado más caro.
 
-Aquí es donde las evaluaciones resultan útiles. No como una ceremonia. No como un panel que haga que todos se sientan temporalmente adultos.
-
-Sino como una forma de descubrir la forma del sistema.
+Aquí es donde las evaluaciones resultan útiles. No son una ceremonia ni un panel que hace que todo el mundo se sienta adulto temporalmente. Te muestran qué parte del sistema está fallando, para que puedas arreglar esa parte en lugar de arreglarlo todo.
 
 ## Recursos
 
-- [Visión general de scorers de Mastra](https://mastra.ai/docs/evals/overview)  
-- [Referencia de `createScorer` de Mastra](https://mastra.ai/reference/evals/create-scorer)  
-- [Referencia de `runEvals` de Mastra](https://mastra.ai/reference/evals/run-evals)  
-- [Visión general de conjuntos de datos de Mastra](https://mastra.ai/docs/evals/datasets/overview)  
-- [Experimentos con conjuntos de datos de Mastra](https://mastra.ai/docs/evals/datasets/running-experiments)  
-- [No te cases con tu modelo](/llm-routing-mastra-ai)  
-- [¡Lucha contra el mal con evaluaciones!](/llm-evals-are-broken)
+- [Descripción general de los scorers de Mastra](https://mastra.ai/docs/evals/overview)
+- [Referencia de `createScorer` de Mastra](https://mastra.ai/reference/evals/create-scorer)
+- [Referencia de `runEvals` de Mastra](https://mastra.ai/reference/evals/run-evals)
+- [Descripción general de los datasets de Mastra](https://mastra.ai/docs/evals/datasets/overview)
+- [Experimentos con datasets de Mastra](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [No te cases con tu modelo](/llm-routing-mastra-ai)
+- [¡Combate los males con evaluaciones!](/llm-evals-are-broken)
