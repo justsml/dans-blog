@@ -20,6 +20,24 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     outputPerMillionUsd: 1.2,
     source: "openrouter-2026-09-13",
   },
+  "openai/gpt-5.6-terra": {
+    inputPerMillionUsd: 2,
+    cachedInputPerMillionUsd: 0.2,
+    outputPerMillionUsd: 12,
+    source: "openrouter-2026-09-13",
+  },
+  "openai/gpt-5.6-sol": {
+    inputPerMillionUsd: 2,
+    cachedInputPerMillionUsd: 0.2,
+    outputPerMillionUsd: 10,
+    source: "openrouter-2026-09-13",
+  },
+  "openai/gpt-6-astra": {
+    inputPerMillionUsd: 10,
+    cachedInputPerMillionUsd: 1,
+    outputPerMillionUsd: 50,
+    source: "openrouter-2026-09-13",
+  },
   "openai/gpt-oss-120b:nitro": {
     inputPerMillionUsd: 0.03,
     outputPerMillionUsd: 0.18,

@@ -114,11 +114,26 @@ export function normalizeLocalizedCandidateFile(sourceContents: string, targetCo
 }
 
 export function normalizeLocalizedAssetReferences(contents: string) {
-  return contents
+  return normalizeLocalizedRouteLinks(contents
     .replace(/]\(\.\/(?!\.)/g, "](../")
     .replace(/(src=["'])\.\/(?!\.)/g, "$1../")
     .replace(/(=["'])\.\/(?!\.)/g, "$1../")
-    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../");
+    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../"));
+}
+
+/**
+ * Put internal site routes back to site-absolute inside locale folders.
+ *
+ * Translation prompts tell models to use parent-relative paths for assets
+ * (`../banner.webp`), and models over-apply that to internal links, turning
+ * `/llm-routing-mastra-ai` into `../llm-routing-mastra-ai`. A route has no file
+ * extension, which is what separates it from a genuine sibling asset.
+ */
+export function normalizeLocalizedRouteLinks(contents: string) {
+  return contents.replace(
+    /]\(\.\.\/([A-Za-z0-9][A-Za-z0-9/_-]*(?:#[^)\s]*)?)\)/g,
+    (match, target: string) => (/\.[A-Za-z0-9]+$/.test(target.split("#")[0]) ? match : `](/${target})`),
+  );
 }
 
 export function normalizeFrontmatterAssetPaths(
