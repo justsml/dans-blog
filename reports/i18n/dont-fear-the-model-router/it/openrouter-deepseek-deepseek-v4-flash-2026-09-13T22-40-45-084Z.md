@@ -1,0 +1,578 @@
+# Translation Candidate
+- Slug: dont-fear-the-model-router
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-07-03--dont-fear-the-model-router/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 133.19
+- Input tokens: 11977
+- Output tokens: 16484
+- Thinking tokens: unknown
+- Cached input tokens: 4096
+- Cache write tokens: 0
+- Estimated cost: $0.001914
+- Pricing source: openrouter-2026-09-13
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Non temere il Model Router
+subTitle: Percorso verso il miglior modello con fiducia.
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - agents
+  - mastra
+  - evals
+  - model-routing
+  - testing
+  - observability
+  - production
+category: AI
+subCategory: AI Infrastructure
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - mastra-workflows-memory
+sourceHash: 9599850328a0
+---
+[Non sposare il tuo modello](../llm-routing-mastra-ai) ha sostenuto l’argomento semplice: smettete di inviare ogni compito allo stesso modello solo perché ha vinto l’ultimo bake-off.
+
+Usa un modello economico per lavori economici. Usa un modello più potente dove il lavoro è effettivamente difficile. Mantieni il livello di routing abbastanza flessibile in modo che cambiare fornitore non trsformi il tuo codebase in un santuario.
+
+Era giusto. Ma era anche incompleto.
+
+Nel momento in cui aggiungi un router, hai un nuovo comprtamento di sistema da testare. La domanda smette di essere «qual è il modello migliore?» e diventa «il sistema ha scelto la rotta giusta, ha usato gli strumenti giusti, ha conservato le prove giuste e si è fermato al momento giusto?»
+
+Se non misuri questo, il tuo router di modello è solo sensazioni con una tabella di smistamento.
+
+<p class="inset">
+Il router non è la risposta. Il router è un'ipotesi su come il tuo sistema dovrebbe comportrsi.
+</p>
+
+Mastra fornisce le superfici per trasformare quell’ipotesi in qualcosa di testabile: [valutatori](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [dataset](https://mastra.ai/docs/evals/datasets/overview) e [esperimenti](https://mastra.ai/docs/evals/datasets/running-experiments). I nomi sembrano infrastruttura di valutazione, e lo sono. Il vero valore è più semplice: rendono il comportamento dell’agente abbastanza visibile da poterci discutere.
+
+## Cosa stiamo testando?
+
+Il router dell’articolo precedente ha tre rotte specializzate:
+
+| Rotta | Cosa dovrebbe finirci | Cosa sarebbe una rotta sbagliata |
+|---|---|---|
+| `code` | implementazione, refactoring, debugging, code review | riassunto di contesto lungo, classificazione semplice |
+| `long-context` | documenti disordinati, trascrizioni, sintesi di policy, molti file | formattazione meccanica breve |
+| `general` | classificazione, formattazione, domande e risposte semplici, estrazione noiosa | codice complesso o analisi pesante di prove |
+
+Quella tabella è un inizio. Non è una valutazione.
+
+Una valutazione ha bisogno di esempi e valutatori:
+
+| Elemento | Ruolo |
+|---|---|
+| Elemento del dataset | «Ecco una richiesta rappresentativa.» |
+| Verità di base | «Ecco la rotta o il comportamento che ci aspettavamo.» |
+| Valutatore | «Ecco come decidiamo se l’output ha superato la valutazione.» |
+| Esperimento | «Ecco l’esecuzione da confrontare con esecuzioni future.» |
+
+La mossa importante è testare il comportamento, non solo la qualità della prosa.
+
+Un modello può scrivere una risposta bellissima dopo aver scelto lo specialista sbagliato. Un agente di sicurezza può produrre un report plausibile senza conservare le prove. Un agente di supporto può sembrare empatico mentre salta il controllo della policy di rimborso. Il paragrafo è la parte visibile. La traiettoria è dove vivono i bug.
+
+Per un router, parto da quattro assi:
+
+| Asse | Domanda | Valutatore di esempio |
+|---|---|---|
+| Qualità | Ha scelto la rotta giusta e prodotto un risultato utile? | accuratezza della rotta, completezza della risposta, fedeltà |
+| Costo | Ha evitato modelli premium per lavori noiosi? | classe di costo della rotta selezionata, budget di token |
+| Velocità | Ha terminato entro il budget di latenza del prodotto? | valutatore di runtime o timeout |
+| Altro | Ha rispettato i vincoli di sicurezza, privacy e osservabilità? | strumenti consentiti, conservazione delle evidenze, comportamento di rifiuto |
+
+Quell’ultima riga è importante. «Altro» è dove vive il tessuto cicatriziale della produzione.
+
+Quell’ultima riga è importante. «Altro» è dove vive il tessuto cicatriziale della produzione.
+
+## Rendi la decisione del router misurabile
+
+Se il router produce solo una risposta finale, stai indovinando sulla decisione. Puoi valutare l’output, ma non puoi dire se la rotta è giusta.
+
+Quindi dai al passaggio di routing un piccolo contratto strutturato:
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+Gli utenti non devono mai vedere questo JSON. Può essere un passo interno, un handoff del workflow o uno span di traccia. Lo scorer ha bisogno solo di accedervi.
+
+Ecco un agente Mastra volutamente piccolo che non fa altro che scegliere una rotta:
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+Sì, è un po’ artificiale. Bene. Le eval premiano i confini noiosi.
+
+Con la decisione esplicita, puoi testare la rotta prima che lo specialista downstream esegua. I fallimenti del router smettono di nascondersi dietro fallimenti del modello selezionato, del suo prompt, dei suoi strumenti o dello scorer della risposta finale.
+
+## Scrivi uno scorer che coglie il fallimento noioso
+
+Il [`createScorer`](https://mastra.ai/reference/evals/create-scorer) di Mastra accetta funzioni JavaScript pure, prompt di LLM judge, o entrambi. Inizia con le funzioni quando il fallimento è deterministico. Sono più economiche, più veloci e meno misteriose.
+
+La precisione della rotta non ha bisogno di un modello giudice. Deve fare il parsing del JSON e confrontare un campo.
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id: "route-accuracy",
+  description: "Checks whether the selected route matches ground truth.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route: ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+Quello scorer non è affascinante. Questo è il punto.
+
+Se il router non riesce a produrre consistentemente JSON valido e a scegliere lo specialista ovvio su un piccolo set di test, non c’è motivo di fidarsi di lui per il traffico di produzione. Non hai bisogno di un modello-filosofo che valuti un’ontologia. Hai bisogno di un rilevatore di fumo con la batteria.
+
+## Esegui prima il piccolo loop di eval
+
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) è il loop veloce. Dài un target, casi di test, scorer e un limite di concorrenza. Esegue il target sui dati e restituisce i punteggi aggregati.
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scorers/route-accuracy";
+
+const routingCases = [
+  {
+    input: "Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input: "Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input: "Debug a failing Playwright test that only breaks in CI.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+Questo è il loop che esegui mentre cambi il prompt, aggiungi una rotta o provi un modello router più economico.
+
+Non basta per un sistema maturo. Basta per prevenire la regressione più imbarazzante: «abbiamo cambiato il prompt del router e ha iniziato a inviare compiti di classificazione al modello premium per codice.»
+
+Mantieni gli assi separati. La precisione della rotta e la qualità della risposta finale sono punteggi diversi. La validità del JSON, gli strumenti consentiti e la tracciabilità hanno i loro propri controlli. Non aggregarli in un unico numero di «qualità». Le medie sono dove i fallimenti utili vanno a nascondersi.
+
+## Aggiungi un giudice LLM solo dove ripaga
+
+Alcuni instradamenti sono legittimamente ambigui:
+
+```text
+Read these logs and tell me why the deploy failed.
+```
+
+È `code` perché sta facendo debug? `long-context` a causa dei log? `general` perché l’utente ha chiesto un riepilogo? La rotta giusta dipende dagli strumenti disponibili e da ciò che il prodotto promette.
+
+Qui è dove un giudice LLM aiuta, ma solo con una rubrica rigorosa. Gli scorer di Mastra possono mescolare passi di funzione e passi di oggetto prompt. Usa funzioni per la struttura, poi un giudice per la parte che ha effettivamente bisogno di giudizio.
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description: "Judges whether the route explanation matches the request.",
+  type: "agent",
+  judge: {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+Questo scorer costa denaro perché chiama un modello giudice. Va bene quando il giudizio vale la spesa.
+
+Non usarlo per controllare se il JSON viene parsato.
+
+## Promuovi i casi validi in un dataset
+
+Gli array di eval hard-coded vanno bene all’inizio. Col tempo i tuoi esempi diventano asset di prodotto: il ticket cliente fallito, la conversazione di supporto strana, il tentativo di prompt injection, la richiesta che è stata instradata correttamente fino a giovedì scorso.
+
+Questi appartengono a un dataset.
+
+I dataset di Mastra sono raccolte versionate di casi di test. Ogni mutazione crea una nuova versione, così puoi rieseguire un esperimento contro l’esatto set di casi che esisteva quando hai preso una decisione sul modello.
+
+I dataset hanno bisogno di persistenza, quindi prima configura lo storage:
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+Poi crea il dataset e aggiungi i casi:
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+Una volta che hai un dataset, i casi di eval smettono di essere dati di script usa e getta. Hanno ID, versioni, cronologia e risultati degli esperimenti.
+
+È allora che gli eval smettono di sembrare "file di test per prompt" e iniziano a sembrare memoria di prodotto.
+
+## Esegui esperimenti sul router
+
+Con il dataset in posizione, [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) lo esegue contro un agente, un workflow o uno scorer registrato.
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+Ora la conversazione cambia.
+
+Invece di «il nuovo router sembra migliore», puoi dire:
+
+- Il vecchio router ha ottenuto un punteggio di `0.94` sulla precisione delle rotte.
+- Il nuovo router ha ottenuto un punteggio di `0.98`.
+- Ha migliorato il routing in contesti lunghi.
+- Ha fatto regredire due casi di code review.
+- Ha ridotto del 18% i passaggi a modelli premium.
+- Ha aggiunto 300 ms di latenza del router.
+
+Questa è una conversazione da ingegneri. Ci sono tradeoff sul tavolo e puoi decidere se lo scambio vale la pena.
+
+## Valuta il comportamento in produzione, ma non confonderlo con il ground truth
+
+Mastra può anche associare degli scorer direttamente ad agent e step di workflow. Gli scorer in produzione vengono eseguiti in modo asincrono, memorizzano i risultati nel database configurato e supportano il campionamento, così da non valutare ogni risposta di produzione a meno che non lo voglia esplicitamente.
+
+Utile. Ma è un lavoro diverso.
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+La valutazione in produzione ti dice che il router sta ancora emettendo decisioni valide. Cattura output malformati, contenuti tossici, chiamate a tool non consentite, marcatori di evidenza mancanti e una confidenza sospettosamente bassa.
+
+Di solito non può dirti la precisione delle rotte, perché il traffico di produzione non arriva con il ground truth attaccato.
+
+La valutazione in produzione è monitoraggio. Gli esperimenti con dataset sono test controllati. Ti servono entrambi. Rispondono a domande diverse.
+
+## Cosa misurare dopo la precisione delle rotte
+
+La precisione delle rotte è il primo gradino. Ti dice che la richiesta ha raggiunto lo specialista previsto. Non dice nulla sulla qualità del lavoro dello specialista.
+
+Una volta che il router supera le basi, valuta il sistema a strati:
+
+| Livello | Cosa valutare | Perché è importante |
+|---|---|---|
+| Decisione del router | rotta selezionata, confidenza, motivo | Cattura errori di classificazione e regole di escalation errate |
+| Traiettoria | sequenza prevista di tool o agent | Cattura comportamenti del tipo «risposta giusta, percorso sbagliato» |
+| Output dello specialista | correttezza, fedeltà, utilità | Cattura lavoro di bassa qualità dopo un routing corretto |
+| Costo e latenza | modello scelto, token, tempo di esecuzione | Cattura vittorie costose o lente |
+| Sicurezza e ambito | tool consentiti, limiti di rifiuto, evidenze | Cattura fallimenti a rischio prodotto |
+
+`runEvals` supporta configurazioni di scorer a livello di agente, workflow, step e traiettoria, quindi non devi fingere che la risposta finale sia l'unico artefatto.
+
+Per un workflow, la struttura è questa:
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+Questo è il modello mentale che voglio per gli agent in produzione:
+
+Valuta la decisione. Valuta il percorso. Valuta la risposta.
+
+Se valuti solo la risposta, il modello può passare per caso.
+
+## Il router dovrebbe diventare sempre più noioso
+
+Man mano che gli eval ti insegnano cose, parti del router dovrebbero diventare meno magiche:
+
+- Casi lessicali chiari diventano regole deterministiche.
+- Compiti rischiosi richiedono approvazione esplicita o un ramo del flusso di lavoro.
+- Compiti ambigui fanno una domanda chiarificatrice invece di indovinare.
+- Route costose richiedono maggiore confidenza o un secondo segnale.
+- Casi di fallimento noti diventano elementi del dataset.
+
+L'obiettivo non è rendere il router "più intelligente" per sempre. L'obiettivo è rendere il sistema più facile da ragionare.
+
+A volte significa un modello migliore. A volte un prompt più stretto. A volte un passo del flusso di lavoro, uno scorer, un limite duro, o un noioso statement `if` che ti fa risparmiare quattro cifre al mese.
+
+Questo è il senso di misurare il comportamento. Smettere di discutere per gusto e iniziare a discutere per evidenza.
+
+## Una checklist pratica per iniziare
+
+Se stai costruendo un router di Mastra oggi, parti da qui:
+
+1. Rendi strutturata la decisione di routing, anche se gli utenti non la vedono mai.
+2. Scrivi scorer deterministici per JSON valido, route attesa e route proibite.
+3. Usa `runEvals` con 10 a 20 casi prima di cambiare prompt o modelli del router.
+4. Promuovi i fallimenti reali in un dataset versionato.
+5. Esegui esperimenti con dataset per cambiamenti significativi di prompt, modello, route o flusso di lavoro.
+6. Aggiungi scorer live per invarianti di produzione economiche.
+7. Confronta gli esperimenti per route, non solo per punteggio medio.
+
+La media conta meno del cluster di fallimenti.
+
+Se ogni regressione è nella sintesi di policy con contesto lungo, non hai "un router peggiore". Hai un problema di confine di route. Se ogni caso fallito usa uno strumento specifico, hai un problema di contratto dello strumento. Se ogni modello economico fallisce gli stessi due casi ambigui, ti serve logica di escalation, non un default più costoso.
+
+Qui è dove gli eval diventano utili. Non sono una cerimonia, o una dashboard che fa sentire tutti temporaneamente adulti. Mostrano quale parte del sistema sta fallendo, in modo che tu possa risolvere quella parte invece di tutto.
+
+## Risorse
+
+- [Panoramica degli scorer di Mastra](https://mastra.ai/docs/evals/overview)
+- [Riferimento `createScorer` di Mastra](https://mastra.ai/reference/evals/create-scorer)
+- [Riferimento `runEvals` di Mastra](https://mastra.ai/reference/evals/run-evals)
+- [Panoramica dei dataset di Mastra](https://mastra.ai/docs/evals/datasets/overview)
+- [Esperimenti con dataset di Mastra](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [Non sposare il tuo modello](/llm-routing-mastra-ai)
+- [Combatti i mali con gli eval!](/llm-evals-are-broken)
+````
