@@ -1,6 +1,8 @@
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import type { ProviderOptions } from "@ai-sdk/provider-utils";
-import { parse as parseLlmString, normalize, validate } from "llm-strings";
+import { parse as parseLlmString } from "llm-strings";
+import { normalize } from "llm-strings/normalize";
+import { validate } from "llm-strings/validate";
 import { createAiSdkProviderOptions } from "llm-strings/ai-sdk";
 import type { LanguageModel } from "ai";
 import { OPENROUTER_USAGE_ACCOUNTING } from "../llm-telemetry.ts";

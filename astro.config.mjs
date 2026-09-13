@@ -4,7 +4,7 @@ import { globSync } from "tinyglobby";
 
 // import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
-import { unified } from "unified";
+import { unified } from "@astrojs/markdown-remark";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
