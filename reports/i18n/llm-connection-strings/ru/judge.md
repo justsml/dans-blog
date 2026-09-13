@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 27395c6a41a1e34cd0d6b1d0fdbfc03147622cc1
-- Selected model: openrouter/qwen/qwen3.6-plus
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 1a8bc643e8e094a9b8f78507e5c623dd07b7cf9f
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.887)
 
-This candidate provides the most natural and technically accurate translation. It correctly uses 'connection strings' (a standard term in Russian dev communities) or translates it contextually well. It preserves the informal, punchy tone of the original ('touch grass' -> 'идите потрогайте траву'). It also correctly handles the MDX image paths and blockquotes. The 'current' version had a typo ('199:') and several awkward phrasings.
+Pass 1 applied the suggested correction for the 'vibe-year' quote cleanly. All asset paths, code blocks, frontmatter, and MDX elements match the source structure with excellent fluency and tone. No further medium or high-priority issues remain.
