@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 428158cbc72e2fe6b75387f44d2d1b7fce0b75bf
-- Selected model: openrouter/deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Confidence: high (0.880)
+- Selected candidate: a127b630dec8483ef87a7f498728f02f65fdc401
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.879)
 
-The selected candidate correctly followed the locale-specific asset pathing rules (using ../ for images) and preserved all MDX structures, including tables and code blocks. The translation is technically sound and maintains the author's direct, engineering-focused tone. The previous judge's suggestion to change paths back to ./ was incorrect based on the project's directory structure for localized content.
+The pre-publish fixes pass 1 successfully cleaned up the relative asset image paths (`../docker-lab-score-matrix.svg`, etc.). Candidate a127b630dec8483ef87a7f498728f02f65fdc401 remains superior in technical accuracy, terminology, flow, and structural preservation, without any remaining MDX or high-priority issues.

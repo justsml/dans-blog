@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "428158cbc72e2fe6b75387f44d2d1b7fce0b75bf",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "a127b630dec8483ef87a7f498728f02f65fdc401",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 92,
-    "technicalAccuracy": 98,
+    "readability": 95,
+    "technicalAccuracy": 96,
     "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 94,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 96,
+    "culturalAdaptation": 94,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The selected candidate correctly followed the locale-specific asset pathing rules (using ../ for images) and preserved all MDX structures, including tables and code blocks. The translation is technically sound and maintains the author's direct, engineering-focused tone. The previous judge's suggestion to change paths back to ./ was incorrect based on the project's directory structure for localized content.",
+  "rationale": "The pre-publish fixes pass 1 successfully cleaned up the relative asset image paths (`../docker-lab-score-matrix.svg`, etc.). Candidate a127b630dec8483ef87a7f498728f02f65fdc401 remains superior in technical accuracy, terminology, flow, and structural preservation, without any remaining MDX or high-priority issues.",
   "confidence": "high",
-  "confidenceScore": 0.88,
+  "confidenceScore": 0.879,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,15 +27,42 @@
   "slug": "security-agent-model-router",
   "locale": "ar",
   "candidateCommits": [
-    "428158cbc72e2fe6b75387f44d2d1b7fce0b75bf",
-    "59300c9b1691e3b0cd0832d5abaccac688c04a29"
+    "a127b630dec8483ef87a7f498728f02f65fdc401",
+    "0d343a5b2f1f17c7a1293bc3cfa6eaa7590ce485"
   ],
   "suggestionLog": [
     {
       "priority": "high",
-      "match": "<img src=\"../docker-lab-score-matrix.svg\"",
-      "replacement": "<img src=\"./docker-lab-score-matrix.svg\"",
-      "reason": "The English source uses bare paths (./) which should be preserved or adjusted to ./ in the locale folder if the assets are co-located. However, the instructions state: 'Any inherited local image or asset path in frontmatter, Markdown, or JSX must start with ../'. Wait, looking at the instruction: 'Locale files live one folder deeper than English... must start with ../'. The candidate correctly used ../. My suggestion was wrong based on the specific constraint. I will remove the suggestion.",
+      "match": "<img src=\".././docker-lab-score-matrix.svg\"",
+      "replacement": "<img src=\"../docker-lab-score-matrix.svg\"",
+      "reason": "Fix redundant './' in locale relative image path so asset resolution is clean.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././cost-quality-frontier.svg\"",
+      "replacement": "<img src=\"../cost-quality-frontier.svg\"",
+      "reason": "Fix redundant './' in locale relative image path so asset resolution is clean.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././frontier-tool-behavior.svg\"",
+      "replacement": "<img src=\"../frontier-tool-behavior.svg\"",
+      "reason": "Fix redundant './' in locale relative image path so asset resolution is clean.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././command-tool-pass-rates.svg\"",
+      "replacement": "<img src=\"../command-tool-pass-rates.svg\"",
+      "reason": "Fix redundant './' in locale relative image path so asset resolution is clean.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
@@ -45,6 +72,6 @@
     "ok": false,
     "scope": "local",
     "command": "bun run i18n:validate --slug security-agent-model-router --locale ar --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale ar --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ar/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ar/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":1,\"tableShapes\":1}. Differences: {\"tableColumns\":1,\"tableShapes\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale ar --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale ar --skip-global\n256 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n257 |   const comparison = compareMdxStructure(input);\n258 |   if (comparison.valid) return;\n259 | \n260 |   const targetLabel = input.targetPath ?? \"translation\";\n261 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ar/index.mdx failed structural parity with score 0.948 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ar/index.mdx: Link count or href sequence changed across Markdown/HTML link formats. Differences: {\"linkTargets\":1}. Differences: {\"linkTargets\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
   }
 }
