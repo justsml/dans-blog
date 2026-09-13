@@ -1,20 +1,20 @@
 {
-  "selectedCommit": "4182ce5b00c6f8d48c59ce2f852979f204d168d0",
-  "selectedModel": "openrouter/deepseek/deepseek-v4-flash",
+  "selectedCommit": "937851780d84294f8155f9d3bfc5c0b19a979c83",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 92,
-    "technicalAccuracy": 95,
-    "coherence": 94,
-    "relevance": 95,
-    "translationQuality": 90,
-    "mdxPreservation": 98,
-    "culturalAdaptation": 88,
-    "languagePurity": 95
+    "readability": 96,
+    "technicalAccuracy": 98,
+    "coherence": 97,
+    "relevance": 98,
+    "translationQuality": 96,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 95,
+    "languagePurity": 98
   },
   "suggestions": [],
-  "rationale": "The current translation already incorporates the high-priority fix for the empty title identified in the previous judge report. The translation is technically sound, preserves MDX structure, and maintains the direct, authoritative tone of the original English text. All tables, code blocks, and frontmatter fields are correctly handled.",
+  "rationale": "The pre-publish fix correctly closed the JSX comment block. The translation is clean, idiomatic, technically precise, and preserves all structural elements, code blocks, tables, and asset links without any remaining defects.",
   "confidence": "high",
-  "confidenceScore": 0.87,
+  "confidenceScore": 0.888,
   "confidenceSignals": [
     "no high/medium issues",
     "single judge"
@@ -27,24 +27,24 @@
   "slug": "security-agent-model-router",
   "locale": "ja",
   "candidateCommits": [
-    "4182ce5b00c6f8d48c59ce2f852979f204d168d0",
-    "c617006706f6bba78b9c71948f777fa01a051829"
+    "e8a13a805e2891be184f6cc86cfccb6a9edf45eb",
+    "937851780d84294f8155f9d3bfc5c0b19a979c83"
   ],
   "suggestionLog": [
     {
-      "priority": "high",
-      "match": "title: ''",
-      "replacement": "title: 'セキュリティエージェントに必要なのはモデルランキングではなく、モデルルーターだ'",
-      "reason": "The frontmatter title was left empty in the candidate.",
+      "priority": "medium",
+      "match": "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md\n*/",
+      "replacement": "- /Users/dan/code/oss/agent-security/evals/results/browser-e2e/five-model-post-tuning-gpt-oss-serial-triplicate-20260719/report.md\n*/}",
+      "reason": "Close the JSX comment properly with */} instead of */ to avoid MDX parsing fragility.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
     }
   ],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug security-agent-model-router --locale ja --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug security-agent-model-router --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug security-agent-model-router --locale ja --skip-global\n224 | export function assertStructuralParity(input: CompareMdxStructureInput) {\n225 |   const comparison = compareMdxStructure(input);\n226 |   if (comparison.valid) return;\n227 | \n228 |   const targetLabel = input.targetPath ?? \"translation\";\n229 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ja/index.mdx failed structural parity with score 0.991 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2026-06-30--security-agent-model-router/ja/index.mdx: Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Differences: {\"tableColumns\":1,\"tableShapes\":1}. Differences: {\"tableColumns\":1,\"tableShapes\":1}\n      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:229:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }
