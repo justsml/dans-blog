@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: a4343c45eb31e810b4d600a64af11ea55f87655a
-- Selected model: openrouter/qwen/qwen3.6-plus
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 8c355e09fe9bfa12044ad8060cd43fe966d3845d
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.887)
 
-The candidate a4343c45eb31e810b4d600a64af11ea55f87655a provides the best balance of natural, direct Japanese (using the 'da/dearu' style which fits Dan's tone) and technical accuracy. It correctly translates 'vibe-year' as 'バイブス年' (a creative and fitting choice for the context) and maintains all MDX structures and metadata. The other candidate (glm-5.1) missed the frontmatter metadata (date, tags, etc.), which is a significant preservation failure.
+8c355e09fe9bfa12044ad8060cd43fe966d3845d provides a very natural, idiomatic, and punchy Japanese translation that captures Dan's direct, sarcastic developer tone. All asset paths correctly use `../`, structural tags and headings match the English original, and the strikethrough joke (`~~盗んで~~借りてくればいいのでは？`) is faithfully preserved.
