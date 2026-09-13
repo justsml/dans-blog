@@ -1,0 +1,50 @@
+{
+  "selectedCommit": "6e41163b69d78d1c2e5a82e50109c141cde4a381",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
+  "scores": {
+    "readability": 96,
+    "technicalAccuracy": 97,
+    "coherence": 97,
+    "relevance": 98,
+    "translationQuality": 96,
+    "mdxPreservation": 99,
+    "culturalAdaptation": 95,
+    "languagePurity": 96
+  },
+  "suggestions": [],
+  "rationale": "Pass 1 applied the suggested phrasing fix cleanly. Code blocks, links, tables, and frontmatter are fully intact and accurate. No further medium or high priority issues remain.",
+  "confidence": "high",
+  "confidenceScore": 0.885,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "dont-fear-the-model-router",
+  "locale": "zh",
+  "candidateCommits": [
+    "5196841170db70725e13bdeddf3694e63aa98d99",
+    "6e41163b69d78d1c2e5a82e50109c141cde4a381"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "如果你不测量这些东西，你的模型路由器就只是带着一张调度表的凭感觉行事。",
+      "replacement": "如果你不测量这些，你的模型路由器就只是带着调度表的凭感觉行事。",
+      "reason": "Improves flow and conciseness to better match Dan's punchy style ('vibes with a dispatch table').",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug dont-fear-the-model-router --locale zh --skip-global",
+    "output": ""
+  }
+}
