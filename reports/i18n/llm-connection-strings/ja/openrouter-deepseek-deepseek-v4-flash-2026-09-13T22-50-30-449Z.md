@@ -1,0 +1,134 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: ja
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-30--llm-connection-strings/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.74
+- Input tokens: 4270
+- Output tokens: 2417
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000347
+- Pricing source: openrouter-2026-09-13
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: '今こそ llm:// 接続文字列'
+subTitle: '`llm://` URL でモデルとプロバイダの設定をシンプルに'
+modified: '2026-06-30'
+tags:
+  - ai
+  - llm
+  - api
+  - developer-experience
+  - standards
+category: AI
+social_image: ../desktop-social.webp
+cover_full_width: ../hero-wide.webp
+cover_mobile: ../square-200.webp
+cover_icon: ../square-200.webp
+sourceHash: 88892a247d5c
+---
+<blockquote class="inset">
+**更新:** この記事は、[`llm://` URIスキームに関するインターネットドラフト](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/) と、それをサポートする [`llm-strings` npm パッケージ](https://www.npmjs.com/package/llm-strings) につながりました。実装は [GitHub](https://github.com/justsml/llm-strings) にもあります。
+</blockquote>
+
+データベースに接続するために、寄せ集めの環境変数をあれこれ管理していた悪しき時代を覚えていますか？
+
+あれは繊細な設定のタワーでした。`DB_HOST`、`DB_PORT`、`DB_USER`、`DB_PASSWORD`、`DB_NAME`……いや待て、`DB_USERNAME` だったか？ `DB_PASS` なのか `DB_PWD` なのか？ 今回は `PG_*` のプレフィックスが必要なのか？ で、タイムアウト設定はどこに書くんだ？
+
+それは脆弱なトランプの家のようなもので、`HOST` の大文字小文字を間違えただけでプロダクションビルドが吹き飛びかねませんでした。
+
+そこに現れた名案が、URL をそのまま使ってしまおうというアイデアでした¹：
+
+```bash
+postgres://user:pass@host:5432/dbname
+```
+
+一つの文字列。必要な情報はすべて入っている。普遍的にパースできる。ポータブル。あえて言うなら……美しい？
+
+それなのに、なぜ LLM に対しては1999年のような扱いをしているのでしょう？
+
+## 環境変数爆発
+
+今、私の `.env` ファイルは、放棄された API キーの墓地のようです。`OPENAI_API_KEY`、`ANTHROPIC_API_KEY`、`MISTRAL_API_KEY`、`GROQ_API_KEY`。Azure に至っては話すのも嫌になります。エンドポイント、デプロイ名、API バージョン、キーが全部揃わないと「こんにちは」すら言えないんです。
+
+見苦しいだけではありません。これは摩擦です。モデルを切り替えたり、新しいプロバイダーを試したりするたびに、初期化コードを書き直し、特定のパラメータ名を探してドキュメントを漁り、環境設定にさらに3行追加しなければなりません。
+
+だったら、DB の URL アイデアを……「拝借」してしまえばいいのでは？
+
+## LLM 接続文字列の登場
+
+モデル全体のインタフェースを、たった一行で設定できると想像してみてください：
+
+```bash
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+---
+
+<br />
+
+### LLM 接続文字列の構成
+
+![LLM 接続文字列の各部](../inline-url-diagram-dark.svg)
+
+スキームは `llm://`。ホストはプロバイダーの API ベース URL。パスはモデル名。そしてクエリパラメータで、普段コードを汚しているすべてのランタイムオプションを扱います。
+
+## 認証が必要？問題ない、それも付け加えよう
+
+`postgres://` と同じように、認証情報を URL に直接埋め込めます：
+
+```bash
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
+```
+
+*注意：URL に認証情報を入れると、公開ログに貼り付けた場合にセキュリティリスクになり得ます。とはいえ、最近のログサービスはこの手のパターンをうまく除去してくれますし、正直なところ、皆さんの `.env` ファイルはもっと丁寧に扱われていますか？検証し、サニタイズし、注意して使ってください。*
+
+## レジリエンシー？やらない理由がない
+
+多くのデータベースライブラリは、複数ホストを指定してラウンドロビンフェイルオーバーをサポートしています。我々の AI エージェントに同じ信頼性が備わっていて、何か悪いことでも？
+
+```bash
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
+```
+
+`llms://` の `s` は誤字ではありません。複数形です。`primary.gpt` が応答しなくなったら、クライアントは自動的に `backup.gpt` にリトライします。複雑なルーターロジックは不要です。
+
+<blockquote class="inset">**認証** から **エンドポイント** 、**ハイパーパラメータ** まで、すべてをたった一行に詰め込んだ文字列。</blockquote>
+
+## 代替フォーマット
+
+私は `llm://` に固執しているわけではありません。肝心なのはスキームの具体的な名前ではなく、標準化そのものです。
+
+プロバイダ固有のスキームを使えば、標準構造を保ちつつ、もっと簡潔に書ける世界もあるでしょう：
+
+```bash
+ollama://localhost:11434/llama3
+vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
+bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
+```
+
+正確な構文はどうあれ、核となるメリットは揺るぎません：
+
+1.  **ポータビリティ：** ローカルスクリプトの設定全体をコピペしてクラウドワーカーに持っていける。
+2.  **CLI との親和性：** スクリプトに単一の引数を渡すだけ。`my-agent --model "llm://..."` は `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...` より遥かに優れている。
+3.  **言語非依存：** あらゆるプログラミング言語には、堅牢な URL パーサーが備わっている。バリデーション、パース、サニタイゼーションをタダで手に入れられる。
+
+<blockquote class="ai-response inset">データベースの世界がこれを理解するまでには数十年かかりました。<br /><b>幸いなことに、AI のタイムラインで言えば、それはほんの半バイブ年前の話です。</b></blockquote>
+
+## 結論
+
+複雑な設定標準や、新しい YAML ベースのマニフェストファイルなんて必要ありません。この30年間、インターネットの他の部分でずっと使われてきた、たった一つのツールを活用すればいいのです。
+
+車輪の再発明はやめましょう。データベースに払っているのと同じ敬意を、LLM 接続にも払い始めましょう。あなたの `.env` ファイル（そしてあなたの正気）は、きっと感謝してくれます。
+
+![乱雑な env var の引き出し](../hero-concept-8-drawers.webp)
+
+{/* ¹ ええ、`URI` の方が `URL` より正確なのは分かっています。もしその違いを気にするほど衒学的な方なら、どうぞ現実を見に行ってください。 */}
+````
