@@ -1,6 +1,6 @@
 # I18n Coverage
 
-Generated at `2026-09-13T20:39:29.031Z`.
+Generated at `2026-09-13T23:16:50.297Z`.
 
 ## Summary
 
@@ -8,9 +8,9 @@ Generated at `2026-09-13T20:39:29.031Z`.
 - Translation slots: 790/800 filled (98.8%)
 - Missing slots: 10
 - Fully translated posts: 79/80
-- Structure-valid translations: 624/790 (79.0%)
+- Structure-valid translations: 658/790 (83.3%)
 - Heading anchor link failures: 14 failing link(s) across 6/151 translation(s) with same-page heading links
-- Average structure score: 0.987
+- Average structure score: 0.989
 - Minimum structure score: 0.722
 - Locales: es, hi, ja, ru, de, fr, it, ar, he, zh
 
@@ -18,22 +18,22 @@ Generated at `2026-09-13T20:39:29.031Z`.
 
 | Locale | Filled | Missing | Coverage | Structure valid | Heading link files | Heading link fails | Avg structure | Min structure |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| es | 79 | 1 | 98.8% | 62/79 | 0/15 | 0 | 0.987 | 0.768 |
-| hi | 79 | 1 | 98.8% | 66/79 | 0/15 | 0 | 0.988 | 0.773 |
-| ja | 79 | 1 | 98.8% | 58/79 | 1/15 | 1 | 0.983 | 0.722 |
-| ru | 79 | 1 | 98.8% | 62/79 | 1/16 | 8 | 0.987 | 0.809 |
-| de | 79 | 1 | 98.8% | 60/79 | 1/15 | 1 | 0.984 | 0.779 |
-| fr | 79 | 1 | 98.8% | 63/79 | 0/15 | 0 | 0.987 | 0.739 |
-| it | 79 | 1 | 98.8% | 64/79 | 1/15 | 1 | 0.989 | 0.747 |
-| ar | 79 | 1 | 98.8% | 65/79 | 1/15 | 1 | 0.989 | 0.809 |
-| he | 79 | 1 | 98.8% | 61/79 | 1/15 | 2 | 0.989 | 0.809 |
-| zh | 79 | 1 | 98.8% | 63/79 | 0/15 | 0 | 0.990 | 0.740 |
+| es | 79 | 1 | 98.8% | 63/79 | 0/15 | 0 | 0.988 | 0.768 |
+| hi | 79 | 1 | 98.8% | 68/79 | 0/15 | 0 | 0.989 | 0.773 |
+| ja | 79 | 1 | 98.8% | 62/79 | 1/15 | 1 | 0.984 | 0.722 |
+| ru | 79 | 1 | 98.8% | 63/79 | 1/16 | 8 | 0.988 | 0.809 |
+| de | 79 | 1 | 98.8% | 63/79 | 1/15 | 1 | 0.986 | 0.779 |
+| fr | 79 | 1 | 98.8% | 66/79 | 0/15 | 0 | 0.989 | 0.739 |
+| it | 79 | 1 | 98.8% | 67/79 | 1/15 | 1 | 0.990 | 0.747 |
+| ar | 79 | 1 | 98.8% | 70/79 | 1/15 | 1 | 0.992 | 0.809 |
+| he | 79 | 1 | 98.8% | 67/79 | 1/15 | 2 | 0.992 | 0.809 |
+| zh | 79 | 1 | 98.8% | 69/79 | 0/15 | 0 | 0.991 | 0.740 |
 
 ## Structural Health
 
 - Translated slots analyzed: 790
-- Structurally invalid translated slots: 166
-- Average structure score: 0.987
+- Structurally invalid translated slots: 132
+- Average structure score: 0.989
 - Minimum structure score: 0.722
 
 ### Structural Issues
@@ -65,19 +65,19 @@ Generated at `2026-09-13T20:39:29.031Z`.
 | quiz-bash-in-the-shell | fr | 0.840 | 5 | links:+3, blockquotes:+12, components:+12, linkTargets:+14, componentSequence:+12 | Link count or href sequence changed across Markdown/HTML link formats. Blockquote count changed. MDX component order changed. |
 | docker-security-tips-for-self-hosting | ar | 0.844 | 9 | h1:+13, h2:+1, h3:+2, h4:+5, links:+10, codeFences:+1 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Code fence count or language order changed. |
 | docker-security-tips-for-self-hosting | de | 0.856 | 9 | h1:+5, h2:+1, h3:+3, h4:+7, links:+11, codeFences:+1 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. Code fence count or language order changed. |
-| you-may-not-need-axios | ar | 0.857 | 3 | tables:+1, tableRows:+8, tableColumns:+4, linkTargets:+1, tableShapes:+2 | Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Link count or href sequence changed across Markdown/HTML link formats. |
-| you-may-not-need-axios | he | 0.857 | 3 | tables:+1, tableRows:+8, tableColumns:+4, linkTargets:+1, tableShapes:+2 | Table count or row/column shape changed; errant line breaks may have broken a Markdown table. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | es | 0.866 | 3 | h2:-1, headingSequence:+1, linkTargets:+3 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | ja | 0.866 | 3 | h2:-1, headingSequence:+1, linkTargets:+3 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | fr | 0.866 | 3 | h2:-1, headingSequence:+1, linkTargets:+3 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | ar | 0.866 | 3 | h2:-1, headingSequence:+1, linkTargets:+3 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | he | 0.866 | 3 | h2:-1, headingSequence:+1, linkTargets:+3 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | de | 0.879 | 3 | h2:-1, headingSequence:+1, linkTargets:+2 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
+| you-may-not-need-axios | ar | 0.858 | 2 | tables:+1, tableRows:+8, tableColumns:+4, tableShapes:+2 | Table count or row/column shape changed; errant line breaks may have broken a Markdown table. |
+| you-may-not-need-axios | he | 0.858 | 2 | tables:+1, tableRows:+8, tableColumns:+4, tableShapes:+2 | Table count or row/column shape changed; errant line breaks may have broken a Markdown table. |
+| quiz-postgres-sql-mastery-pt1 | es | 0.879 | 3 | h2:-1, headingSequence:+1, linkTargets:+2 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
+| quiz-postgres-sql-mastery-pt1 | ja | 0.879 | 3 | h2:-1, headingSequence:+1, linkTargets:+2 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
+| quiz-postgres-sql-mastery-pt1 | fr | 0.879 | 3 | h2:-1, headingSequence:+1, linkTargets:+2 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-postgres-sql-mastery-pt1 | it | 0.879 | 3 | h2:-1, headingSequence:+1, linkTargets:+2 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt1 | hi | 0.892 | 3 | h2:-1, headingSequence:+1, linkTargets:+1 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
 | higher-order-programming | ru | 0.905 | 2 | h2:-1, headingSequence:+2 | Headings changed or moved. |
 | quiz-destructuring-delights | zh | 0.905 | 2 | links:-1, linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
+| quiz-postgres-sql-mastery-pt1 | hi | 0.905 | 2 | h2:-1, headingSequence:+1 | Headings changed or moved. |
 | quiz-postgres-sql-mastery-pt1 | ru | 0.905 | 2 | h2:-1, headingSequence:+1 | Headings changed or moved. |
+| quiz-postgres-sql-mastery-pt1 | de | 0.905 | 2 | h2:-1, headingSequence:+1 | Headings changed or moved. |
+| quiz-postgres-sql-mastery-pt1 | ar | 0.905 | 2 | h2:-1, headingSequence:+1 | Headings changed or moved. |
+| quiz-postgres-sql-mastery-pt1 | he | 0.905 | 2 | h2:-1, headingSequence:+1 | Headings changed or moved. |
 | ai-sdk-math-tool | de | 0.908 | 4 | h2:-2, links:-1, headingSequence:+2, linkTargets:+5 | Headings changed or moved. Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-postgres-sql-mastery-pt2 | hi | 0.909 | 5 | links:-2, blockquotes:-4, components:-4, linkTargets:+3, componentSequence:+4 | Link count or href sequence changed across Markdown/HTML link formats. Blockquote count changed. MDX component order changed. |
 | docker-server-setup-notes | hi | 0.926 | 6 | h1:+3, h4:-2, blockquotes:-1, codeFences:+1, headingSequence:+3, codeFenceLanguages:+3 | Headings changed or moved. Blockquote count changed. Code fence count or language order changed. |
@@ -86,15 +86,6 @@ Generated at `2026-09-13T20:39:29.031Z`.
 | breaking-unicorns | fr | 0.935 | 4 | images:+1, altTexts:+1, linkTargets:+1, imageTargets:+3 | Image count or target sequence changed. Alt text count or length profile changed. Link count or href sequence changed across Markdown/HTML link formats. |
 | deathmatch-git-rebase-vs-merge | it | 0.935 | 2 | h2:-1, headingSequence:+6 | Headings changed or moved. |
 | llm-connection-strings | es | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | hi | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | ja | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | ru | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | de | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | fr | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | it | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | ar | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | he | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| llm-connection-strings | zh | 0.936 | 2 | links:-2, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
 | from-zero-to-regex-hero-extract-url-like-strings | he | 0.938 | 2 | codeFences:+1, codeFenceLanguages:+3 | Code fence count or language order changed. |
 | quiz-regex-or-wreckage | hi | 0.938 | 5 | links:+4, blockquotes:+4, components:+4, linkTargets:+6, componentSequence:+4 | Link count or href sequence changed across Markdown/HTML link formats. Blockquote count changed. MDX component order changed. |
 | quiz-regex-or-wreckage | ja | 0.938 | 5 | links:+4, blockquotes:+4, components:+4, linkTargets:+6, componentSequence:+4 | Link count or href sequence changed across Markdown/HTML link formats. Blockquote count changed. MDX component order changed. |
@@ -105,34 +96,26 @@ Generated at `2026-09-13T20:39:29.031Z`.
 | breaking-unicorns | ja | 0.944 | 3 | images:+1, altTexts:+1, imageTargets:+3 | Image count or target sequence changed. Alt text count or length profile changed. |
 | breaking-unicorns | zh | 0.944 | 3 | images:+1, altTexts:+1, imageTargets:+3 | Image count or target sequence changed. Alt text count or length profile changed. |
 | stop-trying-to-make-async-await-happen | zh | 0.946 | 2 | links:-2, linkTargets:+15 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-advanced-js-error-mastery | ar | 0.948 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-advanced-js-error-mastery | he | 0.948 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | stop-trying-to-make-async-await-happen | ja | 0.949 | 2 | links:-2, linkTargets:+14 | Link count or href sequence changed across Markdown/HTML link formats. |
 | stop-the-angularjs-hate | ja | 0.952 | 2 | h2:-1, headingSequence:+6 | Headings changed or moved. |
 | quiz-master-modern-html5 | zh | 0.957 | 2 | links:-5, linkTargets:+9 | Link count or href sequence changed across Markdown/HTML link formats. |
 | mastering-functional-pipelines-passing-state | ja | 0.961 | 2 | h4:-1, headingSequence:+9 | Headings changed or moved. |
-| quiz-is-your-memory-rusty | es | 0.961 | 3 | components:-4, linkTargets:+1, componentSequence:+8 | MDX component order changed. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-is-your-memory-rusty | fr | 0.961 | 3 | components:-4, linkTargets:+1, componentSequence:+8 | MDX component order changed. Link count or href sequence changed across Markdown/HTML link formats. |
 | stop-trying-to-make-async-await-happen | ru | 0.962 | 2 | links:-1, linkTargets:+11 | Link count or href sequence changed across Markdown/HTML link formats. |
 | stop-trying-to-make-async-await-happen | de | 0.962 | 2 | links:-1, linkTargets:+11 | Link count or href sequence changed across Markdown/HTML link formats. |
 | breaking-unicorns | de | 0.965 | 1 | linkTargets:+4 | Link count or href sequence changed across Markdown/HTML link formats. |
 | upgrade-from-gatsby-to-astro | es | 0.967 | 2 | links:-7, linkTargets:+14 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-can-you-count-to-bigint | es | 0.972 | 2 | blockquotes:-1, linkTargets:+1 | Blockquote count changed. Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-can-you-count-to-bigint | he | 0.972 | 2 | blockquotes:-1, linkTargets:+1 | Blockquote count changed. Link count or href sequence changed across Markdown/HTML link formats. |
+| quiz-is-your-memory-rusty | es | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
 | quiz-is-your-memory-rusty | hi | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
 | quiz-is-your-memory-rusty | ja | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
 | quiz-is-your-memory-rusty | ru | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
 | quiz-is-your-memory-rusty | de | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
+| quiz-is-your-memory-rusty | fr | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
 | quiz-is-your-memory-rusty | it | 0.974 | 2 | components:-4, componentSequence:+8 | MDX component order changed. |
 | announcing-exploithunter-app | ru | 0.976 | 1 | linkTargets:+8 | Link count or href sequence changed across Markdown/HTML link formats. |
 | handling-international-numbers-and-currency | ja | 0.976 | 2 | links:+3, linkTargets:+4 | Link count or href sequence changed across Markdown/HTML link formats. |
 | serverless-database-magic | es | 0.976 | 2 | h3:+1, headingSequence:+3 | Headings changed or moved. |
 | quiz-is-your-memory-rusty | he | 0.978 | 2 | components:-2, componentSequence:+8 | MDX component order changed. |
-| quiz-postgres-sql-mastery-pt2 | ja | 0.979 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | fr | 0.979 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | it | 0.979 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | ar | 0.979 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | zh | 0.979 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
 | handling-international-numbers-and-currency | fr | 0.980 | 2 | links:+3, linkTargets:+3 | Link count or href sequence changed across Markdown/HTML link formats. |
 | handling-international-numbers-and-currency | ar | 0.980 | 2 | links:+3, linkTargets:+3 | Link count or href sequence changed across Markdown/HTML link formats. |
 | handling-international-numbers-and-currency | he | 0.980 | 2 | links:+3, linkTargets:+3 | Link count or href sequence changed across Markdown/HTML link formats. |
@@ -154,19 +137,13 @@ Generated at `2026-09-13T20:39:29.031Z`.
 | docker-security-tips-for-self-hosting | ja | 0.983 | 1 | linkTargets:+10 | Link count or href sequence changed across Markdown/HTML link formats. |
 | securely-using-environment-variables-in-nodejs | de | 0.983 | 1 | blockquotes:-1 | Blockquote count changed. |
 | stop-trying-to-make-async-await-happen | he | 0.984 | 2 | links:-1, linkTargets:+4 | Link count or href sequence changed across Markdown/HTML link formats. |
-| are-promises-broken | es | 0.985 | 2 | links:-1, linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
 | javascript-promises-quiz | ja | 0.986 | 3 | blockquotes:-1, components:-1, componentSequence:+1 | Blockquote count changed. MDX component order changed. |
-| you-may-not-need-axios | es | 0.986 | 2 | links:-1, linkTargets:+8 | Link count or href sequence changed across Markdown/HTML link formats. |
-| you-may-not-need-axios | ru | 0.986 | 2 | links:-1, linkTargets:+8 | Link count or href sequence changed across Markdown/HTML link formats. |
-| you-may-not-need-axios | de | 0.986 | 2 | links:-1, linkTargets:+8 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-is-your-memory-rusty | zh | 0.987 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | upgrade-from-gatsby-to-astro | ja | 0.987 | 2 | links:-1, linkTargets:+7 | Link count or href sequence changed across Markdown/HTML link formats. |
+| you-may-not-need-axios | es | 0.987 | 2 | links:-1, linkTargets:+7 | Link count or href sequence changed across Markdown/HTML link formats. |
+| you-may-not-need-axios | ru | 0.987 | 2 | links:-1, linkTargets:+7 | Link count or href sequence changed across Markdown/HTML link formats. |
+| you-may-not-need-axios | de | 0.987 | 2 | links:-1, linkTargets:+7 | Link count or href sequence changed across Markdown/HTML link formats. |
 | you-may-not-need-axios | zh | 0.987 | 2 | links:-1, linkTargets:+7 | Link count or href sequence changed across Markdown/HTML link formats. |
-| are-promises-broken | fr | 0.990 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | es | 0.990 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | de | 0.990 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-postgres-sql-mastery-pt2 | he | 0.990 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| securely-using-environment-variables-in-nodejs | hi | 0.990 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
+| are-promises-broken | es | 0.991 | 2 | links:-1, linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | breaking-unicorns | es | 0.991 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | js-quiz-14-date-time-questions-test-your-knowledge | ru | 0.991 | 2 | links:-1, linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | protect-your-tokens | es | 0.991 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
@@ -174,30 +151,17 @@ Generated at `2026-09-13T20:39:29.031Z`.
 | upgrade-from-gatsby-to-astro | he | 0.991 | 2 | h2:+1, headingSequence:+1 | Headings changed or moved. |
 | from-zero-to-regex-hero-extract-url-like-strings | it | 0.994 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-nodejs-files-streams-buffers-oh-my | fr | 0.994 | 2 | links:-1, linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| are-promises-broken | de | 0.995 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
+| are-promises-broken | fr | 0.995 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | are-promises-broken | it | 0.995 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| are-promises-broken | ar | 0.995 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| are-promises-broken | he | 0.995 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| are-promises-broken | zh | 0.995 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | guerrilla-types-in-typescript | ru | 0.996 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | guerrilla-types-in-typescript | de | 0.996 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | guerrilla-types-in-typescript | fr | 0.996 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-regex-or-wreckage | fr | 0.996 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-regex-or-wreckage | he | 0.996 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-regex-or-wreckage | zh | 0.996 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | announcing-exploithunter-app | de | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | announcing-exploithunter-app | it | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | announcing-exploithunter-app | ar | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | from-zero-to-regex-hero-extract-url-like-strings | zh | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-in-the-aws-cloud | es | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-in-the-aws-cloud | ja | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-in-the-aws-cloud | it | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-in-the-aws-cloud | he | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-nodejs-files-streams-buffers-oh-my | es | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-nodejs-files-streams-buffers-oh-my | ja | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-nodejs-files-streams-buffers-oh-my | ar | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| quiz-nodejs-files-streams-buffers-oh-my | zh | 0.997 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
-| you-may-not-need-axios | it | 0.997 | 1 | linkTargets:+2 | Link count or href sequence changed across Markdown/HTML link formats. |
 | quiz-can-you-count-to-bigint | hi | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
 | quiz-can-you-count-to-bigint | ja | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
 | quiz-can-you-count-to-bigint | ru | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
@@ -205,7 +169,9 @@ Generated at `2026-09-13T20:39:29.031Z`.
 | quiz-can-you-count-to-bigint | fr | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
 | quiz-can-you-count-to-bigint | it | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
 | quiz-can-you-count-to-bigint | ar | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
+| quiz-can-you-count-to-bigint | he | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
 | quiz-can-you-count-to-bigint | zh | 0.998 | 1 | blockquotes:-1 | Blockquote count changed. |
+| you-may-not-need-axios | it | 0.998 | 1 | linkTargets:+1 | Link count or href sequence changed across Markdown/HTML link formats. |
 
 ## Heading Anchor Link Health
 
@@ -231,8 +197,8 @@ Generated at `2026-09-13T20:39:29.031Z`.
 ## Health Notes
 
 - Missing locale slots with candidate reports waiting: 0
-- Existing translations without judge summaries: 118
-- Existing translations with structural parity failures: 166
+- Existing translations without judge summaries: 110
+- Existing translations with structural parity failures: 132
 - Existing translations with heading anchor link failures: 6
 
 ### Candidate Reports Without Translation Files
@@ -243,14 +209,6 @@ No waiting candidate reports found.
 
 | Post | Locale | Qwen baseline |
 | --- | --- | --- |
-| dont-fear-the-model-router | es | no |
-| dont-fear-the-model-router | ja | no |
-| dont-fear-the-model-router | ru | no |
-| dont-fear-the-model-router | fr | no |
-| dont-fear-the-model-router | it | no |
-| dont-fear-the-model-router | ar | no |
-| dont-fear-the-model-router | he | no |
-| dont-fear-the-model-router | zh | no |
 | the-jsonb-seduction | hi | no |
 | the-jsonb-seduction | ja | no |
 | the-8-byte-timestamp-that-destroyed-our-database | it | no |

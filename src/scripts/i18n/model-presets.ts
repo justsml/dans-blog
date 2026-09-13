@@ -27,6 +27,11 @@ export function resolveCheapFastTranslationModel(input: string) {
   const trimmed = input.trim();
   if (trimmed === "") return trimmed;
 
+  // A bare `openai/<model>` is an explicit request for first-party OpenAI.
+  // Without this the fuzzy match below rewrites it to the `openrouter/openai/...`
+  // preset, silently routing through OpenRouter and paying its markup.
+  if (trimmed.startsWith("openai/")) return trimmed;
+
   const normalized = normalizeModelSearchText(trimmed);
   const aliased = DEPRECATED_MODEL_ALIASES[normalized];
   if (aliased) return aliased;
