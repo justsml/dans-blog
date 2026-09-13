@@ -1,0 +1,580 @@
+# Translation Candidate
+- Slug: dont-fear-the-model-router
+- Locale: he
+- Model: openrouter/openai/gpt-5.6-luna
+- Target: src/content/posts/2026-07-03--dont-fear-the-model-router/he/index.mdx
+- Validation: deferred
+- Runtime seconds: 46.52
+- Input tokens: 11303
+- Output tokens: 6244
+- Thinking tokens: unknown
+- Cached input tokens: 4280
+- Cache write tokens: 7008
+- Estimated cost: $0.008983
+- Pricing source: openrouter-2026-09-13
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: אל תפחדו מנתב המודלים
+subTitle: נתבו למודל המתאים ביותר בביטחון.
+modified: '2026-09-04'
+tags:
+  - ai
+  - llm
+  - agents
+  - mastra
+  - evals
+  - model-routing
+  - testing
+  - observability
+  - production
+category: AI
+subCategory: AI Infrastructure
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+related:
+  - llm-routing-mastra-ai
+  - llm-evals-are-broken
+  - mastra-workflows-memory
+sourceHash: 9599850328a0
+---
+[אל תתחתן עם המודל שלך](../llm-routing-mastra-ai) טען את הטיעון הפשוט: הפסיקו לשלוח כל משימה לאותו מודל רק מפני שהוא ניצח במבחן ההשוואתי האחרון.
+
+השתמשו במודל זול לעבודה זולה. השתמשו במודל חזק יותר במקום שבו העבודה באמת קשה. השאירו את שכבת הניתוב מספיק רופפת, כך שהחלפת ספק לא תהפוך את בסיס הקוד שלכם למקדש.
+
+זה היה נכון.
+
+זה גם לא היה שלם.
+
+ברגע שאתם מוסיפים נתב, אתם מקבלים התנהגות מערכת חדשה שצריך לבדוק. השאלה מפסיקה להיות "איזה מודל הוא הטוב ביותר?" והופכת ל"האם המערכת בחרה את הנתיב הנכון, השתמשה בכלים הנכונים, שמרה את הראיות הנכונות, ועצרה בזמן הנכון?"
+
+אם אתם לא מודדים את זה, נתב המודלים שלכם הוא תחושת בטן עם טבלת ניתוב.
+
+<p class="inset">
+הנתב אינו התשובה. הנתב הוא השערה לגבי האופן שבו המערכת שלכם אמורה להתנהג.
+</p>
+
+ל-Mastra יש את הממשקים הדרושים כדי להפוך את ההשערה הזאת למשהו שאפשר לבדוק: [scorers](https://mastra.ai/docs/evals/overview), [`runEvals`](https://mastra.ai/reference/evals/run-evals), [datasets](https://mastra.ai/docs/evals/datasets/overview), ו-[experiments](https://mastra.ai/docs/evals/datasets/running-experiments). השמות נשמעים כמו תשתית להערכה, וזה אכן מה שהם. הערך האמיתי פשוט יותר: הם הופכים את התנהגות הסוכן לגלויה מספיק כדי שאפשר יהיה להתווכח איתה.
+
+## מה אנחנו בודקים?
+
+לנתב מהפוסט הקודם יש שלושה נתיבים ייעודיים:
+
+| נתיב | מה אמור להגיע אליו | מה יהיה נתיב שגוי |
+|---|---|---|
+| `code` | מימוש, ריפקטורינג, ניפוי באגים, סקירת קוד | סיכום של הקשר ארוך, סיווג פשוט |
+| `long-context` | מסמכים מבולגנים, תמלילים, סינתזה של מדיניות, קבצים רבים | עיצוב מכני קצר |
+| `general` | סיווג, עיצוב, שאלות ותשובות פשוטות, חילוץ משעמם | קוד מורכב או ניתוח עתיר ראיות |
+
+הטבלה הזאת היא התחלה. היא אינה הערכה.
+
+הערכה צריכה דוגמאות ומעריכי תוצאות:
+
+| רכיב | תפקיד |
+|---|---|
+| פריט במערך הנתונים | "הנה בקשה מייצגת." |
+| אמת מידה | "זה הנתיב או אופן ההתנהגות שציפינו להם." |
+| מעריך תוצאות | "כך אנחנו מחליטים אם הפלט עבר." |
+| ניסוי | "זו ההרצה שנוכל להשוות להרצות עתידיות." |
+
+המהלך החשוב הוא לבדוק התנהגות, לא רק את איכות הפרוזה.
+
+מודל יכול לכתוב תשובה יפהפייה אחרי שבחר במומחה הלא נכון. סוכן אבטחה יכול להפיק דוח שנשמע אמין בלי לשמר את הראיות. סוכן תמיכה יכול להישמע אמפתי ובמקביל לדלג על בדיקת מדיניות ההחזרים. הפסקה היא החלק הגלוי. מסלול הביצוע הוא המקום שבו הבאגים חיים.
+
+עבור נתב, אני מתחיל בארבעה צירים:
+
+| ציר | שאלה | דוגמה למעריך תוצאות |
+|---|---|---|
+| איכות | האם הוא בחר את הנתיב הנכון והפיק תוצאה שימושית? | דיוק הניתוב, שלמות התשובה, נאמנות למקור |
+| עלות | האם הוא נמנע ממודלים יקרים עבור עבודה משעממת? | מחלקת העלות של הנתיב שנבחר, תקציב טוקנים |
+| מהירות | האם הוא סיים במסגרת יעד זמן התגובה של המוצר? | מעריך זמן ריצה או פסק זמן |
+| אחר | האם הוא ציית למגבלות בטיחות, פרטיות וניטור? | רשימת כלים מותרים, שימור ראיות, התנהגות סירוב |
+
+השורה האחרונה חשובה. "אחר" הוא המקום שבו מצטלק הניסיון מהפרודקשן.
+
+## הפכו את החלטת הנתב לניתנת לניקוד
+
+אם הנתב מפיק רק תשובה סופית, אתם מנחשים לגבי ההחלטה. אפשר לנקד את הפלט, אבל אי אפשר לדעת אם הנתיב שנבחר היה נכון.
+
+לכן תנו לשלב הניתוב חוזה מובנה קטן:
+
+```typescript
+type RouterDecision = {
+  route: "code" | "long-context" | "general";
+  confidence: number;
+  reason: string;
+};
+```
+
+המשתמשים לעולם לא צריכים לראות את ה-JSON הזה. הוא יכול להיות שלב פנימי, מסירה בין שלבים ב-workflow או span ב-trace. כל מה שה-scorer צריך הוא גישה אליו.
+
+הנה סוכן Mastra קטן בכוונה, שכל תפקידו הוא לבחור נתיב:
+
+```typescript
+// src/mastra/agents/router-decision-agent.ts
+import { Agent } from "@mastra/core/agent";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  name: "Router Decision Agent",
+  instructions: `Choose the best specialist route for the user request.
+
+Return ONLY JSON:
+{
+  "route": "code" | "long-context" | "general",
+  "confidence": number,
+  "reason": string
+}
+
+Routing rules:
+- code: implementation, refactoring, debugging, code review, APIs, tests
+- long-context: large documents, transcripts, policy synthesis, many files
+- general: classification, formatting, extraction, simple Q&A
+
+Do not answer the user request. Only choose the route.`,
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+});
+```
+
+כן, זה קצת מלאכותי. מצוין. Evals מתגמלים נקודות חיבור משעממות.
+
+כשההחלטה מפורשת, אפשר לבדוק את הנתיב לפני שהמומחה downstream מתחיל לרוץ. כשלי הנתב מפסיקים להסתתר מאחורי כשלים במודל שנבחר, ב-prompt שלו, בכלים שלו או ב-scorer של התשובה הסופית.
+
+## כתבו scorer שתופס את הכשל המשעמם
+
+[`createScorer`](https://mastra.ai/reference/evals/create-scorer) של Mastra מקבל פונקציות JavaScript רגילות, prompts לשופט LLM, או את שניהם. התחילו בפונקציות בכל פעם שהכשל דטרמיניסטי. הן זולות יותר, מהירות יותר ופחות מסתוריות.
+
+דיוק ניתוב לא דורש מודל שופט. צריך רק לפרסר JSON ולהשוות שדה אחד.
+
+```typescript
+// src/mastra/scorers/route-accuracy.ts
+import { createScorer } from "@mastra/core/evals";
+
+type Route = "code" | "long-context" | "general";
+type RouteGroundTruth = {
+  route: Route;
+  mustMention?: string[];
+};
+
+function textFromAgentOutput(output: Array<{ content?: unknown }>) {
+  const content = output[0]?.content;
+  return typeof content === "string" ? content : JSON.stringify(content ?? "");
+}
+
+function parseDecision(output: Array<{ content?: unknown }>) {
+  try {
+    return JSON.parse(textFromAgentOutput(output)) as {
+      route?: string;
+      confidence?: number;
+      reason?: string;
+    };
+  } catch {
+    return {};
+  }
+}
+
+export const validRouterJsonScorer = createScorer({
+  id: "valid-router-json",
+  description: "Checks that the router emits a valid decision object.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const decision = parseDecision(run.output);
+    const validRoute = ["code", "long-context", "general"].includes(
+      decision.route ?? "",
+    );
+    const validConfidence =
+      typeof decision.confidence === "number" &&
+      decision.confidence >= 0 &&
+      decision.confidence <= 1;
+
+    return validRoute && validConfidence && decision.reason ? 1 : 0;
+  })
+  .generateReason(({ score }) =>
+    score === 1 ? "Valid router decision." : "Router output was not valid JSON.",
+  );
+
+export const routeAccuracyScorer = createScorer({
+  id: "route-accuracy",
+  description: "Checks whether the selected route matches ground truth.",
+  type: "agent",
+})
+  .generateScore(({ run }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+    return decision.route === expected.route ? 1 : 0;
+  })
+  .generateReason(({ run, score }) => {
+    const expected = run.groundTruth as RouteGroundTruth;
+    const decision = parseDecision(run.output);
+
+    return score === 1
+      ? `Selected expected route: ${expected.route}.`
+      : `Expected ${expected.route}, got ${decision.route ?? "nothing"}.`;
+  });
+```
+
+ה-scorer הזה לא זוהר במיוחד. זאת בדיוק הנקודה.
+
+אם הנתב לא מצליח להפיק JSON תקין באופן עקבי ולבחור את המומחה הברור מאליו בקבוצת בדיקה זעירה, אין סיבה לסמוך עליו עם תעבורת פרודקשן. אתם לא צריכים מודל-פילוסוף שידרג אונטולוגיה. אתם צריכים גלאי עשן עם סוללה.
+
+## הריצו קודם את לולאת ה-eval הקטנה
+
+[`runEvals`](https://mastra.ai/reference/evals/run-evals) היא הלולאה המהירה. נותנים לה יעד, מקרי בדיקה, scorers ומגבלת concurrency. היא מריצה את היעד מול הנתונים ומחזירה ציונים מצטברים.
+
+```typescript
+// src/mastra/evals/router.eval.ts
+import { runEvals } from "@mastra/core/evals";
+import { routerDecisionAgent } from "../agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "../scorers/route-accuracy";
+
+const routingCases = [
+  {
+    input: "Refactor this React component to remove duplicated state.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Summarize these 14 interview transcripts and find recurring objections.",
+    groundTruth: { route: "long-context" },
+  },
+  {
+    input: "Classify this ticket as billing, technical, account, or other.",
+    groundTruth: { route: "general" },
+  },
+  {
+    input: "Debug a failing Playwright test that only breaks in CI.",
+    groundTruth: { route: "code" },
+  },
+  {
+    input: "Extract the renewal date and contract value from this short paragraph.",
+    groundTruth: { route: "general" },
+  },
+];
+
+const result = await runEvals({
+  target: routerDecisionAgent,
+  data: routingCases,
+  scorers: [validRouterJsonScorer, routeAccuracyScorer],
+  targetOptions: {
+    modelSettings: { temperature: 0 },
+  },
+  concurrency: 3,
+});
+
+console.log(result.scores);
+console.log(result.summary.totalItems);
+
+if (result.scores["valid-router-json"] < 1) {
+  throw new Error("Router emitted invalid decision JSON.");
+}
+
+if (result.scores["route-accuracy"] < 0.9) {
+  throw new Error("Router route accuracy fell below 90%.");
+}
+```
+
+זו הלולאה שמריצים כשמשנים את ה-prompt, מוסיפים נתיב או מנסים מודל נתב זול יותר.
+
+היא לא מספיקה למערכת בשלה. היא כן מספיקה כדי למנוע את הרגרסיה המביכה ביותר: "שינינו את ה-prompt של הנתב, והוא התחיל לשלוח משימות סיווג למודל הקוד הפרימיום."
+
+שמרו את הצירים נפרדים. דיוק הניתוב ואיכות התשובה הסופית הם ציונים שונים. תקינות JSON, כלים מותרים ועקיבות מקבלים בדיקות משלהם. אל תאחדו אותם למספר "איכות" אחד. ממוצעים הם המקום שבו כשלים שימושיים הולכים לפרוש.
+
+## הוסיפו שופט LLM רק במקומות שבהם הוא מצדיק את העלות
+
+חלק מהניתובים אכן עמומים:
+
+```text
+Read these logs and tell me why the deploy failed.
+```
+
+האם זה `code` כי מדובר בניפוי באגים? `long-context` בגלל הלוגים? `general` כי המשתמש ביקש סיכום? הניתוב הנכון תלוי בכלים הזמינים ובמה שהמוצר שלכם מבטיח.
+
+כאן שופט LLM יכול לעזור, אבל רק עם rubric הדוק. scorers של Mastra יכולים לשלב שלבי פונקציה ושלבי prompt-object. השתמשו בפונקציות למבנה, ואז בשופט עבור החלק שבאמת דורש שיקול דעת.
+
+```typescript
+// src/mastra/scorers/route-reasonableness.ts
+import { createScorer } from "@mastra/core/evals";
+import { z } from "zod";
+
+export const routeReasonablenessScorer = createScorer({
+  id: "route-reasonableness",
+  description: "Judges whether the route explanation matches the request.",
+  type: "agent",
+  judge: {
+    model: process.env.JUDGE_MODEL ?? "openai/gpt-5-mini",
+    instructions: "You are a strict evaluator for model-routing decisions.",
+  },
+})
+  .analyze({
+    description: "Evaluate the router's decision rationale.",
+    outputSchema: z.object({
+      score: z.number().min(0).max(1),
+      rationale: z.string(),
+    }),
+    createPrompt: ({ run }) => `
+User request:
+${JSON.stringify(run.input)}
+
+Router output:
+${JSON.stringify(run.output)}
+
+Score from 0 to 1.
+
+1.0 = route is clearly appropriate and the reason cites the right task signals
+0.5 = route is defensible but underspecified or ambiguous
+0.0 = route is wrong, unsupported, or the reason is unrelated
+
+Return JSON with { "score": number, "rationale": string }.
+`,
+  })
+  .generateScore(({ results }) => results.analyzeStepResult.score)
+  .generateReason(({ results }) => results.analyzeStepResult.rationale);
+```
+
+ה-scorer הזה עולה כסף, כי הוא קורא למודל שופט. זה בסדר כשהשיפוט מצדיק את העלות.
+
+אל תשתמשו בו כדי לבדוק אם ה-JSON עובר parsing.
+
+## קידמו מקרים טובים ל-dataset
+
+מערכי eval מקודדים קשיחים הם בסדר בהתחלה. בסופו של דבר הדוגמאות שלכם הופכות לנכסי מוצר: פנייה שנכשלה מצד לקוח, שיחת תמיכה מוזרה, ניסיון להזרקת prompt, או בקשה שנותבה נכון עד יום חמישי האחרון.
+
+המקרים האלה שייכים ל-dataset.
+
+Datasets של Mastra הם אוספים מנוהלי-גרסאות של מקרי בדיקה. כל שינוי יוצר גרסה חדשה, כך שאפשר להריץ ניסוי מחדש מול אותה קבוצת מקרים בדיוק שהייתה קיימת כשקיבלתם החלטה לגבי מודל.
+
+Datasets דורשים persistence, לכן הגדירו אחסון קודם:
+
+```typescript
+// src/mastra/index.ts
+import { Mastra } from "@mastra/core";
+import { LibSQLStore } from "@mastra/libsql";
+import { routerDecisionAgent } from "./agents/router-decision-agent";
+import {
+  routeAccuracyScorer,
+  validRouterJsonScorer,
+} from "./scorers/route-accuracy";
+
+export const mastra = new Mastra({
+  storage: new LibSQLStore({
+    id: "router-evals",
+    url: "file:./mastra.db",
+  }),
+  agents: {
+    routerDecisionAgent,
+  },
+  scorers: {
+    validRouterJson: validRouterJsonScorer,
+    routeAccuracy: routeAccuracyScorer,
+  },
+});
+```
+
+אחר כך צרו את ה-dataset והוסיפו מקרים:
+
+```typescript
+// src/mastra/evals/create-router-dataset.ts
+import { z } from "zod";
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.create({
+  name: "router-decisions-v1",
+  description: "Representative model-router decisions for CI and experiments.",
+  inputSchema: z.string(),
+  groundTruthSchema: z.object({
+    route: z.enum(["code", "long-context", "general"]),
+    source: z.string().optional(),
+  }),
+});
+
+await dataset.addItems({
+  items: [
+    {
+      input: "Refactor this React component to remove duplicated state.",
+      groundTruth: { route: "code", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Summarize these 14 interview transcripts and find recurring objections.",
+      groundTruth: { route: "long-context", source: "synthetic:happy-path" },
+    },
+    {
+      input: "Classify this ticket as billing, technical, account, or other.",
+      groundTruth: { route: "general", source: "synthetic:happy-path" },
+    },
+  ],
+});
+```
+
+מרגע שיש לכם dataset, מקרי eval מפסיקים להיות נתונים זמניים של סקריפט. יש להם מזהים, גרסאות, היסטוריה ותוצאות ניסויים.
+
+בשלב הזה evals מפסיקים להרגיש כמו "קובצי בדיקה ל-prompts" ומתחילים להרגיש כמו זיכרון של המוצר.
+
+## הריצו ניסויים מול הנתב
+
+אחרי שה-dataset מוכן, [`dataset.startExperiment()`](https://mastra.ai/reference/datasets/startExperiment) מריץ אותו מול agent, workflow או scorer רשומים.
+
+```typescript
+// src/mastra/evals/run-router-experiment.ts
+import { mastra } from "../index";
+
+const dataset = await mastra.datasets.get({ id: process.env.ROUTER_DATASET_ID! });
+
+const summary = await dataset.startExperiment({
+  name: "router-gpt-5-mini-baseline",
+  description: "Baseline router decision run before adding security route.",
+  targetType: "agent",
+  targetId: "router-decision-agent",
+  scorers: ["validRouterJson", "routeAccuracy"],
+  metadata: {
+    routerModel: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+    promptVersion: "router-2026-07-03",
+  },
+  maxConcurrency: 5,
+  itemTimeout: 30_000,
+  maxRetries: 1,
+});
+
+console.log(`${summary.succeededCount}/${summary.totalItems} items succeeded`);
+
+for (const item of summary.results) {
+  const scores = Object.fromEntries(
+    item.scores.map((score) => [score.scorerId, score.score]),
+  );
+
+  console.log(item.itemId, item.output, scores);
+}
+```
+
+עכשיו השיחה משתנה.
+
+במקום לומר "נראה שהנתב החדש טוב יותר", אפשר לומר:
+
+- הנתב הישן קיבל ציון `0.94` בדיוק בניתוב.
+- הנתב החדש קיבל ציון `0.98`.
+- הוא השתפר בניתוב הקשרים ארוכים.
+- הוא נסוג בשני מקרי סקירת קוד.
+- הוא הפחית ב-18% את מסירות העבודה למודלים פרימיום.
+- הוא הוסיף 300ms של השהיה לנתב.
+
+זו שיחה הנדסית. יש כאן פשרות על השולחן, ואפשר להחליט אם הפשרה משתלמת.
+
+## מדדו התנהגות בזמן אמת, אבל אל תבלבלו בינה לבין אמת מידה
+
+Mastra יכולה גם לחבר scorers ישירות לסוכנים ולשלבי workflow. scorers בזמן אמת רצים באופן אסינכרוני, שומרים את התוצאות במסד הנתונים שהגדרתם, ותומכים בדגימה — כך שלא תצטרכו לתת ציון לכל תגובה בפרודקשן, אלא אם זו באמת הכוונה.
+
+שימושי. וגם תפקיד אחר.
+
+```typescript
+import { Agent } from "@mastra/core/agent";
+import { validRouterJsonScorer } from "../scorers/route-accuracy";
+
+export const routerDecisionAgent = new Agent({
+  id: "router-decision-agent",
+  instructions: "Choose the best specialist route...",
+  model: process.env.ROUTER_MODEL ?? "openai/gpt-5-mini",
+  scorers: {
+    validRouterJson: {
+      scorer: validRouterJsonScorer,
+      sampling: { type: "ratio", rate: 1 },
+    },
+  },
+});
+```
+
+ניקוד בזמן אמת אומר לכם שהנתב עדיין פולט החלטות תקינות. הוא מזהה פלט פגום, תוכן רעיל, קריאות אסורות לכלים, סמני ראיות חסרים וביטחון נמוך באופן חשוד.
+
+בדרך כלל הוא לא יכול לומר לכם מהי דיוק הניתוב, משום שתעבורת פרודקשן לא מגיעה כשאמת המידה מוצמדת אליה.
+
+ניקוד בזמן אמת הוא ניטור. ניסויים על datasets הם בדיקות מבוקרות. אתם צריכים את שניהם. הם עונים על שאלות שונות.
+
+## מה למדוד אחרי דיוק הניתוב
+
+דיוק הניתוב הוא המדרגה הראשונה. הוא אומר לכם שהבקשה הגיעה למומחה הצפוי. הוא לא אומר דבר על השאלה אם המומחה עשה עבודה טובה.
+
+אחרי שהנתב עובר את הבדיקות הבסיסיות, מדדו את המערכת בשכבות:
+
+| שכבה | מה למדוד | למה זה חשוב |
+|---|---|---|
+| החלטת הנתב | הנתיב שנבחר, רמת הביטחון, הסיבה | מזהה סיווג שגוי וכללי הסלמה גרועים |
+| מסלול הביצוע | רצף הכלים או הסוכנים הצפוי | מזהה התנהגות של "תשובה נכונה, מסלול שגוי" |
+| פלט המומחה | נכונות, נאמנות למקור, שימושיות | מזהה עבודה באיכות נמוכה אחרי ניתוב נכון |
+| עלות והשהיה | בחירת מודל, טוקנים, זמן ריצה | מזהה ניצחונות יקרים או איטיים |
+| בטיחות והיקף | כלים מותרים, גבולות סירוב, ראיות | מזהה כשלים שמסכנים את המוצר |
+
+`runEvals` תומך בתצורות scorers ברמת הסוכן, ה-workflow, השלב ומסלול הביצוע, כך שלא תצטרכו להעמיד פנים שהתשובה הסופית היא התוצר היחיד שחשוב.
+
+עבור workflow, המבנה נראה כך:
+
+```typescript
+const result = await runEvals({
+  target: supportWorkflow,
+  data: supportCases,
+  scorers: {
+    workflow: [finalAnswerQualityScorer],
+    steps: {
+      "route-request": [routeAccuracyScorer],
+      "check-policy": [policyGroundingScorer],
+    },
+    trajectory: [expectedPathScorer],
+  },
+});
+```
+
+זה המודל המחשבתי שאני רוצה עבור סוכנים בפרודקשן:
+
+תנו ציון להחלטה. תנו ציון למסלול. תנו ציון לתשובה.
+
+אם תתנו ציון רק לתשובה, המודל יכול לעבור במקרה.
+
+## הנתב צריך להפוך למשעמם יותר עם הזמן
+
+הפרומפט הראשון לניתוב הוא בדרך כלל פסקה של החלטות שיפוטיות. בסדר גמור לאב־טיפוס.
+
+ככל שההערכות מלמדות אתכם דברים, חלקים מהנתב צריכים להפוך לפחות קסומים:
+
+- מקרים לקסיקליים ברורים הופכים לכללים דטרמיניסטיים.
+- משימות מסוכנות דורשות אישור מפורש או הסתעפות ב־workflow.
+- משימות עמומות שואלות שאלת הבהרה במקום לנחש.
+- נתיבים יקרים דורשים רמת ביטחון גבוהה יותר או אות נוסף.
+- מקרי כשל מוכרים הופכים לפריטים ב־dataset.
+
+המטרה אינה להפוך את הנתב ל"חכם יותר" לנצח. המטרה היא להפוך את המערכת לקלה יותר להבנה ולניתוח.
+
+לפעמים זה אומר מודל טוב יותר. לפעמים prompt מדויק יותר. לפעמים זה שלב ב־workflow, scorer, תקרה קשיחה, או הצהרת `if` משעממת שחוסכת לכם אלפי דולרים בחודש.
+
+זאת כל הנקודה במדידת התנהגות. מפסיקים להתווכח על סמך טעם אישי ומתחילים להתווכח על סמך ראיות.
+
+## רשימת בדיקה מעשית להתחלה
+
+אם אתם בונים נתב של Mastra היום, התחילו כאן:
+
+1. הפכו את החלטת הניתוב למובנית, גם אם המשתמשים לעולם לא יראו אותה.
+2. כתבו scorers דטרמיניסטיים עבור JSON תקין, הנתיב הצפוי ונתיבים אסורים.
+3. השתמשו ב־`runEvals` עם 10 עד 20 מקרים לפני שאתם משנים את ה־prompts או את המודלים של הנתב.
+4. קידמו כשלים אמיתיים ל־dataset מנוהל גרסאות.
+5. הריצו ניסויים על dataset עבור שינויים משמעותיים ב־prompt, במודל, בנתיב או ב־workflow.
+6. הוסיפו scorers חיים עבור invariants זולים בפרודקשן.
+7. השוו ניסויים לפי נתיב, ולא רק לפי הציון הממוצע.
+
+הממוצע חשוב פחות מצביר הכשלים.
+
+אם כל הרגרסיות מופיעות בסינתזה של מדיניות בהקשר ארוך, אין לכם "נתב גרוע יותר". יש לכם בעיה בגבול שבין הנתיבים. אם בכל המקרים שנכשלו נעשה שימוש בכלי מסוים, יש לכם בעיה בחוזה של הכלי. אם כל מודל זול נכשל באותם שני מקרים עמומים, אתם צריכים לוגיקת הסלמה, לא ברירת מחדל יקרה יותר.
+
+כאן ההערכות הופכות לשימושיות. הן לא טקס, וגם לא לוח מחוונים שגורם לכולם להרגיש בוגרים באופן זמני. הן מראות לכם איזה חלק במערכת נכשל, כדי שתוכלו לתקן את החלק הזה במקום את המערכת כולה.
+
+## משאבים
+
+- [סקירה של scorers ב־Mastra](https://mastra.ai/docs/evals/overview)
+- [הפניה ל־`createScorer` של Mastra](https://mastra.ai/reference/evals/create-scorer)
+- [הפניה ל־`runEvals` של Mastra](https://mastra.ai/reference/evals/run-evals)
+- [סקירה של datasets ב־Mastra](https://mastra.ai/docs/evals/datasets/overview)
+- [ניסויים על datasets ב־Mastra](https://mastra.ai/docs/evals/datasets/running-experiments)
+- [אל תתחתנו עם המודל שלכם](/llm-routing-mastra-ai)
+- [נלחמים ברעות באמצעות הערכות!](/llm-evals-are-broken)
+````
