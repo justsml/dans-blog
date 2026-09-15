@@ -54,7 +54,7 @@ Aligned every quiz to frozen source commit 35c81f213 plus the final Date formatt
 
 | Quiz | SHA-256 |
 |---|---|
-| javascript-promises-quiz | ead6cb486ce9cef02d253b30715e77820dde44c9a310546a0532e7164078dd5a |
+| javascript-promises-quiz | e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12 |
 | js-quiz-14-date-time-questions-test-your-knowledge | ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d |
 | quiz-data-structures-algorithms | bbe16f991f17d61caaf6a3d510caa7d4dd771d1113bbbdd157319831abc66dd7 |
 | quiz-do-you-know-esnext | 63cd3ddef63907f8281b7060db5b8004bf7bac2067f84fcdf01ca8bd8b18c3fb |
@@ -73,3 +73,7 @@ Aligned every quiz to frozen source commit 35c81f213 plus the final Date formatt
 | quiz-in-the-aws-cloud | 8f073f151596d04141eec7cd5a1517d350fc7a7ebb7a42725eac544d8cb8dba9 |
 | quiz-is-your-memory-rusty | e31e6449bc819ea5691b0d41998b3052afe28378c4dbe0bab4551abe753c2f9c |
 | quiz-advanced-js-error-mastery | e00c048b44ae6dec4bee8aedf31356a8c002564399f9e3525175ace3b2fe3bbb |
+
+### Promises Q9 text explanation follow-up
+
+Added Arabic explanation above the retained annotated image, preserving the literal `The fails!`. Source SHA-256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`. Arabic SHA-256: `06ed876ac8a6ed6c4ef5361f36be11e8270846edfc986b62cd7bbf1837b49f7f`. Other source evidence is unchanged.
