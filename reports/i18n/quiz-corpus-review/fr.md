@@ -263,7 +263,7 @@ Source SHA-256: `77b0246b9c8275d11d3ca3108732512ae203d0d5f45f379aeb5166c24892893
 
 ### javascript-promises-quiz
 
-Source SHA-256: `ead6cb486ce9cef02d253b30715e77820dde44c9a310546a0532e7164078dd5a`
+Source SHA-256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`
 
 | Question | Correct position | Correct answer |
 | ---: | ---: | --- |
