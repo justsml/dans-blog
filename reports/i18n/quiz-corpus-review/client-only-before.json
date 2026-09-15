@@ -1,0 +1,155 @@
+{
+  "config": {
+    "argv": [
+      "/Users/dan/.nvm/versions/node/v24.14.1/bin/node",
+      "/Users/dan/code/oss/dans-blog/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/quiz-runtime.spec.ts",
+      "--config=/tmp/quiz-playwright.config.ts",
+      "--grep",
+      "client-only questions",
+      "--workers=1",
+      "--output=/tmp/quiz-client-only-before"
+    ],
+    "configFile": "/tmp/quiz-playwright.config.ts",
+    "rootDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/quiz-client-only-before",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/tmp/quiz-client-only-before.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "quiz-runtime.spec.ts",
+      "file": "quiz-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "client-only questions keep their positions when React loads slowly",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8422,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.quiz-dot')\nExpected: \u001b[32m9\u001b[39m\nReceived: \u001b[31m7\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.quiz-dot') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.quiz-dot')\u001b[22m\n\u001b[2m    14 × locator resolved to 7 elements\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.quiz-dot')\nExpected: \u001b[32m9\u001b[39m\nReceived: \u001b[31m7\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.quiz-dot') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.quiz-dot')\u001b[22m\n\u001b[2m    14 × locator resolved to 7 elements\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n\n    at /Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts:52:43",
+                    "location": {
+                      "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                      "column": 43,
+                      "line": 52
+                    },
+                    "snippet": "  50 |   await expect(page.locator(\".quiz-ui\")).toHaveClass(/quiz-slides-active/);\n  51 |   await expect(page.locator(\".challenge\")).toHaveCount(9);\n> 52 |   await expect(page.locator(\".quiz-dot\")).toHaveCount(9);\n     |                                           ^\n  53 |   await expect(page.locator(\".quiz-score-bar-value\")).toHaveText(\"0/9\");\n  54 |   await page.locator(\".quiz-dot\").nth(2).click();\n  55 |   await expect(page.locator(\"#qq-3\").locator(\"xpath=..\")).toHaveClass(/quiz-slide--active/);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                        "column": 43,
+                        "line": 52
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveCount\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.quiz-dot')\nExpected: \u001b[32m9\u001b[39m\nReceived: \u001b[31m7\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveCount\" locator('.quiz-dot') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.quiz-dot')\u001b[22m\n\u001b[2m    14 × locator resolved to 7 elements\u001b[22m\n\u001b[2m       - unexpected value \"7\"\u001b[22m\n\n\n  50 |   await expect(page.locator(\".quiz-ui\")).toHaveClass(/quiz-slides-active/);\n  51 |   await expect(page.locator(\".challenge\")).toHaveCount(9);\n> 52 |   await expect(page.locator(\".quiz-dot\")).toHaveCount(9);\n     |                                           ^\n  53 |   await expect(page.locator(\".quiz-score-bar-value\")).toHaveText(\"0/9\");\n  54 |   await page.locator(\".quiz-dot\").nth(2).click();\n  55 |   await expect(page.locator(\"#qq-3\").locator(\"xpath=..\")).toHaveClass(/quiz-slide--active/);\n    at /Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts:52:43"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-15T03:43:32.281Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/quiz-client-only-before/quiz-runtime-client-only-q-c97f0-ons-when-React-loads-slowly-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                    "column": 43,
+                    "line": 52
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "129089a2d928a9470de5-380bcb18780182c38cbf",
+          "file": "quiz-runtime.spec.ts",
+          "line": 43,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-15T03:43:30.429Z",
+    "duration": 11631.666,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

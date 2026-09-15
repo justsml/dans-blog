@@ -30,13 +30,14 @@ export function initQuizSlideManager(
 
   const islands = [
     ...quizUI.querySelectorAll<HTMLElement>("astro-island"),
-  ].filter((island) => island.querySelector(".challenge"));
+  ].filter((island) => island.querySelector(".challenge")
+    || /(?:^|\/)Challenge(?:[./]|$)/.test(island.getAttribute("component-url") ?? ""));
   if (islands.length === 0) return null;
 
-  const challenges = islands.map(
-    (island) => island.querySelector<HTMLElement>(".challenge")!,
-  );
-  const totalQuestions = challenges.length;
+  // client:only islands have no server-rendered .challenge yet. Keep their
+  // positions and collect their elements once React has rendered them.
+  let challenges: HTMLElement[] = [];
+  const totalQuestions = islands.length;
   let currentIndex = 0;
   let isTransitioning = false;
   let completionCardShown = false;
@@ -839,15 +840,17 @@ export function initQuizSlideManager(
     }
   }
 
-  // Wait only for the first question; later questions hydrate when navigated to.
-  // Hydration is signaled by the island having rendered React content.
-  // We poll with a reasonable timeout.
+  // Wait for client-only question markup and the first question to hydrate.
+  // Server-rendered later questions still hydrate only when navigated to.
   let attempts = 0;
-  const maxAttempts = 50; // 50 * 100ms = 5s max wait
+  const maxAttempts = 50; // Bound the first-question hydration wait, never omit missing markup.
 
   function checkHydration() {
     if (destroyed) return;
     attempts++;
+    const renderedChallenges = islands.map(island => island.querySelector<HTMLElement>(".challenge"));
+    const allRendered = renderedChallenges.every((challenge): challenge is HTMLElement => challenge !== null);
+    if (allRendered) challenges = renderedChallenges;
     // Check the first island without forcing hidden questions to hydrate
     // After hydration, React adds __reactFiber$ or __reactInternalInstance$ properties
     const firstHydrated = islands.slice(0, 1).every((island) => {
@@ -861,7 +864,7 @@ export function initQuizSlideManager(
       );
     });
 
-    if (firstHydrated || attempts >= maxAttempts) {
+    if (allRendered && (firstHydrated || attempts >= maxAttempts)) {
       activate();
     } else {
       hydrationTimer = window.setTimeout(checkHydration, 100);

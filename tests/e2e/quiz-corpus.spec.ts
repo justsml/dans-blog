@@ -8,7 +8,7 @@ const corpus = loadQuizCorpus();
 test.use({ reducedMotion: "reduce", timezoneId: "America/Denver" });
 for (const entry of corpus) {
   test(`${entry.locale}/${entry.slug}: every choice is represented and selectable`, async ({ page }) => {
-    test.setTimeout(180_000);
+    test.setTimeout(Math.max(180_000, entry.quiz.challenges.length * 15_000));
     const errors: string[] = [];
     page.on("pageerror", error => errors.push(error.message));
     expect(entry.quiz.challenges.length).toBe(entry.source.challenges.length);
@@ -16,6 +16,7 @@ for (const entry of corpus) {
     const first = page.locator("#qq-1");
     await first.scrollIntoViewIfNeeded();
     await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+    await expect(page.locator(".quiz-dot")).toHaveCount(entry.quiz.challenges.length);
     const messages = getQuizMessages(entry.locale);
     for (const [index, challenge] of entry.quiz.challenges.entries()) {
       await test.step(`Question ${index + 1}: all ${challenge.options.length} choices`, async () => {
@@ -37,9 +38,8 @@ for (const entry of corpus) {
           expect(option.text.trim()).not.toBe("");
           const control = options.nth(option.i);
           await expect(control.locator("label")).toHaveText(option.text);
-          await control.scrollIntoViewIfNeeded();
-          await expect(control).toBeVisible();
           await control.focus();
+          await expect(control).toBeInViewport();
           await page.keyboard.press(attempt % 2 ? "Space" : "Enter");
           await expect(question).toHaveAttribute("data-answer-count", String(attempt + 1));
           await expect(question).toHaveAttribute("data-question-correct", String(Boolean(option.isAnswer)));
@@ -64,7 +64,15 @@ test.describe("mobile locale controls", () => {
       await first.scrollIntoViewIfNeeded();
       await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
       await expect(first).toHaveCSS("direction", ["ar", "he"].includes(entry.locale) ? "rtl" : "ltr");
-      await expect(first.locator("pre").first()).toHaveCSS("direction", "ltr");
+      const code = first.locator("pre").first();
+      await expect(code).toHaveCSS("direction", "ltr");
+      if (await code.evaluate(element => element.scrollWidth > element.clientWidth)) {
+        await code.hover();
+        await page.mouse.wheel(180, 0);
+        await expect.poll(() => code.evaluate(element => element.scrollLeft)).toBeGreaterThan(0);
+        await code.evaluate(element => { element.scrollLeft = 0; });
+        await expect.poll(() => code.evaluate(element => element.scrollLeft)).toBe(0);
+      }
       if (["en", "ar", "ja"].includes(entry.locale)) {
         await page.screenshot({ path: `reports/i18n/quiz-corpus-review/screenshots/${entry.locale}-mobile.png` });
       }

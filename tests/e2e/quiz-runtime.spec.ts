@@ -38,3 +38,19 @@ test("an incorrect answer stays available for another attempt", async ({ page })
   await first.locator(".option").nth(1).click();
   await expect(first).toHaveAttribute("data-answer-count", "2");
 });
+
+
+test("client-only questions keep their positions when React loads slowly", async ({ page }) => {
+  await page.route("**/Challenge.*.js", async route => {
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    await route.continue();
+  });
+  await page.goto("/javascript-promises-quiz/", { waitUntil: "domcontentloaded" });
+  await page.locator("#qq-1").scrollIntoViewIfNeeded();
+  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+  await expect(page.locator(".challenge")).toHaveCount(9);
+  await expect(page.locator(".quiz-dot")).toHaveCount(9);
+  await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/9");
+  await page.locator(".quiz-dot").nth(2).click();
+  await expect(page.locator("#qq-3").locator("xpath=..")).toHaveClass(/quiz-slide--active/);
+});
