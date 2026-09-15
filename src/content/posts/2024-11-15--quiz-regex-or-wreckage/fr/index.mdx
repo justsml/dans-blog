@@ -110,7 +110,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
 >
   <slot name="question">
   <div className="question">
-    Que cela va-t-il correspondre ?
+    Quelles correspondances seront trouvées ?
     ```js
     '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
@@ -180,7 +180,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
 >
   <slot name="question">
   <div className="question">
-    Que va-t-il correspondre ?
+    Quelles correspondances seront trouvées ?
     ```js
     '$100 and €50'.match(/\d+(?=[\$€])/g)
     ```
@@ -188,7 +188,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ce motif ne correspondra à rien parce que le look‑ahead est inversé ! Si vous voulez des chiffres précédés de `$` ou `€`, utilisez un look‑behind : `/(?<=[\$€])\d+/g`.
+    Ce motif ne trouve rien dans cette entrée : il cherche un symbole monétaire après les chiffres, alors que la chaîne place les symboles avant eux. Si vous voulez des chiffres précédés de `$` ou `€`, utilisez un look‑behind : `/(?<=[\$€])\d+/g`.
 
     Les look‑aheads vérifient ce qui vient *après* la position courante. Le motif tel qu’il est écrit recherche :
     - Un ou plusieurs chiffres (`\d+`)
@@ -223,7 +223,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La `\b` représente une bordure de mot, qui correspond à :
+    La `\b` représente une frontière de mot, qui correspond à :
     - Entre un caractère de mot et un caractère non‑mot
     - Au début ou à la fin de la chaîne s'il y a un caractère de mot
 
@@ -232,7 +232,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
     - ❌ "cats" (pas de bordure après "cat")
     - ❌ "category" (pas de bordure après "cat")
 
-    [En savoir plus sur les bordures de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+    [En savoir plus sur les frontières de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
   </div>
   </slot>
 </Challenge>
@@ -296,14 +296,14 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Le regard arrière négatif `(?<!abc)` garantit que les chiffres ne sont pas précédés de "abc" :
+    La rétrospection négative (look-behind) `(?<!abc)` garantit que les chiffres ne sont pas précédés de "abc" :
     - ❌ "123" (précédé de "abc")
     - ✅ "23" (précédé de "abc1")
     - ✅ "456" (précédé de "def")
 
-    JavaScript prend en charge les assertions de regard arrière dans les moteurs modernes. Cet exemple utilise un regard arrière de longueur fixe : `abc` fait toujours trois caractères. Le regard arrière de longueur variable est l’aspect plus délicat propre à chaque moteur.
+    JavaScript prend en charge les assertions de rétrospection dans les moteurs modernes. Cet exemple utilise une rétrospection de longueur fixe : `abc` fait toujours trois caractères. La rétrospection de longueur variable est l’aspect plus délicat propre à chaque moteur.
 
-    Remarque : la prise en charge du regard arrière est relativement récente en JavaScript. Consultez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez supporter d'anciens navigateurs.
+    Remarque : la prise en charge de la rétrospection est relativement récente en JavaScript. Consultez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez supporter d'anciens navigateurs.
   </div>
   </slot>
 </Challenge>
@@ -330,16 +330,16 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Le motif utilise trois groupes capturants :
+    Le motif utilise trois groupes de capture :
     1. `(\d{4})` capture l'année
     2. `(\d{2})` capture le mois
     3. `(\d{2})` capture le jour
 
     `match()` sans le drapeau `g` renvoie :
     - Index 0 : correspondance complète
-    - Index 1+ : groupes capturants
+    - Index 1+ : groupes de capture
 
-    `slice(1)` est une astuce courante pour ne récupérer que les groupes capturants.
+    `slice(1)` est une astuce courante pour ne récupérer que les groupes de capture.
 
     [En savoir plus sur les groupes et la capture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
   </div>
@@ -368,13 +368,13 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Le look‑ahead négatif `(?![a-z])` garantit qu'il n'y a pas de lettres minuscules après les chiffres. Comme la partie "3aBc" contient une lettre minuscule après les chiffres, cette portion ne correspond pas. Ainsi, seule la séquence de départ "12" correspond.
+  <slot name="explanation">
+<div className="explanation">
+Avec le drapeau `i`, `(?![a-z])` rejette une lettre ASCII suivante, majuscule ou minuscule. La recherche gourmande consomme d’abord `123`, échoue devant `a`, puis revient en arrière jusqu’à `12`. Le caractère suivant est alors `3` : l’assertion réussit et le résultat est `["12"]`.
 
-    [En savoir plus sur le look‑ahead négatif](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
-  </div>
-  </slot>
+[En savoir plus sur l’anticipation négative](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -465,7 +465,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
 >
   <slot name="question">
   <div className="question">
-    Qu'est‑ce qui est correspond ?
+    Quelle correspondance est trouvée ?
     ```js
     '$100'.match(/(?<=\$)\d+/)
     ```
@@ -473,14 +473,14 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Le regard arrière positif `(?<=\$)` garantit que les chiffres sont précédés d'un signe dollar :
-    - `(?<=\$)`: regard arrière pour le signe dollar
+    La rétrospection positive (look-behind) `(?<=\$)` garantit que les chiffres sont précédés d'un signe dollar :
+    - `(?<=\$)`: rétrospection pour le signe dollar
     - `\d+`: correspond à un ou plusieurs chiffres
 
-    Les assertions de regard arrière ne consomment pas de caractères ; elles ne font que vérifier ce qui se trouve avant.
+    Les assertions de rétrospection ne consomment pas de caractères ; elles ne font que vérifier ce qui se trouve avant.
     Cela est utile lorsqu'on veut faire correspondre quelque chose en fonction de ce qui le précède sans inclure cette partie.
 
-    [En savoir plus sur les assertions de regard arrière](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [En savoir plus sur les assertions de rétrospection](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -599,7 +599,7 @@ Testez vos connaissances en RegEx avec des questions portant sur les motifs de b
 
 </QuizUI>
 
-<h2>Comment ças'est passé ? 🧐</h2>
+<h2>Comment ça s’est passé ? 🧐</h2>
 
 Les expressions régulières peuvent être une bête à dompter, mais elles sont incroyablement puissantes une fois que vous avez compris le principe (et toutes les nouvelles syntaxes). Continuez à pratiquer, et vous deviendrez un maître du RegEx en un rien de temps ! 🧙‍♂️
 

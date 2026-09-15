@@ -2,7 +2,7 @@
 social_image: ../mobile.webp
 title: 'Quiz : Postgres en profondeur, partie 2'
 subTitle: SQL d'acier ou SQL en mousse ?
-label: 'Deep PostgreSQL #2'
+label: "PostgreSQL approfondi 2"
 category: Quiz
 subCategory: Database
 modified: '2024-12-02'
@@ -126,26 +126,24 @@ Bonne chance ! 🍀
   ]}
 >
   <slot name="question">
-  <div className="question">
-    Laquelle de ces fonctionnalités PostgreSQL ne fait **PAS** ❌ partie du standard ANSI SQL ?
-  </div>
-  </slot>
+<div className="question">
+Quelle clause PostgreSQL documente-t-il comme une extension au standard SQL ?
+</div>
+</slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    Exemples d'extensions PostgreSQL au standard ANSI SQL :
-    - La clause `RETURNING`.
-    - `ILIKE` pour la correspondance insensible à la casse.
-    - Les types de tableaux (arrays) et leurs opérations.
-    - Les types JSON/JSONB.
+  <slot name="explanation">
+<div className="explanation">
+PostgreSQL documente sa clause `RETURNING` comme une extension au standard SQL. `ILIKE` est une autre extension PostgreSQL.
 
-    Le standard ANSI SQL original inclut :
-    - `WITH` (Common Table Expressions).
-    - `LIKE` pour la recherche de motifs.
-    - Les jointures `LATERAL`.
-    - Les fonctions de fenêtrage (Window functions).
-  </div>
-  </slot>
+Ne classez pas toute la prise en charge des tableaux et de JSON comme non standard : SQL normalise des fonctionnalités dans ces domaines, tandis que PostgreSQL fournit aussi ses propres types et opérateurs, comme `jsonb`.
+
+Différentes éditions successives du standard SQL ont introduit notamment :
+- `WITH` (expressions de table communes).
+- `LIKE` pour la recherche de motifs.
+- Les jointures `LATERAL`.
+- Les fonctions de fenêtrage.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -321,7 +319,7 @@ Bonne chance ! 🍀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="Quoting 2"
+  group="Guillemets 2"
   title="Guillemets pour les noms de colonnes"
   options={[
     {text: 'first.name'},
@@ -444,7 +442,7 @@ Bonne chance ! 🍀
 
     Ils sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsqu'un seul sous-ensemble de lignes est généralement interrogé.
 
-    Postgres n'utilisera l'index que si la condition `status = 'active'` est présente dans la requête.
+    Le planificateur peut envisager cet index s’il peut prouver que les conditions de la requête impliquent `status = 'active'`. Une correspondance textuelle exacte n’est pas toujours nécessaire, mais ces vérifications sont limitées : une condition paramétrée peut ne pas établir le prédicat lors de la planification. Être éligible ne garantit pas que l’index sera choisi.
 
     **Rappel :** Postgres ne supporte pas les 'query hints' (indices de requête) comme d'autres RDBMS. Le planificateur de requête décidera quand utiliser le ou les index appropriés.
   </div>

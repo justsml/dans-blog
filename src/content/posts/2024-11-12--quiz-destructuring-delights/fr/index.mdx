@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Délices de la déstructuration'
 subTitle: Êtes‑vous un maestro du destructuring ?
-label: Destructuring
+label: "Déstructuration"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -37,17 +37,30 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Échauffement : Objets"
   title="Destructuration d'objet basique"
   options={[
-    {text: 'Nom : Dan Levy, Âge : 20'},
-    {text: 'Nom : Dan Levy, Âge : 40'},
-    {text: 'Nom : Dan Levy, Âge : Infinity'},
-    {text: 'Nom : Dan Levy, Âge : undefined', isAnswer: true},
-    {text: 'Erreur : Impossible de lire la propriété \'age\''},
-    {text: 'Nom : undefined, Âge : 40'},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: 20"
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Name: Dan Levy, Age: Infinity"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Error: Cannot read property 'age'"
+  },
+  {
+    "text": "Name: undefined, Age: 40"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que affichera ce code ?
+    Qu’affichera ce code ?
     ```js
     const person = {
       name: 'Dan Levy',
@@ -74,15 +87,28 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Échauffement : Tableaux"
-  title="Valeur par défaut dans la destructuration d'objet"
+  title="Valeur par défaut dans la déstructuration d'objet"
   options={[
-    {text: 'Nom : Dan Levy, Âge : NaN'},
-    {text: 'Nom : Dan Levy, Âge : null'},
-    {text: 'Nom : Dan Levy, Âge : undefined', isAnswer: true},
-    {text: 'Nom : Dan Levy, Âge : 40'},
-    {text: 'Erreur : Impossible de déstructurer la propriété \'age\''},
-    {text: 'SyntaxError : Jeton inattendu \',\''},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: NaN"
+  },
+  {
+    "text": "Name: Dan Levy, Age: null"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Error: Cannot destructure property 'age'"
+  },
+  {
+    "text": "SyntaxError: Unexpected token ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -112,16 +138,27 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Destructuration imbriquée"
   title="Destructuration imbriquée"
   options={[
-    {text: 'Prénom : Dan, Ville : Denver'},
-    {text: 'Prénom : undefined, Ville : Denver'},
-    {text: 'Erreur : Impossible de lire la propriété \'first\''},
-    {text: 'Prénom : Dan, Ville : undefined'},
-    {text: 'Erreur', isAnswer: true},
-  ]}
+  {
+    "text": "First: Dan, City: Denver"
+  },
+  {
+    "text": "First: undefined, City: Denver"
+  },
+  {
+    "text": "Error: Cannot read property 'first'"
+  },
+  {
+    "text": "First: Dan, City: undefined"
+  },
+  {
+    "text": "Erreur",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Et si on faisait de la destructuration imbriquée ?
+    Et si on faisait de la déstructuration imbriquée ?
     ```js
     'use strict';
     const person = {
@@ -161,12 +198,23 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Valeurs par défaut"
   title="Valeurs par défaut dans la déstructuration d'objets"
   options={[
-    {text: 'Salut Dan de Inconnu'},
-    {text: 'Salut Dan de Denver'},
-    {text: 'Salut Inconnu de Inconnu'},
-    {text: 'Salut Inconnu de Denver'},
-    {text: 'Erreur', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Erreur",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -187,20 +235,17 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    La propriété `birth` n'existe pas sur `person`, donc l'ensemble de l'objet a encore besoin d'une valeur par défaut, pas seulement la propriété imbriquée. En gros, il manque un ` = {}` par défaut là‑dedans.
+  <slot name="explanation">
+<div className="explanation">
+La propriété `birth` est absente : JavaScript tente donc de déstructurer `place` depuis `undefined`. L’erreur est levée avant que la valeur par défaut de `place` puisse s’appliquer.
 
-    La façon dont c'est écrit indique « si `person.birth` est `undefined`, alors `place` vaut `Unknown` ». Mais `person.birth` est `undefined`, donc il essaie de déstructurer `undefined`, ce qui provoque une erreur.
-    ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+```plaintext
+TypeError
+```
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
-    ```
-  </div>
-  </slot>
+Le message exact dépend de l’environnement d’exécution. La valeur par défaut d’une propriété ne traite son absence ou sa valeur `undefined` qu’une fois l’objet contenant disponible. Utilisez `birth: { place = "Unknown" } = {}` pour fournir un objet par défaut quand `birth` est absente ou vaut `undefined`.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -209,13 +254,26 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Valeurs par défaut"
   title="Valeurs par défaut dans la déstructuration d'objet"
   options={[
-    {text: 'Salut Dan de Denver'},
-    {text: 'Salut Dan de Johannesburg'},
-    {text: 'Salut Dan d\'Inconnu', isAnswer: true},
-    {text: 'Salut Inconnu d\'Inconnu'},
-    {text: 'Salut Inconnu de Denver'},
-    {text: 'Erreur'},
-  ]}
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Dan from Johannesburg"
+  },
+  {
+    "text": "Hi Dan from Unknown",
+    "isAnswer": true
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Erreur"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -249,13 +307,26 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Arguments de fonction"
   title="Déstructuration des paramètres de fonction avec valeurs par défaut"
   options={[
-    {text: 'Salut Dan de undefined'},
-    {text: 'Salut Dan de Unknown'},
-    {text: 'Salut Dan de Denver'},
-    {text: 'Salut Unknown de Unknown'},
-    {text: 'Salut Unknown de Denver'},
-    {text: 'Erreur', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from undefined"
+  },
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Erreur",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -287,15 +358,32 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Arguments de fonction"
   title="Destructuration avec valeurs par défaut imbriquées"
   options={[
-    {text: 'Inconnu, Inconnu, Joburg'},
-    {text: 'Inconnu, Inconnu, Inconnu'},
-    {text: 'Inconnu, `undefined`, Joburg'},
-    {text: 'N/D, `undefined`, Joburg'},
-    {text: 'N/D, Inconnu, Joburg'},
-    {text: 'N/D, N/D, Joburg', isAnswer: true},
-    {text: 'Inconnu, N/D, Joburg'},
-    {text: 'Erreur'},
-  ]}
+  {
+    "text": "Unknown, Unknown, Joburg"
+  },
+  {
+    "text": "Unknown, Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, Unknown, Joburg"
+  },
+  {
+    "text": "N/A, N/A, Joburg",
+    "isAnswer": true
+  },
+  {
+    "text": "Unknown, N/A, Joburg"
+  },
+  {
+    "text": "Erreur"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -315,20 +403,19 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    La fonction `displayPlace` n’utilisera UN OBJET par défaut que si aucun objet n’est fourni. Ainsi, le seul moyen d’obtenir la valeur par défaut `{ place: "Unknown" }` est d’appeler la fonction sans argument : `displayPlace()`.
+  <slot name="explanation">
+<div className="explanation">
+L’objet paramètre par défaut `{ place: "Unknown" }` est utilisé si l’argument est omis ou vaut explicitement `undefined` : `displayPlace()` et `displayPlace(undefined)` affichent tous deux `Unknown`.
 
-    Un autre comportement notable est que passer `undefined` pour `place` déclenchera l’utilisation de la valeur par défaut, un peu comme le comportement de `JSON.stringify` (ignore `undefined`, reconnaît `null`).
+Si un objet est fourni, une propriété `place` absente ou valant `undefined` utilise sa propre valeur par défaut `"N/A"`. Les valeurs par défaut du paramètre et de la propriété s’appliquent à des niveaux différents.
 
-    Cela donne :
-    ```js
-    displayPlace() // Unknown
-    displayPlace({ name: "Dan" }) // N/A
-    displayPlace({ name: "Dan", place: undefined }) // N/A
-    ```
-  </div>
-  </slot>
+```js
+displayPlace() // Unknown
+displayPlace({ name: "Dan" }) // N/A
+displayPlace({ name: "Dan", place: undefined }) // N/A
+```
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -364,12 +451,14 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Dans ce cas, la propriété `place` est définie sur `null` lors du premier appel, et sur `undefined` lors du second. La valeur par défaut pour `place` n’est utilisée que si l’ensemble de l’objet est absent **ou** `undefined`. Les `null` passeront tels quels, c’est‑à‑dire `null`.
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+Au premier appel, `place` vaut `null` ; au second, elle vaut `undefined`. La valeur par défaut de la propriété, `"N/A"`, s’applique quand `place` est absente ou vaut `undefined`, même si l’objet est fourni. `null` ne déclenche pas cette valeur par défaut : les sorties sont donc `null` et `N/A`.
+</div>
+</slot>
 </Challenge>
+
+## Place à TypeScript
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -377,12 +466,23 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="Types inline TypeScript"
   title="Destructuration avec valeurs par défaut imbriquées"
   options={[
-    {text: 'N/A'},
-    {text: 'undefined'},
-    {text: 'Inconnu'},
-    {text: '\'null\''},
-    {text: 'Erreur TypeScript', isAnswer: true},
-  ]}
+  {
+    "text": "N/A"
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Unknown"
+  },
+  {
+    "text": "'null'"
+  },
+  {
+    "text": "TypeScript Error",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -451,7 +551,7 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Cela affichera `Denver` dans la console. La propriété `place` est renommée en `location` dans la signature de la fonction. C’est un schéma courant (renommer des propriétés lors de la destructuration) lorsqu’on adapte des structures de données tierces.
+    Cela affichera `Denver` dans la console. La propriété `place` est renommée en `location` dans la signature de la fonction. C’est un schéma courant (renommer des propriétés lors de la déstructuration) lorsqu’on adapte des structures de données tierces.
   </div>
   </slot>
 </Challenge>
@@ -505,12 +605,23 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   group="TypeScript + Affectation"
   title="Destructuration avec valeurs imbriquées, affectation et types"
   options={[
-    {text: 'Salut Dan Levy de N/A'},
-    {text: 'Salut Dan Levy de Cape Town'},
-    {text: 'Salut N/A N/A de N/A'},
-    {text: 'Salut N/A N/A de Cape Town'},
-    {text: 'Erreur', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan Levy from N/A"
+  },
+  {
+    "text": "Hi Dan Levy from Cape Town"
+  },
+  {
+    "text": "Hi N/A N/A from N/A"
+  },
+  {
+    "text": "Hi N/A N/A from Cape Town"
+  },
+  {
+    "text": "Erreur",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -542,7 +653,7 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   <div className="explanation">
     Une autre erreur ! Vous commencez à deviner, n'est-ce pas ?!
 
-    Il est difficile de lire les couches de destructuration, avec des valeurs par défaut, l'affectation et les types !
+    Il est difficile de lire les couches de déstructuration, avec des valeurs par défaut, l'affectation et les types !
 
     Dès que `place` est réassigné à la variable `p`, il n'est plus défini dans la portée de l'instruction `console.log`.
     ```ts
@@ -553,5 +664,11 @@ Plongez directement dans l’échauffement – prouvez vos compétences en destr
   </div>
   </slot>
 </Challenge>
+
+Ça faisait beaucoup de déstructuration, de valeurs par défaut, d’imbrication, d’affectation et de TypeScript ! 🤯
+
+J’espère que cela vous a plu !
+
+Vous en voulez encore ? Bien sûr ! Découvrez ma [collection de quiz](/challenges/) pour d’autres défis.
 
 </QuizUI>

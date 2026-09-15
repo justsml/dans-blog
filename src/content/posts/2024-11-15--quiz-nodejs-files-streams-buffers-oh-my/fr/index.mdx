@@ -38,7 +38,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   options={[
     {text: 'Crée un Buffer de taille 5 rempli de zéros', isAnswer: true},
     {text: 'Crée un Buffer de taille 5 avec des données aléatoires'},
-    {text: 'Lance une erreur'},
+    {text: 'Lève une erreur'},
     {text: 'Crée un Buffer vide'},
   ]}
 >
@@ -56,7 +56,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
     `Buffer.alloc(size)` crée un nouveau Buffer de la taille spécifiée rempli de zéros.
     Le résultat sera : `<Buffer 00 00 00 00 00>`
 
-    Si vous voulez créer un Buffer avec des données aléatoires, utilisez `Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` omet l’initialisation à zéro : ses octets peuvent contenir d’anciennes données mémoire. Ce n’est pas un générateur aléatoire. Initialisez chaque octet avant de le lire ou de l’exposer ; pour des octets aléatoires, utilisez `crypto.randomBytes(5)`.
 
     [En savoir plus sur l’allocation de Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -69,12 +69,23 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   group="Échauffement : Buffers"
   title="Conversion de Buffer en Chaîne"
   options={[
-    {text: 'A', isAnswer: true},
-    {text: '65'},
-    {text: '[Object object]'},
-    {text: 'Undefined'},
-    {text: 'Binary data'},
-  ]}
+  {
+    "text": "A",
+    "isAnswer": true
+  },
+  {
+    "text": "65"
+  },
+  {
+    "text": "[Object object]"
+  },
+  {
+    "text": "Undefined"
+  },
+  {
+    "text": "Données binaires"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -107,7 +118,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
     {text: 'Affiche le contenu du fichier puis "Done"'},
     {text: 'Affiche "Done" puis le contenu du fichier', isAnswer: true},
     {text: 'Affiche uniquement le contenu du fichier'},
-    {text: 'Lance une erreur'},
+    {text: 'Lève une erreur'},
   ]}
 >
   <slot name="question">
@@ -213,11 +224,20 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   group="Flux"
   title="Piping de flux"
   options={[
-    {text: 'Copie le fichier avec compression'},
-    {text: 'Copie le fichier sans mise en mémoire tampon', isAnswer: true},
-    {text: 'Charge le fichier entier en mémoire'},
-    {text: 'Crée un lien symbolique'},
-  ]}
+  {
+    "text": "Copie le fichier avec compression"
+  },
+  {
+    "text": "Copie le fichier par blocs sans mettre le fichier entier en mémoire tampon",
+    "isAnswer": true
+  },
+  {
+    "text": "Charge le fichier entier en mémoire"
+  },
+  {
+    "text": "Crée un lien symbolique"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -232,7 +252,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `pipe()` connecte un flux lisible à un flux inscriptible, gérant automatiquement la pression arrière et copiant les données par morceaux sans charger le fichier entier en mémoire.
+    `pipe()` connecte un flux lisible à un flux inscriptible, gérant automatiquement la rétropression et copiant les données par morceaux sans charger le fichier entier en mémoire.
 
     C’est efficace en mémoire pour les gros fichiers comparé à `fs.readFile()` suivi de `fs.writeFile()`.
 
@@ -249,7 +269,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   options={[
     {text: 'Crée des répertoires imbriqués si nécessaire', isAnswer: true},
     {text: 'Crée uniquement le dernier répertoire'},
-    {text: 'Lance une erreur'},
+    {text: 'Lève une erreur'},
     {text: 'Crée des liens symboliques'},
   ]}
 >
@@ -280,11 +300,20 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   group="Flux"
   title="Flux de transformation"
   options={[
-    {text: 'bonjour le monde'},
-    {text: 'BONJOUR LE MONDE', isAnswer: true},
-    {text: 'Erreur'},
-    {text: 'indéfini'},
-  ]}
+  {
+    "text": "hello world"
+  },
+  {
+    "text": "HELLO WORLD",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur"
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -403,7 +432,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
     {text: 'Empêche le débordement de mémoire', isAnswer: true},
     {text: 'Augmente la vitesse de lecture'},
     {text: 'Compresse les données'},
-    {text: 'Crypte les données'},
+    {text: 'Chiffre les données'},
   ]}
 >
   <slot name="question">
@@ -494,7 +523,7 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
   <div className="explanation">
     Les flux peuvent fonctionner en :
     1. Mode binaire (par défaut) : pour les tampons et les chaînes
-    2. Mode objet : pour toute valeur JavaScript
+    2. Mode objet : pour les valeurs JavaScript autres que `null`, qui signale la fin d’un flux lisible
 
     Exemple de mode objet :
     ```js
@@ -596,4 +625,4 @@ Voyons à quel point vous distinguez vos streams de vos buffers ! 🚀
 
 </QuizUI>
 
-J’espère que vous avez apprécié tester vos connaissances Node JS IO ! Vous en voulez plus ? Consultez ma [Collection de Quiz]../challenges/ pour d’autres défis !
+J’espère que vous avez apprécié tester vos connaissances Node JS IO ! Vous en voulez plus ? Consultez ma [collection de quiz](/challenges/) pour d’autres défis !

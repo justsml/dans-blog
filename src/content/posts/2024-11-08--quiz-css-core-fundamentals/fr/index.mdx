@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Connaissez‑vous les bases du CSS ? (2025)'
 subTitle: Êtes‑vous assez front‑end ?
-label: CSS Fundamentals
+label: "Bases du CSS"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -45,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Sélectionnez le <em class="highlight">UN INVALIDE</em> ❌ `font-size` :
+    Sélectionnez la <em class="highlight">SEULE VALEUR INVALIDE</em> ❌ pour `font-size` :
   </div>
   </slot>
   <slot name='explanation'>
@@ -120,7 +120,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Lequel de ces unités <em class="highlight">N'EST PAS</em> une unité CSS valide ❌ ?
+    Laquelle de ces unités <em class="highlight">N'EST PAS</em> une unité CSS valide ❌ ?
   </div>
   </slot>
   <slot name='explanation'>
@@ -289,17 +289,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    Comment centrer "shit" dans une boîte ?
-  </div>
-  </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Utiliser `text-align: center;` est la bonne façon de centrer du texte dans un élément bloc. Les propriétés `align` sont utilisées pour les mises en page flexbox, et `margin: 0 auto;` sert à centrer horizontalement les éléments bloc.
+<div className="question">
+Quelle déclaration centre horizontalement le texte en ligne dans le bloc qui le contient ?
+</div>
+</slot>
+  <slot name="explanation">
+<div className="explanation">
+`text-align: center;` centre le texte dans un élément bloc. La propriété CSS `align` n’existe pas. `margin: 0 auto;` peut centrer un bloc dont la largeur est contrainte ; elle ne centre pas son texte.
 
-    La propriété `align-content` est utilisée pour les mises en page grid, et `text-content` n’est pas une propriété CSS valide.
-  </div>
-  </slot>
+`align-content` aligne le contenu dans les contextes compatibles, notamment les grilles et les conteneurs flex sur plusieurs lignes ; ce n’est pas la propriété d’alignement du texte. `text-content` n’est pas une propriété CSS valide.
+</div>
+</slot>
 </Challenge>
 
 <Challenge

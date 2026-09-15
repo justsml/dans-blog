@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Maîtrise avancée des erreurs JavaScript'
 subTitle: Vos exceptions sont-elles vraiment exceptionnelles ?
-label: Errors
+label: "Erreurs"
 category: Quiz
 subCategory: JavaScript
 modified: '2025-11-04'
@@ -59,8 +59,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Les objets Error possèdent des propriétés non‑énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` renvoie `{}`. C’est un piège fréquent lorsqu’on envoie des erreurs dans les réponses d’API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Pensez aux propriétés énumérables des objets Error.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -90,8 +93,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `console.log(err)` affiche l'erreur avec son message et sa trace de pile parce que la console a un traitement spécial pour les objets Error. `JSON.stringify(err)` renvoie `'{}'` parce que les propriétés de Error ne sont pas énumérables. Cette différence piège de nombreux développeurs qui déboguent des API.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Comparez le traitement des objets par console.log et par la sérialisation JSON.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -124,20 +130,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Les trois renvoient `true`. `CustomError` hérite de `Error`, qui hérite de `Object`. L'opérateur `instanceof` parcourt toute la chaîne de prototypes, donc une instance de `CustomError` est aussi une instance de `Error` et de `Object`.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Rappelez-vous la chaîne de prototypes dans l’héritage JavaScript.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Astuces de vérification de type"
-  title="instanceof entre cadres"
+  title="instanceof entre contextes d’exécution"
   options={[
     {text: 'Toujours vrai'},
     {text: 'Toujours faux'},
-    {text: 'Peut être faux entre cadres', isAnswer: true},
-    {text: 'Lance une erreur'},
+    {text: 'Peut être faux entre contextes d’exécution', isAnswer: true},
+    {text: 'Lève une erreur'},
   ]}
 >
   <slot name="question">
@@ -153,8 +162,11 @@ console.log(iframeError instanceof Error);
 Les contextes d’exécution ont des constructeurs `Error` distincts : ce test peut donc renvoyer `false`. `Object.prototype.toString.call(obj)` reconnaît des erreurs ordinaires issues d’un autre contexte, mais `Symbol.toStringTag` permet d’imiter son résultat. Ce n’est pas une preuve d’authenticité.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Les contextes d’exécution ont des constructeurs Error distincts.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -187,8 +199,11 @@ Les contextes d’exécution ont des constructeurs `Error` distincts : ce test p
     JavaScript autorise le lancer de n’importe quelle valeur. Ici, `e instanceof Error` vaut `false` et `typeof e` est `"string"`. Cela peut casser le code de gestion des erreurs qui suppose que toutes les exceptions capturées sont des objets Error. Lancez toujours des instances d’Error pour faciliter le débogage.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+JavaScript permet de lever n’importe quelle valeur, pas seulement un objet Error.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -223,8 +238,11 @@ Les contextes d’exécution ont des constructeurs `Error` distincts : ce test p
     `err.name` est `"CustomError"` parce que `this.constructor.name` renvoie le nom de la classe. Affecter `this.name = this.constructor.name` est un schéma courant pour garantir que les classes d'erreur personnalisées affichent le bon nom dans les traces de pile et les messages d'erreur.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Examinez la valeur de `this.constructor.name`.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -256,8 +274,11 @@ Les contextes d’exécution ont des constructeurs `Error` distincts : ce test p
     Sans définir explicitement `this.name`, l’erreur hérite de la propriété `name` par défaut de la classe `Error`, qui est `"Error"`. C’est pourquoi les classes d’erreur personnalisées doivent toujours définir `this.name = this.constructor.name` dans leur constructeur.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Quelle est la valeur par défaut de la propriété name d’Error ?
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -266,11 +287,20 @@ Les contextes d’exécution ont des constructeurs `Error` distincts : ce test p
   group="Cause d'erreur"
   title="Erreur moderne .cause"
   options={[
-    {text: 'Original error', isAnswer: true},
-    {text: 'undefined'},
-    {text: 'L\'erreur enveloppante'},
-    {text: 'SyntaxError'},
-  ]}
+  {
+    "text": "\"Original error\"",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "L'erreur enveloppante"
+  },
+  {
+    "text": "SyntaxError"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -289,8 +319,11 @@ Les contextes d’exécution ont des constructeurs `Error` distincts : ce test p
     `Error.cause` (ES2022) permet de chaîner les erreurs pour conserver le contexte de l'erreur originale. `wrapper.cause` fait référence à l'erreur originale, donc `wrapper.cause.message` renvoie `"Original error"`. C’est utile pour envelopper des erreurs de bas niveau avec un contexte de niveau supérieur.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Error.cause permet de chaîner les erreurs en JavaScript moderne.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -299,7 +332,7 @@ Les contextes d’exécution ont des constructeurs `Error` distincts : ce test p
   group="Traces de pile"
   title="Manipulation de la pile"
   options={[
-    {text: 'Supprime createError de la pile', isAnswer: true},
+    {text: 'Retire createError de la trace de pile', isAnswer: true},
     {text: 'Efface toute la pile'},
     {text: 'Ne fait rien'},
     {text: 'Lance un TypeError'},
@@ -324,8 +357,11 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
     `Error.captureStackTrace` (V8/Node.js) supprime la fonction spécifiée (`createError`) de la trace de pile, rendant les fonctions usine d’erreur invisibles aux utilisateurs finaux. Cela crée des traces de pile plus propres qui pointent vers l’endroit où l’usine a été appelée, pas vers l’usine elle‑même.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Cette fonctionnalité de V8 permet de simplifier les traces de pile.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -364,8 +400,11 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
     Les littéraux de modèle convertissent `undefined` en la chaîne `"undefined"` lors de l’interpolation. Le message d’erreur devient `"Value undefined is invalid"`. Pour des messages plus propres, envisagez d’utiliser `value ?? 'null'` ou des vérifications similaires avant l’interpolation.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Comment l’interpolation des littéraux de modèle traite-t-elle undefined ?
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -376,7 +415,7 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
   options={[
     {text: 'Envoie l\'objet d\'erreur complet'},
     {text: 'Envoie {"error":{}}', isAnswer: true},
-    {text: 'Lance une erreur serveur'},
+    {text: 'Lève une erreur serveur'},
     {text: 'Envoie uniquement le message d\'erreur'},
   ]}
 >
@@ -397,8 +436,11 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
     `res.json()` utilise `JSON.stringify()` en interne, donc l'objet Error devient `{}`. Le client reçoit `{"error":{}}`. Pour corriger cela, utilisez `res.json({ error: error.message })` ou `res.json({ error: { message: error.message, name: error.name } })`.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Rappelez-vous comment JSON.stringify sérialise les objets Error.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -434,8 +476,11 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
     Comme `throw`, `Promise.reject()` accepte n'importe quelle valeur – chaînes, objets, nombres, etc. Cela affiche `"string"`, `404` et `42`. Vérifiez toujours le type des valeurs attrapées dans les chaînes de promesses, surtout lorsqu'un code tiers peut rejeter des valeurs qui ne sont pas des objets Error.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Les rejets de promesses ressemblent aux exceptions levées par throw.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -469,8 +514,11 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
     Des propriétés comme `code` et `errno` sont spécifiques à l'environnement (Node.js dans ce cas) et ne font pas partie de l'objet Error standard. Les erreurs du navigateur n'auront pas ces propriétés. Vérifiez toujours leur existence : `if (err.code === 'ENOENT')` plutôt que de supposer qu'elles existent.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Pensez aux différents environnements JavaScript et types d’erreurs.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -507,8 +555,11 @@ On utilise ici V8/Node.js, où `Error.captureStackTrace` est disponible.
 Les deux comparaisons valent `false` pour cet objet précis. Son prototype n’est pas `Error.prototype` et son étiquette par défaut est `[object Object]`. Toutefois, ajouter `[Symbol.toStringTag]: "Error"` rendrait la deuxième comparaison vraie. Une étiquette ou des propriétés ressemblant à celles d’une erreur ne prouvent pas son authenticité.
   </div>
   </slot>
-  <slot name='hints'>
-  </slot>
+  <slot name="hints">
+<div className="hints">
+Le premier test examine la chaîne de prototypes. Le second produit une étiquette de type qui peut être influencée par Symbol.toStringTag.
+</div>
+</slot>
 </Challenge>
 
 </QuizUI>

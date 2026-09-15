@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Connaissez‑vous le CSS moderne ? (2025)'
 subTitle: Êtes‑vous assez front‑end ?
-label: Advanced CSS
+label: "CSS avancé"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -70,13 +70,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Fonctions CSS"
   title="Fonction CSS min()"
   options={[
-    {text: 'largeur: 50%;'},
-    {text: 'largeur: 200px;', isAnswer: true},
-    {text: 'largeur: 250px;'},
-    {text: 'largeur: 500px;'},
-    {text: 'largeur: max(50%, 200px);'},
-    {text: 'Syntaxe invalide'},
-  ]}
+  {
+    "text": "width: 50%;"
+  },
+  {
+    "text": "width: 200px;",
+    "isAnswer": true
+  },
+  {
+    "text": "width: 250px;"
+  },
+  {
+    "text": "width: 500px;"
+  },
+  {
+    "text": "width: max(50%, 200px);"
+  },
+  {
+    "text": "Syntaxe invalide"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -101,7 +114,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     width: min(250px, 200px);
     /* -> 200px wins */
     ```
-    La fonction `min()` est particulièrement utile en conception réactive, où vous pouvez garantir qu’un composant (ou une taille de police) ne dépasse pas une certaine limite.
+    La fonction `min()` est particulièrement utile en conception adaptative, où vous pouvez garantir qu’un composant (ou une taille de police) ne dépasse pas une certaine limite.
   </div>
   </slot>
 </Challenge>
@@ -117,12 +130,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 10px;'},
     {text: 'width: 50px;'},
     {text: 'width: 96px;', isAnswer: true},
-    {text: 'Invalid syntax'},
+    {text: 'Syntaxe invalide'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Étant donné un conteneur de 200 px de largeur, quelle serait la largeur calculée du `<div>` ?
+    Avec un bloc conteneur de 200 px et une taille de police racine de 16 px, quelle est la largeur calculée du `<div>` ?
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -132,7 +145,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La fonction `max()` accepte 2 entrées ou plus et utilise automatiquement la plus grande valeur. En supposant que la taille de police racine soit la valeur par défaut du navigateur `16px`, la largeur donne `96px`.
+    La fonction `max()` accepte une ou plusieurs expressions de calcul et utilise automatiquement la plus grande valeur. En supposant que la taille de police racine soit la valeur par défaut du navigateur `16px`, la largeur donne `96px`.
 
     Pour comprendre la valeur calculée, il faut convertir les unités relatives en pixels :
 
@@ -185,7 +198,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'blue'},
     {text: 'red'},
-    {text: 'system default'},
+    {text: 'valeur par défaut du système'},
     {text: '#6b8e23', isAnswer: true},
     {text: 'var(--secondary-color)'},
   ]}
@@ -259,12 +272,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Le CSS prend‑il en charge le nesting nativement ?
+    Le CSS prend‑il en charge le imbrication nativement ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Oui ! Nous avons enfin le nesting CSS natif ! Le CSS a introduit la syntaxe de nesting native ces dernières années (2023), permettant un style hiérarchique directement dans le CSS.
+    Oui ! Nous avons enfin le imbrication CSS natif ! Le CSS a introduit la syntaxe de imbrication native ces dernières années (2023), permettant un style hiérarchique directement dans le CSS.
   </div>
   </slot>
 </Challenge>
@@ -313,7 +326,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'background-color: red'},
     {text: 'background-color: white', isAnswer: true},
     {text: 'background-color: blue'},
-    {text: 'Invalid syntax'},
+    {text: 'Syntaxe invalide'},
   ]}
 >
   <slot name="question">

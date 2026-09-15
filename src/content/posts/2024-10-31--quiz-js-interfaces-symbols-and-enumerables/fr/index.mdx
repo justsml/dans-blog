@@ -1,7 +1,7 @@
 ---
 title: "Quiz\_: Symboles et énumérables"
 subTitle: Connaissez‑vous les aspects moins connus d’ES2015 ?
-label: Symbols
+label: "Symboles"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -37,7 +37,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Utiliser une boucle'},
     {text: 'Appeler une méthode pour accéder à la valeur'},
     {text: 'Accéder directement à la valeur', isAnswer: true},
-    {text: 'Lancer une erreur'},
+    {text: 'Lever une erreur'},
   ]}
 >
   <slot name="question">
@@ -59,6 +59,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Dans cet exemple, accéder à `obj.val` invoque directement la méthode d’accesseur et affiche `got it!`.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -87,9 +90,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les Symboles sont un type primitif unique et immuable qui peut être utilisé comme clés pour les propriétés d’un objet. Cela permet d’éviter les collisions de noms, notamment dans les grands bases de code ou lors de l’écriture de bibliothèques réutilisables.
+    Les Symboles sont un type primitif unique et immuable qui peut être utilisé comme clés pour les propriétés d’un objet. Cela permet d’éviter les collisions de noms, notamment dans les grandes bases de code ou lors de l’écriture de bibliothèques réutilisables.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -98,10 +104,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Interfaces avancées"
   title="Propriétés énumérables"
   options={[
-    {text: 'Lance une erreur'},
-    {text: 'Non, il ne le fera pas'},
+    {text: 'Lève une erreur'},
+    {text: 'Non, elle ne sera pas listée'},
     {text: 'Cela dépend du type de valeur'},
-    {text: 'Oui, il sera listé', isAnswer: true},
+    {text: 'Oui, elle sera listée', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -124,6 +130,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     La propriété `enumerable` dans `Object.defineProperty()` détermine si la propriété apparaîtra dans les méthodes d'énumération comme `for...in`. Dans cet exemple, comme `enumerable: true`, la propriété `age` sera listée lors de l'itération.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -132,11 +141,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Travailler avec les objets"
   title="Énumérabilité par défaut avec Object.defineProperty()"
   options={[
-    {text: 'vrai'},
-    {text: 'faux', isAnswer: true},
-    {text: 'indéfini'},
-    {text: 'Dépend du contexte'},
-  ]}
+  {
+    "text": "true"
+  },
+  {
+    "text": "false",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Dépend du contexte"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -155,6 +173,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Lorsque vous utilisez `Object.defineProperty()` sans spécifier `enumerable`, sa valeur par défaut est `false`. Cela signifie que la propriété `make` n'apparaîtra pas dans `Object.keys()` ni dans d'autres méthodes d'énumération.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -166,7 +187,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Dépend de leurs descriptions'},
     {text: 'true'},
     {text: 'false', isAnswer: true},
-    {text: 'Lance une erreur'},
+    {text: 'Lève une erreur'},
   ]}
 >
   <slot name="question">
@@ -184,6 +205,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Chaque appel à `Symbol()` crée une valeur unique et immuable, même si la description est identique. Dans ce cas, `sym1` et `sym2` sont des symboles différents, donc la comparaison renvoie `false`.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -192,10 +216,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Interfaces avancées"
   title="Symboles comme clés non‑énumérables"
   options={[
-    {text: 'Non, ça ne le fera pas', isAnswer: true},
-    {text: 'Oui, il sera listé'},
+    {text: 'Non, elle ne sera pas listée', isAnswer: true},
+    {text: 'Oui, elle sera listée'},
     {text: 'Cela dépend de la méthode d\'itération'},
-    {text: 'Lance une erreur'},
+    {text: 'Lève une erreur'},
   ]}
 >
   <slot name="question">
@@ -218,6 +242,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Les propriétés à clé Symbol peuvent posséder leur propre drapeau `enumerable`, mais `for...in` et `Object.keys()` ne parcourent que les propriétés énumérables à clé chaîne. Dans cet exemple, seule `regularKey` sera listée, pas la propriété à clé Symbol.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -253,6 +280,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 </QuizUI>

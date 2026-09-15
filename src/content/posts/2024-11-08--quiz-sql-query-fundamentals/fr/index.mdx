@@ -138,22 +138,31 @@ Plongez‑y directement pour prouver votre maîtrise des requêtes SQL ! 👇
   group="Sous-requêtes SQL"
   title="Sous-requête corrélée"
   options={[
-    {text: 'Une sous‑requête qui s’exécute une fois au total'},
-    {text: 'Une sous‑requête utilisée uniquement dans les clauses JOIN'},
-    {text: 'Une sous‑requête qui ne renvoie que plusieurs colonnes'},
-    {text: 'Une sous‑requête qui s’exécute une fois pour chaque ligne de la requête externe', isAnswer: true},
-  ]}
+  {
+    "text": "Une sous‑requête qui s’exécute une fois au total"
+  },
+  {
+    "text": "Une sous‑requête utilisée uniquement dans les clauses JOIN"
+  },
+  {
+    "text": "Une sous‑requête qui ne renvoie que plusieurs colonnes"
+  },
+  {
+    "text": "Une sous-requête qui référence des colonnes de la requête externe",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
     Qu’est‑ce qu’une sous‑requête corrélée en SQL ?
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Une sous‑requête corrélée est évaluée une fois par ligne de la requête externe. Elle fait référence aux colonnes de la requête externe, ce qui la rend dépendante de chaque ligne.
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+Une sous-requête corrélée référence des colonnes de sa requête externe. Son résultat dépend conceptuellement de la ligne externe courante ; l’optimiseur peut transformer l’exécution. Une exécution physique séparée pour chaque ligne n’est donc pas garantie.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -239,7 +248,7 @@ Plongez‑y directement pour prouver votre maîtrise des requêtes SQL ! 👇
 
     Bien qu'il *puisse* renvoyer des "lignes uniques" (et le fait souvent), ce n'est pas forcément son objectif principal.
 
-    L'indexation n'est pas requise ici, bien qu'il soit recommandé d'utiliser `IN` sur une colonne indexée, de préférence avec un index `UNIQUE`, car cela peut améliorer les performances.
+    Un index n’est pas obligatoire. Un index B-tree adapté peut accélérer un filtre `IN` sélectif, mais le planificateur peut préférer un parcours séquentiel si les correspondances sont nombreuses ou la table petite. `UNIQUE` impose une contrainte sur les données ; ce n’est pas une condition d’optimisation de `IN`.
   </div>
   </slot>
 </Challenge>

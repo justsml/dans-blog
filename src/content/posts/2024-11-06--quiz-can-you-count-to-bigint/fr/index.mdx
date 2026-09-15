@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Pouvez‑vous compter sur JavaScript ?'
 subTitle: Vous maîtrisez la différence entre `parseInt` et `parseFloat` ?
-label: Numbers
+label: "Nombres"
 modified: '2024-11-09'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -21,6 +21,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <>
 <QuizUI>
+
+Bienvenue dans mon défi sur les nombres JavaScript !
+
+Ce quiz teste vos connaissances des nombres en JS, de `parseInt`, de `parseFloat` et de `BigInt` !
+
+Nous aborderons l’analyse des nombres dans différentes bases, la précision des nombres à virgule flottante et les particularités du système numérique de JavaScript.
+
+> Ce ne sont que des nombres : ça ne peut pas être si difficile, si ? 🤓
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -172,10 +180,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Comparaison des types"
   title="Comparaison d'égalité entre `parseInt` et `parseFloat`"
   options={[
-    {text: 'vrai', isAnswer: true},
-    {text: 'faux'},
-    {text: 'NaN'},
-  ]}
+  {
+    "text": "true",
+    "isAnswer": true
+  },
+  {
+    "text": "false"
+  },
+  {
+    "text": "NaN"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -223,12 +238,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Basé"
   title="Analyse hexadécimale"
   options={[
-    {text: 'vrai', isAnswer: true},
-    {text: 'faux'},
-    {text: 'NaN'},
-    {text: 'Doit être en majuscules : 2A'},
-    {text: 'Erreur'},
-  ]}
+  {
+    "text": "true",
+    "isAnswer": true
+  },
+  {
+    "text": "false"
+  },
+  {
+    "text": "NaN"
+  },
+  {
+    "text": "Doit être en majuscules : 2A"
+  },
+  {
+    "text": "Erreur"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -404,7 +430,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <table>
     <thead>
       <tr>
-        <th>Function</th>
+        <th>Fonction</th>
         <th><code>parseInt</code></th>
         <th><code>parseFloat</code></th>
         <th><code>Number</code></th>
@@ -413,7 +439,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     </thead>
     <tbody>
       <tr>
-        <td>Ignores Whitespace</td>
+        <td>Ignore les espaces</td>
         <td>✅</td>
         <td>✅</td>
         <td>✅</td>
@@ -427,21 +453,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         <td>✅</td>
       </tr>
       <tr>
-        <td>Supports Radix Arg</td>
+        <td>Accepte un argument de base</td>
         <td>✅</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
       </tr>
       <tr>
-        <td>Binary/Octal/Hex literals</td>
-        <td>✅</td>
+        <td>Préfixes binaires, octaux et hexadécimaux dans les chaînes</td>
+        <td>Seulement <code>0x</code> ; <code>0b</code>/<code>0o</code> ne sont pas reconnus automatiquement</td>
         <td>❌</td>
         <td>✅</td>
         <td>✅</td>
       </tr>
       <tr>
-        <td>Invalid chars <code>42 oh no</code></td>
+        <td>Caractères invalides <code>42 oh no</code></td>
         <td><code>42</code></td>
         <td><code>42</code></td>
         <td><code>NaN</code></td>

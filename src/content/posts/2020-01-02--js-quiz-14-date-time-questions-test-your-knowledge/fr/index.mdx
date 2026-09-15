@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : 14 questions JavaScript sur les dates'
 subTitle: Apprenez à épater la galerie avec des quiz JS ! ✨
-label: Dates & Times
+label: "Dates et heures"
 modified: '2024-11-27'
 tags:
   - quiz
@@ -36,7 +36,7 @@ La lutte pour maîtriser `Date` pousse de nombreux développeurs à recourir san
 
 Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API native `Date`. Utilisez les boutons verts pour obtenir des indices et des explications ! En théorie, à la fin du défi vous aurez consolidé votre compréhension de `Date` en JavaScript.
 
-#### **NOTE :** Toutes les exemples supposent le fuseau horaire local GMT‑7.
+#### **NOTE :** Tous les exemples supposent le fuseau horaire local GMT‑7.
 
 
 ### 👇 14 questions ci‑dessous 👇
@@ -49,14 +49,21 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Constructeur Date Partie 1"
   options={[
-    {text: 'Jan 01 2020'},
-    {text: 'Feb 01 2020', isAnswer: true},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    "text": "Jan 01 2020"
+  },
+  {
+    "text": "Feb 01 2020",
+    "isAnswer": true
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -70,6 +77,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     'février' a une valeur d'index de un. (Pensez-y comme à une recherche dans un tableau.)
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -78,14 +88,21 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Constructeur de Date Partie 2"
   options={[
-    {text: 'Jan 01 2020', isAnswer: true},
-    {text: 'Feb 01 2020'},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    "text": "Jan 01 2020",
+    "isAnswer": true
+  },
+  {
+    "text": "Feb 01 2020"
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -99,6 +116,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     « January » a une valeur d'index zéro. (Pensez-y comme à une recherche dans un tableau.)
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -107,13 +127,26 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Constructeur Date Partie 3"
   options={[
-    {text: '01 Jan 1970'},
-    {text: 'Époque Unix de 0'},
-    {text: 'Date actuelle, en UTC/GMT'},
-    {text: 'Date actuelle', isAnswer: true},
-    {text: 'NaN'},
-    {text: 'RangeError : argument invalide.'},
-  ]}
+  {
+    "text": "01 Jan 1970"
+  },
+  {
+    "text": "Époque Unix de 0"
+  },
+  {
+    "text": "Date actuelle, en UTC/GMT"
+  },
+  {
+    "text": "Date actuelle",
+    "isAnswer": true
+  },
+  {
+    "text": "NaN"
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -124,15 +157,14 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    N'oubliez pas le mot‑clé `new` ! `Date` est une classe et doit être appelée avec `new`.
+  <slot name="explanation">
+<div className="explanation">
+Appeler `Date()` sans `new` ignore tous les arguments et renvoie une chaîne représentant la date et l’heure actuelles. Utilisez `new Date(...)` pour créer un objet Date à partir des arguments fournis.
+</div>
+</slot>
+<slot name="hints">
 
-    `Date('...')` sans `new` ignore ce que vous lui passez. Il semble toujours produire la date et l'heure actuelles avec `new Date()` (sans arguments).
-
-    C'est un **piège courant** qui est **facile à négliger**, même lors d'une revue de code.
-  </div>
-  </slot>
+</slot>
 </Challenge>
 
 <Challenge
@@ -151,6 +183,7 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
 >
   <slot name="question">
   <div className="question">
+    Supposez un décalage local GMT−7 pour ces dates.
     Que contiendra la sortie ?
     ```js
     const date = new Date(2020)
@@ -169,6 +202,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     Vous pouvez contourner le décalage du fuseau horaire local en utilisant [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -185,6 +221,7 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
 >
   <slot name="question">
   <div className="question">
+    Supposez un décalage local GMT−7 pour ces dates.
     Quelle valeur sera affichée dans la console ?
     ```js
     const d1 = new Date('2020-01-01')
@@ -205,6 +242,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     La deuxième date est interprétée comme `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -231,6 +271,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     Consultez la documentation de la méthode [`toLocaleDateString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString). Son comportement est documenté sous [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -254,16 +297,14 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Vous obtiendrez `TypeError: date.toUTCString is not a function`, car [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) renvoie un entier en millisecondes, pas une instance de date.
+  <slot name="explanation">
+<div className="explanation">
+`Date.UTC()` attend des arguments numériques : année, mois, etc. Cette chaîne ne peut pas être convertie en année valide, donc l’appel renvoie d’abord `NaN`. Ce résultat est un nombre, pas un objet Date ; appeler sa méthode `.toUTCString()` lève une `TypeError`.
+</div>
+</slot>
+<slot name="hints">
 
-    {/* Le méthode [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) utilise votre décalage local (supposez GMT‑07:00 pour ces questions.)
-    Ce qui signifie qu’elle renverra l’année précédente (Nouvel An -7 heures).
-    La méthode [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) renverra l’année telle que nous l’avons fournie à `Date.UTC()`, 2020.
-    */}
-  </div>
-  </slot>
+</slot>
 </Challenge>
 
 <Challenge
@@ -292,6 +333,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     La méthode d'aide [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) ne renvoie pas une instance de date. Elle renvoie un entier en millisecondes.
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -309,6 +353,7 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
 >
   <slot name="question">
   <div className="question">
+    Supposez un décalage local GMT−7 pour ces dates.
     Que contiendra la sortie ?
     ```js
     // Assume local TZ is -07:00
@@ -317,13 +362,14 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Les objets `Date` sont présentés implicitement en heure locale, avec un (effectivement) immuable [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+  <slot name="explanation">
+<div className="explanation">
+Les objets Date stockent les millisecondes écoulées depuis l’époque Unix, pas un fuseau horaire. `getTimezoneOffset()` utilise les règles du fuseau local pour cette date et renvoie l’écart avec UTC en minutes. Avec le décalage GMT−7 indiqué, le résultat vaut `420`. Cet écart peut changer selon la date dans les régions qui appliquent l’heure d’été.
+</div>
+</slot>
+<slot name="hints">
 
-    Les instances `Date` ne stockent pas de données de fuseau horaire. Elles stockent le nombre de millisecondes écoulées depuis l’époque Unix (1 janvier 1970). Le fuseau horaire est pris en compte lors de l’analyse et du rendu des chaînes de date. Le comportement d’affichage par défaut est déterminé automatiquement en fonction des paramètres régionaux du système ou du navigateur.
-  </div>
-  </slot>
+</slot>
 </Challenge>
 
 <Challenge
@@ -332,14 +378,21 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Manipulation des dates"
   title="Définisseurs de date – Partie 1"
   options={[
-    {text: '01 janv. 2020', isAnswer: true},
-    {text: '01 févr. 2020'},
-    {text: 'RangeError : argument invalide.'},
-  ]}
+  {
+    "text": "Jan 01 2020",
+    "isAnswer": true
+  },
+  {
+    "text": "Feb 01 2020"
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -356,6 +409,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     <aside class="hint">`setDate` définit le jour du mois, généralement dans la plage 1‑31.</aside>
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -364,14 +420,21 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Setters de date – Partie 2"
   options={[
-    {text: '01 janv. 2020'},
-    {text: '01 févr. 2020', isAnswer: true},
-    {text: 'RangeError : argument invalide.'},
-  ]}
+  {
+    "text": "Jan 01 2020"
+  },
+  {
+    "text": "Feb 01 2020",
+    "isAnswer": true
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
@@ -394,15 +457,24 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Setters de date – Partie 3"
   options={[
-    {text: '01 janv. 2020'},
-    {text: '01 janv. 2021', isAnswer: true},
-    {text: '01 févr. 2020'},
-    {text: 'RangeError : argument invalide.'},
-  ]}
+  {
+    "text": "Jan 01 2020"
+  },
+  {
+    "text": "Jan 01 2021",
+    "isAnswer": true
+  },
+  {
+    "text": "Feb 01 2020"
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -419,6 +491,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     Ici, l’année passe à 2021, car `setMonth(12)` représente un mois au‑delà de 11 (décembre).
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -427,16 +502,27 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Gestion des dates"
   title="Définisseurs de Date Partie 4"
   options={[
-    {text: 'Jan 01 2020'},
-    {text: 'Feb 01 2020'},
-    {text: 'Jan 01 2021'},
-    {text: 'Feb 01 2021', isAnswer: true},
-    {text: 'RangeError : argument invalide.'},
-  ]}
+  {
+    "text": "Jan 01 2020"
+  },
+  {
+    "text": "Feb 01 2020"
+  },
+  {
+    "text": "Jan 01 2021"
+  },
+  {
+    "text": "Feb 01 2021",
+    "isAnswer": true
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -458,6 +544,9 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     </aside>
   </div>
   </slot>
+<slot name="hints">
+
+</slot>
 </Challenge>
 
 <Challenge
@@ -466,16 +555,27 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
   group="Manipulation des dates"
   title="Définisseurs de Date Partie 5"
   options={[
-    {text: '01 janv. 2020'},
-    {text: '01 févr. 2020'},
-    {text: '01 janv. 2019'},
-    {text: '01 déc. 2019', isAnswer: true},
-    {text: 'RangeError : argument invalide.'},
-  ]}
+  {
+    "text": "Jan 01 2020"
+  },
+  {
+    "text": "Feb 01 2020"
+  },
+  {
+    "text": "Jan 01 2019"
+  },
+  {
+    "text": "Dec 01 2019",
+    "isAnswer": true
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que contiendra la sortie ?
+    Quelle date locale cet objet représente-t-il ? Le format d’affichage de la console dépend de l’environnement.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)
@@ -492,6 +592,10 @@ Ce quiz a pour but de tester (et d’approfondir) votre connaissance de l’API 
     Ici, le mois et l'année reculent à décembre 2019, car `setMonth(-1)` est inférieur à 0 (janvier).
   </div>
   </slot>
+<slot name="hints">
+<aside class="hint">Les mois n’ont pas tous la même durée : ils comptent de 28 à 31 jours.</aside>
+<aside class="hint">`setDate` définit le jour du mois, généralement entre 1 et 31. Les valeurs négatives ou supérieures au nombre de jours du mois modifient aussi le mois, parfois de façon surprenante.</aside>
+</slot>
 </Challenge>
 
 </QuizUI>

@@ -2,7 +2,7 @@
 social_image: ../desktop-social.webp
 title: "Quiz\_: 9 questions sur les Promises JavaScript"
 subTitle: Ne laissez plus jamais tomber une promesse.
-label: Promise Gotchas
+label: "Pièges des promesses"
 modified: '2024-11-28'
 tags:
   - promises
@@ -130,7 +130,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Lors du chaînage des `.then` et des `.catch`, il est utile de les imaginer comme une série d'étapes. Chaque `.then` reçoit la valeur renvoyée par le `.then` précédent (en tant qu'argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront sautées jusqu'à ce qu'un `.catch` soit rencontré. Si vous voulez écraser une erreur, il suffit de renvoyer une valeur non‑erreur. Celle‑ci pourra être récupérée dans n'importe quel `.then` suivant.
+    Lors du chaînage des `.then` et des `.catch`, il est utile de les imaginer comme une série d'étapes. Chaque `.then` reçoit la valeur renvoyée par le `.then` précédent (en tant qu'argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront sautées jusqu'à ce qu'un `.catch` soit rencontré. Un gestionnaire catch rétablit la chaîne en revenant normalement : même un objet `Error` renvoyé devient la valeur d’une promesse accomplie. Lever une exception ou renvoyer une promesse rejetée maintient le rejet. Si une promesse est renvoyée, son état final est adopté.
   </div>
   </slot>
 </Challenge>
@@ -197,9 +197,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** Les `.catch` peuvent être utilisés pour ignorer (ou remplacer) les erreurs simplement en renvoyant une valeur ordinaire.
+    **Indice :** Les `.catch` peuvent être utilisés pour ignorer (ou remplacer) les erreurs simplement en renvoyant une valeur ordinaire.
 
-    Cette astuce ne fonctionne que s'il y a un `.then` suivant pour recevoir la valeur.
+    Le premier catch rétablit la chaîne et accomplit sa promesse avec la chaîne renvoyée. Aucun `.then` ultérieur n’est nécessaire ; le deuxième catch est ignoré puisque la promesse est accomplie. Aucun gestionnaire exécuté n’affiche de valeur.
   </div>
   </slot>
 </Challenge>
@@ -232,7 +232,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** les `.then` transmettent les données séquentiellement, du `return value` au prochain `.then(value => /* handle value */)`.
+    **Indice :** les `.then` transmettent les données séquentiellement, du `return value` au prochain `.then(value => /* handle value */)`.
 
     Un `return` est essentiel pour passer une valeur au `.then` suivant.
   </div>
@@ -302,7 +302,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** les `.then` transmettent les données séquentiellement, du `return value` au prochain `.then(value => /* handle value */)`.
+    **Indice :** les `.then` transmettent les données séquentiellement, du `return value` au prochain `.then(value => /* handle value */)`.
 
     Un `return` est essentiel pour passer une valeur au `.then` suivant.
   </div>

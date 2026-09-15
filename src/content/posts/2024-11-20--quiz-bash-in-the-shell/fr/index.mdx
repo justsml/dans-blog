@@ -88,9 +88,9 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Je sais. C'est fou à quel point l'échappement rend les chaînes difficiles à analyser. Imaginez devoir échapper d'autres langages dans des chaînes Bash – avec toutes ces guillemets, apostrophes et symboles `$` qui vous font chier. 🫠
+    Je sais. C'est fou à quel point l'échappement rend les chaînes difficiles à analyser. Imaginez devoir échapper d'autres langages dans des chaînes Bash – avec tous ces guillemets, apostrophes et symboles `$` qui vous font chier. 🫠
 
-    Les guillemets simples doivent être échappés à l'intérieur des chaînes entre guillemets simples. La séquence fermeture‑guillemet, guillemet‑échappé, réouverture (`'\''`) permet d'afficher :
+    Une apostrophe ne peut pas apparaître dans une chaîne Bash entre apostrophes, même précédée d’un antislash. Fermez le segment cité, écrivez une apostrophe échappée à l’extérieur, puis rouvrez le segment cité. La séquence fermeture‑guillemet, guillemet‑échappé, réouverture (`'\''`) permet d'afficher :
     ```plaintext
     It's 🔨 Time!
     ```
@@ -139,13 +139,26 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Variables"
   title="Échapper les caractères"
   options={[
-    {text: 'Coût : $$100'},
-    {text: 'Coût : $100'},
-    {text: 'Coût : 100'},
-    {text: 'Coût : 00', isAnswer: true},
-    {text: 'Coût :'},
-    {text: 'Erreur'},
-  ]}
+  {
+    "text": "Cost: $$100"
+  },
+  {
+    "text": "Cost: $100"
+  },
+  {
+    "text": "Cost: 100"
+  },
+  {
+    "text": "Cost: 00",
+    "isAnswer": true
+  },
+  {
+    "text": "Cost:"
+  },
+  {
+    "text": "Erreur"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -253,12 +266,23 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Conditionnels"
   title="If-Else basique"
   options={[
-    {text: 'Le fichier existe'},
-    {text: 'Le fichier n\'existe pas, après un diagnostic de test', isAnswer: true},
-    {text: 'Erreur uniquement'},
-    {text: 'Crochets doubles manquants'},
-    {text: 'Rien'},
-  ]}
+  {
+    "text": "File exists"
+  },
+  {
+    "text": "Affiche « File does not exist » après un diagnostic de test",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur uniquement"
+  },
+  {
+    "text": "Crochets doubles manquants"
+  },
+  {
+    "text": "Rien"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -274,7 +298,7 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Avez‑vous remarqué l’espace manquant avant la parenthèse fermante ?
+    Avez‑vous remarqué l’espace manquant avant la crochet fermant ?
 
     Bash est assez pointilleux ici : des espaces sont requis à l’intérieur des expressions entre crochets.
 
@@ -299,11 +323,20 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Conditionnels"
   title="Comparaison de chaînes"
   options={[
-    {text: 'Même chat'},
-    {text: 'Chats différents, après une erreur de syntaxe de test', isAnswer: true},
-    {text: 'Zalgo'},
-    {text: 'Erreur uniquement'},
-  ]}
+  {
+    "text": "Same cat"
+  },
+  {
+    "text": "Affiche « Different cats » après une erreur de syntaxe de test",
+    "isAnswer": true
+  },
+  {
+    "text": "Zalgo"
+  },
+  {
+    "text": "Erreur uniquement"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -338,13 +371,26 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Fonctions"
   title="Déclaration de fonction"
   options={[
-    {text: 'Salut', isAnswer: true},
-    {text: 'Dan'},
-    {text: 'Salut Dan'},
-    {text: 'greet'},
-    {text: 'Erreur'},
-    {text: 'Erreur de syntaxe'},
-  ]}
+  {
+    "text": "Hi",
+    "isAnswer": true
+  },
+  {
+    "text": "Dan"
+  },
+  {
+    "text": "Hi Dan"
+  },
+  {
+    "text": "greet"
+  },
+  {
+    "text": "Erreur"
+  },
+  {
+    "text": "Erreur de syntaxe"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -458,7 +504,7 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   <div className="explanation">
     La syntaxe `(( ))` effectue UNIQUEMENT des opérations arithmétiques **entières**. Vous savez, des nombres entiers, sans virgule flottante !
 
-    Bash (sans surprise) ne possède pas de support **intégré** pour l'arithmétique à virgule flottante.
+    Bash (peut-être étonnamment) ne possède pas de support **intégré** pour l'arithmétique à virgule flottante.
 
     La solution la plus courante consiste à utiliser les utilitaires GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) ou [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -471,11 +517,20 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   group="Manipulation de chaînes"
   title="Extraction de sous-chaîne"
   options={[
-    {text: 'Mauvais chat'},
-    {text: 'Mauvais chat, bon chat:9'},
-    {text: 'bon chat', isAnswer: true},
-    {text: 'Erreur'},
-  ]}
+  {
+    "text": "Bad cat"
+  },
+  {
+    "text": "Bad cat, good cat:9"
+  },
+  {
+    "text": "good cat",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -521,7 +576,7 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
   <div className="explanation">
     `each` n'est pas un mot‑clé de boucle en Bash. Les principaux mots‑clés de boucle sont `for`, `while` et `until`.
 
-    Bien que `do` ne soit pas techniquement un mot‑clé de boucle, il fait partie intégrante de la syntaxe des boucles.
+    `do` ouvre le corps de ces boucles : il appartient bien à la syntaxe des boucles, même s’il n’en choisit pas le type.
   </div>
   </slot>
 </Challenge>
@@ -551,6 +606,8 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
     echo "Today is $(date +%F)"
     # => Today is 2029-12-31
     ```
+    Les accents graves (`` `ls -l` ``) restent pris en charge pour exécuter une commande, mais `$(command)` facilite la lecture et l’imbrication. Les accolades `${}` servent à développer les variables, pas à substituer une commande. `%` ne sert pas à la substitution de commande.
+
     La première option utilise des guillemets simples `'`, **pas des backticks**. Cela empêche l'expansion, donc `'$(date +%F)'` afficherait simplement la chaîne littérale `$(date +%F)`.
   </div>
   </slot>
@@ -574,11 +631,15 @@ Affûtez (ou prouvez) vos **compétences** en scripting shell !
     Quel opérateur est utilisé pour combiner la sortie d'erreur avec la sortie standard ?
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    L'opérateur `2>&1` redirige l'erreur standard (descripteur de fichier 2) vers la sortie standard (descripteur de fichier 1). Cela permet de capturer les messages d'erreur dans le même flux de sortie que la sortie normale.
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+L'opérateur `2>&1` redirige l'erreur standard (descripteur de fichier 2) vers la sortie standard (descripteur de fichier 1). Cela permet de capturer les messages d'erreur dans le même flux de sortie que la sortie normale.
+
+`1>&2` redirige au contraire la sortie standard vers l’erreur standard ; la question demande le sens inverse.
+
+Pour approfondir, consultez [l’excellente FAQ de Greg sur les redirections](https://mywiki.wooledge.org/BashFAQ/055). Merci à [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) pour ses suggestions de formulation.
+</div>
+</slot>
 </Challenge>
 
 </QuizUI>

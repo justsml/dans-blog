@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Le HTML a-t-il encore sa place sur votre CV ?'
 subTitle: Fais tes preuves
-label: Semantic HTML5
+label: "HTML5 sémantique"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: HTML
@@ -65,11 +65,20 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
   group="HTML sémantique avancé"
   title="Utilisation de `<dd>`"
   options={[
-    {text: 'Définition de description'},
-    {text: 'Terme de description'},
-    {text: 'Affichage de données'},
-    {text: 'Détails de description', isAnswer: true},
-  ]}
+  {
+    "text": "Une déclaration qui définit un champ de base de données"
+  },
+  {
+    "text": "Un terme dans une liste de description"
+  },
+  {
+    "text": "Un affichage de données"
+  },
+  {
+    "text": "Une description, une définition ou une valeur associée à un terme dans une liste de description",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -102,17 +111,26 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
   group="HTML sémantique avancé"
   title="Utilisation de `<figure>/<figcaption>`"
   options={[
-    {text: 'Pour les images avec des informations de copyright à afficher'},
-    {text: 'Décrire des images, des graphiques, etc.', isAnswer: true},
-    {text: 'Pour annoter des tableaux, des calculs, etc.'},
-    {text: 'Utilisé pour légender des vidéos'},
-  ]}
+  {
+    "text": "Uniquement pour les images accompagnées d’informations de copyright"
+  },
+  {
+    "text": "Regrouper un contenu autonome avec sa légende",
+    "isAnswer": true
+  },
+  {
+    "text": "Exclusivement pour les tableaux et les calculs mathématiques"
+  },
+  {
+    "text": "Uniquement pour ajouter des sous-titres à une vidéo"
+  }
+]}
 >
   <slot name="question">
-  <div className="question">
-    Quand faut-il utiliser les éléments `<figure>` et `<figcaption>` ?
-  </div>
-  </slot>
+<div className="question">
+Quel est le rôle général de l’association de `<figure>` et `<figcaption>` ?
+</div>
+</slot>
 
   <slot name='explanation'>
   <div className="explanation">
@@ -121,7 +139,7 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
     Cela est utile pour les images, les diagrammes, les extraits de code, etc.
     ```html
     <figure>
-    <img src="../image.jpg" alt="Description of image">
+    <img src="image.jpg" alt="Description of image">
     <figcaption>Image caption</figcaption>
     </figure>
     ```
@@ -231,7 +249,7 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
   <div className="explanation">
     L'élément [`<meter>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) est utilisé pour représenter une mesure scalaire (unique) dans une plage définie, comme la température, l'utilisation du disque ou un décompte de votes.
 
-    Il peut sembler similaire à une barre [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress), cependant les barres de progression **COMMENCENT TOUJOURS** à zéro. Par conséquent, les éléments `<progress>` affichent un `percent of completion`, tandis qu'un `<meter>` affiche n'importe quelle valeur dans une plage définissable.
+    Il peut sembler similaire à une barre [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress), cependant les barres de progression **COMMENCENT TOUJOURS** à zéro. Par conséquent, les éléments `<progress>` affichent un pourcentage d’achèvement, tandis qu'un `<meter>` affiche n'importe quelle valeur dans une plage définissable.
     ```html
     <meter min="-60" max="130" value="75" /> 75°F
     <meter min="0" max="100" value="75" /> 75%
@@ -260,7 +278,7 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
 
   <slot name='explanation'>
   <div className="explanation">
-    L'[`<source>` élément est utilisé pour spécifier les formats de médias disponibles](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+    L’[élément `<source>` est utilisé pour spécifier les formats de médias disponibles](https://developer.mozilla.org/en-us/docs/web/html/element/source).
 
     Utilisé spécifiquement avec les éléments [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) et [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture), permettant au navigateur de choisir le format le plus approprié.
     ```html
@@ -351,7 +369,7 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
   group="HTML sémantique avancé"
   title="Rôle de `<details>/<summary>`"
   options={[
-    {text: 'Contenu pliable natif', isAnswer: true},
+    {text: 'Contenu repliable natif', isAnswer: true},
     {text: 'Infobulles natives'},
     {text: 'Ajouter du contexte à <section>'},
     {text: 'Pour afficher des données structurées'},
@@ -365,9 +383,9 @@ Après tout, tu sais distinguer un `<div>` d'un `<span>`, non ? Mais connais-tu 
 
   <slot name='explanation'>
   <div className="explanation">
-    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) permet un contenu pliable, et [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) spécifie un titre visible pour le contenu.
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) permet un contenu repliable, et [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) spécifie un titre visible pour le contenu.
 
-    Ceci est utile pour les FAQ, les sections pliables, ou tout contenu pouvant être basculé.
+    Ceci est utile pour les FAQ, les sections repliables, ou tout contenu pouvant être basculé.
     ```html
     <details>
     <summary>Click to expand 🤯</summary>

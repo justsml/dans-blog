@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Structures de données et algorithmes'
 subTitle: Pouvez‑vous effectuer une recherche binaire sur un arbre binaire ?
-label: Algorithms & DS
+label: "Algorithmes et structures"
 modified: '2024-11-08'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -45,14 +45,17 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
 >
   <slot name="question">
   <div className="question">
-    Quelle structure de données est la mieux adaptée à un schéma d'accès LIFO (Last In, First Out) ?
+    Quelle structure de données est la mieux adaptée à un schéma d'accès LIFO (dernier entré, premier sorti) ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Les piles sont les mieux adaptées aux schémas d'accès LIFO. Les files sont les mieux adaptées aux schémas d'accès FIFO (First In, First Out).
+    Les piles sont les mieux adaptées aux schémas d'accès LIFO. Les files sont les mieux adaptées aux schémas d'accès FIFO (premier entré, premier sorti).
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -69,14 +72,17 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
 >
   <slot name="question">
   <div className="question">
-    Quelle est la complexité temporelle d'un algorithme qui prend toujours le même temps d'exécution, quel que soit la taille de l'entrée ?
+    Quelle est la complexité temporelle d'un algorithme qui prend toujours le même temps d'exécution, quelle que soit la taille de l'entrée ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    O(1) représente une complexité temporelle constante. Cela signifie que l'algorithme prend toujours le même temps d'exécution, quel que soit la taille de l'entrée.
+    O(1) représente une complexité temporelle constante. Cela signifie que l'algorithme prend toujours le même temps d'exécution, quelle que soit la taille de l'entrée.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -93,15 +99,18 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   ]}
 >
   <slot name="question">
-  <div className="question">
-    Quelle est la complexité temporelle du calcul de la longueur d'une liste simplement chaînée ?
-  </div>
-  </slot>
+<div className="question">
+Si une liste simplement chaînée ne stocke pas sa longueur, quelle est la complexité temporelle du calcul de cette longueur par parcours ?
+</div>
+</slot>
   <slot name='explanation'>
   <div className="explanation">
     Pour calculer la longueur d'une liste simplement chaînée, vous devez parcourir chaque nœud du début à la fin, ce qui donne une complexité temporelle de O(n).
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -127,6 +136,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Dans un BST équilibré, la complexité temporelle moyenne pour une recherche est O(log n) car chaque niveau réduit de moitié l'espace de recherche.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -149,9 +161,12 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Le tri fusion fonctionne toujours avec une complexité dans le pire cas de O(n log n) car il divise répétivement le tableau en deux et fusionne les sous‑tableaux triés.
+    Le tri fusion fonctionne toujours avec une complexité dans le pire cas de O(n log n) car il divise de manière répétée le tableau en deux et fusionne les sous‑tableaux triés.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -174,9 +189,12 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    BFS utilise une file d'attente pour explorer les nœuds niveau par niveau, en traitant les nœuds de manière breadth‑first (par « ligne »).
+    BFS utilise une file d'attente pour explorer les nœuds niveau par niveau, en traitant les nœuds de largeur (par « ligne »).
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -193,15 +211,18 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   ]}
 >
   <slot name="question">
-  <div className="question">
-    Quel algorithme est couramment utilisé pour détecter les cycles dans un graphe orienté ?
-  </div>
-  </slot>
+<div className="question">
+Quel parcours détecte un cycle orienté en trouvant une arête vers un sommet encore présent dans sa pile de récursion ?
+</div>
+</slot>
   <slot name='explanation'>
   <div className="explanation">
     La recherche en profondeur (DFS) est généralement utilisée pour détecter les cycles dans un graphe en maintenant une pile de récursion pour suivre les nœuds visités.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -227,6 +248,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Le tri par tas conserve une complexité temporelle de pire cas de O(n log n), car il construit un tas et extrait répétitivement l'élément maximal.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -252,6 +276,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Les tables de hachage ont une complexité temporelle moyenne de O(1) pour accéder aux éléments, en supposant une fonction de hachage efficace qui minimise les collisions.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -260,11 +287,20 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   group="Structures de données"
   title="Opérations de pile"
   options={[
-    {text: 'Push, Pop, Peek', isAnswer: true},
-    {text: 'Enqueue, Dequeue, Peek'},
-    {text: 'Insert, Search, Delete'},
-    {text: 'Traverse, Visit, Sort'},
-  ]}
+  {
+    "text": "Empiler, dépiler, consulter le sommet",
+    "isAnswer": true
+  },
+  {
+    "text": "Enfiler, défiler, consulter la tête"
+  },
+  {
+    "text": "Insérer, rechercher, supprimer"
+  },
+  {
+    "text": "Parcourir, visiter, trier"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -276,6 +312,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Les opérations principales d’une pile sont Push (ajouter un élément), Pop (supprimer un élément) et Peek (voir l’élément du sommet sans le supprimer).
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -284,23 +323,37 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   group="Algorithmes de graphe"
   title="Algorithme de plus court chemin"
   options={[
-    {text: 'Kruskal\'s Algorithm'},
-    {text: 'Prim\'s Algorithm'},
-    {text: 'Bellman-Ford Algorithm'},
-    {text: 'Dijkstra\'s Algorithm', isAnswer: true},
-    {text: 'Floyd-Warshall Algorithm'},
-  ]}
+  {
+    "text": "Algorithme de Kruskal"
+  },
+  {
+    "text": "Algorithme de Prim"
+  },
+  {
+    "text": "Algorithme de Bellman-Ford"
+  },
+  {
+    "text": "Algorithme de Dijkstra",
+    "isAnswer": true
+  },
+  {
+    "text": "Algorithme de Floyd-Warshall"
+  }
+]}
 >
   <slot name="question">
-  <div className="question">
-    Quel algorithme est couramment utilisé pour trouver le plus court chemin dans un graphe pondéré avec des arêtes non négatives ?
-  </div>
-  </slot>
+<div className="question">
+Quel algorithme glouton de plus court chemin depuis une source unique sélectionne à chaque étape le sommet non finalisé de plus petite distance provisoire, généralement avec une file de priorité, et exige des poids d’arêtes non négatifs ?
+</div>
+</slot>
   <slot name='explanation'>
   <div className="explanation">
     L'algorithme de Dijkstra est fréquemment utilisé pour trouver le plus court chemin dans les graphes dont les poids des arêtes sont non négatifs. Il utilise une file de priorité pour déterminer la distance la plus courte de manière efficace.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -325,6 +378,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Les arbres AVL et les arbres rouge-noir sont des types d'arbres auto‑équilibrés, qui garantissent que l'arbre reste équilibré après chaque insertion ou suppression.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -350,6 +406,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Un cas de base est nécessaire dans une fonction récursive pour arrêter les appels récursifs lorsqu’une condition spécifique est remplie, évitant ainsi une récursion infinie.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -374,6 +433,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Les deux opérations principales d’une file sont Enqueue (ajouter un élément à l’arrière) et Dequeue (retirer un élément à l’avant).
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -398,6 +460,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Le tri topologique peut être effectué sur un graphe s'il est orienté et acyclique (DAG). Ce type d'ordre est utile dans les problèmes de planification de tâches.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -423,6 +488,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     L’implémentation récursive naïve de la suite de Fibonacci a une complexité temporelle de O(2^n) en raison des calculs répétés et intensifs pour chaque nombre de Fibonacci.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -448,6 +516,9 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
     Une file de priorité est le plus souvent implémentée à l'aide d'un tas car il permet une extraction efficace de l'élément de priorité la plus haute ou la plus basse.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -456,11 +527,20 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   group="Structures de données"
   title="Parcours d'arbres binaires"
   options={[
-    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
-    {text: 'Breadth-First, Depth-First, Heapify'},
-    {text: 'Sort, Search, Rotate'},
-    {text: 'Push, Pop, Peek'},
-  ]}
+  {
+    "text": "Infixe, préfixe, postfixe",
+    "isAnswer": true
+  },
+  {
+    "text": "Parcours en largeur, parcours en profondeur, construction d’un tas"
+  },
+  {
+    "text": "Tri, recherche, rotation"
+  },
+  {
+    "text": "Empiler, dépiler, consulter le sommet"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -469,9 +549,12 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In-order, Pre-order et Post-order sont les trois ordres de parcours en profondeur les plus courants pour les arbres binaires, chacun visitant les nœuds dans un ordre différent. Le parcours en largeur est également fréquent, mais il appartient à une catégorie de parcours différente.
+    Les parcours infixe (in-order), préfixe (pre-order) et postfixe (post-order) sont les trois ordres de parcours en profondeur les plus courants pour les arbres binaires, chacun visitant les nœuds dans un ordre différent. Le parcours en largeur est également fréquent, mais il appartient à une catégorie de parcours différente.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -488,14 +571,17 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
 >
   <slot name="question">
   <div className="question">
-    Lesquelles des propriétés suivantes sont vraies pour un min‑tas ?
+    Lesquelles des propriétés suivantes sont vraies pour un tas minimum ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Dans un min‑tas, la racine est toujours le plus petit élément, et la hauteur de l’arbre est O(log n), ce qui rend l’insertion et l’extraction efficaces.
+    Dans un tas minimum, la racine est toujours le plus petit élément, et la hauteur de l’arbre est O(log n), ce qui rend l’insertion et l’extraction efficaces.
   </div>
   </slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 <Challenge
@@ -512,15 +598,18 @@ Ce quiz évaluera votre connaissance des structures de données (piles, listes, 
   ]}
 >
   <slot name="question">
-  <div className="question">
-    L'algorithme de tri à bulles est‑il stable ?
-  </div>
-  </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    Le tri à bulles est un algorithme de tri stable car il préserve l'ordre relatif des éléments égaux pendant le tri.
-  </div>
-  </slot>
+<div className="question">
+Le tri à bulles standard est-il stable s’il échange deux éléments adjacents uniquement lorsque la clé de gauche est strictement supérieure à celle de droite ?
+</div>
+</slot>
+  <slot name="explanation">
+<div className="explanation">
+Avec cette comparaison stricte, les éléments de clés égales ne se dépassent jamais : le tri à bulles est donc stable. Une implémentation qui échange aussi les clés égales peut perdre cette propriété.
+</div>
+</slot>
+<slot name="hints">
+Examinez le mode d’accès plutôt que le nom de la structure. La réponse dépend souvent de ce qui doit se produire en premier ou en dernier.
+</slot>
 </Challenge>
 
 </QuizUI>

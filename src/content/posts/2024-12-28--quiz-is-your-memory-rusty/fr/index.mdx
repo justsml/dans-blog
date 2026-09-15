@@ -1,7 +1,7 @@
 ---
 title: 'Quiz : Gestion essentielle de la mémoire en Rust'
 subTitle: "(Borrow) checke‑toi avant de te crasher ! \U0001F980"
-label: 'Memory, man'
+label: "Gestion de la mémoire"
 category: Quiz
 subCategory: Rust
 modified: '2024-12-29'
@@ -27,7 +27,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Prêt·e à mettre à l'épreuve vos compétences en gestion de mémoire Rust ? 🦀</p>
 
-Ce quiz mettra à l’épreuve votre compréhension du système de possession, des règles d’emprunt, des durées de vie et des pointeurs intelligents de Rust.
+Ce quiz mettra à l’épreuve votre compréhension du système de propriété, des règles d’emprunt, des durées de vie et des pointeurs intelligents de Rust.
 
 **Note :** Les questions sont formatées sur une largeur d’environ 50 colonnes afin de garantir une lisibilité sur tous les appareils. (Les suggestions d’amélioration sont les bienvenues !)
 
@@ -36,18 +36,38 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 <QuizUI>
 
 <Challenge
+  difficulty={2}
+  objectives={["Expliquer les règles de propriété et de déplacement de Rust", "Identifier les erreurs de compilation liées aux valeurs déplacées", "Corriger les erreurs liées aux déplacements"]}
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Propriété"
   title="Sémantique de déplacement de base"
   options={[
-    {text: 'Bonjour, !', hint: 'Réfléchissez à ce qui arrive à \'philosopher\' après son déplacement'},
-    {text: 'Bonjour, Zénon de Citium !', hint: 'Une fois qu\'une valeur est déplacée, peut‑on encore l\'utiliser ?'},
-    {text: 'Bonjour, Zénon d\'Elea !', hint: 'La chaîne contient \'Citium\', pas \'Elea\''},
-    {text: 'Bonjour, Marcus Aurelius', hint: 'Vérifiez si cela correspond au contenu de la chaîne'},
-    {text: 'Erreur de compilation : valeur empruntée après déplacement', isAnswer: true},
-    {text: 'Erreur d\'exécution : exception de pointeur nul', hint: 'Rust détecte ces problèmes à la compilation'},
-  ]}
+  {
+    "text": "Hello, !",
+    "hint": "Réfléchissez à ce qui arrive à 'philosopher' après son déplacement"
+  },
+  {
+    "text": "Hello, Zeno of Citium!",
+    "hint": "Une fois qu'une valeur est déplacée, peut‑on encore l'utiliser ?"
+  },
+  {
+    "text": "Hello, Zeno of Elea!",
+    "hint": "La chaîne contient 'Citium', pas 'Elea'"
+  },
+  {
+    "text": "Hello, Marcus Aurelius",
+    "hint": "Vérifiez si cela correspond au contenu de la chaîne"
+  },
+  {
+    "text": "Erreur de compilation : valeur empruntée après déplacement",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur d'exécution : exception de pointeur nul",
+    "hint": "Rust détecte ces problèmes à la compilation"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -87,6 +107,8 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Comprendre le transfert de propriété lors d’un appel de fonction", "Reconnaître les erreurs de propriété dans les appels", "Appliquer différentes stratégies de propriété dans les fonctions"]}
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Propriété"
@@ -151,6 +173,8 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprendre les règles des références mutables", "Identifier les violations des règles d’emprunt", "Délimiter les portées pour gérer plusieurs références mutables"]}
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="Emprunt"
@@ -211,6 +235,8 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprendre les règles d’élision des durées de vie", "Identifier les annotations de durée de vie inutiles", "Appliquer l’élision dans les signatures de fonctions"]}
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Élision des durées de vie"
@@ -274,28 +300,30 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comprendre les types récursifs et leur représentation mémoire", "Identifier les besoins de Box<T>", "Corriger les structures récursives avec Box<T>"]}
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Pointeurs intelligents"
   title="Pointeur intelligent Box"
   options={[
-    {
-      text: '5',
-      hint: "The code won't even compile to produce a value"
-    },
-    {
-      text: 'null',
-      hint: "Rust doesn't have null values"
-    },
-    {
-      text: 'Compilation Error',
-      hint: "The compiler can't determine a finite size for this recursive type.",
-      isAnswer: true
-    },
-    {
-      text: 'Stack overflow'
-    }
-  ]}
+  {
+    "text": "5",
+    "hint": "Le code ne compile pas ; il ne peut produire aucune valeur."
+  },
+  {
+    "text": "null",
+    "hint": "Rust n’a pas de valeur null."
+  },
+  {
+    "text": "Erreur de compilation",
+    "hint": "Le compilateur ne peut pas déterminer une taille finie pour ce type récursif.",
+    "isAnswer": true
+  },
+  {
+    "text": "Débordement de pile"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -354,32 +382,34 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprendre le comptage de références en Rust", "Appliquer Rc<T> à la propriété partagée", "Analyser les compteurs de références dans le code"]}
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Comptage de références"
   title="Pointeur intelligent Rc"
   options={[
-    {
-      text: 'Reference count: 1',
-      hint: "Count the initial creation plus each clone"
-    },
-    {
-      text: 'Reference count: 2',
-      hint: "Don't forget the original reference"
-    },
-    {
-      text: 'Reference count: 3',
-      isAnswer: true
-    },
-    {
-      text: 'Compilation Error',
-      hint: "Rc<T> is designed for exactly this use case"
-    }
-  ]}
+  {
+    "text": "Reference count: 1",
+    "hint": "Comptez la création initiale et chaque clone."
+  },
+  {
+    "text": "Reference count: 2",
+    "hint": "N’oubliez pas la référence originale."
+  },
+  {
+    "text": "Reference count: 3",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur de compilation",
+    "hint": "Rc<T> est précisément conçu pour ce cas."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que affichera ce code ? Comptez attentivement !
+    Qu’affichera ce code ? Comptez attentivement !
     ```rust
     use std::rc::Rc;
 
@@ -426,7 +456,7 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
     - Utilisez les références `Weak` pour éviter les cycles de références
 
     Bonnes pratiques :
-    - Utilisez Rc quand vous avez besoin d’une possession partagée
+    - Utilisez Rc quand vous avez besoin d’une propriété partagée
     - Envisagez `Arc` pour les scénarios thread‑safe
     - Évitez de créer des cycles de références
   </div>
@@ -434,6 +464,8 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprendre les durées de vie dans les définitions de structures", "Identifier les champs nécessitant des paramètres de durée de vie", "Annoter correctement les durées de vie des structures"]}
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Durées de vie"
@@ -503,20 +535,34 @@ Que vous soyez un·e Rustacean chevronné·e ou que vous débutiez tout juste av
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Déterminer les annotations de durée de vie nécessaires dans une signature", "Annoter les fonctions avec plusieurs références", "Évaluer les relations entre durées de vie des entrées et de la sortie"]}
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Durées de vie"
   title="Annotations de durée de vie"
   options={[
-    {text: 'Résultat : Sénèque le Jeune', hint: 'Le code ne compile pas, il ne produira aucune sortie'},
-    {text: 'Erreur : spécificateur de durée de vie manquant', isAnswer: true},
-    {text: 'Erreur : impossible de retourner une référence à une variable locale', hint: 'La référence pointe vers un paramètre d\'entrée, pas une variable locale'},
-    {text: 'Erreur : incohérence de durée de vie', hint: 'Nous n\'avons pas encore spécifié de durées de vie, ce qui crée une incohérence'},
-  ]}
+  {
+    "text": "Affiche : Seneca the Younger",
+    "hint": "Le code ne compile pas, il ne produira aucune sortie"
+  },
+  {
+    "text": "Erreur : spécificateur de durée de vie manquant",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur : impossible de retourner une référence à une variable locale",
+    "hint": "La référence pointe vers un paramètre d'entrée, pas une variable locale"
+  },
+  {
+    "text": "Erreur : incohérence de durée de vie",
+    "hint": "L’erreur porte sur une annotation absente, pas sur deux durées de vie incompatibles."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Que se passe-t-il avec cette fonction qui renvoie le plus long des deux tranches de chaîne ?
+    Que se passe-t-il avec cette fonction qui renvoie la plus longue des deux tranches de chaîne ?
     ```rust
     fn longest(text1: &str, text2: &str) -> &str {
         if text1.len() > text2.len() {
@@ -549,6 +595,8 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comprendre la mutabilité intérieure avec RefCell", "Analyser les règles d’emprunt vérifiées à l’exécution", "Contrôler les accès mutables avec RefCell"]}
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="RefCells"
@@ -577,7 +625,7 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Libérez l’emprunt mutable avant de créer des emprunts partagés. Sinon, cet exemple provoque un panic à l’exécution.
+Libérez l’emprunt mutable avant de créer des emprunts partagés. Sinon, cet exemple provoque une panique à l’exécution.
 
 ```rust
 use std::cell::RefCell;
@@ -596,6 +644,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Distinguer les usages de Cell et RefCell", "Utiliser Cell pour une mutabilité intérieure simple", "Comparer les types Copy et non-Copy avec Cell"]}
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Mutabilité"
@@ -609,7 +659,7 @@ fn main() {
 >
   <slot name="question">
   <div className="question">
-    Que affichera ce code ?
+    Qu’affichera ce code ?
     ```rust
     use std::cell::Cell;
 
@@ -672,6 +722,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprendre le rôle et les limites de Rc", "Distinguer comptage de références monothread et multithread", "Utiliser Rc pour la propriété partagée"]}
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Comptage de références"
@@ -759,21 +811,23 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Distinguer RefCell des solutions adaptées au partage entre threads", "Choisir entre RefCell et RwLock", "Choisir les primitives de synchronisation selon les besoins"]}
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="RefCell"
-  title="RefCells et Threading"
+  title="RefCell et multithreading"
   options={[
   {
-    "text": "RefCell est utilisé pour les emprunts mutables, Rw pour les immutables",
+    "text": "RefCell est utilisé pour les emprunts mutables, RwLock pour les immutables",
     "hint": "Les deux types supportent les emprunts mutables et immutables"
   },
   {
-    "text": "Rw est utilisé pour les emprunts mutables, RefCell pour les immutables",
+    "text": "RwLock est utilisé pour les emprunts mutables, RefCell pour les immutables",
     "hint": "Les deux supportent les deux types d'emprunts"
   },
   {
-    "text": "RefCell et Rw sont utilisés pour le même but",
+    "text": "RefCell et RwLock sont utilisés pour le même but",
     "hint": "Pensez à la sécurité des threads"
   },
   {
@@ -781,7 +835,7 @@ fn main() {
     "isAnswer": true
   },
   {
-    "text": "Rw n'est utilisé que dans des environnements multithread",
+    "text": "RwLock n'est utilisé que dans des environnements multithread",
     "hint": "Bien qu'il soit généralement utilisé pour les threads, ce n'est pas la différence clé"
   }
 ]}
@@ -813,6 +867,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={5}
+  objectives={["Analyser les accès concurrents avec Arc et Mutex", "Identifier les risques d’interblocage", "Appliquer une synchronisation qui évite les interblocages"]}
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="Pointeurs intelligents"
@@ -824,7 +880,7 @@ fn main() {
   },
   {
     "text": "Affiche : 43",
-    "hint": "Le code se bloquera avant d'afficher"
+    "hint": "Le second verrouillage ne revient pas normalement jusqu’à cet affichage."
   },
   {
     "text": "Erreur de compilation",
@@ -835,7 +891,7 @@ fn main() {
     "hint": "Le second verrouillage ne peut pas revenir normalement."
   },
   {
-    "text": "Interblocage ou panic",
+    "text": "Interblocage ou panique",
     "isAnswer": true
   }
 ]}
@@ -860,7 +916,7 @@ fn main() {
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Verrouiller deux fois le même mutex dans un thread sans libérer le premier guard ne revient jamais normalement. L’API autorise un interblocage ou un panic ; libérez le guard avant de verrouiller à nouveau.
+Verrouiller deux fois le même mutex dans un thread sans libérer le premier garde de verrouillage ne revient jamais normalement. L’API autorise un interblocage ou une panique ; libérez le garde avant de verrouiller à nouveau.
 
 ```rust
 use std::sync::Mutex;
@@ -876,32 +932,34 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comprendre les références faibles", "Identifier les cas où elles évitent les fuites mémoire", "Rompre les cycles de références avec Weak<T>"]}
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="Pointeurs intelligents"
   title="Références faibles"
   options={[
-    {
-      text: 'Prints: Some("Wisdom")',
-      hint: "What happens to the data when all strong references are dropped?"
-    },
-    {
-      text: 'Prints: None',
-      isAnswer: true
-    },
-    {
-      text: 'Compilation Error',
-      hint: "The code is syntactically correct"
-    },
-    {
-      text: 'Runtime Panic',
-      hint: "Weak references gracefully handle dropped values"
-    },
-    {
-      text: 'Existential Panic',
-      hint: "While philosophical, not a real Rust error!"
-    }
-  ]}
+  {
+    "text": "Affiche : Some(\"Wisdom\")",
+    "hint": "Que deviennent les données quand toutes les références fortes sont libérées ?"
+  },
+  {
+    "text": "Affiche : None",
+    "isAnswer": true
+  },
+  {
+    "text": "Erreur de compilation",
+    "hint": "La syntaxe du code est valide."
+  },
+  {
+    "text": "Panique à l’exécution",
+    "hint": "Les références faibles gèrent la disparition de leur cible."
+  },
+  {
+    "text": "Panique existentielle",
+    "hint": "C’est philosophique, mais pas une vraie erreur Rust !"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -967,6 +1025,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprendre RAII en Rust", "Nettoyer les ressources avec le trait Drop", "Appliquer RAII à la gestion des ressources"]}
   client:visible={{rootMargin: "150px"}}
   index={14}
   group="Patrons de mémoire"
@@ -1050,6 +1110,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Distinguer les traits Copy et Clone", "Comprendre quand implémenter chaque trait", "Dériver Copy et Clone à bon escient"]}
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="Patrons de conception"
@@ -1091,6 +1153,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Analyser la disposition mémoire et l’alignement des structures", "Évaluer l’ordre des champs pour l’efficacité mémoire", "Appliquer les principes d’alignement pour réduire la taille"]}
   client:visible={{rootMargin: "150px"}}
   index={16}
   group="Bonnes pratiques"
@@ -1163,6 +1227,8 @@ fn main() {
 </Challenge>
 
 <Challenge
+  difficulty={5}
+  objectives={["Comprendre les abstractions à coût nul de Rust", "Distinguer coûts de compilation et d’exécution", "Appliquer des abstractions sans surcoût d’exécution"]}
   client:visible={{rootMargin: "150px"}}
   index={17}
   group="Patrons avancés"
@@ -1178,7 +1244,7 @@ fn main() {
   },
   {
     "text": "Plus lent mais plus lisible",
-    "hint": "L'abstraction n'affecte pas les performances d'exécution"
+    "hint": "L’optimiseur peut éliminer le surcoût de l’itérateur ; le code généré et la charge de travail comptent toujours."
   },
   {
     "text": "Les itérateurs ne peuvent pas être optimisés"
