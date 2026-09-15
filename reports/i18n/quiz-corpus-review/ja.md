@@ -219,7 +219,9 @@ Source SHA-256: 4788ec9e33c53b4fb819c0e7e472f3a737b497b83add5049de127d7dcc4b32ad
 
 ### javascript-promises-quiz
 
-Source SHA-256: ead6cb486ce9cef02d253b30715e77820dde44c9a310546a0532e7164078dd5a
+Source SHA-256: e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12
+
+Target SHA-256: 48fb0d0af379b9a860951bd8c4da7ffbddb1449d19955d00f2b97c789a82872f
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|

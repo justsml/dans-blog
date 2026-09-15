@@ -343,7 +343,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ![annotated-code/question-9-4.webp](../annotated-code/question-9-4.webp)
+    最初の `.catch` は文字列を返して拒否状態から回復しますが、何も出力しません。次の `.then` が `Error('The fails!')` をスローし、最後の `.catch` はそのメッセージ `The fails!` だけを出力します。
+
+    ![Promiseチェーンで例外が伝わり、最後のcatchがThe fails!を出力する流れ](../annotated-code/question-9-4.webp)
   </div>
   </slot>
 </Challenge>

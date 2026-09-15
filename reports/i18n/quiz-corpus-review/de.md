@@ -15,6 +15,8 @@ Reviewed 2026-09-14: all 19 German quiz translations, 267 questions. Review cove
 
 The existing German [Visualizing Promises article](../../../src/content/posts/2018-09-30--visualizing-promises/de/index.mdx) uses Promises, Callback and .then unchanged (lines 24–36, 84–105); these identifiers remain English, while fulfillment/rejection behavior is explained in German. The German [foreign-key article](../../../src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx) uses Fremdschlüssel and GIN-Index (line 61), supporting Index/Fremdschlüssel instead of forced word-for-word translations. Across the German SQL quizzes, Abfrage, Klausel, Bezeichner and Zeichenkettenliteral identify distinct concepts. Across the JS interfaces/errors quizzes, Eigenschaft and aufzählbar consistently describe property/enumerable; API names and literal output tokens remain untouched. Rust's lifetime vocabulary was consolidated to Lebensdauer, matching its existing struct and RefCell explanations, while Rc/Arc/Box/Send/Sync remain API names.
 
+Promises Q9 now also has a German text explanation of the recovery and second rejection, plus descriptive image alt text, so the answer does not depend on reading the English annotated image.
+
 ## Verification boundary
 
 A fresh parser comparison confirms all 267 questions have the same number of options and same correct-answer positions as their English sources, and every question/explanation/hint code fence matches modulo whitespace. All offered choices were read for meaning and literal-output consistency. Actual browser selection and rendering are covered by the parent task's corpus-wide Playwright run; this ledger does not claim a separate German browser run.
@@ -28,8 +30,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### javascript-promises-quiz
 
 - Questions: 9
-- English SHA-256: `ead6cb486ce9cef02d253b30715e77820dde44c9a310546a0532e7164078dd5a`
-- German SHA-256: `177fe224bdddd01a00149d26ffb3b3ba472c551cba40a64bf3c3ec8f8016d7d3`
+- English SHA-256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`
+- German SHA-256: `fb616dbad3fa70be74c98c3f8aad1b72f8a19997ca92d3514780cf09c5ca37eb`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
