@@ -463,3 +463,7 @@ Russian SHA-256: `81277cfe759e07b09568ffc9e77396e6c41dc6038ea36137fcbc29278f0282
 | 9: Использование функции COALESCE | 3 | Возвращает первый не‑NULL аргумент |
 | 10: Использование GROUP BY | 4 | Группирует строки по указанным столбцам |
 | 11: Основы FULL OUTER JOIN | 5 | Возвращает все строки из обеих таблиц, заполняя NULL для несоответствующих строк |
+
+## Final image explanation alignment
+
+The parent review verified that the existing localized Promise Q9 text already explains the recovery, second thrown error and final output now added to English. No translation edit was needed. Latest Promise source SHA-256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`. Translation SHA-256: `2f5cf8f05fa2b8def186aee85ad88a4eedc79602ff97ba23f8e9e489bf61e7d5`. Historical pipeline metadata remains unchanged.

@@ -425,3 +425,7 @@ Source SHA-256: `e00c048b44ae6dec4bee8aedf31356a8c002564399f9e3525175ace3b2fe3bb
 | 12 | 2 | Qualsiasi valore può essere un rifiuto |
 | 13 | 2 | Potrebbe non esistere in tutti gli ambienti |
 | 14 | 2 | false, false |
+
+## Final image explanation alignment
+
+The parent review verified that the existing localized Promise Q9 text already explains the recovery, second thrown error and final output now added to English. No translation edit was needed. Latest Promise source SHA-256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`. Translation SHA-256: `634a26e2d8c5fb7259f8b9f94b178d41b754368fa0f0f9d07b788381668c3c7e`. Historical pipeline metadata remains unchanged.

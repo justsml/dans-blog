@@ -28,6 +28,7 @@ for (const entry of corpus) {
         await expect(dot).toHaveClass(/active/);
         await question.scrollIntoViewIfNeeded();
         await expect(question.locator(".toggle-explainer")).toHaveText(messages.showExplanation);
+        await expect(question.locator("section.explanation")).toContainText(/\S/);
         const options = question.locator(".option");
         await expect(options).toHaveCount(challenge.options.length);
         const order = challenge.options.map((option, i) => ({ ...option, i }))

@@ -12,7 +12,7 @@ for (const entry of loadQuizCorpus()) {
         entry.source.challenges[index].options.findIndex(option => option.isAnswer),
       );
       for (const slot of ["question", "explanation", "hints"] as const) {
-        const hasText = (raw: string) => raw.replace(/<!--[\s\S]*?-->/g, "").replace(/<[^>]*>/g, "").trim().length > 0;
+        const hasText = (raw: string) => raw.replace(/<!--[\s\S]*?-->/g, "").replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/<[^>]*>/g, "").trim().length > 0;
         if (hasText(entry.source.challenges[index][slot].raw)) {
           expect(hasText(challenge[slot].raw), `${entry.locale}/${entry.slug} Q${index + 1} ${slot}`).toBe(true);
         }

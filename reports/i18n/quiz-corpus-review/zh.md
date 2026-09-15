@@ -439,3 +439,7 @@ Source SHA-256: `9320d673f59fafb3da0b9c01736b3b54a103301210b176a3e5c5c78e771b7b7
 | 12 | <time> 的使用 | 1 | 表示日期和时间 |
 | 13 | ARIA 属性的作用 | 2 | 提高可访问性 |
 | 14 | \`role\`属性的用途 | 2 | 描述元素的目的 |
+
+## Final image explanation alignment
+
+The parent review verified that the existing localized Promise Q9 text already explains the recovery, second thrown error and final output now added to English. No translation edit was needed. Latest Promise source SHA-256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`. Translation SHA-256: `34ba3309265193e57561defa3bfc3b3fcbb45c010cde5cb026230116a9c3f603`. Historical pipeline metadata remains unchanged.
