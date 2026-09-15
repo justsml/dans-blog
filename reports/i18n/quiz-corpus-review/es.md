@@ -9,6 +9,10 @@ Reviewed all 19 Spanish quizzes: 267 questions and 1,231 selectable choices, aga
 - Propagated source accuracy fixes: Promise rejection handling, Date local-date assumptions and UTC numeric behavior, CSS selector specificity/case/descendants and max(), SQL correlation/planner semantics, PostgreSQL standards and timestamp precision, DSA question disambiguation, Buffer allocation, Rust borrowing and iterator caveats, AWS operation limits/consistency and service tradeoffs, HTML semantically distinct choices, and destructuring defaults.
 - Restored missing sections/hint slots and the BigInt introduction; translated its comparison table and corrected its hexadecimal-only parseInt inference. Repaired its closing link and translated quiz labels.
 
+## Follow-up regression repair
+
+The strengthened corpus check exposed 45 hints previously represented by empty slots: 20 DSA, 11 ESNext, and 14 advanced Error questions. These now have useful question-specific Spanish hints. Date Q6 now describes toLocaleFormat as outside ECMAScript without the unsupported third-party-library claim; Regex Q15 recognizes both u and v Unicode modes.
+
 ## Terminology consensus
 
 Existing related Spanish articles provide evidence for terminology, not automatic proof that every technical claim in them is correct:
@@ -25,7 +29,7 @@ Existing related Spanish articles provide evidence for terminology, not automati
 ## Verification and limits
 
 - All19 local integrity checks: zero issues.
-- Spanish corpus unit checks: 19 pass, 0 fail, 1,621 assertions. Checks cover count, index sequence, one correct choice, answer-position parity, and nonempty distinct choices.
+- Spanish corpus unit checks: 19 pass, 0 fail, 2,296 assertions. Checks cover count, index sequence, one correct choice, answer-position parity, nonempty distinct choices, and nonempty question/explanation/hint content where the source supplies it.
 - Full locale validation output: `es-validation.txt`.
 - Browser interaction across the full corpus is owned by the parent task's shared Playwright suite; this report does not claim independent Spanish browser execution.
 - No paid or external AI judging was performed.
@@ -55,9 +59,9 @@ Spanish SHA256: `66e69103eaa72f14612271ddceb39b7a6b0feece42e32adaaf93e7a8c4a1a18
 
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
-Source SHA256: `989751b2ad3098d09729710992be6df598d713b5e494fbb8a539c85cf39cc780`
+Source SHA256: `ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d`
 
-Spanish SHA256: `384a8db2750e838d78e04e699f08521a380fe1326be47fffec5a7c6a3b05b2ea`
+Spanish SHA256: `efc2bc9d837c4aae6ca5f509b1a625194f0711a20b874766086496da35f23eca`
 
 | Q | Title | Choices in order |
 |---|---|---|
@@ -80,7 +84,7 @@ Spanish SHA256: `384a8db2750e838d78e04e699f08521a380fe1326be47fffec5a7c6a3b05b2e
 
 Source SHA256: `bbe16f991f17d61caaf6a3d510caa7d4dd771d1113bbbdd157319831abc66dd7`
 
-Spanish SHA256: `12979e4f1f5bb1cc8bf02258fccc8b6dfb77c7ffbb6c87a88d368457fc195a20`
+Spanish SHA256: `2cac0f1084f56863155469f1967af63301178082ed2bd06f3bcdb726ed3d5d7c`
 
 | Q | Title | Choices in order |
 |---|---|---|
@@ -109,7 +113,7 @@ Spanish SHA256: `12979e4f1f5bb1cc8bf02258fccc8b6dfb77c7ffbb6c87a88d368457fc195a2
 
 Source SHA256: `63cd3ddef63907f8281b7060db5b8004bf7bac2067f84fcdf01ca8bd8b18c3fb`
 
-Spanish SHA256: `0538fef6f596ed7628dc0bead2bfc2468fa3e341ddb71dd4e9698c7394acf6e3`
+Spanish SHA256: `730c31879e08b65b7f0cef0877843f8f254df136aadea98fb6ba8be5a3528441`
 
 | Q | Title | Choices in order |
 |---|---|---|
@@ -296,9 +300,9 @@ Spanish SHA256: `32f633bb0fcd1827ed9b384e2bccc923e4a50f5f9d700f34a8bae169c9068f2
 
 ### quiz-regex-or-wreckage
 
-Source SHA256: `10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25`
+Source SHA256: `0b087416a4feeb151ae3aaa3f19d785b8edc4860522fe150845f43141d7444e9`
 
-Spanish SHA256: `16457f49e539f787d082dd70eca5958e36d9c7088cf73886cd4524499f8fa25c`
+Spanish SHA256: `4e0992a786bf6195faacdee8af3dd54fbd7bac87399fc450b10e8ed6899f825b`
 
 | Q | Title | Choices in order |
 |---|---|---|
@@ -454,7 +458,7 @@ Spanish SHA256: `71e163a5c37982da0a8fdb18bc5e87f683d10dea00a4b9227e95dc4b9f84784
 
 Source SHA256: `e00c048b44ae6dec4bee8aedf31356a8c002564399f9e3525175ace3b2fe3bbb`
 
-Spanish SHA256: `41b83c0403bf0da4ada81c535ee5c7156bfea94a25a50e1a9fed245b2a3b001c`
+Spanish SHA256: `b3ef4bbe6db937b490cd3cbc415f9101437e3d6b6e91dac7fdd1b04dd1692804`
 
 | Q | Title | Choices in order |
 |---|---|---|
