@@ -269,13 +269,13 @@ objectives={[
     API Gateway unterstützt bidirektionale WebSocket‑APIs, aber die Implementierung wird von API Gateway verwaltet und ist kein direkter Socket zu Ihrem eigenen Server‑Prozess.
     API Gateway hält die Client‑Verbindung aufrecht und leitet Nachrichten an Lambda, HTTP‑Endpunkte oder andere Integrationen weiter. Nachrichten können über die API Gateway Management API an verbundene Clients zurückgesendet werden.
 
-    Die anderen Optionen sind wesentlich WebSocket‑freundlicher:
-    - Lightsail: Perfekt für einfache WebSocket‑Setups 👌
+    Andere Dienste bieten andere Abwägungen:
+    - Lightsail: Einen eigenen WebSocket-Server auf einer Instanz betreiben und verwalten
     - AppSync: Nutzt WebSockets für verwaltete GraphQL‑Abonnements
     - EC2: Ihre klassische „mach, was du willst“‑Option für WebSockets
-    - EKS: Ideal zum Betreiben skalierbarer WebSocket‑Cluster
+    - EKS: Eigene WebSocket-Dienste in Kubernetes betreiben
 
-    Pro‑Tipp: Wenn Sie rohe WebSocket‑Leistung benötigen, bleiben Sie bei den Compute‑Diensten!
+    Wähle nach Protokoll, Verbindungsgrenzen, Bereitstellungsmodell und Betriebsverantwortung. Verwaltetes API-Routing und ein selbst betriebener Server erfüllen unterschiedliche Anforderungen.
   </div>
   </slot>
 </Challenge>
@@ -393,7 +393,7 @@ objectives={[
 
     Diese Limits zu verstehen ist entscheidend, um die Performance deiner Anwendung zu optimieren und effiziente Datenoperationen sicherzustellen.
 
-    **Hinweis:** Das Maximum von 100 Elementen pro `BatchGetItem`-Aufruf ist eine API-Grenze. Höhere anpassbare Durchsatzquoten ändern diese Grenze nicht; teile größere Abrufe auf mehrere Aufrufe auf.
+    **Hinweis:** Das Maximum von 100 Elementen pro `BatchGetItem`-Aufruf ist eine API-Grenze. Höhere anpassbare Durchsatzquoten ändern diese Grenze nicht; teile größere Abrufe auf mehrere Aufrufe auf. Wiederhole `UnprocessedKeys` mit wachsenden Wartezeiten (Backoff).
   </div>
   </slot>
 </Challenge>

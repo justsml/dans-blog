@@ -121,23 +121,21 @@ Viel Glück! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welche dieser PostgreSQL‑Funktionen ist **NICHT** ❌ Teil des ANSI‑SQL‑Standards?
+    Welche Klausel dokumentiert PostgreSQL als Erweiterung des SQL-Standards?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Beispiele für PostgreSQL‑Erweiterungen zu ANSI SQL:
-    - `RETURNING`‑Klausel.
-    - `ILIKE` für case‑insensitive Vergleiche.
-    - Array‑Typen und -Operationen.
-    - JSON/JSONB‑Typen.
+PostgreSQL dokumentiert `RETURNING` als Erweiterung des SQL-Standards. Auch `ILIKE` ist eine PostgreSQL-Erweiterung.
 
-    Zu den standardisierten SQL-Funktionen gehören:
-    - `WITH` (Common Table Expressions).
-    - `LIKE` für Mustervergleich.
-    - `LATERAL`‑Joins.
-    - Fensterfunktionen.
-  </div>
+Array- und JSON-Unterstützung sind nicht pauschal außerhalb des Standards: SQL standardisiert Funktionen in beiden Bereichen. PostgreSQL bietet zusätzlich eigene Typen und Operatoren wie `jsonb`.
+
+In verschiedenen Ausgaben des SQL-Standards eingeführte Funktionen sind:
+- `WITH` (Common Table Expressions)
+- `LIKE` für Mustervergleiche
+- `LATERAL`-Joins
+- Fensterfunktionen
+</div>
   </slot>
 </Challenge>
 

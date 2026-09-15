@@ -19,7 +19,7 @@ The existing German [Visualizing Promises article](../../../src/content/posts/20
 
 A fresh parser comparison confirms all 267 questions have the same number of options and same correct-answer positions as their English sources, and every question/explanation/hint code fence matches modulo whitespace. All offered choices were read for meaning and literal-output consistency. Actual browser selection and rendering are covered by the parent task's corpus-wide Playwright run; this ledger does not claim a separate German browser run.
 
-Scoped i18n validation after repairs passed nine files; remaining failures were shared validator issues: Markdown scans misreading JSX option text, and overbroad preservation rules rejecting valid German prose such as “Nur in Node.js” or “gibt undefined aus”. The parent task owns validator fixes and final rerun. Exact current source hashes below allow detecting later source edits.
+All 19 files pass structural parity after restoring missing links and aligning the PostgreSQL geometry explanation. Scoped i18n validation still flags overbroad preservation rules rejecting valid German prose such as “Nur in Node.js” or “gibt undefined aus”. The parent task owns validator fixes and final rerun. Exact current source hashes below allow detecting later source edits.
 
 ## Per-question answer audit
 
@@ -46,7 +46,7 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
 - Questions: 14
-- English SHA-256: `fcef89818a405467abb8281315473a211b41b4e815d14835c8264d8fc8804f29`
+- English SHA-256: `989751b2ad3098d09729710992be6df598d713b5e494fbb8a539c85cf39cc780`
 - German SHA-256: `920330f58b5f829a5be6a9d47482641de544d3be45118affc0cee4c2b7508151`
 
 | Question | Correct choice | Reviewed answer |
@@ -69,7 +69,7 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-data-structures-algorithms
 
 - Questions: 20
-- English SHA-256: `f258c619229805a1a020c8a04e43e9e2c1a98845a967429d069e1b53648bd1b9`
+- English SHA-256: `bbe16f991f17d61caaf6a3d510caa7d4dd771d1113bbbdd157319831abc66dd7`
 - German SHA-256: `3bb7bb3a6a1206a895222f0ee668b5e50763e366a729f109df5a98fe9a4eafd0`
 
 | Question | Correct choice | Reviewed answer |
@@ -179,8 +179,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-modern-css-2025
 
 - Questions: 11
-- English SHA-256: `7f302e5782ff1d262f8af1bb22cfe184f7490015bc2bf8e7becc3fc5936fdd2e`
-- German SHA-256: `30e858559ee15131f0f36be3dc800b02bc2e4af2070c935af03c60a8d23a9c10`
+- English SHA-256: `7254e27e26db35a72ca971a9fce8ae96d3cba30163bc6958ec3118e52e39704b`
+- German SHA-256: `454704bebf0f8e9de0510d7a53604e58d1976f27797a54be293ce76f7f590d64`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -313,7 +313,7 @@ Numbers are one-based choice positions, not proof of independent program executi
 
 - Questions: 16
 - English SHA-256: `ea4b4440293b28444b461e783c6f33db1a9d797e64fa8a5987034d8dada9f631`
-- German SHA-256: `13e2b8f56de3469d083f7dd00b669b4fc7f9eb8778df2cd55c853f9cb4713111`
+- German SHA-256: `f773d8586bcb092b9a1dba51ded01fbb48b2ecb1b1f91ccdd398115f8dace52d`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -338,7 +338,7 @@ Numbers are one-based choice positions, not proof of independent program executi
 
 - Questions: 14
 - English SHA-256: `8cb97e01f93954cd744f660f427ef83528e228aef5df6c5bdeae527f140c09b6`
-- German SHA-256: `0a11a8c92762f9c7c2b5ce8b0e3260372fba49313f93bd1a3daa1caf67014cfa`
+- German SHA-256: `6a827cdac93a1bb7558a7fc396b9df66536c2c9de5ec4336a6c7a132f5f812b0`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -360,8 +360,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-postgres-sql-mastery-pt2
 
 - Questions: 12
-- English SHA-256: `b97ed535e3eced922287f21009e9b99a8a074cc2ea569e7d9e52c8572ac06cce`
-- German SHA-256: `bc61b9f901ad4b16c42d34a189dde15bff34335afd3553ad161e06462442c2b4`
+- English SHA-256: `442e06417de424ae712b9a4016865482fd1050ef479a9719f3c28d4709b2d808`
+- German SHA-256: `c13cf367430a1b88494368d38349e46c707dca987fe44f05a74b095a89b1a6ee`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -381,8 +381,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-in-the-aws-cloud
 
 - Questions: 26
-- English SHA-256: `9690cc0b49efc10047045e06bd765e746a16b0bb5456fa9cf8d786a3cfdc7e30`
-- German SHA-256: `01aafc121536f318f3d69446eed775844db30b878e97d037ab421796d4b9dde0`
+- English SHA-256: `8f073f151596d04141eec7cd5a1517d350fc7a7ebb7a42725eac544d8cb8dba9`
+- German SHA-256: `02fe96c4ea6727417866620b0fc709b0190740e3d91b0ff745e9c3e2c49e3257`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
