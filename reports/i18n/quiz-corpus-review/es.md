@@ -41,9 +41,9 @@ Each row lists every Spanish choice in display order; the correct choice is **bo
 
 ### javascript-promises-quiz
 
-Source SHA256: `ead6cb486ce9cef02d253b30715e77820dde44c9a310546a0532e7164078dd5a`
+Source SHA256: `e764fa63c7b596684e65aa43df3b758eef30b31aadae917a28a5e1ca32d7ab12`
 
-Spanish SHA256: `66e69103eaa72f14612271ddceb39b7a6b0feece42e32adaaf93e7a8c4a1a182`
+Spanish SHA256: `3d51676bbf21ae5326aef30a2cd6e209bd574b20e6eefa04b2ce07a473275a04`
 
 | Q | Title | Choices in order |
 |---|---|---|
