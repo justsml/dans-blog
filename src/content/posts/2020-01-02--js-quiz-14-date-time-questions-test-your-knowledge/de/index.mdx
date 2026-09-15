@@ -57,7 +57,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -90,7 +90,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -139,12 +139,8 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 
   <slot name='explanation'>
   <div className="explanation">
-    Vergiss nicht das `new`-Schlüsselwort! `Date` ist eine Klasse und sollte mit `new` aufgerufen werden.
-
-    `Date('...')` ohne `new` ignoriert die übergebenen Argumente. Es scheint immer das aktuelle Datum und die Uhrzeit auszugeben, ähnlich wie `new Date()` (ohne Argumente).
-
-    Das ist ein **häufiger Fallstrick**, der selbst bei einem Code-Review **leicht zu übersehen** ist.
-  </div>
+`Date(...)` ohne `new` ist ein Funktionsaufruf. Er ignoriert alle Argumente und gibt einen String mit dem aktuellen Datum und der aktuellen Uhrzeit zurück. `new Date(...)` erzeugt dagegen ein Date-Objekt und verarbeitet seine Argumente. Dieser Unterschied ist leicht zu übersehen.
+</div>
   </slot>
 </Challenge>
 
@@ -164,6 +160,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
+    Nimm für diese Frage einen lokalen Zeitzonenoffset von GMT−07:00 an.
     Was wird die Ausgabe enthalten?
     ```js
     const date = new Date(2020)
@@ -202,6 +199,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
+    Nimm für diese Frage einen lokalen Zeitzonenoffset von GMT−07:00 an.
     Welcher Wert wird in der Konsole ausgegeben?
     ```js
     const d1 = new Date('2020-01-01')
@@ -285,13 +283,8 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 
   <slot name='explanation'>
   <div className="explanation">
-    Du erhältst einen `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Date-Instanz.
-
-    {/* Die Methode [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) verwendet deinen lokalen Offset (nimm für diese Fragen GMT-07:00 an).
-    Das bedeutet, sie würde das Vorjahr zurückgeben (Silvester -7 Stunden).
-    Die Methode [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) würde das Jahr zurückgeben, das wir an `Date.UTC()` übergeben haben, also 2020.
-    */}
-  </div>
+`Date.UTC("2020-01-01")` versucht, den String als numerisches Jahr umzuwandeln, und liefert hier `NaN`. `Date.UTC` gibt eine Zahl zurück, kein Date-Objekt. Deshalb schlägt der anschließende Aufruf `.toUTCString()` mit einem `TypeError` fehl.
+</div>
   </slot>
 </Challenge>
 
@@ -342,6 +335,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
+    Nimm für diese Frage einen lokalen Zeitzonenoffset von GMT−07:00 an.
     Was wird die Ausgabe enthalten?
     ```js
     // Assume local TZ is -07:00
@@ -356,10 +350,8 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 
   <slot name='explanation'>
   <div className="explanation">
-    Daten werden implizit in der lokalen Zeit dargestellt, mit einem (effektiv) unveränderlichen [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
-
-    `Date`-Instanzen speichern keine Zeitzonendaten. Sie speichern die Anzahl der Millisekunden seit der Unix-Epoche (1. Januar 1970). Die Zeitzone wird beim Parsen und Rendern von Datums-Strings berücksichtigt. Das Standard-Anzeigeverhalten wird automatisch basierend auf den Gebietsschema-Einstellungen des Systems oder Browsers bestimmt.
-  </div>
+`getTimezoneOffset()` liefert UTC minus lokale Zeit in Minuten. Bei GMT−07:00 sind das `420`. Ein Date-Objekt speichert einen Zeitpunkt als Millisekunden seit der Unix-Epoche, keine Zeitzone. Der Offset hängt von der Systemzeitzone und dem jeweiligen Datum ab und kann sich etwa durch Sommerzeit ändern.
+</div>
   </slot>
 </Challenge>
 
@@ -376,7 +368,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -412,7 +404,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
@@ -444,7 +436,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -482,7 +474,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -525,7 +517,7 @@ Dieses Quiz soll Ihr Wissen über die native `Date`-API testen (und vertiefen). 
 >
   <slot name="question">
   <div className="question">
-    Was wird die Ausgabe enthalten?
+    Welches lokale Kalenderdatum stellt das Ergebnis dar? Die genaue Konsolendarstellung hängt von der Laufzeit ab.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)

@@ -45,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Wähle das <em class="highlight">EINEN UNGÜLTIGEN</em> ❌ `font-size`:
+    Wähle den <em class="highlight">EINZIGEN UNGÜLTIGEN</em> ❌ Wert für `font-size`:
   </div>
   </slot>
   <slot name='explanation'>
@@ -120,7 +120,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Welches dieser Einheiten ist <em class="highlight">NICHT</em> eine gültige ❌ CSS‑Einheit?
+    Welche dieser Einheiten ist <em class="highlight">NICHT</em> eine gültige ❌ CSS‑Einheit?
   </div>
   </slot>
   <slot name='explanation'>
@@ -156,7 +156,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die richtige Antwort ist `a#home[name='home']`, da sie sowohl das `id`‑ als auch das `name`‑Attribut trifft. CSS‑Selektoren sind case‑sensitive, daher funktioniert `#Home` nicht, und Leerzeichen bedeuten Kind‑Elemente, was hier nicht zutrifft.
+    Die richtige Antwort ist `a#home[name='home']`, da sie sowohl das `id`‑ als auch das `name`‑Attribut trifft. ID-Werte unterscheiden Groß- und Kleinschreibung, daher passt `#Home` nicht. Ein Leerzeichen ist ein Nachfahrenkombinator: `a [id='home']` sucht innerhalb des Links, nicht den Link selbst.
 
     Der `:contains()`‑Selektor ist kein standardmäßiger CSS‑Selektor, ist aber in einigen JS‑Bibliotheken verfügbar.
   </div>
@@ -290,15 +290,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Wie kannst du "shit" in einer Box zentrieren?
+    Welche Deklaration zentriert Inline-Text horizontal innerhalb seines umgebenden Blocks?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Verwendung von `text-align: center;` ist der richtige Weg, um Text in einem Block-Element zu zentrieren. Die `align`‑Eigenschaften werden für Flexbox‑Layouts verwendet, und `margin: 0 auto;` dient dazu, Block-Elemente horizontal zu zentrieren.
+`text-align: center;` zentriert Text innerhalb eines Blockelements. Eine CSS-Eigenschaft `align` gibt es nicht. `margin: 0 auto;` kann einen Block mit begrenzter Breite zentrieren, aber nicht dessen Text.
 
-    Die `align-content`‑Eigenschaft wird für Grid‑Layouts genutzt, und `text-content` ist keine gültige CSS‑Eigenschaft.
-  </div>
+`align-content` richtet Inhalte in unterstützten Layouts wie Grid und mehrzeiligem Flexbox aus; es ist keine Eigenschaft zur Textausrichtung. `text-content` ist keine gültige CSS-Eigenschaft.
+</div>
   </slot>
 </Challenge>
 

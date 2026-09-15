@@ -46,7 +46,7 @@ Viel Glück! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welche ist ❌ kein gültiger PostgreSQL‑JOIN‑Ausdruck?
+    Welcher Ausdruck ist ❌ kein gültiger PostgreSQL-JOIN-Ausdruck?
   </div>
   </slot>
   <slot name='explanation'>
@@ -62,7 +62,7 @@ Viel Glück! 🍀
     - `LEFT JOIN` (oder `LEFT OUTER JOIN`)
     - `RIGHT JOIN` (oder `RIGHT OUTER JOIN`)
     - `FULL JOIN` (oder `FULL OUTER JOIN`)
-    - `CROSS JOIN` (das kartesische Produkt, sofern ein späteres `WHERE`‑Klausel es filtert)
+    - `CROSS JOIN` (das kartesische Produkt, das eine spätere `WHERE`-Klausel einschränken kann)
   </div>
   </slot>
 </Challenge>
@@ -132,7 +132,7 @@ Viel Glück! 🍀
     - Array‑Typen und -Operationen.
     - JSON/JSONB‑Typen.
 
-    Der ursprüngliche ANSI‑SQL‑Standard enthält:
+    Zu den standardisierten SQL-Funktionen gehören:
     - `WITH` (Common Table Expressions).
     - `LIKE` für Mustervergleich.
     - `LATERAL`‑Joins.
@@ -216,7 +216,7 @@ Viel Glück! 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ein Hash-Join ist mit einer Gleichheitsbedingung (`=`) im `ON`‑Clause möglich.
+    Ein Hash-Join ist mit einer Gleichheitsbedingung (`=`) in der `ON`-Klausel möglich.
 
     - `=` ist die zentrale Prädikatform für Hash-Joins
     - `>` und `>=` sind keine Hash‑Join‑Prädikate
@@ -254,7 +254,7 @@ Viel Glück! 🍀
   <div className="explanation">
     Für mich ist das Überraschende, dass ein mehrspaltiger Index sogar dann verwendet werden kann, wenn die Spaltenreihenfolge im Abfrage‑Text nicht mit der Indexdefinition übereinstimmt.
 
-    **Note:** Bei B‑Tree‑Indizes ist die führende Spalte entscheidend. Da diese Abfrage nach `grade_level` und `last_name` filtert, passt ein Index, der mit `grade_level` beginnt und danach `last_name` enthält, gut.
+    **Hinweis:** Bei B‑Tree‑Indizes ist die führende Spalte entscheidend. Da diese Abfrage nach `grade_level` und `last_name` filtert, passt ein Index, der mit `grade_level` beginnt und danach `last_name` enthält, gut.
 
     Je schneller SQL die wenigsten Zeilen auswählen kann, desto besser ist die Performance.
 
@@ -366,7 +366,7 @@ Viel Glück! 🍀
 >
   <slot name="question">
   <div className="question">
-    Welcher Syntax ist gültig, um **zufällig 10 %** der Studenten zu entnehmen?
+    Welche Syntax ist gültig, um **im Mittel zufällig 10 %** der Studenten zu entnehmen?
   </div>
   </slot>
   <slot name='explanation'>
@@ -386,7 +386,7 @@ Viel Glück! 🍀
 
     Um mehr über Sampling zu erfahren, sieh dir diesen Artikel von [Render](https://render.com/blog/postgresql-random-samples-big-tables) an.
 
-    Example:
+    Beispiel:
     ```sql
     -- Sample 10% of rows
     SELECT * FROM students TABLESAMPLE BERNOULLI (10);
@@ -431,7 +431,7 @@ Viel Glück! 🍀
 
     Sie sind nützlich, um Speicherplatz zu sparen und Abfragen zu beschleunigen, wenn typischerweise nur ein Teil der Zeilen abgefragt wird.
 
-    Postgres verwendet den Index nur, wenn die Bedingung `status = 'active'` im Query vorkommt.
+    Der Abfrageplaner kann diesen Index berücksichtigen, wenn er beweisen kann, dass die Abfragebedingungen `status = 'active'` implizieren. Der Wortlaut muss nicht immer identisch sein, aber die Schlussfolgerungen des Planers sind begrenzt; ein Parameter kann den Nachweis zur Planungszeit verhindern. Ein geeigneter Index wird nicht zwangsläufig ausgewählt.
 
     **Erinnerung:** Postgres unterstützt keine „query hints“ wie andere RDBMSs. Der Abfrageplaner entscheidet, wann ein passender Index verwendet wird.
   </div>

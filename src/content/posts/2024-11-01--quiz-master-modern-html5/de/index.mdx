@@ -65,11 +65,20 @@ Immerhin kennst du dein `<div>` von deinem `<span>`, oder? Aber wie gut kennst d
   group="Fortgeschrittenes semantisches HTML"
   title="Verwendung von `<dd>`"
   options={[
-    {text: 'Definitionsbeschreibung'},
-    {text: 'Beschreibungsbegriff'},
-    {text: 'Datenanzeige'},
-    {text: 'Beschreibungsdetails', isAnswer: true},
-  ]}
+  {
+    "text": "Eine Deklaration, die ein Datenbankfeld definiert"
+  },
+  {
+    "text": "Beschreibungsbegriff"
+  },
+  {
+    "text": "Datenanzeige"
+  },
+  {
+    "text": "Eine Beschreibung, Definition oder ein Wert zu einem Begriff in einer Beschreibungsliste",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -102,15 +111,24 @@ Immerhin kennst du dein `<div>` von deinem `<span>`, oder? Aber wie gut kennst d
   group="Fortgeschrittenes semantisches HTML"
   title="Verwendung von `<figure>/<figcaption>`"
   options={[
-    {text: 'Für Bilder mit Urheberrechtsinformationen, die angezeigt werden sollen'},
-    {text: 'Beschreibung von Bildern, Diagrammen usw.', isAnswer: true},
-    {text: 'Zur Annotation von Tabellen, Berechnungen usw.'},
-    {text: 'Wird für die Untertitelung von Videos verwendet'},
-  ]}
+  {
+    "text": "Nur für Bilder mit Urheberrechtsinformationen"
+  },
+  {
+    "text": "Eigenständige Inhalte mit ihrer Beschriftung gruppieren",
+    "isAnswer": true
+  },
+  {
+    "text": "Ausschließlich für Tabellen und mathematische Berechnungen"
+  },
+  {
+    "text": "Nur zum Hinzufügen von Untertiteln bei der Videowiedergabe"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Wann sollten die `<figure>`- und `<figcaption>`-Elemente verwendet werden?
+    Was ist der allgemeine Zweck der Kombination von `<figure>` und `<figcaption>`?
   </div>
   </slot>
 
@@ -121,7 +139,7 @@ Immerhin kennst du dein `<div>` von deinem `<span>`, oder? Aber wie gut kennst d
     Dies ist nützlich für Bilder, Diagramme, Codeausschnitte und mehr.
     ```html
     <figure>
-    <img src="../image.jpg" alt="Description of image">
+    <img src="image.jpg" alt="Description of image">
     <figcaption>Image caption</figcaption>
     </figure>
     ```

@@ -37,13 +37,26 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Aufwärmen: Objekte"
   title="Grundlegendes Objekt-Destructuring"
   options={[
-    {text: 'Name: Dan Levy, Alter: 20'},
-    {text: 'Name: Dan Levy, Alter: 40'},
-    {text: 'Name: Dan Levy, Alter: Infinity'},
-    {text: 'Name: Dan Levy, Alter: undefined', isAnswer: true},
-    {text: 'Fehler: Cannot read property \'age\''},
-    {text: 'Name: undefined, Alter: 40'},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: 20"
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Name: Dan Levy, Age: Infinity"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Fehler: Cannot read property 'age'"
+  },
+  {
+    "text": "Name: undefined, Age: 40"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -76,13 +89,26 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Aufwärmen: Arrays"
   title="Standardwert bei Objekt-Destrukturierung"
   options={[
-    {text: 'Name: Dan Levy, Alter: NaN'},
-    {text: 'Name: Dan Levy, Alter: null'},
-    {text: 'Name: Dan Levy, Alter: undefined', isAnswer: true},
-    {text: 'Name: Dan Levy, Alter: 40'},
-    {text: 'Fehler: Kann Eigenschaft \'age\' nicht destrukturieren'},
-    {text: 'SyntaxError: Unerwartetes Token \',\''},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: NaN"
+  },
+  {
+    "text": "Name: Dan Levy, Age: null"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Fehler: Kann Eigenschaft 'age' nicht destrukturieren"
+  },
+  {
+    "text": "SyntaxError: Unerwartetes Token ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -112,12 +138,23 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Verschachteltes Destructuring"
   title="Verschachteltes Destructuring"
   options={[
-    {text: 'Vorname: Dan, Stadt: Denver'},
-    {text: 'Vorname: undefined, Stadt: Denver'},
-    {text: 'Fehler: Kann Eigenschaft \'first\' nicht lesen'},
-    {text: 'Vorname: Dan, Stadt: undefined'},
-    {text: 'Fehler', isAnswer: true},
-  ]}
+  {
+    "text": "First: Dan, City: Denver"
+  },
+  {
+    "text": "First: undefined, City: Denver"
+  },
+  {
+    "text": "Fehler: Kann Eigenschaft 'first' nicht lesen"
+  },
+  {
+    "text": "First: Dan, City: undefined"
+  },
+  {
+    "text": "Fehler",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -161,12 +198,23 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Standardwerte"
   title="Standardwerte bei Objekt-Destrukturierung"
   options={[
-    {text: 'Hallo Dan aus Unbekannt'},
-    {text: 'Hallo Dan aus Denver'},
-    {text: 'Hallo Unbekannt aus Unbekannt'},
-    {text: 'Hallo Unbekannt aus Denver'},
-    {text: 'Fehler', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Fehler",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -191,7 +239,7 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   <div className="explanation">
     Die `birth`‑Eigenschaft existiert nicht auf `person`, also benötigt das gesamte Objekt immer noch einen Standardwert, nicht nur die verschachtelte Eigenschaft. Im Grunde fehlt hier ein ` = {}`‑Standard.
 
-    So wie das geschrieben ist, bedeutet es: "wenn `person.birth` `undefined` ist, dann ist `place` `Unknown`". Aber `person.birth` ist `undefined`, also versucht man, `undefined` zu destrukturieren, was zu einem Fehler führt.
+    Der Standard `place = "Unknown"` greift erst innerhalb eines vorhandenen oder als Standard eingesetzten `birth`-Objekts. Er ersetzt nicht das fehlende Objekt `person.birth`: Das Destrukturieren von `undefined` löst zuerst einen Fehler aus.
     ```plaintext
     In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
@@ -209,13 +257,26 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Standardwerte"
   title="Standardwerte bei Objekt-Destrukturierung"
   options={[
-    {text: 'Hallo Dan aus Denver'},
-    {text: 'Hallo Dan aus Johannesburg'},
-    {text: 'Hallo Dan aus Unbekannt', isAnswer: true},
-    {text: 'Hallo Unbekannt aus Unbekannt'},
-    {text: 'Hallo Unbekannt aus Denver'},
-    {text: 'Fehler'},
-  ]}
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Dan from Johannesburg"
+  },
+  {
+    "text": "Hi Dan from Unknown",
+    "isAnswer": true
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Fehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -249,13 +310,26 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Funktionsargumente"
   title="Destrukturieren von Funktionsparametern mit Standardwerten"
   options={[
-    {text: 'Hallo Dan von undefined'},
-    {text: 'Hallo Dan von Unknown'},
-    {text: 'Hallo Dan von Denver'},
-    {text: 'Hallo Unknown von Unknown'},
-    {text: 'Hallo Unknown von Denver'},
-    {text: 'Fehler', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from undefined"
+  },
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Fehler",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -287,15 +361,32 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Funktionsargumente"
   title="Destrukturierung mit verschachtelten Standardwerten"
   options={[
-    {text: 'Unbekannt, Unbekannt, Joburg'},
-    {text: 'Unbekannt, Unbekannt, Unbekannt'},
-    {text: 'Unbekannt, `undefined`, Joburg'},
-    {text: 'k.A., `undefined`, Joburg'},
-    {text: 'k.A., Unbekannt, Joburg'},
-    {text: 'k.A., k.A., Joburg', isAnswer: true},
-    {text: 'Unbekannt, k.A., Joburg'},
-    {text: 'Fehler'},
-  ]}
+  {
+    "text": "Unknown, Unknown, Joburg"
+  },
+  {
+    "text": "Unknown, Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, Unknown, Joburg"
+  },
+  {
+    "text": "N/A, N/A, Joburg",
+    "isAnswer": true
+  },
+  {
+    "text": "Unknown, N/A, Joburg"
+  },
+  {
+    "text": "Fehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -317,9 +408,9 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Funktion `displayPlace` verwendet NUR ein Standard‑Objekt, wenn kein Objekt übergeben wird. Das heißt, das einzige, was das Standard‑Objekt `{ place: "Unknown" }` liefert, ist ein Aufruf ohne Argumente `displayPlace()`.
+    Das Standardobjekt `{ place: "Unknown" }` wird verwendet, wenn das Argument fehlt oder explizit `undefined` ist: Sowohl `displayPlace()` als auch `displayPlace(undefined)` geben `Unknown` aus.
 
-    Ein weiteres bemerkenswertes Verhalten ist, dass das Übergeben von `undefined` für `place` dazu führt, dass der Standardwert verwendet wird – ein bisschen ähnlich wie bei `JSON.stringify` (ignoriert `undefined`, erkennt `null`).
+    Wird ein Objekt übergeben, verwendet eine fehlende oder auf `undefined` gesetzte Eigenschaft `place` den Eigenschaftsstandard `"N/A"`. Parameter- und Eigenschaftsstandards greifen auf unterschiedlichen Ebenen.
 
     Das Ergebnis ist:
     ```js
@@ -337,20 +428,39 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="Funktionsargumente"
   title="Destrukturierung mit verschachtelten Standardwerten"
   options={[
-    {text: 'k.A., k.A.'},
-    {text: 'k.A., undefined'},
-    {text: 'Unbekannt, k.A.'},
-    {text: 'Unbekannt, Unbekannt'},
-    {text: 'Unbekannt, undefined'},
-    {text: 'null, k.A.', isAnswer: true},
-    {text: 'null, Unbekannt'},
-    {text: 'null, undefined'},
-    {text: 'Fehler'},
-  ]}
+  {
+    "text": "N/A, N/A"
+  },
+  {
+    "text": "N/A, undefined"
+  },
+  {
+    "text": "Unknown, N/A"
+  },
+  {
+    "text": "Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, undefined"
+  },
+  {
+    "text": "null, N/A",
+    "isAnswer": true
+  },
+  {
+    "text": "null, Unknown"
+  },
+  {
+    "text": "null, undefined"
+  },
+  {
+    "text": "Fehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Ähnlich wie beim Vorherigen… Wie wird `null` behandelt?_
+    Ähnlich wie beim Vorherigen… Wie wird `null` behandelt?
     ```js
     function displayPlace({
       name = "N/A",
@@ -366,10 +476,12 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In diesem Fall wird die Eigenschaft `place` beim ersten Aufruf auf `null` gesetzt und beim zweiten auf `undefined`. Der Standardwert für `place` wird nur verwendet, wenn das gesamte Objekt fehlt **oder** `undefined` ist. Null‑Werte bleiben `null`.
+    In diesem Fall wird die Eigenschaft `place` beim ersten Aufruf auf `null` gesetzt und beim zweiten auf `undefined`. Der Eigenschaftsstandard `"N/A"` greift, wenn `place` fehlt oder `undefined` ist, auch bei einem übergebenen Objekt. `null` löst ihn nicht aus: Die Ausgaben sind `null` und `N/A`.
   </div>
   </slot>
 </Challenge>
+
+## Jetzt kommt TypeScript
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -377,12 +489,23 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="TypeScript Inline-Typen"
   title="Destrukturierung mit verschachtelten Standardwerten"
   options={[
-    {text: 'N/A'},
-    {text: 'undefined'},
-    {text: 'Unbekannt'},
-    {text: '\'null\''},
-    {text: 'TypeScript-Fehler', isAnswer: true},
-  ]}
+  {
+    "text": "N/A"
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Unknown"
+  },
+  {
+    "text": "'null'"
+  },
+  {
+    "text": "TypeScript-Fehler",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -420,15 +543,32 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="TypeScript: Mit Zuweisung"
   title="Destrukturierung mit verschachtelten Standardwerten"
   options={[
-    {text: 'undefiniert'},
-    {text: 'null'},
-    {text: 'k.A.'},
-    {text: 'Unbekannt'},
-    {text: 'Denver', isAnswer: true},
-    {text: 'SyntaxError'},
-    {text: 'Fehler: Ungültiger Typ'},
-    {text: 'Fehler: Ungültige Argumente'},
-  ]}
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "null"
+  },
+  {
+    "text": "N/A"
+  },
+  {
+    "text": "Unknown"
+  },
+  {
+    "text": "Denver",
+    "isAnswer": true
+  },
+  {
+    "text": "SyntaxError"
+  },
+  {
+    "text": "Fehler: Ungültiger Typ"
+  },
+  {
+    "text": "Fehler: Ungültige Argumente"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -505,12 +645,23 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   group="TypeScript + Zuweisung"
   title="Destrukturierung mit verschachtelten Werten, Zuweisung und Typen"
   options={[
-    {text: 'Hallo Dan Levy aus N/A'},
-    {text: 'Hallo Dan Levy aus Kapstadt'},
-    {text: 'Hallo N/A N/A aus N/A'},
-    {text: 'Hallo N/A N/A aus Kapstadt'},
-    {text: 'Fehler', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan Levy from N/A"
+  },
+  {
+    "text": "Hi Dan Levy from Cape Town"
+  },
+  {
+    "text": "Hi N/A N/A from N/A"
+  },
+  {
+    "text": "Hi N/A N/A from Cape Town"
+  },
+  {
+    "text": "Fehler",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -555,3 +706,5 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
 </Challenge>
 
 </QuizUI>
+
+Du willst noch mehr? Natürlich! In meiner [Quiz-Sammlung](/challenges/) findest du weitere Herausforderungen.

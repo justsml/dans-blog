@@ -27,7 +27,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Bereit, deine Rust‑Speicherverwaltungs‑Fähigkeiten zu testen? 🦀</p>
 
-Dieses Quiz stellt dein Verständnis des Rust‑Ownership‑Systems, der Borrowing‑Regeln, Lebenszeiten und Smart‑Pointer auf die Probe.
+Dieses Quiz stellt dein Verständnis des Rust‑Ownership‑Systems, der Borrowing‑Regeln, Lebensdauern und Smart‑Pointer auf die Probe.
 
 **Hinweis:** Die Fragen sind auf etwa 50 Spalten Breite formatiert, um auf allen Geräten gut lesbar zu sein. (Verbesserungsvorschläge sind willkommen!)
 
@@ -40,14 +40,38 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   index={0}
   group="Besitz"
   title="Grundlegende Move-Semantik"
+difficulty={2}
+objectives={[
+  "Rusts Besitzregeln und Move-Semantik erklären",
+  "Kompilierungsfehler durch verschobene Werte erkennen",
+  "Move-bedingte Kompilierungsfehler beheben"
+]}
   options={[
-    {text: 'Hallo, !', hint: 'Denke darüber nach, was mit \'philosopher\' passiert, nachdem es verschoben wurde'},
-    {text: 'Hallo, Zeno von Citium!', hint: 'Wenn ein Wert verschoben wurde, können wir ihn noch benutzen?'},
-    {text: 'Hallo, Zeno von Elea!', hint: 'Der String enthält \'Citium\', nicht \'Elea\''},
-    {text: 'Hallo, Marcus Aurelius', hint: 'Prüfe, ob das zum String-Inhalt passt'},
-    {text: 'Kompilierungsfehler: Wert nach Move ausgeliehen', isAnswer: true},
-    {text: 'Laufzeitfehler: Nullzeiger-Ausnahme', hint: 'Rust erkennt diese Probleme bereits zur Compile‑Zeit'},
-  ]}
+  {
+    "text": "Hello, !",
+    "hint": "Denke darüber nach, was mit 'philosopher' passiert, nachdem es verschoben wurde"
+  },
+  {
+    "text": "Hello, Zeno of Citium!",
+    "hint": "Wenn ein Wert verschoben wurde, können wir ihn noch benutzen?"
+  },
+  {
+    "text": "Hello, Zeno of Elea!",
+    "hint": "Der String enthält 'Citium', nicht 'Elea'"
+  },
+  {
+    "text": "Hello, Marcus Aurelius",
+    "hint": "Prüfe, ob das zum String-Inhalt passt"
+  },
+  {
+    "text": "Kompilierungsfehler: Wert nach Move ausgeliehen",
+    "isAnswer": true
+  },
+  {
+    "text": "Laufzeitfehler: Nullzeiger-Ausnahme",
+    "hint": "Rust erkennt diese Probleme bereits zur Compile‑Zeit"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -91,6 +115,12 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   index={1}
   group="Besitz"
   title="Move-Semantik mit Funktionen"
+difficulty={2}
+objectives={[
+  "Besitzübertragung bei Funktionsaufrufen verstehen",
+  "Besitzbedingte Kompilierungsfehler bei Funktionsaufrufen erkennen",
+  "Strategien für den Besitz von Funktionswerten anwenden"
+]}
   options={[
     {text: 'Gibt beide Zeilen aus', hint: 'Überlege, was mit `wisdom` passiert, nachdem es an die Funktion übergeben wurde'},
     {text: 'Gibt nur die erste Zeile aus', hint: 'Der Code kompiliert nicht, sodass die Laufzeit nie erreicht wird'},
@@ -155,10 +185,16 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   index={2}
   group="Ausleihe"
   title="Mutable Referenzen"
+difficulty={3}
+objectives={[
+  "Rusts Regeln für veränderbare Referenzen verstehen",
+  "Verstöße gegen Ausleihregeln erkennen",
+  "Gültigkeitsbereiche für mehrere veränderbare Referenzen sinnvoll begrenzen"
+]}
   options={[
-    {text: 'Kommt erfolgreich zum Kompilieren', hint: 'Können wir gleichzeitig mehrere mutable Referenzen haben?'},
+    {text: 'Kompiliert erfolgreich', hint: 'Können wir gleichzeitig mehrere mutable Referenzen haben?'},
     {text: 'Fehler: `wisdom` kann nicht mehr als einmal mutabel geborgt werden', isAnswer: true},
-    {text: 'Fehler: fehlender Lebenszeit‑Spezifizierer', hint: 'Das Problem hat hier nichts mit Lebenszeiten zu tun'},
+    {text: 'Fehler: fehlender Lebensdauer‑Spezifizierer', hint: 'Das Problem hat hier nichts mit Lebensdauern zu tun'},
     {text: 'Laufzeit‑Panik', hint: 'Rust erkennt diese Probleme bereits zur Compile‑Zeit'},
   ]}
 >
@@ -212,13 +248,19 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="Lebenszeit‑Elision"
-  title="Implizite Lebenszeiten"
+  group="Lebensdauer‑Elision"
+  title="Implizite Lebensdauern"
+difficulty={3}
+objectives={[
+  "Rusts Regeln zur Lebensdauer-Elision verstehen",
+  "Überflüssige explizite Lebensdauer-Annotationen erkennen",
+  "Lebensdauer-Elision in Funktionssignaturen anwenden"
+]}
   options={[
     {text: 'Kompiliert erfolgreich', isAnswer: true},
-    {text: 'Fehler: fehlender Lebenszeit‑Spezifizierer', hint: 'Denke an die Lebenszeit‑Elisionsregeln – sie sollen dir helfen!'},
-    {text: 'Fehler: explizite Lebenszeit erforderlich', hint: 'Der Compiler kann das hier automatisch herausfinden'},
-    {text: 'Fehler: Lebenszeit‑Mismatch', hint: 'Die Lebenszeiten passen hier perfekt'},
+    {text: 'Fehler: fehlender Lebensdauer‑Spezifizierer', hint: 'Denke an die Lebensdauer‑Elisionsregeln – sie sollen dir helfen!'},
+    {text: 'Fehler: explizite Lebensdauer erforderlich', hint: 'Der Compiler kann das hier automatisch herausfinden'},
+    {text: 'Fehler: Lebensdauer‑Mismatch', hint: 'Die Lebensdauern passen hier perfekt'},
   ]}
 >
   <slot name="question">
@@ -242,13 +284,13 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Dieser Code kompiliert dank Rusts Lebenszeit‑Elisionsregeln erfolgreich.
-    Diese Regeln erlauben dem Compiler, Lebenszeiten in üblichen Mustern automatisch zu inferieren.
+    Dieser Code kompiliert dank Rusts Lebensdauer‑Elisionsregeln erfolgreich.
+    Diese Regeln erlauben dem Compiler, Lebensdauern in üblichen Mustern automatisch zu inferieren.
 
     Die drei Elisionsregeln sind:
-    1. Jeder Parameter bekommt seinen eigenen Lebenszeit‑Parameter
-    2. Gibt es genau einen Eingabe‑Lebenszeit‑Parameter, wird dieser allen Ausgabe‑Lebenszeit‑Parametern zugewiesen
-    3. Gibt es mehrere Eingabe‑Lebenszeit‑Parameter, aber einer davon ist &self oder &mut self, wird die Lebenszeit von self allen Ausgabe‑Lebenszeit‑Parametern zugewiesen
+    1. Jeder Parameter bekommt seinen eigenen Lebensdauer‑Parameter
+    2. Gibt es genau einen Eingabe‑Lebensdauer‑Parameter, wird dieser allen Ausgabe‑Lebensdauer‑Parametern zugewiesen
+    3. Gibt es mehrere Eingabe‑Lebensdauer‑Parameter, aber einer davon ist &self oder &mut self, wird die Lebensdauer von self allen Ausgabe‑Lebensdauer‑Parametern zugewiesen
 
     Diese Funktion ist äquivalent zu:
     ```rust
@@ -267,7 +309,7 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
         if x.len() > y.len() { x } else { y }
     }
     ```
-    Best Practice: Lass die Elision für dich arbeiten, wenn möglich, aber verstehe, wann explizite Lebenszeiten nötig sind.
+    Best Practice: Lass die Elision für dich arbeiten, wenn möglich, aber verstehe, wann explizite Lebensdauern nötig sind.
   </div>
   </slot>
 </Challenge>
@@ -277,24 +319,30 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   index={4}
   group="Smart Pointer"
   title="Box Smart Pointer"
+difficulty={4}
+objectives={[
+  "Rekursive Typen und deren Speicherbedarf verstehen",
+  "Notwendige Einsatzfälle von Box<T> erkennen",
+  "Rekursive Datenstrukturen mit Box<T> korrigieren"
+]}
   options={[
-    {
-      text: '5',
-      hint: "The code won't even compile to produce a value"
-    },
-    {
-      text: 'null',
-      hint: "Rust doesn't have null values"
-    },
-    {
-      text: 'Compilation Error',
-      hint: "The compiler can't determine a finite size for this recursive type.",
-      isAnswer: true
-    },
-    {
-      text: 'Stack overflow'
-    }
-  ]}
+  {
+    "text": "5",
+    "hint": "Der Code kompiliert nicht und kann daher keinen Wert ausgeben"
+  },
+  {
+    "text": "null",
+    "hint": "Rust verwendet hier keine null-Werte"
+  },
+  {
+    "text": "Kompilierungsfehler",
+    "hint": "Der Compiler kann für diesen rekursiven Typ keine endliche Größe bestimmen.",
+    "isAnswer": true
+  },
+  {
+    "text": "Stack-Überlauf"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -357,24 +405,30 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   index={5}
   group="Referenzzählung"
   title="Rc Smart-Zeiger"
+difficulty={3}
+objectives={[
+  "Referenzzählung in Rust verstehen",
+  "Rc<T> für gemeinsamen Besitz anwenden",
+  "Das Verhalten des Referenzzählers analysieren"
+]}
   options={[
-    {
-      text: 'Reference count: 1',
-      hint: "Count the initial creation plus each clone"
-    },
-    {
-      text: 'Reference count: 2',
-      hint: "Don't forget the original reference"
-    },
-    {
-      text: 'Reference count: 3',
-      isAnswer: true
-    },
-    {
-      text: 'Compilation Error',
-      hint: "Rc<T> is designed for exactly this use case"
-    }
-  ]}
+  {
+    "text": "Reference count: 1",
+    "hint": "Zähle die ursprüngliche Referenz und jeden Klon"
+  },
+  {
+    "text": "Reference count: 2",
+    "hint": "Vergiss die ursprüngliche Referenz nicht"
+  },
+  {
+    "text": "Reference count: 3",
+    "isAnswer": true
+  },
+  {
+    "text": "Kompilierungsfehler",
+    "hint": "Rc<T> ist genau für diesen Anwendungsfall gedacht"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -437,6 +491,12 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   index={6}
   group="Lebensdauern"
   title="Struktur-Lebensdauern"
+difficulty={3}
+objectives={[
+  "Lebensdauer-Annotationen in Strukturdefinitionen verstehen",
+  "Strukturfelder mit notwendigen Lebensdauer-Parametern erkennen",
+  "Lebensdauer-Annotationen in Strukturen korrekt anwenden"
+]}
   options={[
     {text: 'Kompiliert erfolgreich', hint: 'Strukturen mit Referenzen benötigen Lebensdauer‑Annotationen'},
     {text: 'Fehler: fehlender Lebensdauer‑Spezifizierer', isAnswer: true},
@@ -446,7 +506,7 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
 >
   <slot name="question">
   <div className="question">
-    Wird diese Strukturddefinition kompilieren? Warum oder warum nicht?
+    Wird diese Strukturdefinition kompilieren? Warum oder warum nicht?
     ```rust
     struct Philosopher {
         name: &str,    // Reference without lifetime
@@ -493,7 +553,7 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
     }
     ```
     Best practices:
-    1. Verwende besessene Typen (String), wenn du Daten unbegrenzt speichern musst
+    1. Verwende Typen mit eigenem Besitz (String), wenn du Daten unbegrenzt speichern musst
     2. Verwende Referenzen, wenn die Lebensdauer der Struktur eindeutig kürzer ist als die der Daten
     3. Ziehe mehrere Lebensdauer‑Parameter in Betracht, wenn Referenzen unterschiedliche Lebensdauern haben können
     4. Dokumentiere Lebensdauer‑Beziehungen in komplexen Strukturen
@@ -505,13 +565,31 @@ Egal, ob du ein erfahrener Rustacean bist oder gerade erst mit Speicherverwaltun
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Lebensdauern"
-  title="Lebenszeit-Anmerkungen"
+  title="Lebensdauer-Anmerkungen"
+difficulty={4}
+objectives={[
+  "Funktionssignaturen auf notwendige Lebensdauer-Annotationen prüfen",
+  "Funktionen mit mehreren Referenzen annotieren",
+  "Die Beziehung zwischen Eingabe- und Ausgabelebensdauern bewerten"
+]}
   options={[
-    {text: 'Ergebnis: Seneca der Jüngere', hint: 'Der Code lässt sich nicht kompilieren, um irgendeine Ausgabe zu erzeugen'},
-    {text: 'Fehler: fehlender Lebenszeit‑Angabe', isAnswer: true},
-    {text: 'Fehler: kann Referenz auf lokale Variable nicht zurückgeben', hint: 'Die Referenz bezieht sich auf einen Eingabeparameter, nicht auf eine lokale Variable'},
-    {text: 'Fehler: Lebenszeit‑Mismatch', hint: 'Wir haben noch keine Lebenszeiten angegeben, um einen Konflikt zu erzeugen'},
-  ]}
+  {
+    "text": "Result: Seneca the Younger",
+    "hint": "Der Code lässt sich nicht kompilieren, um irgendeine Ausgabe zu erzeugen"
+  },
+  {
+    "text": "Fehler: fehlender Lebensdauer‑Angabe",
+    "isAnswer": true
+  },
+  {
+    "text": "Fehler: kann Referenz auf lokale Variable nicht zurückgeben",
+    "hint": "Die Referenz bezieht sich auf einen Eingabeparameter, nicht auf eine lokale Variable"
+  },
+  {
+    "text": "Fehler: Lebensdauer‑Mismatch",
+    "hint": "Wir haben noch keine Lebensdauern angegeben, um einen Konflikt zu erzeugen"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -552,6 +630,12 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   index={8}
   group="RefCells"
   title="RefCell-Verhalten"
+difficulty={4}
+objectives={[
+  "Innere Mutabilität mit RefCell verstehen",
+  "Ausleihregeln von RefCell zur Laufzeit analysieren",
+  "RefCell für kontrollierten veränderbaren Zugriff anwenden"
+]}
   options={[
     {text: 'Gibt aus: 42', hint: 'Können wir gleichzeitig zwei mutable Borrows haben?'},
     {text: 'Laufzeit-Panik: RefCell bereits geborgt', isAnswer: true},
@@ -576,7 +660,7 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Gib die veränderbare Ausleihe frei, bevor gemeinsame Ausleihen entstehen. Andernfalls löst dieses Beispiel zur Laufzeit eine Panic aus.
+Im Fragecode ist die erste veränderbare Ausleihe `_borrow1` noch aktiv, wenn `_borrow2` erneut `borrow_mut()` aufruft. Dieser zweite Aufruf löst eine Panic aus; die Ausgabe wird nicht erreicht. Im korrigierten Beispiel unten wird jede veränderbare Ausleihe freigegeben, bevor eine weitere oder eine gemeinsame Ausleihe entsteht.
 
 ```rust
 use std::cell::RefCell;
@@ -599,6 +683,12 @@ fn main() {
   index={9}
   group="Mutabilität"
   title="Cell vs RefCell"
+difficulty={3}
+objectives={[
+  "Einsatzmuster von Cell und RefCell unterscheiden",
+  "Cell für einfache innere Mutabilität einsetzen",
+  "Copy- und Nicht-Copy-Typen bei Cell vergleichen"
+]}
   options={[
     {text: 'Gibt aus: 42, 43', isAnswer: true},
     {text: 'Gibt aus: 43, 43', hint: 'Cell::get() gibt den Wert zum Zeitpunkt des Aufrufs zurück'},
@@ -675,10 +765,16 @@ fn main() {
   index={10}
   group="Referenzzählung"
   title="Verstehen von Rc"
+difficulty={3}
+objectives={[
+  "Zweck und Grenzen von Rc verstehen",
+  "Referenzzählung in einem oder mehreren Threads unterscheiden",
+  "Rc passend für gemeinsamen Besitz einsetzen"
+]}
   options={[
     {text: 'Rc wird in Single‑Thread‑Umgebungen verwendet', isAnswer: true},
     {text: 'Rc wird in Multi‑Thread‑Umgebungen verwendet', hint: 'Denke an Thread‑Sicherheit – Rc hat keine Synchronisation'},
-    {text: 'Rc wird nur für unveränderliche Daten verwendet', hint: 'Rc kann mit interner Mutabilität kombiniert werden'},
+    {text: 'Rc wird nur für unveränderliche Daten verwendet', hint: 'Rc kann mit innerer Mutabilität kombiniert werden'},
     {text: 'Rc wird nur für veränderliche Daten verwendet', hint: 'Rc funktioniert sowohl mit veränderlichen als auch mit unveränderlichen Daten'},
     {text: 'Rc ist für Fernsteuerung', hint: 'Klug, aber kein Programmierkonzept!'},
   ]}
@@ -762,6 +858,12 @@ fn main() {
   index={11}
   group="RefCell"
   title="RefCells und Threading"
+difficulty={4}
+objectives={[
+  "RefCell und threadsichere Alternativen unterscheiden",
+  "Einsatzfälle für RefCell und RwLock erkennen",
+  "Synchronisierung passend zu den Thread-Anforderungen einsetzen"
+]}
   options={[
   {
     "text": "RefCell wird für mutable Borrows verwendet, Rw für immutable",
@@ -816,10 +918,16 @@ fn main() {
   index={12}
   group="Smart-Pointer"
   title="Arc und Mutex"
+difficulty={5}
+objectives={[
+  "Zugriffsmuster mit Arc und Mutex analysieren",
+  "Mögliche Deadlocks erkennen",
+  "Synchronisierungsmuster zur Vermeidung von Deadlocks anwenden"
+]}
   options={[
   {
     "text": "Gibt aus: 42",
-    "hint": "Der Code wird die Ausgabzeile nie erreichen"
+    "hint": "Der Code wird die Ausgabezeile nie erreichen"
   },
   {
     "text": "Gibt aus: 43",
@@ -879,28 +987,34 @@ fn main() {
   index={13}
   group="Smart Pointer"
   title="Schwache Referenzen"
+difficulty={4}
+objectives={[
+  "Zweck und Verhalten schwacher Referenzen verstehen",
+  "Einsatzfälle zur Vermeidung von Speicherlecks erkennen",
+  "Referenzzyklen mit Weak<T> aufbrechen"
+]}
   options={[
-    {
-      text: 'Prints: Some("Wisdom")',
-      hint: "What happens to the data when all strong references are dropped?"
-    },
-    {
-      text: 'Prints: None',
-      isAnswer: true
-    },
-    {
-      text: 'Compilation Error',
-      hint: "The code is syntactically correct"
-    },
-    {
-      text: 'Runtime Panic',
-      hint: "Weak references gracefully handle dropped values"
-    },
-    {
-      text: 'Existential Panic',
-      hint: "While philosophical, not a real Rust error!"
-    }
-  ]}
+  {
+    "text": "Ausgabe: Some(\"Wisdom\")",
+    "hint": "Was passiert mit den Daten, wenn alle starken Referenzen freigegeben wurden?"
+  },
+  {
+    "text": "Ausgabe: None",
+    "isAnswer": true
+  },
+  {
+    "text": "Kompilierungsfehler",
+    "hint": "Der Code ist syntaktisch korrekt"
+  },
+  {
+    "text": "Laufzeit-Panic",
+    "hint": "Schwache Referenzen können mit bereits freigegebenen Werten umgehen"
+  },
+  {
+    "text": "Existenzielle Panic",
+    "hint": "Philosophisch, aber kein echter Rust-Fehler!"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -970,6 +1084,12 @@ fn main() {
   index={14}
   group="Speichermuster"
   title="RAII-Muster"
+difficulty={3}
+objectives={[
+  "RAII (Resource Acquisition Is Initialization) in Rust verstehen",
+  "Ressourcen bei Bedarf mit dem Drop-Trait aufräumen",
+  "RAII-Muster zur Ressourcenverwaltung anwenden"
+]}
   options={[
     {text: 'Ressource wird nach dem Gültigkeitsbereich freigegeben', isAnswer: true, hint: 'Das `File`-Feld hat seine eigene `Drop`-Implementierung.'},
     {text: 'Ressourcenleck', hint: 'Der Wrapper hat kein benutzerdefiniertes `Drop`, aber seine Felder werden trotzdem freigegeben.'},
@@ -1053,6 +1173,12 @@ fn main() {
   index={15}
   group="Entwurfsmuster"
   title="Kopieren vs Klonen"
+difficulty={3}
+objectives={[
+  "Copy und Clone unterscheiden",
+  "Geeignete Implementierungen beider Traits erkennen",
+  "Copy und Clone passend ableiten"
+]}
   options={[
     {text: 'Kompilierungsfehler', hint: 'Das derive-Attribut ist korrekt verwendet'},
     {text: 'Tiefe Kopie erstellt', isAnswer: true},
@@ -1094,6 +1220,12 @@ fn main() {
   index={16}
   group="Beste Praktiken"
   title="Speicheroptimierung"
+difficulty={4}
+objectives={[
+  "Speicherlayout und Ausrichtung von Strukturen analysieren",
+  "Feldreihenfolge im jeweiligen Layout auf Speichereffizienz prüfen",
+  "Ausrichtung zur Größenoptimierung berücksichtigen"
+]}
   options={[
     {text: '16 Bytes', hint: 'Beachte Ausrichtungsanforderungen'},
     {text: '24 Bytes'},
@@ -1166,6 +1298,12 @@ fn main() {
   index={17}
   group="Fortgeschrittene Muster"
   title="Null-Kosten-Abstraktionen"
+difficulty={5}
+objectives={[
+  "Rusts kostenfreie Abstraktionen verstehen",
+  "Kosten zur Kompilierzeit und Laufzeit analysieren",
+  "Abstraktionen mit optimierbarem Aufwand einsetzen"
+]}
   options={[
   {
     "text": "Laufzeit-Overhead durch Iterator",
@@ -1177,7 +1315,7 @@ fn main() {
   },
   {
     "text": "Langsamer, aber lesbarer",
-    "hint": "Die Abstraktion beeinflusst die Laufzeitleistung nicht"
+    "hint": "Der Compiler kann den Abstraktionsaufwand wegoptimieren"
   },
   {
     "text": "Iteratoren können nicht optimiert werden"

@@ -59,13 +59,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Error-Objekte haben nicht aufzählbare Eigenschaften (`message`, `name`, `stack`), daher gibt `JSON.stringify()` `{}` zurück. Das ist ein häufiger Stolperstein beim Senden von Fehlern in API‑Antworten. Verwende `JSON.stringify(error, Object.getOwnPropertyNames(error))` oder erstelle stattdessen ein einfaches Objekt.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Serialisierungsüberraschungen"
-  title="Konsolevs JSON"
+  title="Konsole vs. JSON"
   options={[
     {text: 'Beide zeigen die gleiche Ausgabe'},
     {text: '`console.log` zeigt mehr Infos', isAnswer: true},
@@ -88,6 +90,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `console.log(err)` zeigt den Fehler mit seiner Nachricht und dem Stack‑Trace, weil die Konsole eine spezielle Behandlung für Error‑Objekte hat. `JSON.stringify(err)` liefert `'{}'`, weil Error‑Eigenschaften nicht aufzählbar sind. Dieser Unterschied bringt viele Entwickler beim Debuggen von APIs durcheinander.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -120,6 +124,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Alle drei geben `true` zurück. `CustomError` erweitert `Error`, das wiederum `Object` erweitert. Der `instanceof`‑Operator prüft die gesamte Prototypkette, sodass eine `CustomError`‑Instanz auch eine Instanz von `Error` und `Object` ist.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -136,20 +142,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Was passiert mit `instanceof Error` über iframes hinweg?
-    ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
-    ```
-  </div>
+Angenommen, ein Same-Origin-iframe erzeugt ein Error-Objekt und übergibt es als `iframeError` an das übergeordnete Fenster. Was kann diese Prüfung im übergeordneten Fenster ergeben?
+```js
+console.log(iframeError instanceof Error);
+```
+</div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof` kann über verschiedene Ausführungskontexte (iframes, Workers) `false` zurückgeben, weil jeder Kontext seinen eigenen `Error`‑Konstruktor hat. Verwende `Object.prototype.toString.call(obj) === '[object Error]'` für zuverlässige Fehlererkennung über Kontextgrenzen hinweg.
-  </div>
+`instanceof` kann über Realm-Grenzen hinweg `false` liefern, weil jeder Realm einen eigenen `Error`-Konstruktor und Prototyp besitzt. `Object.prototype.toString.call(obj)` kann bei gewöhnlichen Error-Objekten helfen, doch `Symbol.toStringTag` kann das Ergebnis fälschen. Es ist kein Echtheitsnachweis für nicht vertrauenswürdige Werte.
+</div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -182,6 +187,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     JavaScript erlaubt das Werfen beliebiger Werte. Hier ist `e instanceof Error` `false` und `typeof e` ist `"string"`. Das kann Fehlerbehandlungscode zum Absturz bringen, der annimmt, dass alle gefangenen Ausnahmen Error‑Objekte sind. Wirf immer Error‑Instanzen für bessere Debug‑Informationen.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -193,7 +200,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '"Error"'},
     {text: '"CustomError"', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Depends on the browser'},
+    {text: 'Hängt vom Browser ab'},
   ]}
 >
   <slot name="question">
@@ -216,6 +223,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `err.name` ist `"CustomError"`, weil `this.constructor.name` den Klassennamen zurückgibt. Das Setzen von `this.name = this.constructor.name` ist ein gängiges Muster, um sicherzustellen, dass benutzerdefinierte Fehlerklassen den korrekten Namen in Stack‑Traces und Fehlermeldungen anzeigen.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -247,6 +256,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Wenn `this.name` nicht explizit gesetzt wird, erbt der Fehler die Standard‑`name`‑Eigenschaft der `Error`‑Klasse, die `"Error"` ist. Deshalb sollten benutzerdefinierte Fehlerklassen immer `this.name = this.constructor.name` im Konstruktor setzen.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -255,11 +266,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Error-Ursache"
   title="Modernes Error.cause"
   options={[
-    {text: '"Ursprünglicher Fehler"', isAnswer: true},
-    {text: 'undefined'},
-    {text: 'Der umhüllende Fehler'},
-    {text: 'SyntaxError'},
-  ]}
+  {
+    "text": "\"Original error\"",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Der umhüllende Fehler"
+  },
+  {
+    "text": "SyntaxError"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -278,13 +298,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Error.cause` (ES2022) ermöglicht das Ketten von Errors, um den ursprünglichen Fehlerkontext zu bewahren. `wrapper.cause` verweist auf den ursprünglichen Fehler, daher gibt `wrapper.cause.message` `"Original error"` zurück. Das ist nützlich, um niedrigere Fehler mit höherem Kontext zu umhüllen.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Stack-Trace"
-  title="Stapelmanipulation"
+  title="Stack-Trace anpassen"
   options={[
     {text: 'Entfernt createError aus dem Stack', isAnswer: true},
     {text: 'Löscht den gesamten Stack'},
@@ -294,7 +316,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Was macht `Error.captureStackTrace`?
+    Was macht `Error.captureStackTrace` in V8/Node.js?
     ```js
     function createError(msg) {
       const err = new Error(msg);
@@ -310,6 +332,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Error.captureStackTrace` (V8/Node.js) entfernt die angegebene Funktion (`createError`) aus dem Stack‑Trace, sodass Fehler‑Factory‑Funktionen für End‑Benutzer unsichtbar werden. Das erzeugt sauberere Stack‑Traces, die auf die Aufrufstelle der Factory zeigen, nicht auf die Factory selbst.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -345,9 +369,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Template‑Literals wandeln `undefined` beim Einsetzen in den String `"undefined"` um. Die Fehlermeldung wird zu `"Value undefined is invalid"`. Für sauberere Meldungen solltest du `value ?? 'null'` oder ähnliche Prüfungen vor der Interpolation verwenden.
+    Template-Literale wandeln `undefined` beim Einsetzen in den String `"undefined"` um. Die Fehlermeldung wird zu `"Value undefined is invalid"`. Für sauberere Meldungen solltest du `value ?? 'null'` oder ähnliche Prüfungen vor der Interpolation verwenden.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -379,6 +405,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `res.json()` verwendet intern `JSON.stringify()`, sodass das Error‑Objekt zu `{}` wird. Der Client erhält `{"error":{}}`. Um das zu beheben, benutze `res.json({ error: error.message })` oder `res.json({ error: { message: error.message, name: error.name } })`.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -414,6 +442,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Wie `throw` akzeptiert `Promise.reject()` jeden beliebigen Wert – Strings, Objekte, Zahlen usw. Das gibt `"string"`, `404` und `42` aus. Prüfe immer den Typ der abgefangenen Werte in Promise‑Ketten, besonders wenn du mit Drittanbieter‑Code arbeitest, der mit Nicht‑Error‑Werten ablehnen könnte.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -447,6 +477,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und gehören nicht zum standardmäßigen Error‑Objekt. Browser‑Fehler besitzen diese Eigenschaften nicht. Prüfe immer, ob sie existieren: `if (err.code === 'ENOENT')` anstatt anzunehmen, dass sie vorhanden sind.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -480,9 +512,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof Error` gibt `false` zurück, weil das Objekt nicht vom Error‑Konstruktor erstellt wurde. `Object.prototype.toString.call()` liefert ebenfalls `false` (es gibt `'[object Object]'` zurück), weil es den internen `[[Class]]`‑Slot prüft. Beide Methoden erkennen korrekt, dass es sich um ein gefälschtes Fehlerobjekt handelt.
-  </div>
+Für dieses gewöhnliche Objekt liefern beide Vergleiche `false`: Es erbt nicht von `Error.prototype`, und `Object.prototype.toString.call(fakeError)` ergibt `[object Object]`. Ein Objekt kann jedoch über `Symbol.toStringTag` einen anderen Tag vortäuschen. Diese Prüfungen sind kein Echtheitsnachweis für fremde Werte.
+</div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 </QuizUI>

@@ -36,7 +36,7 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="SQL Grundlagen"
-  title="Einfacher WHERE-Abschnitt"
+  title="Einfacher WHERE-Klausel"
   options={[
     {text: 'SELECT * FROM users WHERE name LIKE(John);'},
     {text: 'SELECT * FROM users WHERE name = \'John\';', isAnswer: true },
@@ -46,12 +46,12 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 >
   <slot name="question">
   <div className="question">
-    Welcher der folgenden SQL‑Abfragen ruft korrekt Zeilen ab, bei denen der Name "John" ist?
+    Welche der folgenden SQL‑Abfragen ruft korrekt Zeilen ab, bei denen der Name "John" ist?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In SQL wird das einfache Gleichheitszeichen (`=`) für Gleichheitsprüfungen im `WHERE`‑Clause verwendet, nicht `==` oder `===`, das sind JavaScript‑Operatoren.
+    In SQL wird das einfache Gleichheitszeichen (`=`) für Gleichheitsprüfungen in der `WHERE`-Klausel verwendet, nicht `==` oder `===`, das sind JavaScript‑Operatoren.
 
     Die korrekte Syntax lautet `SELECT * FROM users WHERE name = 'John';`.
   </div>
@@ -136,13 +136,22 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="SQL-Unterabfragen"
-  title="Korreliertes Unterabfrage"
+  title="Korrelierte Unterabfrage"
   options={[
-    {text: 'Eine Unterabfrage, die einmal insgesamt ausgeführt wird'},
-    {text: 'Eine Unterabfrage, die nur in JOIN‑Anweisungen verwendet wird'},
-    {text: 'Eine Unterabfrage, die ausschließlich mehrere Spalten zurückgibt'},
-    {text: 'Eine Unterabfrage, die für jede Zeile der äußeren Abfrage einmal ausgeführt wird', isAnswer: true},
-  ]}
+  {
+    "text": "Eine Unterabfrage, die einmal insgesamt ausgeführt wird"
+  },
+  {
+    "text": "Eine Unterabfrage, die nur in JOIN‑Anweisungen verwendet wird"
+  },
+  {
+    "text": "Eine Unterabfrage, die ausschließlich mehrere Spalten zurückgibt"
+  },
+  {
+    "text": "Eine Unterabfrage, die auf Spalten der äußeren Abfrage verweist",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -151,8 +160,8 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Eine korrelierte Unterabfrage wird einmal pro Zeile der äußeren Abfrage ausgewertet. Sie bezieht sich auf Spalten der äußeren Abfrage und ist damit von jeder Zeile abhängig.
-  </div>
+Eine korrelierte Unterabfrage verweist auf Spalten ihrer äußeren Abfrage. Inhaltlich hängt das Ergebnis von der aktuellen äußeren Zeile ab. Der Optimierer kann die Ausführung jedoch umformen; eine separate tatsächliche Ausführung pro Zeile ist nicht garantiert.
+</div>
   </slot>
 </Challenge>
 
@@ -239,7 +248,7 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 
     Während er *möglicherweise* "eindeutige Zeilen" zurückgibt (und das oft tut), ist das nicht unbedingt der Hauptzweck.
 
-    Indexierung ist hier nicht erforderlich, obwohl es durchaus eine bewährte Praxis ist, `IN` auf einer Spalte mit Index zu verwenden, vorzugsweise einem `UNIQUE`‑Index, da dies die Leistung verbessern kann.
+    Ein Index ist nicht erforderlich. Ein passender B-Tree-Index kann einen selektiven `IN`-Filter beschleunigen, aber bei vielen Treffern oder kleinen Tabellen kann der Planer einen sequenziellen Scan vorziehen. `UNIQUE` erzwingt eine Datenbedingung und ist keine Voraussetzung zur Optimierung von `IN`.
   </div>
   </slot>
 </Challenge>

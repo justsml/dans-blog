@@ -56,7 +56,7 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
     `Buffer.alloc(size)` erstellt einen neuen Buffer mit der angegebenen Größe, gefüllt mit Nullen.
     Die Ausgabe ist: `<Buffer 00 00 00 00 00>`
 
-    Wenn du einen Buffer mit zufälligen Daten erstellen willst, benutze `Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` überspringt die Nullinitialisierung; die Bytes können alte Speicherinhalte enthalten. Es erzeugt keine Zufallszahlen. Initialisiere jedes Byte vor dem Lesen oder Weitergeben. Für zufällige Bytes verwende `crypto.randomBytes(5)`.
 
     [Erfahre mehr über Buffer‑Allocation](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -73,7 +73,7 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
     {text: '65'},
     {text: '[Object object]'},
     {text: 'Undefined'},
-    {text: 'Binary data'},
+    {text: 'Binärdaten'},
   ]}
 >
   <slot name="question">
@@ -214,7 +214,7 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   title="Stream-Piping"
   options={[
     {text: 'Kopiert Datei mit Kompression'},
-    {text: 'Kopiert Datei ohne Speicherpufferung', isAnswer: true},
+    {text: 'Kopiert die Datei in Blöcken, ohne sie vollständig zu puffern', isAnswer: true},
     {text: 'Lädt die gesamte Datei in den Speicher'},
     {text: 'Erstellt einen symbolischen Link'},
   ]}
@@ -280,11 +280,20 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   group="Streams"
   title="Transform-Streams"
   options={[
-    {text: 'hallo welt'},
-    {text: 'HALLO WELT', isAnswer: true},
-    {text: 'Fehler'},
-    {text: 'undefiniert'},
-  ]}
+  {
+    "text": "hello world"
+  },
+  {
+    "text": "HELLO WORLD",
+    "isAnswer": true
+  },
+  {
+    "text": "Fehler"
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -494,7 +503,7 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="explanation">
     Streams können arbeiten in:
     1. Binärmodus (Standard): für Buffer und Strings
-    2. Objektmodus: für beliebige JavaScript‑Werte
+    2. Objektmodus: für JavaScript-Werte außer `null`, das das Ende eines lesbaren Streams signalisiert
 
     Beispiel für Objektmodus:
     ```js

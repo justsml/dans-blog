@@ -101,7 +101,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     width: min(250px, 200px);
     /* -> 200px wins */
     ```
-    Die `min()`‑Funktion ist besonders nützlich für responsives Design, da Sie sicherstellen können, dass ein Komponenten (oder die Schriftgröße) einen bestimmten Grenzwert nicht überschreitet.
+    Die `min()`‑Funktion ist besonders nützlich für responsives Design, da Sie sicherstellen können, dass eine Komponente (oder die Schriftgröße) einen bestimmten Grenzwert nicht überschreitet.
   </div>
   </slot>
 </Challenge>
@@ -117,7 +117,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 10px;'},
     {text: 'width: 50px;'},
     {text: 'width: 96px;', isAnswer: true},
-    {text: 'Invalid syntax'},
+    {text: 'Ungültige Syntax'},
   ]}
 >
   <slot name="question">
@@ -310,11 +310,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="CSS-Verschachtelung"
   title="Direkter Kind-Selektor mit Verschachtelung"
   options={[
-    {text: 'background-color: rot'},
-    {text: 'background-color: weiß', isAnswer: true},
-    {text: 'background-color: blau'},
-    {text: 'Ungültige Syntax'},
-  ]}
+  {
+    "text": "background-color: red"
+  },
+  {
+    "text": "background-color: white",
+    "isAnswer": true
+  },
+  {
+    "text": "background-color: blue"
+  },
+  {
+    "text": "Ungültige Syntax"
+  }
+]}
 >
   <slot name="question">
   <div className="question">

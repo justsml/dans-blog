@@ -90,7 +90,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   <div className="explanation">
     Ich weiß. Es ist verrückt, wie schnell Escaping Strings schwer lesbar macht. Stell dir vor, du musst andere Sprachen in Bash-Strings escapen – mit all den Anführungszeichen, Apostrophen und `$`‑Symbolen, die dich verarschen. 🫠
 
-    Einzelne Anführungszeichen müssen innerhalb von einfach‑gequoteten Strings escaped werden. Die Sequenz Schließen‑Quote, escaped‑Quote, Wieder‑öffnen‑Quote (`'\''`) ermöglicht die Ausgabe von:
+    Innerhalb einfacher Anführungszeichen ist kein Escaping möglich. Schließe zuerst den String, schreibe außerhalb davon ein maskiertes Apostroph und öffne anschließend den String erneut. Die Sequenz Schließen‑Quote, escaped‑Quote, Wieder‑öffnen‑Quote (`'\''`) ermöglicht die Ausgabe von:
     ```plaintext
     It's 🔨 Time!
     ```
@@ -139,13 +139,26 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Variablen"
   title="Zeichen escapen"
   options={[
-    {text: 'Kosten: $$100'},
-    {text: 'Kosten: $100'},
-    {text: 'Kosten: 100'},
-    {text: 'Kosten: 00', isAnswer: true},
-    {text: 'Kosten:'},
-    {text: 'Fehler'},
-  ]}
+  {
+    "text": "Cost: $$100"
+  },
+  {
+    "text": "Cost: $100"
+  },
+  {
+    "text": "Cost: 100"
+  },
+  {
+    "text": "Cost: 00",
+    "isAnswer": true
+  },
+  {
+    "text": "Cost:"
+  },
+  {
+    "text": "Fehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -253,12 +266,23 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Bedingungen"
   title="Grundlegendes If-Else"
   options={[
-    {text: 'Datei existiert'},
-    {text: 'Datei existiert nicht, nach einer Testdiagnose', isAnswer: true},
-    {text: 'Nur Fehler'},
-    {text: 'Fehlende doppelte eckige Klammern'},
-    {text: 'Nichts'},
-  ]}
+  {
+    "text": "File exists"
+  },
+  {
+    "text": "File does not exist, nach einer Diagnose des Testbefehls",
+    "isAnswer": true
+  },
+  {
+    "text": "Nur Fehler"
+  },
+  {
+    "text": "Fehlende doppelte eckige Klammern"
+  },
+  {
+    "text": "Nichts"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -299,11 +323,20 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Bedingungen"
   title="String-Vergleich"
   options={[
-    {text: 'Gleiche Katze'},
-    {text: 'Verschiedene Katzen, nach einem Test‑Syntaxfehler', isAnswer: true},
-    {text: 'Zalgo'},
-    {text: 'Nur Fehler'},
-  ]}
+  {
+    "text": "Same cat"
+  },
+  {
+    "text": "Different cats, nach einem Syntaxfehler im Test",
+    "isAnswer": true
+  },
+  {
+    "text": "Zalgo"
+  },
+  {
+    "text": "Nur Fehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -338,13 +371,26 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Funktionen"
   title="Funktionsdeklaration"
   options={[
-    {text: 'Hallo', isAnswer: true},
-    {text: 'Dan'},
-    {text: 'Hallo Dan'},
-    {text: 'grüßen'},
-    {text: 'Fehler'},
-    {text: 'Syntaxfehler'},
-  ]}
+  {
+    "text": "Hi",
+    "isAnswer": true
+  },
+  {
+    "text": "Dan"
+  },
+  {
+    "text": "Hi Dan"
+  },
+  {
+    "text": "greet"
+  },
+  {
+    "text": "Fehler"
+  },
+  {
+    "text": "Syntaxfehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -471,11 +517,20 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   group="Zeichenketten-Manipulation"
   title="Teilstring-Extraktion"
   options={[
-    {text: 'Schlechte Katze'},
-    {text: 'Schlechte Katze, gute Katze:9'},
-    {text: 'gute Katze', isAnswer: true},
-    {text: 'Fehler'},
-  ]}
+  {
+    "text": "Bad cat"
+  },
+  {
+    "text": "Bad cat, good cat:9"
+  },
+  {
+    "text": "good cat",
+    "isAnswer": true
+  },
+  {
+    "text": "Fehler"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -514,14 +569,14 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
 >
   <slot name="question">
   <div className="question">
-    Was ist KEIN ❌ Schlüsselwort für Schleifen in Bash?
+    Welches Wort ist KEIN ❌ Bash-Schlüsselwort der Schleifensyntax?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     `each` ist kein Schleifen‑Schlüsselwort in Bash. Die wichtigsten Schleifen‑Schlüsselwörter sind `for`, `while` und `until`.
 
-    Obwohl `do` technisch gesehen kein Schleifen‑Schlüsselwort ist, ist es ein wesentlicher Teil der Schleifensyntax.
+    `do` beginnt den Schleifenkörper. Es gehört zur Schleifensyntax, obwohl es die Art der Schleife nicht festlegt.
   </div>
   </slot>
 </Challenge>
@@ -566,7 +621,7 @@ Schärfen (oder beweisen) Sie Ihre Shell‑Skript‑**Fähigkeiten**!
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="Standard Ein/Aus"
-  title="Standardwerte"
+  title="Standardfehlerausgabe umleiten"
   options={[
     { text: "1>&2" },
     { text: "&2>&1" },

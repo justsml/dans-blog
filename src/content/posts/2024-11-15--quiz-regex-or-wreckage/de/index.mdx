@@ -135,7 +135,7 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Häufige Stolperfallen"
-  title="Der Punkt-Metazeichen"
+  title="Wortzeichen und Zeilenumbrüche"
   options={[
     {text: '["hello\nworld"]'},
     {text: '["hello", "world"]', isAnswer: true},
@@ -188,7 +188,7 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Dieses Muster liefert keinen Treffer, weil das Look-ahead rückwärts gerichtet ist! Wenn du Ziffern möchtest, die von `$` oder `€` vorausgehen, verwende ein Look-behind: `/(?<=[\$€])\d+/g`.
+    Dieses Muster liefert keinen Treffer, weil der Look-ahead für diese Absicht in die falsche Richtung prüft! Wenn du Ziffern möchtest, denen `$` oder `€` vorausgehen, verwende ein Look-behind: `/(?<=[\$€])\d+/g`.
 
     Look-aheads prüfen, was *nach* der aktuellen Position kommt. Das hier geschriebene Muster sucht nach:
     - Einer oder mehreren Ziffern (`\d+`)
@@ -297,9 +297,9 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   <slot name='explanation'>
   <div className="explanation">
     Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht "abc" vorausgeht:
-    - ❌ "123" (vorgestellt von "abc")
-    - ✅ "23" (vorgestellt von "abc1")
-    - ✅ "456" (vorgestellt von "def")
+    - ❌ "123" (unmittelbar davor steht "abc")
+    - ✅ "23" (unmittelbar davor steht "abc1")
+    - ✅ "456" (unmittelbar davor steht "def")
 
     JavaScript unterstützt Look-behind‑Assertions in modernen Engines. Dieses Beispiel verwendet ein Look-behind fester Länge: `abc` ist immer drei Zeichen. Look-behind variabler Länge ist die kniffligere, engine‑spezifische Ecke.
 
@@ -473,7 +473,7 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der positive Look-behind `(?<=\$)` stellt sicher, dass die Ziffern von einem Dollarzeichen vorausgegangen werden:
+    Der positive Look-behind `(?<=\$)` stellt sicher, dass direkt vor den Ziffern ein Dollarzeichen steht:
     - `(?<=\$)`: Look-behind für Dollarzeichen
     - `\d+`: Ein oder mehrere Ziffern matchen
 
@@ -526,7 +526,7 @@ Testen Sie Ihr RegEx‑Wissen mit Fragen zu Grundmustern, Quantifizierern, Grupp
   client:visible={{rootMargin: "150px"}}
   index={14}
   group="Grundlegende Übereinstimmung"
-  title="Unicode‑Flagge"
+  title="Unicode-Flag"
   options={[
     {text: '["🙂"]'},
     {text: '["😀", "🙂"]', isAnswer: true},

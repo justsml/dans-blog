@@ -55,6 +55,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Der Null‑Koaleszenz‑Operator (`??`) gibt den rechten Operanden (`b`) zurück, wenn der linke Operanden (`a`) `null` oder `undefined` ist. In diesem Fall ist `a` `null`, also ist `result` `100`.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -85,6 +87,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Der Null‑Koaleszenz‑Operator (`??`) behandelt falsy‑Werte wie `false` als gültige Werte. Da `value` `false` ist, wird er als gültiger Wert angesehen und zurückgegeben.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -114,6 +118,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Der optionale Verkettungsoperator (`?.`) stoppt die Auswertung, wenn die linke Seite `null` oder `undefined` ist. Da `obj.foo` `null` ist, evaluiert `obj.foo?.bar` zu `undefined`.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -143,6 +149,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     BigInt‑Werte werden erzeugt, indem man an eine Zahl `n` anhängt. Man kann BigInt nicht mit normalen Zahlen in arithmetischen Operationen mischen. Hier sind beide Werte BigInt, sodass die Multiplikation funktioniert und `84n` ergibt.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -151,12 +159,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Dynamischer Import"
   title="Dynamische Import‑Syntax"
   options={[
-    {text: 'SyntaxError'},
-    {text: 'Promise'},
-    {text: 'Module'},
-    {text: 'Objekt', isAnswer: true},
-    {text: 'undefined'},
-  ]}
+  {
+    "text": "SyntaxError"
+  },
+  {
+    "text": "Promise"
+  },
+  {
+    "text": "Module"
+  },
+  {
+    "text": "object",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -172,6 +191,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Die `import()`‑Funktion gibt ein `Promise` zurück, das zum Modul‑Objekt aufgelöst wird. Da `Promise`‑Instanzen Objekte sind, gibt `typeof modulePromise` `'object'` aus.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -180,11 +201,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'erfüllt: success', isAnswer: true},
-    {text: 'Abgelehnt: error'},
-    {text: 'Ausstehend'},
-    {text: 'null'},
-  ]}
+  {
+    "text": "fulfilled: success",
+    "isAnswer": true
+  },
+  {
+    "text": "Rejected: error"
+  },
+  {
+    "text": "Pending"
+  },
+  {
+    "text": "null"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -205,6 +235,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Promise.allSettled` gibt ein Array von Objekten zurück, die das Ergebnis jeder Promise beschreiben. Die erste Promise ist `fulfilled` mit dem Wert `'success'`, daher wird die Log‑Anweisung `fulfilled: success` ausgeben.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -233,6 +265,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `String.matchAll` gibt einen Iterator von Treffern zurück, nicht ein Array. Dieser Iterator kann verwendet werden, um alle passenden Gruppen aus einem String zu erhalten.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -260,6 +294,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `import.meta` ist ein Objekt, das Metadaten über das aktuelle Modul enthält. Die Eigenschaft `import.meta.url` stellt die URL des aktuellen Moduls dar und kann verwendet werden, um Informationen darüber zu erhalten, wo das Skript ausgeführt wird.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -289,6 +325,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Die logische ODER‑Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke Wert falsy ist (`null`, `undefined`, `0`, `false` usw.). Da `a` `null` ist, wird ihr der Wert `10` zugewiesen.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -318,6 +356,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Die Nullish‑Coalescing‑Zuweisung (`??=`) weist den rechten Wert zu, wenn der linke Wert `null` oder `undefined` ist. Da `b` `null` ist, wird ihr der Wert `10` zugewiesen.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 <Challenge
@@ -347,6 +387,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `WeakRef` liefert eine schwache Referenz auf ein Objekt, wodurch das Objekt vom Garbage Collector freigegeben werden kann, wenn keine anderen Referenzen mehr existieren. Da `obj` hier noch stark referenziert wird, gibt `deref()` das ursprüngliche Objekt zurück. Wäre das Ziel bereits freigegeben, würde `deref()` `undefined` zurückgeben.
   </div>
   </slot>
+<slot name='hints'>
+</slot>
 </Challenge>
 
 </QuizUI>

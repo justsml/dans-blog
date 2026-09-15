@@ -130,7 +130,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Beim Verketten von `.then`- und `.catch`-Aufrufen ist es hilfreich, sie als Reihe von Schritten zu betrachten. Jeder `.then` erhält den von dem vorherigen `.then` zurückgegebenen Wert (als Argument). Wenn jedoch dein „Schritt“ einen Fehler verursacht, werden alle nachfolgenden `.then`‑„Schritte“ übersprungen, bis ein `.catch` gefunden wird. Möchtest du einen Fehler überschreiben, musst du einfach einen Nicht‑Fehler‑Wert zurückgeben. Dieser kann dann in jedem nachfolgenden `.then` verwendet werden.
+    Beim Verketten von `.then`- und `.catch`-Aufrufen ist es hilfreich, sie als Reihe von Schritten zu betrachten. Jeder `.then` erhält den von dem vorherigen `.then` zurückgegebenen Wert (als Argument). Wenn jedoch dein „Schritt“ einen Fehler verursacht, werden alle nachfolgenden `.then`‑„Schritte“ übersprungen, bis ein `.catch` gefunden wird. Ein Catch-Handler behandelt die Ablehnung, indem er normal zurückkehrt: Selbst ein zurückgegebenes `Error`-Objekt erfüllt das nächste Promise mit diesem Objekt. Werfen oder die Rückgabe eines abgelehnten Promises hält die Kette abgelehnt. Bei einem zurückgegebenen Promise wird dessen späterer Zustand übernommen.
   </div>
   </slot>
 </Challenge>
@@ -199,7 +199,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     **Hinweis:** `.catch`s können verwendet werden, um Fehler zu ignorieren (oder zu überschreiben), indem einfach ein regulärer Wert zurückgegeben wird.
 
-    Dieser Trick funktioniert nur, wenn ein nachfolgendes `.then` den Wert empfängt.
+    Der erste Catch erfüllt das zurückgegebene Promise mit dem String. Dafür ist kein späteres `.then` nötig; der zweite Catch wird übersprungen, weil die Kette bereits erfüllt ist. Keiner der ausgeführten Handler gibt etwas aus.
   </div>
   </slot>
 </Challenge>

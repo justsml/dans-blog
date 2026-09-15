@@ -37,13 +37,29 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={0}
   group="Aufwärmen"
   title="S3 Trivia"
+difficulty={1}
+objectives={[
+  "Bedeutung des Dienstnamens AWS S3 kennen",
+  "Grundlegende AWS-Speicherdienste erkennen"
+]}
   options={[
-    {text: 'Server-Speicher v3'},
-    {text: 'Speicher als Service'},
-    {text: 'Einfacher Speicher Service', isAnswer: true},
-    {text: 'Frecher Speicher Service'},
-    {text: 'Einfacher synchronisierter Speicher'},
-  ]}
+  {
+    "text": "Server Storage v3"
+  },
+  {
+    "text": "Storage as a Service"
+  },
+  {
+    "text": "Simple Storage Service",
+    "isAnswer": true
+  },
+  {
+    "text": "Sassy Storage Service"
+  },
+  {
+    "text": "Simple Synchronized Store"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -72,6 +88,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={1}
   group="Schema‑los"
   title="DynamoDB"
+difficulty={2}
+objectives={[
+  "Eigenschaften schemaloser Datenbanken definieren",
+  "Das flexible Datenmodell von DynamoDB erklären"
+]}
   options={[
     {text: 'Beliebige Eigenschaften speichern', isAnswer: true},
     {text: 'Dynamische Partitionsschlüssel'},
@@ -99,12 +120,18 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={2}
   group="Schema‑los"
   title="DynamoDB"
+difficulty={4}
+objectives={[
+  "DynamoDB-Batch-Operationen vergleichen",
+  "DynamoDB-Aktualisierungen optimieren",
+  "Skalierungsaspekte von Aktualisierungen bewerten"
+]}
   options={[
     {text: 'PutItem', hint: 'Erstellt ein neues Element oder ersetzt ein altes Element durch ein neues.'},
     {text: 'BatchUpdateItem', hint: 'Existiert nicht.'},
     {text: 'BatchWriteItem', hint: 'Fügt (inserts) ODER löscht mehrere Elemente in einem einzigen Aufruf.'},
     {text: 'UpdateItem', isAnswer: true},
-    {text: 'BatchUpsertItem', hint: 'In DynamoDB?'},
+    {text: 'BatchUpsertItem', hint: 'Diese API-Operation existiert in DynamoDB nicht.'},
     {text: 'TransactWriteItems', hint: 'Kombiniert mehrere PutItem-, UpdateItem-, DeleteItem- und ConditionCheck‑Operationen zu einem einzigen Aufruf.'},
   ]}
 >
@@ -138,6 +165,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={3}
   group="Abfragefähigkeiten"
   title="Erweiterte Suchfunktionen"
+difficulty={3}
+objectives={[
+  "Erweiterte Abfragefunktionen von AWS-Diensten verstehen",
+  "Volltextsuchfunktionen vergleichen"
+]}
   options={[
     {text: 'ElastiCache', hint: 'Primär ein In‑Memory‑Cache; neuere Valkey‑Versionen enthalten Suchfunktionen.'},
     {text: 'OpenSearch', isAnswer: true},
@@ -169,6 +201,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={4}
   group="RDS"
   title="Multi-AZ-Bereitstellung"
+difficulty={2}
+objectives={[
+  "Hauptzweck von Multi-AZ-Bereitstellungen erkennen",
+  "Hohe Verfügbarkeit von Leseskalierung unterscheiden"
+]}
   options={[
     {text: 'Reduziert Speicherkosten'},
     {text: 'Löst das Egress-Problem'},
@@ -204,6 +241,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={5}
   group="WebSockets"
   title="WebSocket-Zauberei"
+difficulty={3}
+objectives={[
+  "WebSocket-Unterstützung von AWS-Diensten vergleichen",
+  "Architekturgrenzen von AWS-Diensten erkennen",
+  "WebSocket-Implementierungen bewerten"
+]}
   options={[
     {text: 'API Gateway', isAnswer: true},
     {text: 'EKS', hint: 'EKS kann Ihre eigenen langlebigen WebSocket‑Dienste ausführen.'},
@@ -242,12 +285,17 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={6}
   group="S3-Sicherheit"
   title="S3-Bucket-Richtlinie"
+difficulty={2}
+objectives={[
+  "Bewährte Sicherheitspraktiken auf S3 anwenden",
+  "Das Prinzip der minimalen Rechte umsetzen"
+]}
   options={[
     {text: 'Neue Buckets öffentlich machen', hint: 'Prinzip der minimalen Rechte zuerst.'},
     {text: 'S3 on-premises verschieben, um ACLs vollständig zu kontrollieren'},
-    {text: 'Daten in eine private Blockchain verschieben', hint: 'Spaß, oder?'},
+    {text: 'Daten in eine private Blockchain verschieben', hint: 'Ein anderer Speicherort ersetzt keine Zugriffsberechtigungen.'},
     {text: 'Prinzip der minimalen Rechte anwenden', isAnswer: true},
-    {text: 'Policy‑Platzhalter verwenden, um notwendigen Zugriff sicherzustellen', hint: '😯 Nein!'},
+    {text: 'Policy‑Platzhalter verwenden, um notwendigen Zugriff sicherzustellen', hint: 'Platzhalter können mehr Aktionen oder Ressourcen freigeben als erforderlich.'},
   ]}
 >
   <slot name="question">
@@ -280,6 +328,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={7}
   group="Aurora"
   title="Aurora Serverless"
+difficulty={2}
+objectives={[
+  "Hauptmerkmale von Aurora Serverless erkennen",
+  "Serverlose Datenbanken und vorab bereitgestellte Kapazität unterscheiden"
+]}
   options={[
     {text: 'Immer günstiger als bereitgestellt'},
     {text: 'Skaliert die Rechenkapazität automatisch', isAnswer: true},
@@ -312,6 +365,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={8}
   group="Batches, Teil 1!"
   title="BatchGetItem‑Grenzen"
+difficulty={2}
+objectives={[
+  "Grenzen von DynamoDB BatchGetItem kennen",
+  "BatchGetItem mit anderen Batch-Operationen vergleichen"
+]}
   options={[
     {text: '1', hint: '... Ich bestehe auf Batch‑Verarbeitung.'},
     {text: '25', hint: 'Das ist das Limit für `BatchWriteItem`.'},
@@ -319,7 +377,7 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
     {text: '75', hint: 'Nahe dran, aber es gibt eine runde Zahl.'},
     {text: '50', hint: 'Etwas höher für `BatchGetItem`.'},
     {text: '200', hint: 'Etwas zu hoch …'},
-    {text: 'Unlimited', hint: 'Es gibt ein festes Limit für `BatchGetItem`.'},
+    {text: 'Unbegrenzt', hint: 'Es gibt ein festes Limit für `BatchGetItem`.'},
   ]}
 >
   <slot name="question">
@@ -335,7 +393,7 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
 
     Diese Limits zu verstehen ist entscheidend, um die Performance deiner Anwendung zu optimieren und effiziente Datenoperationen sicherzustellen.
 
-    **Hinweis:** Es ist möglich, _einige_ dieser Limits zu überschreiten – wenn du deinen AWS‑Account‑Manager überzeugst. 😎
+    **Hinweis:** Das Maximum von 100 Elementen pro `BatchGetItem`-Aufruf ist eine API-Grenze. Höhere anpassbare Durchsatzquoten ändern diese Grenze nicht; teile größere Abrufe auf mehrere Aufrufe auf.
   </div>
   </slot>
 </Challenge>
@@ -345,26 +403,31 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={9}
   group="Batches, Teil 2!"
   title="Batch‑Operationen"
+difficulty={4}
+objectives={[
+  "Grenzen von DynamoDB-Batch-Operationen verstehen",
+  "Einzeloperationen und Batch-Operationen unterscheiden"
+]}
   options={[
     {text: '1', isAnswer: true},
     {text: '10'},
-    {text: '25', hint: 'Gute Vermutung...'},
+    {text: '25', hint: '25 ist die Grenze von BatchWriteItem; gefragt ist ein einzelner UpdateItem-Aufruf.'},
     {text: '50'},
-    {text: '100', hint: 'Denke an das GetItem‑Limit?'},
-    {text: '100 when streaming'},
-    {text: 'None of the above', hint: 'Das ist ein bisschen knifflig...'},
+    {text: '100', hint: '100 gehört zu BatchGetItem, nicht zu UpdateItem.'},
+    {text: '100 beim Streaming'},
+    {text: 'Keine der genannten Antworten', hint: 'UpdateItem arbeitet mit einem einzigen Primärschlüssel.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wie viele Dokumente kann DynamoDB pro Batch maximal `UPDATE`‑en?
+    Wie viele Elemente kann ein einzelner DynamoDB-Aufruf von `UpdateItem` ändern?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     Die DynamoDB‑Clients sind im Wesentlichen Wrapper für die HTTP‑API. Der `BatchWriteItem`‑Aufruf kann pro HTTP‑Request bis zu **25** Dokumente `PUT`‑en oder `DELETE`‑en, aber er kann nicht mehrere Dokumente `UPDATE`‑en.
 
-    Während DynamoDB pro HTTP‑Request bis zu **25** Dokumente `INSERT`‑en kann, kann es nur **1** Dokument pro Request mit der `UpdateItem`‑Operation `UPDATE`‑en.
+    `UpdateItem` ändert **ein** Element. Das ist eine Grenze dieses API-Aufrufs, nicht jeder DynamoDB-Anfrage: Transaktions- und PartiQL-Batch-APIs können mehrere Aktualisierungen enthalten.
   </div>
   </slot>
 </Challenge>
@@ -374,16 +437,22 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={10}
   group="DynamoDB"
   title="Bereitgestellt vs On-Demand Kapazität"
+difficulty={3}
+objectives={[
+  "DynamoDB-Kapazitätsmodi vergleichen",
+  "Den Modus passend zur Arbeitslast wählen",
+  "Kostenfolgen der Kapazitätswahl bewerten"
+]}
   options={[
     {text: 'Bereitgestellt ist immer besser'},
     {text: 'On-Demand hat unbegrenzte Kapazität'},
     {text: 'Sie leisten identisch'},
-    {text: 'On-Demand ist günstiger bei unvorhersehbaren Workloads', isAnswer: true},
+    {text: 'On-Demand vermeidet vorab bereitgestellte Kapazität bei sporadischem, unvorhersehbarem Verkehr', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Wann solltest du die DynamoDB On-Demand Kapazität verwenden?
+    Was ist ein Grund, DynamoDB On-Demand-Kapazität zu wählen?
   </div>
   </slot>
   <slot name='explanation'>
@@ -399,6 +468,8 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
     - Mehr Kontrolle über die Leistung
     - Potenzielle Kosteneinsparungen
 
+    On-Demand ist nicht immer günstiger. Vergleiche Anfragevolumen, Auslastung und aktuelle Preise; bei vorhersehbarem Dauerverkehr kann bereitgestellte Kapazität günstiger sein.
+
     [DynamoDB Capacity Modes](https://aws.amazon.com/dynamodb/pricing/)
   </div>
   </slot>
@@ -409,6 +480,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={11}
   group="S3‑Performance"
   title="S3‑Performance‑Optimierung"
+difficulty={3}
+objectives={[
+  "S3-Leistung bei hohen Anfrageraten optimieren",
+  "Bewährte Benennungsregeln für S3-Schlüssel anwenden",
+  "Die S3-Partitionsverteilung beim Entwurf berücksichtigen"
+]}
   options={[
     {text: 'Verwende zufällige/Hash‑Präfixe'},
     {text: 'Verwende logische Präfixe; Randomisierung ist nicht nötig', isAnswer: true},
@@ -441,10 +518,15 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={12}
   group="RDS‑Backup"
   title="RDS‑Backup‑Strategie"
+difficulty={2}
+objectives={[
+  "Bewährte RDS-Backup-Strategien erkennen",
+  "Wiederherstellung zu einem bestimmten Zeitpunkt verstehen"
+]}
   options={[
     {text: 'Nur manuelle Snapshots'},
     {text: 'Keine Backups nötig'},
-    {text: 'Automatisierte Backups mit Punkt‑in‑Zeit‑Wiederherstellung', isAnswer: true},
+    {text: 'Automatisierte Backups mit Wiederherstellung zu einem bestimmten Zeitpunkt', isAnswer: true},
     {text: 'Wöchentliche Vollbackups'},
   ]}
 >
@@ -457,13 +539,13 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   <div className="explanation">
     Beste Backup‑Best Practices:
     - Automatisierte Backups aktivieren
-    - Punkt‑in‑Zeit‑Wiederherstellung nutzen
+    - Wiederherstellung zu einem bestimmten Zeitpunkt nutzen
     - Backups gemäß Compliance‑Anforderungen aufbewahren
     - Wiederherstellungsprozess regelmäßig testen
     - Region‑übergreifendes Backup in Betracht ziehen
 
     Automatisierte Backups bieten:
-    - Kontinuierlichen Datenschutz
+    - Kontinuierliche Datensicherung
     - Flexible Wiederherstellungsoptionen
 
     [RDS‑Backup‑Best‑Practices](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
@@ -476,6 +558,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={13}
   group="ElastiCache"
   title="Redis vs Memcached"
+difficulty={2}
+objectives={[
+  "Fähigkeiten von Redis und Memcached vergleichen",
+  "Funktionen von Cache-Engines unterscheiden"
+]}
   options={[
     {text: 'Redis unterstützt mehr Datenstrukturen und Operationen', isAnswer: true},
     {text: 'In allen Aspekten identisch'},
@@ -511,6 +598,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={14}
   group="DynamoDB-Indizes"
   title="Globaler Sekundärindex"
+difficulty={3}
+objectives={[
+  "Zweck globaler Sekundärindizes verstehen",
+  "DynamoDB-Zugriffsmuster bewerten",
+  "Effiziente Abfragestrategien entwerfen"
+]}
   options={[
     {text: 'Identisch zum Primärschlüssel'},
     {text: 'Kostenfrei ohne zusätzliche Kosten'},
@@ -543,6 +636,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={15}
   group="S3 Lebenszyklus"
   title="S3-Lebenszyklusverwaltung"
+difficulty={2}
+objectives={[
+  "S3-Lebenszyklusverwaltung verstehen",
+  "Strategien zur S3-Kostenoptimierung anwenden"
+]}
   options={[
     {text: 'Objekte manuell verschieben'},
     {text: 'Objekte automatisch zwischen Speicherklassen verschieben', isAnswer: true},
@@ -574,6 +672,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={16}
   group="Aurora Skalierung"
   title="Skalierung von Lesevorgängen mit Amazon Aurora"
+difficulty={2}
+objectives={[
+  "Grenzen für Aurora-Lesereplikate kennen",
+  "Auroras Leseskalierung verstehen"
+]}
   options={[
     {text: 'Begrenzt auf ein einzelnes Lesereplikat', hint: 'Denken Sie an Auroras Skalierbarkeitsfunktionen.'},
     {text: 'Keine Leseskalierung möglich', hint: 'Passt das zu Auroras Fähigkeiten?'},
@@ -606,6 +709,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={17}
   group="RDS-Sicherheit"
   title="RDS-Verschlüsselung"
+difficulty={2}
+objectives={[
+  "RDS-Verschlüsselungsfunktionen erkennen",
+  "Datenschutzmechanismen in RDS verstehen"
+]}
   options={[
     {text: 'Daten im Ruhezustand und während der Übertragung verschlüsseln', isAnswer: true},
     {text: 'Verschlüsselung ist optional'},
@@ -637,12 +745,18 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={18}
   group="DynamoDB Streams"
   title="Zweck von DynamoDB Streams"
+difficulty={3}
+objectives={[
+  "Einsatzfälle von DynamoDB Streams verstehen",
+  "Ereignisgesteuerte Architekturen mit DynamoDB entwerfen",
+  "Muster zur Verarbeitung von Datenströmen bewerten"
+]}
   options={[
     {text: 'Zusätzliche Datenkopien speichern'},
-    {text: 'DynamoDB-Guthaben für grüne Anbieter', hint: 'Wirklich?'},
-    {text: 'Schreibleistung erhöhen', hint: 'Streams sind '},
+    {text: 'DynamoDB-Guthaben für grüne Anbieter', hint: 'Streams erfassen Datenänderungen und vergeben keine Guthaben.'},
+    {text: 'Schreibleistung erhöhen', hint: 'Streams protokollieren bereits erfolgte Änderungen; sie erhöhen die Schreibkapazität nicht.'},
     {text: 'Item‑bezogene Änderungen für ereignisgesteuerte Architekturen erfassen', isAnswer: true},
-    {text: 'Alternative zu Global Secondary Indexes', hint: 'Raten Sie?'},
+    {text: 'Alternative zu Global Secondary Indexes', hint: 'Ein Änderungsstrom ist kein zusätzlicher Index für Abfragen.'},
   ]}
 >
   <slot name="question">
@@ -669,6 +783,11 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={19}
   group="S3-Transfer"
   title="Großer Dateitransfer"
+difficulty={2}
+objectives={[
+  "Bewährte Verfahren für große Uploads erkennen",
+  "Vorteile von Multipart-Uploads verstehen"
+]}
   options={[
     {text: 'Immer eine einzelne PUT-Anfrage verwenden'},
     {text: 'Multipart-Upload für große Dateien verwenden', isAnswer: true},
@@ -700,6 +819,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={20}
   group="Kostenoptimierung"
   title="Speicherkostenanalyse"
+difficulty={4}
+objectives={[
+  "Speicherkosten verschiedener AWS-Dienste vergleichen",
+  "Kostenfolgen der Speicherwahl bewerten",
+  "Strategien zur Kostenoptimierung anwenden"
+]}
   options={[
     {text: 'S3 Standard für alle Daten'},
     {text: 'Immer den günstigsten Speicher verwenden'},
@@ -735,6 +860,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={21}
   group="DynamoDB Konsistenz"
   title="Konsistenzmodelle"
+difficulty={4}
+objectives={[
+  "DynamoDB-Konsistenzmodelle verstehen",
+  "Abwägungen zwischen Konsistenzstufen bewerten",
+  "Konsistenzmodelle in praktischen Szenarien anwenden"
+]}
   options={[
     {text: '100 Lesevorgänge pro Sekunde', isAnswer: true},
     {text: '50 Lesevorgänge pro Sekunde'},
@@ -772,6 +903,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={22}
   group="Aurora‑Hohe Verfügbarkeit"
   title="Aurora‑Failover‑Mechanismus"
+difficulty={3}
+objectives={[
+  "Auroras Failover-Verfahren verstehen",
+  "Konfigurationen für hohe Verfügbarkeit erkennen",
+  "Bewährte Wiederherstellungsverfahren anwenden"
+]}
   options={[
     {text: 'Manuelle Intervention erforderlich'},
     {text: 'Erfordert eine Neukonfiguration der Anwendung'},
@@ -806,29 +943,35 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={23}
   group="S3 Konsistenz"
   title="S3 Starke Konsistenz"
+difficulty={3}
+objectives={[
+  "S3-Konsistenzmodell verstehen",
+  "Garantien von S3-Operationen erkennen",
+  "Konsistenz beim Anwendungsentwurf berücksichtigen"
+]}
   options={[
     {text: 'Nur für neue Objekte'},
-    {text: 'Starke Konsistenz für alle Vorgänge', isAnswer: true},
-    {text: 'Schließlich konsistent bei Aktualisierungen'},
+    {text: 'Starke Read-after-Write-Konsistenz für das Schreiben, Löschen und Auflisten von Objekten', isAnswer: true},
+    {text: 'Eventual Consistency bei Aktualisierungen'},
     {text: 'Hängt von der Region ab'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Ab Ende 2020, welches Konsistenzmodell bietet S3 für alle Vorgänge?
+    Welche Konsistenz gilt nach einem erfolgreichen S3-Objekt-PUT oder -DELETE für nachfolgende GET- und LIST-Anfragen?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     S3-Konsistenzmodell:
-    - Starke Read-after-Write‑Konsistenz für alle Vorgänge
+    - Starke Read-after-Write-Konsistenz für Objektoperationen
     - Gilt für PUTs und DELETEs
     - Keine Notwendigkeit mehr für zuvor genutzte Workarounds
     - Keine zusätzlichen Kosten
 
     Auswirkungen:
     - Vereinfachte Anwendungslogik
-    - Keine Konsistenzprüfungen mehr nötig
+    - Kein Warten auf Eventual Consistency vor dem Lesen eines erfolgreich geschriebenen Objekts nötig
     - Zuverlässige sofortige Lesevorgänge nach Schreibvorgängen
     - Verbesserte Anwendungszuverlässigkeit
   </div>
@@ -840,6 +983,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={24}
   group="DynamoDB‑Funktionen"
   title="Time‑to‑Live (TTL)"
+difficulty={3}
+objectives={[
+  "DynamoDB TTL verstehen",
+  "TTL zur Datenlebenszyklusverwaltung anwenden",
+  "Effiziente Ablaufstrategien für Daten entwerfen"
+]}
   options={[
     {text: 'Löscht Elemente sofort beim Ablauf'},
     {text: 'Erfordert manuelle Auslöser für das Löschen'},
@@ -874,6 +1023,12 @@ Mach dich bereit, deine Cloud‑Kompetenz zu beweisen! 🚀
   index={25}
   group="Aurora Serverless"
   title="Skalierungsverhalten"
+difficulty={4}
+objectives={[
+  "Skalierung von Aurora Serverless verstehen",
+  "Skalierungsauslöser erkennen",
+  "Kosten variabler Arbeitslasten optimieren"
+]}
   options={[
     {text: 'Die Skalierungsgeschwindigkeit hängt von der aktuellen und konfigurierten Kapazität ab', isAnswer: true},
     {text: 'Skaliert sofort bei Bedarf'},
