@@ -19,7 +19,7 @@ The existing German [Visualizing Promises article](../../../src/content/posts/20
 
 A fresh parser comparison confirms all 267 questions have the same number of options and same correct-answer positions as their English sources, and every question/explanation/hint code fence matches modulo whitespace. All offered choices were read for meaning and literal-output consistency. Actual browser selection and rendering are covered by the parent task's corpus-wide Playwright run; this ledger does not claim a separate German browser run.
 
-Final source alignment: all 19 English sources were rechecked against frozen commit 35c81f213. Late changes to BigInt parsing/table, CSS standards-mode ID matching, the destructuring TypeError example, and the Error prototype/tag hint are incorporated. All 19 scoped i18n validators pass. The strengthened corpus regression suite also passes all 19 German cases (2,296 assertions), including preservation of nonempty source hints. The hashes below identify exactly the reviewed final English and German texts.
+Final source alignment: all 19 English sources were rechecked against commit 35c81f213, then the Date Q6 and Regex Q15 explanation corrections in 6ddaf51c2 were incorporated. Late changes to BigInt parsing/table, CSS standards-mode ID matching, the destructuring TypeError example, and the Error prototype/tag hint are incorporated. All 19 scoped i18n validators pass. The strengthened corpus regression suite also passes all 19 German cases (2,296 assertions), including preservation of nonempty source hints. The hashes below identify exactly the reviewed final English and German texts.
 
 ## Per-question answer audit
 
@@ -46,8 +46,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
 - Questions: 14
-- English SHA-256: `989751b2ad3098d09729710992be6df598d713b5e494fbb8a539c85cf39cc780`
-- German SHA-256: `920330f58b5f829a5be6a9d47482641de544d3be45118affc0cee4c2b7508151`
+- English SHA-256: `ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d`
+- German SHA-256: `b92aab82e2d8cffa8cb0ad8b7b52214ffd4767f010df14a8424924dc3d0f4289`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -287,8 +287,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-regex-or-wreckage
 
 - Questions: 16
-- English SHA-256: `10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25`
-- German SHA-256: `c2afe4be07416a38181d941772287812552ac76d2061f40216cec1ba5b2edf9c`
+- English SHA-256: `0b087416a4feeb151ae3aaa3f19d785b8edc4860522fe150845f43141d7444e9`
+- German SHA-256: `e66454ce62bbc6b5796320fe960028814c99be3f08cbdaff1199dd31bd3fc89b`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
