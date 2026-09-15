@@ -38,3 +38,16 @@ test("an incorrect answer stays available for another attempt", async ({ page })
   await first.locator(".option").nth(1).click();
   await expect(first).toHaveAttribute("data-answer-count", "2");
 });
+
+test("changing a correct answer cancels its pending navigation", async ({ page }) => {
+  await page.goto("/quiz-is-your-memory-rusty/");
+  const first = page.locator("#qq-1");
+  await first.scrollIntoViewIfNeeded();
+  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+  await first.locator(".option").nth(4).click();
+  await expect(first).toHaveAttribute("data-question-correct", "true");
+  await first.locator(".option").first().click();
+  await expect(first).toHaveAttribute("data-question-correct", "false");
+  await page.waitForTimeout(1400);
+  await expect(page.locator(".quiz-dot").first()).toHaveClass(/active/);
+});

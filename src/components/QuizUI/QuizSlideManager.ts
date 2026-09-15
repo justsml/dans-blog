@@ -337,7 +337,6 @@ export function initQuizSlideManager(
         isQuestionCorrect(index),
       ).every(Boolean);
 
-    const isQuizFullyAnswered = () => answeredQuestions.size >= totalQuestions;
 
     const triggerFinalConfetti = (answeredIndex: number) => {
       if (confettiShown || !isQuizCorrectlyCompleted()) return;
@@ -426,7 +425,7 @@ export function initQuizSlideManager(
       if (advanceTimer != null) window.clearTimeout(advanceTimer);
       advanceTimer = window.setTimeout(() => {
         advanceTimer = null;
-        if (destroyed || currentIndex !== answeredIndex) return;
+        if (destroyed || currentIndex !== answeredIndex || !answeredQuestions.get(answeredIndex)) return;
         goToQuestion(
           nextUnansweredIndex,
           nextUnansweredIndex > currentIndex ? "next" : "prev",
