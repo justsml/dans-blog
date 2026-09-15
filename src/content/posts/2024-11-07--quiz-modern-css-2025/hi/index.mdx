@@ -117,12 +117,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 10px;'},
     {text: 'width: 50px;'},
     {text: 'width: 96px;', isAnswer: true},
-    {text: 'Invalid syntax'},
+    {text: 'अमान्य सिंटैक्स'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    यदि कंटेनर की चौड़ाई 200px है, तो `<div>` की गणना की गई चौड़ाई क्या होगी?
+    यदि containing block की चौड़ाई 200px और रूट फ़ॉन्ट आकार 16px है, तो `<div>` की गणना की गई चौड़ाई क्या होगी?
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -132,7 +132,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `max()` फ़ंक्शन 2 या अधिक इनपुट लेता है, और स्वचालित रूप से सबसे बड़ा मान उपयोग करता है। मान लेते हैं कि रूट फ़ॉन्ट आकार ब्राउज़र का डिफ़ॉल्ट `16px` है, तो चौड़ाई `96px` निकलती है।
+    `max()` फ़ंक्शन एक या अधिक गणनाएँ लेता है, और स्वचालित रूप से सबसे बड़ा मान उपयोग करता है। मान लेते हैं कि रूट फ़ॉन्ट आकार ब्राउज़र का डिफ़ॉल्ट `16px` है, तो चौड़ाई `96px` निकलती है।
 
     गणना किए गए मान को समझने के लिए हमें सापेक्ष इकाइयों को पिक्सेल में बदलना होगा:
 
@@ -313,7 +313,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'background-color: red'},
     {text: 'background-color: white', isAnswer: true},
     {text: 'background-color: blue'},
-    {text: 'Invalid syntax'},
+    {text: 'अमान्य सिंटैक्स'},
   ]}
 >
   <slot name="question">

@@ -40,14 +40,34 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={0}
   group="स्वामित्व"
   title="मूव सेमेंटिक्स की मूल बातें"
+  difficulty={2}
+  objectives={["Rust के ओनरशिप नियम और मूव व्यवहार समझाना","मूव किए गए मानों की कंपाइलेशन त्रुटियाँ पहचानना","मूव-संबंधी कंपाइलेशन त्रुटियाँ ठीक करना"]}
   options={[
-    {text: 'नमस्ते, !', hint: '\'philosopher\' को मूव करने के बाद क्या होता है, इस पर विचार करें'},
-    {text: 'नमस्ते, सिटियम के ज़ेनो!', hint: 'किसी वैल्यू को मूव करने के बाद, क्या हम उसका उपयोग कर सकते हैं?'},
-    {text: 'नमस्ते, एलिया के ज़ेनो!', hint: 'स्ट्रिंग में \'Citium\' है, \'Elea\' नहीं'},
-    {text: 'नमस्ते, मार्कस ऑरेलियस', hint: 'जाँचें कि क्या यह स्ट्रिंग की सामग्री से मेल खाता है'},
-    {text: 'कंपाइलेशन एरर: मूव के बाद वैल्यू बॉरो की गई', isAnswer: true},
-    {text: 'रनटाइम एरर: नल पॉइंटर एक्सेप्शन', hint: 'Rust इन समस्याओं को कंपाइल टाइम पर ही पकड़ लेता है'},
-  ]}
+  {
+    "text": "Hello, !",
+    "hint": "'philosopher' को मूव करने के बाद क्या होता है, इस पर विचार करें"
+  },
+  {
+    "text": "Hello, Zeno of Citium!",
+    "hint": "किसी वैल्यू को मूव करने के बाद, क्या हम उसका उपयोग कर सकते हैं?"
+  },
+  {
+    "text": "Hello, Zeno of Elea!",
+    "hint": "स्ट्रिंग में 'Citium' है, 'Elea' नहीं"
+  },
+  {
+    "text": "Hello, Marcus Aurelius",
+    "hint": "जाँचें कि क्या यह स्ट्रिंग की सामग्री से मेल खाता है"
+  },
+  {
+    "text": "कंपाइलेशन त्रुटि: मूव के बाद वैल्यू बॉरो की गई",
+    "isAnswer": true
+  },
+  {
+    "text": "रनटाइम त्रुटि: नल पॉइंटर एक्सेप्शन",
+    "hint": "Rust इन समस्याओं को कंपाइल टाइम पर ही पकड़ लेता है"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -91,6 +111,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={1}
   group="ओनरशिप"
   title="फ़ंक्शन्स के साथ मूव सेमेंटिक्स"
+  difficulty={2}
+  objectives={["फ़ंक्शन को मान देने पर ओनरशिप ट्रांसफर समझना","फ़ंक्शन कॉल में ओनरशिप त्रुटियाँ पहचानना","फ़ंक्शन में ओनरशिप संभालने के अलग तरीके लागू करना"]}
   options={[
     {text: 'दोनों लाइनें प्रिंट होती हैं', hint: 'ध्यान दें कि फ़ंक्शन को पास करने के बाद `wisdom` का क्या होता है'},
     {text: 'केवल पहली लाइन प्रिंट होती है', hint: 'कोड रनटाइम तक पहुँचने के लिए कंपाइल भी नहीं होगा'},
@@ -155,6 +177,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={2}
   group="बोरोइंग"
   title="म्यूटेबल रेफरेंसेस"
+  difficulty={3}
+  objectives={["Rust के म्यूटेबल रेफ़रेंस नियम समझना","बॉरोइंग नियमों के उल्लंघन पहचानना","कई म्यूटेबल रेफ़रेंस संभालने के लिए सही स्कोप लगाना"]}
   options={[
     {text: 'सफलतापूर्वक कंपाइल हो जाता है', hint: 'क्या हमारे पास एक ही समय में कई म्यूटेबल रेफरेंसेस हो सकते हैं?'},
     {text: 'त्रुटि: `wisdom` को एक से अधिक बार म्यूटेबल के रूप में उधार नहीं लिया जा सकता', isAnswer: true},
@@ -214,6 +238,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={3}
   group="लाइफटाइम एलिजन"
   title="अंतर्निहित लाइफटाइम"
+  difficulty={3}
+  objectives={["Rust के लाइफटाइम एलिजन नियम समझना","स्पष्ट लाइफटाइम एनोटेशन कब आवश्यक नहीं है यह पहचानना","फ़ंक्शन सिग्नेचर में लाइफटाइम एलिजन लगाना"]}
   options={[
     {text: 'कोड सफलतापूर्वक कंपाइल हो जाता है', isAnswer: true},
     {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', hint: 'लाइफटाइम एलिजन के नियमों को याद रखें - वे आपकी मदद के लिए ही हैं!'},
@@ -277,22 +303,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={4}
   group="स्मार्ट पॉइंटर्स"
   title="`Box` स्मार्ट पॉइंटर"
+  difficulty={4}
+  objectives={["रिकर्सिव टाइप और उनका मेमोरी प्रभाव समझना","Box<T> की आवश्यकता पहचानना","रिकर्सिव डेटा संरचनाएँ ठीक करने के लिए Box<T> लगाना"]}
   options={[
     {
       text: '5',
-      hint: "The code won't even compile to produce a value"
+      hint: "कोड कोई मान देने के लिए कंपाइल भी नहीं होगा"
     },
     {
       text: 'null',
-      hint: "Rust doesn't have null values"
+      hint: "Rust में null मान नहीं होते"
     },
     {
-      text: 'Compilation Error',
-      hint: "The compiler can't determine a finite size for this recursive type.",
+      text: 'कंपाइलेशन त्रुटि',
+      hint: "कंपाइलर इस रिकर्सिव टाइप का सीमित आकार तय नहीं कर सकता।",
       isAnswer: true
     },
     {
-      text: 'Stack overflow'
+      text: 'स्टैक ओवरफ़्लो'
     }
   ]}
 >
@@ -357,22 +385,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={5}
   group="रेफरेंस काउंटिंग"
   title="Rc स्मार्ट पॉइंटर"
+  difficulty={3}
+  objectives={["Rust में रेफ़रेंस गिनती समझना","साझा ओनरशिप में Rc<T> लगाना","कोड में रेफ़रेंस गिनती का व्यवहार देखना"]}
   options={[
     {
       text: 'Reference count: 1',
-      hint: "Count the initial creation plus each clone"
+      hint: "प्रारंभिक निर्माण और हर क्लोन को गिनें"
     },
     {
       text: 'Reference count: 2',
-      hint: "Don't forget the original reference"
+      hint: "मूल रेफ़रेंस को न भूलें"
     },
     {
       text: 'Reference count: 3',
       isAnswer: true
     },
     {
-      text: 'Compilation Error',
-      hint: "Rc<T> is designed for exactly this use case"
+      text: 'कंपाइलेशन त्रुटि',
+      hint: "Rc<T> इसी काम के लिए बनाया गया है"
     }
   ]}
 >
@@ -437,6 +467,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={6}
   group="लाइफटाइम"
   title="स्ट्रक्ट लाइफटाइम"
+  difficulty={3}
+  objectives={["स्ट्रक्ट में लाइफटाइम एनोटेशन समझना","फ़ील्ड को लाइफटाइम पैरामीटर कब चाहिए पहचानना","स्ट्रक्ट कार्यान्वयन में सही लाइफटाइम एनोटेशन लगाना"]}
   options={[
     {text: 'सफलतापूर्वक कंपाइल हो जाता है', hint: 'रेफरेंस वाले स्ट्रक्ट्स को लाइफटाइम एनोटेशन की आवश्यकता होती है'},
     {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', isAnswer: true},
@@ -506,8 +538,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={7}
   group="लाइफटाइम्स"
   title="लाइफटाइम एनोटेशन"
+  difficulty={4}
+  objectives={["सिग्नेचर देखकर लाइफटाइम एनोटेशन की आवश्यकता पहचानना","कई रेफ़रेंस वाले फ़ंक्शन में लाइफटाइम एनोटेशन लगाना","इनपुट और आउटपुट लाइफटाइम का संबंध देखना"]}
   options={[
-    {text: 'परिणाम: सेनेका द यंगर', hint: 'कोड कंपाइल ही नहीं होगा, इसलिए कोई आउटपुट नहीं मिलेगा'},
+    {text: 'Result: Seneca the Younger', hint: 'कोड कंपाइल ही नहीं होगा, इसलिए कोई आउटपुट नहीं मिलेगा'},
     {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', isAnswer: true},
     {text: 'त्रुटि: लोकल वेरिएबल का रेफरेंस रिटर्न नहीं किया जा सकता', hint: 'यह रेफरेंस किसी लोकल वेरिएबल का नहीं, बल्कि इनपुट पैरामीटर का है'},
     {text: 'त्रुटि: लाइफटाइम मिसमैच', hint: 'हमने अभी तक लाइफटाइम स्पेसिफाई ही नहीं किए हैं, तो मिसमैच कहाँ से आएगा?'},
@@ -552,6 +586,8 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   index={8}
   group="RefCells"
   title="RefCell का व्यवहार"
+  difficulty={4}
+  objectives={["RefCell से आंतरिक परिवर्तनशीलता समझना","RefCell के रनटाइम बॉरोइंग नियम देखना","नियंत्रित म्यूटेबल एक्सेस के लिए RefCell लगाना"]}
   options={[
     {text: 'आउटपुट: 42', hint: 'क्या हम एक साथ दो mutable borrows ले सकते हैं?'},
     {text: 'रनटाइम पैनिक: RefCell already borrowed', isAnswer: true},
@@ -576,7 +612,7 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-साझा उधार लेने से पहले mutable borrow छोड़ें। ऐसा न करने पर यह उदाहरण रनटाइम में panic करता है।
+प्रश्न में दूसरी `borrow_mut()` कॉल पर panic आता है क्योंकि पहला mutable borrow अभी मौजूद है। `RefCell` इस बॉरोइंग नियम की जाँच रनटाइम पर करता है। नीचे सही किए गए उदाहरण में `drop(second)` दो साझा borrows से पहले mutable borrow छोड़ता है।
 
 ```rust
 use std::cell::RefCell;
@@ -599,6 +635,8 @@ fn main() {
   index={9}
   group="परिवर्तनशीलता"
   title="Cell बनाम RefCell"
+  difficulty={3}
+  objectives={["Cell और RefCell के उपयोग में अंतर करना","सरल आंतरिक परिवर्तनशीलता के लिए Cell लगाना","Cell में Copy और गैर-Copy टाइप का व्यवहार तुलना करना"]}
   options={[
     {text: 'आउटपुट: 42, 43', isAnswer: true},
     {text: 'आउटपुट: 43, 43', hint: 'Cell::get() कॉल करने के समय का मान लौटाता है'},
@@ -675,6 +713,8 @@ fn main() {
   index={10}
   group="रेफरेंस काउंटिंग"
   title="Rc को समझना"
+  difficulty={3}
+  objectives={["Rc का उद्देश्य और सीमाएँ समझना","सिंगल-थ्रेड और मल्टी-थ्रेड रेफ़रेंस गिनती में अंतर करना","साझा ओनरशिप में सही Rc उपयोग करना"]}
   options={[
     {text: 'Rc का उपयोग सिंगल-थ्रेडेड वातावरण के लिए किया जाता है', isAnswer: true},
     {text: 'Rc का उपयोग मल्टी-थ्रेडेड वातावरण के लिए किया जाता है', hint: 'थ्रेड सेफ्टी के बारे में सोचें - Rc में कोई सिंक्रोनाइज़ेशन नहीं होता है'},
@@ -762,6 +802,8 @@ fn main() {
   index={11}
   group="RefCell"
   title="RefCell और थ्रेडिंग"
+  difficulty={4}
+  objectives={["RefCell और थ्रेड-सुरक्षित विकल्पों का अंतर समझना","RefCell और RwLock के उपयुक्त उपयोग पहचानना","थ्रेड आवश्यकताओं के अनुसार सिंक्रनाइज़ेशन साधन चुनना"]}
   options={[
   {
     "text": "RefCell का उपयोग म्यूटेबल बॉरो के लिए होता है, Rw का इम्यूटेबल बॉरो के लिए",
@@ -816,6 +858,8 @@ fn main() {
   index={12}
   group="स्मार्ट पॉइंटर्स"
   title="Arc और Mutex"
+  difficulty={5}
+  objectives={["Arc और Mutex के समवर्ती एक्सेस पैटर्न देखना","संभावित डेडलॉक पहचानना","डेडलॉक रोकने के सही सिंक्रनाइज़ेशन पैटर्न लगाना"]}
   options={[
   {
     "text": "आउटपुट: 42",
@@ -879,26 +923,28 @@ fn main() {
   index={13}
   group="स्मार्ट पॉइंटर्स"
   title="कमज़ोर रेफ़रेंस"
+  difficulty={4}
+  objectives={["Weak रेफ़रेंस का उद्देश्य और व्यवहार समझना","मेमोरी लीक रोकने में Weak रेफ़रेंस के उपयोग पहचानना","रेफ़रेंस चक्र तोड़ने के लिए Weak<T> लगाना"]}
   options={[
     {
-      text: 'Prints: Some("Wisdom")',
-      hint: "What happens to the data when all strong references are dropped?"
+      text: 'प्रिंट होता है: Some("Wisdom")',
+      hint: "सभी strong रेफ़रेंस ड्रॉप होने पर डेटा का क्या होता है?"
     },
     {
-      text: 'Prints: None',
+      text: 'प्रिंट होता है: None',
       isAnswer: true
     },
     {
-      text: 'Compilation Error',
-      hint: "The code is syntactically correct"
+      text: 'कंपाइलेशन त्रुटि',
+      hint: "कोड का सिंटैक्स सही है"
     },
     {
-      text: 'Runtime Panic',
-      hint: "Weak references gracefully handle dropped values"
+      text: 'रनटाइम पैनिक',
+      hint: "Weak रेफ़रेंस ड्रॉप किए गए मानों को संभाल सकते हैं"
     },
     {
-      text: 'Existential Panic',
-      hint: "While philosophical, not a real Rust error!"
+      text: 'अस्तित्व का संकट',
+      hint: "दार्शनिक ज़रूर है, लेकिन वास्तविक Rust त्रुटि नहीं!"
     }
   ]}
 >
@@ -970,6 +1016,8 @@ fn main() {
   index={14}
   group="मेमोरी पैटर्न"
   title="RAII पैटर्न"
+  difficulty={3}
+  objectives={["Rust में RAII (Resource Acquisition Is Initialization) समझना","Drop ट्रैट से संसाधनों की सही सफाई करना","संसाधन प्रबंधन में RAII पैटर्न लगाना"]}
   options={[
     {text: 'स्कोप के बाद रिसोर्स मुक्त हो जाता है', isAnswer: true, hint: '`File` फ़ील्ड का अपना `Drop` इम्प्लीमेंटेशन होता है।'},
     {text: 'रिसोर्स लीक हो जाता है', hint: 'रैपर का कोई कस्टम `Drop` नहीं है, लेकिन इसके फ़ील्ड्स फिर भी ड्रॉप हो जाते हैं।'},
@@ -1053,6 +1101,8 @@ fn main() {
   index={15}
   group="डिज़ाइन पैटर्न"
   title="Copy बनाम Clone"
+  difficulty={3}
+  objectives={["Copy और Clone ट्रैट में अंतर करना","हर ट्रैट कब लागू करना है समझना","Copy और Clone का उचित derive लगाना"]}
   options={[
     {text: 'कंपाइलेशन एरर', hint: 'derive एट्रिब्यूट का उपयोग सही तरीके से किया गया है'},
     {text: 'डीप कॉपी बनाई गई', isAnswer: true},
@@ -1094,6 +1144,8 @@ fn main() {
   index={16}
   group="सर्वोत्तम प्रथाएँ"
   title="मेमोरी ऑप्टिमाइज़ेशन"
+  difficulty={4}
+  objectives={["स्ट्रक्ट मेमोरी लेआउट और अलाइनमेंट देखना","मेमोरी दक्षता के लिए फ़ील्ड क्रम सुधारना","स्ट्रक्ट आकार घटाने के लिए अलाइनमेंट सिद्धांत लगाना"]}
   options={[
     {text: '16 बाइट्स', hint: 'अलाइनमेंट आवश्यकताओं पर ध्यान दें'},
     {text: '24 बाइट्स'},
@@ -1166,6 +1218,8 @@ fn main() {
   index={17}
   group="उन्नत पैटर्न"
   title="शून्य-लागत अमूर्तन"
+  difficulty={5}
+  objectives={["Rust के zero-cost abstraction सिद्धांत समझना","कंपाइल-टाइम और रनटाइम लागत तुलना करना","प्रदर्शन के अतिरिक्त खर्च के बिना abstraction लगाना"]}
   options={[
   {
     "text": "Iterator के कारण रनटाइम ओवरहेड",
@@ -1177,7 +1231,7 @@ fn main() {
   },
   {
     "text": "धीमा लेकिन अधिक पठनीय",
-    "hint": "यह अमूर्तन रनटाइम प्रदर्शन को प्रभावित नहीं करता है"
+    "hint": "ऑप्टिमाइज़र इटरेटर का अतिरिक्त खर्च हटा सकता है; बना हुआ कोड और वास्तविक काम फिर भी मायने रखते हैं"
   },
   {
     "text": "इटरेटर ऑप्टिमाइज़ नहीं किए जा सकते"

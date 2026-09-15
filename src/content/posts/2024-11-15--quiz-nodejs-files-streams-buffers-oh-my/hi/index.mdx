@@ -56,7 +56,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)` एक नया बफ़र बनाता है जिसका आकार निर्दिष्ट है और वह शून्य से भरा होता है।
     आउटपुट होगा: `<Buffer 00 00 00 00 00>`
 
-    यदि आप यादृच्छिक डेटा वाला बफ़र बनाना चाहते हैं, तो `Buffer.allocUnsafe(5)` उपयोग करें।
+    `Buffer.allocUnsafe(5)` बाइट्स को शून्य से आरंभ नहीं करता; उनमें मेमोरी का पुराना डेटा हो सकता है। यह यादृच्छिक संख्याएँ बनाने का साधन नहीं है। पढ़ने या साझा करने से पहले हर बाइट को आरंभ करें। यादृच्छिक बाइट्स के लिए `crypto.randomBytes(5)` का उपयोग करें।
 
     [बफ़र आवंटन के बारे में अधिक जानें](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -72,7 +72,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'A', isAnswer: true},
     {text: '65'},
     {text: '[Object object]'},
-    {text: 'अपरिभाषित'},
+    {text: 'undefined'},
     {text: 'बाइनरी डेटा'},
   ]}
 >
@@ -214,7 +214,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="स्ट्रीम पाइपिंग"
   options={[
     {text: 'फ़ाइल को संपीड़न के साथ कॉपी करता है'},
-    {text: 'फ़ाइल को बिना मेमोरी बफ़रिंग के कॉपी करता है', isAnswer: true},
+    {text: 'पूरी फ़ाइल को बफ़र किए बिना टुकड़ों में कॉपी करता है', isAnswer: true},
     {text: 'पूरी फ़ाइल को मेमोरी में लोड करता है'},
     {text: 'एक सिम्बॉलिक लिंक बनाता है'},
   ]}
@@ -280,11 +280,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="स्ट्रीम्स"
   title="ट्रांसफ़ॉर्म स्ट्रीम्स"
   options={[
-    {text: 'हैलो वर्ल्ड'},
-    {text: 'हैलो वर्ल्ड', isAnswer: true},
-    {text: 'त्रुटि'},
-    {text: 'अपरिभाषित'},
-  ]}
+  {
+    "text": "hello world"
+  },
+  {
+    "text": "HELLO WORLD",
+    "isAnswer": true
+  },
+  {
+    "text": "त्रुटि"
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -494,7 +503,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     स्ट्रीम्स निम्न मोड्स में काम कर सकते हैं:
     1. बाइनरी मोड (डिफ़ॉल्ट): बफ़र्स और स्ट्रिंग्स के लिए
-    2. ऑब्जेक्ट मोड: किसी भी जावास्क्रिप्ट वैल्यू के लिए
+    2. ऑब्जेक्ट मोड: `null` को छोड़कर JavaScript मानों के लिए; `null` readable स्ट्रीम के अंत का संकेत है
 
     ऑब्जेक्ट मोड का उदाहरण:
     ```js

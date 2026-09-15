@@ -90,7 +90,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     मैं जानता हूँ। यह पागलपन है कि एस्केपिंग कितनी जल्दी स्ट्रिंग्स को समझना कठिन बना देती है। सोचिए Bash स्ट्रिंग्स में अन्य भाषाओं को एस्केप करना - सभी कोट्स, अपॉस्ट्रोफ़ और `$` सिंबल जो आपको परेशान कर देते हैं। 🫠
 
-    सिंगल कोट्स को सिंगल‑कोटेड स्ट्रिंग्स के भीतर एस्केप करना पड़ता है। क्लोज‑कोट, एस्केप्ड‑कोट, री‑ओपन‑कोट सीक्वेंस (`'\''`) आउटपुट देता है:
+    Bash की सिंगल-कोटेड स्ट्रिंग के भीतर सिंगल कोट नहीं आ सकता, बैकस्लैश के साथ भी नहीं। पहले उद्धृत भाग बंद करें, उसके बाहर एस्केप किया हुआ कोट लिखें, फिर उद्धृत भाग दोबारा खोलें। क्लोज‑कोट, एस्केप्ड‑कोट, री‑ओपन‑कोट सीक्वेंस (`'\''`) आउटपुट देता है:
     ```plaintext
     It's 🔨 Time!
     ```
@@ -139,13 +139,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="चर"
   title="अक्षरों का एस्केपिंग"
   options={[
-    {text: 'लागत: $$100'},
-    {text: 'लागत: $100'},
-    {text: 'लागत: 100'},
-    {text: 'लागत: 00', isAnswer: true},
-    {text: 'लागत:'},
-    {text: 'त्रुटि'},
-  ]}
+  {
+    "text": "Cost: $$100"
+  },
+  {
+    "text": "Cost: $100"
+  },
+  {
+    "text": "Cost: 100"
+  },
+  {
+    "text": "Cost: 00",
+    "isAnswer": true
+  },
+  {
+    "text": "Cost:"
+  },
+  {
+    "text": "त्रुटि"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -253,12 +266,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="शर्तीय"
   title="बेसिक If-Else"
   options={[
-    {text: 'फ़ाइल मौजूद है'},
-    {text: 'फ़ाइल मौजूद नहीं है, परीक्षण निदान के बाद', isAnswer: true},
-    {text: 'केवल त्रुटि'},
-    {text: 'डबल ब्रैकेट्स गायब'},
-    {text: 'कुछ नहीं'},
-  ]}
+  {
+    "text": "File exists"
+  },
+  {
+    "text": "परीक्षण के त्रुटि संदेश के बाद File does not exist",
+    "isAnswer": true
+  },
+  {
+    "text": "केवल त्रुटि"
+  },
+  {
+    "text": "डबल ब्रैकेट्स गायब"
+  },
+  {
+    "text": "कुछ नहीं"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -299,11 +323,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="शर्तें"
   title="स्ट्रिंग तुलना"
   options={[
-    {text: 'एक ही बिल्ली'},
-    {text: 'विभिन्न बिल्लियाँ, परीक्षण सिंटैक्स त्रुटि के बाद', isAnswer: true},
-    {text: 'Zalgo'},
-    {text: 'केवल त्रुटि'},
-  ]}
+  {
+    "text": "Same cat"
+  },
+  {
+    "text": "परीक्षण की सिंटैक्स त्रुटि के बाद Different cats",
+    "isAnswer": true
+  },
+  {
+    "text": "Zalgo"
+  },
+  {
+    "text": "केवल त्रुटि"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -338,13 +371,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="फ़ंक्शन"
   title="फ़ंक्शन घोषणा"
   options={[
-    {text: 'नमस्ते', isAnswer: true},
-    {text: 'डैन'},
-    {text: 'नमस्ते डैन'},
-    {text: 'greet'},
-    {text: 'त्रुटि'},
-    {text: 'सिंटैक्स त्रुटि'},
-  ]}
+  {
+    "text": "Hi",
+    "isAnswer": true
+  },
+  {
+    "text": "Dan"
+  },
+  {
+    "text": "Hi Dan"
+  },
+  {
+    "text": "greet"
+  },
+  {
+    "text": "त्रुटि"
+  },
+  {
+    "text": "सिंटैक्स त्रुटि"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -521,7 +567,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `each` Bash में लूप कीवर्ड नहीं है। मुख्य लूप कीवर्ड हैं `for`, `while`, और `until`.
 
-    जबकि `do` तकनीकी रूप से लूप कीवर्ड नहीं है, यह लूप सिंटैक्स का एक महत्वपूर्ण हिस्सा है।
+    `do` इन लूपों का मुख्य भाग शुरू करता है। यह लूप सिंटैक्स का हिस्सा है, भले ही यह लूप का प्रकार नहीं चुनता।
   </div>
   </slot>
 </Challenge>

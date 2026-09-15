@@ -37,13 +37,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="वार्मअप: ऑब्जेक्ट्स"
   title="बेसिक ऑब्जेक्ट डिस्ट्रक्चरिंग"
   options={[
-    {text: 'नाम: Dan Levy, आयु: 20'},
-    {text: 'नाम: Dan Levy, आयु: 40'},
-    {text: 'नाम: Dan Levy, आयु: Infinity'},
-    {text: 'नाम: Dan Levy, आयु: undefined', isAnswer: true},
-    {text: 'त्रुटि: Cannot read property \'age\''},
-    {text: 'नाम: undefined, आयु: 40'},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: 20"
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Name: Dan Levy, Age: Infinity"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Error: Cannot read property 'age'"
+  },
+  {
+    "text": "Name: undefined, Age: 40"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -76,13 +89,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="वार्मअप: एरेज़"
   title="ऑब्जेक्ट डीस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यू"
   options={[
-    {text: 'नाम: Dan Levy, आयु: NaN'},
-    {text: 'नाम: Dan Levy, आयु: null'},
-    {text: 'नाम: Dan Levy, आयु: undefined', isAnswer: true},
-    {text: 'नाम: Dan Levy, आयु: 40'},
-    {text: 'त्रुटि: प्रॉपर्टी \'age\' को डीस्ट्रक्चर नहीं किया जा सकता'},
-    {text: 'SyntaxError: अप्रत्याशित टोकन \',\''},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: NaN"
+  },
+  {
+    "text": "Name: Dan Levy, Age: null"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Error: Cannot destructure property 'age'"
+  },
+  {
+    "text": "SyntaxError: Unexpected token ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -112,12 +138,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="नेस्टेड डीस्ट्रक्चरिंग"
   title="नेस्टेड डीस्ट्रक्चरिंग"
   options={[
-    {text: 'पहला: Dan, शहर: Denver'},
-    {text: 'पहला: undefined, शहर: Denver'},
-    {text: 'त्रुटि: Cannot read property \'first\''},
-    {text: 'पहला: Dan, शहर: undefined'},
-    {text: 'त्रुटि', isAnswer: true},
-  ]}
+  {
+    "text": "First: Dan, City: Denver"
+  },
+  {
+    "text": "First: undefined, City: Denver"
+  },
+  {
+    "text": "Error: Cannot read property 'first'"
+  },
+  {
+    "text": "First: Dan, City: undefined"
+  },
+  {
+    "text": "त्रुटि",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -161,12 +198,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="डिफ़ॉल्ट्स"
   title="ऑब्जेक्ट डीस्ट्रक्चरिंग में डिफ़ॉल्ट मान"
   options={[
-    {text: 'हाय डैन अनजान से'},
-    {text: 'हाय डैन डेनवर से'},
-    {text: 'हाय अनजान अनजान से'},
-    {text: 'हाय अनजान डेनवर से'},
-    {text: 'त्रुटि', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "त्रुटि",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -193,12 +241,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     जैसा लिखा है, इसका मतलब है "यदि `person.birth` `undefined` है, तो `place` `Unknown` होगा"। लेकिन `person.birth` `undefined` है, इसलिए यह `undefined` को डीस्ट्रक्चर करने की कोशिश कर रहा है, जिससे त्रुटि आती है।
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
-
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
-    ```
+TypeError
+```
   </div>
   </slot>
 </Challenge>
@@ -209,13 +253,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="डिफ़ॉल्ट्स"
   title="ऑब्जेक्ट डीस्ट्रक्चरिंग में डिफ़ॉल्ट मान"
   options={[
-    {text: 'हाय डैन डेनवर से'},
-    {text: 'हाय डैन जोहानेसबर्ग से'},
-    {text: 'हाय डैन अनजान से', isAnswer: true},
-    {text: 'हाय अनजान अनजान से'},
-    {text: 'हाय अनजान डेनवर से'},
-    {text: 'त्रुटि'},
-  ]}
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Dan from Johannesburg"
+  },
+  {
+    "text": "Hi Dan from Unknown",
+    "isAnswer": true
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "त्रुटि"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -238,7 +295,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `birth` प्रॉपर्टी `person` में मौजूद नहीं है, इसलिए यह खाली ऑब्जेक्ट ` = {}` पर फॉल्ट करता है। इससे डिफ़ॉल्ट मान उपयोग में आता है।
+    `birth` प्रॉपर्टी `person` में मौजूद नहीं है, इसलिए यह खाली ऑब्जेक्ट ` = {}` का उपयोग करता है। इससे डिफ़ॉल्ट मान उपयोग में आता है।
   </div>
   </slot>
 </Challenge>
@@ -249,13 +306,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="फ़ंक्शन आर्ग्युमेंट्स"
   title="डिफ़ॉल्ट्स के साथ फ़ंक्शन पैरामीटर का डीस्ट्रक्चरिंग"
   options={[
-    {text: 'हाय डैन से undefined'},
-    {text: 'हाय डैन से Unknown'},
-    {text: 'हाय डैन से Denver'},
-    {text: 'हाय Unknown से Unknown'},
-    {text: 'हाय Unknown से Denver'},
-    {text: 'Error', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from undefined"
+  },
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "त्रुटि",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -287,15 +357,32 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="फ़ंक्शन आर्ग्यूमेंट्स"
   title="नेस्टेड डिफ़ॉल्ट मानों के साथ डीस्ट्रक्चरिंग"
   options={[
-    {text: 'अज्ञात, अज्ञात, Joburg'},
-    {text: 'अज्ञात, अज्ञात, अज्ञात'},
-    {text: 'अज्ञात, `undefined`, Joburg'},
-    {text: 'लागू नहीं, `undefined`, Joburg'},
-    {text: 'लागू नहीं, अज्ञात, Joburg'},
-    {text: 'लागू नहीं, लागू नहीं, Joburg', isAnswer: true},
-    {text: 'अज्ञात, लागू नहीं, Joburg'},
-    {text: 'त्रुटि'},
-  ]}
+  {
+    "text": "Unknown, Unknown, Joburg"
+  },
+  {
+    "text": "Unknown, Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, Unknown, Joburg"
+  },
+  {
+    "text": "N/A, N/A, Joburg",
+    "isAnswer": true
+  },
+  {
+    "text": "Unknown, N/A, Joburg"
+  },
+  {
+    "text": "त्रुटि"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -315,20 +402,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `displayPlace` फ़ंक्शन केवल तब ही डिफ़ॉल्ट ऑब्जेक्ट का उपयोग करेगा जब कोई ऑब्जेक्ट पास नहीं किया गया हो। इसलिए `{ place: "Unknown" }` डिफ़ॉल्ट प्राप्त करने का एक ही तरीका है जब आप शून्य आर्ग्यूमेंट्स के साथ `displayPlace()` कॉल करते हैं।
+  <slot name="explanation">
+<div className="explanation">
+आर्ग्यूमेंट न देने या स्पष्ट रूप से `undefined` देने पर डिफ़ॉल्ट पैरामीटर ऑब्जेक्ट `{ place: "Unknown" }` इस्तेमाल होता है: `displayPlace()` और `displayPlace(undefined)` दोनों `Unknown` प्रिंट करते हैं।
 
-    यहाँ एक और उल्लेखनीय व्यवहार यह है कि `place` के लिए `undefined` पास करने पर डिफ़ॉल्ट मान इस्तेमाल होगा, जो `JSON.stringify` के व्यवहार जैसा है (`undefined` को अनदेखा करता है, `null` को पहचानता है)।
+यदि ऑब्जेक्ट दिया गया हो और उसकी `place` प्रॉपर्टी गायब या `undefined` हो, तो प्रॉपर्टी का डिफ़ॉल्ट `"N/A"` लगता है। पैरामीटर और प्रॉपर्टी के ये डिफ़ॉल्ट अलग स्तरों पर लागू होते हैं।
 
-    इसका परिणाम है:
-    ```js
+इसका परिणाम है:
+```js
     displayPlace() // Unknown
     displayPlace({ name: "Dan" }) // N/A
     displayPlace({ name: "Dan", place: undefined }) // N/A
-    ```
-  </div>
-  </slot>
+```
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -337,20 +424,39 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="फ़ंक्शन आर्ग्यूमेंट्स"
   title="नेस्टेड डिफ़ॉल्ट मानों के साथ डीस्ट्रक्चरिंग"
   options={[
-    {text: 'N/A, N/A'},
-    {text: 'N/A, undefined'},
-    {text: 'अज्ञात, N/A'},
-    {text: 'अज्ञात, अज्ञात'},
-    {text: 'अज्ञात, undefined'},
-    {text: 'null, N/A', isAnswer: true},
-    {text: 'null, अज्ञात'},
-    {text: 'null, undefined'},
-    {text: 'त्रुटि'},
-  ]}
+  {
+    "text": "N/A, N/A"
+  },
+  {
+    "text": "N/A, undefined"
+  },
+  {
+    "text": "Unknown, N/A"
+  },
+  {
+    "text": "Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, undefined"
+  },
+  {
+    "text": "null, N/A",
+    "isAnswer": true
+  },
+  {
+    "text": "null, Unknown"
+  },
+  {
+    "text": "null, undefined"
+  },
+  {
+    "text": "त्रुटि"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    पिछले वाले जैसा... `null` को कैसे संभालते हैं?_
+    पिछले वाले जैसा... `null` को कैसे संभालते हैं?
     ```js
     function displayPlace({
       name = "N/A",
@@ -364,12 +470,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    इस केस में, पहली कॉल में `place` प्रॉपर्टी `null` पर सेट होती है, और दूसरी में `undefined`। `place` के लिए डिफ़ॉल्ट मान केवल तब उपयोग होता है जब पूरा ऑब्जेक्ट गायब **या** `undefined` हो। `null` मान 그대로 `null` रहेगा।
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+पहली कॉल में `place` प्रॉपर्टी `null` है और दूसरी में `undefined`। `place` गायब या `undefined` होने पर प्रॉपर्टी का डिफ़ॉल्ट `"N/A"` लगता है, भले ही ऑब्जेक्ट दिया गया हो। `null` यह डिफ़ॉल्ट सक्रिय नहीं करता, इसलिए आउटपुट `null` और `N/A` हैं।
+</div>
+</slot>
 </Challenge>
+
+## आगे TypeScript है
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -420,15 +528,32 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript: असाइनमेंट के साथ"
   title="नेस्टेड डिफॉल्ट मानों के साथ डीस्ट्रक्चरिंग"
   options={[
-    {text: 'अपरिभाषित'},
-    {text: 'शून्य'},
-    {text: 'लागू नहीं'},
-    {text: 'अज्ञात'},
-    {text: 'Denver', isAnswer: true},
-    {text: 'SyntaxError'},
-    {text: 'Error: अमान्य प्रकार'},
-    {text: 'Error: अमान्य तर्क'},
-  ]}
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "null"
+  },
+  {
+    "text": "N/A"
+  },
+  {
+    "text": "Unknown"
+  },
+  {
+    "text": "Denver",
+    "isAnswer": true
+  },
+  {
+    "text": "SyntaxError"
+  },
+  {
+    "text": "Error: Invalid type"
+  },
+  {
+    "text": "Error: Invalid Arguments"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -505,12 +630,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="टाइपस्क्रिप्ट + असाइनमेंट"
   title="नेस्टेड मानों के साथ डीस्ट्रक्चरिंग, असाइनमेंट और टाइप्स"
   options={[
-    {text: 'नमस्ते Dan Levy से N/A'},
-    {text: 'नमस्ते Dan Levy से Cape Town'},
-    {text: 'नमस्ते N/A N/A से N/A'},
-    {text: 'नमस्ते N/A N/A से Cape Town'},
-    {text: 'त्रुटि', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan Levy from N/A"
+  },
+  {
+    "text": "Hi Dan Levy from Cape Town"
+  },
+  {
+    "text": "Hi N/A N/A from N/A"
+  },
+  {
+    "text": "Hi N/A N/A from Cape Town"
+  },
+  {
+    "text": "त्रुटि",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">

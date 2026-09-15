@@ -59,6 +59,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Error ऑब्जेक्ट में गैर‑enumerable प्रॉपर्टी (`message`, `name`, `stack`) होती हैं, इसलिए `JSON.stringify()` `{}` लौटाता है। यह API प्रतिक्रियाओं में एरर भेजते समय अक्सर होने वाला गड़बड़ है। `JSON.stringify(error, Object.getOwnPropertyNames(error))` का उपयोग करें या सीधे एक साधारण ऑब्जेक्ट बनाएं।
   </div>
   </slot>
+<slot name="hints">
+Error ऑब्जेक्ट की enumerable प्रॉपर्टियों पर विचार करें।
+</slot>
 </Challenge>
 
 <Challenge
@@ -88,6 +91,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `console.log(err)` त्रुटि को उसके संदेश और स्टैक ट्रेस के साथ दिखाता है क्योंकि कंसोल में Error ऑब्जेक्ट्स के लिए विशेष हैंडलिंग होती है। `JSON.stringify(err)` `'{}'` लौटाता है क्योंकि Error की प्रॉपर्टीज़ enumerable नहीं होतीं। यह अंतर कई डेवलपर्स को API डिबग करते समय फँसाता है।
   </div>
   </slot>
+<slot name="hints">
+सोचें कि console.log और JSON सीरियलाइज़ेशन ऑब्जेक्ट को कैसे संभालते हैं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -120,6 +126,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     तीनों `true` लौटाते हैं। `CustomError` `Error` को विस्तारित करता है, जो `Object` को विस्तारित करता है। `instanceof` ऑपरेटर पूरी प्रोटोटाइप चेन को जांचता है, इसलिए `CustomError` का एक इंस्टेंस भी `Error` और `Object` का इंस्टेंस होता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript इनहेरिटेंस की प्रोटोटाइप चेन याद करें।
+</slot>
 </Challenge>
 
 <Challenge
@@ -135,21 +144,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    यदिफ़्रेम्स के बीच `instanceof Error` के साथ क्या होता है?
-    ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
-    ```
-  </div>
-  </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `instanceof` विभिन्न निष्पादन संदर्भों (iframes, workers) के बीच `false` लौटा सकता है क्योंकि प्रत्येक संदर्भ का अपना `Error` कंस्ट्रक्टर होता है। संदर्भों के बीच विश्वसनीय त्रुटि पहचान के लिए `Object.prototype.toString.call(obj) === '[object Error]'` का उपयोग करें।
-  </div>
-  </slot>
+<div className="question">
+मान लें कि `iframeError` उसी origin के iframe में बनाया गया और उसकी पैरेंट विंडो को दिया गया है।
+```js
+console.log(iframeError instanceof Error);
+```
+</div>
+</slot>
+  <slot name="explanation">
+<div className="explanation">
+अलग realms के `Error` कंस्ट्रक्टर अलग होते हैं, इसलिए यह जाँच `false` लौटा सकती है। `Object.prototype.toString.call(obj)` सामान्य cross-realm त्रुटियों को पहचान सकता है, लेकिन `Symbol.toStringTag` से उसका परिणाम नकली बनाया जा सकता है; यह प्रामाणिकता की जाँच नहीं है।
+</div>
+</slot>
+<slot name="hints">
+अलग संदर्भों में Error कंस्ट्रक्टर अलग होते हैं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -182,6 +191,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     JavaScript किसी भी मान को थ्रो करने की अनुमति देता है। यहाँ, `e instanceof Error` `false` है और `typeof e` `"string"` है। यह उन त्रुटि‑हैंडलिंग कोड को तोड़ सकता है जो मानते हैं कि सभी पकड़ी गई अपवाद Error ऑब्जेक्ट हैं। बेहतर डिबगिंग के लिए हमेशा Error इंस्टेंस थ्रो करें।
   </div>
   </slot>
+<slot name="hints">
+JavaScript में केवल Error ऑब्जेक्ट ही नहीं, कोई भी मान throw किया जा सकता है।
+</slot>
 </Challenge>
 
 <Challenge
@@ -193,7 +205,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '"Error"'},
     {text: '"CustomError"', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Depends on the browser'},
+    {text: 'ब्राउज़र पर निर्भर करता है'},
   ]}
 >
   <slot name="question">
@@ -216,6 +228,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `err.name` `"CustomError"` है क्योंकि `this.constructor.name` क्लास का नाम लौटाता है। `this.name = this.constructor.name` सेट करना एक सामान्य पैटर्न है जिससे कस्टम एरर क्लासेस स्टैक ट्रेस और एरर मैसेज में सही नाम दिखाते हैं।
   </div>
   </slot>
+<slot name="hints">
+देखें कि `this.constructor.name` का मान क्या है।
+</slot>
 </Challenge>
 
 <Challenge
@@ -247,6 +262,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     यदि आप स्पष्ट रूप से `this.name` सेट नहीं करते हैं, तो त्रुटि `Error` क्लास की डिफ़ॉल्ट `name` प्रॉपर्टी को विरासत में ले लेती है, जो `"Error"` है। इसलिए कस्टम एरर क्लासों को हमेशा अपने कंस्ट्रक्टर में `this.name = this.constructor.name` सेट करना चाहिए।
   </div>
   </slot>
+<slot name="hints">
+Error की डिफ़ॉल्ट name प्रॉपर्टी में क्या होता है?
+</slot>
 </Challenge>
 
 <Challenge
@@ -255,11 +273,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Error कारण"
   title="आधुनिक Error.cause"
   options={[
-    {text: '"मूल त्रुटि"', isAnswer: true},
-    {text: 'undefined'},
-    {text: 'रैपिंग त्रुटि'},
-    {text: 'SyntaxError'},
-  ]}
+  {
+    "text": "\"Original error\"",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "रैपिंग त्रुटि"
+  },
+  {
+    "text": "SyntaxError"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -278,6 +305,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Error.cause` (ES2022) त्रुटियों को चेन करने की अनुमति देता है ताकि मूल त्रुटि संदर्भ संरक्षित रहे। `wrapper.cause` मूल त्रुटि को संदर्भित करता है, इसलिए `wrapper.cause.message` `"Original error"` लौटाता है। यह निचले‑स्तर की त्रुटियों को उच्च‑स्तर के संदर्भ में रैप करने में उपयोगी है।
   </div>
   </slot>
+<slot name="hints">
+Error.cause त्रुटियों को जोड़ने की आधुनिक JavaScript सुविधा है।
+</slot>
 </Challenge>
 
 <Challenge
@@ -294,6 +324,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
+    मान लें कि यह V8/Node.js है, जहाँ `Error.captureStackTrace` उपलब्ध है।
     `Error.captureStackTrace` क्या करता है?
     ```js
     function createError(msg) {
@@ -310,6 +341,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Error.captureStackTrace` (V8/Node.js) स्टैक ट्रेस से निर्दिष्ट फ़ंक्शन (`createError`) को हटा देता है, जिससे एरर फ़ैक्टरी फ़ंक्शन उपयोगकर्ताओं को दिखाई नहीं देते। इससे साफ़ स्टैक ट्रेस मिलते हैं जो फ़ैक्टरी को कॉल किए गए स्थान को दिखाते हैं, फ़ैक्टरी खुद को नहीं।
   </div>
   </slot>
+<slot name="hints">
+स्टैक ट्रेस साफ़ करने की यह सुविधा V8 से संबंधित है।
+</slot>
 </Challenge>
 
 <Challenge
@@ -318,11 +352,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="संदेश टेम्प्लेट"
   title="त्रुटियों में टेम्प्लेट लिटेरल्स"
   options={[
-    {text: '"Value ${value} अमान्य है"'},
-    {text: '"Value undefined अमान्य है"', isAnswer: true},
-    {text: 'ReferenceError: value परिभाषित नहीं है'},
-    {text: '"Value  अमान्य है"'},
-  ]}
+  {
+    "text": "\"Value ${value} is invalid\""
+  },
+  {
+    "text": "\"Value undefined is invalid\"",
+    "isAnswer": true
+  },
+  {
+    "text": "ReferenceError: value is not defined"
+  },
+  {
+    "text": "\"Value  is invalid\""
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -348,6 +391,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     टेम्प्लेट लिटेरल्स इंटरपोलेशन के दौरान `undefined` को स्ट्रिंग `"undefined"` में बदल देते हैं। त्रुटि संदेश बन जाता है `"Value undefined is invalid"`। साफ़ संदेशों के लिए, इंटरपोलेशन से पहले `value ?? 'null'` या इसी तरह की जाँचों का उपयोग करने पर विचार करें।
   </div>
   </slot>
+<slot name="hints">
+टेम्प्लेट लिटरल इंटरपोलेशन undefined को कैसे संभालता है?
+</slot>
 </Challenge>
 
 <Challenge
@@ -379,6 +425,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `res.json()` अंदर `JSON.stringify()` का उपयोग करता है, इसलिए Error ऑब्जेक्ट `{}` बन जाता है। क्लाइंट को `{"error":{}}` मिलता है। इसे ठीक करने के लिए, `res.json({ error: error.message })` या `res.json({ error: { message: error.message, name: error.name } })` का उपयोग करें।
   </div>
   </slot>
+<slot name="hints">
+याद करें कि JSON.stringify Error ऑब्जेक्ट का सीरियलाइज़ेशन कैसे करता है।
+</slot>
 </Challenge>
 
 <Challenge
@@ -414,6 +463,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `throw` की तरह, `Promise.reject()` कोई भी मान स्वीकार करता है – स्ट्रिंग्स, ऑब्जेक्ट्स, नंबर आदि। यह `"string"`, `404`, और `42` प्रिंट करता है। प्रॉमिस चेन में पकड़े गए मानों के प्रकार की हमेशा जाँच करें, खासकर जब थर्ड‑पार्टी कोड गैर‑Error मानों से रिजेक्ट कर सकता है।
   </div>
   </slot>
+<slot name="hints">
+प्रॉमिस रिजेक्शन throw कथनों जैसे काम करते हैं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -447,6 +499,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `code` और `errno` जैसे गुण पर्यावरण‑विशिष्ट हैं (इस मामले में Node.js) और मानक Error ऑब्जेक्ट का हिस्सा नहीं हैं। ब्राउज़र त्रुटियों में ये गुण नहीं होते। हमेशा इनके अस्तित्व की जाँच करें: `if (err.code === 'ENOENT')` बजाय यह मानने के कि वे मौजूद हैं।
   </div>
   </slot>
+<slot name="hints">
+अलग JavaScript वातावरण और त्रुटि प्रकारों पर विचार करें।
+</slot>
 </Challenge>
 
 <Challenge
@@ -478,11 +533,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `instanceof Error` `false` लौटाता है क्योंकि ऑब्जेक्ट Error कंस्ट्रक्टर से नहीं बनाया गया था। `Object.prototype.toString.call()` भी `false` लौटाता है (यह `'[object Object]'` लौटाता है) क्योंकि यह आंतरिक `[[Class]]` स्लॉट को जांचता है। दोनों मेथड सही तरीके से इसे एक नकली एरर ऑब्जेक्ट के रूप में पहचानते हैं।
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+इस विशेष ऑब्जेक्ट के लिए दोनों तुलनाएँ `false` हैं। इसका प्रोटोटाइप `Error.prototype` नहीं है और डिफ़ॉल्ट टैग `[object Object]` है। लेकिन `[Symbol.toStringTag]: "Error"` जोड़ने पर दूसरी तुलना true हो जाएगी। टैग का मिलना या ये फ़ील्ड मौजूद होना साबित नहीं करता कि ऑब्जेक्ट वास्तविक Error है।
+</div>
+</slot>
+<slot name="hints">
+एक जाँच प्रोटोटाइप चेन देखती है, दूसरी ऑब्जेक्ट का टैग।
+</slot>
 </Challenge>
 
 </QuizUI>

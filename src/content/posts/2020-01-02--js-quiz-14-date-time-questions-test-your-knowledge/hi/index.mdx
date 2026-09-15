@@ -57,7 +57,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -90,7 +90,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -116,13 +116,26 @@ JavaScript में `Date` क्लास का API अपनी पेची
   group="Handling Dates"
   title="Date Constructor Part 3"
   options={[
-    {text: '01 Jan 1970'},
-    {text: 'Unix Epoch of 0'},
-    {text: 'Current Date, UTC/GMT में'},
-    {text: 'Current Date', isAnswer: true},
-    {text: 'NaN'},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    "text": "01 Jan 1970"
+  },
+  {
+    "text": "Unix Epoch का 0"
+  },
+  {
+    "text": "वर्तमान तारीख, UTC/GMT में"
+  },
+  {
+    "text": "वर्तमान तारीख",
+    "isAnswer": true
+  },
+  {
+    "text": "NaN"
+  },
+  {
+    "text": "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -137,15 +150,11 @@ JavaScript में `Date` क्लास का API अपनी पेची
   <slot name='hints'>
   </slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    `new` कीवर्ड को न भूलें! `Date` एक क्लास है, और इसे `new` के साथ कॉल किया जाना चाहिए।
-
-    बिना `new` के `Date('...')` आपके द्वारा दिए गए इनपुट को अनदेखा कर देता है। यह हमेशा `new Date()` (बिना किसी argument के) की तरह वर्तमान तारीख और समय (current date & time) ही देता है।
-
-    यह एक **common gotcha** है जिसे कोड रिव्यू में भी **पकड़ना मुश्किल** हो सकता है।
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+`new` के बिना `Date()` कॉल करने पर सभी आर्ग्यूमेंट अनदेखे होते हैं और वर्तमान तारीख तथा समय की स्ट्रिंग लौटती है। दिए गए आर्ग्यूमेंट से Date ऑब्जेक्ट बनाने के लिए `new Date(...)` का उपयोग करें।
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -164,6 +173,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
+    इस प्रश्न के लिए स्थानीय ऑफसेट GMT−7 मानें।
     आउटपुट में क्या शामिल होगा?
     ```js
     const date = new Date(2020)
@@ -202,6 +212,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
+    इस प्रश्न के लिए स्थानीय ऑफसेट GMT−7 मानें।
     कंसोल पर क्या वैल्यू प्रिंट होगी?
     ```js
     const d1 = new Date('2020-01-01')
@@ -283,16 +294,11 @@ JavaScript में `Date` क्लास का API अपनी पेची
   <slot name='hints'>
   </slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    आपको `TypeError: date.toUTCString is not a function` मिलेगा, क्योंकि [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) मिलीसेकंड में एक पूर्णांक (integer) लौटाता है, न कि कोई date instance।
-
-    {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) मेथड आपके लोकल ऑफसेट का उपयोग करता है (इन सवालों के लिए GMT-07:00 मान लें)।
-    इसका मतलब है कि यह पिछला वर्ष (NYE -7 घंटे) देगा।
-    [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) मेथड वही वर्ष देगा जो हमने `Date.UTC()` को दिया था, यानी 2020।
-    */}
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+`Date.UTC()` वर्ष, महीने आदि के संख्यात्मक आर्ग्यूमेंट चाहता है। यह स्ट्रिंग वैध वर्ष में नहीं बदल सकती, इसलिए कॉल पहले `NaN` लौटाती है। वह संख्या है, Date ऑब्जेक्ट नहीं; उसकी `.toUTCString()` कॉल करने पर `TypeError` आता है।
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -342,6 +348,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
+    इस प्रश्न के लिए स्थानीय ऑफसेट GMT−7 मानें।
     आउटपुट में क्या शामिल होगा?
     ```js
     // Assume local TZ is -07:00
@@ -354,13 +361,11 @@ JavaScript में `Date` क्लास का API अपनी पेची
   <slot name='hints'>
   </slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    तारीखें (Dates) स्वाभाविक रूप से स्थानीय समय (local time) में दिखाई जाएंगी, जिसमें [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) (प्रभावी रूप से) अपरिवर्तित रहता है।
-
-    `Date` इंस्टेंस टाइमज़ोन डेटा स्टोर नहीं करते हैं। वे Unix Epoch (1 जनवरी, 1970) से अब तक के मिलीसेकंड्स की संख्या स्टोर करते हैं। Date String की पार्सिंग और रेंडरिंग के दौरान टाइमज़ोन का ध्यान रखा जाता है। डिफ़ॉल्ट डिस्प्ले व्यवहार सिस्टम या ब्राउज़र की लोकेल सेटिंग्स के आधार पर स्वचालित रूप से निर्धारित होता है।
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+Date ऑब्जेक्ट Unix epoch से मिलीसेकंड संग्रहीत करते हैं, टाइमज़ोन नहीं। `getTimezoneOffset()` उस तारीख के स्थानीय टाइमज़ोन नियमों का उपयोग करके UTC से अंतर मिनटों में लौटाता है। यहाँ माने गए GMT−7 ऑफसेट पर परिणाम `420` है। डेलाइट सेविंग टाइम वाले क्षेत्रों में अलग तारीखों पर ऑफसेट बदल सकता है।
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -376,7 +381,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -412,7 +417,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
@@ -444,7 +449,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -482,7 +487,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -525,7 +530,7 @@ JavaScript में `Date` क्लास का API अपनी पेची
 >
   <slot name="question">
   <div className="question">
-    आउटपुट में क्या शामिल होगा?
+    Date ऑब्जेक्ट किस तारीख को दर्शाएगा? कंसोल का प्रदर्शन प्रारूप अलग हो सकता है।
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)

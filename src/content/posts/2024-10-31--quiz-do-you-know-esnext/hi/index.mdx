@@ -55,6 +55,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     नल कोएलसिंग ऑपरेटर (`??`) बाएँ हाथ के ऑपरेण्ड (`a`) यदि `null` या `undefined` हो तो दाएँ हाथ के ऑपरेण्ड (`b`) को लौटाता है। इस मामले में, `a` `null` है, इसलिए `result` `100` है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -85,6 +88,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     नल कोएलसिंग ऑपरेटर (`??`) `false` जैसे फॉल्सी मानों को वैध मानता है। चूँकि `value` `false` है, इसे वैध मान माना जाता है और वापस किया जाता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -114,6 +120,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     वैकल्पिक चेनिंग ऑपरेटर (`?.`) बाएँ पक्ष `null` या `undefined` होने पर मूल्यांकन रोक देता है। चूँकि `obj.foo` `null` है, `obj.foo?.bar` `undefined` में मूल्यांकित होता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -143,6 +152,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     BigInt मान `n` को संख्या के अंत में जोड़कर बनाए जाते हैं। आप अंकगणितीय संचालन में BigInt को सामान्य संख्याओं के साथ मिला नहीं सकते। यहाँ, दोनों मान BigInt हैं, इसलिए गुणा काम करता है और परिणाम `84n` मिलता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -154,7 +166,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'SyntaxError'},
     {text: 'Promise'},
     {text: 'Module'},
-    {text: 'ऑब्जेक्ट', isAnswer: true},
+    {text: 'object', isAnswer: true},
     {text: 'undefined'},
   ]}
 >
@@ -172,6 +184,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `import()` फ़ंक्शन एक `Promise` लौटाता है जो मॉड्यूल ऑब्जेक्ट को रिजॉल्व करता है। क्योंकि `Promise` इंस्टेंस ऑब्जेक्ट होते हैं, `typeof modulePromise` `'object'` लॉग करता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -180,11 +195,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'पूरा हुआ: success', isAnswer: true},
-    {text: 'अस्वीकृत: error'},
-    {text: 'लंबित'},
-    {text: 'null'},
-  ]}
+  {
+    "text": "fulfilled: success",
+    "isAnswer": true
+  },
+  {
+    "text": "Rejected: error"
+  },
+  {
+    "text": "Pending"
+  },
+  {
+    "text": "null"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -205,6 +229,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Promise.allSettled` एक एरे लौटाता है जिसमें प्रत्येक प्रॉमिस के परिणाम का विवरण होता है। पहला प्रॉमिस `fulfilled` है और उसका मान `'success'` है, इसलिए लॉग स्टेटमेंट `fulfilled: success` प्रिंट करेगा।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -233,6 +260,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `String.matchAll` एक एरे नहीं, बल्कि मैचों का इटेरेटर लौटाता है। इस इटेरेटर का उपयोग स्ट्रिंग से सभी मिलते‑जुलते समूह प्राप्त करने के लिए किया जा सकता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -260,6 +290,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `import.meta` एक ऑब्जेक्ट है जो वर्तमान मॉड्यूल के मेटाडाटा को रखता है। `import.meta.url` प्रॉपर्टी वर्तमान मॉड्यूल का URL दर्शाती है, जिसका उपयोग स्क्रिप्ट कहाँ चल रही है, इसकी जानकारी पाने के लिए किया जा सकता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -289,6 +322,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     तार्किक OR असाइनमेंट (`||=`) बाएँ वाले मान को तभी दाएँ वाले मान से बदलता है जब बाएँ वाला मान falsy हो (`null`, `undefined`, `0`, `false`, आदि)। चूँकि `a` `null` है, इसे मान `10` सौंपा जाता है।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -297,11 +333,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="तार्किक नलिश असाइनमेंट"
   title="तार्किक नलिश असाइनमेंट"
   options={[
-    {text: '5'},
-    {text: '10', isAnswer: true},
-    {text: 'अपरिभाषित'},
-    {text: 'नल'},
-  ]}
+  {
+    "text": "5"
+  },
+  {
+    "text": "10",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "null"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -318,6 +363,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     नलिश कोलेसिंग असाइनमेंट (`??=`) दाएँ‑हाथ का मान तब असाइन करता है जब बाएँ‑हाथ का मान `null` या `undefined` हो। चूँकि `b` `null` है, इसे मान `10` असाइन किया गया।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 <Challenge
@@ -344,9 +392,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `WeakRef` एक ऑब्जेक्ट का कमजोर संदर्भ प्रदान करता है, जिससे यदि अन्य कोई संदर्भ न हो तो ऑब्जेक्ट को गार्बेज कलेक्ट किया जा सकता है। चूँकि यहाँ `obj` अभी भी मजबूत रूप से संदर्भित है, `deref()` मूल ऑब्जेक्ट लौटाता है। यदि लक्ष्य को पुनः प्राप्त कर लिया गया होता, तो `deref()` `undefined` लौटाता।
+    `WeakRef` एक ऑब्जेक्ट का कमजोर संदर्भ प्रदान करता है, जिससे यदि अन्य कोई संदर्भ न हो तो ऑब्जेक्ट को गार्बेज कलेक्ट किया जा सकता है। चूँकि यहाँ `obj` अभी भी मजबूत रूप से संदर्भित है, `deref()` मूल ऑब्जेक्ट लौटाता है। यदि लक्ष्य की मेमोरी गार्बेज कलेक्टर ने मुक्त कर दी होती, तो `deref()` `undefined` लौटाता।
   </div>
   </slot>
+<slot name="hints">
+JavaScript ऑपरेटर का सटीक व्यवहार जाँचें। आकर्षक विकल्प अक्सर पुराने सिंटैक्स का व्यवहार बताता है, इस सुविधा का नहीं।
+</slot>
 </Challenge>
 
 </QuizUI>

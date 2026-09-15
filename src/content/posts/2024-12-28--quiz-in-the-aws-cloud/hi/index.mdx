@@ -26,9 +26,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">क्या आप क्लाउड के लिए तैयार हैं?! 🤡</p>
 
-Dive deep into AWS Storage Services! This quiz will test your knowledge of S3, DynamoDB, Aurora, RDS, ElastiCache, and more. From best practices to tricky gotchas, we'll explore the cloud storage landscape.
+AWS स्टोरेज सेवाओं को गहराई से जानें! यह क्विज़ S3, DynamoDB, Aurora, RDS, ElastiCache और अन्य सेवाओं के आपके ज्ञान को परखेगा। अच्छे अभ्यासों से लेकर पेचीदा व्यवहार तक, हम क्लाउड स्टोरेज की दुनिया खोजेंगे।
 
-Get ready to prove your cloud expertise! 🚀
+अपनी क्लाउड विशेषज्ञता साबित करने के लिए तैयार हो जाएँ! 🚀
 
 <QuizUI>
 
@@ -37,6 +37,8 @@ Get ready to prove your cloud expertise! 🚀
   index={0}
   group="वार्म‑अप"
   title="S3 ट्रिविया"
+  difficulty={1}
+  objectives={["AWS S3 सेवा के नाम का अर्थ याद करना","AWS की मूल स्टोरेज सेवाएँ पहचानना"]}
   options={[
     {text: 'सर्वर स्टोरेज v3'},
     {text: 'स्टोरेज एज़ ए सर्विस'},
@@ -72,6 +74,8 @@ Get ready to prove your cloud expertise! 🚀
   index={1}
   group="स्कीमा‑लेस"
   title="DynamoDB"
+  difficulty={2}
+  objectives={["स्कीमा-लेस डेटाबेस की विशेषताएँ बताना","DynamoDB का लचीला डेटा मॉडल समझाना"]}
   options={[
     {text: 'मनचाहे गुण संग्रहीत करें', isAnswer: true},
     {text: 'डायनामिक पार्टिशन कुंजियाँ'},
@@ -99,6 +103,8 @@ Get ready to prove your cloud expertise! 🚀
   index={2}
   group="स्कीमा‑लेस"
   title="DynamoDB"
+  difficulty={4}
+  objectives={["DynamoDB बैच ऑपरेशनों की क्षमताओं की तुलना करना","DynamoDB अपडेट ऑपरेशनों को बेहतर करना","अपडेट स्केल करने के विचारों का मूल्यांकन करना"]}
   options={[
     {text: 'PutItem', hint: 'एक नया आइटम बनाता है, या पुराने आइटम को नए आइटम से बदल देता है।'},
     {text: 'BatchUpdateItem', hint: 'मौजूद नहीं है।'},
@@ -139,6 +145,8 @@ Get ready to prove your cloud expertise! 🚀
   index={3}
   group="क्वेरी क्षमताएँ"
   title="उन्नत खोज सुविधाएँ"
+  difficulty={3}
+  objectives={["AWS सेवाओं की उन्नत क्वेरी क्षमताएँ समझना","पूर्ण-पाठ खोज सुविधाओं की तुलना करना"]}
   options={[
     {text: 'ElastiCache', hint: 'मुख्यतः एक इन‑मेमोरी कैश; नए Valkey संस्करणों में खोज सुविधाएँ शामिल हैं।'},
     {text: 'OpenSearch', isAnswer: true},
@@ -156,7 +164,7 @@ Get ready to prove your cloud expertise! 🚀
   <div className="explanation">
     OpenSearch AWS की प्रबंधित सेवा है जो खोज, लॉग विश्लेषण और पूर्ण‑पाठ खोज कार्यभार को संभालती है.
 
-    विचलन उपयोगी सेवाएँ हैं, लेकिन वे इस सूची में विशेष रूप से निर्मित खोज इंजन नहीं हैं:
+    बाकी विकल्प उपयोगी सेवाएँ हैं, लेकिन वे इस सूची में विशेष रूप से निर्मित खोज इंजन नहीं हैं:
     - ElastiCache: मुख्यतः एक इन‑मेमोरी कैश। वर्तमान ElastiCache for Valkey में इंडेक्स्ड इन‑मेमोरी डेटा के लिए खोज कमांड शामिल हैं, इसलिए पूरी सेवा को बिना अंतर्निहित खोज के कहना अब सही नहीं है।
     - Neptune: ग्राफ डेटाबेस; यह पूर्ण‑पाठ खोज के लिए OpenSearch के साथ एकीकृत हो सकता है।
     - Redshift: SQL विश्लेषण के लिए डेटा वेयरहाउस।
@@ -170,6 +178,8 @@ Get ready to prove your cloud expertise! 🚀
   index={4}
   group="RDS"
   title="मल्टी‑AZ डिप्लॉयमेंट"
+  difficulty={2}
+  objectives={["Multi-AZ डिप्लॉयमेंट का मुख्य उद्देश्य पहचानना","उच्च उपलब्धता और रीड स्केलिंग में अंतर करना"]}
   options={[
     {text: 'स्टोरेज लागत कम करता है'},
     {text: 'एग्रेस समस्या को हल करता है'},
@@ -205,6 +215,8 @@ Get ready to prove your cloud expertise! 🚀
   index={5}
   group="WebSockets"
   title="WebSocket जादू"
+  difficulty={3}
+  objectives={["AWS सेवाओं के WebSocket समर्थन की तुलना करना","AWS सेवाओं की आर्किटेक्चर सीमाएँ पहचानना","WebSocket कार्यान्वयन विकल्पों का मूल्यांकन करना"]}
   options={[
     {text: 'API Gateway', isAnswer: true},
     {text: 'EKS', hint: 'EKS आपके अपने लंबे‑समय वाले WebSocket सेवाओं को चला सकता है।'},
@@ -227,13 +239,13 @@ Get ready to prove your cloud expertise! 🚀
     API Gateway द्वि‑दिशात्मक WebSocket API का समर्थन करता है, लेकिन कार्यान्वयन API Gateway द्वारा प्रबंधित होता है, न कि आपके अपने सर्वर प्रोसेस में सीधे सॉकेट होने जैसा।
     API Gateway क्लाइंट कनेक्शन को बनाए रखता है और संदेशों को Lambda, HTTP एंडपॉइंट्स या अन्य इंटीग्रेशन तक रूट करता है। संदेशों को API Gateway Management API के माध्यम से जुड़े क्लाइंट्स को वापस भेजा जा सकता है।
 
-    बाकी विकल्प WebSocket‑फ्रेंडली हैं:
-    - Lightsail: सरल WebSocket सेटअप के लिए एकदम सही 👌
+    अन्य सेवाओं के अलग लाभ और सीमाएँ हैं:
+    - Lightsail: इंस्टेंस पर अपना WebSocket सर्वर चलाएँ और प्रबंधित करें
     - AppSync: प्रबंधित GraphQL सब्सक्रिप्शन के लिए WebSockets का उपयोग करता है
     - EC2: WebSockets के लिए आपका क्लासिक "do whatever you want" विकल्प
-    - EKS: स्केलेबल WebSocket क्लस्टर चलाने के लिए बढ़िया
+    - EKS: Kubernetes में अपनी WebSocket सेवाएँ चलाएँ
 
-    प्रो टिप: यदि आपको कच्ची WebSocket शक्ति चाहिए, तो कंप्यूट सेवाओं के साथ रहें!
+    प्रोटोकॉल, कनेक्शन सीमाओं, डिप्लॉयमेंट मॉडल और संचालन की ज़िम्मेदारी के आधार पर चुनें। प्रबंधित API रूटिंग और अपना सर्वर होस्ट करना अलग आवश्यकताओं को पूरा करते हैं।
   </div>
   </slot>
 </Challenge>
@@ -243,6 +255,8 @@ Get ready to prove your cloud expertise! 🚀
   index={6}
   group="S3 सुरक्षा"
   title="S3 बकेट नीति"
+  difficulty={2}
+  objectives={["S3 पर सुरक्षा के अच्छे अभ्यास लागू करना","न्यूनतम अधिकार का सिद्धांत लागू करना"]}
   options={[
     {text: 'नए बकेट को सार्वजनिक बनाएं', hint: 'सबसे कम अधिकार, पहले.'},
     {text: 'S3 को ऑन‑प्रेमाइसेस ले जाएँ ताकि ACLs पर पूरी नियंत्रण हो सके'},
@@ -281,8 +295,10 @@ Get ready to prove your cloud expertise! 🚀
   index={7}
   group="Aurora"
   title="Aurora Serverless"
+  difficulty={2}
+  objectives={["Aurora Serverless की मुख्य सुविधाएँ पहचानना","सर्वरलेस और प्रोविज़न्ड डेटाबेस में अंतर करना"]}
   options={[
-    {text: 'हमीशा प्रोविज़नड से सस्ता'},
+    {text: 'हमेशा प्रोविज़नड से सस्ता'},
     {text: 'स्वचालित रूप से कंप्यूट क्षमता को स्केल करता है', isAnswer: true},
     {text: 'असीमित स्टोरेज प्रदान करता है'},
     {text: 'डेटाबेस प्रबंधन को समाप्त करता है'},
@@ -313,6 +329,8 @@ Get ready to prove your cloud expertise! 🚀
   index={8}
   group="बैच, भाग 1!"
   title="BatchGetItem सीमाएँ"
+  difficulty={2}
+  objectives={["DynamoDB BatchGetItem की सीमाएँ याद करना","BatchGetItem की अन्य बैच ऑपरेशनों से तुलना करना"]}
   options={[
     {text: '1', hint: '... मैं बैचिंग पर ज़ोर देता हूँ।'},
     {text: '25', hint: '`BatchWriteItem` के लिए यही सीमा है।'},
@@ -320,7 +338,7 @@ Get ready to prove your cloud expertise! 🚀
     {text: '75', hint: 'लगभग सही, लेकिन एक गोल संख्या है।'},
     {text: '50', hint: '`BatchGetItem` के लिए थोड़ा अधिक है।'},
     {text: '200', hint: 'थोड़ा बहुत अधिक...'},
-    {text: 'Unlimited', hint: '`BatchGetItem` के लिए एक निश्चित सीमा है।'},
+    {text: 'असीमित', hint: '`BatchGetItem` के लिए एक निश्चित सीमा है।'},
   ]}
 >
   <slot name="question">
@@ -336,7 +354,7 @@ Get ready to prove your cloud expertise! 🚀
 
     इन सीमाओं को समझना आपके एप्लिकेशन के प्रदर्शन को अनुकूलित करने और कुशल डेटा संचालन सुनिश्चित करने के लिए महत्वपूर्ण है।
 
-    **Note:** कुछ सीमाओं को पार करना संभव है — यदि आप अपने AWS अकाउंट मैनेजर को मीठी बातों से राज़ी करा सकें। 😎
+    इस API ऑपरेशन की 100-आइटम सीमा निश्चित है। बड़ी पढ़ाइयों को अलग अनुरोधों में बाँटें और `UnprocessedKeys` के लिए बढ़ते अंतराल पर फिर प्रयास करें। बढ़ाए जा सकने वाले थ्रूपुट कोटे अलग तरह की सीमा हैं।
   </div>
   </slot>
 </Challenge>
@@ -346,26 +364,28 @@ Get ready to prove your cloud expertise! 🚀
   index={9}
   group="बैचेस, भाग 2!"
   title="बैच ऑपरेशन्स"
+  difficulty={4}
+  objectives={["DynamoDB बैच ऑपरेशनों की सीमाएँ समझना","एकल और बैच ऑपरेशनों में अंतर करना"]}
   options={[
     {text: '1', isAnswer: true},
     {text: '10'},
     {text: '25', hint: 'अच्छा अनुमान...'},
     {text: '50'},
     {text: '100', hint: 'GetItem सीमा के बारे में सोच रहे हैं?'},
-    {text: '100 when streaming'},
-    {text: 'None of the above', hint: 'यह थोड़ा जटिल है...'},
+    {text: 'स्ट्रीमिंग के दौरान 100'},
+    {text: 'इनमें से कोई नहीं', hint: 'यह थोड़ा जटिल है...'},
   ]}
 >
   <slot name="question">
-  <div className="question">
-    एक बैच में DynamoDB कितनी अधिकतम दस्तावेज़ `UPDATE` कर सकता है?
-  </div>
-  </slot>
+<div className="question">
+एक DynamoDB `UpdateItem` कॉल कितने आइटम बदल सकती है?
+</div>
+</slot>
   <slot name='explanation'>
   <div className="explanation">
     DynamoDB क्लाइंट मूलतः उसके HTTP API के सभी रैपर हैं। `BatchWriteItem` ऑपरेशन एक HTTP अनुरोध में **25** दस्तावेज़ तक `PUT` या `DELETE` कर सकता है, लेकिन यह कई दस्तावेज़ों को `UPDATE` नहीं कर सकता।
 
-    जबकि DynamoDB एक HTTP अनुरोध में **25** दस्तावेज़ तक `INSERT` कर सकता है, यह `UpdateItem` ऑपरेशन का उपयोग करके प्रति अनुरोध केवल **1** दस्तावेज़ को `UPDATE` कर सकता है।
+    `UpdateItem` **एक** आइटम बदलता है। यह उस API कॉल की सीमा है, सभी DynamoDB अनुरोधों की नहीं: ट्रांजैक्शन और PartiQL बैच API में कई अपडेट शामिल हो सकते हैं।
   </div>
   </slot>
 </Challenge>
@@ -375,22 +395,24 @@ Get ready to prove your cloud expertise! 🚀
   index={10}
   group="DynamoDB"
   title="प्रोविजन्ड बनाम ऑन-डिमांड क्षमता"
+  difficulty={3}
+  objectives={["DynamoDB क्षमता मोड की तुलना करना","कार्यभार के अनुसार उपयुक्त क्षमता मोड चुनना","क्षमता के विकल्पों का लागत पर असर देखना"]}
   options={[
     {text: 'प्रोविजन्ड हमेशा बेहतर है'},
     {text: 'ऑन-डिमांड की असीमित क्षमता है'},
     {text: 'वे समान रूप से कार्य करते हैं'},
-    {text: 'अनपेक्षित कार्यभार के लिए ऑन-डिमांड सस्ता है', isAnswer: true},
+    {text: 'अनियमित, अनिश्चित ट्रैफ़िक के लिए ऑन-डिमांड में क्षमता पहले से तय नहीं करनी पड़ती', isAnswer: true},
   ]}
 >
   <slot name="question">
-  <div className="question">
-    आपको DynamoDB ऑन-डिमांड क्षमता कब उपयोग करनी चाहिए?
-  </div>
-  </slot>
+<div className="question">
+DynamoDB ऑन-डिमांड क्षमता चुनने का एक कारण क्या है?
+</div>
+</slot>
   <slot name='explanation'>
   <div className="explanation">
     ऑन-डिमांड क्षमता के लिए सबसे उपयुक्त है:
-    - अअनुमानित कार्यभार
+    - अप्रत्याशित कार्यभार
     - विरल ट्रैफ़िक
     - अज्ञात एक्सेस पैटर्न वाले अनुप्रयोग
     - अधिक प्रोविजनिंग से बचना
@@ -399,6 +421,8 @@ Get ready to prove your cloud expertise! 🚀
     - पूर्वानुमेय, सुसंगत कार्यभार
     - प्रदर्शन पर अधिक नियंत्रण
     - संभावित लागत बचत
+
+    ऑन-डिमांड हमेशा सस्ता नहीं होता। अनुरोधों की संख्या, उपयोग और वर्तमान कीमतों की तुलना करें; अनुमानित, लगातार ट्रैफ़िक में प्रोविज़न्ड क्षमता बेहतर हो सकती है।
 
     [डायनमोDB क्षमता मोड्स](https://aws.amazon.com/dynamodb/pricing/)
   </div>
@@ -410,6 +434,8 @@ Get ready to prove your cloud expertise! 🚀
   index={11}
   group="S3 प्रदर्शन"
   title="S3 प्रदर्शन अनुकूलन"
+  difficulty={3}
+  objectives={["अधिक अनुरोध दर के लिए S3 प्रदर्शन सुधारना","S3 कुंजी नामकरण के अच्छे अभ्यास लागू करना","S3 पार्टिशन वितरण के लिए डिज़ाइन करना"]}
   options={[
     {text: 'रैंडम/हैश प्रीफ़िक्स का उपयोग करें'},
     {text: 'तार्किक प्रीफ़िक्स का उपयोग करें; रैंडमाइज़ेशन की आवश्यकता नहीं है', isAnswer: true},
@@ -442,6 +468,8 @@ Get ready to prove your cloud expertise! 🚀
   index={12}
   group="RDS बैकअप"
   title="RDS बैकअप रणनीति"
+  difficulty={2}
+  objectives={["RDS बैकअप रणनीतियों के अच्छे अभ्यास पहचानना","पॉइंट-इन-टाइम रिकवरी की क्षमताएँ समझना"]}
   options={[
     {text: 'केवल मैनुअल स्नैपशॉट'},
     {text: 'बैकअप की आवश्यकता नहीं'},
@@ -477,6 +505,8 @@ Get ready to prove your cloud expertise! 🚀
   index={13}
   group="ElastiCache"
   title="Redis बनाम Memcached"
+  difficulty={2}
+  objectives={["Redis और Memcached की क्षमताओं की तुलना करना","कैशिंग इंजनों की सुविधाओं में अंतर करना"]}
   options={[
     {text: 'Redis अधिक डेटा संरचनाएँ और ऑपरेशन्स का समर्थन करता है', isAnswer: true},
     {text: 'सभी पहलुओं में समान'},
@@ -512,6 +542,8 @@ Get ready to prove your cloud expertise! 🚀
   index={14}
   group="डायनामोडीबी इंडेक्स"
   title="ग्लोबल सेकेंडरी इंडेक्स"
+  difficulty={3}
+  objectives={["Global Secondary Index का उद्देश्य समझना","DynamoDB एक्सेस पैटर्न का मूल्यांकन करना","कुशल क्वेरी रणनीतियाँ बनाना"]}
   options={[
     {text: 'प्राथमिक कुंजी के समान'},
     {text: 'अतिरिक्त लागत से मुक्त'},
@@ -544,6 +576,8 @@ Get ready to prove your cloud expertise! 🚀
   index={15}
   group="S3 लाइफ़साइकल"
   title="S3 लाइफ़साइकल प्रबंधन"
+  difficulty={2}
+  objectives={["S3 लाइफ़साइकल प्रबंधन की क्षमताएँ समझना","S3 की लागत घटाने की रणनीतियाँ लागू करना"]}
   options={[
     {text: 'ऑब्जेक्ट्स को मैन्युअल रूप से ले जाएँ'},
     {text: 'स्टोरेज क्लासेज़ के बीच ऑब्जेक्ट्स को स्वचालित रूप से ट्रांज़िशन करें', isAnswer: true},
@@ -575,6 +609,8 @@ Get ready to prove your cloud expertise! 🚀
   index={16}
   group="Aurora स्केलिंग"
   title="Amazon Aurora के साथपढ़ने का स्केलिंग"
+  difficulty={2}
+  objectives={["Aurora रीड रेप्लिका की सीमाएँ याद करना","Aurora की रीड स्केलिंग क्षमताएँ समझना"]}
   options={[
     {text: 'सीमित एक ही रीड रेप्लिका तक', hint: 'Aurora की स्केलेबिलिटी सुविधाओं के बारे में सोचें।'},
     {text: 'कोई रीड स्केलिंग संभव नहीं', hint: 'क्या यह Aurora की क्षमताओं के साथ मेल खाता है?'},
@@ -607,6 +643,8 @@ Get ready to prove your cloud expertise! 🚀
   index={17}
   group="RDS सुरक्षा"
   title="RDS एन्क्रिप्शन"
+  difficulty={2}
+  objectives={["RDS एन्क्रिप्शन क्षमताएँ पहचानना","RDS में डेटा सुरक्षा के तरीके समझना"]}
   options={[
     {text: 'डेटा को स्थिर और ट्रांसिट दोनों में एन्क्रिप्ट करें', isAnswer: true},
     {text: 'एन्क्रिप्शन वैकल्पिक है'},
@@ -638,10 +676,12 @@ Get ready to prove your cloud expertise! 🚀
   index={18}
   group="DynamoDB Streams"
   title="DynamoDB Streams का उद्देश्य"
+  difficulty={3}
+  objectives={["DynamoDB Streams के उपयोग समझना","DynamoDB से इवेंट-ड्रिवेन आर्किटेक्चर बनाना","स्ट्रीम-आधारित डेटा प्रोसेसिंग पैटर्न का मूल्यांकन करना"]}
   options={[
     {text: 'अतिरिक्त डेटा प्रतियों को संग्रहीत करें'},
     {text: 'ग्रीन विक्रेताओं के लिए DynamoDB क्रेडिट', hint: 'सच में?'},
-    {text: 'लेखन प्रदर्शन बढ़ाएँ', hint: 'स्ट्रीम्स हैं '},
+    {text: 'लेखन प्रदर्शन बढ़ाएँ', hint: 'स्ट्रीम्स बदलाव दर्ज करती हैं; वे तालिका की लेखन क्षमता नहीं बढ़ातीं।'},
     {text: 'इवेंट‑ड्रिवेन आर्किटेक्चर के लिए आइटम‑लेवल परिवर्तन को कैप्चर करें', isAnswer: true},
     {text: 'ग्लोबल सेकेंडरी इंडेक्स का विकल्प', hint: 'क्या आप अनुमान लगा रहे हैं?'},
   ]}
@@ -670,6 +710,8 @@ Get ready to prove your cloud expertise! 🚀
   index={19}
   group="S3 ट्रांसफ़र"
   title="बड़ी फ़ाइल ट्रांसफ़र"
+  difficulty={2}
+  objectives={["बड़ी फ़ाइल अपलोड के अच्छे अभ्यास पहचानना","मल्टीपार्ट अपलोड के लाभ समझना"]}
   options={[
     {text: 'हमेशा एकल PUT अनुरोध का उपयोग करें'},
     {text: 'बड़ी फ़ाइलों के लिए मल्टीपार्ट अपलोड का उपयोग करें', isAnswer: true},
@@ -701,6 +743,8 @@ Get ready to prove your cloud expertise! 🚀
   index={20}
   group="लागत अनुकूलन"
   title="स्टोरेज लागत विश्लेषण"
+  difficulty={4}
+  objectives={["AWS सेवाओं में स्टोरेज लागत की तुलना करना","स्टोरेज विकल्पों के लागत प्रभाव देखना","लागत घटाने की रणनीतियाँ लागू करना"]}
   options={[
     {text: 'सभी डेटा के लिए S3 Standard'},
     {text: 'हमेशा सबसे सस्ता स्टोरेज उपयोग करें'},
@@ -736,6 +780,8 @@ Get ready to prove your cloud expertise! 🚀
   index={21}
   group="DynamoDB संगतता"
   title="संगतता मॉडल"
+  difficulty={4}
+  objectives={["DynamoDB कंसिस्टेंसी मॉडल समझना","कंसिस्टेंसी स्तरों के लाभ और सीमाएँ देखना","वास्तविक परिस्थितियों में कंसिस्टेंसी मॉडल लागू करना"]}
   options={[
     {text: 'प्रति सेकंड 100 पढ़ाइयाँ', isAnswer: true},
     {text: 'प्रति सेकंड 50 पढ़ाइयाँ'},
@@ -773,6 +819,8 @@ Get ready to prove your cloud expertise! 🚀
   index={22}
   group="ऑरोरा उच्च उपलब्धता"
   title="ऑरोरा फेलओवर तंत्र"
+  difficulty={3}
+  objectives={["Aurora फेलओवर प्रक्रिया समझना","उच्च उपलब्धता के कॉन्फ़िगरेशन पहचानना","आपदा से रिकवरी के अच्छे अभ्यास लागू करना"]}
   options={[
     {text: 'हस्तचालित हस्तक्षेप आवश्यक'},
     {text: 'एप्लिकेशन पुन:कॉन्फ़िगरेशन की आवश्यकता'},
@@ -807,29 +855,31 @@ Get ready to prove your cloud expertise! 🚀
   index={23}
   group="S3 स्थिरता"
   title="S3 मजबूत स्थिरता"
+  difficulty={3}
+  objectives={["S3 कंसिस्टेंसी मॉडल समझना","S3 ऑपरेशनों की गारंटियाँ पहचानना","एप्लिकेशन डिज़ाइन में कंसिस्टेंसी की समझ लागू करना"]}
   options={[
     {text: 'केवल नई वस्तुओं के लिए'},
-    {text: 'सभी ऑपरेशनों के लिए मजबूत स्थिरता', isAnswer: true},
+    {text: 'ऑब्जेक्ट लिखने, हटाने और सूचीबद्ध करने पर मज़बूत read-after-write कंसिस्टेंसी', isAnswer: true},
     {text: 'अपडेट्स के लिए अंततः स्थिरता'},
     {text: 'क्षेत्र पर निर्भर करता है'},
   ]}
 >
   <slot name="question">
-  <div className="question">
-    2020 के अंत तक, S3 सभी ऑपरेशनों के लिए कौन सा स्थिरता मॉडल प्रदान करता है?
-  </div>
-  </slot>
+<div className="question">
+S3 ऑब्जेक्ट पर सफल PUT या DELETE के बाद, अगली GET और LIST अनुरोधों पर कौन-सी कंसिस्टेंसी लागू होती है?
+</div>
+</slot>
   <slot name='explanation'>
   <div className="explanation">
     S3 स्थिरता मॉडल:
-    - सभी ऑपरेशनों के लिए मजबूत पढ़ने-के-बाद-लिखने स्थिरता
+    - ऑब्जेक्ट ऑपरेशनों के लिए मज़बूत read-after-write कंसिस्टेंसी
     - PUTs और DELETEs पर लागू होता है
     - पहले उपयोग किए गए वर्कअराउंड की आवश्यकता नहीं
     - अतिरिक्त लागत नहीं
 
     प्रभाव:
     - एप्लिकेशन लॉजिक सरल हुआ
-    - स्थिरता जांच की आवश्यकता नहीं
+    - सफलतापूर्वक लिखे ऑब्जेक्ट को पढ़ने से पहले eventual consistency का इंतज़ार नहीं करना पड़ता
     - लिखने के बाद तुरंत विश्वसनीय पढ़ना
     - एप्लिकेशन विश्वसनीयता में सुधार
   </div>
@@ -841,6 +891,8 @@ Get ready to prove your cloud expertise! 🚀
   index={24}
   group="DynamoDB विशेषताएँ"
   title="समय‑से‑जीवन (TTL)"
+  difficulty={3}
+  objectives={["DynamoDB TTL सुविधा समझना","डेटा लाइफ़साइकल प्रबंधन में TTL लगाना","डेटा की अवधि समाप्त करने की कुशल रणनीतियाँ बनाना"]}
   options={[
     {text: 'समाप्ति पर आइटम को तुरंत हटाता है'},
     {text: 'हाथ से हटाने के ट्रिगर की आवश्यकता होती है'},
@@ -875,6 +927,8 @@ Get ready to prove your cloud expertise! 🚀
   index={25}
   group="ऑरोरा सर्वरलेस"
   title="स्केलिंग व्यवहार"
+  difficulty={4}
+  objectives={["Aurora Serverless स्केलिंग समझना","स्केलिंग ट्रिगर पहचानना","बदलते कार्यभार की लागत सुधारना"]}
   options={[
     {text: 'स्केलिंग गति वर्तमान और कॉन्फ़िगर की गई क्षमता पर निर्भर करती है', isAnswer: true},
     {text: 'आवश्यकता पर तुरंत स्केल करता है'},

@@ -41,11 +41,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="वार्मअप"
   title="`<ul>` की भूमिका"
   options={[
-    {text: 'Unordered List', isAnswer: true},
-    {text: 'Unique List'},
-    {text: 'Universal List'},
-    {text: 'User List'},
-  ]}
+  {
+    "text": "Unordered List (बिना क्रम की सूची)",
+    "isAnswer": true
+  },
+  {
+    "text": "Unique List (अद्वितीय सूची)"
+  },
+  {
+    "text": "Universal List (सार्वभौमिक सूची)"
+  },
+  {
+    "text": "User List (उपयोगकर्ता सूची)"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -66,11 +75,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="उन्नत सिमेंटिक HTML"
   title="`<dd>` का उपयोग"
   options={[
-    {text: 'Description definition'},
-    {text: 'Description term'},
-    {text: 'Data display'},
-    {text: 'Description Details', isAnswer: true},
-  ]}
+  {
+    "text": "डेटाबेस फ़ील्ड परिभाषित करने वाली घोषणा"
+  },
+  {
+    "text": "विवरण सूची का पद (term)"
+  },
+  {
+    "text": "डेटा प्रदर्शन"
+  },
+  {
+    "text": "विवरण सूची में किसी पद का विवरण, परिभाषा या मान",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -103,17 +121,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="उन्नत सिमेंटिक HTML"
   title="`<figure>/<figcaption>` का उपयोग"
   options={[
-    {text: 'कॉपीराइट जानकारी के साथ प्रदर्शित की जाने वाली इमेज के लिए'},
-    {text: 'इमेज, चार्ट आदि का वर्णन करने के लिए', isAnswer: true},
-    {text: 'टेबल, गणना (computations) आदि को एनोटेट करने के लिए'},
-    {text: 'वीडियो में कैप्शन देने के लिए'},
-  ]}
+  {
+    "text": "केवल कॉपीराइट जानकारी वाली इमेज के लिए"
+  },
+  {
+    "text": "स्वतंत्र सामग्री को उसके कैप्शन के साथ समूहित करना",
+    "isAnswer": true
+  },
+  {
+    "text": "केवल तालिकाओं और गणितीय गणनाओं के लिए"
+  },
+  {
+    "text": "केवल वीडियो प्लेबैक में सबटाइटल जोड़ने के लिए"
+  }
+]}
 >
   <slot name="question">
-  <div className="question">
-    `<figure>` और `<figcaption>` तत्वों का उपयोग कब किया जाना चाहिए?
-  </div>
-  </slot>
+<div className="question">
+`<figure>` के साथ `<figcaption>` का उपयोग करने का सामान्य उद्देश्य क्या है?
+</div>
+</slot>
 
   <slot name='explanation'>
   <div className="explanation">
@@ -122,7 +149,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     यह इमेज, डायग्राम, कोड स्निपेट और बहुत कुछ के लिए उपयोगी है।
     ```html
     <figure>
-    <img src="../image.jpg" alt="Description of image">
+    <img src="image.jpg" alt="Description of image">
     <figcaption>Image caption</figcaption>
     </figure>
     ```

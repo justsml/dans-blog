@@ -188,7 +188,7 @@ RegEx ज्ञान को परखें उन प्रश्नों स
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    यह पैटर्न कुछ भी मैच नहीं करेगा क्योंकि लुक-अहेड पीछे की ओर है! यदि आप `$` या `€` से पहले वाले अंकों चाहते हैं, तो लुक-बिहाइंड इस्तेमाल करें: `/(?<=[\$€])\d+/g`.
+    यह पैटर्न कोई मिलान नहीं खोजता, क्योंकि लुक-अहेड अंकों के बाद मुद्रा चिह्न जाँचता है, जबकि इनपुट में चिह्न पहले हैं। यदि आप ऐसे अंक चाहते हैं जिनसे पहले `$` या `€` हो, तो लुक-बिहाइंड इस्तेमाल करें: `/(?<=[\$€])\d+/g`.
 
     लुक-अहेड यह जांचते हैं कि वर्तमान स्थिति के *बाद* क्या है। लिखा गया पैटर्न खोजता है:
     - एक या अधिक अंक (`\d+`)
@@ -221,20 +221,20 @@ RegEx ज्ञान को परखें उन प्रश्नों स
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    The `\b` represents a word boundary, which matches:
-    - Between a word character and a non-word character
-    - At the start/end of the string if there's a word character
+  <slot name="explanation">
+<div className="explanation">
+`\b` शब्द-सीमा (word boundary) दर्शाता है:
+- शब्द-अक्षर और गैर-शब्द-अक्षर के बीच।
+- स्ट्रिंग के आरंभ या अंत पर, यदि वहाँ शब्द-अक्षर हो।
 
-    So `/\bcat\b/` matches "cat" only when it's a complete word, not part of another word.
-    - ✅ "cat" (surrounded by spaces)
-    - ❌ "cats" (no boundary after "cat")
-    - ❌ "category" (no boundary after "cat")
+इसलिए `/\bcat\b/` केवल पूरा शब्द "cat" मिलाता है, दूसरे शब्द का हिस्सा नहीं।
+- ✅ "cat" (चारों ओर स्पेस)
+- ❌ "cats" ("cat" के बाद सीमा नहीं)
+- ❌ "category" ("cat" के बाद सीमा नहीं)
 
-    [Learn more about word boundaries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
-  </div>
-  </slot>
+[शब्द-सीमाओं के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -297,9 +297,9 @@ RegEx ज्ञान को परखें उन प्रश्नों स
   <slot name='explanation'>
   <div className="explanation">
     नकारात्मक लुक‑बिहाइंड `(?<!abc)` यह सुनिश्चित करता है कि अंकों के पहले "abc" न हो:
-    - ❌ "123" ("abc" के पहले)
-    - ✅ "23" ("abc1" के पहले)
-    - ✅ "456" ("def" के पहले)
+    - ❌ "123" (इसके पहले "abc" है)
+    - ✅ "23" (इसके पहले "abc1" है)
+    - ✅ "456" (इसके पहले "def" है)
 
     जावास्क्रिप्ट आधुनिक इंजन में लुक‑बिहाइंड एसेर्शन को सपोर्ट करता है। यह उदाहरण फिक्स्ड‑लेंथ लुक‑बिहाइंड का उपयोग करता है: `abc` हमेशा तीन अक्षर का होता है। वैरिएबल‑लेंथ लुक‑बिहाइंड अधिक जटिल इंजन‑विशिष्ट मामला है।
 
@@ -368,13 +368,13 @@ RegEx ज्ञान को परखें उन प्रश्नों स
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    नकारात्मक लुक-अहेड `(?![a-z])` सुनिश्चित करता है कि अंकों के बाद कोई लोअरकेस अक्षर न हो। क्योंकि "3aBc" भाग में अंकों के बाद लोअरकेस अक्षर है, उसका भाग मेल नहीं खाता। इसलिए केवल शुरुआती "12" ही मेल खाता है।
+  <slot name="explanation">
+<div className="explanation">
+`i` फ़्लैग के कारण `(?![a-z])` अगले ASCII अक्षर को छोटे और बड़े दोनों केस में अस्वीकार करता है। ग्रीडी मिलान पहले `123` लेता है, `a` के पहले विफल होता है, फिर पीछे लौटकर `12` तक सिमटता है। अब अगला अक्षर `3` है, इसलिए एसेर्शन सफल होता है और परिणाम `["12"]` मिलता है।
 
-    [नकारात्मक लुक-अहेड के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
-  </div>
-  </slot>
+[नकारात्मक लुक-अहेड के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -436,9 +436,9 @@ RegEx ज्ञान को परखें उन प्रश्नों स
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    विशेष अक्षरों को शाब्दिक रूप से मिलाने के लिए `\\` से एस्केप करना पड़ता है:
+    विशेष अक्षरों को शाब्दिक रूप से मिलाने के लिए `\` से एस्केप करना पड़ता है:
     - `$` एक विशेष अक्षर है (स्ट्रिंग का अंत)
-    - वास्तविक डॉलर साइन मिलाने के लिए, इसे एस्केप करें: `\\$`
+    - वास्तविक डॉलर साइन मिलाने के लिए, इसे एस्केप करें: `\$`
 
     एस्केप करने वाले सामान्य अक्षर:
     ```js

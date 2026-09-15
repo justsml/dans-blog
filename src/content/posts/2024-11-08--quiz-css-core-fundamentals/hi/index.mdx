@@ -120,14 +120,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    इनमें से कौन सी इकाई <em class="highlight">NOT</em> एक वैध ❌ CSS इकाई है?
+    इनमें से कौन-सी इकाई वैध CSS इकाई <em class="highlight">नहीं</em> ❌ है?
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `ch`, `vmin`, `vmax`, `vh`, `vw` जैसी नई इकाइयाँ डायनेमिक/रिस्पॉन्सिव लेआउट के लिए काफी उपयोगी हैं।
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+`ch`, `vmin`, `vmax`, `vh`, `vw` जैसी इकाइयाँ डायनेमिक/रिस्पॉन्सिव लेआउट के लिए उपयोगी हैं।
+
+कुछ पुरानी, कम इस्तेमाल होने वाली इकाइयाँ भी हैं: सेंटीमीटर के लिए `cm`, `mm`, इंच के लिए `in`, पॉइंट के लिए `pt`, `pc`, बड़े अक्षरों की ऊँचाई के लिए `cap`, और `x` अक्षर की ऊँचाई के लिए `ex`।
+
+आम इकाइयाँ हैं पिक्सल के लिए `px`, एलिमेंट के फ़ॉन्ट आकार के सापेक्ष `em`, और रूट एलिमेंट के फ़ॉन्ट आकार के सापेक्ष `rem`। आखिरी नाम 90 के दशक के बैंड R.E.M. को श्रद्धांजलि नहीं है—बस नाम मिल गया!
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -285,17 +289,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    आप बॉक्स में "shit" को कैसे केंद्रित करेंगे?
-  </div>
-  </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    ब्लॉक तत्व में टेक्स्ट को केंद्रित करने का सही तरीका `text-align: center;` का उपयोग करना है। `align` प्रॉपर्टी flexbox लेआउट के लिए उपयोग होती हैं, और `margin: 0 auto;` ब्लॉक तत्वों को क्षैतिज रूप से केंद्रित करने के लिए प्रयोग होता है।
+<div className="question">
+कौन-सी घोषणा इनलाइन टेक्स्ट को उसके ब्लॉक के भीतर क्षैतिज रूप से केंद्रित करती है?
+</div>
+</slot>
+  <slot name="explanation">
+<div className="explanation">
+ब्लॉक के भीतर टेक्स्ट को केंद्रित करने के लिए `text-align: center;` सही है। CSS में `align` नाम की प्रॉपर्टी नहीं है। `margin: 0 auto;` सीमित चौड़ाई वाले ब्लॉक को केंद्रित कर सकता है; वह ब्लॉक के भीतर टेक्स्ट को केंद्रित नहीं करता।
 
-    `align-content` प्रॉपर्टी grid लेआउट के लिए उपयोग होती है, और `text-content` कोई वैध CSS प्रॉपर्टी नहीं है।
-  </div>
-  </slot>
+`align-content` समर्थित लेआउट संदर्भों, जैसे grid और कई पंक्तियों वाले flex कंटेनरों में सामग्री का संरेखण करता है। यह टेक्स्ट संरेखण की प्रॉपर्टी नहीं है। `text-content` कोई वैध CSS प्रॉपर्टी नहीं है।
+</div>
+</slot>
 </Challenge>
 
 <Challenge
