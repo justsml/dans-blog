@@ -124,26 +124,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    أي من هذه الميزات في PostgreSQL **ليست** ❌ جزءًا من معيار SQL ANSI؟
-  </div>
-  </slot>
+<div className="question">
+أي جملة توثّقها PostgreSQL بوصفها امتدادًا لمعيار SQL؟
+</div>
+</slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    أمثلة على إضافات PostgreSQL إلى SQL ANSI:
-    - عبارة `RETURNING`.
-    - `ILIKE` للمطابقة غير الحساسة لحالة الأحرف.
-    - أنواع المصفوفات والعمليات.
-    - أنواع JSON/JSONB.
+  <slot name="explanation">
+<div className="explanation">
+توثّق PostgreSQL جملة `RETURNING` بوصفها امتدادًا لمعيار SQL. ويُعد `ILIKE` امتدادًا آخر.
 
-    يتضمن معيار SQL ANSI الأصلي:
-    - `WITH` (التعبيرات الجدولية الشائعة).
-    - `LIKE` للمطابقة الأنماط.
-    - وصلات `LATERAL`.
-    - دوال النوافذ.
-  </div>
-  </slot>
+لا تصنّف كل دعم للمصفوفات أو JSON على أنه غير معياري؛ يتضمن SQL مرافق معيارية لهما، وتوفر PostgreSQL أيضًا أنواعًا وعوامل خاصة مثل `jsonb`.
+
+من الميزات التي أُضيفت عبر إصدارات معيار SQL المتعاقبة: `WITH` و`LIKE` وربط `LATERAL` ودوال النوافذ.
+</div>
+</slot>
 </Challenge>
 
 <Challenge

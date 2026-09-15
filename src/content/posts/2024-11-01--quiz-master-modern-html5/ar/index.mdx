@@ -66,11 +66,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="HTML الدلالي المتقدم"
   title="استخدام `<dd>`"
   options={[
-    {text: 'تعريف الوصف'},
-    {text: 'مصطلح الوصف'},
-    {text: 'عرض البيانات'},
-    {text: 'تفاصيل الوصف', isAnswer: true},
-  ]}
+  {
+    "text": "تصريح يعرّف حقلًا في قاعدة بيانات"
+  },
+  {
+    "text": "مصطلح الوصف"
+  },
+  {
+    "text": "عرض البيانات"
+  },
+  {
+    "text": "وصف أو تعريف أو قيمة لمصطلح في قائمة وصف",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -103,17 +112,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="HTML الدلالي المتقدم"
   title="استخدام `<figure>/<figcaption>`"
   options={[
-    {text: 'للصور مع معلومات حقوق النشر لعرضها'},
-    {text: 'لوصف الصور والرسوم البيانية، إلخ.', isAnswer: true},
-    {text: 'لتعليق الجداول والحسابات، إلخ.'},
-    {text: 'يُستخدم لتسمية الفيديوهات'},
-  ]}
+  {
+    "text": "للصور التي تحتوي على معلومات حقوق النشر فقط"
+  },
+  {
+    "text": "تجميع محتوى مستقل مع تسميته التوضيحية",
+    "isAnswer": true
+  },
+  {
+    "text": "للجداول والحسابات الرياضية حصريًا"
+  },
+  {
+    "text": "لإضافة ترجمة نصية إلى تشغيل الفيديو فقط"
+  }
+]}
 >
   <slot name="question">
-  <div className="question">
-    متى يجب استخدام عنصري `<figure>` و `<figcaption>`؟
-  </div>
-  </slot>
+<div className="question">
+ما الغرض العام من الجمع بين `<figure>` و`<figcaption>`؟
+</div>
+</slot>
 
   <slot name='explanation'>
   <div className="explanation">

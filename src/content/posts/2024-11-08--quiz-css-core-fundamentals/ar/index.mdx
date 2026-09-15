@@ -160,7 +160,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    الإجابة الصحيحة هي `a#home[name='home']`، والتي تطابق كلاً من الخاصيتين `id` و `name`. محددات CSS حساسة لحالة الأحرف، لذا فإن `#Home` لن يعمل، والمسافات تشير إلى العناصر الفرعية، وهو ما لا ينطبق هنا.
+    الإجابة الصحيحة هي `a#home[name='home']`، والتي تطابق كلاً من الخاصيتين `id` و `name`. في HTML بنمط المعايير، قيم ID حساسة لحالة الأحرف، لذا لا يطابق `#Home` القيمة `id="home"`. المسافة معامل علاقة سليل، فتستهدف عنصرًا آخر داخل سلف بدل جمع الشروط على الرابط نفسه.
 
     المحدد `:contains()` ليس محدد CSS قياسي، لكنه متوفر في بعض مكتبات JavaScript.
   </div>
@@ -297,18 +297,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    كيف يمكنك توسيط "نص" في مربع؟
-  </div>
-  </slot>
+<div className="question">
+أي تصريح يوسّط النص المضمن أفقيًا داخل الكتلة الحاوية له؟
+</div>
+</slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    استخدام `text-align: center;` هو الطريقة الصحيحة لتوسيط النص في عنصر كتلة. خصائص `align` تُستخدم لتخطيطات flexbox، و `margin: 0 auto;` تُستخدم لتوسيط عناصر الكتلة أفقيًا.
-
-    خاصية `align-content` تُستخدم لتخطيطات grid، و `text-content` ليست خاصية CSS صالحة.
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+التصريح `text-align: center;` يوسّط النص داخل الكتلة. لا توجد خاصية CSS باسم `align`. يمكن لـ `margin: 0 auto;` توسيط كتلة ذات عرض مقيد، لكنه لا يوسّط النص بداخلها. تستخدم `align-content` لمحاذاة المحتوى في سياقات تخطيط تدعمها، وليست خاصية لمحاذاة النص. أما `text-content` فليست خاصية CSS صالحة.
+</div>
+</slot>
 </Challenge>
 
 <Challenge

@@ -107,7 +107,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     text: "خطأ: لا يمكن تفكيك الخاصية 'age'"
   },
   {
-    text: "SyntaxError: رمز غير متوقع ','"
+    text: "SyntaxError: Unexpected token ','"
   }
 ]}
 >
@@ -239,20 +239,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    الخاصية `birth` غير موجودة في `person`، لذا لا يزال الكائن بأكمله بحاجة إلى قيمة افتراضية، وليس فقط الخاصية المتداخلة. ببساطة، ينقصه قيمة افتراضية ` = {}`.
+  <slot name="explanation">
+<div className="explanation">
+الخاصية `birth` مفقودة، لذلك تحاول JavaScript تفكيك `place` من `undefined`. يحدث الخطأ قبل تطبيق القيمة الافتراضية للخاصية:
 
-    الطريقة التي كُتب بها هذا تقول: "إذا كانت `person.birth` هي `undefined`، فإن `place` هي `Unknown`". لكن `person.birth` هي `undefined`، لذا فهي تحاول تفكيك `undefined`، مما يؤدي إلى خطأ.
-    ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+```plaintext
+TypeError
+```
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
-    ```
-  </div>
-  </slot>
+تختلف صياغة التشخيص بين بيئات التشغيل. تعالج القيمة الافتراضية للخاصية غيابها أو قيمتها `undefined` بعد إتاحة الكائن الحاوي. استخدم `birth: { place = "Unknown" } = {}` لتوفير كائن افتراضي عندما تكون `birth` مفقودة أو `undefined`.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -399,6 +396,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
 <div className="explanation">
 تستخدم الدالة الكائن الافتراضي عند عدم تمرير وسيطة أو عند تمرير `undefined` صراحة. أما في الاستدعاءات المعروضة فهناك كائن في كل مرة: غياب `place` أو قيمتها `undefined` يفعّل القيمة الافتراضية للخاصية `N/A`، بينما تبقى `Joburg` كما هي. لذا الناتج هو `N/A, N/A, Joburg`.
+
+```js
+    displayPlace() // Unknown
+    displayPlace({ name: "Dan" }) // N/A
+    displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
 </div>
 </slot>
 </Challenge>

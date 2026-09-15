@@ -183,7 +183,7 @@ console.log(iframeError instanceof Error);
   group="رمي القيم غير الخطأ"
   title="رمي السلاسل النصية"
   options={[
-    {text: 'TypeError: السلسلة النصية ليست خطأ'},
+    {text: 'TypeError: string is not an Error'},
     {text: 'false, "string"', isAnswer: true},
     {text: 'ينشئ كائن خطأ تلقائيًا'},
     {text: 'سلوك غير محدد'},
@@ -586,10 +586,10 @@ console.log(iframeError instanceof Error);
   </slot>
 
   <slot name="hints">
-  <div className="hint">
-    أحد الفحوصات ينظر إلى سلسلة النموذج الأولي، والآخر إلى الفتحات الداخلية.
-  </div>
-  </slot>
+<div className="hints">
+يتتبع أحد الفحصين سلسلة النموذج الأولي؛ ويُرجع الآخر وسم كائن يمكن أن يتأثر بـ `Symbol.toStringTag`.
+</div>
+</slot>
 
   <slot name='explanation'>
 <div className="explanation">
