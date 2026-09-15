@@ -260,13 +260,13 @@ JavaScript में `Date` क्लास का API अपनी पेची
   <slot name='hints'>
   </slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    `toLocaleFormat()` मेथड स्टैंडर्ड नहीं है! यह शायद जाना-पहचाना लगे क्योंकि यह एक पुरानी थर्ड-पार्टी लाइब्रेरी से है।
+  <slot name="explanation">
+<div className="explanation">
+`toLocaleFormat()` ECMAScript मानक का हिस्सा नहीं है, इसलिए पोर्टेबल कोड में इसका उपयोग न करें। मानक `toLocaleDateString()` या `toLocaleString()` का उपयोग करें।
 
-    [`toLocaleDateString` डॉक्स](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) मेथड देखें। इसका व्यवहार [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) के तहत डॉक्यूमेंट किया गया है।
-  </div>
-  </slot>
+[`toLocaleDateString` के दस्तावेज़](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) देखें। फ़ॉर्मेटिंग विकल्प [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) में दिए गए हैं।
+</div>
+</slot>
 </Challenge>
 
 <Challenge

@@ -7,7 +7,7 @@ Reviewed all **19 quizzes, 267 questions and 1,231 options**, including every qu
 - All267 question indices, option counts and accepted-answer positions match English. No duplicate option labels remain.
 - Executable code blocks in questions and explanations match English after whitespace normalization. This check is code parity, not a claim that every snippet was executed.
 - All19 final files compile with the MDX compiler; targeted whitespace/diff validation passes. Browser selection, persistence and layout verification are owned by the parent corpus Playwright run.
-- Existing Hindi HTML per-option hints are useful adaptations; the strict integrity checker flags them because English lacks those hints. Remaining code-option flags concern translated diagnostic prose and “Only in Node.js”, not changed JavaScript output. These were reported to the parent for the shared validator fix.
+- Final strengthened Hindi corpus suite: **19 passed, 0 failed**, 2,296 assertions. All19 integrity checks have **zero high-severity issues**. Nine useful existing HTML option hints remain medium-severity adaptation notes and were reviewed and retained. Literal TypeError diagnostics are preserved in English with surrounding Hindi explanations.
 - No external AI judge/provider was used and no fresh model score is claimed.
 
 ## Review ledger
@@ -48,3 +48,7 @@ Use familiar developer terms with Hindi explanations, and keep identifiers, comm
 ## Source issues escalated
 
 PostgreSQL part2's original SQL-standard history was inaccurate; the parent corrected it and Hindi now matches. The BigInt summary table's blanket parseInt binary/octal/hex support claim was corrected in English and aligned in Hindi.
+
+## Final source alignment
+
+Aligned Date Q6 with the nonstandard status of `toLocaleFormat()` and portable standard alternatives. Regex Q15 now states that Unicode property escapes accept Unicode-aware `u` or `v` mode. Evidence hashes were refreshed against current source files; pipeline frontmatter sourceHash and model scores remain unchanged.
