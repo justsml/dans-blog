@@ -444,3 +444,7 @@ Source SHA-256: `8cb97e01f93954cd744f660f427ef83528e228aef5df6c5bdeae527f140c09b
 | 12 | 4 | 2024-01-08 13:30:00.1234567 |
 | 13 | 5 | tsrank |
 | 14 | 1 | Immédiatement pour les nouvelles lignes ou les lignes modifiées |
+
+## Final PostgreSQL link parity check
+
+The full validator caught a stale GEOS link in Q10 after the English source removed speculative extension history. The French explanation now distinguishes built-in geometric types from PostGIS extensions. The closing Part 2 link uses the same canonical path as the source; the previous French-prefixed path was routable but differed from the source URL-preservation rule. Full selected-page validation passed after these repairs.
