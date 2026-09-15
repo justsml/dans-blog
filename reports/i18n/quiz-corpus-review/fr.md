@@ -36,7 +36,7 @@ Reviewed every question, choice, hint and explanation in all 19 French quizzes a
 
 ## Verification and limits
 
-- French corpus regression: **19 tests passed, 0 failed, 1,621 assertions**. It checks every question index, every option count, one correct answer, source answer position parity, nonempty options, and distinct options.
+- French corpus regression: **19 tests passed, 0 failed, 2,296 assertions**. It checks every question index, every option count, one correct answer, source answer position parity, nonempty options, and distinct options.
 - Source/translation SHA-256 values and all 267 answer records are in [fr-evidence.json](fr-evidence.json).
 - Root task owns Playwright coverage, source corrections, and full build validation. The language review does not claim browser execution or live SQL/AWS checks.
 - All 19 French translations pass the current translation-integrity checks with zero diagnostics; see [fr-integrity.txt](fr-integrity.txt). The shared validator now distinguishes translatable prose from executable tokens.
@@ -135,7 +135,7 @@ Source SHA-256: `f7af3ca5f8ef55272d24882cc3612f0492277f3ce73ad21ddc7a952a7f4d6a8
 
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
-Source SHA-256: `989751b2ad3098d09729710992be6df598d713b5e494fbb8a539c85cf39cc780`
+Source SHA-256: `ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d`
 
 | Question | Correct position | Correct answer |
 | ---: | ---: | --- |
@@ -355,7 +355,7 @@ Source SHA-256: `ee5866dcab74b29fcaf99765c78fd8c474d51fbd357ed07af1c02059c59d81c
 
 ### quiz-regex-or-wreckage
 
-Source SHA-256: `10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25`
+Source SHA-256: `0b087416a4feeb151ae3aaa3f19d785b8edc4860522fe150845f43141d7444e9`
 
 | Question | Correct position | Correct answer |
 | ---: | ---: | --- |
