@@ -1,7 +1,7 @@
 ---
 title: 小测验：数据结构与算法
 subTitle: 你能忽悠二叉树吗？
-label: Algorithms & DS
+label: 数据结构与算法
 modified: '2024-11-08'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -52,7 +52,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于哪个元素先发生或后发生。
+    想想最后放进去的元素是否应该最先取出。
   </div>
   </slot>
 
@@ -83,7 +83,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须先发生或最后发生什么。
+    输入数量翻倍时，操作次数是否也随之增加？
   </div>
   </slot>
 
@@ -109,13 +109,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    计算单向链表长度的时间复杂度是多少？
+    如果单链表没有保存长度字段，通过遍历计算其长度的时间复杂度是多少？
   </div>
   </slot>
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构名称。正确答案通常取决于必须先发生或最后发生什么。
+    没有长度字段时，必须经过多少个节点才能计数？
   </div>
   </slot>
 
@@ -147,7 +147,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须首先或最后发生的事情。
+    平衡树每向下一层，剩余搜索范围会怎样变化？
   </div>
   </slot>
 
@@ -179,7 +179,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须先发生或最后发生的事情。
+    分别考虑分层次数与每一层合并全部元素的工作量。
   </div>
   </slot>
 
@@ -211,7 +211,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须先处理还是后处理什么。
+    要按层处理节点，应该先处理刚加入的还是较早加入的节点？
   </div>
   </slot>
 
@@ -237,13 +237,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    哪种算法常用于检测有向图中的环？
+    哪种遍历会通过发现指向递归栈中尚未退出的顶点的边，检测有向图中的环？
   </div>
   </slot>
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构名称。正确答案通常取决于必须最先或最后发生的事情。
+    区分已经访问过的顶点与当前递归路径上尚未退出的顶点。
   </div>
   </slot>
 
@@ -275,7 +275,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须先发生什么或最后发生什么。
+    构建堆之后，每次移除堆顶需要多少调整工作？
   </div>
   </slot>
 
@@ -307,7 +307,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构名称。正确答案通常取决于必须先发生或最后发生的事情。
+    在散列分布均匀且负载合适时，查找平均需要检查多少个桶？
   </div>
   </slot>
 
@@ -338,7 +338,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于最先或最后发生什么。
+    考虑添加元素、移除最新元素，以及只查看最新元素的操作。
   </div>
   </slot>
 
@@ -364,13 +364,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    哪种算法常用于在具有非负权重的加权图中寻找最短路径？
+    哪种贪心单源最短路径算法通常使用优先队列，每次选择尚未确定最短路径且暂定距离最小的顶点，并要求边权非负？
   </div>
   </slot>
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须最先或最后发生的事情。
+    注意“贪心”“最小暂定距离”和“非负边权”这些条件。
   </div>
   </slot>
 
@@ -401,7 +401,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须首先或最后发生的事情。
+    哪些结构会在插入或删除后主动恢复树的平衡？
   </div>
   </slot>
 
@@ -433,7 +433,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须首先或最后发生的事情。
+    递归必须在什么条件下停止调用自身？
   </div>
   </slot>
 
@@ -464,7 +464,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于哪个操作必须先发生或后发生。
+    新元素从队列哪一端加入，旧元素从哪一端移除？
   </div>
   </slot>
 
@@ -495,7 +495,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于什么必须最先或最后发生。
+    如果存在有向环，还能把每个前置任务都排在依赖它的任务之前吗？
   </div>
   </slot>
 
@@ -527,7 +527,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须先发生或最后发生的事情。
+    画出递归调用树，看看相同的子问题被重复计算多少次。
   </div>
   </slot>
 
@@ -559,7 +559,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于哪个元素必须最先或最后处理。
+    哪种结构把当前最高或最低优先级的元素放在最容易取出的位置？
   </div>
   </slot>
 
@@ -590,7 +590,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须先发生或最后发生的事情。
+    考虑访问当前节点与左右子树的先后顺序。
   </div>
   </slot>
 
@@ -621,7 +621,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于最先或最后发生什么。
+    考虑父节点与子节点的大小关系，以及完全二叉树的高度。
   </div>
   </slot>
 
@@ -653,7 +653,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    关注访问模式，而不是结构的名称。正确答案通常取决于必须首先或最后发生的事情。
+    标准冒泡排序是否会交换值相等的相邻元素？
   </div>
   </slot>
 

@@ -135,7 +135,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    在链式调用 `.then` 和 `.catch` 时，将它们想象成一系列步骤会很有帮助。每个 `.then` 都会接收上一个 `.then` 返回的值（作为其参数）。但是，如果你的某个“步骤”遇到了错误，后续的所有 `.then` 步骤都将被跳过，直到遇到 `.catch`。如果你想覆盖错误并继续执行，只需返回一个非错误值即可。该值可以通过后续的任何 `.then` 访问。
+    在链式调用 `.then` 和 `.catch` 时，将它们想象成一系列步骤会很有帮助。每个 `.then` 都会接收上一个 `.then` 返回的值（作为其参数）。但是，如果你的某个“步骤”遇到了错误，后续的所有 `.then` 步骤都将被跳过，直到遇到 `.catch`。catch 处理程序正常返回即可恢复为兑现状态；即使返回 `Error` 对象，下一个 Promise 也会以该对象兑现。抛出异常或返回被拒绝的 Promise 则会保持拒绝状态。返回另一个 Promise 时，链会采用它最终的状态。
   </div>
   </slot>
 </Challenge>
@@ -207,7 +207,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     **提示：** `.catch` 可以通过返回一个普通值来忽略（或覆盖）错误。
 
-    这个技巧只有在后面跟着一个 `.then` 来接收该值时才有效。
+    第一个 catch 恢复执行，并以返回的字符串兑现它生成的 Promise；这不需要后续 `.then`。第二个 catch 因链已兑现而被跳过。实际执行的处理程序没有打印任何值。
   </div>
   </slot>
 </Challenge>
@@ -354,7 +354,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    ![annotated-code/question-9-4.webp](../annotated-code/question-9-4.webp)
+    第一个 catch 返回字符串，使链恢复为兑现状态。随后的 then 又抛出 `Error('The fails!')`，最后一个 catch 打印它的 message。因此只输出 `The fails!`，前面的错误消息不会被打印。
+
+    ![Promise 链中恢复执行并再次抛出错误的代码流程图](../annotated-code/question-9-4.webp)
   </div>
   </slot>
 </Challenge>

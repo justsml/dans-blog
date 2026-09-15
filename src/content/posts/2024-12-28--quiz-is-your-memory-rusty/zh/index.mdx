@@ -47,12 +47,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "应用解决方案修复与移动相关的编译错误",
   ]}
   options={[
-    {text: '你好, !', hint: '思考一下 \'philosopher\' 被移动后会发生什么'},
-    {text: '你好，季蒂昂的芝诺！', hint: '一旦值被移动，我们还能使用它吗？'},
-    {text: '你好，埃利亚的芝诺！', hint: '字符串包含 \'Citium\'，而不是 \'Elea\''},
-    {text: '你好，马可·奥勒留', hint: '检查这是否与字符串内容匹配'},
-    {text: '编译错误：移动后借用了值', isAnswer: true},
-    {text: '运行时错误：空指针异常', hint: 'Rust 在编译时捕获这些问题'},
+    {"text": "Hello, !", "hint": "思考一下 'philosopher' 被移动后会发生什么"},
+    {"text": "Hello, Zeno of Citium!", "hint": "一旦值被移动，我们还能使用它吗？"},
+    {"text": "Hello, Zeno of Elea!", "hint": "字符串包含 'Citium'，而不是 'Elea'"},
+    {"text": "Hello, Marcus Aurelius", "hint": "检查这是否与字符串内容匹配"},
+    {"text": "编译错误：移动后借用了值", "isAnswer": true},
+    {"text": "运行时错误：空指针异常", "hint": "Rust 在编译时捕获这些问题"},
   ]}
 >
   <slot name="question">
@@ -179,7 +179,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '编译成功', hint: '我们能同时拥有多个可变引用吗？'},
     {text: '错误：不能多次可变借用 `wisdom`', isAnswer: true},
     {text: '错误：缺少生命周期标注', hint: '这里的问题不在于生命周期'},
-    {text: '运行时恐慌', hint: 'Rust 在编译时捕获这些问题'},
+    {text: '运行时 panic', hint: 'Rust 在编译时捕获这些问题'},
   ]}
 >
   <slot name="question">
@@ -387,10 +387,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "分析代码中的引用计数行为",
   ]}
   options={[
-    {text: '引用计数：1', hint: '计算初始创建加上每次克隆'},
-    {text: '引用计数：2', hint: '别忘了原始引用'},
-    {text: '引用计数：3', isAnswer: true},
-    {text: '编译错误', hint: 'Rc<T> 正是为此用例设计的'},
+    {"text": "Reference count: 1", "hint": "计算初始创建加上每次克隆"},
+    {"text": "Reference count: 2", "hint": "别忘了原始引用"},
+    {"text": "Reference count: 3", "isAnswer": true},
+    {"text": "编译错误", "hint": "Rc<T> 正是为此用例设计的"},
   ]}
 >
   <slot name="question">
@@ -592,9 +592,9 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   ]}
   options={[
     {text: '输出：42', hint: '我们能同时有两个可变借用吗？'},
-    {text: '运行时恐慌：RefCell 已被借用', isAnswer: true},
+    {text: '运行时 panic：RefCell 已被借用', isAnswer: true},
     {text: '编译错误', hint: 'RefCell 将检查移至运行时'},
-    {text: '运行时恐慌：不同消息', hint: '错误特别提到了借用'},
+    {text: '运行时 panic：不同消息', hint: '错误特别提到了借用'},
   ]}
 >
   <slot name="question">
@@ -615,7 +615,7 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
 
   <slot name='explanation'>
   <div className="explanation">
-创建共享借用之前，先释放可变借用。否则这个例子会在运行时 panic。
+原代码在第一个可变借用仍然存活时调用第二次 `borrow_mut()`，因此触发运行时 panic，还没有执行到打印语句。修复时，应先释放现有可变借用，再创建其他借用；下面的例子在创建共享借用前显式释放可变借用。
 
 ```rust
 use std::cell::RefCell;
@@ -648,7 +648,7 @@ fn main() {
     {text: '输出：42, 43', isAnswer: true},
     {text: '输出：43, 43', hint: 'Cell::get() 返回调用时的值'},
     {text: '编译错误', hint: 'Cell 正是为此用例设计的'},
-    {text: '运行时恐慌', hint: 'Cell 操作对于 Copy 类型始终安全'},
+    {text: '运行时 panic', hint: 'Cell 操作对于 Copy 类型始终安全'},
   ]}
 >
   <slot name="question">
@@ -822,27 +822,12 @@ fn main() {
     "根据线程需求应用正确的同步原语",
   ]}
   options={[
-  {
-    "text": "RefCell用于可变借用，Rw用于不可变借用",
-    "hint": "两种类型都支持可变和不可变借用"
-  },
-  {
-    "text": "Rw用于可变借用，RefCell用于不可变借用",
-    "hint": "两者都支持两种类型的借用"
-  },
-  {
-    "text": "RefCell和Rw用于相同目的",
-    "hint": "考虑线程安全"
-  },
-  {
-    "text": "RefCell 不实现 Sync；RwLock 提供同步共享",
-    "isAnswer": true
-  },
-  {
-    "text": "Rw仅用于多线程环境",
-    "hint": "虽然通常用于线程，但这并非关键区别"
-  }
-]}
+    {"text": "RefCell用于可变借用，RwLock用于不可变借用", "hint": "两种类型都支持可变和不可变借用"},
+    {"text": "RwLock用于可变借用，RefCell用于不可变借用", "hint": "两者都支持两种类型的借用"},
+    {"text": "RefCell和RwLock用于相同目的", "hint": "考虑线程安全"},
+    {"text": "RefCell 不实现 Sync；RwLock 提供同步共享", "isAnswer": true},
+    {"text": "RwLock仅用于多线程环境", "hint": "虽然通常用于线程，但这并非关键区别"},
+  ]}
 >
   <slot name="question">
   <div className="question">
@@ -883,27 +868,12 @@ fn main() {
     "应用正确的同步模式以防止死锁",
   ]}
   options={[
-  {
-    "text": "打印: 42",
-    "hint": "代码永远不会执行到打印语句"
-  },
-  {
-    "text": "打印: 43",
-    "hint": "代码会在打印前卡住"
-  },
-  {
-    "text": "编译错误",
-    "hint": "代码语法正确"
-  },
-  {
-    "text": "不输出内容并正常返回",
-    "hint": "第二次 lock 调用无法正常返回。"
-  },
-  {
-    "text": "死锁或 panic",
-    "isAnswer": true
-  }
-]}
+    {"text": "打印: 42", "hint": "代码永远不会执行到打印语句"},
+    {"text": "打印: 43", "hint": "代码会在打印前卡住"},
+    {"text": "编译错误", "hint": "代码语法正确"},
+    {"text": "不输出内容并正常返回", "hint": "第二次 lock 调用无法正常返回。"},
+    {"text": "死锁或 panic", "isAnswer": true},
+  ]}
 >
   <slot name="question">
   <div className="question">
@@ -956,7 +926,7 @@ fn main() {
     {text: '输出: Some("Wisdom")', hint: '当所有强引用被丢弃时，数据会发生什么？'},
     {text: '输出: None', isAnswer: true},
     {text: '编译错误', hint: '代码语法正确'},
-    {text: '运行时恐慌', hint: '弱引用优雅地处理已丢弃的值'},
+    {text: '运行时 panic', hint: '弱引用优雅地处理已丢弃的值'},
     {text: '存在性恐慌', hint: '虽然富有哲学意味，但这不是真正的 Rust 错误！'},
   ]}
 >
@@ -1105,7 +1075,7 @@ fn main() {
     5. 使用 `?` 进行错误传播
 
     最佳实践：
-    1. 当标准库 Drop 实现已经模拟资源时，依赖它们
+    1. 当标准库 Drop 实现已经管理资源时，依赖它们
     2. 保持资源管理简单明了
     3. 尽可能使用标准库类型
     4. 记录清理行为
@@ -1253,22 +1223,11 @@ fn main() {
     "应用抽象而不产生性能开销",
   ]}
   options={[
-  {
-    "text": "迭代器带来的运行时开销",
-    "hint": "Rust 迭代器是零成本抽象"
-  },
-  {
-    "text": "迭代器代码可以与手写循环一样高效",
-    "isAnswer": true
-  },
-  {
-    "text": "更慢但更易读",
-    "hint": "抽象不影响运行时性能"
-  },
-  {
-    "text": "迭代器无法被优化"
-  }
-]}
+    {"text": "迭代器带来的运行时开销", "hint": "Rust 迭代器是零成本抽象"},
+    {"text": "迭代器代码可以与手写循环一样高效", "isAnswer": true},
+    {"text": "更慢但更易读", "hint": "优化器可以消除迭代器开销，但生成的代码和实际工作负载仍然重要"},
+    {"text": "迭代器无法被优化"},
+  ]}
 >
   <slot name="question">
   <div className="question">

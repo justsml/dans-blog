@@ -57,7 +57,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)` 创建一个指定大小的新缓冲区，并用零填充。
     输出将是：`<Buffer 00 00 00 00 00>`
 
-    如果你想创建一个包含随机数据的缓冲区，请使用 `Buffer.allocUnsafe(5)`。
+    `Buffer.allocUnsafe(5)` 跳过零初始化，其中可能残留旧的内存内容；它不是随机数生成器。读取或暴露缓冲区之前，应初始化每个字节。需要随机字节时使用 `crypto.randomBytes(5)`。
 
     [了解更多关于缓冲区分配的信息](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -70,11 +70,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="热身：缓冲区"
   title="缓冲区到字符串的转换"
   options={[
-    {text: 'A', isAnswer: true},
-    {text: '65'},
-    {text: '[Object object]'},
-    {text: 'Undefined'},
-    {text: 'Binary data'},
+    {"text": "A", "isAnswer": true},
+    {"text": "65"},
+    {"text": "[Object object]"},
+    {"text": "Undefined"},
+    {"text": "二进制数据"},
   ]}
 >
   <slot name="question">
@@ -218,10 +218,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="流"
   title="流管道"
   options={[
-    {text: '复制文件并压缩'},
-    {text: '复制文件而不进行内存缓冲', isAnswer: true},
-    {text: '将整个文件加载到内存中'},
-    {text: '创建符号链接'},
+    {"text": "复制文件并压缩"},
+    {"text": "分块复制文件，无需缓冲整个文件", "isAnswer": true},
+    {"text": "将整个文件加载到内存中"},
+    {"text": "创建符号链接"},
   ]}
 >
   <slot name="question">
@@ -289,7 +289,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'hello world'},
     {text: 'HELLO WORLD', isAnswer: true},
-    {text: 'Error'},
+    {text: '错误'},
     {text: 'undefined'},
   ]}
 >
@@ -375,7 +375,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'true'},
     {text: 'false', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -507,7 +507,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     流可以以以下模式运行：
     1. 二进制模式（默认）：用于缓冲区和字符串
-    2. 对象模式：用于任何 JavaScript 值
+    2. 对象模式：用于除 `null` 以外的 JavaScript 值；`null` 表示可读流结束
 
     对象模式示例：
     ```js

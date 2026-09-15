@@ -1,7 +1,7 @@
 ---
 title: 测验：你了解现代CSS吗？（2025版）
 subTitle: 你的前端功力够吗？
-label: Advanced CSS
+label: 进阶 CSS
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -71,12 +71,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="CSS 函数"
   title="CSS min() 函数"
   options={[
-    {text: 'width: 50%;'},
-    {text: 'width: 200px;', isAnswer: true},
-    {text: 'width: 250px;'},
-    {text: 'width: 500px;'},
-    {text: 'width: max(50%, 200px);'},
-    {text: 'Invalid syntax'},
+    {"text": "width: 50%;"},
+    {"text": "width: 200px;", "isAnswer": true},
+    {"text": "width: 250px;"},
+    {"text": "width: 500px;"},
+    {"text": "width: max(50%, 200px);"},
+    {"text": "无效语法"},
   ]}
 >
   <slot name="question">
@@ -114,17 +114,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="CSS 函数"
   title="CSS max() 函数"
   options={[
-    {text: 'width: 6em;'},
-    {text: 'width: 10%;'},
-    {text: 'width: 10px;'},
-    {text: 'width: 50px;'},
-    {text: 'width: 96px;', isAnswer: true},
-    {text: 'Invalid syntax'},
+    {"text": "width: 6em;"},
+    {"text": "width: 10%;"},
+    {"text": "width: 10px;"},
+    {"text": "width: 50px;"},
+    {"text": "width: 96px;", "isAnswer": true},
+    {"text": "无效语法"},
   ]}
 >
   <slot name="question">
   <div className="question">
-    假设一个容器的宽度为 200px，那么 `<div>` 的计算宽度是多少？
+    假设容器宽度为 200px，根元素字体大小为 16px，那么 `<div>` 的计算宽度是多少？
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -187,11 +187,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="CSS 变量"
   title="CSS 变量回退值"
   options={[
-    {text: 'blue'},
-    {text: 'red'},
-    {text: 'system default'},
-    {text: '#6b8e23', isAnswer: true},
-    {text: 'var(--secondary-color)'},
+    {"text": "blue"},
+    {"text": "red"},
+    {"text": "系统默认值"},
+    {"text": "#6b8e23", "isAnswer": true},
+    {"text": "var(--secondary-color)"},
   ]}
 >
   <slot name="question">
@@ -318,10 +318,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="CSS 嵌套"
   title="嵌套中的直接子选择器"
   options={[
-    {text: 'background-color: red'},
-    {text: 'background-color: white', isAnswer: true},
-    {text: 'background-color: blue'},
-    {text: 'Invalid syntax'},
+    {"text": "background-color: red"},
+    {"text": "background-color: white", "isAnswer": true},
+    {"text": "background-color: blue"},
+    {"text": "无效语法"},
   ]}
 >
   <slot name="question">

@@ -1,7 +1,7 @@
 ---
 title: JavaScript计数，你靠得住吗？
 subTitle: 分清 `parseInt` 和 `parseFloat`？
-label: Numbers
+label: 数字
 modified: '2024-11-09'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -22,6 +22,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <>
 <QuizUI>
 
+欢迎参加 JavaScript 数字测验！
+
+这里将考查 JS 数字处理，包括 `parseInt`、`parseFloat` 和 `BigInt`。
+
+我们会解析不同进制的数字表达式，处理浮点精度，并探索 JavaScript 数字系统中的陷阱。
+
+> 不就是几个数字吗，能有多难？🤓
+
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
@@ -32,7 +40,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '123'},
     {text: '12345600'},
     {text: '456.00'},
-    {text: 'Error'},
+    {text: '错误'},
     {text: 'NaN'},
   ]}
 >
@@ -61,7 +69,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '12345600'},
     {text: '123456.00'},
     {text: '456.00'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -118,7 +126,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'Infinity', isAnswer: true},
     {text: 'NaN'},
-    {text: 'Error'},
+    {text: '错误'},
     {text: 'undefined'},
   ]}
 >
@@ -234,7 +242,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'false'},
     {text: 'NaN'},
     {text: '必须是大写: 2A'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">

@@ -135,7 +135,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - JSON/JSONB 类型。
 
     原始 ANSI SQL 标准包含：
-    - `WITH`（公共表表达式）。
+    - `WITH`（公用表表达式）。
     - 用于模式匹配的 `LIKE`。
     - `LATERAL` 连接。
     - 窗口函数。
@@ -157,7 +157,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    除“Depends on side effects”之外，
+    除“取决于副作用”之外，
     错误发生后会怎样？
     ```sql
     BEGIN;
@@ -361,14 +361,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="数据抽样"
   title="TABLESAMPLE 语法"
   options={[
-    {text: '...学生 SAMPLETABLE BERNOULLI (0.10)'},
-    {text: '...学生 TABLESAMPLE USER (10)'},
-    {text: '...学生 TABLESAMPLE RANDOM (10)'},
-    {text: '...学生 SAMPLE 10 PERCENT'},
-    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},
-    {text: 'ORDER BY RANDOM() >= 10'},
-    {text: 'WHERE RANDOM() >= 0.1'},
-    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},
+    {"text": "...students SAMPLETABLE BERNOULLI (0.10)"},
+    {"text": "...students TABLESAMPLE USER (10)"},
+    {"text": "...students TABLESAMPLE RANDOM (10)"},
+    {"text": "...students SAMPLE 10 PERCENT"},
+    {"text": "ROW_NUMBER() OVER (ORDER BY RAND())"},
+    {"text": "ORDER BY RANDOM() >= 10"},
+    {"text": "WHERE RANDOM() >= 0.1"},
+    {"text": "WHERE RANDOM() >= 0.9", "isAnswer": true},
   ]}
 >
   <slot name="question">
@@ -383,7 +383,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     1. 高层描述 + 语法碎片，考察你如何拼凑不完整的信息。
     2. 需要熟悉 `TABLESAMPLE` 语法，因为没有一个 `TABLESAMPLE` 选项使用了正确的写法！（阴险！我知道！继续，加油，我相信你!!! ❤️）
-    3. `ROW_NUMBER() OVER (ORDER BY RAND())` 和 `ORDER BY RANDOM() > 10` 只是红鲱鱼。它们看起来像是可行的，但其实不对。`RAND()` 并不存在，且 `RANDOM() > 10` 永远为假，因为 `RANDOM()` 的取值范围是 `0.0-1.0`。
+    3. `ROW_NUMBER() OVER (ORDER BY RAND())` 和 `ORDER BY RANDOM() > 10` 只是干扰项。它们看起来像是可行的，但其实不对。`RAND()` 并不存在，且 `RANDOM() > 10` 永远为假，因为 `RANDOM()` 的取值范围是 `0.0-1.0`。
     另外，`ORDER BY RANDOM() > 10` 甚至会在布尔值上排序，而不是在随机数上。`> 10` 看起来像是百分比，但其实不是。
     4. `BERNOULLI` 是合法的，但 `SAMPLETABLE` 不是。
     5. `WHERE RANDOM() >= 0.1` 是个陷阱！`RANDOM()` 返回 `0.0 <= x < 1.0`，所以 `>= 0.1` 会返回约 90% 的行，而不是 10%。
@@ -440,7 +440,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     当通常只查询一部分行时，它们有助于减少磁盘使用并加速查询。
 
-    当查询中出现 `status = 'active'` 条件时，Postgres 才会使用该索引。
+    只有当规划器能证明查询条件蕴含 `status = 'active'` 时，才会考虑这个索引。并不总是要求文本完全相同，但规划器的逻辑推导能力有限；参数化条件可能无法在规划时证明满足谓词。符合使用条件，也不保证最终选择该索引。
 
     **提醒:** Postgres 不支持像其他 RDBMS 那样的 “query hints”。查询规划器会自行决定何时使用合适的索引。
   </div>

@@ -53,7 +53,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。常见的误导答案往往是旧语法的行为，而不是此特性的实际表现。
+    只有 null 和 undefined 会触发这个回退值。
   </div>
   </slot>
 
@@ -90,7 +90,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是该特性的实际表现。
+    false 与 null、undefined 有什么区别？
   </div>
   </slot>
 
@@ -126,7 +126,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的表现。
+    可选链遇到 null 时是继续访问，还是短路返回？
   </div>
   </slot>
 
@@ -162,7 +162,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际表现。
+    检查两个乘数是否都带有 BigInt 的 n 后缀。
   </div>
   </slot>
 
@@ -198,7 +198,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际表现。
+    注意 typeof 检查的是返回值的类型，不是构造函数名称。
   </div>
   </slot>
 
@@ -215,10 +215,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: '已兑现: success', isAnswer: true},
-    {text: '已拒绝: error'},
-    {text: '待定'},
-    {text: 'null'},
+    {"text": "fulfilled: success", "isAnswer": true},
+    {"text": "Rejected: error"},
+    {"text": "Pending"},
+    {"text": "null"},
   ]}
 >
   <slot name="question">
@@ -238,7 +238,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际表现。
+    区分 Promise 状态名称的实际字符串与中文解释。
   </div>
   </slot>
 
@@ -273,7 +273,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际返回。
+    结果可以被迭代，是否意味着它已经是数组？
   </div>
   </slot>
 
@@ -307,7 +307,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际作用。
+    这是模块的元数据，不是执行时间信息。
   </div>
   </slot>
 
@@ -343,7 +343,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。常见的误导答案往往是旧语法的行为，而不是此特性的实际表现。
+    逻辑或赋值判断的是假值，而不仅仅是空值。
   </div>
   </slot>
 
@@ -379,7 +379,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际效果。
+    空值合并赋值在什么情况下才会执行赋值？
   </div>
   </slot>
 
@@ -415,7 +415,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    检查 JavaScript 运算符的精确语义。诱人的答案往往是旧语法的行为，而不是此特性的实际作用。
+    目标对象仍然被强引用时，deref() 会得到什么？
   </div>
   </slot>
 

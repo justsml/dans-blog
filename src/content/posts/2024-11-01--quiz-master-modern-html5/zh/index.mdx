@@ -65,10 +65,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="高级语义HTML"
   title="`<dd>` 的用法"
   options={[
-    {text: '描述定义'},
-    {text: '描述术语'},
-    {text: '数据展示'},
-    {text: '描述详情', isAnswer: true},
+    {"text": "定义数据库字段的声明"},
+    {"text": "描述术语"},
+    {"text": "数据展示"},
+    {"text": "描述列表中某个术语的描述、定义或值", "isAnswer": true},
   ]}
 >
   <slot name="question">
@@ -102,15 +102,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="高级语义HTML"
   title="`<figure>/<figcaption>` 的使用"
   options={[
-    {text: '用于显示带有版权信息的图片'},
-    {text: '描述图片、图表等', isAnswer: true},
-    {text: '用于注释表格、计算等'},
-    {text: '用于视频的字幕'},
+    {"text": "仅用于带版权信息的图片"},
+    {"text": "将自包含的内容及其说明文字分组", "isAnswer": true},
+    {"text": "仅用于表格和数学计算"},
+    {"text": "仅用于为视频播放添加字幕"},
   ]}
 >
   <slot name="question">
   <div className="question">
-    何时应该使用 `<figure>` 和 `<figcaption>` 元素？
+    将 `<figure>` 与 `<figcaption>` 配合使用的一般用途是什么？
   </div>
   </slot>
 
@@ -121,7 +121,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     这对于图片、图表、代码片段等非常有用。
     ```html
     <figure>
-    <img src="../image.jpg" alt="Description of image">
+    <img src="image.jpg" alt="Description of image">
     <figcaption>Image caption</figcaption>
     </figure>
     ```

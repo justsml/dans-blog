@@ -1,7 +1,7 @@
 ---
 title: 测验：解构的乐趣
 subTitle: 你是解构大师吗？
-label: Destructuring
+label: 解构
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -37,12 +37,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="热身：对象"
   title="基本对象解构"
   options={[
-    {text: '姓名：Dan Levy，年龄：20'},
-    {text: '姓名：Dan Levy，年龄：40'},
-    {text: '姓名：Dan Levy，年龄：Infinity'},
-    {text: '姓名：Dan Levy，年龄：undefined', isAnswer: true},
-    {text: '错误：无法读取属性 \'age\''},
-    {text: '姓名：undefined，年龄：40'},
+    {"text": "Name: Dan Levy, Age: 20"},
+    {"text": "Name: Dan Levy, Age: 40"},
+    {"text": "Name: Dan Levy, Age: Infinity"},
+    {"text": "Name: Dan Levy, Age: undefined", "isAnswer": true},
+    {"text": "错误：无法读取属性 'age'"},
+    {"text": "Name: undefined, Age: 40"},
   ]}
 >
   <slot name="question">
@@ -75,14 +75,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="热身：数组"
-  title="对象解构中的默认值"
+  title="数组解构与缺失元素"
   options={[
-    {text: '姓名：Dan Levy，年龄：NaN'},
-    {text: '姓名：Dan Levy，年龄：null'},
-    {text: '姓名：Dan Levy，年龄：undefined', isAnswer: true},
-    {text: '姓名：Dan Levy，年龄：40'},
-    {text: '错误：无法解构属性 \'age\''},
-    {text: 'SyntaxError：意外的标记 \',\''},
+    {"text": "Name: Dan Levy, Age: NaN"},
+    {"text": "Name: Dan Levy, Age: null"},
+    {"text": "Name: Dan Levy, Age: undefined", "isAnswer": true},
+    {"text": "Name: Dan Levy, Age: 40"},
+    {"text": "错误：无法解构属性 'age'"},
+    {"text": "SyntaxError：意外的标记 ','"},
   ]}
 >
   <slot name="question">
@@ -98,7 +98,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `age` 变量不存在于 `tuple` 数组中，因此它的值为 `undefined`。
+    `person` 数组没有第三个元素，因此对应的 `age` 为 `undefined`。
 
     这将导致：
     ```plaintext
@@ -163,11 +163,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="默认值"
   title="对象解构中的默认值"
   options={[
-    {text: '嗨 Dan 来自 Unknown'},
-    {text: '嗨 Dan 来自 Denver'},
-    {text: '嗨 Unknown 来自 Unknown'},
-    {text: '嗨 Unknown 来自 Denver'},
-    {text: '错误', isAnswer: true},
+    {"text": "Hi Dan from Unknown"},
+    {"text": "Hi Dan from Denver"},
+    {"text": "Hi Unknown from Unknown"},
+    {"text": "Hi Unknown from Denver"},
+    {"text": "错误", "isAnswer": true},
   ]}
 >
   <slot name="question">
@@ -194,13 +194,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `birth` 属性在 `person` 上不存在，所以整个对象仍然需要一个默认值，而不仅仅是嵌套属性。基本上缺少一个 ` = {}` 的默认值。
 
-    这样写的意思是“如果 `person.birth` 为 `undefined`，则 `place` 为 `Unknown`”。但 `person.birth` 为 `undefined`，于是尝试对 `undefined` 进行解构，导致错误。
+    属性默认值只有在能够先解构外层对象时才会被使用。这里 `person.birth` 为 `undefined`，对它进行解构会先抛出 `TypeError`，还没有机会使用 `place` 的默认值。具体错误文字因浏览器和运行时而异。
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
-
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
+    TypeError: Cannot read properties of undefined (reading 'place')
     ```
   </div>
   </slot>
@@ -212,12 +208,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="默认值"
   title="对象解构中的默认值"
   options={[
-    {text: '嗨 Dan 来自 Denver'},
-    {text: '嗨 Dan 来自 Johannesburg'},
-    {text: '嗨 Dan 来自 Unknown', isAnswer: true},
-    {text: '嗨 Unknown 来自 Unknown'},
-    {text: '嗨 Unknown 来自 Denver'},
-    {text: '错误'},
+    {"text": "Hi Dan from Denver"},
+    {"text": "Hi Dan from Johannesburg"},
+    {"text": "Hi Dan from Unknown", "isAnswer": true},
+    {"text": "Hi Unknown from Unknown"},
+    {"text": "Hi Unknown from Denver"},
+    {"text": "错误"},
   ]}
 >
   <slot name="question">
@@ -258,7 +254,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Hi Dan from Denver'},
     {text: 'Hi Unknown from Unknown'},
     {text: 'Hi Unknown from Denver'},
-    {text: 'Error', isAnswer: true},
+    {text: '错误', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -292,14 +288,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="函数参数"
   title="带有嵌套默认值的解构"
   options={[
-    {text: '未知, 未知, Joburg'},
-    {text: '未知, 未知, 未知'},
-    {text: '未知, `undefined`, Joburg'},
-    {text: '不适用, `undefined`, Joburg'},
-    {text: '不适用, 未知, Joburg'},
-    {text: '不适用, 不适用, Joburg', isAnswer: true},
-    {text: '未知, 不适用, Joburg'},
-    {text: '错误'},
+    {"text": "Unknown, Unknown, Joburg"},
+    {"text": "Unknown, Unknown, Unknown"},
+    {"text": "Unknown, `undefined`, Joburg"},
+    {"text": "N/A, `undefined`, Joburg"},
+    {"text": "N/A, Unknown, Joburg"},
+    {"text": "N/A, N/A, Joburg", "isAnswer": true},
+    {"text": "Unknown, N/A, Joburg"},
+    {"text": "错误"},
   ]}
 >
   <slot name="question">
@@ -323,9 +319,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    函数 `displayPlace` 只会在没有传入对象时使用默认对象。因此，唯一能得到 `{ place: "Unknown" }` 默认值的方式是调用 `displayPlace()` 而不传参。
+    省略参数或显式传入 `undefined` 时，才使用默认参数对象 `{ place: "Unknown" }`：`displayPlace()` 和 `displayPlace(undefined)` 都打印 `Unknown`。
 
-    另一个值得注意的行为是，如果为 `place` 传入 `undefined`，默认值也会被使用，这有点类似于 `JSON.stringify` 的行为（会忽略 `undefined`，但会识别 `null`）。
+    传入对象时，缺失或为 `undefined` 的 `place` 属性使用属性默认值 `"N/A"`。参数默认值与属性默认值作用于不同层级。
 
     结果是：
     ```js
@@ -343,20 +339,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="函数参数"
   title="带有嵌套默认值的解构"
   options={[
-    {text: 'N/A, N/A'},
-    {text: 'N/A, undefined'},
-    {text: '未知, N/A'},
-    {text: '未知, 未知'},
-    {text: '未知, undefined'},
-    {text: 'null, N/A', isAnswer: true},
-    {text: 'null, 未知'},
-    {text: 'null, undefined'},
-    {text: '错误'},
+    {"text": "N/A, N/A"},
+    {"text": "N/A, undefined"},
+    {"text": "Unknown, N/A"},
+    {"text": "Unknown, Unknown"},
+    {"text": "Unknown, undefined"},
+    {"text": "null, N/A", "isAnswer": true},
+    {"text": "null, Unknown"},
+    {"text": "null, undefined"},
+    {"text": "错误"},
   ]}
 >
   <slot name="question">
   <div className="question">
-    和前一个类似……`null` 是怎么处理的？_
+    和前一个类似……`null` 是怎么处理的？
     ```js
     function displayPlace({
       name = "N/A",
@@ -373,7 +369,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    在这种情况下，第一次调用时 `place` 属性被设为 `null`，第二次调用时为 `undefined`。只有当整个对象缺失 **或** 为 `undefined` 时，`place` 的默认值才会生效。`null` 会原样传递为 `null`。
+    第一次调用的 `place` 为 `null`，第二次为 `undefined`。即使已经传入对象，只要 `place` 缺失或为 `undefined`，属性默认值 `"N/A"` 就会生效。`null` 不会触发默认值，因此依次输出 `null` 和 `N/A`。
   </div>
   </slot>
 </Challenge>
@@ -386,11 +382,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript 内联类型"
   title="带有嵌套默认值的解构"
   options={[
-    {text: 'N/A'},
-    {text: 'undefined'},
-    {text: '未知'},
-    {text: '\'null\''},
-    {text: 'TypeScript 错误', isAnswer: true},
+    {"text": "N/A"},
+    {"text": "undefined"},
+    {"text": "Unknown"},
+    {"text": "'null'"},
+    {"text": "TypeScript 错误", "isAnswer": true},
   ]}
 >
   <slot name="question">
@@ -430,14 +426,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript：带赋值"
   title="带有嵌套默认值的解构"
   options={[
-    {text: '未定义'},
-    {text: '空值'},
-    {text: '不适用'},
-    {text: '未知'},
-    {text: '丹佛', isAnswer: true},
-    {text: 'SyntaxError'},
-    {text: '错误：无效类型'},
-    {text: '错误：无效参数'},
+    {"text": "undefined"},
+    {"text": "null"},
+    {"text": "N/A"},
+    {"text": "Unknown"},
+    {"text": "Denver", "isAnswer": true},
+    {"text": "SyntaxError"},
+    {"text": "错误：无效类型"},
+    {"text": "错误：无效参数"},
   ]}
 >
   <slot name="question">
@@ -517,11 +513,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript + 赋值"
   title="带嵌套值、赋值和类型的解构"
   options={[
-    {text: '嗨 Dan Levy 来自 N/A'},
-    {text: '嗨 Dan Levy 来自 开普敦'},
-    {text: '嗨 N/A N/A 来自 N/A'},
-    {text: '嗨 N/A N/A 来自 开普敦'},
-    {text: '错误', isAnswer: true},
+    {"text": "Hi Dan Levy from N/A"},
+    {"text": "Hi Dan Levy from Cape Town"},
+    {"text": "Hi N/A N/A from N/A"},
+    {"text": "Hi N/A N/A from Cape Town"},
+    {"text": "错误", "isAnswer": true},
   ]}
 >
   <slot name="question">
@@ -568,3 +564,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+
+还想继续挑战？来看看我的[测验合集](/challenges/)，体验更多有趣的题目！

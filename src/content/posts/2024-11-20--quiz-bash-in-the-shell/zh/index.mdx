@@ -92,7 +92,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     我知道。转义这么快就让字符串难以解析，真是疯狂。想象在 Bash 字符串中转义其他语言——所有的引号、撇号和 `$` 符号都会捣乱你。🫠
 
-    单引号在单引号字符串内部需要转义。关闭引号、转义引号、重新打开引号的序列（`'\''`）可以输出：
+    Bash 的单引号字符串内部不能直接转义单引号；必须先结束当前字符串，在外部转义单引号，再重新开始单引号字符串。关闭引号、转义引号、重新打开引号的序列（`'\''`）可以输出：
     ```plaintext
     It's 🔨 Time!
     ```
@@ -112,7 +112,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'ca bt'},
     {text: 'cat'},
     {text: 'cbd'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -142,12 +142,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="变量"
   title="转义字符"
   options={[
-    {text: '费用: $$100'},
-    {text: '费用: $100'},
-    {text: '费用: 100'},
-    {text: '费用: 00', isAnswer: true},
-    {text: '费用:'},
-    {text: '错误'},
+    {"text": "Cost: $$100"},
+    {"text": "Cost: $100"},
+    {"text": "Cost: 100"},
+    {"text": "Cost: 00", "isAnswer": true},
+    {"text": "Cost:"},
+    {"text": "错误"},
   ]}
 >
   <slot name="question">
@@ -185,7 +185,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Meow meow'},
     {text: 'Bark meow', isAnswer: true},
     {text: 'Bark bark'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -259,11 +259,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="条件语句"
   title="基础 if-else"
   options={[
-    {text: '文件存在'},
-    {text: '文件不存在，且出现测试诊断', isAnswer: true},
-    {text: '仅错误'},
-    {text: '缺少双中括号'},
-    {text: '无输出'},
+    {"text": "File exists"},
+    {"text": "File does not exist，并输出测试诊断信息", "isAnswer": true},
+    {"text": "仅错误"},
+    {"text": "缺少双中括号"},
+    {"text": "无输出"},
   ]}
 >
   <slot name="question">
@@ -306,10 +306,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="条件语句"
   title="字符串比较"
   options={[
-    {text: '相同的猫'},
-    {text: '不同的猫，出现测试语法错误后', isAnswer: true},
-    {text: 'Zalgo'},
-    {text: '仅错误'},
+    {"text": "Same cat"},
+    {"text": "先输出测试语法诊断，再打印 Different cats", "isAnswer": true},
+    {"text": "Zalgo"},
+    {"text": "仅错误"},
   ]}
 >
   <slot name="question">
@@ -350,8 +350,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Dan'},
     {text: 'Hi Dan'},
     {text: 'greet'},
-    {text: 'Error'},
-    {text: 'Syntax Error'},
+    {text: '错误'},
+    {text: '语法错误'},
   ]}
 >
   <slot name="question">
@@ -386,7 +386,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '|', isAnswer: true},
     {text: '||'},
     {text: '|>'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -416,7 +416,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'echo ${2 + 2}'},
     {text: 'echo %(2 + 2)'},
     {text: 'echo $(( 2 + 2 ))', isAnswer: true},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -457,7 +457,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'echo %( 10 * 0.5 )'},
     {text: 'echo $(( 10 * 0.5 ))'},
     {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -483,10 +483,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="字符串操作"
   title="子串提取"
   options={[
-    {text: '坏猫'},
-    {text: '坏猫, 好猫:9'},
-    {text: '好猫', isAnswer: true},
-    {text: '错误'},
+    {"text": "Bad cat"},
+    {"text": "Bad cat, good cat:9"},
+    {"text": "good cat", "isAnswer": true},
+    {"text": "错误"},
   ]}
 >
   <slot name="question">
@@ -527,7 +527,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    什么不是 Bash 中用于循环的关键字？
+    哪个词不是 ❌ Bash 循环语法中使用的关键字？
   </div>
   </slot>
 
@@ -535,7 +535,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `each` 不是 Bash 中的循环关键字。主要的循环关键字是 `for`、`while` 和 `until`。
 
-    虽然 `do` 在技术上不是循环关键字，但它是循环语法的关键部分。
+    `do` 标记这些循环的循环体开始；虽然它不决定循环的种类，但它属于循环语法。
   </div>
   </slot>
 </Challenge>
@@ -581,7 +581,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="标准输入/输出"
-  title="默认值"
+  title="合并标准错误与标准输出"
   options={[
     {text: '1>&2'},
     {text: '&2>&1'},

@@ -1,7 +1,7 @@
 ---
 title: 测验：你了解 CSS基础吗？（2025）
 subTitle: 你足够前端吗？
-label: CSS Fundamentals
+label: CSS 基础
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -82,7 +82,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    你能找出 <em class="highlight">ONE</em> 有效的 👍 十六进制代码吗？
+    你能找出 <em class="highlight">唯一</em> 有效的 👍 十六进制代码吗？
   </div>
   </slot>
 
@@ -298,15 +298,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    怎么在盒子里居中“shit”？
+    哪条声明能让行内文本在其包含块内水平居中？
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    使用 `text-align: center;` 是在块级元素中居中文本的正确方法。`align` 属性用于 flexbox 布局，`margin: 0 auto;` 用于水平居中块级元素。
+    使用 `text-align: center;` 可以让块级元素中的文本水平居中。CSS 没有 `align` 属性。`margin: 0 auto;` 可以让具有受限宽度的块水平居中，但不会让块内的文本居中。
 
-    `align-content` 属性用于 grid 布局，而 `text-content` 不是有效的 CSS 属性。
+    `align-content` 在支持的布局上下文中对齐内容，例如网格和多行弹性容器；它不是文本对齐属性。`text-content` 也不是有效的 CSS 属性。
   </div>
   </slot>
 </Challenge>

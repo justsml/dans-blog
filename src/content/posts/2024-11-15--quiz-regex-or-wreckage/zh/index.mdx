@@ -88,7 +88,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     模式 `/^[ch]at/` 匹配的字符串需满足：
-    - 以 `^` 开头，且第一个字符是 'c' 或 'h'（`[ch]` 表示一个字符类，匹配一个字符）
+    - `^` 要求从字符串开头匹配，第一个字符是 'c' 或 'h'（`[ch]` 表示一个字符类，匹配一个字符）
     - 后面紧跟字面量 'at'
 
     因此，只有 "cat" 和 "hat" 符合该模式。`filter()` 方法会保留所有匹配的元素。
@@ -130,7 +130,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     如果没有 `?`，贪婪的 `.*` 会从第一个 `<div>` 匹配到最后一个 `</div>`，得到一个大的匹配。加上 `?` 后，它会分别匹配每一对。
 
-    [了解更多关于贪婪与懒惰匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [了解更多关于贪婪与非贪婪匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -139,7 +139,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="常见陷阱"
-  title="点号元字符"
+  title="单词字符与换行符"
   options={[
     {text: '["hello\nworld"]'},
     {text: '["hello", "world"]', isAnswer: true},
@@ -173,8 +173,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="先行断言"
-  title="正向先行断言"
+  group="前瞻断言"
+  title="正向前瞻断言"
   options={[
     {text: '["$100", "€50"]'},
     {text: '["100", "50"]'},
@@ -194,15 +194,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    这个模式不会匹配任何内容，因为先行断言用反了！如果你想要匹配前面有 `$` 或 `€` 的数字，请使用后行断言：`/(?<=[\$€])\d+/g`。
+    这个模式不会匹配任何内容，因为它要求货币符号位于数字之后，而输入中货币符号在数字之前。如果你想要匹配前面有 `$` 或 `€` 的数字，请使用后顾断言：`/(?<=[\$€])\d+/g`。
 
-    先行断言检查的是当前位置*之后*的内容。这个模式写的是：
+    前瞻断言检查的是当前位置*之后*的内容。这个模式写的是：
     - 一个或多个数字（`\d+`）
     - 后面跟着（`(?=...)`）`$` 或 `€`（`[\$€]`）
 
     由于没有数字后面跟着货币符号（它们前面才有货币符号），所以没有匹配。
 
-    [了解更多关于先行断言的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [了解更多关于前瞻断言的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -254,7 +254,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '["a"]'},
     {text: '["a", "a", "a"]', isAnswer: true},
     {text: '["b", "n", "n"]'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -367,7 +367,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '["123aBc"]'},
     {text: '["12"]', isAnswer: true},
     {text: '["abc"]'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -381,7 +381,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    负向前瞻 `(?![a-z])` 确保数字后面没有小写字母。由于 "3aBc" 部分在数字后面有一个小写字母，所以该部分不匹配。因此只有开头的 "12" 匹配。
+    在 `i` 标志下，负向前瞻 `(?![a-z])` 会拒绝后面紧跟英文字母的匹配（不区分大小写）。贪婪的数字匹配先消耗 `123`，在 `a` 之前断言失败，然后回溯到 `12`。此时下一个字符是 `3`，断言成功，结果为 `["12"]`。
 
     [了解更多关于负向前瞻](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -435,7 +435,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '["100"]'},
     {text: '[]'},
     {text: 'null', isAnswer: true},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -468,7 +468,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="向后查找"
-  title="正向向后查找"
+  title="正向后顾断言"
   options={[
     {text: '["$100"]'},
     {text: '["100"]', isAnswer: true},
@@ -487,14 +487,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    正向向后查找 `(?<=\$) ` 确保数字前面有一个美元符号：
-    - `(?<=\$)`: 向后查找美元符号
+    正向后顾断言 `(?<=\$) ` 确保数字前面有一个美元符号：
+    - `(?<=\$)`: 检查前面的美元符号
     - `\d+`: 匹配一个或多个数字
 
-    向后查找断言不会消耗字符，它们只检查前面的内容。
+    后顾断言不会消耗字符，它们只检查前面的内容。
     当你想要根据前面的内容匹配某些内容而不包括前面的部分时，这很有用。
 
-    [了解更多关于向后查找断言](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [了解更多关于后顾断言](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -503,7 +503,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="基本匹配"
-  title="懒惰与贪婪量词"
+  title="非贪婪与贪婪量词"
   options={[
     {text: '["<b>bold</b>"]'},
     {text: '["bold"]', isAnswer: true},
@@ -522,17 +522,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    该模式使用 `*?` 进行懒惰匹配：
+    该模式使用 `*?` 进行非贪婪匹配：
     - `<b>`：匹配开始标签
-    - `(.*?)`：捕获任意字符（懒惰）
+    - `(.*?)`：捕获任意字符（非贪婪）
     - `</b>`：匹配结束标签
 
-    `*` 后面的 `?` 使其变为懒惰模式，尽可能少地匹配字符。
+    `*` 后面的 `?` 使其变为非贪婪模式，尽可能少地匹配字符。
     如果没有 `?`，它将是贪婪模式，尽可能多地匹配。
 
     `slice(1)` 返回捕获组的内容。
 
-    [了解更多关于贪婪与懒惰匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [了解更多关于贪婪与非贪婪匹配](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -546,7 +546,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '["🙂"]'},
     {text: '["😀", "🙂"]', isAnswer: true},
     {text: 'null'},
-    {text: 'Error'},
+    {text: '错误'},
   ]}
 >
   <slot name="question">
@@ -600,14 +600,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     不要在生产中写这样的代码！😅
 
-    这个模式使用了多个正向先行断言来强制要求：
+    这个模式使用了多个正向前瞻断言来强制要求：
     - 至少一个大写字母：`(?=.*[A-Z])`
     - 至少一个小写字母：`(?=.*[a-z])`
     - 至少一个数字：`(?=.*\d)`
     - 至少一个特殊字符：`(?=.*[!@#$%^&*])`
     - 最小长度8个字符：`.{8,}`
 
-    先行断言非常适合密码验证，因为它们可以在不消耗字符的情况下检查多个条件。
+    前瞻断言非常适合密码验证，因为它们可以在不消耗字符的情况下检查多个条件。
 
     [了解更多关于密码验证模式的信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
