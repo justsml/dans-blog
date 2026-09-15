@@ -58,7 +58,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)` יוצר Buffer חדש בגודל שצוין וממולא באפסים.
     הפלט יהיה: `<Buffer 00 00 00 00 00>`
 
-    `Buffer.allocUnsafe(5)` אינו מאתחל את הזיכרון ועלול להכיל נתונים קודמים; אין להשתמש בו כמקור לנתונים אקראיים. יש למלא את כל הבתים לפני קריאתם או חשיפתם.
+    `Buffer.allocUnsafe(5)` אינו מאתחל את הזיכרון ועלול להכיל נתונים קודמים; אין להשתמש בו כמקור לנתונים אקראיים. יש למלא את כל הבתים לפני קריאתם או חשיפתם; אם דרושים בתים אקראיים, השתמשו ב־`crypto.randomBytes(5)`.
 
     [למידע נוסף על הקצאת Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>

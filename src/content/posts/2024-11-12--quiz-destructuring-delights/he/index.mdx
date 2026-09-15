@@ -242,9 +242,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    ברירת המחדל `place = 'Unknown'` חלה רק לאחר שנמצא אובייקט שאפשר לפרק. כאן `person.birth` הוא `undefined`, ולכן הפירוק עצמו זורק `TypeError` לפני שאפשר להשתמש בברירת המחדל. יש לספק גם ברירת מחדל לאובייקט: `birth: { place = 'Unknown' } = {}`. נוסח הודעת השגיאה משתנה בין סביבות ריצה.
+המאפיין `birth` חסר, ולכן JavaScript מנסה לפרק את `place` מתוך `undefined`. נוצרת שגיאה עוד לפני שברירת המחדל של `place` יכולה לחול:
+
+```plaintext
+TypeError
+```
+
+הנוסח המדויק של הודעת השגיאה משתנה בין סביבות ריצה. ברירת מחדל של מאפיין מטפלת במאפיין חסר או בעל ערך `undefined` רק אחרי שנמצא האובייקט המכיל אותו. השתמשו ב־`birth: { place = "Unknown" } = {}` כדי לספק גם אובייקט ברירת מחדל כאשר `birth` חסר או `undefined`.
   </div>
-  </slot>
+</slot>
 </Challenge>
 
 <Challenge
@@ -396,7 +402,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     הפונקציה `displayPlace` תשתמש באובייקט ברירת מחדל רק אם לא הועבר אובייקט. לכן, אפשר לקבל את ברירת המחדל `{ place: "Unknown" }` בקריאה `displayPlace()` או `displayPlace(undefined)`.
 
-    התנהגות בולטת נוספת כאן היא שהעברת `undefined` עבור `place` תגרום לשימוש בערך ברירת המחדל, בדומה להתנהגות של `JSON.stringify` (מתעלמת מ-`undefined`, מזהה `null`).
+    העברת `undefined` כערך של `place` מפעילה את ברירת המחדל של המאפיין. ברירת המחדל של אובייקט הפרמטר וברירות המחדל של המאפיינים פועלות ברמות שונות.
 
     התוצאה היא:
     ```js
@@ -446,7 +452,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    דומה לשאלה הקודמת... איך מטפלים ב-`null`?_
+    דומה לשאלה הקודמת... איך מטפלים ב-`null`?
     ```js
     function displayPlace({
       name = "N/A",

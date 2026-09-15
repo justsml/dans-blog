@@ -51,3 +51,18 @@ Compared terminology across this corpus and related Hebrew posts, including the 
 `he-integrity.txt` records 267/267 parsed questions and 1,231 options with preserved answer flags. `git diff --check` passed. Ran locale validation for every quiz. Several broad checks still reject legitimate translated prose as code because of `&`, semicolons, parentheses or CSS-unit fragments; these include “Width: 110px”, “Input & output modes”, and “Groups rows by the specified column(s)”. The older option counter also miscounts quoted object keys present in English Rust content. These were sent to the parent for shared parser/validator repair. Source-sensitive validation must be rerun after that repair and central English edits settle.
 
 Technical corrections were cross-checked against the [Node stream documentation](https://nodejs.org/api/stream.html#object-mode) and [AWS S3 consistency explanation](https://aws.amazon.com/s3/consistency/). Central review owns AWS freshness and remaining shared-source issues, including potentially overbroad costs, limits, and HTML distractors.
+
+## Final source alignment
+
+Rechecked the current English corpus after `35c81f213`, including the subsequent Date Q6 and Regex Q15 refinements. Final source body hashes and full-file SHA-256 values for all 19 quizzes are recorded in `he-final-alignment.json`; existing pipeline `sourceHash` frontmatter and judge metadata remain unchanged. These are manual-review evidence hashes, not fresh AI scores.
+
+Aligned the remaining semantic differences: BigInt parsing comparison table and conversion semantics, CSS ID case sensitivity and descendant selectors, `max()` arity, destructuring TypeError fence and property-default distinction, PostgreSQL SQL-standard and extension scope, neutral AWS WebSocket tradeoffs, fixed BatchGetItem limit, UpdateItem versus transaction batches, on-demand pricing caveat, S3 successful-write consistency, Rust runtime-borrow explanation and optimizer caveat, precise regex lookaround reasoning and `u`/`v` flags, legal Bash quote handling, and prototype-tag hint.
+
+Final checks:
+
+- All 19 locale integrity checks passed (`he-locale-validation.txt`).
+- Strengthened corpus regression tests: **19 passed, 0 failed**, 2,296 assertions, including meaningful nonempty source-required hints (`he-corpus-test.txt`).
+- All 267 question/answer positions retained; all 1,231 answer choices remain available and distinct.
+- `git diff --check` passed.
+
+The validator issues described in the earlier section are historical baseline findings; shared fixes now allow the final Hebrew corpus to pass without restoring untranslated prose.
