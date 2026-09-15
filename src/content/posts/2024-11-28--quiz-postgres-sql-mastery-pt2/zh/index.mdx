@@ -122,19 +122,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    以下哪个 PostgreSQL 特性 **不是** ❌ ANSI SQL 标准的一部分？
+    PostgreSQL 文档将以下哪个子句列为对标准 SQL 的扩展？
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    PostgreSQL 对 ANSI SQL 的扩展示例：
-    - `RETURNING` 子句。
-    - 用于不区分大小写匹配的 `ILIKE`。
-    - 数组类型及其操作。
-    - JSON/JSONB 类型。
+    PostgreSQL 文档将 `RETURNING` 子句列为对标准 SQL 的扩展。`ILIKE` 也是 PostgreSQL 的扩展。
 
-    原始 ANSI SQL 标准包含：
+    不应把所有数组或 JSON 支持都归为非标准功能：SQL 在这些领域已有标准化能力，同时 PostgreSQL 也提供 `jsonb` 等自己的类型和运算符。
+
+    不同版本的 SQL 标准逐步引入了以下功能：
     - `WITH`（公用表表达式）。
     - 用于模式匹配的 `LIKE`。
     - `LATERAL` 连接。

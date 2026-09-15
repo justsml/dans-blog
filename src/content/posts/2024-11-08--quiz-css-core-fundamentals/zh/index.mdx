@@ -160,7 +160,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    正确答案是 `a#home[name='home']`，它同时匹配 `id` 和 `name` 属性。CSS 选择器区分大小写，所以 `#Home` 不起作用，且空格表示子元素，这里不适用。
+    正确答案是 `a#home[name='home']`，它同时匹配 `id` 和 `name` 属性。在标准模式的 HTML 中，ID 值区分大小写，所以 `#Home` 不匹配 `id="home"`。空格是后代组合符，会选择某个祖先元素内的另一个元素，而不是把多个条件组合到同一个链接上。
 
     `:contains()` 选择器不是标准的 CSS 选择器，但在某些 JS 库中可用。
   </div>

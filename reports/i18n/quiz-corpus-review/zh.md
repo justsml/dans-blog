@@ -12,6 +12,10 @@ Reviewed 2026-09-14: all **19 quizzes, 267 questions, 1,231 options**. This is a
 - Fixed timestamp precision question, removed duplicate timestamp explanation and speculative PostGIS/GEOS claim. Clarified regex lookahead direction/backtracking, Bash quote boundaries, and the original RefCell panic.
 - Translated remaining prose-only options and badges while retaining technical API names, output text, and identifiers. Date questions that ask which date is represented use consistent Chinese year-month-day formatting.
 
+## Final source alignment
+
+Propagated standard-mode HTML ID matching, descendant-combinator semantics, one-or-more CSS max() inputs and root-font assumptions; PostgreSQL RETURNING standard-extension scope; strict-swapping bubble-sort stability; portable Date formatting; parseInt whole-string versus integer-prefix semantics and prefix table; neutral AWS WebSocket tradeoffs and UnprocessedKeys retry guidance; Unicode-aware regex flags u or v. Restored five missing HTML documentation links. Exact TypeError/SyntaxError alternatives match source. All existing pipeline sourceHash frontmatter and scores remain unchanged.
+
 ## Terminology decisions
 
 | Concept | Usage | Corpus comparison |
@@ -28,9 +32,9 @@ Reviewed 2026-09-14: all **19 quizzes, 267 questions, 1,231 options**. This is a
 ## Verification and limits
 
 - Parsed all19 current Chinese files and compared all267 question indices, option counts and correct-option positions with current English. Every question has exactly one correct option; every option is nonblank; no question has duplicate option text.
-- Compared fenced question code: all match source after whitespace normalization. The HTML figure example's sample image path was restored to source. One deliberate explanation-fence difference remains: Destructuring Q4 now contains only the literal TypeError diagnostic; the previously English explanatory prose is Chinese outside the fence.
+- Compared fenced question code: all match source after whitespace normalization. The HTML figure example's sample image path was restored to source. All fenced question and explanation code now matches the final source after whitespace normalization, including the simplified TypeError diagnostic in Destructuring Q4.
 - No external AI judge was called and no fresh model score is claimed. Existing sourceHash frontmatter is historical pipeline metadata, not silently rewritten to imply fresh judging.
-- The source review and validators are being edited in parallel. Hashes below bind this review to the source bytes inspected. Recheck any file whose hash changes. Known heuristic findings (translated diagnostic prose, conceptual option lists and source inline-code parsing) were sent to the parent task rather than translating Chinese back into English merely to silence them.
+- Final alignment: source manifest from `6ddaf51c2`; all19 hashes below match that manifest and the inspected source files. Recheck any later source changes. All19 locale validators passed with `--skip-global`; the strengthened Chinese corpus suite passed19 tests /2,296 assertions, including nonempty source hints and per-option hint preservation. No build or browser run was performed in this alignment pass.
 
 ## Question ledger
 
@@ -107,7 +111,7 @@ Source SHA-256: `ea4b4440293b28444b461e783c6f33db1a9d797e64fa8a5987034d8dada9f63
 
 ### quiz-regex-or-wreckage
 
-Source SHA-256: `10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25`
+Source SHA-256: `0b087416a4feeb151ae3aaa3f19d785b8edc4860522fe150845f43141d7444e9`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -130,7 +134,7 @@ Source SHA-256: `10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a2
 
 ### quiz-css-core-fundamentals
 
-Source SHA-256: `2788fc04e78db4ccdb705b06b915c55e4c625810b09885221f455cf12e3edaaf`
+Source SHA-256: `ee5866dcab74b29fcaf99765c78fd8c474d51fbd357ed07af1c02059c59d81c7`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -151,7 +155,7 @@ Source SHA-256: `2788fc04e78db4ccdb705b06b915c55e4c625810b09885221f455cf12e3edaa
 
 ### quiz-modern-css-2025
 
-Source SHA-256: `7f302e5782ff1d262f8af1bb22cfe184f7490015bc2bf8e7becc3fc5936fdd2e`
+Source SHA-256: `7254e27e26db35a72ca971a9fce8ae96d3cba30163bc6958ec3118e52e39704b`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -169,7 +173,7 @@ Source SHA-256: `7f302e5782ff1d262f8af1bb22cfe184f7490015bc2bf8e7becc3fc5936fdd2
 
 ### quiz-postgres-sql-mastery-pt2
 
-Source SHA-256: `b97ed535e3eced922287f21009e9b99a8a074cc2ea569e7d9e52c8572ac06cce`
+Source SHA-256: `442e06417de424ae712b9a4016865482fd1050ef479a9719f3c28d4709b2d808`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -262,7 +266,7 @@ Source SHA-256: `63cd3ddef63907f8281b7060db5b8004bf7bac2067f84fcdf01ca8bd8b18c3f
 
 ### quiz-advanced-js-error-mastery
 
-Source SHA-256: `f0ef81ef5c1727d2a8a11e8a819b501a09ccb4f36e8014f758f36aa09b22961a`
+Source SHA-256: `e00c048b44ae6dec4bee8aedf31356a8c002564399f9e3525175ace3b2fe3bbb`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -283,7 +287,7 @@ Source SHA-256: `f0ef81ef5c1727d2a8a11e8a819b501a09ccb4f36e8014f758f36aa09b22961
 
 ### quiz-data-structures-algorithms
 
-Source SHA-256: `f258c619229805a1a020c8a04e43e9e2c1a98845a967429d069e1b53648bd1b9`
+Source SHA-256: `bbe16f991f17d61caaf6a3d510caa7d4dd771d1113bbbdd157319831abc66dd7`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -310,7 +314,7 @@ Source SHA-256: `f258c619229805a1a020c8a04e43e9e2c1a98845a967429d069e1b53648bd1b
 
 ### quiz-destructuring-delights
 
-Source SHA-256: `467e43bad93a2cacd7b0996c571584dcceb98969f924aa31ef9ba672a077ef90`
+Source SHA-256: `0aa930822ea8a6b38914c30bcdb73e22de3e8910a0f92e5f0f6ab8c090fabd4d`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -329,7 +333,7 @@ Source SHA-256: `467e43bad93a2cacd7b0996c571584dcceb98969f924aa31ef9ba672a077ef9
 
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
-Source SHA-256: `fcef89818a405467abb8281315473a211b41b4e815d14835c8264d8fc8804f29`
+Source SHA-256: `ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -350,7 +354,7 @@ Source SHA-256: `fcef89818a405467abb8281315473a211b41b4e815d14835c8264d8fc8804f2
 
 ### quiz-can-you-count-to-bigint
 
-Source SHA-256: `15d65ba75475634f5d393dbf2afecb70b7496d8a0b56b7fe7f36a9f0b32726d1`
+Source SHA-256: `f7af3ca5f8ef55272d24882cc3612f0492277f3ce73ad21ddc7a952a7f4d6a8e`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |
@@ -384,7 +388,7 @@ Source SHA-256: `c31ed61019199a9690cb1c1f02182365a0ddb2c7c99eb9ad49da340c96dd83f
 
 ### quiz-in-the-aws-cloud
 
-Source SHA-256: `9690cc0b49efc10047045e06bd765e746a16b0bb5456fa9cf8d786a3cfdc7e30`
+Source SHA-256: `8f073f151596d04141eec7cd5a1517d350fc7a7ebb7a42725eac544d8cb8dba9`
 
 | Q | Reviewed title | Correct option | Chinese answer |
 | --- | --- | --- | --- |

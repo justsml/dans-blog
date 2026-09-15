@@ -316,7 +316,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     第一个元素 `24` 在基数为 0（自动检测）时被解析为 `24`，因此保持为 `24`。第二个元素 `'One'` 在基数为 1 时被解析为 `NaN`。第三个元素 `42` 使用基数 2 进行解析。在基数 2 中，`'42'` 是 `NaN`，因此结果是 `[24, NaN, NaN]`。
 
-    这是 `parseInt` 和 `map` 的一个常见陷阱。如果你想将字符串数组解析为数字，唯一安全的“内置”方法是 `.map(Number)` 或添加回调/闭包 <code>{`.map(x => parseInt(x, 10))`}</code>。
+    这是 `parseInt` 和 `map` 的一个常见陷阱。若要转换整个字符串，使用 `.map(Number)`；若要按十进制解析字符串开头的整数部分，使用 <code>{`.map(x => parseInt(x, 10))`}</code>。两者的解析语义不同，应按实际需求选择。
   </div>
   </slot>
 </Challenge>
@@ -455,8 +455,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         <td>❌</td>
       </tr>
       <tr>
-        <td>二进制/八进制/十六进制字面量</td>
-        <td>✅</td>
+        <td>字符串中的二进制/八进制/十六进制前缀</td>
+        <td>仅推断十六进制 <code>0x</code>；不会推断 <code>0b</code>/<code>0o</code></td>
         <td>❌</td>
         <td>✅</td>
         <td>✅</td>

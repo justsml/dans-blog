@@ -77,13 +77,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="热身：数组"
   title="数组解构与缺失元素"
   options={[
-    {"text": "Name: Dan Levy, Age: NaN"},
-    {"text": "Name: Dan Levy, Age: null"},
-    {"text": "Name: Dan Levy, Age: undefined", "isAnswer": true},
-    {"text": "Name: Dan Levy, Age: 40"},
-    {"text": "错误：无法解构属性 'age'"},
-    {"text": "SyntaxError：意外的标记 ','"},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: NaN"
+  },
+  {
+    "text": "Name: Dan Levy, Age: null"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "错误：无法解构属性 'age'"
+  },
+  {
+    "text": "SyntaxError: Unexpected token ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -192,12 +205,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `birth` 属性在 `person` 上不存在，所以整个对象仍然需要一个默认值，而不仅仅是嵌套属性。基本上缺少一个 ` = {}` 的默认值。
+    `birth` 属性不存在，因此 JavaScript 会尝试从 `undefined` 解构 `place`。在 `place` 的默认值有机会生效之前，就会抛出错误：
 
-    属性默认值只有在能够先解构外层对象时才会被使用。这里 `person.birth` 为 `undefined`，对它进行解构会先抛出 `TypeError`，还没有机会使用 `place` 的默认值。具体错误文字因浏览器和运行时而异。
     ```plaintext
-    TypeError: Cannot read properties of undefined (reading 'place')
+    TypeError
     ```
+
+    具体的诊断消息因浏览器和运行时而异。为外层对象提供 ` = {}` 默认值，可以避免从 `undefined` 解构。
   </div>
   </slot>
 </Challenge>

@@ -647,7 +647,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    冒泡排序算法是稳定的吗？
+    如果标准冒泡排序仅在左侧键严格大于右侧键时交换相邻元素，它是否稳定？
   </div>
   </slot>
 
@@ -659,7 +659,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    冒泡排序是一种稳定的排序算法，因为它在排序过程中保持了相等元素的相对顺序。
+    在题目指定的严格比较条件下，键相等的元素不会彼此交换次序，因此冒泡排序是稳定的。如果实现也交换键相等的元素，就可能失去稳定性。
   </div>
   </slot>
 </Challenge>

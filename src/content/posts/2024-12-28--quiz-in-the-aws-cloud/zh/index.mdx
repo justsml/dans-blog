@@ -264,13 +264,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     API Gateway 支持双向 WebSocket API，但实现由 API Gateway 托管，而不是直接映射到您自己的服务器进程。
     API Gateway 维护客户端连接并将消息路由到 Lambda、HTTP 端点或其他集成。可以通过 API Gateway Management API 将消息发送回已连接的客户端。
 
-    其他服务对 WebSocket 更友好：
-    - Lightsail：非常适合简单的 WebSocket 部署 👌
+    其他服务提供不同的取舍：
+    - Lightsail：在实例上运行并管理自己的 WebSocket 服务器
     - AppSync：使用 WebSocket 实现托管的 GraphQL 订阅
     - EC2：经典的“想干嘛就干嘛” WebSocket 选项
-    - EKS：适合运行可扩展的 WebSocket 集群
+    - EKS：在 Kubernetes 中运行自己的 WebSocket 服务
 
-    小技巧：如果需要原始的 WebSocket 能力，还是使用计算服务吧！
+    应根据协议、连接限制、部署方式以及运维责任进行选择。托管 API 路由与自行托管服务器满足的是不同需求。
   </div>
   </slot>
 </Challenge>
@@ -391,7 +391,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     理解这些限制对于优化应用性能和确保高效的数据操作至关重要。
 
-    **注意：** `BatchGetItem` 每次调用最多 100 项是固定的 API 限制，不能通过申请提高配额来突破。请求数量更多时，必须拆分为多次调用。
+    **注意：** `BatchGetItem` 每次调用最多 100 项是固定的 API 限制，不能通过申请提高配额来突破。读取更多项时，必须拆分为多次调用，并使用退避策略重试 `UnprocessedKeys`。可调整的吞吐量配额属于另一种限制。
   </div>
   </slot>
 </Challenge>
