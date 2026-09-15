@@ -17,7 +17,7 @@ The English source was corrected alongside translations so the fixes remain avai
 - Clarified Node uninitialized buffers and stream object mode. [Node Buffer documentation](https://nodejs.org/api/buffer.html), [object-mode documentation](https://nodejs.org/api/stream.html#object-mode).
 - Narrowed DynamoDB single-item updates, batch limits, capacity tradeoffs and S3 consistency statements to their documented scope. [UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html), [BatchGetItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchGetItem.html), [on-demand capacity](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/on-demand-capacity-mode.html), [S3 consistency](https://aws.amazon.com/s3/consistency/).
 - Corrected partial-index predicate matching and PostgreSQL SQL-standard claims. [Partial indexes](https://www.postgresql.org/docs/current/indexes-partial.html), [INSERT compatibility](https://www.postgresql.org/docs/18/sql-insert.html).
-- Corrected BigInt/parseInt prefix comparisons, Bash quoting, regex backtracking, Rust borrowing and misleading error-recognition hints.
+- Corrected BigInt/parseInt prefix comparisons, Bash quoting, regex backtracking, Rust borrowing and misleading error-recognition hints. Unicode property escapes support either Unicode-aware flag, `u` or `v`; removed an unsupported historical claim about `toLocaleFormat()`. [Unicode-aware regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/unicode).
 
 ## Shared fixes
 

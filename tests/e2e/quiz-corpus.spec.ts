@@ -64,6 +64,9 @@ test.describe("mobile locale controls", () => {
       await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
       await expect(first).toHaveCSS("direction", ["ar", "he"].includes(entry.locale) ? "rtl" : "ltr");
       await expect(first.locator("pre").first()).toHaveCSS("direction", "ltr");
+      if (["en", "ar", "ja"].includes(entry.locale)) {
+        await page.screenshot({ path: `reports/i18n/quiz-corpus-review/screenshots/${entry.locale}-mobile.png` });
+      }
       const toggle = first.locator(".toggle-explainer");
       await toggle.click();
       await expect(toggle).toHaveText(messages.hideExplanation);
