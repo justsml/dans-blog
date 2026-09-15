@@ -154,13 +154,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    正解は `a#home[name='home']` で、`id` と `name` の両方にマッチします。CSS セレクタは大文字小文字を区別するので `#Home` は機能せず、スペースは子孫結合子を意味しますが、ここでは該当しません。
+  <slot name="explanation">
+<div className="explanation">
 
-    `:contains()` セレクタは標準の CSS セレクタではありませんが、いくつかの JS ライブラリで利用可能です。
-  </div>
-  </slot>
+正解は `a#home[name='home']` で、同じリンクの `id` と `name` の両条件にマッチします。標準モードのHTMLではIDの値は大文字小文字を区別するため、`#Home` は `id="home"` にマッチしません。スペースは子孫結合子であり、同じ要素の条件を組み合わせるのではなく、祖先の内側にある別の要素を選びます。
+
+`:contains()` は標準CSSのセレクタではありませんが、一部のJavaScriptライブラリで使われます。
+
+</div>
+</slot>
 </Challenge>
 
 <Challenge

@@ -7,7 +7,7 @@ Reviewed 2026-09-14. Scope: all 19 Japanese quiz translations, 267 questions and
 - All 19 files compile with the MDX compiler after edits.
 - All 267 question counts, option counts and correct-answer positions match the current English source. All question code matches after whitespace normalization; no question, explanation or option is empty.
 - Localized browser selection is being verified by the parent task corpus Playwright suite; this language review does not independently claim browser completion.
-- The per-locale validator was run for all 19. Its remaining failures include translated diagnostic descriptions treated as immutable code and regex inline text interpreted as structural HTML. These are handed to the parent task for shared-validator repairs. Compilation and answer-key parity are separate evidence, not substitutes for those repairs.
+- Final per-locale integrity validation: all 19 pass. Targeted strengthened corpus regression: 19 pass, 0 fail, 2,296 assertions, including nonempty source hints. Direct MDX compilation: all 19 pass.
 
 ## Terminology consensus
 
@@ -39,7 +39,11 @@ Related Japanese articles were inspected locally. The URL regex article uses 先
 
 ## Remaining shared-source caveats
 
-The parent task owns source edits and final cross-language alignment. The review raised Node uninitialized buffer/stream buffering, SQL correlation and IN semantics, AWS API-limit and consistency scope, DSA ambiguous algorithms, HTML overlapping descriptions, and Promise recovery; the corresponding Japanese changes are applied. Future source changes require a fresh alignment pass. PostgreSQL part 2 still uses broad historical SQL-standard wording and index-planner generalizations; no live database execution was performed by this language reviewer. AWS service claims require the parent task official-document verification rather than treating a fluent translation as proof.
+The parent task owns source edits and final cross-language alignment. The review raised Node uninitialized buffer/stream buffering, SQL correlation and IN semantics, AWS API-limit and consistency scope, DSA ambiguous algorithms, HTML overlapping descriptions, and Promise recovery; the corresponding Japanese changes are applied. Future source changes require a fresh alignment pass. PostgreSQL part 2 now distinguishes its RETURNING extension from SQL-standard array/JSON facilities and describes partial-index predicate implication rather than textual identity. No live database execution was performed by this language reviewer. AWS service claims require the parent task official-document verification rather than treating a fluent translation as proof.
+
+## Final source alignment
+
+The follow-up pass includes CSS ID case sensitivity and explicit root font size; BigInt prefix parsing and the comparison table; Destructuring Q4 exact TypeError output and Q7/Q8 defaults; PostgreSQL extension and partial-index explanations; Bubble Sort stability assumptions; AWS WebSocket tradeoffs and batch API scope; precise Error hints; Date formatting assumptions and standard formatting methods; regex case-insensitive backtracking and u/v Unicode modes. Literal diagnostic choices remain exact. All 19 current English source hashes below were refreshed after this pass.
 
 ## Source snapshots and answer ledger
 
@@ -116,7 +120,7 @@ Source SHA-256: ea4b4440293b28444b461e783c6f33db1a9d797e64fa8a5987034d8dada9f631
 
 ### quiz-regex-or-wreckage
 
-Source SHA-256: 10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25
+Source SHA-256: 0b087416a4feeb151ae3aaa3f19d785b8edc4860522fe150845f43141d7444e9
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -139,7 +143,7 @@ Source SHA-256: 10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25
 
 ### quiz-css-core-fundamentals
 
-Source SHA-256: 2788fc04e78db4ccdb705b06b915c55e4c625810b09885221f455cf12e3edaaf
+Source SHA-256: ee5866dcab74b29fcaf99765c78fd8c474d51fbd357ed07af1c02059c59d81c7
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -160,7 +164,7 @@ Source SHA-256: 2788fc04e78db4ccdb705b06b915c55e4c625810b09885221f455cf12e3edaaf
 
 ### quiz-modern-css-2025
 
-Source SHA-256: 7f302e5782ff1d262f8af1bb22cfe184f7490015bc2bf8e7becc3fc5936fdd2e
+Source SHA-256: 7254e27e26db35a72ca971a9fce8ae96d3cba30163bc6958ec3118e52e39704b
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -178,7 +182,7 @@ Source SHA-256: 7f302e5782ff1d262f8af1bb22cfe184f7490015bc2bf8e7becc3fc5936fdd2e
 
 ### quiz-postgres-sql-mastery-pt2
 
-Source SHA-256: b97ed535e3eced922287f21009e9b99a8a074cc2ea569e7d9e52c8572ac06cce
+Source SHA-256: 442e06417de424ae712b9a4016865482fd1050ef479a9719f3c28d4709b2d808
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -271,7 +275,7 @@ Source SHA-256: 63cd3ddef63907f8281b7060db5b8004bf7bac2067f84fcdf01ca8bd8b18c3fb
 
 ### quiz-advanced-js-error-mastery
 
-Source SHA-256: f0ef81ef5c1727d2a8a11e8a819b501a09ccb4f36e8014f758f36aa09b22961a
+Source SHA-256: e00c048b44ae6dec4bee8aedf31356a8c002564399f9e3525175ace3b2fe3bbb
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -292,7 +296,7 @@ Source SHA-256: f0ef81ef5c1727d2a8a11e8a819b501a09ccb4f36e8014f758f36aa09b22961a
 
 ### quiz-data-structures-algorithms
 
-Source SHA-256: f258c619229805a1a020c8a04e43e9e2c1a98845a967429d069e1b53648bd1b9
+Source SHA-256: bbe16f991f17d61caaf6a3d510caa7d4dd771d1113bbbdd157319831abc66dd7
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -319,7 +323,7 @@ Source SHA-256: f258c619229805a1a020c8a04e43e9e2c1a98845a967429d069e1b53648bd1b9
 
 ### quiz-destructuring-delights
 
-Source SHA-256: 467e43bad93a2cacd7b0996c571584dcceb98969f924aa31ef9ba672a077ef90
+Source SHA-256: 0aa930822ea8a6b38914c30bcdb73e22de3e8910a0f92e5f0f6ab8c090fabd4d
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -338,7 +342,7 @@ Source SHA-256: 467e43bad93a2cacd7b0996c571584dcceb98969f924aa31ef9ba672a077ef90
 
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
-Source SHA-256: fcef89818a405467abb8281315473a211b41b4e815d14835c8264d8fc8804f29
+Source SHA-256: ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -359,7 +363,7 @@ Source SHA-256: fcef89818a405467abb8281315473a211b41b4e815d14835c8264d8fc8804f29
 
 ### quiz-can-you-count-to-bigint
 
-Source SHA-256: 15d65ba75475634f5d393dbf2afecb70b7496d8a0b56b7fe7f36a9f0b32726d1
+Source SHA-256: f7af3ca5f8ef55272d24882cc3612f0492277f3ce73ad21ddc7a952a7f4d6a8e
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|
@@ -393,7 +397,7 @@ Source SHA-256: c31ed61019199a9690cb1c1f02182365a0ddb2c7c99eb9ad49da340c96dd83f9
 
 ### quiz-in-the-aws-cloud
 
-Source SHA-256: 9690cc0b49efc10047045e06bd765e746a16b0bb5456fa9cf8d786a3cfdc7e30
+Source SHA-256: 8f073f151596d04141eec7cd5a1517d350fc7a7ebb7a42725eac544d8cb8dba9
 
 | Question | Title | Correct option | Answer |
 |---:|---|---:|---|

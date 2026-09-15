@@ -364,13 +364,15 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    否定先読み `(?![a-z])` は、数字の後に小文字がないことを保証します。"3aBc" の部分は数字の後に小文字があるためマッチしません。したがって、先頭の "12" のみがマッチします。
+  <slot name="explanation">
+<div className="explanation">
 
-    [否定先読みの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
-  </div>
-  </slot>
+`i` フラグがあるため、`(?![a-z])` は直後のASCII英字を大文字小文字に関係なく拒否します。貪欲な数字のマッチはまず `123` を消費しますが、次の `a` で失敗し、`12` までバックトラックします。すると次の文字は `3` なのでアサーションが成功し、結果は `["12"]` です。
+
+[否定先読みの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -547,7 +549,7 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
     `u` がないと、絵文字やその他の Unicode 文字が正しくマッチしない可能性があります。
     パターン `\p{Emoji}` は Unicode の `Emoji` プロパティを持つ文字にマッチします。この文字列では、2つの絵文字ピクトグラムを指します。
 
-    注意: Unicode プロパティエスケープは `u` フラグが必要です。
+    注意: UnicodeプロパティエスケープにはUnicode対応モードが必要です。この例の `u` フラグ、または新しい `v` フラグを使用します。
 
     [Unicode モードの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
   </div>

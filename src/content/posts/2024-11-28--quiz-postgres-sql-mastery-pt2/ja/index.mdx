@@ -123,25 +123,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    PostgreSQLの機能のうち、ANSI SQL標準に**含まれていない** ❌ ものはどれ？
+    PostgreSQLの文書で、標準SQLへの拡張として説明されている句はどれですか？
   </div>
   </slot>
 
-  <slot name='explanation'>
-  <div className="explanation">
-    ANSI SQLに対するPostgreSQL独自の拡張機能の例：
-    - `RETURNING` 句
-    - 大文字小文字を区別しないマッチング用の `ILIKE`
-    - 配列型とその操作
-    - JSON/JSONB型
+  <slot name="explanation">
+<div className="explanation">
 
-    オリジナルのANSI SQL標準に含まれるもの：
-    - `WITH` (共通テーブル式)
-    - パターンマッチング用の `LIKE`
-    - `LATERAL` ジョイン
-    - ウィンドウ関数
-  </div>
-  </slot>
+PostgreSQLでは `RETURNING` 句を標準SQLへの拡張として説明しています。`ILIKE` もPostgreSQLの拡張です。
+
+配列やJSONの機能をすべて非標準と分類するのは不正確です。SQL標準にもこれらの機能があり、PostgreSQLには `jsonb` など独自の型や演算子もあります。
+
+SQL標準の各版では、`WITH`（共通テーブル式）、`LIKE`、`LATERAL` 結合、ウィンドウ関数などが導入されてきました。
+
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -440,7 +436,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     通常、行の特定のサブセットのみがクエリの対象となる場合に、ディスク使用量を削減し、クエリを高速化するのに役立つ。
 
-    Postgresは、クエリ内に `status = 'active'` という条件が存在する場合にのみ、このインデックスを使用する。
+    プランナが、クエリの条件から `status = 'active'` が成り立つと証明できる場合に、このインデックスを候補にできます。完全な文字列一致は必須ではありませんが、推論には限界があり、パラメータ化された条件では計画時に証明できない場合があります。候補になっても、実際に選択されるとは限りません。
 
     **注意:** Postgresは他のRDBMSのような「クエリヒント」をサポートしていない。クエリプランナが、適切なインデックスを使用するかどうかを自律的に判断する。
   </div>

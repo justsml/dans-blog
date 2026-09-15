@@ -236,13 +236,13 @@ AWSストレージサービスの奥深さに深く掘り下げる！このク�
     API Gatewayは双方向WebSocketAPIをサポートしますが、実装はAPI Gatewayによって管理され、独自サーバープロセスへの直接ソケットではありません。
     API Gatewayはクライアント接続を維持し、LambdaやHTTPエンドポイントなどの統合先にメッセージをルーティングします。メッセージはAPI Gateway Management APIを通じて接続されたクライアントに戻送可能です。
 
-    他の選択肢はWebSocketにフレンドリーです：
-    - Lightsail: 簡単なWebSocketセットアップに最適 👌
+    他のサービスには異なる利点と運用負担があります：
+    - Lightsail: インスタンス上で自分のWebSocketサーバーを運用
     - AppSync: 管理型GraphQLサブスクリプション用のWebSocketを使用
     - EC2: WebSocketで何でもできるクラシックな選択肢
-    - EKS: スケーラブルなWebSocketクラスタを実行するのに最適
+    - EKS: Kubernetes上で自分のWebSocketサービスを実行
 
-    プロのヒント: 生のWebSocketパワーが必要なら、コンピュートサービスを選択してください！
+    プロトコル、接続数の制限、デプロイ方式、運用責任に応じて選びます。管理型APIルーティングと自分のサーバーの運用は、異なる要件に応えます。
   </div>
   </slot>
 </Challenge>
@@ -382,7 +382,7 @@ AWSストレージサービスの奥深さに深く掘り下げる！このク�
   <div className="explanation">
     DynamoDBクライアントは基本的にそのHTTP APIのラッパーです。`BatchWriteItem`操作は1回のHTTPリクエストで最大**25**ドキュメントを`PUT`または`DELETE`できますが、複数ドキュメントの`UPDATE`はできません。
 
-    DynamoDBは1回のHTTPリクエストで最大**25**ドキュメントを`INSERT`できますが、`UpdateItem`操作を使って1回のリクエストで`UPDATE`できるのは**1**ドキュメントだけです。
+    `UpdateItem` が変更するのは1アイテムです。これはそのAPIの制限であり、すべてのDynamoDBリクエストに適用される制限ではありません。トランザクションやPartiQLのバッチAPIは複数の更新を含められます。
   </div>
   </slot>
 </Challenge>
@@ -418,6 +418,8 @@ AWSストレージサービスの奥深さに深く掘り下げる！このク�
     - 予測可能な安定したワークロード
     - パフォーマンスの細かい制御が必要な場合
     - コスト節約の可能性がある場合
+
+    オンデマンドが常に安いわけではありません。リクエスト量、使用率、現在の料金を比較してください。予測できる持続的な負荷ではプロビジョニング容量が有利な場合もあります。
 
     [DynamoDBの容量モード](https://aws.amazon.com/dynamodb/pricing/)
   </div>

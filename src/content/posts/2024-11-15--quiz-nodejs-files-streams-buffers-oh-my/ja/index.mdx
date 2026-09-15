@@ -56,7 +56,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)`は指定されたサイズでゼロで埋めた新しいバッファを作成します。
     出力はこうなります: `<Buffer 00 00 00 00 00>`
 
-    `Buffer.allocUnsafe(5)` は初期化されていないメモリを返すことがあり、乱数生成には使えません。読み出したり外部に送信したりする前に、全バイトを上書きする必要があります。
+    `Buffer.allocUnsafe(5)` は初期化されていないメモリを返すことがあり、乱数生成には使えません。読み出したり外部に送信したりする前に、全バイトを上書きする必要があります。乱数のバイト列が必要なら `crypto.randomBytes(5)` を使います。
 
     [バッファの割り当てについて詳しく学ぶ](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -501,7 +501,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     ストリームは次のように動作できます：
     1. バイナリモード（デフォルト）: バッファや文字列に
-    2. オブジェクトモード: `null` 以外のJavaScript値に
+    2. オブジェクトモード: `null` 以外のJavaScript値に（`null` は読み取りストリームの終端を示します）
 
     オブジェクトモードの例:
     ```js

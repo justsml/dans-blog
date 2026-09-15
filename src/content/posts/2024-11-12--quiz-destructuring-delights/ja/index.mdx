@@ -106,7 +106,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "text": "エラー: プロパティ 'age' を分割代入できません"
   },
   {
-    "text": "SyntaxError: 予期しないトークン ','"
+    "text": "SyntaxError: Unexpected token ','"
   }
 ]}
 >
@@ -224,20 +224,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `birth` プロパティは `person` に存在しないので、ネストされたプロパティだけでなくオブジェクト全体にデフォルトが必要です。実質的に ` = {}` のデフォルトが抜けています。
+  <slot name="explanation">
+<div className="explanation">
 
-    この書き方は「`person.birth` が `undefined` の場合、`place` は `Unknown`」という意味になります。しかし `person.birth` は `undefined` なので、`undefined` を分割代入しようとしてエラーになります。
-    ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+`birth` が存在しないため、JavaScriptは `undefined` から `place` を分割代入しようとします。`place` のデフォルト値を適用する前に例外が発生します。
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+```plaintext
+TypeError
+```
 
-    Exact wording varies between browsers and runtimes.
-    ```
-  </div>
-  </slot>
+正確なエラーメッセージは実行環境によって異なります。入れ子のプロパティだけでなく、外側の `birth` オブジェクトにも `= {}` のデフォルトが必要です。
+
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -382,20 +381,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `displayPlace` 関数は、オブジェクトが渡されない場合にのみデフォルトオブジェクトを使用します。したがって、`{ place: "Unknown" }` のデフォルトを取得できるのは引数なしで `displayPlace()` を呼び出したときだけです。
+  <slot name="explanation">
+<div className="explanation">
 
-    もう一つ注目すべきは、`place` に `undefined` を渡すとデフォルト値が使用される点で、`JSON.stringify` の挙動（`undefined` を無視し `null` を認識する）に少し似ています。
+引数を省略した場合と明示的に `undefined` を渡した場合に、デフォルトの引数オブジェクト `{ place: "Unknown" }` が使われます。`displayPlace()` と `displayPlace(undefined)` はどちらも `Unknown` を出力します。
 
-    その結果は次の通りです:
-    ```js
+オブジェクトを渡した場合、その `place` プロパティが存在しないか `undefined` なら、プロパティのデフォルト値 `"N/A"` が使われます。引数全体とプロパティのデフォルトは別の段階で適用されます。
+
+```js
     displayPlace() // Unknown
     displayPlace({ name: "Dan" }) // N/A
     displayPlace({ name: "Dan", place: undefined }) // N/A
-    ```
-  </div>
-  </slot>
+```
+
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -431,11 +431,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    この場合、最初の呼び出しでは `place` プロパティが `null` に設定され、2 回目の呼び出しでは `undefined` になります。`place` のデフォルト値はオブジェクト全体が存在しない **または** `undefined` のときだけ使用されます。`null` はそのまま `null` として渡されます。
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+
+1回目は `place` が `null`、2回目は `undefined` です。オブジェクト自体が渡されていても、`place` が存在しないか `undefined` ならプロパティのデフォルト値 `"N/A"` が使われます。`null` はデフォルト値を適用しないため、出力は `null` と `N/A` です。
+
+</div>
+</slot>
 </Challenge>
 
 ## ここからはTypeScript

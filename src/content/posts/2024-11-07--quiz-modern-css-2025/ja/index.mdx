@@ -122,7 +122,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    コンテナの幅が200pxの場合、`<div>`の計算幅はどれになるか？
+    包含ブロックの幅が200px、ルート要素のフォントサイズが16pxの場合、`<div>`の計算幅はどれですか？
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -132,7 +132,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `max()`関数は2つ以上の入力を受け取り、自動的に最大値を適用する。ルートフォントサイズがブラウザのデフォルト値16pxと仮定すると、幅は`96px`となる。
+    `max()`関数は1つ以上の計算式を受け取り、自動的に最大値を適用する。ルートフォントサイズがブラウザのデフォルト値16pxと仮定すると、幅は`96px`となる。
 
     計算値を理解するには、相対単位をピクセルに変換する必要がある：
 

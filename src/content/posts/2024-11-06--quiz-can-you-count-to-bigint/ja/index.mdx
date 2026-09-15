@@ -294,11 +294,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    `parseInt` の第2引数（基数）は、配列メソッドのコールバックに渡される `index` 引数と勝手に紐付いてしまいます。これが予期せぬ結果を招く原因です。例えば `parseInt("One", 1)` は基数1が不正なため `NaN` を返します。
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+
+`map` はコールバックに値とインデックスを渡すため、`parseInt` の第2引数である基数にインデックスが入ります。`24` は基数0（自動判定）で24、`One` は無効な基数1でNaN、`42` は基数2で有効な数字から始まらないためNaNとなり、結果は `[24, NaN, NaN]` です。
+
+文字列全体を数値変換するには `.map(Number)`、10進数の整数部分を先頭から読み取るには `.map(x => parseInt(x, 10))` を使います。両者のパース規則は異なるので、意図に合わせて選びます。
+
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -432,8 +436,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         <td>❌</td>
       </tr>
       <tr>
-        <td>2進数/8進数/16進数リテラル</td>
-        <td>✅</td>
+        <td>文字列内の2進数・8進数・16進数プレフィックス</td>
+        <td>16進数の <code>0x</code> のみ。<code>0b</code>/<code>0o</code> は自動判定しない</td>
         <td>❌</td>
         <td>✅</td>
         <td>✅</td>

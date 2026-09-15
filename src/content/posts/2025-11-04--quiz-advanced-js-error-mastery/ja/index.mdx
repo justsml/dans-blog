@@ -175,11 +175,20 @@ iframe と親ウィンドウは別々の `Error` コンストラクタとプロ�
   group="非Errorのスロー"
   title="文字列スロー"
   options={[
-    {text: 'TypeError: 文字列はErrorではありません'},
-    {text: 'false, "string"', isAnswer: true},
-    {text: '自動的にErrorオブジェクトを作成する'},
-    {text: '未定義の動作'},
-  ]}
+  {
+    "text": "TypeError: string is not an Error"
+  },
+  {
+    "text": "false, \"string\"",
+    "isAnswer": true
+  },
+  {
+    "text": "自動的にErrorオブジェクトを作成する"
+  },
+  {
+    "text": "未定義の動作"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -546,10 +555,12 @@ JavaScriptの実行環境とエラーの種類に注目してください。
   </div>
   </slot>
   <slot name="hints">
-  <div className="hints">
-プロトタイプチェーンとオブジェクトのタグの違いに注目してください。
-  </div>
-  </slot>
+<div className="hints">
+
+一方はプロトタイプチェーンをたどり、もう一方は `Symbol.toStringTag` の影響を受けるオブジェクトタグを返します。
+
+</div>
+</slot>
 </Challenge>
 
 </QuizUI>

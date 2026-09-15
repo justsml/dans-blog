@@ -608,14 +608,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    バブルソートアルゴリズムは安定ですか？
+    左のキーが右のキーより厳密に大きい場合だけ隣接要素を交換する、標準的なバブルソートは安定ですか？
   </div>
   </slot>
-  <slot name='explanation'>
-  <div className="explanation">
-    バブルソートは安定なソートアルゴリズムで、等しい要素の相対順序を保ったままソートします。
-  </div>
-  </slot>
+  <slot name="explanation">
+<div className="explanation">
+
+この比較条件では等しいキーを持つ要素同士を追い越して交換しないため、バブルソートは安定です。等しいキーも交換する実装では、その性質が失われることがあります。
+
+</div>
+</slot>
   <slot name="hints">
   <div className="hints">
 構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。

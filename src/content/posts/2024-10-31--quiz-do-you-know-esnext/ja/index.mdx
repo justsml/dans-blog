@@ -137,11 +137,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="BigInt"
   title="BigInt の使用"
   options={[
-    {text: 'TypeError: BigInt と number を混在させることはできません'},
-    {text: '42n'},
-    {text: '84n', isAnswer: true},
-    {text: 'undefined'},
-  ]}
+  {
+    "text": "TypeError: Cannot mix BigInt and number"
+  },
+  {
+    "text": "42n"
+  },
+  {
+    "text": "84n",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
