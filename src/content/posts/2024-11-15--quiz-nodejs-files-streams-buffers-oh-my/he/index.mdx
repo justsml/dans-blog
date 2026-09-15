@@ -58,7 +58,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)` יוצר Buffer חדש בגודל שצוין וממולא באפסים.
     הפלט יהיה: `<Buffer 00 00 00 00 00>`
 
-    אם ברצונך ליצור Buffer עם נתונים אקראיים, השתמש ב-`Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` אינו מאתחל את הזיכרון ועלול להכיל נתונים קודמים; אין להשתמש בו כמקור לנתונים אקראיים. יש למלא את כל הבתים לפני קריאתם או חשיפתם.
 
     [למידע נוסף על הקצאת Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -220,7 +220,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="צנרת זרמים"
   options={[
     {text: 'מעתיק קובץ עם דחיסה'},
-    {text: 'מעתיק קובץ ללא חציצה בזיכרון', isAnswer: true},
+    {text: 'מעתיק קובץ בנתחים בלי לטעון את כולו לזיכרון', isAnswer: true},
     {text: 'טוען את כל הקובץ לזיכרון'},
     {text: 'יוצר קישור סימבולי'},
   ]}
@@ -359,7 +359,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     לצפייה אמינה יותר, שקול להשתמש ב:
     - החבילה `chokidar`
-    - דיבוב (debouncing) של הקולבק
+    - איחוד אירועים סמוכים בזמן (debouncing) של הקולבק
     - שימוש ב-`fs.watchFile()` (אם כי זה פחות יעיל)
 
     [למד עוד על fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
@@ -487,7 +487,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="סטרימים"
+  group="זרמים"
   title="מצבי Stream"
   options={[
     {text: 'מצב בינארי בלבד'},
@@ -500,15 +500,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    באילו מצבים יכולים לפעול סטרימים ב-Node.js?
+    באילו מצבים יכולים לפעול זרמים ב-Node.js?
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    סטרימים יכולים לפעול ב:
+    זרמים יכולים לפעול ב:
     1. מצב בינארי (ברירת מחדל): עבור buffers ומחרוזות
-    2. מצב אובייקט: עבור כל ערך JavaScript
+    2. מצב אובייקט: עבור ערכי JavaScript פרט ל־`null`, שמסמן סוף זרם
 
     דוגמה למצב אובייקט:
     ```js
@@ -520,7 +520,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       }
     });
     ```
-    [למד עוד על מצבי סטרים](https://nodejs.org/api/stream.html#object-mode)
+    [למד עוד על מצבי זרם](https://nodejs.org/api/stream.html#object-mode)
   </div>
   </slot>
 </Challenge>

@@ -55,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה תהיה הפלט עבור הקוד הבא?
+    מה יהיה הפלט עבור הקוד הבא?
     ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
@@ -122,7 +122,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה תהיה הפלט עבור הקוד הבא?
+    מה יהיה הפלט עבור הקוד הבא?
     ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
@@ -135,7 +135,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    כאשר משרשרים `.then` ו-`.catch`, כדאי לחשוב עליהם כסדרה של צעדים. כל `.then` מקבל את הערך שהוחזר על ידי ה-`.then` הקודם (כארגומנט שלו). עם זאת, אם ה"צעד" שלך נתקל בשגיאה, כל צעדי `.then` הבאים ידולגו עד שיימצא `.catch`. אם ברצונך לעקוף שגיאה, כל מה שאתה צריך לעשות הוא להחזיר ערך שאינו שגיאה. ניתן לגשת אליו דרך כל `.then` עוקב.
+    כאשר משרשרים `.then` ו-`.catch`, כדאי לחשוב עליהם כסדרה של צעדים. כל `.then` מקבל את הערך שהוחזר על ידי ה-`.then` הקודם (כארגומנט שלו). עם זאת, אם ה"צעד" שלך נתקל בשגיאה, כל צעדי `.then` הבאים ידולגו עד שיימצא `.catch`. אם ברצונך לעקוף שגיאה, יש להחזיר ערך רגיל במקום לזרוק או להחזיר הבטחה דחויה. אפילו החזרת אובייקט `Error` מממשת את ההבטחה בהצלחה; סוג האובייקט אינו הופך את ההחזרה לדחייה. ה־`.then` הבא מקבל את הערך שהוחזר.
   </div>
   </slot>
 </Challenge>
@@ -155,7 +155,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה תהיה הפלט עבור הקוד הבא?
+    מה יהיה הפלט עבור הקוד הבא?
     ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
@@ -168,7 +168,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    כאשר משרשרים `.catch`'s, כל אחד מטפל רק בשגיאות שנזרקות ב-`.then` או `.catch` הקודמים ("צעדים"). בדוגמה זו, ה-`.catch` הראשון מחזיר את ה-`console.log` שניתן לגשת אליו רק על ידי הוספת `.then()` אחרי שני ה-`.catch`'s.
+    ה־`.catch` הראשון מדפיס את הודעת השגיאה ומחזיר את ערך ההחזרה של `console.log`, כלומר `undefined`. ההבטחה הבאה מתממשת בהצלחה, ולכן ה־`.catch` השני אינו נקרא.
   </div>
   </slot>
 </Challenge>
@@ -187,7 +187,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה תהיה הפלט עבור הקוד הבא?
+    מה יהיה הפלט עבור הקוד הבא?
     ```js
     new Promise((resolve, reject) => {
         resolve('Success!')
@@ -205,9 +205,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    **רמז:** ניתן להשתמש ב-`.catch`'ים כדי להתעלם (או לעקוף) שגיאות פשוט על ידי החזרת ערך רגיל.
-
-    This trick works only when there is a subsequent `.then` to receive the value.
+    ה־`.catch` הראשון מחזיר ערך רגיל, ולכן ההבטחה הבאה מתממשת בהצלחה. ה־`.catch` השני מדולג ולא מודפס דבר. אפשר להוסיף `.then` כדי לקבל את הערך שהוחזר, אך הוא אינו נדרש כדי לטפל בדחייה.
   </div>
   </slot>
 </Challenge>
@@ -298,7 +296,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה תהיה הפלט עבור הקוד הבא?
+    מה יהיה הפלט עבור הקוד הבא?
     ```js
     Promise.resolve('Success!')
       .then(data => {

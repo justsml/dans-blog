@@ -43,12 +43,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "זהה שירותי אחסון בסיסיים של AWS",
   ]}
   options={[
-    {text: 'אחסון שרת גרסה 3'},
-    {text: 'אחסון כשירות'},
-    {text: 'שירות אחסון פשוט', isAnswer: true},
-    {text: 'שירות אחסון חצוף'},
-    {text: 'חנות מסונכרנת פשוטה'},
-  ]}
+  {
+    text: "Server Storage v3 — אחסון שרת גרסה 3"
+  },
+  {
+    text: "Storage as a Service — אחסון כשירות"
+  },
+  {
+    text: "Simple Storage Service — שירות אחסון פשוט",
+    isAnswer: true
+  },
+  {
+    text: "Sassy Storage Service — שירות אחסון חצוף"
+  },
+  {
+    text: "Simple Synchronized Store — מאגר מסונכרן פשוט"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -202,7 +213,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'מפחית עלויות אחסון'},
     {text: 'פותר את בעיית היציאה'},
-    {text: 'מספק החלפת כשל אוטומטית', isAnswer: true},
+    {text: 'מספק מעבר בעת כשל אוטומטית', isAnswer: true},
     {text: 'מגביר ביצועי קריאה'},
     {text: 'משפר תעבורה מבוזרת גאוגרפית'},
   ]}
@@ -215,12 +226,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    אזורי זמינות (AZs) הם מרכזי נתונים נפרדים **בתוך אזור.** פריסת RDS Multi-AZ מספקת החלפת כשל אוטומטית לעותק עמידה באזור *קרוב*.
+    אזורי זמינות (AZs) הם מרכזי נתונים נפרדים **בתוך אזור.** פריסת RDS Multi-AZ מספקת מעבר בעת כשל אוטומטית לעותק גיבוי ממתין באזור זמינות אחר באותו אזור AWS.
 
     פריסת Multi-AZ:
-    - מספקת החלפת כשל אוטומטית
+    - מספקת מעבר בעת כשל אוטומטית
     - מגבירה זמינות מסד הנתונים
-    - יוצרת עותק עמידה סינכרוני
+    - יוצרת עותק גיבוי ממתין סינכרוני
     - ממזערת זמן השבתה במהלך תקלות תשתית
 
     אל תבלבל בין פריסת Multi-AZ לבין Read Replicas, המשמשות להרחבת פעולות קריאה.
@@ -331,7 +342,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
   options={[
     {text: 'תמיד זול יותר מגרסה מוקצית'},
-    {text: 'מכוון אוטומטית את קיבולת המחשוב', isAnswer: true},
+    {text: 'מתאים אוטומטית את קיבולת המחשוב', isAnswer: true},
     {text: 'מספק אחסון בלתי מוגבל'},
     {text: 'מבטל את הצורך בניהול מסד הנתונים'},
   ]}
@@ -345,7 +356,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     Aurora Serverless:
-    - מכוון אוטומטית את קיבולת המחשוב
+    - מתאים אוטומטית את קיבולת המחשוב
     - מתאים משאבים לפי עומס העבודה
     - אידיאלי לעומסי עבודה בלתי צפויים
     - משלם רק על משאבים בשימוש
@@ -374,7 +385,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '75', hint: 'קרוב, אבל יש מספר עגול.'},
     {text: '50', hint: 'קצת גבוה יותר עבור `BatchGetItem`.'},
     {text: '200', hint: 'קצת גבוה מדי...'},
-    {text: 'Unlimited', hint: 'יש מגבלה קבועה עבור `BatchGetItem`.'},
+    {text: 'ללא הגבלה', hint: 'יש מגבלה קבועה עבור `BatchGetItem`.'},
   ]}
 >
   <slot name="question">
@@ -418,7 +429,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מהו המספר המקסימלי של מסמכים ש-DynamoDB יכול לעדכן (`UPDATE`) באצווה?
+    כמה פריטים יכולה פעולת `UpdateItem` יחידה של DynamoDB לעדכן?
   </div>
   </slot>
 
@@ -446,7 +457,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'קיבולת מוקצית תמיד טובה יותר'},
     {text: 'לקיבולת לפי דרישה יש קיבולת בלתי מוגבלת'},
     {text: 'הן פועלות באופן זהה'},
-    {text: 'קיבולת לפי דרישה זולה יותר עבור עומסי עבודה בלתי צפויים', isAnswer: true},
+    {text: 'קיבולת לפי דרישה מתאימה לעומסים בלתי צפויים בלי לתכנן קיבולת מראש', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -759,7 +770,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'אחסון עותקי נתונים נוספים'},
     {text: 'קרדיטים של DynamoDB לספקים ירוקים', hint: 'באמת?'},
-    {text: 'הגדלת ביצועי כתיבה', hint: 'Streams הם '},
+    {text: 'הגדלת ביצועי כתיבה', hint: 'Streams מתעדים שינויים; הם אינם מאיצים כתיבות.'},
     {text: 'לכידת שינויים ברמת הפריט לארכיטקטורות מונעות אירועים', isAnswer: true},
     {text: 'חלופה לאינדקסים משניים גלובליים', hint: 'אתה מנחש?'},
   ]}
@@ -961,8 +972,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
   options={[
     {text: 'רק עבור אובייקטים חדשים'},
-    {text: 'עקביות חזקה לכל הפעולות', isAnswer: true},
-    {text: 'עקביות סופית לעדכונים'},
+    {text: 'עקביות חזקה לפעולות קריאה, כתיבה ומחיקה של אובייקטים ולרשימות אובייקטים', isAnswer: true},
+    {text: 'עקביות בסופו של דבר לעדכונים'},
     {text: 'תלוי באזור'},
   ]}
 >
@@ -1003,8 +1014,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'מוחק פריטים מיד עם תום תוקפם'},
     {text: 'דורש הפעלת מחיקה ידנית'},
-    {text: 'מחיקת רקע עם תזמון מיטבי', isAnswer: true},
-    {text: 'מפוג תוקף פריטים אך שומר אותם מאוחסנים'},
+    {text: 'מחיקה ברקע ללא זמן מחיקה מובטח', isAnswer: true},
+    {text: 'מסמן פריטים כפגי תוקף אך שומר אותם מאוחסנים'},
   ]}
 >
   <slot name="question">
@@ -1017,7 +1028,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     מאפייני TTL של DynamoDB:
     - תהליך רקע עוקב אחר מאפיין TTL
-    - פריטים שפג תוקפם נמחקים בלוח זמנים מיטבי, בדרך כלל תוך מספר ימים
+    - פריטים שפג תוקפם נמחקים ללא זמן מחיקה מובטח, בדרך כלל תוך מספר ימים
     - אין עלות נוספת עבור TTL
     - פריטים שנמחקו מופיעים ב-streams
 
@@ -1043,8 +1054,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
   options={[
     {text: 'מהירות הסקיילינג תלויה בקיבולת הנוכחית והמוגדרת', isAnswer: true},
-    {text: 'מתקנה מידה באופן מיידי לפי דרישה'},
-    {text: 'מתקנה מידה רק במרווחים מוגדרים מראש'},
+    {text: 'מגדיל קיבולת באופן מיידי לפי דרישה'},
+    {text: 'משנה קיבולת רק במרווחים מוגדרים מראש'},
     {text: 'סקיילינג ידני בלבד'},
   ]}
 >
@@ -1057,7 +1068,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     סקיילינג של Aurora Serverless:
-    - Aurora Serverless v2 מתקנה מידה קיבולת בתוספות ACU מדויקות
+    - Aurora Serverless v2 משנה קיבולת בתוספות ACU מדויקות
     - מהירות הסקיילינג תלויה בקיבולת הנוכחית ובהגדרות ACU מינימום/מקסימום
     - גרסאות נתמכות יכולות לעצור אוטומטית ב-0 ACUs כשמוגדר
     - חיוב לפי שנייה על בסיס ACUs

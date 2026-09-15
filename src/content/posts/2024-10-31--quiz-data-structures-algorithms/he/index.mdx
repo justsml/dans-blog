@@ -109,7 +109,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מהי סיבוכיות הזמן לחישוב אורך של רשימה מקושרת חד-כיוונית?
+    מהי סיבוכיות הזמן לחישוב אורך של רשימה מקושרת חד־כיוונית שאינה שומרת מונה איברים?
   </div>
   </slot>
 
@@ -162,7 +162,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="אלגוריתמי מיון"
-  title="מורכבות מיון מיזוג"
+  title="סיבוכיות מיון מיזוג"
   options={[
     {text: 'O(n^2)'},
     {text: 'O(log n)'},
@@ -217,7 +217,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    BFS משתמש בתור כדי לחקור צמתים רמה אחר רמה, תוך עיבוד צמתים בצורה לרוחב (לפי "row").
+    BFS משתמש בתור כדי לחקור צמתים רמה אחר רמה, תוך עיבוד צמתים בצורה לרוחב (לפי רמה).
   </div>
   </slot>
 </Challenge>
@@ -364,7 +364,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איזה אלגוריתם נפוץ למציאת המסלול הקצר ביותר בגרף משוקלל עם קשתות לא שליליות?
+    איזה אלגוריתם חמדני משתמש בתור עדיפויות למציאת מסלולים קצרים ממקור יחיד בגרף עם משקלי קשתות לא שליליים?
   </div>
   </slot>
 
@@ -450,11 +450,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="מבני נתונים"
   title="פעולות תור"
   options={[
-    {text: 'הכנסה והוצאה', isAnswer: true},
-    {text: 'דחיפה ושליפה'},
-    {text: 'הצצה וראש'},
-    {text: 'סריקה ומיון'},
-  ]}
+  {
+    text: "הכנסה לתור (Enqueue) והוצאה מהתור (Dequeue)",
+    isAnswer: true
+  },
+  {
+    text: "דחיפה (Push) ושליפה (Pop)"
+  },
+  {
+    text: "הצצה (Peek) וראש (Top)"
+  },
+  {
+    text: "סריקה (Traverse) ומיון (Sort)"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -576,7 +585,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="מבני נתונים"
   title="סריקות עץ בינארי"
   options={[
-    {text: 'סדר-תוך, סדר-קדם, סדר-אחר', isAnswer: true},
+    {text: 'סריקה תוך־סדרית (in-order), סריקה קדם־סדרית (pre-order), סריקה אחר־סדרית (post-order)', isAnswer: true},
     {text: 'רוחב-ראשון, עומק-ראשון, ערימה'},
     {text: 'מיון, חיפוש, סיבוב'},
     {text: 'דחיפה, שליפה, הצצה'},
@@ -596,7 +605,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    סדר-תוך, סדר-קדם וסדר-אחר הם שלושת סדרי הסריקה הנפוצים של עומק-ראשון בעץ בינארי, כל אחד עם סדר ביקור שונה בצמתים. סריקת רוחב-ראשון גם היא נפוצה, אך היא קטגוריית סריקה שונה.
+    סריקה תוך־סדרית (in-order), סריקה קדם־סדרית (pre-order) וסריקה אחר־סדרית (post-order) הם שלושת סדרי הסריקה הנפוצים של עומק-ראשון בעץ בינארי, כל אחד עם סדר ביקור שונה בצמתים. סריקת רוחב-ראשון גם היא נפוצה, אך היא קטגוריית סריקה שונה.
   </div>
   </slot>
 </Challenge>
@@ -642,12 +651,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'יציב', isAnswer: true},
     {text: 'תלוי במימוש'},
     {text: 'אף אחד'},
-    {text: 'המורכבות קובעת את היציבות'},
+    {text: 'הסיבוכיות קובעת את היציבות'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    האם אלגוריתם מיון בועות הוא יציב?
+    האם מיון בועות שמחליף איברים סמוכים רק כאשר השמאלי גדול ממש מהימני הוא יציב?
   </div>
   </slot>
 

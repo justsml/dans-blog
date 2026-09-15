@@ -58,8 +58,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     יחידות חדשות יותר שימושיות לפריסות דינמיות ורספונסיביות.
 
     - `ch` - רוחב התו `0`
-    - `vmin` - מינימום תצוגה
-    - `vmax` - מקסימום תצוגה
+    - `vmin` - 1% מהממד הקטן של אזור התצוגה
+    - `vmax` - 1% מהממד הגדול של אזור התצוגה
     - `vh` - גובה תצוגה
     - `vw` - רוחב תצוגה
 
@@ -140,8 +140,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="סלקטורים: יסודות"
-  title="התאמת סלקטורים לאלמנטים HTML"
+  group="בוררים: יסודות"
+  title="התאמת בוררים לאלמנטים HTML"
   options={[
     {text: '#Home'},
     {text: 'a [id=\'home\']'},
@@ -151,7 +151,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איזה סלקטור מתאים ביותר ל-HTML הבא?
+    איזה בורר מתאים ביותר ל-HTML הבא?
     ```html
     <a id="home" name="home" href="/home">Home</a>
     ```
@@ -160,9 +160,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    התשובה הנכונה היא `a#home[name='home']`, שתואמת גם למאפיין `id` וגם למאפיין `name`. סלקטורים ב-CSS תלויים ברישיות, כך ש-`#Home` לא יעבוד, ורווחים מרמזים על אלמנטים ילדים, מה שלא רלוונטי כאן.
+    התשובה הנכונה היא `a#home[name='home']`, שתואמת גם למאפיין `id` וגם למאפיין `name`. בוררים ב-CSS תלויים ברישיות, כך ש-`#Home` לא יעבוד, ורווחים מרמזים על אלמנטים ילדים, מה שלא רלוונטי כאן.
 
-    הסלקטור `:contains()` אינו סלקטור CSS סטנדרטי, אבל הוא זמין בחלק מספריות JS.
+    הבורר `:contains()` אינו בורר CSS סטנדרטי, אבל הוא זמין בחלק מספריות JS.
   </div>
   </slot>
 </Challenge>
@@ -228,7 +228,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="סלקטורים: יסודות"
+  group="בוררים: יסודות"
   title="בחירת הקישור האחרון"
   options={[
     {text: 'a :nth-child(3)'},
@@ -240,7 +240,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איזה סלקטור תואם את הקישור האחרון ב-HTML הבא?
+    איזה בורר תואם את הקישור האחרון ב-HTML הבא?
     ```html
     <nav>
       <a name="home" href="/home">Home</a>
@@ -253,7 +253,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    הסלקטור הנכון הוא `a:last-child`, שתואם את ה-`<a>` האחרון כאשר הוא גם הילד האחרון של ההורה שלו. `nav:nth-child(3)` יתאים לאלמנט `<nav>` שהוא הילד השלישי של ההורה שלו.
+    הבורר הנכון הוא `a:last-child`, שתואם את ה-`<a>` האחרון כאשר הוא גם הילד האחרון של ההורה שלו. `nav:nth-child(3)` יתאים לאלמנט `<nav>` שהוא הילד השלישי של ההורה שלו.
   </div>
   </slot>
 </Challenge>
@@ -298,7 +298,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איך אפשר למרכז "shit" בתוך קופסה?
+    איך אפשר למרכז טקסט בתוך קופסה?
   </div>
   </slot>
 
@@ -445,8 +445,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={13}
-  group="סלקטור: ספציפיות"
-  title="סלקטורים עם ספציפיות אפס"
+  group="בורר: ספציפיות"
+  title="בוררים עם ספציפיות אפס"
   options={[
     {text: ':where(.card) .title', isAnswer: true},
     {text: '.card .title'},
@@ -456,7 +456,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איזה סלקטור הוא בעל הספציפיות הנמוכה ביותר?
+    איזה בורר הוא בעל הספציפיות הנמוכה ביותר?
   </div>
   </slot>
 

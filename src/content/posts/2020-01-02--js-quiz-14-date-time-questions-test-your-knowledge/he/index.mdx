@@ -49,14 +49,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="בנאי תאריך - חלק 1"
   options={[
-    {text: 'Jan 01 2020'},
-    {text: 'Feb 01 2020', isAnswer: true},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    text: "1 בינואר 2020"
+  },
+  {
+    text: "1 בפברואר 2020",
+    isAnswer: true
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -84,14 +91,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="בנאי תאריך - חלק 2"
   options={[
-    {text: 'Jan 01 2020', isAnswer: true},
-    {text: 'Feb 01 2020'},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    text: "1 בינואר 2020",
+    isAnswer: true
+  },
+  {
+    text: "1 בפברואר 2020"
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -124,7 +138,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'תאריך נוכחי, ב-UTC/GMT'},
     {text: 'תאריך נוכחי', isAnswer: true},
     {text: 'NaN'},
-    {text: 'RangeError: ארגומנט לא חוקי.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
@@ -144,11 +158,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    אל תשכח את מילת המפתח `new`! `Date` היא מחלקה, ויש לקרוא לה עם `new`.
-
-    `Date('...')` ללא `new` מתעלם ממה שאתה נותן לו. נראה שהוא תמיד מייצר את התאריך והשעה הנוכחיים עם `new Date()` (ללא ארגומנטים).
-
-    זוהי **מלכודת נפוצה** ש**קל להתעלם** ממנה, אפילו בסקירת קוד.
+    קריאה ל־`Date()` ללא `new` חוקית ומתעלמת מכל הארגומנטים. היא מחזירה מחרוזת של התאריך והשעה הנוכחיים בזמן המקומי, ולא אובייקט `Date` או את התאריך שהועבר. השתמשו ב־`new Date(...)` כדי ליצור אובייקט לפי הארגומנטים.
   </div>
   </slot>
 </Challenge>
@@ -164,12 +174,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '2019'},
     {text: '2020'},
     {text: '2021'},
-    {text: 'RangeError: ארגומנט לא חוקי.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    בהנחה שההיסט המקומי בתאריך הנתון הוא GMT−07:00, מה יודפס?
     ```js
     const date = new Date(2020)
     console.log(date.getFullYear())
@@ -209,7 +219,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איזה ערך יודפס לקונסולה?
+    בהנחה שההיסט המקומי בתאריך הנתון הוא GMT−07:00, מה יודפס?
     ```js
     const d1 = new Date('2020-01-01')
     const d2 = new Date('2020-01-01T00:00')
@@ -299,12 +309,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    תקבל `TypeError: date.toUTCString is not a function`, מכיוון ש-[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) מחזירה מספר שלם במילישניות, ולא אובייקט תאריך.
-
-    {/* המתודה [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) משתמשת בהסט המקומי שלך (נניח GMT-07:00 לשאלות אלו).
-    כלומר היא תחזיר את השנה הקודמת (ערב השנה החדשה מינוס 7 שעות).
-    המתודה [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) תחזיר את השנה כפי שסופקה ל-`Date.UTC()`, 2020.
-    */}
+    `Date.UTC()` מצפה לרכיבי תאריך מספריים ומחזירה מספר, לא אובייקט `Date`. כאן המחרוזת אינה שנה מספרית, ולכן מוחזר `NaN`. הניסיון לקרוא על המספר את `toUTCString()` זורק `TypeError`.
   </div>
   </slot>
 </Challenge>
@@ -358,7 +363,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    בהנחה שההיסט המקומי בתאריך הנתון הוא GMT−07:00, מה יודפס?
     ```js
     // Assume local TZ is -07:00
     const d = new Date(Date.UTC(2020, 0, 1))
@@ -374,9 +379,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    אובייקטי Date יוצגו באופן ברירת מחדל בשעה המקומית, עם [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) שאינו משתנה (למעשה).
-
-    אובייקטי `Date` אינם מאחסנים נתוני אזור זמן. הם מאחסנים את מספר המילישניות מאז תקופת יוניקס (1 בינואר 1970). אזור הזמן נלקח בחשבון בעת ניתוח ועיבוד מחרוזות תאריך. התנהגות התצוגה ברירת המחדל נקבעת אוטומטית על פי הגדרות האזור של המערכת או הדפדפן.
+    בהיסט מקומי GMT−07:00, `getTimezoneOffset()` מחזירה `420` דקות: UTC פחות הזמן המקומי. ההיסט עשוי להשתנות לפי התאריך בגלל שעון קיץ וכללים היסטוריים. אובייקט `Date` שומר חותמת זמן במילישניות, ולא אזור זמן; השיטות המקומיות משתמשות באזור הזמן של סביבת הריצה.
   </div>
   </slot>
 </Challenge>
@@ -387,14 +390,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="קובעי תאריכים חלק 1"
   options={[
-    {text: 'ינו 01 2020', isAnswer: true},
-    {text: 'פבר 01 2020'},
-    {text: 'RangeError: ארגומנט לא חוקי.'},
-  ]}
+  {
+    text: "1 בינואר 2020",
+    isAnswer: true
+  },
+  {
+    text: "1 בפברואר 2020"
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -425,14 +435,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="קובעי תאריך חלק 2"
   options={[
-    {text: 'Jan 01 2020'},
-    {text: 'Feb 01 2020', isAnswer: true},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    text: "1 בינואר 2020"
+  },
+  {
+    text: "1 בפברואר 2020",
+    isAnswer: true
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
@@ -456,15 +473,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="קובעי תאריכים חלק 3"
   options={[
-    {text: 'ינו 01 2020'},
-    {text: 'ינו 01 2021', isAnswer: true},
-    {text: 'פבר 01 2020'},
-    {text: 'RangeError: ארגומנט לא חוקי.'},
-  ]}
+  {
+    text: "1 בינואר 2020"
+  },
+  {
+    text: "1 בינואר 2021",
+    isAnswer: true
+  },
+  {
+    text: "1 בפברואר 2020"
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -496,16 +522,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="קובעי תאריך חלק 4"
   options={[
-    {text: 'ינו 01 2020'},
-    {text: 'פבר 01 2020'},
-    {text: 'ינו 01 2021'},
-    {text: 'פבר 01 2021', isAnswer: true},
-    {text: 'RangeError: ארגומנט לא חוקי.'},
-  ]}
+  {
+    text: "1 בינואר 2020"
+  },
+  {
+    text: "1 בפברואר 2020"
+  },
+  {
+    text: "1 בינואר 2021"
+  },
+  {
+    text: "1 בפברואר 2021",
+    isAnswer: true
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -541,16 +578,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טיפול בתאריכים"
   title="קובעי תאריכים חלק 5"
   options={[
-    {text: 'Jan 01 2020'},
-    {text: 'Feb 01 2020'},
-    {text: 'Jan 01 2019'},
-    {text: 'Dec 01 2019', isAnswer: true},
-    {text: 'RangeError: Invalid argument.'},
-  ]}
+  {
+    text: "1 בינואר 2020"
+  },
+  {
+    text: "1 בפברואר 2020"
+  },
+  {
+    text: "1 בינואר 2019"
+  },
+  {
+    text: "1 בדצמבר 2019",
+    isAnswer: true
+  },
+  {
+    text: "RangeError: Invalid argument."
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    מה יכלול הפלט?
+    איזה תאריך מקומי מייצג האובייקט? פורמט התצוגה בקונסולה עשוי להשתנות.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)

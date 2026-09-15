@@ -32,7 +32,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ממשקים מתקדמים"
-  title="Getter לעומת גישה ישירה לנכס"
+  title="Getter לעומת גישה ישירה למאפיין"
   options={[
     {text: 'השתמש בלולאה'},
     {text: 'קרא למתודה כדי לגשת לערך'},
@@ -42,7 +42,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    כיצד עליך לגשת לנכס של אובייקט JavaScript שמשתמש במתודת getter?
+    כיצד עליך לגשת למאפיין של אובייקט JavaScript שמשתמש במתודת getter?
     ```js
     const obj = {
       get val() {
@@ -61,7 +61,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    ב-JavaScript, ניתן לגשת ל-getter כמו לנכס רגיל. אין צורך לקרוא לו כמו פונקציה.
+    ב-JavaScript, ניתן לגשת ל-getter כמו למאפיין רגיל. אין צורך לקרוא לו כמו פונקציה.
     בדוגמה זו, גישה ל-`obj.val` ישירות מפעילה את מתודת ה-getter ומדפיסה `got it!`.
   </div>
   </slot>
@@ -148,7 +148,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="עבודה עם אובייקטים"
-  title="ברירת מחדל של ספירה עם Object.defineProperty()"
+  title="ברירת המחדל של enumerable עם Object.defineProperty()"
   options={[
     {text: 'true'},
     {text: 'false', isAnswer: true},
@@ -176,7 +176,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    כאשר אתה משתמש ב-`Object.defineProperty()` מבלי לציין `enumerable`, ערך ברירת המחדל שלו הוא `false`. משמעות הדבר היא שהמאפיין `make` לא יופיע ב-`Object.keys()` או בשיטות ספירה אחרות.
+    כאשר אתה משתמש ב-`Object.defineProperty()` מבלי לציין `enumerable`, ערך ברירת המחדל שלו הוא `false`. משמעות הדבר היא שהמאפיין `make` לא יופיע ב-`Object.keys()` או בשיטות מנייה אחרות.
   </div>
   </slot>
 </Challenge>
@@ -220,7 +220,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="ממשקים מתקדמים"
-  title="Symbols כמפתחות לא ניתנים למנייה"
+  title="מפתחות Symbol ו־for...in"
   options={[
     {text: 'לא, זה לא יופיע', isAnswer: true},
     {text: 'כן, זה יופיע ברשימה'},
@@ -251,7 +251,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    למאפיינים עם מפתחות Symbol יכולה להיות דגל `enumerable` משלהם, אבל `for...in` ו-`Object.keys()` מבקרים רק במאפיינים הניתנים למנייה עם מפתחות מחרוזת. בדוגמה זו, רק `regularKey` יופיע ברשימה, לא המאפיין עם מפתח Symbol.
+    למאפיינים עם מפתחות Symbol יכול להיות דגל `enumerable` משלהם, אבל `for...in` ו-`Object.keys()` מבקרים רק במאפיינים הניתנים למנייה עם מפתחות מחרוזת. בדוגמה זו, רק `regularKey` יופיע ברשימה, לא המאפיין עם מפתח Symbol.
   </div>
   </slot>
 </Challenge>

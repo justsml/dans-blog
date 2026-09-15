@@ -45,7 +45,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה הערך של `result`?
+    מה יודפס לקונסולה?
     ```js
     console.log(null ?? 100);
     ```
@@ -60,7 +60,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    אופרטור איחוי Null (`??`) מחזיר את האופרנד הימני (`b`) אם האופרנד השמאלי (`a`) הוא `null` או `undefined`. במקרה זה, `a` הוא `null`, ולכן `result` הוא `100`.
+    אופרטור איחוי Null (`??`) מחזיר את האופרנד הימני (`b`) אם האופרנד השמאלי (`a`) הוא `null` או `undefined`. במקרה זה, `a` הוא `null`, ולכן יודפס `100`.
   </div>
   </slot>
 </Challenge>
@@ -80,7 +80,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה תהיה הפלט של הקוד הבא?
+    מה יהיה הפלט של הקוד הבא?
     ```js
     const value = false;
     const defaultVal = 42;
@@ -144,7 +144,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="BigInt"
   title="שימוש ב-BigInt"
   options={[
-    {text: 'TypeError: לא ניתן לערבב BigInt ומספר'},
+    {text: 'TypeError: Cannot mix BigInt and number'},
     {text: '42n'},
     {text: '84n', isAnswer: true},
     {text: 'undefined'},
@@ -216,11 +216,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'התמלא: הצלחה', isAnswer: true},
-    {text: 'נדחה: שגיאה'},
-    {text: 'ממתין'},
-    {text: 'null'},
-  ]}
+  {
+    text: "fulfilled: success",
+    isAnswer: true
+  },
+  {
+    text: "Rejected: error"
+  },
+  {
+    text: "Pending"
+  },
+  {
+    text: "null"
+  }
+]}
 >
   <slot name="question">
   <div className="question">

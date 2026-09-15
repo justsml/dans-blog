@@ -142,17 +142,30 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="משתנים"
   title="בריחת תווים"
   options={[
-    {text: 'עלות: $$100'},
-    {text: 'עלות: $100'},
-    {text: 'עלות: 100'},
-    {text: 'עלות: 00', isAnswer: true},
-    {text: 'עלות:'},
-    {text: 'שגיאה'},
-  ]}
+  {
+    text: "Cost: $$100"
+  },
+  {
+    text: "Cost: $100"
+  },
+  {
+    text: "Cost: 100"
+  },
+  {
+    text: "Cost: 00",
+    isAnswer: true
+  },
+  {
+    text: "Cost:"
+  },
+  {
+    text: "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    עכשיו, מה זה ידפיס?
+    בהנחה שלא הועברו ארגומנטים ו־`$1` אינו מוגדר, מה יודפס?
     ```bash
     price="$100"
     echo "Cost: $price"
@@ -259,12 +272,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="תנאים"
   title="If-Else בסיסי"
   options={[
-    {text: 'הקובץ קיים'},
-    {text: 'הקובץ לא קיים, לאחר הודעת אבחון של הבדיקה', isAnswer: true},
-    {text: 'רק שגיאה'},
-    {text: 'חסרים סוגריים מרובעים כפולים'},
-    {text: 'כלום'},
-  ]}
+  {
+    text: "File exists"
+  },
+  {
+    text: "File does not exist, לאחר הודעת אבחון של הבדיקה",
+    isAnswer: true
+  },
+  {
+    text: "שגיאה בלבד"
+  },
+  {
+    text: "חסרים סוגריים מרובעים כפולים"
+  },
+  {
+    text: "לא מודפס דבר"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -306,11 +330,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="תנאים"
   title="השוואת מחרוזות"
   options={[
-    {text: 'אותו חתול'},
-    {text: 'חתולים שונים, אחרי שגיאת תחביר של בדיקה', isAnswer: true},
-    {text: 'זלגו'},
-    {text: 'רק שגיאה'},
-  ]}
+  {
+    text: "Same cat"
+  },
+  {
+    text: "Different cats, לאחר שגיאת תחביר בבדיקה",
+    isAnswer: true
+  },
+  {
+    text: "Zalgo"
+  },
+  {
+    text: "שגיאה בלבד"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -483,11 +516,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="מניפולציית מחרוזות"
   title="חילוץ תת-מחרוזת"
   options={[
-    {text: 'חתול רע'},
-    {text: 'חתול רע, חתול טוב:9'},
-    {text: 'חתול טוב', isAnswer: true},
-    {text: 'שגיאה'},
-  ]}
+  {
+    text: "Bad cat"
+  },
+  {
+    text: "Bad cat, good cat:9"
+  },
+  {
+    text: "good cat",
+    isAnswer: true
+  },
+  {
+    text: "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -527,7 +569,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מהי מילת המפתח שאינה ❌ לולאה בבאש?
+    איזו מהמילים הבאות אינה ❌ מילת מפתח בתחביר הלולאות של Bash?
   </div>
   </slot>
 
@@ -581,7 +623,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="קלט/פלט סטנדרטי"
-  title="ערכי ברירת מחדל"
+  title="הפניית פלט שגיאה"
   options={[
     {text: '1>&2'},
     {text: '&2>&1'},
@@ -598,7 +640,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    האופרטור `2>&1` מפנה את פלט השגיאה הסטנדרטי (תיאור קובץ 2) לפלט הסטנדרטי (תיאור קובץ 1). זה שימושי ללכידת הודעות שגיאה באותו זרם פלט כמו הפלט הרגיל.
+    האופרטור `2>&1` מפנה את פלט השגיאה הסטנדרטי (מתאר קובץ 2) לפלט הסטנדרטי (מתאר קובץ 1). זה שימושי ללכידת הודעות שגיאה באותו זרם פלט כמו הפלט הרגיל.
 
     האופרטור `1>&2` מפנה את הפלט הסטנדרטי לשגיאה הסטנדרטית, אך השאלה שאלה כיצד להפנות שגיאה סטנדרטית לפלט סטנדרטי.
 

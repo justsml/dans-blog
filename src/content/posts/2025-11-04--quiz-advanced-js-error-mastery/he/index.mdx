@@ -111,11 +111,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="טריקים של בדיקת טיפוסים"
   title="ירושת instanceof"
   options={[
-    {text: 'אמת, אמת, אמת', isAnswer: true},
-    {text: 'אמת, שקר, שקר'},
-    {text: 'שקר, אמת, אמת'},
-    {text: 'אמת, אמת, שקר'},
-  ]}
+  {
+    text: "true, true, true",
+    isAnswer: true
+  },
+  {
+    text: "true, false, false"
+  },
+  {
+    text: "false, true, true"
+  },
+  {
+    text: "true, true, false"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -158,13 +167,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה קורה עם `instanceof Error` בין iframes?
-    ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
-    ```
+    נניח ש־`iframeError` הוא אובייקט `Error` שנוצר ב־iframe מאותו מקור והועבר לחלון האב. מה עשויה להחזיר הבדיקה בחלון האב?
+```js
+console.log(iframeError instanceof Error);
+```
   </div>
   </slot>
 
@@ -176,7 +182,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof` יכול להחזיר `false` בין הקשרי הרצה שונים (iframes, workers) כי לכל הקשר יש בנאי `Error` משלו. השתמש ב-`Object.prototype.toString.call(obj) === '[object Error]'` לזיהוי שגיאות אמין בין הקשרים.
+    לכל הקשר הרצה יש בנאי `Error` ושרשרת אב־טיפוס משלו. לכן `instanceof Error` בחלון האב עשוי להחזיר `false` עבור שגיאה מה־iframe. `Object.prototype.toString.call(obj)` יכול לעזור בזיהוי בין הקשרים, אך `Symbol.toStringTag` מאפשר לזייף את התגית; זו אינה בדיקת אותנטיות מהימנה.
   </div>
   </slot>
 </Challenge>
@@ -187,7 +193,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="זריקת אי-שגיאות"
   title="זריקת מחרוזת"
   options={[
-    {text: 'TypeError: מחרוזת אינה שגיאה'},
+    {text: 'TypeError: string is not an Error'},
     {text: 'false, "string"', isAnswer: true},
     {text: 'יוצר אובייקט שגיאה אוטומטית'},
     {text: 'התנהגות לא מוגדרת'},
@@ -307,7 +313,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: '"Original error"', isAnswer: true},
     {text: 'undefined'},
-    {text: 'The wrapping error'},
+    {text: 'השגיאה העוטפת'},
     {text: 'SyntaxError'},
   ]}
 >
@@ -351,7 +357,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    מה עושה `Error.captureStackTrace`?
+    בסביבת V8 או Node.js, מה עושה `Error.captureStackTrace` כאן?
     ```js
     function createError(msg) {
       const err = new Error(msg);
@@ -448,7 +454,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    זכור כיצד אובייקטי Error מסודרים על ידי JSON.stringify.
+    זכור כיצד אובייקטי Error עוברים סריאליזציה על ידי JSON.stringify.
   </div>
   </slot>
 
@@ -573,13 +579,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name="hints">
   <div className="hint">
-    בדיקה אחת בודקת את שרשרת האב-טיפוס, והשנייה בודקת חריצים פנימיים.
+    בדיקה אחת בודקת את שרשרת האב-טיפוס, והשנייה משווה את תגית האובייקט.
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof Error` מחזיר `false` כי האובייקט לא נוצר על ידי בנאי Error. `Object.prototype.toString.call()` גם מחזיר `false` (הוא מחזיר `'[object Object]'`) כי הוא בודק את החריץ הפנימי `[[Class]]`. שתי השיטות מזהות נכון את זה כאובייקט שגיאה מזויף.
+    שתי הבדיקות מחזירות `false`. האובייקט אינו יורש מ־`Error.prototype`, ו־`Object.prototype.toString.call(fakeError)` מחזירה כאן `"[object Object]"`. הבדיקה השנייה אינה הוכחת אותנטיות: מאפיין `Symbol.toStringTag` יכול לשנות את התגית המוחזרת.
   </div>
   </slot>
 </Challenge>

@@ -20,6 +20,8 @@ import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <>
+> אלה רק מספרים, כמה קשה זה כבר יכול להיות? 🤓
+
 <QuizUI>
 
 <Challenge
@@ -116,11 +118,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="גלישת מספרים"
   title="טיפול באינסוף"
   options={[
-    {text: 'אינסוף', isAnswer: true},
-    {text: 'NaN'},
-    {text: 'שגיאה'},
-    {text: 'undefined'},
-  ]}
+  {
+    text: "Infinity",
+    isAnswer: true
+  },
+  {
+    text: "NaN"
+  },
+  {
+    text: "Error"
+  },
+  {
+    text: "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
