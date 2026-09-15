@@ -7,7 +7,7 @@ Reviewed all **19 quizzes, 267 questions and 1,231 options**, including every qu
 - All267 question indices, option counts and accepted-answer positions match English. No duplicate option labels remain.
 - Executable code blocks in questions and explanations match English after whitespace normalization. This check is code parity, not a claim that every snippet was executed.
 - All19 final files compile with the MDX compiler; targeted whitespace/diff validation passes. Browser selection, persistence and layout verification are owned by the parent corpus Playwright run.
-- Final strengthened Hindi corpus suite: **19 passed, 0 failed**, 2,296 assertions. All19 integrity checks have **zero high-severity issues**. Nine useful existing HTML option hints remain medium-severity adaptation notes and were reviewed and retained. Literal TypeError diagnostics are preserved in English with surrounding Hindi explanations.
+- Final strengthened Hindi corpus suite: **19 passed, 0 failed**, 2,296 assertions. All19 integrity checks have **zero high-severity issues**. Nine useful existing HTML option hints remain low-severity adaptation notes and were reviewed and retained. Literal TypeError diagnostics are preserved in English with surrounding Hindi explanations.
 - No external AI judge/provider was used and no fresh model score is claimed.
 
 ## Review ledger
@@ -52,3 +52,7 @@ PostgreSQL part2's original SQL-standard history was inaccurate; the parent corr
 ## Final source alignment
 
 Aligned Date Q6 with the nonstandard status of `toLocaleFormat()` and portable standard alternatives. Regex Q15 now states that Unicode property escapes accept Unicode-aware `u` or `v` mode. Evidence hashes were refreshed against current source files; pipeline frontmatter sourceHash and model scores remain unchanged.
+
+## Full-validator follow-up
+
+The full scoped validator caught a missing closing paragraph and quiz-collection link inside the Destructuring QuizUI container; the parser-based question ledger did not cover that interstitial prose. Restored the complete Hindi closing text and `/challenges/` link. The full scoped Destructuring validator now passes. Evidence target hashes were refreshed.
