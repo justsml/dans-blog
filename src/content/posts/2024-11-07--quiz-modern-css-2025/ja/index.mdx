@@ -75,7 +75,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 250px;'},
     {text: 'width: 500px;'},
     {text: 'width: max(50%, 200px);'},
-    {text: 'Invalid syntax'},
+    {text: '無効な構文'},
   ]}
 >
   <slot name="question">
@@ -204,7 +204,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `var()`関数は変数が定義されていない場合にフォールバック値を指定できます。このケースでは`--primary`が定義されていないため、背景色は`olivedrab`(`#6b8e23`)になります。
 
-    変数が存在しない場合やサポートされていない環境でもスタイルが崩れないようにするための重要なテクニックです。
+    このフォールバックは変数が未定義などの場合に使われます。CSS変数自体をサポートしないブラウザへの互換性対策にはなりません。
   </div>
   </slot>
 </Challenge>
@@ -213,7 +213,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="CSS関数"
-  title="clamp()を使用したリスポンシブデザイン"
+  title="clamp()を使用したレスポンシブデザイン"
   options={[
     {text: 'サポートされていない単位へのフォールバック'},
     {text: '`vw`単位を20px〜50pxの範囲に保つ'},
@@ -238,7 +238,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     つまり`50vw`が200px未満の場合は200px、500pxを超える場合は500px、その間は線形に変化します。
 
-    これにより自動的にリスポンシブデザインが実現できます！`clamp`の特徴は**固定単位**と**リスポンシブ/計算単位**を組み合わせることです。
+    これにより自動的にレスポンシブデザインが実現できます！`clamp`の特徴は**固定単位**と**レスポンシブ/計算単位**を組み合わせることです。
 
     通常はビューポート単位をフォントサイズに使いたくないですが、`clamp()`を使えばフォントサイズが小さすぎる/大きすぎるのを防げます。
   </div>
@@ -349,7 +349,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'JavaScriptを使用して', isAnswer: true},
     {text: 'SCSSでのみ'},
     {text: 'インラインスタイルでのみ'},
-    {text: 'リスポンシブ単位を使用して'},
+    {text: 'レスポンシブ単位を使用して'},
   ]}
 >
   <slot name="question">
@@ -378,11 +378,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="CSS変数"
   title="CSS変数とcalc()の使用"
   options={[
-    {text: 'Width: 50px'},
-    {text: 'Width: 100px', hint: 'base値だけを考慮しています'},
-    {text: 'Width: 110px', isAnswer: true},
-    {text: 'Width: 120px', hint: '追加の10pxを2回計算しています'},
-  ]}
+  {
+    "text": "Width: 50px"
+  },
+  {
+    "text": "Width: 100px"
+  },
+  {
+    "text": "Width: 110px",
+    "isAnswer": true
+  },
+  {
+    "text": "Width: 120px"
+  }
+]}
 >
   <slot name="question">
   <div className="question">

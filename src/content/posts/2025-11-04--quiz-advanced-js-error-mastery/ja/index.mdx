@@ -59,6 +59,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Error オブジェクトは列挙できないプロパティ（`message`、`name`、`stack`）を持つため、`JSON.stringify()` は `{}` を返します。これは API 応答でエラーを送る際の典型的な落とし穴です。`JSON.stringify(error, Object.getOwnPropertyNames(error))` を使うか、代わりにプレーンオブジェクトを作成してください。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+Errorオブジェクトの列挙可能なプロパティに注目してください。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -86,6 +91,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `console.log(err)` はエラーメッセージとスタックトレースを表示する。コンソールは Error オブジェクトを特別に扱うからだ。`JSON.stringify(err)` は `'{}'` を返す。Error のプロパティは列挙可能ではないためだ。この違いで API デバッグ中に多くの開発者がつまずく。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+console.logによる表示とJSONシリアライズを比べてください。
   </div>
   </slot>
 </Challenge>
@@ -120,6 +130,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     すべてのチェックは `true` を返します。`CustomError` は `Error` を継承し、`Error` は `Object` を継承しています。`instanceof` 演算子はプロトタイプチェーン全体を確認するので、`CustomError` のインスタンスは `Error` と `Object` のインスタンスでもあります。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+JavaScriptの継承とプロトタイプチェーンを思い出してください。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -136,18 +151,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    iframe 間で `instanceof Error` はどうなる？
-    ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
-    ```
+同一オリジンの iframe 内で作成した Error オブジェクトを、親ウィンドウの変数 `iframeError` に渡したとします。親ウィンドウの `Error` を使う次の判定はどうなりますか？
+```js
+console.log(iframeError instanceof Error);
+```
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
-    `instanceof` は異なる実行コンテキスト（iframe や worker）間では `false` を返すことがあります。各コンテキストは独自の `Error` コンストラクタを持っているためです。コンテキストを超えて確実にエラーを判定したい場合は `Object.prototype.toString.call(obj) === '[object Error]'` を使いましょう。
+iframe と親ウィンドウは別々の `Error` コンストラクタとプロトタイプを持つため、この判定は `false` です。`Object.prototype.toString.call(obj)` は別の実行領域のエラーを識別する手掛かりになりますが、`Symbol.toStringTag` で偽装できるため、本物の Error であることの保証にはなりません。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+別の実行領域は別のErrorコンストラクタを持ちます。
   </div>
   </slot>
 </Challenge>
@@ -180,6 +197,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     JavaScriptでは任意の値をthrowできる。ここでは `e instanceof Error` は `false` で、`typeof e` は `"string"` になる。これにより、捕捉した例外がすべてErrorオブジェクトであると想定したエラーハンドリングコードが壊れる可能性がある。デバッグしやすくするため、常にErrorインスタンスをthrowしよう。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+JavaScriptではError以外の値もthrowできます。
   </div>
   </slot>
 </Challenge>
@@ -216,6 +238,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `err.name` は `"CustomError"` です。なぜなら `this.constructor.name` がクラス名を返すからです。`this.name = this.constructor.name` を設定するのは、カスタムエラークラスがスタックトレースやエラーメッセージで正しい名前を表示するようにする一般的なパターンです。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+`this.constructor.name` の評価結果に注目してください。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -245,6 +272,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `this.name` を明示的に設定しないと、エラーは `Error` クラスからデフォルトの `name` プロパティ（`"Error"`）を継承します。だからカスタムエラークラスではコンストラクタ内で必ず `this.name = this.constructor.name` を設定すべきです。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+Errorのデフォルトのnameプロパティには何が入りますか？
   </div>
   </slot>
 </Challenge>
@@ -278,6 +310,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Error.cause`（ES2022）はエラーをチェーンさせ、元のエラーコンテキストを保持できる。`wrapper.cause` は元のエラーを指すので、`wrapper.cause.message` は `"Original error"` を返す。これは下位レベルのエラーを上位コンテキストでラップする際に便利だ。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+Error.causeはエラーを連鎖させるための機能です。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -294,7 +331,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    `Error.captureStackTrace` は何をしますか？
+    V8 / Node.js で、`Error.captureStackTrace` は何をしますか？
     ```js
     function createError(msg) {
       const err = new Error(msg);
@@ -308,6 +345,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `Error.captureStackTrace`（V8/Node.js）は、指定した関数（`createError`）をスタックトレースから除外し、エラーファクトリ関数をエンドユーザーに見えなくします。これにより、ファクトリが呼び出された場所を指す、よりクリーンなスタックトレースが得られます。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+V8固有のスタックトレース操作機能です。
   </div>
   </slot>
 </Challenge>
@@ -348,6 +390,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     テンプレートリテラルは補間時に `undefined` を文字列 `"undefined"` に変換します。エラーメッセージは `"Value undefined is invalid"` になります。よりクリーンなメッセージにするには、補間前に `value ?? 'null'` などのチェックを検討してください。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+テンプレートリテラルの補間でundefinedはどうなりますか？
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -377,6 +424,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `res.json()` は内部で `JSON.stringify()` を使用するため、Error オブジェクトは `{}` になります。クライアントは `{"error":{}}` を受け取ります。これを修正するには、`res.json({ error: error.message })` または `res.json({ error: { message: error.message, name: error.name } })` を使用します。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+JSON.stringifyによるErrorオブジェクトの扱いを思い出してください。
   </div>
   </slot>
 </Challenge>
@@ -414,6 +466,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `throw` と同様に、`Promise.reject()` は任意の値（文字列、オブジェクト、数値など）を受け取れます。これにより `"string"`、`404`、`42` が出力されます。Promise チェーンで捕捉した値の型は常に確認しましょう。特にサードパーティのコードが Error 以外で拒否する可能性がある場合は注意が必要です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+Promiseの拒否値はthrowと同様に任意の値です。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -423,7 +480,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="非標準プロパティ"
   options={[
     {text: '常に利用可能'},
-    {text: 'すべての環境で存在しない可能性がある', isAnswer: true},
+    {text: 'すべての環境で存在するとは限らない', isAnswer: true},
     {text: 'Node.js のみ'},
     {text: '非推奨で削除された'},
   ]}
@@ -445,6 +502,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `code` や `errno` のようなプロパティは環境固有（この場合は Node.js）で、標準の Error オブジェクトには含まれません。ブラウザのエラーにはこれらのプロパティはありません。常に存在を確認しましょう：`if (err.code === 'ENOENT')` のように、存在すると仮定しないでください。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+JavaScriptの実行環境とエラーの種類に注目してください。
   </div>
   </slot>
 </Challenge>
@@ -478,9 +540,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
-    `instanceof Error` はオブジェクトが Error コンストラクタで作られていないため `false` を返す。`Object.prototype.toString.call()` も `false` を返す（実際は `'[object Object]'` が返る）ので、内部の `[[Class]]` スロットをチェックしている。両方の手法ともこの偽エラーオブジェクトを正しく判別している。
+このコードは `false, false` を出力します。`fakeError` は Error のプロトタイプを継承しないプレーンオブジェクトで、`Object.prototype.toString.call(fakeError)` は `"[object Object]"` を返します。ただし `Symbol.toStringTag` を設定するとタグを偽装できるため、この方法は一般的な真正性の検証にはなりません。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+プロトタイプチェーンとオブジェクトのタグの違いに注目してください。
   </div>
   </slot>
 </Challenge>

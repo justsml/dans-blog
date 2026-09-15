@@ -59,6 +59,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     この例では、`obj.val` に直接アクセスすると getter メソッドが呼び出され、`got it!` と出力されます。
   </div>
   </slot>
+  <slot name='hints'>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -89,6 +91,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Symbol はユニークで不変なプリミティブ型で、オブジェクトのプロパティキーとして使用できます。これにより、特に大規模なコードベースや再利用可能なライブラリを書く際に、名前の衝突を回避できます。
   </div>
+  </slot>
+  <slot name='hints'>
   </slot>
 </Challenge>
 
@@ -124,6 +128,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Object.defineProperty()` の `enumerable` プロパティは、`for...in` のような列挙メソッドでプロパティが表示されるかどうかを制御します。この例では `enumerable: true` なので、`age` プロパティはイテレーション中に列挙されます。
   </div>
   </slot>
+  <slot name='hints'>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -135,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'true'},
     {text: 'false', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Depends on context'},
+    {text: '文脈による'},
   ]}
 >
   <slot name="question">
@@ -154,6 +160,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `Object.defineProperty()` を `enumerable` 指定なしで呼び出すと、デフォルト値は `false` です。つまり、`make` プロパティは `Object.keys()` やその他の列挙メソッドに現れません。
   </div>
+  </slot>
+  <slot name='hints'>
   </slot>
 </Challenge>
 
@@ -183,6 +191,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `Symbol()` の呼び出しは、たとえ説明が同じでも、ユニークで不変な値を生成します。この場合、`sym1` と `sym2` は異なるシンボルなので、比較は `false` を返します。
   </div>
+  </slot>
+  <slot name='hints'>
   </slot>
 </Challenge>
 
@@ -218,6 +228,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Symbol キーのプロパティは独自の `enumerable` フラグを持てますが、`for...in` と `Object.keys()` は文字列キーの列挙可能なプロパティしか訪れません。この例では `regularKey` だけが列挙され、Symbol キーのプロパティは列挙されません。
   </div>
   </slot>
+  <slot name='hints'>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -252,6 +264,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     // [Symbol(id), Symbol(name)]
     ```
   </div>
+  </slot>
+  <slot name='hints'>
   </slot>
 </Challenge>
 

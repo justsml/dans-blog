@@ -55,10 +55,10 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれますか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-        const d1 = new Date(2020, 1, 1)
-        console.log(d1)
+    const d1 = new Date(2020, 1, 1)
+    console.log(d1)
     ```
   </div>
   </slot>
@@ -88,10 +88,10 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれますか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-        const d2 = new Date(2020, 0, 1)
-        console.log(d2)
+    const d2 = new Date(2020, 0, 1)
+    console.log(d2)
     ```
   </div>
   </slot>
@@ -126,8 +126,8 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
   <div className="question">
     出力には何が含まれますか？
     ```js
-        const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
-        console.log(d3)
+    const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+    console.log(d3)
     ```
   </div>
   </slot>
@@ -137,11 +137,7 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 
   <slot name="explanation">
   <div className="explanation">
-    `new`キーワードを忘れないでください！`Date`はクラスなので、`new`を付けて呼び出す必要があります。
-
-    `new`なしの`Date('...')`は引数を無視します。`new Date()`（引数なし）で現在の日時を常に生成するように見えます。
-
-    これは**よくある落とし穴**で、コードレビューでも**見落としがち**です。
+`Date(...)` は `new` なしでも呼び出せます。この場合、引数はすべて無視され、現在のローカル日時を表す文字列が返されます。Date オブジェクトを作る `new Date(...)` とは戻り値も引数の扱いも異なります。
   </div>
   </slot>
 </Challenge>
@@ -162,11 +158,12 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
+    ローカルタイムゾーンは、その日時に GMT−07:00 とします。
     出力に含まれるのはどれですか？
     ```js
-          const date = new Date(2020)
-          console.log(date.getFullYear())
-    ```
+      const date = new Date(2020)
+      console.log(date.getFullYear())
+      ```
   </div>
   </slot>
 
@@ -200,12 +197,13 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
+    ローカルタイムゾーンは、その日時に GMT−07:00 とします。
     コンソールに出力される値は？
     ```js
-          const d1 = new Date('2020-01-01')
-          const d2 = new Date('2020-01-01T00:00')
-          console.log(d1.getFullYear(), d2.getFullYear())
-    ```
+      const d1 = new Date('2020-01-01')
+      const d2 = new Date('2020-01-01T00:00')
+      console.log(d1.getFullYear(), d2.getFullYear())
+      ```
   </div>
   </slot>
 
@@ -272,9 +270,9 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
   <div className="question">
     出力には何が含まれますか？
     ```js
-          var date = Date.UTC('2020-01-02T00:00')
-          console.log(date.toUTCString())
-    ```
+      var date = Date.UTC('2020-01-02T00:00')
+      console.log(date.toUTCString())
+      ```
   </div>
   </slot>
 
@@ -283,9 +281,7 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 
   <slot name="explanation">
   <div className="explanation">
-    `TypeError: date.toUTCString is not a function` となります。なぜなら、[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) はミリ秒単位の整数を返し、日付インスタンスではないからです。
-
-    {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルのオフセット（これらの問題では GMT-07:00 と仮定）を使用します。そのため、前の年（NYE -7時間）が返されます。 [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは、`Date.UTC()` に指定した年である2020年を返します。 */}
+`Date.UTC()` は Date オブジェクトではなく数値を返します。この呼び出しでは日時文字列が年の数値に変換できないため `NaN` になります。その数値に `toUTCString()` メソッドはないので、呼び出すと `TypeError` が発生します。
   </div>
   </slot>
 </Challenge>
@@ -306,9 +302,9 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
   <div className="question">
     出力には何が含まれますか？
     ```js
-          const d = Date.UTC(2020, 0, 1)
-          console.log(d)
-    ```
+      const d = Date.UTC(2020, 0, 1)
+      console.log(d)
+      ```
   </div>
   </slot>
 
@@ -337,12 +333,13 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
+    ローカルタイムゾーンは、その日時に GMT−07:00 とします。
     出力には何が含まれますか？
     ```js
-          // Assume local TZ is -07:00
-          const d = new Date(Date.UTC(2020, 0, 1))
-          console.log(d.getTimezoneOffset())
-    ```
+      // Assume local TZ is -07:00
+      const d = new Date(Date.UTC(2020, 0, 1))
+      console.log(d.getTimezoneOffset())
+      ```
   </div>
   </slot>
 
@@ -351,9 +348,7 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 
   <slot name="explanation">
   <div className="explanation">
-    Dateの値は暗黙的にローカルタイムで表示され、（実質的に）変化しない[`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset)を持ちます。
-
-    `Date`インスタンスはタイムゾーンデータを保存しません。Unixエポック（1970年1月1日）からのミリ秒数を保存します。タイムゾーンはDate文字列の解析と表示の際に考慮されます。デフォルトの表示動作は、システムまたはブラウザのロケール設定に基づいて自動的に決定されます。
+`getTimezoneOffset()` は、その日時のUTCとローカル時刻の差を分で返します。GMT−07:00 の場合は `420` です。Date オブジェクトはタイムゾーン名を保持せず、エポックからの経過ミリ秒を保持します。オフセットはホストのタイムゾーンと対象日時に依存し、夏時間のある地域では季節によって変わります。
   </div>
   </slot>
 </Challenge>
@@ -371,12 +366,12 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれるでしょうか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-          const d = new Date(2020, 0, 1)
-          d.setDate(1)
-          console.log(d)
-    ```
+      const d = new Date(2020, 0, 1)
+      d.setDate(1)
+      console.log(d)
+      ```
   </div>
   </slot>
 
@@ -385,7 +380,7 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 
   <slot name="explanation">
   <div className="explanation">
-    The [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) メソッドは、指定されたインスタンスの現在の月に基づいて、日（日付）を設定します。
+    [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) メソッドは、指定されたインスタンスの現在の月に基づいて、日（日付）を設定します。
 
     値が月の日数範囲外の場合、日付インスタンスの月が調整されます（例: 1月に `setDate(32)` を実行すると、2月1日として計算されます）。
 
@@ -407,12 +402,12 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれますか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-          const d = new Date(2020, 0, 1)
-          d.setMonth(1)
-          console.log(d)
-    ```
+      const d = new Date(2020, 0, 1)
+      d.setMonth(1)
+      console.log(d)
+      ```
   </div>
   </slot>
 
@@ -439,12 +434,12 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれますか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-          const d = new Date(2020, 0, 1)
-          d.setMonth(12)
-          console.log(d)
-    ```
+      const d = new Date(2020, 0, 1)
+      d.setMonth(12)
+      console.log(d)
+      ```
   </div>
   </slot>
 
@@ -477,12 +472,12 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれますか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-          const d = new Date(2020, 0, 1)
-          d.setMonth(13)
-          console.log(d)
-    ```
+      const d = new Date(2020, 0, 1)
+      d.setMonth(13)
+      console.log(d)
+      ```
   </div>
   </slot>
 
@@ -491,16 +486,9 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 
   <slot name="explanation">
   <div className="explanation">
-    The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.
+[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) はローカル日時の月を、0から始まる番号で設定します。0が1月、11が12月です。
 
-    The month argument is zero-based, with a range of 0-11 (using western calendars.)
-
-    Here we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).
-
-    <aside class="hint">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>
-    <aside class="hint">
-    Numbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).
-    </aside>
+`setMonth(13)` は翌年の2月を意味するため、この例では2021年2月1日になります。0〜11の範囲外の値も受け付け、年を繰り上げたり繰り下げたりします。
   </div>
   </slot>
 </Challenge>
@@ -520,12 +508,12 @@ JavaScriptの`Date`クラスは、悪名高いほど扱いづらいAPIを持つ�
 >
   <slot name="question">
   <div className="question">
-    出力には何が含まれますか？
+    この Date が表すローカルの日付はどれですか？（コンソールの表示形式は環境により異なります。）
     ```js
-          const d = new Date(2020, 0, 1)
-          d.setMonth(-1)
-          console.log(d)
-    ```
+      const d = new Date(2020, 0, 1)
+      d.setMonth(-1)
+      console.log(d)
+      ```
   </div>
   </slot>
 

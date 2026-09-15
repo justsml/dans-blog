@@ -65,11 +65,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="高度なセマンティックHTML"
   title="`<dd>`の使い方"
   options={[
-    {text: '説明の定義'},
-    {text: '説明用語'},
-    {text: 'データ表示'},
-    {text: '説明の詳細', isAnswer: true},
-  ]}
+  {
+    "text": "データベースのフィールドを定義する宣言"
+  },
+  {
+    "text": "説明対象の用語"
+  },
+  {
+    "text": "データの表示"
+  },
+  {
+    "text": "説明リスト内の用語に対応する説明、定義、または値",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -91,6 +100,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     <dt>HTML</dt>
     <dd>Client-side</dd>
     </dl>
+
     ```
   </div>
   </slot>
@@ -102,15 +112,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="高度なセマンティックHTML"
   title="`<figure>`/`<figcaption>`の使い方"
   options={[
-    {text: '著作権情報を表示する画像に対して'},
-    {text: '画像やチャートなどを説明するために', isAnswer: true},
-    {text: 'テーブルや計算などを注釈するために'},
-    {text: '動画のキャプションに使用する'},
-  ]}
+  {
+    "text": "著作権情報を含む画像だけに使用する"
+  },
+  {
+    "text": "自己完結したコンテンツとそのキャプションをまとめる",
+    "isAnswer": true
+  },
+  {
+    "text": "表や数式にだけ使用する"
+  },
+  {
+    "text": "動画再生の字幕を付けるためだけに使用する"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    `<figure>`要素と`<figcaption>`要素はいつ使用すべきですか？
+    `<figure>` と `<figcaption>` を組み合わせる一般的な目的は何ですか？
   </div>
   </slot>
 

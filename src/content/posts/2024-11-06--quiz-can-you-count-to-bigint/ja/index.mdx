@@ -20,6 +20,8 @@ import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <>
+> 数字だけなら簡単……ですよね？ 🤓
+
 <QuizUI>
 
 <Challenge
@@ -45,7 +47,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `parseInt` 関数はスペースを無視し、先頭の数字の列を整数としてパースします。ここでは小数点の位置で処理が停止するため、`123456` のみが返されます。
+    `parseInt` 関数は先頭の空白を無視し、先頭の数字の列を整数としてパースします。ここでは小数点の位置で処理が停止するため、`123456` のみが返されます。
   </div>
   </slot>
 </Challenge>

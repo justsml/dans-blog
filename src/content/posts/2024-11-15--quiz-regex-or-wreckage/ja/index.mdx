@@ -169,7 +169,7 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="先読み"
-  title="前方肯定的先読み"
+  title="肯定先読み"
   options={[
     {text: '["$100", "€50"]'},
     {text: '["100", "50"]'},
@@ -186,17 +186,13 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
     ```
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
-    このパターンは何もマッチしません。先読みが逆向きだからです！`$` または `€` の前に数字が欲しいなら、先行参照を使ってください: `/(?<=[\$€])\d+/g`。
+結果は `null` です。`\d+(?=[\$€])` は数字の直後に通貨記号がある位置を探しますが、入力では通貨記号が数字の前にあります。
 
-    先読みは現在位置の*後ろ*に何があるかをチェックします。現在のパターンは以下を探します:
-    - 1つ以上の数字 (`\d+`)
-    - それに続く (`(?=...)`) `$` または `€` のいずれか (`[\$€]`)
+通貨記号の後の数字を取り出すには、肯定後読み `/(?<=[\$€])\d+/g` を使います。先読みは現在位置の後に続く文字を、後読みは現在位置より前の文字を検査します。
 
-    通貨記号の後に数字がない（数字は記号の前にある）ので、マッチは得られません。
-
-    [Look-ahead アサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+[アサーションの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -276,8 +272,8 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="後方参照"
-  title="否定的後方参照"
+  group="後読み"
+  title="否定後読み"
   options={[
     {text: '["123"]'},
     {text: '["123", "456"]'},
@@ -296,14 +292,14 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    否定的後方参照 `(?<!abc)` は、数字の前に "abc" がないことを保証します:
+    否定後読み `(?<!abc)` は、数字の前に "abc" がないことを保証します:
     - ❌ "123" (前に "abc" がある)
     - ✅ "23" (前に "abc1" がある)
     - ✅ "456" (前に "def" がある)
 
-    JavaScript はモダンエンジンで後方参照アサーションをサポートしています。この例は固定長の後方参照を使用しています: `abc` は常に3文字です。可変長の後方参照はエンジン依存でやや難しいです。
+    JavaScript はモダンエンジンで後読みアサーションをサポートしています。この例は固定長の後読みを使用しています: `abc` は常に3文字です。可変長の後読みはエンジン依存でやや難しいです。
 
-    注意: 後方参照のサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。
+    注意: 後読みのサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。
   </div>
   </slot>
 </Challenge>
@@ -350,7 +346,7 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="先読み"
-  title="否定的先読み"
+  title="否定先読み"
   options={[
     {text: '["password123"]'},
     {text: '["abc123"]'},
@@ -370,9 +366,9 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    否定的先読み `(?![a-z])` は、数字の後に小文字がないことを保証します。"3aBc" の部分は数字の後に小文字があるためマッチしません。したがって、先頭の "12" のみがマッチします。
+    否定先読み `(?![a-z])` は、数字の後に小文字がないことを保証します。"3aBc" の部分は数字の後に小文字があるためマッチしません。したがって、先頭の "12" のみがマッチします。
 
-    [否定的先読みの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [否定先読みの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -380,8 +376,8 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={10}
-  group="後方参照"
-  title="後方参照で分割"
+  group="後読み"
+  title="後読みで分割"
   options={[
     {text: '["a,", "b,", "c"]', isAnswer: true},
     {text: '["a,b,c"]'},
@@ -399,16 +395,16 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    パターン `/(?<=,)/` は、カンマの後にマッチする後方参照です:
+    パターン `/(?<=,)/` は、カンマの後にマッチする後読みです:
     - `a,`（カンマの後）
     - `b,`（カンマの後）
     - `c`（カンマが後ろにない）
 
-    後方参照はカンマを消費しないため、分割結果ではカンマが前のセグメントに残ります。
+    後読みはカンマを消費しないため、分割結果ではカンマが前のセグメントに残ります。
 
     文字列を前にある文字で分割したいが、**分割文字を失わずに**したい場合に便利です。
 
-    [後方参照アサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [後読みアサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -436,9 +432,9 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    特殊文字は文字通りマッチさせるために `\\` でエスケープする必要があります:
+    特殊文字は文字通りマッチさせるために バックスラッシュでエスケープする必要があります:
     - `$` は特殊文字（文字列の終端）です
-    - リテラルのドル記号にマッチさせるにはエスケープします: `\\$`
+    - リテラルのドル記号にマッチさせるにはエスケープします: ドル記号の前にバックスラッシュを置きます
 
     エスケープが必要な一般的な文字:
     ```js
@@ -455,7 +451,7 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="後読み"
-  title="正の後読み"
+  title="肯定後読み"
   options={[
     {text: '["$100"]'},
     {text: '["100"]', isAnswer: true},
@@ -473,7 +469,7 @@ RegEx の知識をテストしましょう。基本パターン、量指定子�
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    正の後読み `(?<=\$)` は、数字の前にドル記号があることを保証します:
+    肯定後読み `(?<=\$)` は、数字の前にドル記号があることを保証します:
     - `(?<=\$)`: ドル記号の後読み
     - `\d+`: 1つ以上の数字にマッチ
 

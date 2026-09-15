@@ -90,7 +90,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     クォートのエスケープは本当にややこしいですよね。Bash文字列内で他の言語をエスケープする想像してみてください。クォートやアポストロフ、`$`記号が邪魔になります。🫠
 
-    シングルクォート内ではシングルクォートをエスケープする必要があります。`'\''`というクォート→エスケープ→クォートのシーケンスで出力できます：
+    シングルクォート内ではシングルクォートを直接エスケープできません。一度クォートを閉じ、外側でエスケープした引用符を挿入してから、クォートを開き直します。`'\''`というクォート→エスケープ→クォートのシーケンスで出力できます：
     ```plaintext
     It's 🔨 Time!
     ```
@@ -251,12 +251,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="条件分岐"
   title="基本的なif-else"
   options={[
-    {text: 'ファイルが存在する場合'},
-    {text: 'ファイルが存在しないが、テスト診断後に処理される', isAnswer: true},
-    {text: 'エラーのみ'},
-    {text: '二重括弧が不足している'},
-    {text: '何も出力しない'},
-  ]}
+  {
+    "text": "File exists"
+  },
+  {
+    "text": "File does not exist（テストの診断メッセージの後）",
+    "isAnswer": true
+  },
+  {
+    "text": "エラーのみ"
+  },
+  {
+    "text": "二重角括弧が不足している"
+  },
+  {
+    "text": "Nothing"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -297,11 +308,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="条件分岐"
   title="文字列の比較"
   options={[
-    {text: '同じ猫'},
-    {text: 'テスト構文エラー後の異なる猫', isAnswer: true},
-    {text: 'ザルゴ'},
-    {text: 'エラーのみ'},
-  ]}
+  {
+    "text": "Same cat"
+  },
+  {
+    "text": "Different cats, （テストの構文エラーの後）",
+    "isAnswer": true
+  },
+  {
+    "text": "Zalgo"
+  },
+  {
+    "text": "エラーのみ"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -341,7 +361,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Hi Dan'},
     {text: 'greet'},
     {text: 'Error'},
-    {text: 'Syntax Error'},
+    {text: '構文エラー'},
   ]}
 >
   <slot name="question">
@@ -423,6 +443,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
     条件式にも利用可能です:
     ```bash
+
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
@@ -469,11 +490,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="文字列操作"
   title="部分文字列の抽出"
   options={[
-    {text: '悪い猫'},
-    {text: '悪い猫、良い猫:9'},
-    {text: '良い猫', isAnswer: true},
-    {text: 'エラー'},
-  ]}
+  {
+    "text": "Bad cat"
+  },
+  {
+    "text": "Bad cat, good cat:9"
+  },
+  {
+    "text": "good cat",
+    "isAnswer": true
+  },
+  {
+    "text": "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -512,7 +542,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Bashでルーピングのキーワードでないのはどれですか？❌
+    Bashのループ構文に属する予約語ではないのはどれですか？❌
   </div>
   </slot>
   <slot name='explanation'>
@@ -564,7 +594,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="標準入出力"
-  title="デフォルト値"
+  title="標準エラー出力のリダイレクト"
   options={[
     { text: "1>&2" },
     { text: "&2>&1" },
@@ -576,13 +606,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
     エラー出力を標準出力に結合するためには、どの演算子を使用しますか？
-  </div>
+
+
+</div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     `2>&1` 演算子は、標準エラー出力（ファイル記述子2）を標準出力（ファイル記述子1）にリダイレクトします。これは、通常の出力と同じストリームにエラーメッセージをキャプチャするのに役立ちます。
   </div>
   </slot>
+詳しくは[リダイレクトFAQ](https://mywiki.wooledge.org/BashFAQ/055)を参照してください。表現の改善を提案してくれた[u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/)に感謝します。
+
 </Challenge>
 
 </QuizUI>

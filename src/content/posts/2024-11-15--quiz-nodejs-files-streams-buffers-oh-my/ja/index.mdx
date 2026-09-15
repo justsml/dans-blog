@@ -56,7 +56,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)`は指定されたサイズでゼロで埋めた新しいバッファを作成します。
     出力はこうなります: `<Buffer 00 00 00 00 00>`
 
-    ランダムなデータでバッファを作成したい場合は`Buffer.allocUnsafe(5)`を使用してください。
+    `Buffer.allocUnsafe(5)` は初期化されていないメモリを返すことがあり、乱数生成には使えません。読み出したり外部に送信したりする前に、全バイトを上書きする必要があります。
 
     [バッファの割り当てについて詳しく学ぶ](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -72,7 +72,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'A', isAnswer: true},
     {text: '65'},
     {text: '[Object object]'},
-    {text: '未定義'},
+    {text: 'undefined'},
     {text: 'バイナリデータ'},
   ]}
 >
@@ -214,7 +214,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="ストリームのパイピング"
   options={[
     {text: 'ファイルを圧縮してコピー'},
-    {text: 'メモリバッファリングなしでファイルをコピー', isAnswer: true},
+    {text: 'ファイル全体をメモリに保持せず、チャンク単位でコピー', isAnswer: true},
     {text: 'ファイル全体をメモリに読み込む'},
     {text: 'シンボリックリンクを作成'},
   ]}
@@ -245,11 +245,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="ファイルシステム"
   title="ディレクトリ操作"
   options={[
-    {text: '必要に応じてネストされたディレクトリを作成する', isAnswer: true, hint: '再帰的に親ディレクトリを作成'},
-    {text: '最後のディレクトリのみを作成する', hint: 'パスの最終セグメントのみ処理'},
-    {text: 'エラーをスローする', hint: '親ディレクトリが存在しない場合のデフォルト挙動'},
-    {text: 'シンボリックリンクを作成する', hint: 'リンク作成は別のオプションが必要'},
-  ]}
+  {
+    "text": "必要に応じてネストされたディレクトリを作成する",
+    "isAnswer": true
+  },
+  {
+    "text": "最後のディレクトリのみを作成する"
+  },
+  {
+    "text": "エラーをスローする"
+  },
+  {
+    "text": "シンボリックリンクを作成する"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -281,7 +290,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'hello world'},
     {text: 'HELLO WORLD', isAnswer: true},
     {text: 'エラー'},
-    {text: '未定義'},
+    {text: 'undefined'},
   ]}
 >
   <slot name="question">
@@ -329,7 +338,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ファイルが変更されたときに`fs.watch()`が保証された回数はどのくらいですか？
+    ファイルが変更されたとき、`fs.watch()` のコールバック呼び出し回数は保証されますか？
     ```js
     import fs from 'fs';
     fs.watch('test.txt', (eventType, filename) => {
@@ -464,7 +473,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```js
     fs.linkSync('target.txt', 'hardlink.txt');
     ```
-    [Learn more about symlinks](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+    [シンボリックリンクについて詳しく読む](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
   </slot>
 </Challenge>
@@ -492,7 +501,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     ストリームは次のように動作できます：
     1. バイナリモード（デフォルト）: バッファや文字列に
-    2. オブジェクトモード: 任意のJavaScript値に
+    2. オブジェクトモード: `null` 以外のJavaScript値に
 
     オブジェクトモードの例:
     ```js
@@ -558,12 +567,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="エンコーディング"
   title="バッファのエンコーディング"
   options={[
-    {text: '3'},
-    {text: '4'},
-    {text: '6'},
-    {text: '8'},
-    {text: '10', isAnswer: true, hint: '正解です！Hello 🌍 は 5 + 1 + 4 = 10 バイトです'},
-  ]}
+  {
+    "text": "3"
+  },
+  {
+    "text": "4"
+  },
+  {
+    "text": "6"
+  },
+  {
+    "text": "8"
+  },
+  {
+    "text": "10",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">

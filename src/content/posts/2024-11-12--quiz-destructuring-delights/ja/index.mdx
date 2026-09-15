@@ -1,5 +1,5 @@
 ---
-title: 'クイズ: デストラクチャリングの魅力'
+title: 'クイズ: 分割代入の魅力'
 subTitle: 分割代入の達人ですか？
 label: Destructuring
 social_image: ../desktop-social.webp
@@ -22,12 +22,12 @@ sourceHash: "4dfaeff83cd5"
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-{/* デストラクチャリングの達人ですか？<br/> */}
+{/* 分割代入の達人ですか？<br/> */}
 <p class="inset">それとも、あなたの<em>破壊の交響曲</em>ですか？</p>
 
-このクイズは JavaScript のデストラクチャリングに関する知識を測ります。基本的なオブジェクト構文から入れ子のデストラクチャ、デフォルト値まで網羅します。さらに TypeScript のインライン型に関するボーナス問題もあります。
+このクイズは JavaScript の分割代入に関する知識を測ります。基本的なオブジェクト構文から入れ子のデストラクチャ、デフォルト値まで網羅します。さらに TypeScript のインライン型に関するボーナス問題もあります。
 
-まずはウォームアップから――デストラクチャリングスキルを証明してください！ 👇
+まずはウォームアップから――分割代入スキルを証明してください！ 👇
 
 <QuizUI>
 
@@ -37,13 +37,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="ウォームアップ: オブジェクト"
   title="基本的なオブジェクト分割代入"
   options={[
-    {text: '名前: Dan Levy, 年齢: 20'},
-    {text: '名前: Dan Levy, 年齢: 40'},
-    {text: '名前: Dan Levy, 年齢: Infinity'},
-    {text: '名前: Dan Levy, 年齢: undefined', isAnswer: true},
-    {text: 'エラー: プロパティ \'age\' を読み取れません'},
-    {text: '名前: undefined, 年齢: 40'},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: 20"
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Name: Dan Levy, Age: Infinity"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "エラー: プロパティ 'age' を読み取れません"
+  },
+  {
+    "text": "Name: undefined, Age: 40"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -74,15 +87,28 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ウォームアップ: 配列"
-  title="オブジェクトのデストラクチャリングにおけるデフォルト値"
+  title="オブジェクトの分割代入におけるデフォルト値"
   options={[
-    {text: '名前: Dan Levy, 年齢: NaN'},
-    {text: '名前: Dan Levy, 年齢: null'},
-    {text: '名前: Dan Levy, 年齢: undefined', isAnswer: true},
-    {text: '名前: Dan Levy, 年齢: 40'},
-    {text: 'エラー: プロパティ \'age\' をデストラクトできません'},
-    {text: 'SyntaxError: 予期しないトークン \',\''},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: NaN"
+  },
+  {
+    "text": "Name: Dan Levy, Age: null"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "エラー: プロパティ 'age' を分割代入できません"
+  },
+  {
+    "text": "SyntaxError: 予期しないトークン ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -109,8 +135,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="入れ子のデストラクチャリング"
-  title="入れ子のデストラクチャリング"
+  group="入れ子の分割代入"
+  title="入れ子の分割代入"
   options={[
     {text: 'First: Dan, City: Denver'},
     {text: 'First: undefined, City: Denver'},
@@ -121,7 +147,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    入れ子のデストラクチャリングはどうですか？
+    入れ子の分割代入はどうですか？
     ```js
     'use strict';
     const person = {
@@ -148,7 +174,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     最新の Chrome では: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-    Node でも同様に `TypeError` になります。JavaScript が `place` を読み取る前に `undefined` から `place` をデストラクトしようとするためです。
+    Node でも同様に `TypeError` になります。JavaScript が `place` を読み取る前に `undefined` から `place` を分割代入しようとするためです。
 
     正確な文言はブラウザやランタイムによって異なります。
   </div>
@@ -159,14 +185,25 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="デフォルト"
-  title="オブジェクトのデストラクチャリングにおけるデフォルト値"
+  title="オブジェクトの分割代入におけるデフォルト値"
   options={[
-    {text: 'こんにちは Dan、出身は Unknown'},
-    {text: 'こんにちは Dan、出身は Denver'},
-    {text: 'こんにちは Unknown、出身は Unknown'},
-    {text: 'こんにちは Unknown、出身は Denver'},
-    {text: 'エラー', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "エラー",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -191,7 +228,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `birth` プロパティは `person` に存在しないので、ネストされたプロパティだけでなくオブジェクト全体にデフォルトが必要です。実質的に ` = {}` のデフォルトが抜けています。
 
-    この書き方は「`person.birth` が `undefined` の場合、`place` は `Unknown`」という意味になります。しかし `person.birth` は `undefined` なので、`undefined` をデストラクトしようとしてエラーになります。
+    この書き方は「`person.birth` が `undefined` の場合、`place` は `Unknown`」という意味になります。しかし `person.birth` は `undefined` なので、`undefined` を分割代入しようとしてエラーになります。
     ```plaintext
     In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
@@ -207,15 +244,28 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="デフォルト"
-  title="オブジェクトのデストラクチャリングにおけるデフォルト値"
+  title="オブジェクトの分割代入におけるデフォルト値"
   options={[
-    {text: 'こんにちは Dan さん、Denver から'},
-    {text: 'こんにちは Dan さん、Johannesburg から'},
-    {text: 'こんにちは Dan さん、Unknown から', isAnswer: true},
-    {text: 'こんにちは Unknown さん、Unknown から'},
-    {text: 'こんにちは Unknown さん、Denver から'},
-    {text: 'エラー'},
-  ]}
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Dan from Johannesburg"
+  },
+  {
+    "text": "Hi Dan from Unknown",
+    "isAnswer": true
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "エラー"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -287,15 +337,32 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="関数引数"
   title="ネストされたデフォルト値を使った分割代入"
   options={[
-    {text: '不明, 不明, Joburg'},
-    {text: '不明, 不明, 不明'},
-    {text: '不明, `undefined`, Joburg'},
-    {text: 'N/A, `undefined`, Joburg'},
-    {text: 'N/A, 不明, Joburg'},
-    {text: 'N/A, N/A, Joburg', isAnswer: true},
-    {text: '不明, N/A, Joburg'},
-    {text: 'エラー'},
-  ]}
+  {
+    "text": "Unknown, Unknown, Joburg"
+  },
+  {
+    "text": "Unknown, Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, Unknown, Joburg"
+  },
+  {
+    "text": "N/A, N/A, Joburg",
+    "isAnswer": true
+  },
+  {
+    "text": "Unknown, N/A, Joburg"
+  },
+  {
+    "text": "エラー"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -350,7 +417,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    前の問題と似ているけど… `null` はどう扱われる？_
+    前の問題と似ているけど… `null` はどう扱われる？
     ```js
     function displayPlace({
       name = "N/A",
@@ -370,6 +437,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 </Challenge>
+
+## ここからはTypeScript
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -420,15 +489,32 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript: 代入付き"
   title="ネストされたデフォルト値を使った分割代入"
   options={[
-    {text: '未定義'},
-    {text: 'null'},
-    {text: '該当なし'},
-    {text: '不明'},
-    {text: 'デンバー', isAnswer: true},
-    {text: 'SyntaxError'},
-    {text: 'エラー: 無効な型'},
-    {text: 'エラー: 無効な引数'},
-  ]}
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "null"
+  },
+  {
+    "text": "N/A"
+  },
+  {
+    "text": "Unknown"
+  },
+  {
+    "text": "Denver",
+    "isAnswer": true
+  },
+  {
+    "text": "SyntaxError"
+  },
+  {
+    "text": "エラー: 無効な型"
+  },
+  {
+    "text": "エラー: 無効な引数"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -505,12 +591,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript + 代入"
   title="ネストされた値、代入、型を使った分割代入"
   options={[
-    {text: 'こんにちは Dan Levy from N/A'},
-    {text: 'こんにちは Dan Levy from Cape Town'},
-    {text: 'こんにちは N/A N/A from N/A'},
-    {text: 'こんにちは N/A N/A from Cape Town'},
-    {text: 'エラー', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan Levy from N/A"
+  },
+  {
+    "text": "Hi Dan Levy from Cape Town"
+  },
+  {
+    "text": "Hi N/A N/A from N/A"
+  },
+  {
+    "text": "Hi N/A N/A from Cape Town"
+  },
+  {
+    "text": "エラー",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -553,5 +650,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 </Challenge>
+
+さらに挑戦したい方は、[クイズ一覧](/challenges/)もどうぞ。
 
 </QuizUI>

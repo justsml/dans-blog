@@ -40,14 +40,34 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={0}
   group="所有権"
   title="基本的なムーブセマンティクス"
+  difficulty={2}
+  objectives={["所有権とムーブを説明する","ムーブ後の値の使用によるコンパイルエラーを識別する","ムーブに関するエラーの修正方法を適用する"]}
   options={[
-    {text: 'こんにちは、！', hint: '「philosopher」がムーブされた後にどうなるか考えてみてください'},
-    {text: 'こんにちは、キティオンのゼノン！', hint: '値がムーブされた後、それを使うことはできますか？'},
-    {text: 'こんにちは、エレアのゼノン！', hint: '文字列には「Citium」が含まれており、「Elea」ではありません'},
-    {text: 'こんにちは、マルクス・アウレリウス', hint: 'これが文字列の内容と一致するか確認してください'},
-    {text: 'コンパイルエラー：ムーブ後に値が借用されました', isAnswer: true},
-    {text: 'ランタイムエラー：ヌルポインタ例外', hint: 'Rustはこれらの問題をコンパイル時に検出します'},
-  ]}
+  {
+    "text": "Hello, !",
+    "hint": "「philosopher」がムーブされた後にどうなるか考えてみてください"
+  },
+  {
+    "text": "Hello, Zeno of Citium!",
+    "hint": "値がムーブされた後、それを使うことはできますか？"
+  },
+  {
+    "text": "Hello, Zeno of Elea!",
+    "hint": "文字列には「Citium」が含まれており、「Elea」ではありません"
+  },
+  {
+    "text": "Hello, Marcus Aurelius",
+    "hint": "これが文字列の内容と一致するか確認してください"
+  },
+  {
+    "text": "コンパイルエラー：ムーブ後に値が借用されました",
+    "isAnswer": true
+  },
+  {
+    "text": "ランタイムエラー：ヌルポインタ例外",
+    "hint": "Rustはこれらの問題をコンパイル時に検出します"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -91,6 +111,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={1}
   group="所有権"
   title="関数におけるムーブセマンティクス"
+  difficulty={2}
+  objectives={["関数に渡す際の所有権移動を理解する","関数呼び出しの所有権エラーを識別する","関数で所有権を扱う方法を適用する"]}
   options={[
     {text: '両方の行が出力される', hint: '\'wisdom\'が関数に渡された後にどうなるかを考えてみてください'},
     {text: '最初の行だけが出力される', hint: 'このコードはコンパイルすら通らないので、実行時には至りません'},
@@ -155,6 +177,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={2}
   group="借用"
   title="可変参照"
+  difficulty={3}
+  objectives={["可変参照のルールを理解する","借用ルール違反を識別する","スコープを使って複数の可変借用を扱う"]}
   options={[
     {text: 'コンパイル成功', hint: '同時に複数の可変参照を持つことはできますか？'},
     {text: 'エラー：`wisdom`を可変として2回以上借用できません', isAnswer: true},
@@ -214,6 +238,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={3}
   group="ライフタイム省略"
   title="暗黙のライフタイム"
+  difficulty={3}
+  objectives={["ライフタイム省略規則を理解する","明示的な注釈が不要な場合を識別する","関数シグネチャに省略規則を適用する"]}
   options={[
     {text: '正常にコンパイルされる', isAnswer: true},
     {text: 'エラー: ライフタイム指定子が不足しています', hint: 'ライフタイム省略ルールを思い出してください - 助けてくれますよ！'},
@@ -277,22 +303,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={4}
   group="スマートポインタ"
   title="Boxスマートポインタ"
+  difficulty={4}
+  objectives={["再帰型の定義とメモリへの影響を理解する","Box<T>が必要な場合を識別する","Box<T>で再帰データ構造を修正する"]}
   options={[
     {
       text: '5',
-      hint: "The code won't even compile to produce a value"
+      hint: "値を出力する前にコンパイルで失敗します。"
     },
     {
       text: 'null',
-      hint: "Rust doesn't have null values"
+      hint: "Rustにはnull値はありません。"
     },
     {
-      text: 'Compilation Error',
-      hint: "The compiler can't determine a finite size for this recursive type.",
+      text: 'コンパイルエラー',
+      hint: "この再帰型の有限なサイズをコンパイラが決定できません。",
       isAnswer: true
     },
     {
-      text: 'Stack overflow'
+      text: 'スタックオーバーフロー'
     }
   ]}
 >
@@ -357,24 +385,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={5}
   group="参照カウント"
   title="Rcスマートポインタ"
+  difficulty={3}
+  objectives={["参照カウントを理解する","共有所有権にRc<T>を適用する","コードの参照カウントを分析する"]}
   options={[
-    {
-      text: 'Reference count: 1',
-      hint: "Count the initial creation plus each clone"
-    },
-    {
-      text: 'Reference count: 2',
-      hint: "Don't forget the original reference"
-    },
-    {
-      text: 'Reference count: 3',
-      isAnswer: true
-    },
-    {
-      text: 'Compilation Error',
-      hint: "Rc<T> is designed for exactly this use case"
-    }
-  ]}
+  {
+    "text": "Reference count: 1",
+    "hint": "最初の生成と、その後の各クローンを数えてください。"
+  },
+  {
+    "text": "Reference count: 2",
+    "hint": "元の参照も忘れずに数えてください。"
+  },
+  {
+    "text": "Reference count: 3",
+    "isAnswer": true
+  },
+  {
+    "text": "コンパイルエラー",
+    "hint": "Rc<T>はこの用途のために設計されています。"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -437,6 +467,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={6}
   group="ライフタイム"
   title="構造体のライフタイム"
+  difficulty={3}
+  objectives={["構造体のライフタイム注釈を理解する","フィールドにライフタイムが必要な場合を識別する","構造体に適切なライフタイム注釈を付ける"]}
   options={[
     {text: '正常にコンパイルされる', hint: '参照を含む構造体にはライフタイム注釈が必要です'},
     {text: 'エラー: ライフタイム指定子が不足しています', isAnswer: true},
@@ -506,12 +538,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={7}
   group="ライフタイム"
   title="ライフタイム注釈"
+  difficulty={4}
+  objectives={["注釈が必要な関数シグネチャを識別する","複数参照を持つ関数にライフタイム注釈を付ける","入出力のライフタイムの関係を評価する"]}
   options={[
-    {text: '結果: 小セネカ', hint: 'このコードはコンパイルされず、出力は生成されません'},
-    {text: 'エラー: ライフタイム指定子が不足しています', isAnswer: true},
-    {text: 'エラー: ローカル変数への参照を返せません', hint: '参照は入力パラメータに対するものであり、ローカル変数ではありません'},
-    {text: 'エラー: ライフタイムの不一致', hint: '不一致が生じるようにライフタイムをまだ指定していません'},
-  ]}
+  {
+    "text": "結果: 小セネカ",
+    "hint": "このコードはコンパイルされず、出力は生成されません"
+  },
+  {
+    "text": "エラー: ライフタイム指定子が不足しています",
+    "isAnswer": true
+  },
+  {
+    "text": "エラー: ローカル変数への参照を返せません",
+    "hint": "参照は入力パラメータに対するものであり、ローカル変数ではありません"
+  },
+  {
+    "text": "エラー: ライフタイムの不一致",
+    "hint": "不一致が生じるようにライフタイムをまだ指定していません"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -552,6 +598,8 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   index={8}
   group="RefCell"
   title="RefCellの動作"
+  difficulty={4}
+  objectives={["RefCellによる内部可変性を理解する","RefCellの実行時借用規則を分析する","RefCellで可変アクセスを制御する"]}
   options={[
     {text: '出力: 42', hint: '同時に2つの可変借用は可能ですか？'},
     {text: '実行時パニック: RefCellは既に借用されています', isAnswer: true},
@@ -576,7 +624,7 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-共有借用を作る前に可変借用を解放します。そうしないと、この例は実行時にパニックになります。
+問題のコードは、最初の可変借用が生きている間に2回目の borrow_mut() を呼ぶため、そこで実行時パニックになります。次の修正版では、値を変更した後に可変借用を解放してから共有借用を作ります。
 
 ```rust
 use std::cell::RefCell;
@@ -599,6 +647,8 @@ fn main() {
   index={9}
   group="可変性"
   title="Cell と RefCell"
+  difficulty={3}
+  objectives={["CellとRefCellの用途を区別する","単純な内部可変性にCellを使う","CellでのCopy型と非Copy型の扱いを比較する"]}
   options={[
     {text: '出力: 42, 43', isAnswer: true},
     {text: '出力: 43, 43', hint: 'Cell::get() は呼び出し時の値を返します'},
@@ -675,6 +725,8 @@ fn main() {
   index={10}
   group="参照カウント"
   title="Rcの理解"
+  difficulty={3}
+  objectives={["Rcの目的と制約を理解する","単一スレッドと複数スレッドの参照カウントを区別する","共有所有権にRcを適切に適用する"]}
   options={[
     {text: 'Rcはシングルスレッド環境で使用される', isAnswer: true},
     {text: 'Rcはマルチスレッド環境で使用される', hint: 'スレッドセーフについて考えてみてください - Rcには同期機構がありません'},
@@ -762,17 +814,19 @@ fn main() {
   index={11}
   group="RefCell"
   title="RefCellとスレッディング"
+  difficulty={4}
+  objectives={["RefCellとスレッドセーフな代替手段を比較する","RefCellとRwLockの用途を識別する","スレッド要件に適切な同期機構を適用する"]}
   options={[
   {
-    "text": "RefCellは可変借用に使われ、Rwは不変借用に使われる",
+    "text": "RefCellは可変借用に使われ、RwLockは不変借用に使われる",
     "hint": "両方の型が可変借用と不変借用をサポートしている"
   },
   {
-    "text": "Rwは可変借用に使われ、RefCellは不変借用に使われる",
+    "text": "RwLockは可変借用に使われ、RefCellは不変借用に使われる",
     "hint": "両方とも両方の借用タイプをサポートしている"
   },
   {
-    "text": "RefCellとRwは同じ目的で使われる",
+    "text": "RefCellとRwLockは同じ目的で使われる",
     "hint": "スレッドセーフティについて考えてみよう"
   },
   {
@@ -780,7 +834,7 @@ fn main() {
     "isAnswer": true
   },
   {
-    "text": "Rwはマルチスレッド環境でのみ使われる",
+    "text": "RwLockはマルチスレッド環境でのみ使われる",
     "hint": "通常はスレッドで使われるが、それが主要な違いではない"
   }
 ]}
@@ -816,6 +870,8 @@ fn main() {
   index={12}
   group="スマートポインタ"
   title="ArcとMutex"
+  difficulty={5}
+  objectives={["ArcとMutexの並行アクセスを分析する","デッドロックの可能性を識別する","デッドロックを防ぐ同期パターンを適用する"]}
   options={[
   {
     "text": "出力: 42",
@@ -879,28 +935,30 @@ fn main() {
   index={13}
   group="スマートポインタ"
   title="弱参照"
+  difficulty={4}
+  objectives={["弱参照の目的と動作を理解する","弱参照がメモリリークを防ぐ場合を識別する","Weak<T>で参照サイクルを断つ"]}
   options={[
-    {
-      text: 'Prints: Some("Wisdom")',
-      hint: "What happens to the data when all strong references are dropped?"
-    },
-    {
-      text: 'Prints: None',
-      isAnswer: true
-    },
-    {
-      text: 'Compilation Error',
-      hint: "The code is syntactically correct"
-    },
-    {
-      text: 'Runtime Panic',
-      hint: "Weak references gracefully handle dropped values"
-    },
-    {
-      text: 'Existential Panic',
-      hint: "While philosophical, not a real Rust error!"
-    }
-  ]}
+  {
+    "text": "出力: Some(\"Wisdom\")",
+    "hint": "強参照がすべて解放されると、データはどうなりますか？"
+  },
+  {
+    "text": "出力: None",
+    "isAnswer": true
+  },
+  {
+    "text": "コンパイルエラー",
+    "hint": "このコードは構文的に正しいです。"
+  },
+  {
+    "text": "実行時パニック",
+    "hint": "弱参照は、対象が解放されていても安全に扱えます。"
+  },
+  {
+    "text": "実存的パニック",
+    "hint": "哲学的な悩みですね。Rustのエラーではありません！"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -970,6 +1028,8 @@ fn main() {
   index={14}
   group="メモリパターン"
   title="RAIIパターン"
+  difficulty={3}
+  objectives={["RustのRAIIを理解する","Dropによるリソース解放を実装する","リソース管理にRAIIを適用する"]}
   options={[
     {text: 'リソースはスコープ後に解放される', isAnswer: true, hint: 'Fileフィールドには独自のDrop実装があります。'},
     {text: 'リソースがリークする', hint: 'ラッパーにカスタムDropはありませんが、そのフィールドは依然としてドロップされます。'},
@@ -1053,6 +1113,8 @@ fn main() {
   index={15}
   group="デザインパターン"
   title="コピー vs クローン"
+  difficulty={3}
+  objectives={["CopyとCloneを区別する","各トレイトを実装する場面を理解する","CopyとCloneの適切なderiveを使う"]}
   options={[
     {text: 'コンパイルエラー', hint: 'derive属性は正しく使われています'},
     {text: 'ディープコピーが作成される', isAnswer: true},
@@ -1094,6 +1156,8 @@ fn main() {
   index={16}
   group="ベストプラクティス"
   title="メモリ最適化"
+  difficulty={4}
+  objectives={["構造体の配置とアライメントを分析する","メモリ効率に関わるフィールド順序を検討する","アライメントを考慮して構造体サイズを検討する"]}
   options={[
     {text: '16バイト', hint: 'アライメント要件を考慮してください'},
     {text: '24バイト'},
@@ -1166,6 +1230,8 @@ fn main() {
   index={17}
   group="高度なパターン"
   title="ゼロコスト抽象化"
+  difficulty={5}
+  objectives={["ゼロコスト抽象化を理解する","コンパイル時と実行時のコストを分析する","不要な実行時コストを増やさず抽象化を活用する"]}
   options={[
   {
     "text": "イテレータによるランタイムオーバーヘッド",

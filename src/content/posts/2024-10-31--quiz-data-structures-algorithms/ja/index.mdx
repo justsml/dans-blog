@@ -53,6 +53,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     スタックはLIFOアクセスパターンに最適です。キューはFIFO（First In, First Out）アクセスパターンに最適です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -77,13 +82,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     O(1) は定数時間計算量を表します。入力サイズに関係なく、アルゴリズムは常に同じ時間で実行されます。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="データ構造"
-  title="リンクリストの長さ計算"
+  title="連結リストの長さ計算"
   options={[
     {text: 'O(1)'},
     {text: 'O(log n)'},
@@ -94,12 +104,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    単方向リンクリストの長さを計算する際の時間計算量は何ですか？
+    長さを別途保持していない単方向連結リストで、全ノードを数えて長さを求める時間計算量は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    単方向リンクリストの長さを計算するには、ヘッドからテイルまで全てのノードを走査する必要があり、時間計算量は O(n) になります。
+    単方向連結リストの長さを計算するには、ヘッドからテイルまで全てのノードを走査する必要があり、時間計算量は O(n) になります。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -127,6 +142,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     バランスの取れたBSTでは、各レベルで探索空間が半分になるため、検索の平均時間計算量は O(log n) です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -152,6 +172,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     マージソートは常に最悪ケースで O(n log n) の計算量で動作します。配列を半分に分割し、ソート済みの部分配列をマージすることを繰り返すためです。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -169,12 +194,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Breadth-First Search (BFS) を実装する際に通常使用されるデータ構造は何ですか？
+    幅優先探索（BFS） を実装する際に通常使用されるデータ構造は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     BFS はキューを使用してノードをレベルごとに探索し、幅優先（「行」単位）でノードを処理します。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -185,21 +215,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="グラフ"
   title="グラフにおけるサイクル検出"
   options={[
-    {text: 'Quick Sort'},
-    {text: 'Breadth-First Search'},
-    {text: 'Merge Sort'},
-    {text: 'Depth-First Search', isAnswer: true},
-    {text: 'Bubble Sort'},
+    {text: 'クイックソート'},
+    {text: '幅優先探索（BFS）'},
+    {text: 'マージソート'},
+    {text: '深さ優先探索（DFS）', isAnswer: true},
+    {text: 'バブルソート'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    有向グラフでサイクルを検出する際に一般的に使用されるアルゴリズムはどれですか？
+    再帰スタック上にまだ残っている頂点への辺を見つけることで、有向グラフのサイクルを検出する走査はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     深さ優先探索（DFS）は、訪問したノードを追跡するために再帰スタックを保持することで、グラフ内のサイクルを検出する際に一般的に使用されます。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -227,6 +262,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ヒープソートはヒープを構築し、最大要素を繰り返し取り出すことで、最悪ケースでも O(n log n) の時間計算量を保ちます。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -250,6 +290,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     ハッシュテーブルは、衝突を最小限に抑える優れたハッシュ関数を前提とすれば、要素へのアクセスの平均時間計算量は O(1) です。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -276,6 +321,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     スタックの主要な操作は Push（要素を追加）、Pop（要素を削除）、そして Peek（要素を削除せずにトップを参照）です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -286,19 +336,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'Kruskal\'s Algorithm'},
     {text: 'Prim\'s Algorithm'},
-    {text: 'Bellman-Ford Algorithm'},
+    {text: 'ベルマン–フォード法'},
     {text: 'Dijkstra\'s Algorithm', isAnswer: true},
-    {text: 'Floyd-Warshall Algorithm'},
+    {text: 'ワーシャル–フロイド法'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    非負の重みを持つグラフで最短経路を求める際に一般的に使用されるアルゴリズムはどれですか？
+    通常は優先度キューを使い、未確定頂点の中から暫定距離が最小の頂点を繰り返し選ぶ、単一始点の貪欲な最短経路アルゴリズムはどれですか？辺の重みは非負とします。
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     ダイクストラ法は、非負のエッジ重みを持つグラフで最短経路を求める際に頻繁に使用されます。優先度キューを利用して、最短距離を効率的に算出します。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -323,6 +378,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     AVL木 と 赤黒木 は自己平衡木の一種で、挿入や削除のたびに木がバランスを保つようにします。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -350,6 +410,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     再帰関数では、特定の条件が満たされたときに再帰呼び出しを停止させ、無限再帰を防ぐために基本ケースが必要です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -374,6 +439,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     キューの主要な2つの操作はエンキュー（要素を末尾に追加する）とデキュー（要素を先頭から削除する）です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -396,6 +466,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     グラフが有向非循環（DAG）である場合にトポロジカルソートを実行できます。この順序付けはタスクスケジューリング問題で役立ちます。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -423,6 +498,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     フィボナッチ数列の単純な再帰実装は、各フィボナッチ数に対して膨大な繰り返し計算が行われるため、時間計算量は O(2^n) です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -446,6 +526,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     優先度キューは、最高または最低の優先度の要素を効率的に取り出せるため、通常ヒープを使って実装されます。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -472,6 +557,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     中順、前順、後順は二分木における代表的な深さ優先走査の3つの順序で、ノードの訪問順序がそれぞれ異なります。幅優先走査も一般的ですが、別の走査カテゴリです。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -488,12 +578,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    次のうち、ミニヒープに当てはまる性質はどれですか？
+    次のうち、最小ヒープに当てはまる性質はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ミニヒープでは、根は常に最小要素であり、木の高さは O(log n) になるため、挿入と抽出が効率的です。
+    最小ヒープでは、根は常に最小要素であり、木の高さは O(log n) になるため、挿入と抽出が効率的です。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>
@@ -519,6 +614,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     バブルソートは安定なソートアルゴリズムで、等しい要素の相対順序を保ったままソートします。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+構造の名前だけでなく、アクセスの順序に注目してください。最初または最後に何を処理する必要があるかを考えましょう。
   </div>
   </slot>
 </Challenge>

@@ -150,13 +150,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     次のHTMLに最も適合するセレクタはどれですか？
     ```html
-    <a id="home" name="home" href="/home">Home</a>
-    ```
+      <a id="home" name="home" href="/home">Home</a>
+      ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    正解は `a#home[name='home']` で、`id` と `name` の両方にマッチします。CSS セレクタは大文字小文字を区別するので `#Home` は機能せず、スペースは子要素を意味しますが、ここでは該当しません。
+    正解は `a#home[name='home']` で、`id` と `name` の両方にマッチします。CSS セレクタは大文字小文字を区別するので `#Home` は機能せず、スペースは子孫結合子を意味しますが、ここでは該当しません。
 
     `:contains()` セレクタは標準の CSS セレクタではありませんが、いくつかの JS ライブラリで利用可能です。
   </div>
@@ -180,8 +180,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     次のHTMLボタンにマッチするセレクタはどれですか？
     ```html
-    <button onclick="openModal()">Contact</button>
-    ```
+      <button onclick="openModal()">Contact</button>
+      ```
   </div>
   </slot>
   <slot name='explanation'>
@@ -236,12 +236,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     次のHTMLで最後のリンクにマッチするセレクタはどれですか？
     ```html
-    <nav>
-      <a name="home" href="/home">Home</a>
-      <a name="login" href="/login">Login</a>
-      <a name="help" href="/help">Help</a>
-    </nav>
-    ```
+      <nav>
+        <a name="home" href="/home">Home</a>
+        <a name="login" href="/login">Login</a>
+        <a name="help" href="/help">Help</a>
+      </nav>
+      ```
   </div>
   </slot>
   <slot name='explanation'>
@@ -254,7 +254,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="セレクタ: 特異性"
+  group="セレクタ: 詳細度"
   title="セレクタの優先度"
   options={[
     {text: 'main article section blockquote a'},
@@ -270,7 +270,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    ID がタグやクラスベースのセレクタよりも特異性が高いため、`a#quote` セレクタが優先されます。
+    ID がタグやクラスベースのセレクタよりも詳細度が高いため、`a#quote` セレクタが優先されます。
   </div>
   </slot>
 </Challenge>
@@ -290,14 +290,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ボックス内の「shit」をどうやって中央に配置しますか？
+    横書きの通常のブロック内で、インラインテキストを水平方向に中央揃えする宣言はどれですか？
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
-    ブロック要素内のテキストを中央揃えにする正しい方法は `text-align: center;` を使うことです。`align` プロパティはフレックスボックスレイアウトで使用され、`margin: 0 auto;` はブロック要素を水平方向に中央に配置するために使います。
-
-    `align-content` プロパティはグリッドレイアウトで使用され、`text-content` は有効な CSS プロパティではありません。
+横書きのブロック内でテキストを水平方向に中央揃えするには `text-align: center;` を使います。`align` と `text-content` はCSSプロパティではありません。`margin: 0 auto;` は幅を持つブロック自体の中央揃えに使い、`align-content` は内容のブロック方向の配置などを制御します。
   </div>
   </slot>
 </Challenge>
@@ -348,12 +346,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     以下のHTMLにおける `<a>` リンクのテキストのピクセルサイズは何ですか？
     ```html
-    <body style="font-size: 40px !important;">
-      <nav style="font-size: 50%;">
-        <a style="font-size: 25%;">HOME</a>
-      </nav>
-    </body>
-    ```
+      <body style="font-size: 40px !important;">
+        <nav style="font-size: 50%;">
+          <a style="font-size: 25%;">HOME</a>
+        </nav>
+      </body>
+      ```
   </div>
   </slot>
   <slot name='explanation'>
@@ -381,12 +379,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     以下のHTMLで「HOME」リンクの `1.2rem` は何ピクセルになるでしょうか？
     ```html
-    <html style="font-size: 10px;">
-      <body style="font-size: 20px;">
-        <a style="font-size: 1.2rem;">HOME</a>
-      </body>
-    </html>
-    ```
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2rem;">HOME</a>
+        </body>
+      </html>
+      ```
   </div>
   </slot>
   <slot name='explanation'>
@@ -414,12 +412,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     前の質問と同様に、以下のHTMLで「HOME」リンクの `1.2em` のピクセルサイズは何ピクセルになりますか？
     ```html
-    <html style="font-size: 10px;">
-      <body style="font-size: 20px;">
-        <a style="font-size: 1.2em;">HOME</a>
-      </body>
-    </html>
-    ```
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2em;">HOME</a>
+        </body>
+      </html>
+      ```
   </div>
   </slot>
   <slot name='explanation'>
@@ -432,8 +430,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={13}
-  group="セレクタ: 特異性"
-  title="ゼロ特異性セレクタ"
+  group="セレクタ: 詳細度"
+  title="ゼロ詳細度セレクタ"
   options={[
     {text: ':where(.card) .title', isAnswer: true},
     {text: '.card .title'},
@@ -443,12 +441,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    どのセレクタが最も特異性が低いですか？
+    どのセレクタが最も詳細度が低いですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `:where(.card) .title` が最も特異性が低いです。`:where()` 疑似クラスとその中身はすべて `0-0-0` とみなされるので、`.title` だけがカウントされます。`:is(.card) .title` は `.card` の特異性を保持し、`.card .title` はクラスが2つ、`#card .title` は ID を含みます。
+    `:where(.card) .title` が最も詳細度が低いです。`:where()` 疑似クラスとその中身はすべて `0-0-0` とみなされるので、`.title` だけがカウントされます。`:is(.card) .title` は `.card` の詳細度を保持し、`.card .title` はクラスが2つ、`#card .title` は ID を含みます。
   </div>
   </slot>
 </Challenge>

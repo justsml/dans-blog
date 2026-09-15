@@ -121,17 +121,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     次のコードの出力は何になりますか？
     ```js
-      var p = new Promise((resolve, reject) => {
-          reject(Error('The Fails!'))
-        })
-        .catch(error => console.log(error))
-        .then(error => console.log(error))
+    var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error))
+    .then(error => console.log(error))
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `.then`と`.catch`をチェーンする際には、それらが一連のステップであると考えると役立ちます。各`.then`は前の`.then`が返した値（引数として）を受け取ります。ただし、"ステップ"でエラーが発生した場合、その後の`.then`の"ステップ"は`.catch`に出会うまでスキップされます。エラーを上書きしたい場合は、エラーでない値を返すだけです。その値はその後のどの`.then`でもアクセス可能です。
+    `.then`と`.catch`をチェーンする際には、それらが一連のステップであると考えると役立ちます。各`.then`は前の`.then`が返した値（引数として）を受け取ります。ただし、"ステップ"でエラーが発生した場合、その後の`.then`の"ステップ"は`.catch`に出会うまでスキップされます。拒否を処理して履行状態にするには、通常の値を返します。Errorオブジェクトも、返すだけなら通常の値として扱われます。再び拒否状態にするにはthrowするか、拒否されたPromiseを返します。その値はその後のどの`.then`でもアクセス可能です。
   </div>
   </slot>
 </Challenge>
@@ -152,11 +152,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     以下のコードの出力は何になりますか？
     ```js
-      var p = new Promise((resolve, reject) => {
-          reject(Error('The Fails!'))
-        })
-        .catch(error => console.log(error.message))
-        .catch(error => console.log(error.message))
+    var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error.message))
+    .catch(error => console.log(error.message))
     ```
   </div>
   </slot>
@@ -200,7 +200,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     **ヒント:** `.catch` は、単に通常の値を返すことでエラーを無視（または上書き）するために使用できます。
 
-    このトリックは、その後に値を受け取る `.then` がある場合にのみ機能します。
+    通常の値を返せば拒否状態は処理され、後続のPromiseは履行状態になります。後に `.then` がなくても拒否は処理されますが、返した値を使うには `.then` などが必要です。
   </div>
   </slot>
 </Challenge>
@@ -303,7 +303,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **ヒント:** `.then`は`return`値を次の`.then(value => /* ハンドリング */)に順番に渡します。
+    **ヒント:** `.then`は`return`値を次の`.then(value => /* ハンドリング */)` に順番に渡します。
 
     値を次の`.then`に渡すには`return`を記述する必要があります。
   </div>

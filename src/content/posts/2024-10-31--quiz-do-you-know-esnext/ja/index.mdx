@@ -55,6 +55,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     null 合体演算子（`??`）は、左側のオペランド（`a`）が `null` または `undefined` の場合、右側のオペランド（`b`）を返します。このケースでは `a` が `null` なので、`result` は `100` です。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -83,6 +88,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     null 合体演算子 (`??`) は `false` のような falsy 値を有効な値として扱います。`value` が `false` なので、有効な値とみなされそのまま返されます。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
   </div>
   </slot>
 </Challenge>
@@ -114,6 +124,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     オプショナルチェイニング演算子（`?.`）は、左側が `null` または `undefined` の場合に評価を停止します。`obj.foo` が `null` なので、`obj.foo?.bar` は `undefined` となります。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -143,6 +158,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     BigInt の値は数値の後ろに `n` を付けて作成します。算術演算では BigInt と通常の数値を混在させることはできません。ここでは両方の値が BigInt なので掛け算が可能で、結果は `84n` になります。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -170,6 +190,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `import()` 関数はモジュールオブジェクトに解決する `Promise` を返します。`Promise` インスタンスはオブジェクトなので、`typeof modulePromise` は `'object'` とログに出します。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
   </div>
   </slot>
 </Challenge>
@@ -205,6 +230,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Promise.allSettled` は各 Promise の結果を記述したオブジェクトの配列を返します。最初の Promise は `fulfilled` で値 `'success'` を持つので、ログは `fulfilled: success` と出力します。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -233,6 +263,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `String.matchAll` は配列ではなくマッチのイテレータを返します。このイテレータを使って文字列からすべてのマッチンググループを取得できます。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -258,6 +293,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `import.meta` は現在のモジュールに関するメタデータを含むオブジェクトです。`import.meta.url` プロパティは現在のモジュールの URL を表し、スクリプトが実行されている場所の情報を取得するのに使えます。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
   </div>
   </slot>
 </Challenge>
@@ -289,6 +329,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     論理 OR 代入（`||=`）は、左側の値が falsy（`null`、`undefined`、`0`、`false` など）の場合に右側の値を代入します。`a` は `null` なので、値 `10` が代入されます。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -318,6 +363,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     nullish 合体代入 (`??=`) は左側の値が `null` または `undefined` の場合に右側の値を代入します。`b` は `null` なので、値 `10` が代入されます。
   </div>
   </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge
@@ -345,6 +395,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `WeakRef` はオブジェクトへの弱参照を提供し、他に参照が無ければガベージコレクションの対象になります。ここでは `obj` がまだ強く参照されているので、`deref()` は元のオブジェクトを返します。対象が回収されていれば、`deref()` は `undefined` を返します。
+  </div>
+  </slot>
+  <slot name="hints">
+  <div className="hints">
+演算子の正確な意味に注目してください。古い構文から予想される動作と、この機能の実際の動作は同じとは限りません。
   </div>
   </slot>
 </Challenge>
