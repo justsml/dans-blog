@@ -94,5 +94,5 @@ test("an added optional hint requests editorial review without a schema failure"
     targetContents: quiz(`[{text: 'A', isAnswer: true, hint: 'Ein hilfreicher Hinweis'}]`),
     targetPath: "de/index.mdx", locale: "de"});
   expect(issues.filter(i => i.severity === "high")).toEqual([]);
-  expect(issues).toContainEqual(expect.objectContaining({code: "quiz-option-unexpected-hint", severity: "medium"}));
+  expect(issues).toContainEqual(expect.objectContaining({code: "quiz-option-unexpected-hint", severity: "low"}));
 });

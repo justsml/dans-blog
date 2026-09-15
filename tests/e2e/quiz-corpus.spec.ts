@@ -87,3 +87,20 @@ test.describe("mobile locale controls", () => {
     });
   }
 });
+
+test("quiz progress stays separate across English, Arabic and Japanese", async ({ page }) => {
+  const entries = ["en", "ar", "ja"].map(locale => corpus.find(entry => entry.locale === locale && entry.slug === "quiz-is-your-memory-rusty")!);
+  for (const entry of entries) {
+    await page.goto(entry.route);
+    const first = page.locator("#qq-1");
+    await first.scrollIntoViewIfNeeded();
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/18");
+    await first.locator(".option").nth(entry.quiz.challenges[0].options.findIndex(option => option.isAnswer)).click();
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+  }
+  for (const entry of entries) {
+    await page.goto(entry.route);
+    await page.locator("#qq-1").scrollIntoViewIfNeeded();
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+  }
+});

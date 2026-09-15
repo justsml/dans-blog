@@ -8,6 +8,23 @@ The corpus contains 19 English quizzes and 190 translations across Arabic, Chine
 
 Each language has its own review agent and answer ledger. The ledgers document semantic review; matching the source answer positions alone does not establish correctness. Historical AI quality scores are not refreshed by this work.
 
+## Language ledgers
+
+Each ledger records answer choices and terminology decisions against related articles in that language.
+
+| Language | Review |
+|---|---|
+| Arabic | [Arabic ledger](ar.md) |
+| Chinese | [Chinese ledger](zh.md) |
+| French | [French ledger](fr.md) |
+| German | [German ledger](de.md) |
+| Hebrew | [Hebrew ledger](he.md) |
+| Hindi | [Hindi ledger](hi.md) |
+| Italian | [Italian ledger](it.md) |
+| Japanese | [Japanese ledger](ja.md) |
+| Russian | [Russian ledger](ru.md) |
+| Spanish | [Spanish ledger](es.md) |
+
 ## Source corrections
 
 The English source was corrected alongside translations so the fixes remain available to future translation runs:

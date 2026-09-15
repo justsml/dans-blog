@@ -447,7 +447,7 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
       if (!sourceOption.hasHint && targetOption.hasHint) {
         issues.push({
           code: "quiz-option-unexpected-hint",
-          severity: "medium",
+          severity: "low",
           message: `${targetPath} Challenge ${sourceChallenge.index} option ${optionIndex} adds a hint that is not present in English.`,
         });
       }
