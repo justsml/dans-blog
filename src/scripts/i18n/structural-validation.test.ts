@@ -211,3 +211,23 @@ describe("extractMdxStructure", () => {
     expect(structure.componentSequence).toEqual(["HeroImage", "QuizUI"]);
   });
 });
+
+test("component sequence ignores Rust generics inside JSX strings", () => {
+  const content = `<QuizUI>\n<Challenge title="Box<T>" options={[{text: "Rc<T>", hint: 'Compare <T> and >', isAnswer: true}]}>
+  <slot name="question"><Callout>Content</Callout></slot>
+</Challenge>\n</QuizUI>`;
+  expect(extractMdxStructure(content).componentSequence).toEqual(["QuizUI", "Challenge", "Callout"]);
+});
+
+test("Markdown syntax in JSX props does not change article structure", () => {
+  const source = `<QuizUI>\n<Challenge options={[{text: "echo ` + "`whoami`" + ` > out", hint: "<T> [label](url)"}]}>
+<slot name="question">Question</slot>\n</Challenge>\n</QuizUI>`;
+  const target = `<QuizUI>\n<Challenge options={[{text: "echo ` + "`whoami`" + ` > out", hint: "Text"}]}>
+<slot name="question">Frage</slot>\n</Challenge>\n</QuizUI>`;
+  expect(extractMdxStructure(source)).toEqual(extractMdxStructure(target));
+});
+
+test("an unmatched code delimiter cannot hide later questions", () => {
+  const contents = "A literal unmatched ` delimiter.\n\n<Challenge title=\"Question\">\nUse `x` here.\n</Challenge>";
+  expect(extractMdxStructure(contents).componentSequence).toEqual(["Challenge"]);
+});

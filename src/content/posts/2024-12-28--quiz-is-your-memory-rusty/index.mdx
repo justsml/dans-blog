@@ -743,7 +743,7 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
 
   <slot name='explanation'>
   <div className="explanation">
-Drop the mutable borrow before taking shared borrows. Otherwise this example panics at runtime.
+The question panics on the second `borrow_mut()` because the first mutable borrow is still alive. `RefCell` enforces this borrowing rule at runtime. In the corrected example below, `drop(second)` releases the mutable borrow before the two shared borrows.
 
 ```rust
 use std::cell::RefCell;
@@ -1480,7 +1480,7 @@ fn main() {
   },
   {
     "text": "Slower but more readable",
-    "hint": "The abstraction doesn't affect runtime performance"
+    "hint": "The optimizer can remove iterator overhead; generated code and workload still matter"
   },
   {
     "text": "Iterators cannot be optimized"

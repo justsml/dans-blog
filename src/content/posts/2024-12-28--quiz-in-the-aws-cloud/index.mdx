@@ -256,13 +256,13 @@ Get ready to prove your cloud expertise! 🚀
       API Gateway supports bidirectional WebSocket APIs, but the implementation is managed by API Gateway rather than being a direct socket into your own server process.
       API Gateway maintains the client connection and routes messages to Lambda, HTTP endpoints, or other integrations. Messages can be sent back to connected clients through the API Gateway Management API.
 
-      The others are much more WebSocket-friendly:
-      - Lightsail: Perfect for simple WebSocket setups 👌
+      Other services offer different tradeoffs:
+      - Lightsail: Run and manage your own WebSocket server on an instance
       - AppSync: Uses WebSockets for managed GraphQL subscriptions
       - EC2: Your classic "do whatever you want" option for WebSockets
-      - EKS: Great for running scalable WebSocket clusters
+      - EKS: Run your own WebSocket services in Kubernetes
 
-      Pro tip: If you need raw WebSocket power, stick with the compute services!
+      Choose based on protocol, connection limits, deployment model, and operational responsibility. Managed API routing and hosting your own server solve different needs.
     </div>
   </slot>
 </Challenge>
@@ -383,7 +383,7 @@ Get ready to prove your cloud expertise! 🚀
 
       Understanding these limits is crucial for optimizing your application's performance and ensuring efficient data operations.
 
-      **Note:** It is possible to exceed _some_ of these limits - if you can sweet-talk your AWS account manager. 😎
+      The 100-item limit is fixed for this API operation. Split larger reads into separate requests, and retry any `UnprocessedKeys` with backoff. Adjustable throughput quotas are a different kind of limit.
     </div>
   </slot>
 </Challenge>
@@ -410,7 +410,7 @@ Get ready to prove your cloud expertise! 🚀
 >
   <slot name="question">
   <div className="question">
-    What's the maximum number of documents DynamoDB can `UPDATE` per batch?
+    How many items can a single DynamoDB `UpdateItem` call modify?
   </div>
   </slot>
 
@@ -418,7 +418,7 @@ Get ready to prove your cloud expertise! 🚀
   <div className="explanation">
     The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
 
-    While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation.
+    `UpdateItem` modifies **one** item. This is a limit of that API call, not a blanket limit on every DynamoDB request: transaction and PartiQL batch APIs can include multiple updates.
 
   </div>
   </slot>
@@ -439,12 +439,12 @@ Get ready to prove your cloud expertise! 🚀
     { text: "Provisioned is always better" },
     { text: "On-demand has unlimited capacity" },
     { text: "They perform identically" },
-    { text: "On-demand is cheaper for unpredictable workloads", isAnswer: true },
+    { text: "On-demand avoids provisioning capacity for sporadic, unpredictable traffic", isAnswer: true },
   ]}
 >
   <slot name="question">
   <div className="question">
-    When should you use DynamoDB On-Demand capacity?
+    Which is a reason to choose DynamoDB On-Demand capacity?
   </div>
   </slot>
 
@@ -460,6 +460,8 @@ Get ready to prove your cloud expertise! 🚀
     - Predictable, consistent workloads
     - More control over performance
     - Potential cost savings
+
+    On-demand is not always cheaper. Compare request volume, utilization, and current pricing; predictable sustained traffic can favor provisioned capacity.
 
     [DynamoDB Capacity Modes](https://aws.amazon.com/dynamodb/pricing/)
   </div>
@@ -752,7 +754,7 @@ Get ready to prove your cloud expertise! 🚀
   options={[
     { text: "Store additional data copies" },
     { text: "DynamoDB credits for Green Vendors", hint: "Really?" },
-    { text: "Increase write performance", hint: "Streams are " },
+    { text: "Increase write performance", hint: "Streams capture changes; they do not increase the table’s write capacity." },
     { text: "Capture item-level changes for event-driven architectures", isAnswer: true },
     { text: "Alternative to Global Secondary Indexes", hint: "Are you guessing?" },
   ]}
@@ -954,28 +956,28 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Only for new objects" },
-    { text: "Strong consistency for all operations", isAnswer: true },
+    { text: "Strong read-after-write consistency for object writes, deletes, and listings", isAnswer: true },
     { text: "Eventually consistent for updates" },
     { text: "Depends on region" },
   ]}
 >
   <slot name="question">
     <div className="question">
-      As of late 2020, what consistency model does S3 provide for all operations?
+      After a successful S3 object PUT or DELETE, what consistency applies to subsequent GET and LIST requests?
     </div>
   </slot>
 
   <slot name="explanation">
     <div className="explanation">
       S3 Consistency Model:
-      - Strong read-after-write consistency for all operations
+      - Strong read-after-write consistency for object operations
       - Applies to PUTs and DELETEs
       - No need for workarounds previously used
       - No additional cost
 
       Impact:
       - Simplified application logic
-      - No need for consistency checks
+      - No need to wait for eventual consistency before reading a successfully written object
       - Reliable immediate reads after writes
       - Improved application reliability
     </div>

@@ -187,18 +187,14 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-    The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. Basically it's missing a ` = {}` default in there.
-
-    The way this is written, says "if `person.birth` is `undefined`, then `place` is `Unknown`". But `person.birth` is `undefined`, so it's trying to destructure `undefined`, which results in an error.
+    The `birth` property is missing, so JavaScript tries to destructure `place` from `undefined`. This throws before the default for `place` can apply:
 
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
-
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
+    TypeError
     ```
-  </div>
+
+    The exact diagnostic message varies between runtimes. A property default only handles a missing or `undefined` property after its containing object is available. Use `birth: { place = "Unknown" } = {}` to supply a default object when `birth` itself is missing or `undefined`.
+    </div>
   </slot>
 </Challenge>
 
@@ -321,9 +317,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-    The function `displayPlace` will ONLY use a default object if no object is passed in. So, the only way to get the `{ place: "Unknown" }` default is with zero arguments `displayPlace()`.
+    The default parameter object `{ place: "Unknown" }` is used when the argument is omitted or explicitly `undefined`: both `displayPlace()` and `displayPlace(undefined)` print `Unknown`.
 
-    Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior (ignoring `undefined`, recognizing `null`).
+    When an object is supplied, a missing or `undefined` `place` property uses the property default `"N/A"`. These parameter and property defaults apply at different levels.
 
     This results in:
 
@@ -355,7 +351,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    Similar to the previous one... how is `null` handled?_
+    Similar to the previous one... how is `null` handled?
     ```js
     function displayPlace({
       name = "N/A",
@@ -372,7 +368,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-    In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The default value for `place` is only used if the whole object is missing **or** `undefined`. Nulls will come through as `null`.
+    In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The property default `"N/A"` applies when `place` is missing or `undefined`, even if the object itself is supplied. `null` does not trigger that default, so the outputs are `null` and `N/A`.
   </div>
   </slot>
 </Challenge>

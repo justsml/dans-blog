@@ -1,3 +1,4 @@
+import { maskInlineCodeSpans } from "./code-spans";
 import matter from "gray-matter";
 import { extractHeadingAnchors } from "./heading-link-validation.ts";
 
@@ -268,7 +269,7 @@ export function assertStructuralParity(input: CompareMdxStructureInput) {
 export function extractMdxStructure(contents: string): MdxStructureSnapshot {
   const body = stripFrontmatter(contents).replace(/\r\n?/g, "\n");
   const codeFenceLanguages = extractCodeFenceLanguages(body);
-  const comparableBody = stripInlineCodeSpans(stripMdxComments(stripFencedCodeBlocks(body)));
+  const comparableBody = stripInlineCodeSpans(maskQuizAttributes(stripMdxComments(stripFencedCodeBlocks(body))));
   const headingSequence = extractHeadingSequence(comparableBody);
   const headingAnchorIndexes = getHeadingAnchorIndexes(contents);
   const linkTargets = extractLinks(comparableBody, headingAnchorIndexes).map((link) => link.target);
@@ -474,7 +475,7 @@ function extractCodeFenceLanguages(contents: string) {
   let fence: { marker: "`" | "~"; length: number } | undefined;
 
   for (const line of lines) {
-    const fenceMatch = line.match(/^\s{0,3}(`{3,}|~{3,})(.*)$/);
+    const fenceMatch = line.match(/^\s{0,12}(`{3,}|~{3,})(.*)$/);
     if (fenceMatch == null) continue;
 
     const marker = fenceMatch[1].startsWith("`") ? "`" : "~";
@@ -642,11 +643,55 @@ function getLineStartOffsets(contents: string) {
   return offsets;
 }
 
+function maskQuizAttributes(contents: string) {
+  const tags = /<(Challenge)\b/g;
+  let match: RegExpExecArray | null;
+  let result = "";
+  let previous = 0;
+  while ((match = tags.exec(contents))) {
+    let quote = "";
+    let braces = 0;
+    let end = tags.lastIndex;
+    for (; end < contents.length; end++) {
+      const char = contents[end];
+      if (quote) {
+        if (char === "\\") end++;
+        else if (char === quote) quote = "";
+      } else if (char === "\"" || char === "'" || char === "`") quote = char;
+      else if (char === "{") braces++;
+      else if (char === "}") braces--;
+      else if (char === ">" && braces === 0) break;
+    }
+    if (end === contents.length) break;
+    result += contents.slice(previous, tags.lastIndex)
+      + contents.slice(tags.lastIndex, end).replace(/[^\n]/g, " ");
+    previous = end;
+    tags.lastIndex = end + 1;
+  }
+  return result + contents.slice(previous);
+}
+
 function extractComponentSequence(contents: string) {
   const components: string[] = [];
-  for (const match of contents.matchAll(/<\/?([A-Z][A-Za-z0-9_.]*)\b/g)) {
-    if (match[0].startsWith("</")) continue;
+  const tags = /<([A-Z][A-Za-z0-9_.]*)\b/g;
+  let match: RegExpExecArray | null;
+  while ((match = tags.exec(contents))) {
     components.push(match[1]);
+    // JSX strings such as "RefCell<T>" are props, not nested MDX components.
+    let quote = "";
+    let braces = 0;
+    let index = tags.lastIndex;
+    for (; index < contents.length; index++) {
+      const char = contents[index];
+      if (quote) {
+        if (char === "\\") index++;
+        else if (char === quote) quote = "";
+      } else if (char === "\"" || char === "'" || char === "`") quote = char;
+      else if (char === "{") braces++;
+      else if (char === "}") braces--;
+      else if (char === ">" && braces === 0) break;
+    }
+    tags.lastIndex = index + 1;
   }
   return components;
 }
@@ -744,7 +789,7 @@ function stripFencedCodeBlocks(contents: string) {
   let fence: { marker: "`" | "~"; length: number } | undefined;
 
   for (const line of lines) {
-    const fenceMatch = line.match(/^\s{0,3}(`{3,}|~{3,})/);
+    const fenceMatch = line.match(/^\s{0,12}(`{3,}|~{3,})/);
     if (fenceMatch == null) {
       if (fence == null) result.push(line);
       continue;
@@ -771,7 +816,7 @@ function stripMdxComments(contents: string) {
 }
 
 function stripInlineCodeSpans(contents: string) {
-  return contents.replace(/`(?:\\.|[^`])*`/g, (match) => " ".repeat(match.length));
+  return maskInlineCodeSpans(contents);
 }
 
 function normalizeLinkTarget(value: string, headingAnchorIndexes = new Map<string, number>()) {

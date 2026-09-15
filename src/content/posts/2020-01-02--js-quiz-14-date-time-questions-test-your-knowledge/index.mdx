@@ -51,7 +51,7 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
 >
   <slot name="question">
   <div className="question">
-    What will the output include?
+    Which local calendar date does this object represent? Console display formatting may vary.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -85,7 +85,7 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
 >
   <slot name="question">
   <div className="question">
-    What will the output include?
+    Which local calendar date does this object represent? Console display formatting may vary.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -159,6 +159,8 @@ Calling `Date()` without `new` ignores all arguments and returns a string for th
   
     <slot name="question">
     <div className="question">
+    Assume the local timezone is fixed at GMT−7.
+
       What will the output include?
       ```js
       const date = new Date(2020)
@@ -199,6 +201,8 @@ Calling `Date()` without `new` ignores all arguments and returns a string for th
   
     <slot name="question">
     <div className="question">
+    Assume the local timezone is fixed at GMT−7.
+
       What value will print to the console?
       ```js
       const d1 = new Date('2020-01-01')
@@ -376,8 +380,8 @@ Date objects store milliseconds since the Unix epoch, not a timezone. `getTimezo
 >
     <slot name="question">
     <div className="question">
-      What will the output include?
-      ```js
+    Which local calendar date does this object represent? Console display formatting may vary.
+    ```js
       const d = new Date(2020, 0, 1)
       d.setDate(1)
       console.log(d)
@@ -414,8 +418,8 @@ Date objects store milliseconds since the Unix epoch, not a timezone. `getTimezo
   
     <slot name="question">
     <div className="question">
-      What will the output include?
-      ```js
+    Which local calendar date does this object represent? Console display formatting may vary.
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(1)
       console.log(d)
@@ -448,8 +452,8 @@ Date objects store milliseconds since the Unix epoch, not a timezone. `getTimezo
   
     <slot name="question">
     <div className="question">
-      What will the output include?
-      ```js
+    Which local calendar date does this object represent? Console display formatting may vary.
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(12)
       console.log(d)
@@ -489,8 +493,8 @@ Date objects store milliseconds since the Unix epoch, not a timezone. `getTimezo
   
     <slot name="question">
     <div className="question">
-      What will the output include?
-      ```js
+    Which local calendar date does this object represent? Console display formatting may vary.
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(13)
       console.log(d)
@@ -535,8 +539,8 @@ Date objects store milliseconds since the Unix epoch, not a timezone. `getTimezo
   
     <slot name="question">
     <div className="question">
-      What will the output include?
-      ```js
+    Which local calendar date does this object represent? Console display formatting may vary.
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(-1)
       console.log(d)

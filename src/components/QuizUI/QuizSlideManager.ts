@@ -49,6 +49,7 @@ export function initQuizSlideManager(
   const cleanupHandlers: Array<() => void> = [];
   let destroyed = false;
   let hydrationTimer: number | null = null;
+  let advanceTimer: number | null = null;
   let visibilityObserver: IntersectionObserver | null = null;
   let mutationObserver: MutationObserver | null = null;
 
@@ -339,7 +340,7 @@ export function initQuizSlideManager(
     const isQuizFullyAnswered = () => answeredQuestions.size >= totalQuestions;
 
     const triggerFinalConfetti = (answeredIndex: number) => {
-      if (confettiShown || !isQuizFullyAnswered()) return;
+      if (confettiShown || !isQuizCorrectlyCompleted()) return;
       confettiShown = true;
 
       const answeredChallenge = islands[answeredIndex]?.querySelector(
@@ -422,7 +423,10 @@ export function initQuizSlideManager(
 
       if (nextUnansweredIndex === currentIndex) return;
 
-      window.setTimeout(() => {
+      if (advanceTimer != null) window.clearTimeout(advanceTimer);
+      advanceTimer = window.setTimeout(() => {
+        advanceTimer = null;
+        if (destroyed || currentIndex !== answeredIndex) return;
         goToQuestion(
           nextUnansweredIndex,
           nextUnansweredIndex > currentIndex ? "next" : "prev",
@@ -762,7 +766,7 @@ export function initQuizSlideManager(
       updateDots();
       updateProgress();
       triggerFinalConfetti(detail.index);
-      advanceToNextUnanswered(detail.index);
+      if (detail.isCorrect) advanceToNextUnanswered(detail.index);
     }) as EventListener);
 
     mutationObserver = new MutationObserver((mutations) => {
@@ -869,6 +873,7 @@ export function initQuizSlideManager(
   return {
     destroy: () => {
       destroyed = true;
+      if (advanceTimer != null) window.clearTimeout(advanceTimer);
       if (hydrationTimer != null) {
         window.clearTimeout(hydrationTimer);
         hydrationTimer = null;

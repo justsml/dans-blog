@@ -316,7 +316,7 @@ We'll cover parsing numeric expressions - in varying bases, handling floating-po
 
     The first element, `24`, is parsed as `24` in base 0 (auto-detect), so it remains `24`. The second element, `'One'`, is parsed as `NaN` in base 1. The third element, `42`, is parsed using base 2. In base 2, `'42'` is `NaN`, so the result is `[24, NaN, NaN]`.
 
-    This is a common gotcha with `parseInt` and `map`. If you want to parse an array of strings to numbers, the only safe "built-in" method is `.map(Number)` or adding a callback/enclosure `.map(x => parseInt(x, 10))`.
+    This is a common gotcha with `parseInt` and `map`. If you want to parse an array of strings to numbers, use `.map(Number)` for whole-string numeric conversion, or `.map(x => parseInt(x, 10))` for base-10 integer-prefix parsing. Those operations have different parsing semantics; choose the one you intend.
   </div>
   </slot>
 </Challenge>
@@ -455,8 +455,8 @@ We'll cover parsing numeric expressions - in varying bases, handling floating-po
         <td>❌</td>
       </tr>
       <tr>
-        <td>Binary/Octal/Hex literals</td>
-        <td>✅</td>
+        <td>Binary/Octal/Hex prefixes in strings</td>
+        <td>Hex <code>0x</code> only; <code>0b</code>/<code>0o</code> are not inferred</td>
         <td>❌</td>
         <td>✅</td>
         <td>✅</td>

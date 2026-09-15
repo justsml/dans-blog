@@ -51,7 +51,7 @@ Let's see how well you know your streams from your buffers! 🚀
     `Buffer.alloc(size)` creates a new Buffer of specified size filled with zeros.
     The output will be: `<Buffer 00 00 00 00 00>`
 
-    If you want to create a Buffer with random data, use `Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` skips zero-initialization: its bytes may contain old memory contents. It is not a random-number generator. Initialize every byte before reading or exposing it; use `crypto.randomBytes(5)` when random bytes are required.
     
     [Learn more about Buffer allocation](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -215,7 +215,7 @@ Let's see how well you know your streams from your buffers! 🚀
   title="Stream Piping"
   options={[
     {text: 'Copies file with compression'},
-    {text: 'Copies file without memory buffering', isAnswer: true},
+    {text: 'Copies file in chunks without buffering the whole file', isAnswer: true},
     {text: 'Loads entire file into memory'},
     {text: 'Creates a symbolic link'},
   ]}
@@ -506,7 +506,7 @@ Let's see how well you know your streams from your buffers! 🚀
   <div className="explanation">
     Streams can operate in:
     1. Binary mode (default): for buffers and strings
-    2. Object mode: for any JavaScript value
+    2. Object mode: for JavaScript values other than `null`, which signals the end of a readable stream
 
     Example of object mode:
     ```js

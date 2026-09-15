@@ -190,7 +190,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
   <slot name='explanation'>
   <div className="explanation">
-    This pattern won't match anything because the look-ahead is backwards! If you want digits preceded by `$` or `€`, use a look-behind: `/(?<=[\$€])\d+/g`.
+    This pattern finds no matches in this input because the lookahead checks for a currency symbol after the digits, while the input puts the symbols before them. If you want digits preceded by `$` or `€`, use a look-behind: `/(?<=[\$€])\d+/g`.
 
     Look-aheads check what comes *after* the current position. The pattern as written looks for:
     - One or more digits (`\d+`)
@@ -377,7 +377,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
   <slot name='explanation'>
   <div className="explanation">
-    The negative look-ahead `(?![a-z])` ensures there are no lowercase letters after the digits. Because the "3aBc" part has a lowercase letter after the digits, its portion doesn't match. So only the beginning "12" matches.
+    With the `i` flag, `(?![a-z])` rejects a following ASCII letter in either case. The greedy digit match first consumes `123`, fails before `a`, then backtracks to `12`. The next character is now `3`, so the assertion succeeds and the result is `["12"]`.
 
     [Learn more about negative look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>

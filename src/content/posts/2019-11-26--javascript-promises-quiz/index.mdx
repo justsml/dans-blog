@@ -127,7 +127,7 @@ options={[
 
 <slot name='explanation'>
 <div className="explanation">
-    When chaining `.then`'s and `.catch`'s it is helpful to think of them as a series of steps. Each `.then` receives the value returned by the previous `.then` (as its argument.) However, if your "step" encountered an error, any subsequent `.then` "steps" will be skipped until a `.catch` is encountered. If you want to override an error, all you need to do is return a non-error value. It can be accessed via any subsequent `.then`.
+    When chaining `.then`'s and `.catch`'s it is helpful to think of them as a series of steps. Each `.then` receives the value returned by the previous `.then` (as its argument.) However, if your "step" encountered an error, any subsequent `.then` "steps" will be skipped until a `.catch` is encountered. A catch handler recovers by returning normally: even returning an `Error` object fulfills the next promise with that object. Throwing or returning a rejected promise keeps the chain rejected. A returned promise is adopted, so its eventual state matters.
 </div>
 </slot>
 
@@ -200,7 +200,7 @@ options={[
   <div className="explanation">
     **Hint:** `.catch`'s can be used to ignore (or override) errors simply by returning a regular value.
 
-    This trick works only when there is a subsequent `.then` to receive the value.
+    The first catch recovers and fulfills its returned promise with the string. This does not require a later `.then`; the second catch is skipped because the chain is now fulfilled. Nothing in the executed handlers logs a value.
   </div>
   </slot>
 

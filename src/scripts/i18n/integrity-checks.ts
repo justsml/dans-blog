@@ -1,3 +1,4 @@
+import { maskInlineCodeSpans } from "./code-spans";
 import ts from "typescript";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { analyzeHeadingAnchorLinks } from "./heading-link-validation.ts";
@@ -132,7 +133,11 @@ function checkHtmlComments(contents: string, targetPath: string): IntegrityIssue
 function checkHtmlMarkup(contents: string, targetPath: string): IntegrityIssue[] {
   const issues: IntegrityIssue[] = [];
   const stack: Array<{ tag: string; lineNumber: number }> = [];
-  const comparable = stripInlineCodeSpans(stripQuizOptionsBlocks(maskFrontmatter(contents)));
+  const proseLines = contents.split(/\r?\n/).map(() => "");
+  for (const { line, lineNumber } of iterNonFenceLines(maskFrontmatter(contents))) {
+    proseLines[lineNumber - 1] = line;
+  }
+  const comparable = stripInlineCodeSpans(stripQuizOptionsBlocks(proseLines.join("\n")));
 
   for (const { line, lineNumber } of iterNonFenceLines(stripMdxComments(comparable))) {
     for (const match of line.matchAll(/<\/?([a-z][a-z0-9:-]*)(?:\s[^<>]*)?>/gi)) {
@@ -186,7 +191,7 @@ function checkFenceLanguages(contents: string, targetPath: string): IntegrityIss
   const suspiciousKnown = new Set(["shdocker"]);
 
   for (const { line, lineNumber } of iterFenceOpenings(contents)) {
-    const info = line.replace(/^\s{0,3}(```+|~~~+)/, "").trim().split(/\s+/)[0] ?? "";
+    const info = line.replace(/^\s{0,12}(```+|~~~+)/, "").trim().split(/\s+/)[0] ?? "";
     if (info === "") continue;
     if (suspiciousKnown.has(info) || suspiciousPrefixes.test(info)) {
       issues.push({
@@ -447,6 +452,12 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
         });
       }
 
+      const codeSpans = [...sourceOption.text.matchAll(/`([^`]+)`/g)].map(match => match[1]);
+      const missingCode = codeSpans.filter(code => !targetOption.text.includes(code));
+      if (missingCode.length) issues.push({
+        code: "quiz-inline-code-preservation", severity: "high",
+        message: `${targetPath} Challenge ${sourceChallenge.index} option ${optionIndex} changed inline code ${missingCode.join(", ")}.`,
+      });
       const requiredTags = extractHtmlTagMentions(sourceOption.text);
       const missingTags = requiredTags.filter((tag) => !targetOption.text.includes(tag));
       if (missingTags.length > 0) {
@@ -629,7 +640,7 @@ function iterNonFenceLines(contents: string) {
   let fence: string | undefined;
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
-    const fenceMatch = line.match(/^\s{0,3}(```+|~~~+)/);
+    const fenceMatch = line.match(/^\s{0,12}(```+|~~~+)/);
     if (fenceMatch != null) {
       const marker = fenceMatch[1][0];
       fence = fence == null ? marker : fence === marker ? undefined : fence;
@@ -647,7 +658,7 @@ function iterFenceOpenings(contents: string) {
 
   for (let index = 0; index < lines.length; index += 1) {
     const line = lines[index];
-    const fenceMatch = line.match(/^\s{0,3}(```+|~~~+)/);
+    const fenceMatch = line.match(/^\s{0,12}(```+|~~~+)/);
     if (fenceMatch == null) continue;
 
     const marker = fenceMatch[1][0];
@@ -663,7 +674,7 @@ function iterFenceOpenings(contents: string) {
 }
 
 function countFenceMarkers(contents: string) {
-  return [...contents.matchAll(/^\s{0,3}(```+|~~~+)/gm)].length;
+  return [...contents.matchAll(/^\s{0,12}(```+|~~~+)/gm)].length;
 }
 
 function countMarkdownImages(contents: string) {
@@ -878,21 +889,34 @@ function extractMarkdownReferenceDefinitions(contents: string) {
 }
 
 function isCodeLikeQuizOption(value: string) {
-  // Literal HTML tag mentions (e.g. "Part of a <newsletter>") are handled by their own
-  // tag-only preservation check, so they're removed here to avoid also tripping the
-  // generic operator/bracket heuristics below and forcing the whole option untranslated.
   const trimmed = value.trim().replace(/<\/?[A-Za-z][^>]*>/g, " ").trim();
-  return (
-    /^(?:NaN|null|undefined|TypeError|RangeError|ReferenceError|SyntaxError)(?::|$)/.test(trimmed)
-    || /(?:\b[A-Za-z_$][\w$]*\s*\(|=>|::|[;]|\\|\\'|\\")/.test(trimmed)
-    || /(?:^|\s)(?:\$\(|\$\{|[12]>&[12]|[|&<>!=]=?|&&|\|\|)/.test(trimmed)
-    || /(?:^|\s)\.[A-Za-z][\w-]*\b/.test(trimmed)
+  if (!trimmed) return false;
+  // Translate prose surrounding inline code; those spans are checked separately.
+  if (/`[^`]+`/.test(trimmed) && trimmed.replace(/`[^`]+`/g, "").trim()) return false;
+  // Recognizable outputs, commands and SQL/CSS syntax need literal preservation.
+  if (/^(?:NaN|Infinity|null|undefined|true|false|TypeError|RangeError|ReferenceError|SyntaxError)(?::|$)/.test(trimmed)
+    || /^(?:Prints|Reference count):/.test(trimmed)
     || /^(?:cat|grep|sed|awk|curl|bun|npm|node|git|docker|pnpm)\s+\S+/.test(trimmed)
-    || /(?:^|[\s/])[-a-z0-9_]+\.(?:js|jsx|ts|tsx|mjs|cjs|css|scss|html|json|mdx?|ya?ml|sql)\b/.test(trimmed)
-    || /(?:^|[\s])\/[^/\n]+\/[a-z]*\b/i.test(trimmed)
-    || /['"`][^'"`]*(?:\(|\)|::|\\|[{}[\];]|=>)[^'"`]*['"`]/.test(trimmed)
-    || /^[A-Za-z][\w -]{0,24}:\s*[-#.$%()\w]+$/.test(trimmed)
-  );
+    || /^[a-z-]+:\s*[^;]+;?$/.test(trimmed)
+    || /^(?:CAST|VARCHAR|CHAR|STRING|CHARACTER VARYING)\s*\(/.test(trimmed)
+    || /^\S+::\S+$/.test(trimmed)
+    || /^\.[A-Za-z][\w-]*$/.test(trimmed)
+    || /^[-\w./]+\.(?:js|jsx|ts|tsx|mjs|cjs|css|scss|html|json|mdx?|ya?ml|sql)$/.test(trimmed)
+  ) return true;
+
+  // A punctuation mark alone does not make prose code: “Input & output modes”
+  // and “Not guaranteed; may fire multiple times” should be translated.
+  const parsed = ts.createSourceFile("option.ts", trimmed, ts.ScriptTarget.Latest, true);
+  const diagnostics = (parsed as ts.SourceFile & { parseDiagnostics: readonly ts.Diagnostic[] }).parseDiagnostics;
+  if (diagnostics.length || parsed.statements.length !== 1
+    || !ts.isExpressionStatement(parsed.statements[0])) return false;
+  const expression = parsed.statements[0].expression;
+  // English location phrases and comma-separated operation names happen to
+  // parse as JavaScript. Neither is evidence of an executable answer.
+  if (ts.isBinaryExpression(expression)
+    && (expression.operatorToken.kind === ts.SyntaxKind.InKeyword
+      || expression.operatorToken.kind === ts.SyntaxKind.CommaToken)) return false;
+  return !ts.isIdentifier(expression);
 }
 
 // Quiz answers sometimes embed a literal HTML tag mention (e.g. "Part of a <newsletter>")
@@ -951,8 +975,18 @@ function stripQuizOptionsBlocks(contents: string) {
     result += contents.slice(index, start);
 
     let depth = 0;
+    let quote = "";
     let end = -1;
     for (let i = start + "options={".length; i < contents.length; i += 1) {
+      if (quote) {
+        if (contents[i] === "\\") i++;
+        else if (contents[i] === quote) quote = "";
+        continue;
+      }
+      if (contents[i] === "\"" || contents[i] === "'" || contents[i] === "`") {
+        quote = contents[i];
+        continue;
+      }
       if (contents[i] === "[") depth += 1;
       else if (contents[i] === "]") {
         depth -= 1;
@@ -979,7 +1013,7 @@ function stripQuizOptionsBlocks(contents: string) {
 }
 
 function stripInlineCodeSpans(contents: string) {
-  return contents.replace(/`(?:\\.|[^`])*`/g, (match) => " ".repeat(match.length));
+  return maskInlineCodeSpans(contents);
 }
 
 function escapeRegExp(value: string) {

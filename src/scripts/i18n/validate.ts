@@ -1,3 +1,4 @@
+import { parseQuizOptions } from "./quiz-parser.ts";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
@@ -177,9 +178,7 @@ function extractChallengeBlocks(contents: string) {
 }
 
 function countOptionTexts(challengeOpening: string) {
-  const optionsMatch = challengeOpening.match(/\boptions=\{\[([\s\S]*?)\]\}/);
-  if (optionsMatch == null) return 0;
-  return [...optionsMatch[1].matchAll(/\btext\s*:/g)].length;
+  return parseQuizOptions(challengeOpening.replace(/^\s*<Challenge\b/, "").replace(/>\s*$/, "")).length;
 }
 
 function countSlot(contents: string, slotName: string) {

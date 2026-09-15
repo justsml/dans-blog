@@ -124,7 +124,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Given a container with a width of 200px, what would be the computed width of the `<div>`?
+    Given a 200px-wide containing block and a 16px root font size, what is the computed width of the `<div>`?
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -135,7 +135,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <slot name="explanation">
 <div className="explanation">
-    The `max()` function accepts 2 or more inputs, and will use the largest value automatically. Assuming the root font size is the browser default `16px`, the width works out to `96px`.
+    The `max()` function accepts one or more calculations, and will use the largest value automatically. Assuming the root font size is the browser default `16px`, the width works out to `96px`.
 
     To understand the computed value, we need to convert the relative units to pixels:
 

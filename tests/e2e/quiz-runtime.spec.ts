@@ -24,3 +24,17 @@ for (const [locale, slug, explanation, direction] of [
     expect(errors).toEqual([]);
   });
 }
+
+test("an incorrect answer stays available for another attempt", async ({ page }) => {
+  await page.goto("/quiz-is-your-memory-rusty/", { waitUntil: "domcontentloaded" });
+  const first = page.locator("#qq-1");
+  await first.scrollIntoViewIfNeeded();
+  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+  await first.locator(".option").first().click();
+  await expect(first).toHaveAttribute("data-question-correct", "false");
+  // Exceeds the old 950ms wrong-answer auto-advance timer.
+  await page.waitForTimeout(1400);
+  await expect(page.locator(".quiz-dot").first()).toHaveClass(/active/);
+  await first.locator(".option").nth(1).click();
+  await expect(first).toHaveAttribute("data-answer-count", "2");
+});

@@ -138,7 +138,7 @@ function parseChallengeBlock(raw: string, fallbackIndex: number): QuizChallenge 
     "options",
   ]));
 
-  const options = parseOptions(propsText);
+  const options = parseQuizOptions(propsText);
   const question = parseSlot(raw, "question");
   const hints = parseSlot(raw, "hints");
   const explanation = parseSlot(raw, "explanation");
@@ -223,7 +223,7 @@ function splitPropSegments(propsText: string): string[][] {
   return segments;
 }
 
-function parseOptions(propsText: string): QuizOption[] {
+export function parseQuizOptions(propsText: string): QuizOption[] {
   // Parse syntax only: never evaluate expressions supplied by translated MDX.
   const file = ts.createSourceFile("quiz.tsx", `<Challenge ${propsText} />`,
     ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);

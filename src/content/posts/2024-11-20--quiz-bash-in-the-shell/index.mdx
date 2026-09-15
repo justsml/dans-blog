@@ -86,7 +86,7 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     I know. It's wild how quickly escaping makes strings tough to parse. Imagine escaping other languages in Bash strings - with all those quotes, apostrophes and `$` symbols to f*ck you up. 🫠
 
-    Single quotes need escaping inside single-quoted strings. The close-quote, escaped-quote, reopen-quote sequence (`'\''`) allows output of:
+    A single quote cannot appear inside a Bash single-quoted string, even with a backslash. Close the quoted segment, write an escaped quote outside it, then reopen the quoted segment. The close-quote, escaped-quote, reopen-quote sequence (`'\''`) allows output of:
     ```plaintext
     It's 🔨 Time!
     ```
@@ -530,7 +530,7 @@ Sharpen (or prove) your shell scripting **skills**!
 >
   <slot name="question">
   <div className="question">
-    What is NOT ❌ a keyword for looping in Bash?
+    Which word is NOT ❌ a Bash keyword used in loop syntax?
   </div>
   </slot>
 
@@ -538,7 +538,7 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     `each` is not a loop keyword in Bash. The main loop keywords are `for`, `while`, and `until`.
 
-    While `do` is not technically a loop keyword, it's a key part of loop syntax.
+    `do` begins the body of these loops; it is part of loop syntax even though it does not choose the kind of loop.
   </div>
   </slot>
 </Challenge>

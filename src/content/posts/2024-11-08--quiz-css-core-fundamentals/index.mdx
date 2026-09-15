@@ -151,7 +151,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      The correct answer is `a#home[name='home']`, which matches both the `id` and `name` attributes. CSS selectors are case-sensitive, so `#Home` wouldn't work, and spaces imply child elements, which doesn't apply here.
+      The correct answer is `a#home[name='home']`, which matches both the `id` and `name` attributes. In standards-mode HTML, ID values are case-sensitive, so `#Home` does not match `id="home"`. A space is a descendant combinator; it would target a different element within an ancestor rather than combine conditions on this same link.
 
       The `:contains()` selector is not a standard CSS selector, but it is available in some JS libraries.
     </div>
@@ -285,14 +285,14 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
     <div className="question">
-      How can you center "shit" in a box?
+      Which declaration horizontally centers inline text within its containing block?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      Using `text-align: center;` is the correct way to center text in a block element. The `align` properties are used for flexbox layouts, and `margin: 0 auto;` is used to center block elements horizontally.
+      Using `text-align: center;` is the correct way to center text in a block element. There is no CSS `align` property. `margin: 0 auto;` can center a block with a constrained width; it does not center text inside that block.
 
-      The `align-content` property is used for grid layouts, and `text-content` is not a valid CSS property.
+      `align-content` aligns content in supported layout contexts, such as grid and multi-line flex containers; it is not the text-alignment property. `text-content` is not a valid CSS property.
     </div>
   </slot>
 </Challenge>

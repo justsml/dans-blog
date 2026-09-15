@@ -118,19 +118,17 @@ Good luck! 🍀
 >
   <slot name="question">
   <div className="question">
-    Which of these PostgreSQL features is **NOT** ❌ part of the ANSI SQL standard?
+    Which clause is documented by PostgreSQL as an extension to standard SQL?
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    Examples of PostgreSQL extensions to ANSI SQL:
-    - `RETURNING` clause.
-    - `ILIKE` for case-insensitive matching.
-    - Array types and operations.
-    - JSON/JSONB types.
-    
-    The original ANSI SQL standard includes:
+    PostgreSQL documents its `RETURNING` clause as an extension to standard SQL. `ILIKE` is another PostgreSQL extension.
+
+    Do not classify all array or JSON support as non-standard: SQL has standardized facilities in these areas, while PostgreSQL also provides its own types and operators, such as `jsonb`.
+
+    Features introduced across successive SQL standard editions include:
     - `WITH` (Common Table Expressions).
     - `LIKE` for pattern matching.
     - `LATERAL` joins.
@@ -437,7 +435,7 @@ Good luck! 🍀
 
     They are useful for reducing disk use & speeding queries when only a subset of rows are typically queried.
 
-    Postgres will only use the index when the `status = 'active'` condition is present in the query.
+    The planner can consider this index when it can prove that the query conditions imply `status = 'active'`. Exact textual matching is not always necessary, but the planner's implication checks are limited; a parameterized condition may not establish the predicate at planning time. Eligibility does not guarantee that the index is chosen.
 
     **Reminder:** Postgres doesn't support 'query hints' like other RDBMSs. The query planner will decide when to use any appropriate index(es).
   </div>
