@@ -1,0 +1,155 @@
+{
+  "config": {
+    "argv": [
+      "/Users/dan/.nvm/versions/node/v24.14.1/bin/node",
+      "/Users/dan/code/oss/dans-blog/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/quiz-runtime.spec.ts",
+      "--config=/tmp/quiz-playwright.config.ts",
+      "--workers=1",
+      "--grep",
+      "dismissing a hint",
+      "--output=/tmp/quiz-hint-before"
+    ],
+    "configFile": "/tmp/quiz-playwright.config.ts",
+    "rootDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/quiz-hint-before",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/tmp/quiz-hint-before.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "quiz-runtime.spec.ts",
+      "file": "quiz-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "dismissing a hint with the keyboard does not answer again",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5373,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#qq-1')\nExpected: \u001b[32m\"2\"\u001b[39m\nReceived: \u001b[31m\"3\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" locator('#qq-1') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#qq-1')\u001b[22m\n\u001b[2m    5 × locator resolved to <div id=\"qq-1\" data-answer-count=\"3\" data-question-correct=\"false\" class=\"challenge challenge-modern incorrect answer-incorrect-shake\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"3\"\u001b[22m\n\u001b[2m    9 × locator resolved to <div id=\"qq-1\" data-answer-count=\"3\" data-question-correct=\"false\" class=\"challenge challenge-modern incorrect\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"3\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#qq-1')\nExpected: \u001b[32m\"2\"\u001b[39m\nReceived: \u001b[31m\"3\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" locator('#qq-1') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#qq-1')\u001b[22m\n\u001b[2m    5 × locator resolved to <div id=\"qq-1\" data-answer-count=\"3\" data-question-correct=\"false\" class=\"challenge challenge-modern incorrect answer-incorrect-shake\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"3\"\u001b[22m\n\u001b[2m    9 × locator resolved to <div id=\"qq-1\" data-answer-count=\"3\" data-question-correct=\"false\" class=\"challenge challenge-modern incorrect\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"3\"\u001b[22m\n\n    at /Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts:95:23",
+                    "location": {
+                      "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                      "column": 23,
+                      "line": 95
+                    },
+                    "snippet": "  93 |   await dismiss.focus();\n  94 |   await page.keyboard.press(\"Enter\");\n> 95 |   await expect(first).toHaveAttribute(\"data-answer-count\", \"2\");\n     |                       ^\n  96 |   await expect(first.locator(\".hint-tooltip\")).toHaveCount(0);\n  97 | });\n  98 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                        "column": 23,
+                        "line": 95
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveAttribute\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#qq-1')\nExpected: \u001b[32m\"2\"\u001b[39m\nReceived: \u001b[31m\"3\"\u001b[39m\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveAttribute\" locator('#qq-1') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#qq-1')\u001b[22m\n\u001b[2m    5 × locator resolved to <div id=\"qq-1\" data-answer-count=\"3\" data-question-correct=\"false\" class=\"challenge challenge-modern incorrect answer-incorrect-shake\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"3\"\u001b[22m\n\u001b[2m    9 × locator resolved to <div id=\"qq-1\" data-answer-count=\"3\" data-question-correct=\"false\" class=\"challenge challenge-modern incorrect\">…</div>\u001b[22m\n\u001b[2m      - unexpected value \"3\"\u001b[22m\n\n\n  93 |   await dismiss.focus();\n  94 |   await page.keyboard.press(\"Enter\");\n> 95 |   await expect(first).toHaveAttribute(\"data-answer-count\", \"2\");\n     |                       ^\n  96 |   await expect(first.locator(\".hint-tooltip\")).toHaveCount(0);\n  97 | });\n  98 |\n    at /Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts:95:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-15T04:34:38.350Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/quiz-hint-before/quiz-runtime-dismissing-a--9d39e-board-does-not-answer-again-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                    "column": 23,
+                    "line": 95
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "129089a2d928a9470de5-9261c0f60ecd98f78c35",
+          "file": "quiz-runtime.spec.ts",
+          "line": 81,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-15T04:34:38.046Z",
+    "duration": 5822.295,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

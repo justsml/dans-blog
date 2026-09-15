@@ -344,7 +344,7 @@ export default function Challenge({
           )}
           onClick={() => !isCorrect && handleAnswer(option)}
           onKeyDown={(event) => {
-            if ((event.key === "Enter" || event.key === " ") && !isCorrect) {
+            if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ") && !isCorrect) {
               event.preventDefault();
               handleAnswer(option);
             }

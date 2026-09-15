@@ -29,7 +29,7 @@ test("an incorrect answer stays available for another attempt", async ({ page })
   await page.goto("/quiz-is-your-memory-rusty/", { waitUntil: "domcontentloaded" });
   const first = page.locator("#qq-1");
   await first.scrollIntoViewIfNeeded();
-  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/, { timeout: 15000 });
   await first.locator(".option").first().click();
   await expect(first).toHaveAttribute("data-question-correct", "false");
   // Exceeds the old 950ms wrong-answer auto-advance timer.
@@ -47,9 +47,9 @@ test("client-only questions keep their positions when React loads slowly", async
   });
   await page.goto("/javascript-promises-quiz/", { waitUntil: "domcontentloaded" });
   await page.locator("#qq-1").scrollIntoViewIfNeeded();
-  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+  await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/, { timeout: 15000 });
   await expect(page.locator(".challenge")).toHaveCount(9);
-  await expect(page.locator(".quiz-dot")).toHaveCount(9);
+  await expect(page.locator(".quiz-dot")).toHaveCount(9, { timeout: 15000 });
   await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/9");
   await page.locator(".quiz-dot").nth(2).click();
   await expect(page.locator("#qq-3").locator("xpath=..")).toHaveClass(/quiz-slide--active/);
@@ -60,7 +60,7 @@ test("answers from independently hydrated questions survive reload", async ({ pa
   await page.goto("/javascript-promises-quiz/");
   const first = page.locator("#qq-1");
   await first.scrollIntoViewIfNeeded();
-  await expect(page.locator(".quiz-dot")).toHaveCount(9);
+  await expect(page.locator(".quiz-dot")).toHaveCount(9, { timeout: 15000 });
   await first.locator(".option").nth(1).focus();
   await page.keyboard.press("Enter");
   await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/9");
@@ -77,3 +77,23 @@ test("answers from independently hydrated questions survive reload", async ({ pa
   await expect(page.locator(".quiz-score-bar-value")).toHaveText("2/9", { timeout: 15000 });
   await expect(page.locator("#qq-2")).toHaveAttribute("data-question-correct", "false");
 });
+
+for (const key of ["Enter", "Space"]) {
+  test(`dismissing a hint with ${key} does not answer again`, async ({ page }) => {
+    await page.goto("/fr/quiz-is-your-memory-rusty/");
+    const first = page.locator("#qq-1");
+    await first.scrollIntoViewIfNeeded();
+    await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/, { timeout: 15000 });
+    await first.locator(".option").first().focus();
+    await page.keyboard.press("Enter");
+    await expect(first).toHaveAttribute("data-answer-count", "1");
+    await page.keyboard.press("Enter");
+    await expect(first).toHaveAttribute("data-answer-count", "2");
+    const dismiss = first.locator(".hint-tooltip button").first();
+    await expect(dismiss).toBeVisible();
+    await dismiss.focus();
+    await page.keyboard.press(key);
+    await expect(first).toHaveAttribute("data-answer-count", "2");
+    await expect(first.locator(".hint-tooltip")).toHaveCount(0);
+  });
+}

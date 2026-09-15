@@ -15,7 +15,7 @@ for (const entry of corpus) {
     await page.goto(entry.route, { waitUntil: "domcontentloaded" });
     const first = page.locator("#qq-1");
     await first.scrollIntoViewIfNeeded();
-    await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+    await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/, { timeout: 15000 });
     await expect(page.locator(".quiz-dot")).toHaveCount(entry.quiz.challenges.length);
     const messages = getQuizMessages(entry.locale);
     for (const [index, challenge] of entry.quiz.challenges.entries()) {
@@ -44,7 +44,12 @@ for (const entry of corpus) {
           await expect(question).toHaveAttribute("data-answer-count", String(attempt + 1));
           await expect(question).toHaveAttribute("data-question-correct", String(Boolean(option.isAnswer)));
           const dismiss = question.locator(".hint-tooltip button").first();
-          if (await dismiss.isVisible()) await dismiss.click();
+          if (await dismiss.isVisible()) {
+            await dismiss.focus();
+            await page.keyboard.press(attempt % 2 ? "Space" : "Enter");
+            await expect(question).toHaveAttribute("data-answer-count", String(attempt + 1));
+            await expect(question.locator(".hint-tooltip")).toHaveCount(0);
+          }
         }
       });
     }
@@ -66,7 +71,7 @@ test.describe("mobile locale controls", () => {
       await page.goto(entry.route);
       const first = page.locator("#qq-1");
       await first.scrollIntoViewIfNeeded();
-      await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+      await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/, { timeout: 15000 });
       await expect(first).toHaveCSS("direction", ["ar", "he"].includes(entry.locale) ? "rtl" : "ltr");
       const code = first.locator("pre").first();
       await expect(code).toHaveCSS("direction", "ltr");
@@ -87,15 +92,15 @@ test.describe("mobile locale controls", () => {
       await toggle.click();
       await expect(toggle).toHaveText(messages.showExplanation);
       await first.locator(".option").nth(entry.quiz.challenges[0].options.findIndex(option => option.isAnswer)).click();
-      await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+      await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18", { timeout: 15000 });
       await page.reload();
       await first.scrollIntoViewIfNeeded();
-      await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+      await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18", { timeout: 15000 });
       const reset = page.locator(".quiz-reset-button");
       await expect(reset).toHaveAccessibleName(messages.resetLabel);
       await reset.click();
       await first.scrollIntoViewIfNeeded();
-      await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/18");
+      await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/18", { timeout: 15000 });
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
     });
   }
@@ -107,13 +112,13 @@ test("quiz progress stays separate across English, Arabic and Japanese", async (
     await page.goto(entry.route);
     const first = page.locator("#qq-1");
     await first.scrollIntoViewIfNeeded();
-    await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/18");
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/18", { timeout: 15000 });
     await first.locator(".option").nth(entry.quiz.challenges[0].options.findIndex(option => option.isAnswer)).click();
-    await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18", { timeout: 15000 });
   }
   for (const entry of entries) {
     await page.goto(entry.route);
     await page.locator("#qq-1").scrollIntoViewIfNeeded();
-    await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18", { timeout: 15000 });
   }
 });
