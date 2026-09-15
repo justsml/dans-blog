@@ -65,7 +65,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="دالة التجميع COUNT"
   options={[
     {text: 'تحسب جميع الصفوف بما في ذلك قيم NULL'},
-    {text: 'تحسب فقط القيم غير الفارغة (non-NULL) في العمود', isAnswer: true},
+    {text: 'تحسب فقط القيم التي ليست NULL في العمود', isAnswer: true},
     {text: 'تحسب قيم NULL كقيمة فريدة واحدة'},
     {text: 'تتعامل مع كل قيمة NULL كقيمة فريدة، تماماً مثل NaN !== NaN'},
   ]}
@@ -78,7 +78,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    تقوم `COUNT(column_name)` بحساب عدد القيم غير الفارغة (non-NULL) في عمود محدد. لحساب جميع الصفوف، بما في ذلك قيم NULL، استخدم `COUNT(*)`.
+    تقوم `COUNT(column_name)` بحساب عدد القيم التي ليست NULL في عمود محدد. لحساب جميع الصفوف، بما في ذلك قيم NULL، استخدم `COUNT(*)`.
 
     يمكنك أيضاً استخدام `COALESCE` لضمان تعيين قيمة افتراضية بدلاً من NULL. شيء مثل: `COUNT(COALESCE(column_name, 0))`.
   </div>
@@ -144,7 +144,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'استعلام فرعي يتم تشغيله مرة واحدة بشكل عام'},
     {text: 'استعلام فرعي يُستخدم فقط في عبارات JOIN'},
     {text: 'استعلام فرعي يعيد أعمدة متعددة فقط'},
-    {text: 'استعلام فرعي يتم تشغيله مرة واحدة لكل صف في الاستعلام الخارجي', isAnswer: true},
+    {text: 'استعلام فرعي يعتمد على قيم الصف الحالي في الاستعلام الخارجي', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -154,10 +154,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    يتم تقييم الاستعلام الفرعي المرتبط مرة واحدة لكل صف من صفوف الاستعلام الخارجي. إنه يشير إلى أعمدة من الاستعلام الخارجي، مما يجعله يعتمد على كل صف.
-  </div>
-  </slot>
+<div className="explanation">
+يشير الاستعلام الفرعي المرتبط إلى أعمدة من الاستعلام الخارجي، فتُفهم نتيجته منطقيًا بالنسبة لكل صف خارجي. قد يحول مخطط الاستعلام التنفيذ أو يحسنّه، لذلك لا يلزم تنفيذ الاستعلام الفرعي حرفيًا مرة مستقلة لكل صف.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -241,14 +241,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    يقوم معامل `IN` بتصفية الصفوف لتطابق أي قيم في قائمة محددة، وغالباً ما يُستخدم كبديل لشروط OR المتعددة.
-
-    بينما *قد* يعيد "صفوفاً فريدة" (وهو ما يفعله غالباً)، إلا أن هذا ليس غرضه الأساسي بالضرورة.
-
-    الفهرسة ليست مطلوبة هنا، رغم أنه من أفضل الممارسات بالتأكيد استخدام `IN` على عمود يحتوي على فهرس (Index)، ويفضل أن يكون فهرس `UNIQUE` لتحسين الأداء.
-  </div>
-  </slot>
+<div className="explanation">
+يتحقق `IN` من انتماء القيمة إلى قائمة القيم المحددة، ويمكن استخدامه بدل عدة شروط `OR`. لا يزيل الصفوف المكررة. قد يساعد فهرس B-tree على العمود في استعلام انتقائي، لكن فائدته تعتمد على البيانات والخطة؛ لا يُشترط أن يكون الفهرس فريدًا.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -258,8 +254,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="استخدام دالة COALESCE"
   options={[
     {text: 'تقوم بعدّ قيم NULL'},
-    {text: 'تعيد آخر معامل (argument) غير فارغ (non-NULL)'},
-    {text: 'تعيد أول معامل (argument) غير فارغ (non-NULL)', isAnswer: true},
+    {text: 'تعيد آخر معامل (argument) ليس NULL'},
+    {text: 'تعيد أول معامل (argument) ليس NULL', isAnswer: true},
     {text: 'تقتصر على أعمدة IDENTITY'},
     {text: 'مشتقة أصلاً من Printer Coalation'},
   ]}
@@ -272,7 +268,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    تعيد دالة `COALESCE` أول قيمة غير فارغة (`non-NULL`) في قائمة محددة، وهي مفيدة لاستبدال القيم الفارغة بقيم افتراضية عند مواجهتها.
+    تعيد دالة `COALESCE` أول قيمة ليست `NULL` في قائمة محددة، وهي مفيدة لاستبدال قيم NULL بقيم افتراضية عند مواجهتها.
 
     على سبيل المثال، `COALESCE(column_name, 0)` ستعيد `0` إذا كانت قيمة `column_name` هي `NULL`.
   </div>

@@ -84,7 +84,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "شرح نموذج البيانات المرن لـ DynamoDB",
   ]}
   options={[
-    {text: 'تخزين خصائص عشوائية', isAnswer: true},
+    {text: 'تخزين سمات غير محددة مسبقًا', isAnswer: true},
     {text: 'مفاتيح التقسيم الديناميكية'},
     {text: 'الأعمدة غير محددة النوع'},
     {text: 'مخطط JSON مُدار تلقائيًا'},
@@ -120,7 +120,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'PutItem', hint: 'ينشئ عنصرًا جديدًا، أو يستبدل عنصرًا قديمًا بعنصر جديد.'},
     {text: 'BatchUpdateItem', hint: 'غير موجود.'},
-    {text: 'BatchWriteItem', hint: 'يقوم بإدراج (إدراج) أو حذف عناصر متعددة في استدعاء واحد.'},
+    {text: 'BatchWriteItem', hint: 'يُدرج أو يستبدل أو حذف عناصر متعددة في استدعاء واحد.'},
     {text: 'UpdateItem', isAnswer: true},
     {text: 'BatchUpsertItem', hint: 'في DynamoDB؟'},
     {text: 'TransactWriteItems', hint: 'يجمع بين عمليات PutItem وUpdateItem وDeleteItem وConditionCheck المتعددة في استدعاء واحد.'},
@@ -215,7 +215,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    مناطق التوفر (AZs) هي مراكز بيانات متميزة **داخل المنطقة.** يوفر نشر RDS متعدد مناطق التوفر تجاوز الفشل التلقائي إلى نسخة احتياطية احتياطية في منطقة توفر *قريبة*.
+    مناطق التوفر (AZs) هي مراكز بيانات متميزة **داخل المنطقة.** يوفر نشر RDS متعدد مناطق التوفر تجاوز الفشل التلقائي إلى نسخة احتياطية في منطقة توفر *قريبة*.
 
     نشر متعدد مناطق التوفر:
     - يوفر تجاوز الفشل التلقائي
@@ -417,18 +417,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    ما هو الحد الأقصى لعدد المستندات التي يمكن لـ DynamoDB `UPDATE` لكل دفعة؟
-  </div>
-  </slot>
+<div className="question">
+كم عنصرًا يمكن لطلب DynamoDB `UpdateItem` واحد تعديله؟
+</div>
+</slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    عملاء DynamoDB هم في الأساس جميعهم أغلفة لواجهة برمجة التطبيقات HTTP الخاصة بها. يمكن لعملية `BatchWriteItem` إجراء `PUT` أو `DELETE` لما يصل إلى **25** مستندًا لكل طلب HTTP، لكنها لا تستطيع `UPDATE` مستندات متعددة.
-
-    بينما يمكن لـ DynamoDB `INSERT` ما يصل إلى **25** مستندًا لكل طلب HTTP، فإنها تستطيع `UPDATE` مستندًا واحدًا فقط لكل طلب باستخدام عملية `UpdateItem`.
-  </div>
-  </slot>
+<div className="explanation">
+يعدّل طلب `UpdateItem` عنصرًا واحدًا. لا تدعم `BatchWriteItem` تحديث السمات؛ تدعم الإدراج والاستبدال والحذف. يمكن جمع تحديثات عدة عناصر باستخدام `TransactWriteItems` أو عمليات PartiQL الدُفعية وفق حدود كل واجهة.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -446,7 +444,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'السعة المخصصة دائمًا أفضل'},
     {text: 'السعة عند الطلب غير محدودة'},
     {text: 'أداؤهما متطابق'},
-    {text: 'السعة عند الطلب أرخص لأحمال العمل غير المتوقعة', isAnswer: true},
+    {text: 'تجنب دفع تكلفة سعة مخصصة خاملة لأحمال متقطعة غير متوقعة', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -456,21 +454,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    السعة عند الطلب هي الأفضل لـ:
-    - أحمال العمل غير المتوقعة
-    - حركة المرور المتقطعة
-    - التطبيقات ذات أنماط الوصول غير المعروفة
-    - تجنب الإفراط في التزويد
+<div className="explanation">
+تسمح السعة عند الطلب بالدفع حسب طلبات القراءة والكتابة وتقلل الحاجة إلى توقع السعة لأحمال متقطعة. [تسعير DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
 
-    السعة المخصصة أفضل لـ:
-    - أحمال العمل المتوقعة والمتسقة
-    - تحكم أكبر في الأداء
-    - توفير محتمل في التكاليف
-
-    [أوضاع السعة في DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
-  </div>
-  </slot>
+ليست أرخص دائمًا؛ قارن حجم الطلبات والأسعار بالتكلفة المحتملة للسعة المخصصة، خصوصًا للأحمال المستمرة المتوقعة.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -697,7 +686,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     يدعم Amazon Aurora **حتى 15 نسخة قراءة**، مما يسمح لك بتوسيع نطاق عمليات القراءة بشكل كبير. تستفيد هذه النسخ من:
 
-    - **تكاد تكون فورية** عبر النسخ
+    - **نسخ منخفض التأخير** عبر النسخ المتماثلة
     - **تأثير أدنى** على المثيل الأساسي
     - **توزيع فعال** لأعباء عمل القراءة
 
@@ -961,39 +950,29 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
   options={[
     {text: 'فقط للكائنات الجديدة'},
-    {text: 'اتساق قوي لجميع العمليات', isAnswer: true},
+    {text: 'اتساق قوي لقراءة الكائنات وسردها بعد الكتابة أو الحذف', isAnswer: true},
     {text: 'اتساق نهائي للتحديثات'},
     {text: 'يعتمد على المنطقة'},
   ]}
 >
   <slot name="question">
-  <div className="question">
-    اعتبارًا من أواخر عام 2020، ما نموذج الاتساق الذي يوفره S3 لجميع العمليات؟
-  </div>
-  </slot>
+<div className="question">
+بعد نجاح كتابة كائن إلى S3 أو حذفه، ما الاتساق الذي توفره عمليات GET وLIST اللاحقة؟
+</div>
+</slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    نموذج اتساق S3:
-    - اتساق قوي للقراءة بعد الكتابة لجميع العمليات
-    - ينطبق على عمليات PUT و DELETE
-    - لا حاجة للحلول البديلة التي كانت مستخدمة سابقًا
-    - بدون تكلفة إضافية
-
-    التأثير:
-    - منطق تطبيق مبسط
-    - لا حاجة لفحوصات الاتساق
-    - قراءات فورية موثوقة بعد الكتابة
-    - تحسين موثوقية التطبيق
-  </div>
-  </slot>
+<div className="explanation">
+توفر S3 اتساقًا قويًا للقراءة بعد كتابة الكائنات أو حذفها، بما في ذلك عمليات GET وLIST اللاحقة. لا يعني ذلك أن كل تغيير في إعدادات الحاوية أو كل عملية نسخ بين المناطق فورية؛ نطاق هذا السؤال هو عمليات الكائنات.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={24}
   group="ميزات DynamoDB"
-  title="الوقت المحدد للحياة (TTL)"
+  title="مدة البقاء (TTL)"
   difficulty={3}
   objectives={[
     "فهم ميزة TTL في DynamoDB",
@@ -1003,7 +982,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'يحذف العناصر فور انتهاء صلاحيتها'},
     {text: 'يتطلب مشغل حذف يدوي'},
-    {text: 'حذف في الخلفية بأفضل جهد زمني', isAnswer: true},
+    {text: 'حذف في الخلفية دون ضمان توقيت دقيق', isAnswer: true},
     {text: 'ينهي صلاحية العناصر لكن يحتفظ بها مخزنة'},
   ]}
 >

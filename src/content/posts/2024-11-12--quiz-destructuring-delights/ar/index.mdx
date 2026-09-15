@@ -25,7 +25,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 {/* Are you a maestero of Destructuring?<br/> */}
 <p class="inset">أم هي سمفونية التدمير الخاصة بك؟</p>
 
-سيختبر هذا الاختبار معرفتك بـ Destructuring في JavaScript: من بناء الجملة «الأساسي» للكائنات إلى التدمير المتداخل والقيم الافتراضية. بالإضافة إلى أسئلة إضافية حول TypeScript والأنواع المضمنة!
+سيختبر هذا الاختبار معرفتك بـ Destructuring في JavaScript: من بناء الجملة «الأساسي» للكائنات إلى التفكيك المتداخل والقيم الافتراضية. بالإضافة إلى أسئلة إضافية حول TypeScript والأنواع المضمنة!
 
 انطلق مباشرة إلى الإحماء — أثبت مهاراتك في Destructuring! 👇
 
@@ -37,13 +37,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="إحماء: الكائنات"
   title="تفكيك الكائنات الأساسي"
   options={[
-    {text: 'الاسم: Dan Levy, العمر: 20'},
-    {text: 'الاسم: Dan Levy, العمر: 40'},
-    {text: 'الاسم: Dan Levy, العمر: Infinity'},
-    {text: 'الاسم: Dan Levy, العمر: undefined', isAnswer: true},
-    {text: 'خطأ: لا يمكن قراءة الخاصية \'age\''},
-    {text: 'الاسم: undefined, العمر: 40'},
-  ]}
+  {
+    text: "Name: Dan Levy, Age: 20"
+  },
+  {
+    text: "Name: Dan Levy, Age: 40"
+  },
+  {
+    text: "Name: Dan Levy, Age: Infinity"
+  },
+  {
+    text: "Name: Dan Levy, Age: undefined",
+    isAnswer: true
+  },
+  {
+    text: "خطأ: لا يمكن قراءة الخاصية 'age'"
+  },
+  {
+    text: "Name: undefined, Age: 40"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -77,13 +90,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="إحماء: المصفوفات"
   title="القيمة الافتراضية في تفكيك الكائنات"
   options={[
-    {text: 'الاسم: Dan Levy، العمر: NaN'},
-    {text: 'الاسم: Dan Levy، العمر: null'},
-    {text: 'الاسم: Dan Levy، العمر: undefined', isAnswer: true},
-    {text: 'الاسم: Dan Levy، العمر: 40'},
-    {text: 'خطأ: لا يمكن تفكيك الخاصية \'age\''},
-    {text: 'SyntaxError: رمز غير متوقع \',\''},
-  ]}
+  {
+    text: "Name: Dan Levy, Age: NaN"
+  },
+  {
+    text: "Name: Dan Levy, Age: null"
+  },
+  {
+    text: "Name: Dan Levy, Age: undefined",
+    isAnswer: true
+  },
+  {
+    text: "Name: Dan Levy, Age: 40"
+  },
+  {
+    text: "خطأ: لا يمكن تفكيك الخاصية 'age'"
+  },
+  {
+    text: "SyntaxError: رمز غير متوقع ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -114,12 +140,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="التفكيك المتداخل"
   title="التفكيك المتداخل"
   options={[
-    {text: 'الأول: دان، المدينة: دنفر'},
-    {text: 'الأول: غير معرف، المدينة: دنفر'},
-    {text: 'خطأ: لا يمكن قراءة الخاصية \'first\''},
-    {text: 'الأول: دان، المدينة: غير معرف'},
-    {text: 'خطأ', isAnswer: true},
-  ]}
+  {
+    text: "First: Dan, City: Denver"
+  },
+  {
+    text: "First: undefined, City: Denver"
+  },
+  {
+    text: "خطأ: لا يمكن قراءة الخاصية 'first'"
+  },
+  {
+    text: "First: Dan, City: undefined"
+  },
+  {
+    text: "خطأ",
+    isAnswer: true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -164,12 +201,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="الافتراضيات"
   title="القيم الافتراضية في تفكيك الكائنات"
   options={[
-    {text: 'مرحبًا دان من غير معروف'},
-    {text: 'مرحبًا دان من دنفر'},
-    {text: 'مرحبًا غير معروف من غير معروف'},
-    {text: 'مرحبًا غير معروف من دنفر'},
-    {text: 'خطأ', isAnswer: true},
-  ]}
+  {
+    text: "Hi Dan from Unknown"
+  },
+  {
+    text: "Hi Dan from Denver"
+  },
+  {
+    text: "Hi Unknown from Unknown"
+  },
+  {
+    text: "Hi Unknown from Denver"
+  },
+  {
+    text: "خطأ",
+    isAnswer: true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -213,13 +261,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="الافتراضيات"
   title="القيم الافتراضية في تفكيك الكائنات"
   options={[
-    {text: 'مرحبًا دان من دنفر'},
-    {text: 'مرحبًا دان من جوهانسبرغ'},
-    {text: 'مرحبًا دان من غير معروف', isAnswer: true},
-    {text: 'مرحبًا غير معروف من غير معروف'},
-    {text: 'مرحبًا غير معروف من دنفر'},
-    {text: 'خطأ'},
-  ]}
+  {
+    text: "Hi Dan from Denver"
+  },
+  {
+    text: "Hi Dan from Johannesburg"
+  },
+  {
+    text: "Hi Dan from Unknown",
+    isAnswer: true
+  },
+  {
+    text: "Hi Unknown from Unknown"
+  },
+  {
+    text: "Hi Unknown from Denver"
+  },
+  {
+    text: "خطأ"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -254,13 +315,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="وسائط الدوال"
   title="تفكيك معاملات الدوال مع القيم الافتراضية"
   options={[
-    {text: 'مرحبًا Dan من undefined'},
-    {text: 'مرحبًا Dan من Unknown'},
-    {text: 'مرحبًا Dan من Denver'},
-    {text: 'مرحبًا Unknown من Unknown'},
-    {text: 'مرحبًا Unknown من Denver'},
-    {text: 'Error', isAnswer: true},
-  ]}
+  {
+    text: "Hi Dan from undefined"
+  },
+  {
+    text: "Hi Dan from Unknown"
+  },
+  {
+    text: "Hi Dan from Denver"
+  },
+  {
+    text: "Hi Unknown from Unknown"
+  },
+  {
+    text: "Hi Unknown from Denver"
+  },
+  {
+    text: "Error",
+    isAnswer: true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -323,19 +397,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    ستستخدم الدالة `displayPlace` الكائن الافتراضي فقط إذا لم يتم تمرير أي كائن إليها. لذا، الطريقة الوحيدة للحصول على القيمة الافتراضية `{ place: "Unknown" }` هي باستخدام صفر من الوسائط `displayPlace()`.
-
-    سلوك آخر ملحوظ هنا هو أن تمرير `undefined` للمعامل `place` سيؤدي إلى استخدام القيمة الافتراضية، وهو مشابه قليلاً لسلوك `JSON.stringify` (تجاهل `undefined`، والتعرف على `null`).
-
-    ينتج عن ذلك:
-    ```js
-    displayPlace() // Unknown
-    displayPlace({ name: "Dan" }) // N/A
-    displayPlace({ name: "Dan", place: undefined }) // N/A
-    ```
-  </div>
-  </slot>
+<div className="explanation">
+تستخدم الدالة الكائن الافتراضي عند عدم تمرير وسيطة أو عند تمرير `undefined` صراحة. أما في الاستدعاءات المعروضة فهناك كائن في كل مرة: غياب `place` أو قيمتها `undefined` يفعّل القيمة الافتراضية للخاصية `N/A`، بينما تبقى `Joburg` كما هي. لذا الناتج هو `N/A, N/A, Joburg`.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -373,11 +438,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    في هذه الحالة، الخاصية `place` مضبوطة على `null` في الاستدعاء الأول، و `undefined` في الثاني. القيمة الافتراضية لـ `place` تُستخدم فقط إذا كان الكائن بأكمله مفقودًا **أو** `undefined`. القيم `null` ستظهر كما هي `null`.
-  </div>
-  </slot>
+<div className="explanation">
+القيمة الافتراضية للخاصية `place` تُستخدم عندما تكون الخاصية مفقودة أو تساوي `undefined`. لا تُستبدل `null` بالقيمة الافتراضية، لذلك يطبع الاستدعاء الأول `null` والثاني `N/A`.
+</div>
+</slot>
 </Challenge>
+
+## حان دور TypeScript
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -516,12 +583,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="TypeScript + التعيين"
   title="التفكيك مع القيم المتداخلة، التعيين والأنواع"
   options={[
-    {text: 'مرحبًا دان ليفي من N/A'},
-    {text: 'مرحبًا دان ليفي من كيب تاون'},
-    {text: 'مرحبًا N/A N/A من N/A'},
-    {text: 'مرحبًا N/A N/A من كيب تاون'},
-    {text: 'خطأ', isAnswer: true},
-  ]}
+  {
+    text: "Hi Dan Levy from N/A"
+  },
+  {
+    text: "Hi Dan Levy from Cape Town"
+  },
+  {
+    text: "Hi N/A N/A from N/A"
+  },
+  {
+    text: "Hi N/A N/A from Cape Town"
+  },
+  {
+    text: "خطأ",
+    isAnswer: true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -567,3 +645,5 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+
+هل تريد المزيد؟ زر [مجموعة الاختبارات](/challenges/) لتحديات أخرى!

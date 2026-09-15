@@ -150,11 +150,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="العمل مع الكائنات"
   title="التعداد الافتراضي مع Object.defineProperty()"
   options={[
-    {text: 'صحيح'},
-    {text: 'خاطئ', isAnswer: true},
-    {text: 'غير معرف'},
-    {text: 'يعتمد على السياق'},
-  ]}
+  {
+    text: "true"
+  },
+  {
+    text: "false",
+    isAnswer: true
+  },
+  {
+    text: "undefined"
+  },
+  {
+    text: "يعتمد على السياق"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -187,11 +196,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="واجهات متقدمة"
   title="رموز فريدة"
   options={[
-    {text: 'يعتمد على أوصافها'},
-    {text: 'صحيح'},
-    {text: 'خطأ', isAnswer: true},
-    {text: 'يُحدث خطأ'},
-  ]}
+  {
+    text: "يعتمد على أوصافها"
+  },
+  {
+    text: "true"
+  },
+  {
+    text: "false",
+    isAnswer: true
+  },
+  {
+    text: "يُحدث خطأ"
+  }
+]}
 >
   <slot name="question">
   <div className="question">

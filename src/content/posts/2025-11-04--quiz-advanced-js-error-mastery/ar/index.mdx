@@ -156,16 +156,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   ]}
 >
   <slot name="question">
-  <div className="question">
-    ماذا يحدث مع `instanceof Error` عبر iframes؟
-    ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
-    ```
-  </div>
-  </slot>
+<div className="question">
+افترض أن إطار iframe من الأصل نفسه أنشأ خطأ ومرره إلى الإطار الأب باسم `iframeError`. ماذا يمكن أن تُرجع المقارنة في الإطار الأب؟
+```js
+console.log(iframeError instanceof Error);
+```
+</div>
+</slot>
 
   <slot name="hints">
   <div className="hint">
@@ -174,10 +171,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    يمكن أن يُرجع `instanceof` القيمة `false` عبر سياقات التنفيذ المختلفة (iframes, workers) لأن كل سياق له منشئ `Error` الخاص به. استخدم `Object.prototype.toString.call(obj) === '[object Error]'` للكشف الموثوق عن الأخطاء عبر السياقات.
-  </div>
-  </slot>
+<div className="explanation">
+قد تكون النتيجة `false` لأن لكل سياق تنفيذ مُنشئ `Error` خاصًا به. يمكن أن يساعد `Object.prototype.toString.call(obj)` في التعرف على أخطاء من سياقات مختلفة، لكن يمكن تزوير الوسم باستخدام `Symbol.toStringTag`؛ ليس هذا الفحص ضمانًا لأصالة الكائن.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -228,7 +225,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '"Error"'},
     {text: '"CustomError"', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Depends on the browser'},
+    {text: 'يعتمد على المتصفح'},
   ]}
 >
   <slot name="question">
@@ -304,11 +301,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="سبب الخطأ"
   title="Error.cause الحديث"
   options={[
-    {text: '"الخطأ الأصلي"', isAnswer: true},
-    {text: 'undefined'},
-    {text: 'خطأ التغليف'},
-    {text: 'SyntaxError'},
-  ]}
+  {
+    text: "\"Original error\"",
+    isAnswer: true
+  },
+  {
+    text: "undefined"
+  },
+  {
+    text: "خطأ التغليف"
+  },
+  {
+    text: "SyntaxError"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -331,7 +337,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `Error.cause` (ES2022) تسمح بسلسلة الأخطاء للحفاظ على سياق الخطأ الأصلي. `wrapper.cause` يشير إلى الخطأ الأصلي، لذا `wrapper.cause.message` تُرجع `"الخطأ الأصلي"`. هذا مفيد لتغليف الأخطاء ذات المستوى المنخفض بسياق ذي مستوى أعلى.
+    `Error.cause` (ES2022) تسمح بسلسلة الأخطاء للحفاظ على سياق الخطأ الأصلي. `wrapper.cause` يشير إلى الخطأ الأصلي، لذا `wrapper.cause.message` تُرجع `"Original error"`. هذا مفيد لتغليف الأخطاء ذات المستوى المنخفض بسياق ذي مستوى أعلى.
   </div>
   </slot>
 </Challenge>
@@ -350,7 +356,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ماذا تفعل `Error.captureStackTrace`؟
+    في V8 أو Node.js، ماذا تفعل `Error.captureStackTrace`؟
     ```js
     function createError(msg) {
       const err = new Error(msg);
@@ -546,11 +552,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="حدود الأخطاء"
   title="تمييز الكائن عن الخطأ"
   options={[
-    {text: 'صحيح، صحيح'},
-    {text: 'خاطئ، خاطئ', isAnswer: true},
-    {text: 'صحيح، خاطئ'},
-    {text: 'خاطئ، صحيح'},
-  ]}
+  {
+    text: "true, true"
+  },
+  {
+    text: "false, false",
+    isAnswer: true
+  },
+  {
+    text: "true, false"
+  },
+  {
+    text: "false, true"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -577,10 +592,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    `instanceof Error` تُرجع `false` لأن الكائن لم يُنشأ بواسطة مُنشئ Error. `Object.prototype.toString.call()` تُرجع أيضًا `false` (تُرجع `'[object Object]'`) لأنها تفحص الفتحة الداخلية `[[Class]]`. كلا الطريقتين تحددان بشكل صحيح أن هذا كائن خطأ مزيف.
-  </div>
-  </slot>
+<div className="explanation">
+النتيجتان هما `false, false`. الكائن العادي لا يرث من `Error.prototype`، ونتيجة `Object.prototype.toString.call()` هنا هي `[object Object]`، فلا تساوي `[object Error]`. يمكن تزوير الوسم باستخدام `Symbol.toStringTag`؛ لا يثبت هذا الفحص وحده أن الكائن خطأ أصيل.
+</div>
+</slot>
 </Challenge>
 
 </QuizUI>

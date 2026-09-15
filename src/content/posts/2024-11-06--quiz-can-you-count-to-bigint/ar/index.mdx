@@ -20,6 +20,8 @@ import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <>
+> إنها مجرد أرقام، ما مدى صعوبتها؟ 🤓
+
 <QuizUI>
 
 <Challenge
@@ -230,12 +232,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="أساسي"
   title="تحليل الأعداد الست عشرية"
   options={[
-    {text: 'صحيح', isAnswer: true},
-    {text: 'خاطئ'},
-    {text: 'NaN'},
-    {text: 'يجب أن يكون بحروف كبيرة: 2A'},
-    {text: 'خطأ'},
-  ]}
+  {
+    text: "true",
+    isAnswer: true
+  },
+  {
+    text: "false"
+  },
+  {
+    text: "NaN"
+  },
+  {
+    text: "يجب أن يكون بحروف كبيرة: 2A"
+  },
+  {
+    text: "خطأ"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -402,7 +415,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     بما أن `parseInt` دائمًا يحول الإدخال إلى سلسلة نصية، فإن `null` يصبح السلسلة `"null"`.
 
-    في الأساس 36 (سداسي عشري ثلاثي، إذا كنت تتابع)، السلسلة `"null"` تمثل `1112745`.
+    في الأساس 36 (الأرقام 0–9 والأحرف a–z)، السلسلة `"null"` تمثل `1112745`.
 
     القيم المتتالية لـ `nulk` و `null` و `nulm` هي على التوالي `1112744` و `1112745` و `1112746` في الأساس 36.
   </div>

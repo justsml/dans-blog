@@ -50,12 +50,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: '01 يناير 2020'},
     {text: '01 فبراير 2020', isAnswer: true},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن المخرج؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -85,12 +85,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'يناير 01 2020', isAnswer: true},
     {text: 'فبراير 01 2020'},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن المخرَج؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -123,7 +123,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'التاريخ الحالي، بتوقيت UTC/GMT'},
     {text: 'التاريخ الحالي', isAnswer: true},
     {text: 'NaN'},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
@@ -142,14 +142,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
   <slot name='explanation'>
-  <div className="explanation">
-    لا تنسَ الكلمة المفتاحية `new`! `Date` هي كلاس، ويجب استدعاؤها مع `new`.
-
-    `Date('...')` بدون `new` تتجاهل ما تعطيه إياه. يبدو أنها تنتج دائمًا التاريخ والوقت الحاليين مع `new Date()` (بدون وسائط).
-
-    هذا **مأزق شائع** يسهل **التغاضي عنه**، حتى في مراجعة الكود.
-  </div>
-  </slot>
+<div className="explanation">
+استدعاء `Date(...)` دون `new` صالح، لكنه يتجاهل الوسائط ويُرجع سلسلة نصية تمثل التاريخ والوقت الحاليين بالتوقيت المحلي. أما `new Date(...)` فينشئ كائن تاريخ باستخدام الوسائط.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -163,11 +159,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '2019'},
     {text: '2020'},
     {text: '2021'},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
+    افترض أن إزاحة المنطقة الزمنية المحلية هي GMT−07:00 في هذا المثال.
     ماذا سيتضمن المخرَج؟
     ```js
     const date = new Date(2020)
@@ -210,6 +207,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
+    افترض أن إزاحة المنطقة الزمنية المحلية هي GMT−07:00 في هذا المثال.
     ما القيمة التي ستُطبع في وحدة التحكم؟
     ```js
     const d1 = new Date('2020-01-01')
@@ -299,15 +297,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
   <slot name='explanation'>
-  <div className="explanation">
-    ستحصل على `TypeError: date.toUTCString is not a function`، لأن [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) يُرجع عددًا صحيحًا بالميلي ثانية، وليس كائن تاريخ.
-
-    {/* طريقة [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) تستخدم الإزاحة المحلية لديك (افترض GMT-07:00 لهذه الأسئلة).
-    مما يعني أنها ستعطي السنة السابقة (NYE -7 ساعات).
-    طريقة [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) ستعطي السنة كما قدمناها إلى `Date.UTC()`، 2020.
-    */}
-  </div>
-  </slot>
+<div className="explanation">
+يحوّل `Date.UTC()` هنا السلسلة المعطاة إلى عدد، فتنتج `NaN`؛ فهو يتوقع معاملات رقمية للسنة والشهر وما يليهما. ثم يؤدي استدعاء `toUTCString()` على القيمة العددية إلى `TypeError`، لأن هذه الدالة تخص كائنات Date.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -359,6 +352,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
+    افترض أن إزاحة المنطقة الزمنية المحلية هي GMT−07:00 في هذا المثال.
     ماذا سيتضمن المخرَج؟
     ```js
     // Assume local TZ is -07:00
@@ -374,12 +368,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
   <slot name='explanation'>
-  <div className="explanation">
-    سيتم عرض التواريخ ضمنيًا بالتوقيت المحلي، مع `.getTimezoneOffset()` غير متغير (بشكل فعلي).
-
-    لا تخزن مثيلات `Date` بيانات المنطقة الزمنية. إنها تخزن عدد الميلي ثانية منذ عصر يونكس (1 يناير 1970). يتم أخذ المنطقة الزمنية في الاعتبار عند تحليل وعرض سلاسل التاريخ. يتم تحديد سلوك العرض الافتراضي تلقائيًا بناءً على إعدادات النظام أو المتصفح.
-  </div>
-  </slot>
+<div className="explanation">
+مع إزاحة GMT−07:00، تُرجع `getTimezoneOffset()` الفرق بالدقائق بين التوقيت المحلي وUTC: القيمة `420`. لا يخزن كائن Date منطقة زمنية؛ يستخدم إعدادات البيئة. وقد تختلف الإزاحة حسب التاريخ بسبب التوقيت الصيفي.
+</div>
+</slot>
 </Challenge>
 
 <Challenge
@@ -390,12 +382,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: '01 يناير 2020', isAnswer: true},
     {text: '01 فبراير 2020'},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن الناتج؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -428,12 +420,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'يناير 01 2020'},
     {text: 'فبراير 01 2020', isAnswer: true},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن المخرَج؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
@@ -460,12 +452,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '01 يناير 2020'},
     {text: '01 يناير 2021', isAnswer: true},
     {text: '01 فبراير 2020'},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن المخرَج؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -501,12 +493,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'فبراير 01 2020'},
     {text: 'يناير 01 2021'},
     {text: 'فبراير 01 2021', isAnswer: true},
-    {text: 'RangeError: وسيطة غير صالحة.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن المخرج؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -551,7 +543,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ماذا سيتضمن المخرجات؟
+    أي تاريخ يمثله كائن Date الناتج؟ قد يختلف تنسيق عرضه في وحدة التحكم.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)

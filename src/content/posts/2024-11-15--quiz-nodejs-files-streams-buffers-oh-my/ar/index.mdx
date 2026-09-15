@@ -57,7 +57,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)` ينشئ مخزنًا مؤقتًا جديدًا بالحجم المحدد مملوءًا بالأصفار.
     سيكون الناتج: `<Buffer 00 00 00 00 00>`
 
-    إذا كنت تريد إنشاء مخزن مؤقت ببيانات عشوائية، استخدم `Buffer.allocUnsafe(5)`.
+    أما `Buffer.allocUnsafe(5)` فلا يهيئ الذاكرة إلى أصفار وقد يكشف بيانات سابقة؛ ليس مولدًا لبيانات عشوائية. املأه قبل قراءة محتواه أو مشاركته.
 
     [تعلم المزيد عن تخصيص المخزن المؤقت](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -106,8 +106,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="إحماء: نظام الملفات"
   title="عمليات الملفات غير المتزامنة"
   options={[
-    {text: 'يطبع محتوى الملف ثم "تم"'},
-    {text: 'يطبع "تم" ثم محتوى الملف', isAnswer: true},
+    {text: 'يطبع محتوى الملف ثم "Done"'},
+    {text: 'يطبع "Done" ثم محتوى الملف', isAnswer: true},
     {text: 'يطبع محتوى الملف فقط'},
     {text: 'يرمي خطأ'},
   ]}
@@ -128,7 +128,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     بما أن `readFile` غير متزامن، يستمر الكود في التنفيذ أثناء قراءة الملف.
-    لذلك، ستتم طباعة "تم" قبل محتوى الملف.
+    لذلك، ستتم طباعة "Done" قبل محتوى الملف.
 
     لانتظار قراءة الملف أولاً، يمكنك استخدام النسخة المعتمدة على Promise:
     ```js
@@ -219,7 +219,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="توجيه التدفقات"
   options={[
     {text: 'ينسخ الملف مع الضغط'},
-    {text: 'ينسخ الملف دون تخزين مؤقت في الذاكرة', isAnswer: true},
+    {text: 'ينسخ الملف على أجزاء دون تحميله كاملًا في الذاكرة', isAnswer: true},
     {text: 'يحمل الملف بأكمله في الذاكرة'},
     {text: 'ينشئ رابطًا رمزيًا'},
   ]}
@@ -285,7 +285,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="التدفقات"
-  title="تيارات التحويل"
+  title="تدفقات التحويل"
   options={[
     {text: 'hello world'},
     {text: 'HELLO WORLD', isAnswer: true},
@@ -313,12 +313,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    تقوم Transform streams بتعديل البيانات أثناء مرورها. هنا، كل chunk يتم:
-    1. تحويله إلى string
-    2. تحويله إلى uppercase
-    3. تمريره إلى stdout
+    تعدّل تدفقات التحويل (Transform streams) البيانات أثناء مرورها. تُعالج كل قطعة بيانات هنا كما يلي:
+    1. تحويلها إلى سلسلة نصية
+    2. تحويلها إلى أحرف كبيرة
+    3. تمريرها إلى stdout
 
-    هذا ينشئ pipeline يحول كل الإدخال إلى uppercase.
+    ينشئ هذا سلسلة معالجة تحول الإدخال إلى أحرف كبيرة.
 
     [تعلم المزيد عن Transform streams](https://nodejs.org/api/stream.html#class-streamtransform)
   </div>
@@ -408,7 +408,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="التدفقات"
-  title="الضغط العكسي للتيار"
+  title="الضغط الخلفي للتدفق"
   options={[
     {text: 'يمنع تجاوز الذاكرة', isAnswer: true},
     {text: 'يزيد سرعة القراءة'},
@@ -418,15 +418,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ما هو الغرض الرئيسي من الضغط العكسي للتيار؟
+    ما هو الغرض الرئيسي من الضغط الخلفي للتدفق؟
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    الضغط العكسي هو آلية تمنع تجاوز الذاكرة عن طريق إيقاف القراءة مؤقتًا عندما لا تستطيع نهاية الكتابة مواكبة ذلك.
+    الضغط الخلفي هو آلية تمنع تجاوز الذاكرة عن طريق إيقاف القراءة مؤقتًا عندما لا تستطيع نهاية الكتابة مواكبة ذلك.
 
-    مثال على الضغط العكسي اليدوي:
+    مثال على الضغط الخلفي اليدوي:
     ```js
     readable.on('data', (chunk) => {
       const canContinue = writable.write(chunk);
@@ -438,7 +438,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
     `pipe()` يتعامل مع هذا تلقائيًا!
 
-    [تعلم المزيد عن الضغط العكسي](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+    [تعلم المزيد عن الضغط الخلفي](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
   </div>
   </slot>
 </Challenge>
@@ -507,7 +507,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     يمكن للتدفقات أن تعمل في:
     1. الوضع الثنائي (الافتراضي): للمخازن المؤقتة والسلاسل النصية
-    2. وضع الكائن: لأي قيمة جافاسكريبت
+    2. وضع الكائن: لقيم JavaScript باستثناء `null`، فهي إشارة نهاية التدفق
 
     مثال على وضع الكائن:
     ```js

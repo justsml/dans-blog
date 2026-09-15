@@ -215,11 +215,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'تم الوفاء: نجاح', isAnswer: true},
-    {text: 'مرفوض: خطأ'},
-    {text: 'قيد الانتظار'},
-    {text: 'null'},
-  ]}
+  {
+    text: "fulfilled: success",
+    isAnswer: true
+  },
+  {
+    text: "Rejected: error"
+  },
+  {
+    text: "Pending"
+  },
+  {
+    text: "null"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
