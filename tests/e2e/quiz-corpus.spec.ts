@@ -51,3 +51,36 @@ for (const entry of corpus) {
     expect(errors).toEqual([]);
   });
 }
+
+// A compact mobile pass includes every writing system and every localized toolbar.
+test.describe("mobile locale controls", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+  for (const entry of corpus.filter(entry => entry.slug === "quiz-is-your-memory-rusty")) {
+    test(`${entry.locale}: explanation, persistence and reset`, async ({ page }) => {
+      const messages = getQuizMessages(entry.locale);
+      await page.goto(entry.route);
+      const first = page.locator("#qq-1");
+      await first.scrollIntoViewIfNeeded();
+      await expect(page.locator(".quiz-ui")).toHaveClass(/quiz-slides-active/);
+      await expect(first).toHaveCSS("direction", ["ar", "he"].includes(entry.locale) ? "rtl" : "ltr");
+      await expect(first.locator("pre").first()).toHaveCSS("direction", "ltr");
+      const toggle = first.locator(".toggle-explainer");
+      await toggle.click();
+      await expect(toggle).toHaveText(messages.hideExplanation);
+      await expect(first.locator("section.explanation")).toBeVisible();
+      await toggle.click();
+      await expect(toggle).toHaveText(messages.showExplanation);
+      await first.locator(".option").nth(entry.quiz.challenges[0].options.findIndex(option => option.isAnswer)).click();
+      await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+      await page.reload();
+      await first.scrollIntoViewIfNeeded();
+      await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18");
+      const reset = page.locator(".quiz-reset-button");
+      await expect(reset).toHaveAccessibleName(messages.resetLabel);
+      await reset.click();
+      await first.scrollIntoViewIfNeeded();
+      await expect(page.locator(".quiz-score-bar-value")).toHaveText("0/18");
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1)).toBe(true);
+    });
+  }
+});

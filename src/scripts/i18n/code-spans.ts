@@ -27,3 +27,32 @@ export function maskInlineCodeSpans(contents: string): string {
   }
   return chars.join("");
 }
+
+/** Hide JSX quiz props before checking Markdown and HTML prose. */
+export function maskQuizAttributes(contents: string) {
+  const tags = /<(Challenge)\b/g;
+  let match: RegExpExecArray | null;
+  let result = "";
+  let previous = 0;
+  while ((match = tags.exec(contents))) {
+    let quote = "";
+    let braces = 0;
+    let end = tags.lastIndex;
+    for (; end < contents.length; end++) {
+      const char = contents[end];
+      if (quote) {
+        if (char === "\\") end++;
+        else if (char === quote) quote = "";
+      } else if (char === "\"" || char === "'" || char === "`") quote = char;
+      else if (char === "{") braces++;
+      else if (char === "}") braces--;
+      else if (char === ">" && braces === 0) break;
+    }
+    if (end === contents.length) break;
+    result += contents.slice(previous, tags.lastIndex)
+      + contents.slice(tags.lastIndex, end).replace(/[^\n]/g, " ");
+    previous = end;
+    tags.lastIndex = end + 1;
+  }
+  return result + contents.slice(previous);
+}

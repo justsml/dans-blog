@@ -80,3 +80,19 @@ test("prose lists and location phrases are not JavaScript answer literals", () =
   expect(analyzeTranslationIntegrity({ sourceContents: source, targetContents: target,
     targetPath: "de/index.mdx", locale: "de" }).filter(i => i.code === "quiz-code-option-preservation")).toEqual([]);
 });
+
+
+test("HTML tag mentions in a question title are props, not unclosed markup", () => {
+  const body = quiz(`[{text: 'Meter', isAnswer: true}]`).replace('title="test"', 'title="<meter> purpose"');
+  expect(analyzeTranslationIntegrity({sourceContents: body, targetContents: body,
+    targetPath: "zh/index.mdx", locale: "zh"}).filter(i => i.code.startsWith("html-"))).toEqual([]);
+});
+
+
+test("an added optional hint requests editorial review without a schema failure", () => {
+  const issues = analyzeTranslationIntegrity({sourceContents: quiz(`[{text: 'A', isAnswer: true}]`),
+    targetContents: quiz(`[{text: 'A', isAnswer: true, hint: 'Ein hilfreicher Hinweis'}]`),
+    targetPath: "de/index.mdx", locale: "de"});
+  expect(issues.filter(i => i.severity === "high")).toEqual([]);
+  expect(issues).toContainEqual(expect.objectContaining({code: "quiz-option-unexpected-hint", severity: "medium"}));
+});

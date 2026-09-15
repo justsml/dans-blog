@@ -1,4 +1,4 @@
-import { maskInlineCodeSpans } from "./code-spans";
+import { maskInlineCodeSpans, maskQuizAttributes } from "./code-spans";
 import ts from "typescript";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { analyzeHeadingAnchorLinks } from "./heading-link-validation.ts";
@@ -137,7 +137,7 @@ function checkHtmlMarkup(contents: string, targetPath: string): IntegrityIssue[]
   for (const { line, lineNumber } of iterNonFenceLines(maskFrontmatter(contents))) {
     proseLines[lineNumber - 1] = line;
   }
-  const comparable = stripInlineCodeSpans(stripQuizOptionsBlocks(proseLines.join("\n")));
+  const comparable = stripInlineCodeSpans(maskQuizAttributes(proseLines.join("\n")));
 
   for (const { line, lineNumber } of iterNonFenceLines(stripMdxComments(comparable))) {
     for (const match of line.matchAll(/<\/?([a-z][a-z0-9:-]*)(?:\s[^<>]*)?>/gi)) {
@@ -415,7 +415,7 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
       if (sourceOption == null || targetOption == null) continue;
 
       const missingKeys = [...sourceOption.keys].filter((key) => !targetOption.keys.has(key));
-      const unexpectedKeys = [...targetOption.keys].filter((key) => !sourceOption.keys.has(key));
+      const unexpectedKeys = [...targetOption.keys].filter((key) => key !== "hint" && !sourceOption.keys.has(key));
       if (missingKeys.length > 0) {
         issues.push({
           code: "quiz-option-missing-field",
@@ -447,7 +447,7 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
       if (!sourceOption.hasHint && targetOption.hasHint) {
         issues.push({
           code: "quiz-option-unexpected-hint",
-          severity: "high",
+          severity: "medium",
           message: `${targetPath} Challenge ${sourceChallenge.index} option ${optionIndex} adds a hint that is not present in English.`,
         });
       }
@@ -956,60 +956,6 @@ function stripMdxComments(contents: string) {
   return contents
     .replace(/\{\/\*[\s\S]*?\*\/}/g, "")
     .replace(/<!--[\s\S]*?-->/g, "");
-}
-
-// Quiz `options={[...]}` props hold literal answer text, sometimes deliberately containing
-// "broken" HTML (e.g. `<newsletter>`, `<legend>`) that the quiz is testing the reader's
-// recognition of. That text must never be treated as real markup to balance-check or fix.
-function stripQuizOptionsBlocks(contents: string) {
-  const marker = "options={[";
-  let result = "";
-  let index = 0;
-
-  while (index < contents.length) {
-    const start = contents.indexOf(marker, index);
-    if (start === -1) {
-      result += contents.slice(index);
-      break;
-    }
-    result += contents.slice(index, start);
-
-    let depth = 0;
-    let quote = "";
-    let end = -1;
-    for (let i = start + "options={".length; i < contents.length; i += 1) {
-      if (quote) {
-        if (contents[i] === "\\") i++;
-        else if (contents[i] === quote) quote = "";
-        continue;
-      }
-      if (contents[i] === "\"" || contents[i] === "'" || contents[i] === "`") {
-        quote = contents[i];
-        continue;
-      }
-      if (contents[i] === "[") depth += 1;
-      else if (contents[i] === "]") {
-        depth -= 1;
-        if (depth === 0) {
-          end = i;
-          break;
-        }
-      }
-    }
-
-    if (end === -1) {
-      result += contents.slice(start);
-      break;
-    }
-
-    let blockEnd = end + 1;
-    if (contents[blockEnd] === "}") blockEnd += 1;
-
-    result += contents.slice(start, blockEnd).replace(/[^\n]/g, " ");
-    index = blockEnd;
-  }
-
-  return result;
 }
 
 function stripInlineCodeSpans(contents: string) {
