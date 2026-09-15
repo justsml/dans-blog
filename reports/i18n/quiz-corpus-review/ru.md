@@ -4,6 +4,8 @@ Reviewed 2026-09-14: all 19 Russian quiz translations, 267 questions and 1,231 c
 
 ## Changes
 
+Final source alignment: Date Q6 now describes `toLocaleFormat` as nonstandard without inventing library history; Regex Q15 accepts Unicode-aware `u` or `v` mode.
+
 - Restored literal program outputs in Bash, Node Transform, destructuring, ESNext and Error.cause/template strings. Preserved case-sensitive distractors and JavaScript tokens. Replaced HTML entities inside Rust code with the source's real braces; these entities had changed the programs.
 - Applied source corrections for Buffer allocation and object mode, SQL correlation and partial indexes, DynamoDB batching/capacity, S3 consistency, Promise recovery, HTML dd/figure, DSA uniqueness, CSS alignment and root-font assumptions, Date formatting/timezone assumptions, and Rust RefCell behavior.
 - Fixed non-NULL being translated as nonzero: COUNT counts zero but ignores NULL. Corrected look-ahead/look-behind direction, BigInt base-36 wording, and the parseInt prefix comparison table.
@@ -44,9 +46,9 @@ Russian SHA-256: `2f5cf8f05fa2b8def186aee85ad88a4eedc79602ff97ba23f8e9e489bf61e7
 
 ### js-quiz-14-date-time-questions-test-your-knowledge
 
-English SHA-256: `989751b2ad3098d09729710992be6df598d713b5e494fbb8a539c85cf39cc780`
+English SHA-256: `ec43802cb19367d4f6404bcba2d9de192622f887999917d08f48645c5e3bd04d`
 
-Russian SHA-256: `3729b517502b1c2d41d24195bbdea19c36a9402a17e28957a79a561eccfed71a`
+Russian SHA-256: `635c3af0808a8ebcecc1100e24678402038af39bfa87fed77e5d402c9415a556`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -419,9 +421,9 @@ Russian SHA-256: `a61b100feed5d7e535a75e58bdccb7a1ca649a8129cda5c2436fe5daf25726
 
 ### quiz-regex-or-wreckage
 
-English SHA-256: `10ac88ad77540507d3992e3b6500e5cc1e13152dd22a82a20d0adce4ac8b4a25`
+English SHA-256: `0b087416a4feeb151ae3aaa3f19d785b8edc4860522fe150845f43141d7444e9`
 
-Russian SHA-256: `7c4cc8443e50848f4249aa5791afb58eca8a050428a701b22711895c300632f0`
+Russian SHA-256: `1974d1ec3f40fd3f9eb2098d09409c107ca9de40dff570632be2aa69c631db50`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
