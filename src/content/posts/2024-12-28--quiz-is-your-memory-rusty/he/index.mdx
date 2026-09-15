@@ -27,7 +27,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">מוכן לבדוק את המיומנות שלך בניהול זיכרון ב‑Rust? 🦀</p>
 
-הקוויז הזה יאתגר את ההבנה שלך במערכת הבעלות של Rust, כללי ההשאלות, חיי החיים, והסמארט‑פוינטרים.
+הקוויז הזה יאתגר את ההבנה שלך במערכת הבעלות של Rust, כללי ההשאלות, זמני החיים, והסמארט‑פוינטרים.
 
 **הערה:** השאלות מעוצבות ברוחב של כ‑50 תווים כדי לשמור על קריאות במגוון מכשירים. (הצעות לשיפור יתקבלו בברכה!)
 
@@ -47,10 +47,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "יישום פתרונות לתיקון שגיאות קומפילציה הקשורות להעברה",
   ]}
   options={[
-    {text: 'שלום, !', hint: 'חשוב מה קורה ל-\'philosopher\' אחרי שהועבר'},
-    {text: 'שלום, זנו מציטיום!', hint: 'לאחר שערך הועבר, האם עדיין אפשר להשתמש בו?'},
-    {text: 'שלום, זנו מאליאה!', hint: 'המחרוזת מכילה \'Citium\', לא \'Elea\''},
-    {text: 'שלום, מרקוס אורליוס', hint: 'בדוק אם זה תואם לתוכן המחרוזת'},
+    {text: 'Hello, !', hint: 'חשוב מה קורה ל-\'philosopher\' אחרי שהועבר'},
+    {text: 'Hello, Zeno of Citium!', hint: 'לאחר שערך הועבר, האם עדיין אפשר להשתמש בו?'},
+    {text: 'Hello, Zeno of Elea!', hint: 'המחרוזת מכילה \'Citium\', לא \'Elea\''},
+    {text: 'Hello, Marcus Aurelius', hint: 'בדוק אם זה תואם לתוכן המחרוזת'},
     {text: 'שגיאת קומפילציה: ערך נלקח אחרי העברה', isAnswer: true},
     {text: 'שגיאת זמן ריצה: חריגת מצביע ריק', hint: 'Rust תופס בעיות אלו בזמן הקומפילציה'},
   ]}
@@ -223,7 +223,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     let ref1 = &mut wisdom;
     ref1.push_str(" himself never runs out of things to laugh at.");
     ```
-    הכללים האלה מונעים תנודות נתונים בזמן הקומפילציה, מה שהופך את Rust לבטוח מבחינת תהליכים כברירת מחדל.
+    הכללים האלה מונעים מרוצי נתונים (data races) בזמן הקומפילציה, מה שהופך את Rust לבטוח מבחינת תהליכונים כברירת מחדל.
 
     טעות נפוצה: ניסיון להשתמש בכמה הפניות ניתנות לשינוי כדי להימנע משכפול או
     כדי לשנות חלקים שונים של אותו ערך במקביל.
@@ -235,16 +235,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="הפחתת זמן חיים"
-  title="זמנים מפורשים במשתמע"
+  title="זמני חיים משתמעים"
   difficulty={3}
   objectives={[
-    "הבנת כללי הפחתת זמן החיים של Rust",
-    "זיהוי מתי anotations של זמן חיים מפורש אינם נחוצים",
-    "יישום עקרונות הפחתת זמן החיים בחתימות פונקציות",
+    "הבנת כללי השמטת ציוני זמן חיים של Rust",
+    "זיהוי מתי ציונים של זמן חיים מפורש אינם נחוצים",
+    "יישום עקרונות השמטת ציוני זמן חיים בחתימות פונקציות",
   ]}
   options={[
     {text: 'מתקמפל בהצלחה', isAnswer: true},
-    {text: 'שגיאה: חסר מציין זמן חיים', hint: 'זכור את כללי הפחתת זמן החיים - הם כאן כדי לעזור!'},
+    {text: 'שגיאה: חסר מציין זמן חיים', hint: 'זכור את כללי השמטת ציוני זמן חיים - הם כאן כדי לעזור!'},
     {text: 'שגיאה: נדרש זמן חיים מפורש', hint: 'הקומפיילר יכול להבין זאת אוטומטית'},
     {text: 'שגיאה: חוסר התאמה של זמן החיים', hint: 'זמני החיים מתאימים כאן באופן מושלם'},
   ]}
@@ -271,10 +271,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    הקוד הזה מתקמפל בהצלחה הודות לכללי הפחתת זמן החיים של Rust.
+    הקוד הזה מתקמפל בהצלחה הודות לכללי השמטת ציוני זמן חיים של Rust.
     כללים אלו מאפשרים למקמפל להסיק באופן אוטומטי זמני חיים בתבניות נפוצות.
 
-    שלושת כללי הפחתת זמן החיים הם:
+    שלושת כללי השמטת ציוני זמן חיים הם:
     1. לכל פרמטר יש פרמטר זמן חיים משלו
     2. אם יש בדיוק פרמטר זמן חיים קלט אחד, זמן החיים הזה מוקצה לכל פרמטרי זמן החיים של הפלט
     3. אם יש כמה פרמטרי זמן חיים קלט, אך אחד מהם הוא &self או &mut self, זמן החיים של self מוקצה לכל פרמטרי זמן החיים של הפלט
@@ -309,13 +309,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   difficulty={4}
   objectives={[
     "להבין הגדרות של סוגים רקורסיביים והשלכות הזיכרון שלהם",
-    "לזהות מקרים שבהם `Box<T>` נדרש",
-    "להשתמש ב-`Box<T>` כדי לתקן מבנים רקורסיביים",
+    "לזהות מקרים שבהם Box<T> נדרש",
+    "להשתמש ב-Box<T> כדי לתקן מבנים רקורסיביים",
   ]}
   options={[
     {text: '5', hint: 'הקוד אפילו לא יקומפל כדי לייצר ערך'},
     {text: 'null', hint: 'לרוסט אין ערכי null'},
-    {text: 'Compilation Error', isAnswer: true, hint: 'הקומפיילר לא יכול לקבוע גודל סופי לסוג הרקורסיבי הזה.'},
+    {text: 'שגיאת קומפילציה', isAnswer: true, hint: 'הקומפיילר לא יכול לקבוע גודל סופי לסוג הרקורסיבי הזה.'},
     {text: 'Stack overflow'},
   ]}
 >
@@ -388,9 +388,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "לנתח את התנהגות ספירת ההפניות בקוד",
   ]}
   options={[
-    {text: 'ספירת הפניות: 1', hint: 'ספור את היצירה הראשונית וכל שכפול'},
-    {text: 'ספירת הפניות: 2', hint: 'אל תשכח את ההפניה המקורית'},
-    {text: 'ספירת הפניות: 3', isAnswer: true},
+    {text: 'Reference count: 1', hint: 'ספור את היצירה הראשונית וכל שכפול'},
+    {text: 'Reference count: 2', hint: 'אל תשכח את ההפניה המקורית'},
+    {text: 'Reference count: 3', isAnswer: true},
     {text: 'שגיאת קומפילציה', hint: 'Rc<T> נועד בדיוק למקרה זה'},
   ]}
 >
@@ -458,12 +458,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="זמני חיים של מבנים"
   difficulty={3}
   objectives={[
-    "להבין anotations של זמני חיים בהגדרות struct",
+    "להבין ציונים של זמני חיים בהגדרות struct",
     "לזהות מתי שדות struct דורשים פרמטרי זמן חיים",
-    "להחיל anotations של זמני חיים בצורה נכונה במימושי struct",
+    "להחיל ציונים של זמני חיים בצורה נכונה במימושי struct",
   ]}
   options={[
-    {text: 'מתקמפל בהצלחה', hint: 'מבנים עם הפניות דורשים anotations של זמני חיים'},
+    {text: 'מתקמפל בהצלחה', hint: 'מבנים עם הפניות דורשים ציונים של זמני חיים'},
     {text: 'שגיאה: חסר מציין זמן חיים', isAnswer: true},
     {text: 'שגיאה: חוסר התאמה של זמן חיים', hint: 'עדיין לא ציינו אף זמן חיים'},
     {text: 'שגיאה: הפניה לא חוקית', hint: 'ההפניות תקינות, אבל משהו אחר חסר'},
@@ -542,7 +542,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'תוצאה: סנקה הצעיר', hint: 'הקוד לא יקומפל כדי לייצר פלט'},
     {text: 'שגיאה: חסר מציין משך חיים', isAnswer: true},
     {text: 'שגיאה: אי‑אפשר להחזיר הפנייה למשתנה מקומי', hint: 'ההפנייה היא לפרמטר קלט, לא למשתנה מקומי'},
-    {text: 'שגיאה: חוסר התאמה של משך החיים', hint: 'עדיין לא ציינו משכי חיים, ולכן יש חוסר התאמה'},
+    {text: 'שגיאה: חוסר התאמה של משך החיים', hint: 'עדיין לא ציינו משכי חיים, ולכן לא נקבעה אי־התאמה'},
   ]}
 >
   <slot name="question">
@@ -569,47 +569,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    קוד זה נכשל מכיוון שהקומפיילר לא יכול לקבוע את הקשר בין משכי החיים של הקלט והפלט. הנה למה ואיך לתקן זאת:
-    ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+ההפניה המוחזרת חייבת להישאר בתוך זמן חיים התקף לשני ערכי הקלט. היא אינה יכולה לחיות מעבר לאף אחד מהם. ציוני זמן חיים מתארים את הקשר ואינם מאריכים את חיי הערכים.
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
-    ```
-    מדוע נדרשים משכי חיים כאן:
-    1. הפניות קלט מרובות יכולות להיות עם משכי חיים שונים
-    2. ערך ההחזרה חייב לחיות לפחות באורך של שני הקלטים
-    3. הקומפיילר צריך לאמת את הקשרים האלה
-
-    תבניות נפוצות:
-    ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
-
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    המלצות מיטביות:
-    1. לאפשר להסתרת משכי חיים (elision) לעבוד כשאפשר
-    2. להשתמש במשכי חיים מפורשים כאשר יש צורך להבהיר קשרים
-    3. לשקול להחזיר טיפוסים בבעלות כדי להימנע ממורכבות משכי החיים
-    4. לתעד קשרים מורכבים של משכי החיים
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -650,42 +616,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    RefCell מספק שינוי פנימי אך עדיין אוכף את כללי ההשאלה של Rust בזמן ריצה:
-    ```rust
-    use std::cell::RefCell;
+יש לשחרר את ההשאלה הניתנת לשינוי לפני יצירת השאלות משותפות. אחרת הדוגמה גורמת לפאניקה בזמן ריצה.
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
-          
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
-          
-        // Now we can borrow again
-        let second = data.borrow_mut();
-          
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
-    ```
-    מושגים מרכזיים:
-    1. RefCell מעביר את בדיקות ההשאלה לזמן ריצה
-    2. עלול לגרום לפאניקות אם הכללים מופרדים
-    3. שימושי לתבנית שינוי פנימי
-
-    מקרים נפוצים לשימוש:
-    - אובייקטים מזויפים בבדיקות
-    - יישום מבנים המתייחסים לעצמם
-    - כאשר צריך לשנות נתונים מאחורי הפנייה משותפת
-
-    שיטות מומלצות:
-    1. עדיף להשתמש בהשאלה בזמן הידור כשאפשר
-    2. שמרו על השאלות של RefCell בטווחים צרים
-    3. שקלו להשתמש ב‑drop() כדי לסיים השאלות במפורש
-    4. השתמשו ב‑RefCell כשצריך שינוי פנימי
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -698,7 +642,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   difficulty={3}
   objectives={[
     "להבדיל בין דפוסי השימוש של Cell ו‑RefCell",
-    "להשתמש ב‑Cell למוטיביות פנימית פשוטה",
+    "להשתמש ב‑Cell לשינוי פנימי (interior mutability) פשוטה",
     "להשוות התנהגות של טיפוסים Copy ולא‑Copy עם Cell",
   ]}
   options={[
@@ -727,7 +671,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    Cell ו‑RefCell משמשים למטרות שונות של מוטיביות פנימית:
+    Cell ו‑RefCell משמשים למטרות שונות של שינוי פנימי (interior mutability):
     ```rust
     use std::cell::{Cell, RefCell};
 
@@ -767,8 +711,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     שיטות עבודה מומלצות:
     1. השתמש ב‑Cell עבור טיפוסים Copy פשוטים (מספרים, bool וכו').
     2. השתמש ב‑RefCell כשצריך להשאיל את התוכן.
-    3. שמור על מינימום שינויי מוטיביות דרך Cell/RefCell.
-    4. תעד מדוע נדרשת מוטיביות פנימית.
+    3. שמור על מינימום שינויי שינוי דרך Cell/RefCell.
+    4. תעד מדוע נדרשת שינוי פנימי (interior mutability).
   </div>
   </slot>
 </Challenge>
@@ -847,7 +791,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     1. השתמשו ב‑Rc כאשר:
     - חלקים מרובים בקוד שלכם צריכים בעלות
     - אתם יודעים שהשיתוף הוא חד-חוטי
-    - חיי החיים אינם ניתנים לקביעות סטטית
+    - זמני החיים אינם ניתנים לקביעות סטטית
 
     2. השתמשו ב‑Arc במקום כאשר:
     - אתם זקוקים לשיתוף בטוח בחוטים
@@ -871,20 +815,35 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="RefCell"
-  title="RefCells ותהליכים"
+  title="RefCells ותהליכונים"
   difficulty={4}
   objectives={[
-    "להבין את ההבדלים בין RefCell לחלופות בטוחות לתהליכים",
+    "להבין את ההבדלים בין RefCell לחלופות בטוחות לתהליכונים",
     "לזהות מקרים מתאימים לשימוש ב‑RefCell מול RwLock",
-    "להשתמש בפרימיטיבים הנכונים של סינכרון בהתאם לדרישות התהליכים",
+    "להשתמש בפרימיטיבים הנכונים של סינכרון בהתאם לדרישות התהליכונים",
   ]}
   options={[
-    {text: 'RefCell משמש להלווה משנית ניתנת לשינוי, Rw להלווה בלתי ניתנת לשינוי', hint: 'שני הסוגים תומכים בהשאלות ניתנות לשינוי ובלתי ניתנות לשינוי'},
-    {text: 'Rw משמש להלווה משנית ניתנת לשינוי, RefCell להלווה בלתי ניתנת לשינוי', hint: 'שניהם תומכים בשני סוגי ההשאלות'},
-    {text: 'RefCell ו‑Rw משמשים לאותו מטרה', hint: 'חשוב על בטיחות תהליכים'},
-    {text: 'RefCell משמש רק בסביבות חד‑תהליטיות', isAnswer: true},
-    {text: 'Rw משמש רק בסביבות מרובות‑תהליכים', hint: 'למרות שבדרך כלל משתמשים בו עבור תהליכים, זה לא ההבדל המרכזי'},
-  ]}
+  {
+    "text": "RefCell משמש להשאלה ניתנת לשינוי, Rw להלווה בלתי ניתנת לשינוי",
+    "hint": "שני הסוגים תומכים בהשאלות ניתנות לשינוי ובלתי ניתנות לשינוי"
+  },
+  {
+    "text": "Rw משמש להשאלה ניתנת לשינוי, RefCell להלווה בלתי ניתנת לשינוי",
+    "hint": "שניהם תומכים בשני סוגי ההשאלות"
+  },
+  {
+    "text": "RefCell ו‑Rw משמשים לאותו מטרה",
+    "hint": "חשוב על בטיחות תהליכונים"
+  },
+  {
+    "text": "RefCell אינו Sync; RwLock מאפשר שיתוף מסונכרן",
+    "isAnswer": true
+  },
+  {
+    "text": "Rw משמש רק בסביבות מרובות‑תהליכונים",
+    "hint": "למרות שבדרך כלל משתמשים בו עבור תהליכונים, זה לא ההבדל המרכזי"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -908,50 +867,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    RefCell ו‑RwLock משמשים למטרות דומות אך בהקשרים שונים:
-    ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
-      
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
-
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
-
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
-      
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
-
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
-    ```
-    מפתחות ההבדלים:
-    1. RefCell:
-    - רק חד‑תהליתי
-    - ללא עלות סינכרון
-    - גורם לפאניקה כאשר יש הפרת הלוואות
-
-    2. RwLock:
-    - בטוח לתהליכים
-    - כולל עלות סינכרון
-    - יכול לחסום תהליכים במקום לגרום לפאניקה
-
-    שיטות מומלצות:
-    1. השתמשו ב‑RefCell למוטביליות פנימית בודדת‑תהלית
-    2. השתמשו ב‑RwLock כשצריך בטיחות תהליכים
-    3. שקלו Mutex למוטביליות תהליכים פשוטה יותר
-    4. תעדו בבירור דרישות בטיחות התהליכים
+`RefCell<T>` בודק השאלות בזמן ריצה ואינו `Sync`: אין לשתף הפניה אליו בין תהליכונים. אפשר להעביר אותו לתהליכון אחר כאשר `T: Send`. `RwLock<T>` מספק גישה מסונכרנת בכפוף למגבלות הטיפוס.
   </div>
   </slot>
 </Challenge>
@@ -968,12 +884,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "להחיל תבניות סינכרון נכונות למניעת נעילות מתות",
   ]}
   options={[
-    {text: 'מדפיס: 42', hint: 'הקוד לעולם לא יגיע לפקודת ההדפסה'},
-    {text: 'מדפיס: 43', hint: 'הקוד יתקע לפני ההדפסה'},
-    {text: 'שגיאת הידור', hint: 'הקוד תקין תחבירית'},
-    {text: 'פאניקה בזמן ריצה', hint: 'זה גרוע יותר מפאניקה'},
-    {text: 'נעילה מתה', isAnswer: true},
-  ]}
+  {
+    "text": "מדפיס: 42",
+    "hint": "הקוד לעולם לא יגיע לפקודת ההדפסה"
+  },
+  {
+    "text": "מדפיס: 43",
+    "hint": "הקוד יתקע לפני ההדפסה"
+  },
+  {
+    "text": "שגיאת הידור",
+    "hint": "הקוד תקין תחבירית"
+  },
+  {
+    "text": "חוזר כרגיל בלי להדפיס",
+    "hint": "הניסיון השני לנעול אינו יכול לחזור כרגיל."
+  },
+  {
+    "text": "קיפאון (deadlock) או פאניקה",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -996,55 +927,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    קוד זה מדגים תרחיש נעילה מתה קלאסי. הנה איך לתקן זאת:
-    ```rust
-    use std::sync::{Arc, Mutex};
+נעילת אותו mutex פעמיים באותו תהליכון בלי לשחרר את הנעילה הראשונה אינה חוזרת כרגיל. ה־API מאפשר קיפאון או פאניקה. יש לשחרר את ה־guard לפני נעילה נוספת.
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
-          
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
-          
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
-    }
-
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
-          
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
-    ```
-    המלצות מיטביות למניעת נעילות מתות:
-    1. להשאיר חלקים קריטיים קטנים
-    2. לשחרר נעילות מיידית באמצעות תחומים
-    3. להשיג מספר נעילות בסדר עקבי
-    4. להשתמש ב‑parking_lot::Mutex לביצועים טובים יותר
-    5. לשקול להשתמש ב‑RwLock לעומסי קריאה גבוהים
-
-    תבניות נפוצות:
-    ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
-
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1265,55 +1158,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    בואו נבין את ההבדלים בין Copy ל‑Clone בפירוט:
-    ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
-
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
-
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
-
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
-    ```
-    מפתחות ההבדל:
-    1. Copy:
-    - העתקה מפורשת, ביט‑ביט
-    - חייב להיות בטוח ל‑Copy (ללא הקצאות heap)
-    - בדרך כלל לסוגים קטנים, רק בערימה
-
-    2. Clone:
-    - מפורש, עשוי להיות העתקה עמוקה
-    - יכול להתמודד עם הקצאות heap
-    - גמיש יותר אך עלול להיות יקר
-
-    המלצות מומלצות:
-    1. מימוש Copy עבור סוגים קטנים, רק בערימה
-    2. שימוש ב‑Clone עבור סוגים עם משאבים בבעלות
-    3. תיעוד השלכות הביצועים של Clone
-    4. שקילה של מימושי Clone מותאמים אישית לשיפור ביצועים
-    5. זהירות עם גזירה אוטומטית
+`Copy` מבצע העתקה משתמעת, ביט־לביט. `Clone` הוא מפורש ועשוי להקצות זיכרון; כאן שני שדות ה־`String` מקבלים עותקים עצמאיים. מיקום הערך במחסנית או בערימה אינו קובע אם הטיפוס מממש `Copy`.
   </div>
   </slot>
 </Challenge>
@@ -1333,7 +1178,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '16 bytes', hint: 'שקול דרישות יישור'},
     {text: '24 bytes'},
     {text: '32 bytes', isAnswer: true, hint: 'String גדול יותר ממצביע בודד.'},
-    {text: 'Depends on platform', hint: 'צייננו מערכת 64‑ביט'},
+    {text: 'תלוי בפלטפורמה', hint: 'צייננו מערכת 64‑ביט'},
   ]}
 >
   <slot name="question">
@@ -1376,7 +1221,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         name: String,
     }
     ```
-    Considerations של פריסת הזיכרון:
+    שיקולים של פריסת הזיכרון:
     1. דרישות יישור:
     - u32: יישור של 4 בתים
     - String: יישור של 8 בתים ו‑גודל של 24 בתים במערכות 64‑ביט נפוצות
@@ -1387,7 +1232,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     - הצב יישורים גדולים יותר ראשונים
     - שקול אופטימיזציית קו מטמון
 
-    Best practices:
+    שיטות עבודה מומלצות:
     1. עבור FFI או הנחות פריסה יציבה, השתמש ב‑`repr(...)` מתאים
     2. השתמש בגודלי שלמים מתאימים
     3. שקול להשתמש ב‑Option לשדות אופציונליים
@@ -1409,16 +1254,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "להשתמש בהפשטות ללא עומס ביצועים",
   ]}
   options={[
-    {text: 'עומס זמן ריצה מ‑Iterator', hint: 'איטרטורים ב‑Rust הם הפשטות ללא עלות'},
-    {text: 'ביצועים זהים ללולאה גולמית', isAnswer: true},
-    {text: 'איטי יותר אך קריא יותר', hint: 'ההפשטה לא משפיעה על ביצועי זמן הריצה'},
-    {text: 'תלוי ברמת האופטימיזציה', hint: 'ההפשטה מוסרת בזמן הקומפילציה'},
-  ]}
+  {
+    "text": "עומס זמן ריצה מ‑Iterator",
+    "hint": "איטרטורים ב‑Rust הם הפשטות ללא עלות"
+  },
+  {
+    "text": "קוד עם איטרטור יכול להיות יעיל כמו לולאה ידנית",
+    "isAnswer": true
+  },
+  {
+    "text": "איטי יותר אך קריא יותר",
+    "hint": "ההפשטה לא משפיעה על ביצועי זמן הריצה"
+  },
+  {
+    "text": "אי אפשר לבצע אופטימיזציה לאיטרטורים"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    איך הביצועים של שתי המימושים האלה משווים זה לזה?
-    ```rust
+כאשר האופטימיזציה מופעלת, מה מאפשרות הפשטות האיטרטור ללא עלות בשני המימושים האלה?
+```rust
     // Implementation A: Iterator
     fn sum_iterator(v: &[i32]) -> i32 {
         v.iter().fold(0, |acc, &x| acc + x)
@@ -1438,51 +1294,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    הפשטות ללא עלות של Rust מתורגמות לקוד יעיל שווה ערך:
-    ```rust
-    use std::ops::Range;
+הפשטות ללא עלות מאפשרות קוד יעיל לאחר אופטימיזציה, אך אינן מבטיחות זמני ריצה זהים בכל קומפיילר או רמת אופטימיזציה. שתי הפונקציות מחשבות אותו סכום. כשביצועים חשובים, יש למדוד את העומס בפועל.
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
     }
-
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
-
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
-
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
-    ```
-    עקרונות מפתח:
-    1. מה שלא משתמשים בו, לא משלם עליו
-    2. מה שמשתמשים בו, לא ניתן לכתוב קוד ידני טוב יותר
-
-    שיטות מומלצות:
-    1. להשתמש בהפשטות ברמה גבוהה בחופשיות
-    2. לבטוח באופטימיזציות של הקומפיילר
-    3. לבצע פרופיל לפני אופטימיזציה
-    4. להתמקד בקריאות תחילה
-    5. להשתמש באיטרטורים וסגירות ללא פחד
+}
+```
   </div>
   </slot>
 </Challenge>

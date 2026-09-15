@@ -136,11 +136,7 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
 
   <slot name='explanation'>
   <div className="explanation">
-    Don't forget the `new` keyword! `Date` is a class, and should be called with `new`.
-
-    `Date('...')` without `new` ignores what you give it. It appears to always produce the current date & time with `new Date()` (no arguments).
-
-    This is a **common gotcha** that's **easy to overlook**, even in code review.
+Calling `Date()` without `new` ignores all arguments and returns a string for the current date and time. Use `new Date(...)` to create a Date object from the supplied arguments.
   </div>
   </slot>
 
@@ -290,16 +286,10 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
     </slot>
 
     <slot name='explanation'>
-    <div className="explanation">
-
-      You'll get `TypeError: date.toUTCString is not a function`, since [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) returns an integer in milliseconds, not a date instance.
-
-      {/* The [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) method uses your local offset (assume GMT-07:00 for these questions.)
-      Which means it will give the previous year (NYE -7 hours).
-      The [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) method will give the year as we supplied to `Date.UTC()`, 2020.
-      */}
-    </div>
-    </slot>
+  <div className="explanation">
+`Date.UTC()` expects numeric year/month/etc. arguments. This string cannot be converted to a valid year, so the call first returns `NaN`. That is a number, not a Date object; calling its `.toUTCString()` throws `TypeError`.
+  </div>
+  </slot>
     
 </Challenge>
 
@@ -366,12 +356,10 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
     </slot>
 
     <slot name='explanation'>
-    <div className="explanation">
-      Date's will be implicitly presented in local time, with an (effectively) unchanging [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
-  
-      `Date` instances do not store timezone data. They store the # of milliseconds since the Unix Epoch (Jan 1, 1970). The timezone is accounted for when Date String parsing & rendering. The default display behavior is automatically determined based on the system or browser's locale settings.
-    </div>
-    </slot>
+  <div className="explanation">
+Date objects store milliseconds since the Unix epoch, not a timezone. `getTimezoneOffset()` uses the local timezone rules for that date and returns the difference from UTC in minutes. At the stated GMT−7 offset, the result is `420`. Offsets can differ across dates in regions that observe daylight saving time.
+  </div>
+  </slot>
 
 </Challenge>
 

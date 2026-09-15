@@ -155,13 +155,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name="question">
   <div className="question">
-    What happens with `instanceof Error` across iframes?
-    ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
-    ```
+Assume `iframeError` was created in a same-origin iframe and passed to its parent window.
+```js
+console.log(iframeError instanceof Error);
+```
   </div>
   </slot>
 
@@ -173,7 +170,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof` can return `false` across different execution contexts (iframes, workers) because each context has its own `Error` constructor. Use `Object.prototype.toString.call(obj) === '[object Error]'` for reliable error detection across contexts.
+Different realms have different `Error` constructors, so this check can return `false`. `Object.prototype.toString.call(obj)` can recognize ordinary cross-realm errors, but `Symbol.toStringTag` can spoof its result; it is not an authenticity check.
   </div>
   </slot>
 </Challenge>
@@ -353,6 +350,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name="question">
   <div className="question">
+Assume V8/Node.js, where `Error.captureStackTrace` is available.
     What does `Error.captureStackTrace` do?
     ```js
     function createError(msg) {
@@ -586,7 +584,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof Error` returns `false` because the object wasn't created by the Error constructor. `Object.prototype.toString.call()` also returns `false` (it returns `'[object Object]'`) because it checks the internal `[[Class]]` slot. Both methods correctly identify this as a fake error object.
+Both comparisons are `false` for this exact object. Its prototype is not `Error.prototype`, and its default tag is `[object Object]`. However, adding `[Symbol.toStringTag]: "Error"` would make the second comparison true. Neither a matching tag nor these fields proves that an object is an authentic Error.
   </div>
   </slot>
 </Challenge>

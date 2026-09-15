@@ -1,0 +1,135 @@
+bun test v1.3.1 (89fa0f34)
+
+src/scripts/i18n/structural-validation.test.ts:
+(pass) assertLocalizedFrontmatter > rejects blank reader-facing fields required by the source [4.17ms]
+(pass) assertLocalizedFrontmatter > does not require an optional source subtitle that is already blank
+(pass) compareMdxStructure > treats Markdown and HTML links, blockquotes, tables, and images as equivalent structure [18.23ms]
+(pass) compareMdxStructure > treats localized same-page heading fragments as matching structure [3.68ms]
+(pass) compareMdxStructure > reports count differences in target-minus-source direction [0.41ms]
+(pass) compareMdxStructure > flags code fence language sequence and table row/column shape drift [0.50ms]
+(pass) compareMdxStructure > assertStructuralParity throws on non-identical blocking structure [0.22ms]
+(pass) extractMdxStructure > exposes alt text lengths and MDX component sequence
+
+src/scripts/i18n/quiz-parser.test.ts:
+(pass) preserves escaped quotes, braces and backslashes in quiz choices [20.73ms]
+(pass) rejects executable choices without evaluating them [5.67ms]
+(pass) integrity checks distinguish option fields from quoted colons and braces [9.29ms]
+(pass) integrity checks still report real field changes and damaged output [2.41ms]
+
+src/scripts/i18n/judge.test.ts:
+(pass) resolveCheapFastTranslationModel > passes full model IDs through [0.30ms]
+(pass) resolveCheapFastTranslationModel > resolves loose substrings to the first cheap/fast model match [0.96ms]
+(pass) resolveCheapFastTranslationModel > returns unmatched input unchanged for custom or downstream handling [0.23ms]
+(pass) GPT-5.6 Luna configuration > uses low reasoning and omits unsupported temperature [0.46ms]
+(pass) translation prompt builders > include stable quiz rules in the cached section for quiz prompts [0.49ms]
+(pass) translation prompt builders > tell translators to localize same-page heading fragments [0.13ms]
+(pass) quiz option preservation heuristics > treats SQL, regex, date constructor, file, shell, and key-value options as code-like [0.12ms]
+(pass) quiz option preservation heuristics > allows ordinary prose options to be translated
+(pass) extractJsonObject > extracts bare JSON object [0.37ms]
+(pass) extractJsonObject > strips usage line before extracting [0.14ms]
+(pass) extractJsonObject > extracts from fenced JSON block [0.03ms]
+(pass) extractJsonObject > extracts from unfenced code block [0.06ms]
+(pass) extractJsonObject > returns undefined for no JSON object
+(pass) extractJsonObject > handles leading prose before first brace [0.03ms]
+(pass) parseJudgeOutput > parses valid JSON output
+(pass) parseJudgeOutput > returns empty object for invalid JSON
+(pass) parseJudgeOutput > returns empty object for empty string
+(pass) parseJudgeOutput > returns empty object when JSON is not an object
+(pass) parseSelectedCommit > reads selectedCommit SHA from JSON
+(pass) parseSelectedCommit > reads current from JSON
+(pass) parseSelectedCommit > returns undefined for missing commit
+(pass) parseSelectedCommit > extracts SHA from 'Selected candidate:' prose
+(pass) parseSelectedCommit > extracts SHA from backtick-quoted prose
+(pass) parseSelectedCommit > extracts SHA from recommendation+accept prose
+(pass) parseSelectedCommit > ignores malformed SHA (too short)
+(pass) normalizeJudgeScore > clamps above 100 to 100
+(pass) normalizeJudgeScore > clamps below 0 to 0
+(pass) normalizeJudgeScore > rounds fractional scores
+(pass) normalizeJudgeScore > parses numeric string
+(pass) normalizeJudgeScore > returns 0 for NaN [0.88ms]
+(pass) normalizeJudgeScore > returns 0 for null
+(pass) normalizeJudgeScores > returns undefined for null [0.15ms]
+(pass) normalizeJudgeScores > returns undefined when no numeric key present [0.10ms]
+(pass) normalizeJudgeScores > normalizes a full scores object [0.13ms]
+(pass) normalizeJudgeScores > rescales judge outputs that use a 0-10 rubric
+(pass) normalizeJudgeScores > fills missing keys with 0 when at least one is present
+(pass) averageJudgeScore > averages six equal scores
+(pass) averageJudgeScore > averages mixed scores [0.23ms]
+(pass) analyzeTranslationIntegrity > flags raw HTML comments outside code fences [3.07ms]
+(pass) analyzeTranslationIntegrity > flags unclosed HTML markup [1.36ms]
+(pass) analyzeTranslationIntegrity > ignores HTML-like text inside frontmatter and inline code spans [0.45ms]
+(pass) analyzeTranslationIntegrity > ignores literal unclosed tags inside quiz options text [4.60ms]
+(pass) analyzeTranslationIntegrity > flags invalid inherited asset paths in locale files [1.98ms]
+(pass) analyzeTranslationIntegrity > flags bare inherited asset paths with Markdown image titles [5.46ms]
+(pass) analyzeTranslationIntegrity > flags external reference assets rewritten as local paths [6.51ms]
+(pass) analyzeTranslationIntegrity > flags malformed locale-relative Gist paths [3.12ms]
+(pass) analyzeTranslationIntegrity > flags locale component imports with the wrong relative depth [1.31ms]
+(pass) analyzeTranslationIntegrity > flags suspicious code fence languages created by glued prose [2.96ms]
+(pass) analyzeTranslationIntegrity > flags structural count drift [0.86ms]
+(pass) analyzeTranslationIntegrity > counts headings by level against the English source [2.10ms]
+(pass) analyzeTranslationIntegrity > does not count headings inside frontmatter or code fences [0.14ms]
+(pass) analyzeTranslationIntegrity > flags same-page heading links that still point at English heading IDs [0.93ms]
+(pass) analyzeTranslationIntegrity > accepts same-page heading links updated to translated heading IDs [0.43ms]
+(pass) analyzeTranslationIntegrity > flags same-page heading links that point at the wrong translated heading [1.34ms]
+(pass) analyzeTranslationIntegrity > flags changed code-like quiz options and answer counts [0.89ms]
+(pass) analyzeTranslationIntegrity > allows translated prose around a preserved literal HTML tag mention [0.49ms]
+(pass) analyzeTranslationIntegrity > flags a quiz option that drops a literal HTML tag mention during translation [0.82ms]
+(pass) analyzeTranslationIntegrity > flags quiz challenges with options but no correct answer [1.96ms]
+(pass) analyzeTranslationIntegrity > flags quiz prop, option field, hint, and answer-position drift [3.48ms]
+(pass) analyzeTranslationIntegrity > flags quiz slot code block drift and long code lines [1.51ms]
+(pass) analyzeTranslationIntegrity > does not flag long quiz code lines that are unchanged from English [1.55ms]
+(pass) analyzeTranslationIntegrity > flags LLM instruction leakage [0.75ms]
+(pass) normalizePriority > passes through high/medium/low
+(pass) normalizePriority > maps critical → high
+(pass) normalizePriority > returns undefined for unknown strings
+(pass) isBlockingSuggestion > high is blocking
+(pass) isBlockingSuggestion > medium is blocking
+(pass) isBlockingSuggestion > low is not blocking
+(pass) normalizeSuggestions > parses well-formed suggestion array [0.33ms]
+(pass) normalizeSuggestions > drops items with missing fields
+(pass) normalizeSuggestions > normalizes critical → high priority [0.14ms]
+(pass) normalizeSuggestions > returns empty for non-array
+(pass) normalizeLegacySuggestedChanges > maps severity/current/suggested fields to priority/match/replacement [0.13ms]
+(pass) normalizeLegacySuggestedChanges > drops items with missing legacy fields
+(pass) normalizeSelectedCandidate > selects matched candidate by id
+(pass) normalizeSelectedCandidate > falls back to hint when value doesn't match
+(pass) normalizeSelectedCandidate > falls back to last candidate when nothing matches
+(pass) normalizeSelectedCandidate > throws when candidates is empty [0.24ms]
+(pass) normalizeSelectedCandidate > selects current candidate [0.03ms]
+(pass) shouldEscalateSecondJudge > escalates when primary and second select different SHAs [0.11ms]
+(pass) shouldEscalateSecondJudge > does not escalate when both select same SHA [0.18ms]
+(pass) shouldEscalateSecondJudge > does not escalate on explicit no-escalation phrase [0.13ms]
+(pass) shouldEscalateSecondJudge > escalates on explicit disagree keyword
+(pass) shouldEscalateSecondJudge > does not escalate on explicit agree keyword [0.07ms]
+(pass) shouldEscalateSecondJudge > escalates on 'escalat' keyword in output [0.02ms]
+(pass) shouldEscalateSecondJudge > escalates on multilingual disagree signals [0.28ms]
+(pass) buildPrimaryJudgePrompt > includes locale and slug [0.01ms]
+(pass) buildPrimaryJudgePrompt > lists selectable candidate ids [0.03ms]
+(pass) buildPrimaryJudgePrompt > includes heading-preservation rule
+(pass) buildPrimaryJudgePrompt > includes localized heading-anchor rule
+(pass) buildPrimaryJudgePrompt > includes asset path rule
+(pass) buildPrimaryJudgePrompt > includes deploy-breaker structural rules
+(pass) buildPrimaryJudgePrompt > includes quiz answer faithfulness rules
+(pass) buildPrimaryJudgePrompt > includes JSON shape [0.04ms]
+(pass) buildPrimaryJudgePrompt > includes Dan's direct style criterion when no hint is set
+(pass) buildPrimaryJudgePrompt > uses hint commit when selectedCommit is provided [0.05ms]
+(pass) buildPrePublishRescorePrompt > identifies itself as a rescore prompt with pass number
+(pass) buildPrePublishRescorePrompt > forbids shell commands
+(pass) buildPrePublishRescorePrompt > requests empty suggestions array when no fixes remain
+(pass) buildPrePublishRescorePrompt > mentions target path [0.10ms]
+(pass) buildPrePublishRescorePrompt > checks localized heading anchors during rescore
+(pass) buildPrePublishRescorePrompt > includes quiz rescore contract
+(pass) buildSecondJudgePrompt > identifies itself as a second-pass reviewer
+(pass) buildSecondJudgePrompt > includes the no-escalation phrase instruction [0.07ms]
+(pass) buildSecondJudgePrompt > mentions heading count checks [0.01ms]
+(pass) buildSecondJudgePrompt > checks stale English heading IDs
+(pass) buildSecondJudgePrompt > checks quiz semantic answer faithfulness [0.02ms]
+(pass) buildEscalationPrompt > asks to resolve judge disagreement
+(pass) buildEscalationPrompt > includes heading-preservation rule
+(pass) buildEscalationPrompt > includes localized heading-anchor rule
+(pass) buildEscalationPrompt > mentions target path for output
+
+ 123 pass
+ 0 fail
+ 204 expect() calls
+Ran 123 tests across 3 files. [3.14s]

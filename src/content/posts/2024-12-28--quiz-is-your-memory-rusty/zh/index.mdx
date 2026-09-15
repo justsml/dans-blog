@@ -568,47 +568,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    这段代码失败是因为编译器无法确定输入与输出生命周期之间的关系。原因及修复方法如下：
-    ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+返回的引用必须处于对两个输入都有效的生命周期内，不能比任一被借用的值活得更久。生命周期注解描述这种关系，并不延长生命周期。
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
-    ```
-    为何需要生命周期：
-    1. 多个输入引用可能具有不同的生命周期
-    2. 返回值必须与两个输入存活时间相同
-    3. 编译器需要验证这些关系
-
-    常见模式：
-    ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
-
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    最佳实践：
-    1. 尽可能让生命周期省略规则生效
-    2. 当关系需要明确时使用显式生命周期
-    3. 考虑返回所有权类型以避免生命周期复杂性
-    4. 记录复杂的生命周期关系
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -649,42 +615,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    RefCell 提供了内部可变性，但仍然在运行时强制执行 Rust 的借用规则：
-    ```rust
-    use std::cell::RefCell;
+创建共享借用之前，先释放可变借用。否则这个例子会在运行时 panic。
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
-          
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
-          
-        // Now we can borrow again
-        let second = data.borrow_mut();
-          
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
-    ```
-    关键概念：
-    1. RefCell 将借用检查移至运行时
-    2. 如果违反规则可能导致恐慌
-    3. 适用于内部可变性模式
-
-    常见用例：
-    - 测试中的模拟对象
-    - 实现自引用结构
-    - 当你需要在共享引用后修改数据时
-
-    最佳实践：
-    1. 尽可能优先使用编译时借用
-    2. 将 RefCell 借用限制在狭窄的作用域内
-    3. 考虑使用 drop() 显式结束借用
-    4. 在需要内部可变性时使用 RefCell
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -878,12 +822,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "根据线程需求应用正确的同步原语",
   ]}
   options={[
-    {text: 'RefCell用于可变借用，Rw用于不可变借用', hint: '两种类型都支持可变和不可变借用'},
-    {text: 'Rw用于可变借用，RefCell用于不可变借用', hint: '两者都支持两种类型的借用'},
-    {text: 'RefCell和Rw用于相同目的', hint: '考虑线程安全'},
-    {text: 'RefCell仅用于单线程环境', isAnswer: true},
-    {text: 'Rw仅用于多线程环境', hint: '虽然通常用于线程，但这并非关键区别'},
-  ]}
+  {
+    "text": "RefCell用于可变借用，Rw用于不可变借用",
+    "hint": "两种类型都支持可变和不可变借用"
+  },
+  {
+    "text": "Rw用于可变借用，RefCell用于不可变借用",
+    "hint": "两者都支持两种类型的借用"
+  },
+  {
+    "text": "RefCell和Rw用于相同目的",
+    "hint": "考虑线程安全"
+  },
+  {
+    "text": "RefCell 不实现 Sync；RwLock 提供同步共享",
+    "isAnswer": true
+  },
+  {
+    "text": "Rw仅用于多线程环境",
+    "hint": "虽然通常用于线程，但这并非关键区别"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -907,50 +866,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    RefCell和RwLock在相似的目的下但用于不同的上下文：
-    ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
-      
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
-
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
-
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
-      
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
-
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
-    ```
-    关键区别：
-    1. RefCell：
-    - 仅单线程
-    - 无同步开销
-    - 借用违规时恐慌
-
-    2. RwLock：
-    - 线程安全
-    - 有同步开销
-    - 可以阻塞线程而非恐慌
-
-    最佳实践：
-    1. 对单线程内部可变性使用RefCell
-    2. 需要线程安全时使用RwLock
-    3. 考虑使用Mutex实现更简单的线程安全可变性
-    4. 清晰记录线程安全需求
+`RefCell<T>` 在运行时检查借用，不实现 `Sync`，因此不能跨线程共享它的引用。但在 `T: Send` 时，可以把值移动到另一个线程。`RwLock<T>` 在相应类型约束下提供同步访问。
   </div>
   </slot>
 </Challenge>
@@ -967,12 +883,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "应用正确的同步模式以防止死锁",
   ]}
   options={[
-    {text: '打印: 42', hint: '代码永远不会执行到打印语句'},
-    {text: '打印: 43', hint: '代码会在打印前卡住'},
-    {text: '编译错误', hint: '代码语法正确'},
-    {text: '运行时恐慌', hint: '比恐慌更糟糕'},
-    {text: '死锁', isAnswer: true},
-  ]}
+  {
+    "text": "打印: 42",
+    "hint": "代码永远不会执行到打印语句"
+  },
+  {
+    "text": "打印: 43",
+    "hint": "代码会在打印前卡住"
+  },
+  {
+    "text": "编译错误",
+    "hint": "代码语法正确"
+  },
+  {
+    "text": "不输出内容并正常返回",
+    "hint": "第二次 lock 调用无法正常返回。"
+  },
+  {
+    "text": "死锁或 panic",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -995,55 +926,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    这段代码展示了一个经典的死锁场景。以下是修复方法：
-    ```rust
-    use std::sync::{Arc, Mutex};
+在同一线程中，未释放第一个 guard 就再次锁定同一 mutex，不会正常返回。API 允许死锁或 panic。再次加锁前应释放 guard。
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
-          
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
-          
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
-    }
-
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
-          
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
-    ```
-    防止死锁的最佳实践：
-    1. 保持临界区小
-    2. 使用作用域及时释放锁
-    3. 以一致的顺序获取多个锁
-    4. 使用 parking_lot::Mutex 以获得更好的性能
-    5. 考虑使用 RwLock 处理读密集型工作负载
-
-    常见模式：
-    ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
-
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1264,55 +1157,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    让我们详细了解 Copy 与 Clone：
-    ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
-
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
-
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
-
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
-    ```
-    主要区别：
-    1. Copy：
-    - 隐式，按位复制
-    - 必须是 Copy 安全的（无堆分配）
-    - 通常用于小型、仅栈类型
-
-    2. Clone：
-    - 显式，可能深拷贝
-    - 可以处理堆分配
-    - 更灵活但可能代价高昂
-
-    最佳实践：
-    1. 为小型、仅栈类型实现 Copy
-    2. 对拥有资源的类型使用 Clone
-    3. 记录 Clone 的性能影响
-    4. 考虑自定义 Clone 实现以优化
-    5. 谨慎使用自动派生
+`Copy` 是隐式的按位复制。`Clone` 需要显式调用，可能分配内存；这里两个 `String` 字段各自得到独立副本。值在栈上还是堆上，并不决定类型能否实现 `Copy`。
   </div>
   </slot>
 </Challenge>
@@ -1408,16 +1253,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "应用抽象而不产生性能开销",
   ]}
   options={[
-    {text: '迭代器带来的运行时开销', hint: 'Rust 迭代器是零成本抽象'},
-    {text: '与原始循环性能相同', isAnswer: true},
-    {text: '更慢但更易读', hint: '抽象不影响运行时性能'},
-    {text: '取决于优化级别', hint: '抽象在编译时被消除'},
-  ]}
+  {
+    "text": "迭代器带来的运行时开销",
+    "hint": "Rust 迭代器是零成本抽象"
+  },
+  {
+    "text": "迭代器代码可以与手写循环一样高效",
+    "isAnswer": true
+  },
+  {
+    "text": "更慢但更易读",
+    "hint": "抽象不影响运行时性能"
+  },
+  {
+    "text": "迭代器无法被优化"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    这两种实现的性能如何比较？
-    ```rust
+启用优化时，Rust 的零成本迭代器抽象能让这两种实现达到什么效果？
+```rust
     // Implementation A: Iterator
     fn sum_iterator(v: &[i32]) -> i32 {
         v.iter().fold(0, |acc, &x| acc + x)
@@ -1437,51 +1293,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    Rust 的零成本抽象编译为等效的高效代码：
-    ```rust
-    use std::ops::Range;
+零成本抽象允许生成高效的优化代码，但不保证每种编译器和优化级别下耗时完全相同。两个函数计算相同的和。性能重要时，应测量实际工作负载。
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
     }
-
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
-
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
-
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
-    ```
-    关键原则：
-    1. 不使用就不付费
-    2. 使用则无法手写更优
-
-    最佳实践：
-    1. 自由使用高级抽象
-    2. 信任编译器的优化
-    3. 先分析再优化
-    4. 优先关注可读性
-    5. 放心使用迭代器和闭包
+}
+```
   </div>
   </slot>
 </Challenge>

@@ -537,47 +537,13 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Este código falla porque el compilador no puede determinar la relación entre los lifetimes de entrada y salida. He aquí por qué y cómo solucionarlo:
-    ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+La referencia devuelta debe permanecer dentro de un tiempo de vida válido para ambas entradas. No puede sobrevivir a ninguno de los valores prestados. Las anotaciones describen esa relación; no prolongan los tiempos de vida.
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
-    ```
-    Por qué se necesitan lifetimes aquí:
-    1. Múltiples referencias de entrada pueden tener lifetimes diferentes
-    2. El valor de retorno debe vivir tanto como ambas entradas
-    3. El compilador necesita verificar estas relaciones
-
-    Patrones comunes:
-    ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
-
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    Mejores prácticas:
-    1. Deja que la elisión de lifetimes funcione cuando sea posible
-    2. Usa lifetimes explícitos cuando las relaciones necesiten ser claras
-    3. Considera devolver tipos propios para evitar la complejidad de lifetimes
-    4. Documenta relaciones de lifetimes complejas
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -611,42 +577,20 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCell proporciona mutabilidad interior pero aún así hace cumplir las reglas de préstamo de Rust en tiempo de ejecución:
-    ```rust
-    use std::cell::RefCell;
+Libera el préstamo mutable antes de crear préstamos compartidos. De lo contrario, este ejemplo provoca un panic en ejecución.
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
-          
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
-          
-        // Now we can borrow again
-        let second = data.borrow_mut();
-          
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
-    ```
-    Conceptos clave:
-    1. RefCell traslada las comprobaciones de préstamo al tiempo de ejecución
-    2. Puede causar pánicos si se violan las reglas
-    3. Útil para el patrón de mutabilidad interior
-
-    Casos de uso comunes:
-    - Objetos simulados en pruebas
-    - Implementación de estructuras autorreferenciales
-    - Cuando necesitas mutar datos detrás de una referencia compartida
-
-    Buenas prácticas:
-    1. Preferir el préstamo en tiempo de compilación cuando sea posible
-    2. Mantener los préstamos de RefCell en ámbitos estrechos
-    3. Considerar usar drop() para terminar explícitamente los préstamos
-    4. Usar RefCell cuando necesites mutabilidad interior
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -820,12 +764,27 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   group="RefCell"
   title="RefCells y Hilos"
   options={[
-    {text: 'RefCell se usa para préstamos mutables, Rw para inmutables', hint: 'Ambos tipos admiten préstamos mutables e inmutables'},
-    {text: 'Rw se usa para préstamos mutables, RefCell para inmutables', hint: 'Ambos soportan ambos tipos de préstamos'},
-    {text: 'RefCell y Rw se usan para el mismo propósito', hint: 'Piensa en la seguridad de hilos'},
-    {text: 'RefCell solo se usa en entornos de un solo hilo', isAnswer: true},
-    {text: 'Rw solo se usa en entornos multihilo', hint: 'Aunque típicamente se usa para hilos, no es la diferencia clave'},
-  ]}
+  {
+    "text": "RefCell se usa para préstamos mutables, Rw para inmutables",
+    "hint": "Ambos tipos admiten préstamos mutables e inmutables"
+  },
+  {
+    "text": "Rw se usa para préstamos mutables, RefCell para inmutables",
+    "hint": "Ambos soportan ambos tipos de préstamos"
+  },
+  {
+    "text": "RefCell y Rw se usan para el mismo propósito",
+    "hint": "Piensa en la seguridad de hilos"
+  },
+  {
+    "text": "RefCell no es Sync; RwLock permite compartir con sincronización",
+    "isAnswer": true
+  },
+  {
+    "text": "Rw solo se usa en entornos multihilo",
+    "hint": "Aunque típicamente se usa para hilos, no es la diferencia clave"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -848,50 +807,7 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCell y RwLock sirven propósitos similares pero en diferentes contextos:
-    ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
-      
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
-
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
-
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
-      
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
-
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
-    ```
-    Diferencias clave:
-    1. RefCell:
-    - Solo un hilo
-    - Sin sobrecarga de sincronización
-    - Produce pánico en violaciones de préstamo
-
-    2. RwLock:
-    - Seguro para hilos
-    - Tiene sobrecarga de sincronización
-    - Puede bloquear hilos en lugar de pánico
-
-    Buenas prácticas:
-    1. Usa RefCell para mutabilidad interior de un solo hilo
-    2. Usa RwLock cuando se necesita seguridad de hilos
-    3. Considera Mutex para mutabilidad segura de hilos más simple
-    4. Documenta claramente los requisitos de seguridad de hilos
+`RefCell<T>` comprueba los préstamos en ejecución y no es `Sync`: no compartas una referencia entre hilos. Puede trasladarse a otro hilo si `T: Send`. `RwLock<T>` proporciona acceso sincronizado, sujeto a sus restricciones de tipos.
   </div>
   </slot>
 </Challenge>
@@ -902,12 +818,27 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   group="Punteros Inteligentes"
   title="Arc y Mutex"
   options={[
-    {text: 'Imprime: 42', hint: 'El código nunca alcanzará la sentencia de impresión'},
-    {text: 'Imprime: 43', hint: 'El código se quedará atascado antes de imprimir'},
-    {text: 'Error de compilación', hint: 'El código es sintácticamente correcto'},
-    {text: 'Pánico en tiempo de ejecución', hint: 'Es peor que un pánico'},
-    {text: 'Bloqueo mutuo', isAnswer: true},
-  ]}
+  {
+    "text": "Imprime: 42",
+    "hint": "El código nunca alcanzará la sentencia de impresión"
+  },
+  {
+    "text": "Imprime: 43",
+    "hint": "El código se quedará atascado antes de imprimir"
+  },
+  {
+    "text": "Error de compilación",
+    "hint": "El código es sintácticamente correcto"
+  },
+  {
+    "text": "Retorna normalmente sin imprimir",
+    "hint": "El segundo bloqueo no puede retornar normalmente."
+  },
+  {
+    "text": "Interbloqueo o panic",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -929,55 +860,17 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Este código muestra un escenario clásico de deadlock. Así se soluciona:
-    ```rust
-    use std::sync::{Arc, Mutex};
+Bloquear el mismo mutex dos veces en un hilo sin liberar el primer guard nunca retorna normalmente. La API permite un interbloqueo o un panic; libera el guard antes de volver a bloquear.
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
-          
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
-          
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
-    }
-
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
-          
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
-    ```
-    Mejores prácticas para prevenir deadlocks:
-    1. Mantén las secciones críticas pequeñas
-    2. Libera los bloqueos rápidamente usando ámbitos
-    3. Adquiere múltiples bloqueos en un orden consistente
-    4. Usa parking_lot::Mutex para mejor rendimiento
-    5. Considera usar RwLock para cargas de trabajo con muchas lecturas
-
-    Patrones comunes:
-    ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
-
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1192,55 +1085,7 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Entendamos Copy vs Clone en detalle:
-    ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
-
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
-
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
-
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
-    ```
-    Diferencias clave:
-    1. Copy:
-    - Copia implícita, a nivel de bits
-    - Debe ser seguro para Copy (sin asignaciones en el heap)
-    - Normalmente para tipos pequeños que solo viven en la pila
-
-    2. Clone:
-    - Copia explícita, potencialmente profunda
-    - Puede manejar asignaciones en el heap
-    - Más flexible pero potencialmente costosa
-
-    Buenas prácticas:
-    1. Implementar Copy para tipos pequeños que solo viven en la pila
-    2. Usar Clone para tipos con recursos propios
-    3. Documentar las implicaciones de rendimiento de Clone
-    4. Considerar implementaciones personalizadas de Clone para optimización
-    5. Tener cuidado con la derivación automática
+`Copy` realiza copias implícitas bit a bit. `Clone` es explícito y puede reservar memoria; aquí ambos campos `String` reciben copias independientes. Estar en la pila o en el heap no determina si un tipo implementa `Copy`.
   </div>
   </slot>
 </Challenge>
@@ -1323,16 +1168,27 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   group="Patrones Avanzados"
   title="Abstracciones de Costo Cero"
   options={[
-    {text: 'Sobrecarga en tiempo de ejecución del iterador', hint: 'Los iteradores de Rust son abstracciones de costo cero'},
-    {text: 'Mismo rendimiento que un bucle sin abstraer', isAnswer: true},
-    {text: 'Más lento pero más legible', hint: 'La abstracción no afecta al rendimiento en tiempo de ejecución'},
-    {text: 'Depende del nivel de optimización', hint: 'La abstracción se elimina en tiempo de compilación'},
-  ]}
+  {
+    "text": "Sobrecarga en tiempo de ejecución del iterador",
+    "hint": "Los iteradores de Rust son abstracciones de costo cero"
+  },
+  {
+    "text": "El iterador puede ser tan eficiente como un bucle manual",
+    "isAnswer": true
+  },
+  {
+    "text": "Más lento pero más legible",
+    "hint": "La abstracción no afecta al rendimiento en tiempo de ejecución"
+  },
+  {
+    "text": "Los iteradores no se pueden optimizar"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cómo se compara el rendimiento de estas dos implementaciones?
-    ```rust
+Con optimizaciones activadas, ¿qué pueden lograr las abstracciones de iteradores de coste cero en estas implementaciones?
+```rust
     // Implementation A: Iterator
     fn sum_iterator(v: &[i32]) -> i32 {
         v.iter().fold(0, |acc, &x| acc + x)
@@ -1351,51 +1207,19 @@ Ya seas un Rustacean experimentado o recién estés comenzando con la gestión d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Las abstracciones de costo cero de Rust se compilan a código eficiente equivalente:
-    ```rust
-    use std::ops::Range;
+Las abstracciones de coste cero permiten código optimizado eficiente; no garantizan tiempos idénticos con cualquier compilador o nivel de optimización. Ambas funciones calculan la misma suma. Mide la carga real cuando importe el rendimiento.
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
     }
-
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
-
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
-
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
-    ```
-    Principios clave:
-    1. Lo que no usas, no pagas
-    2. Lo que usas, no podrías codificar a mano mejor
-
-    Buenas prácticas:
-    1. Usa abstracciones de alto nivel sin restricciones
-    2. Confía en las optimizaciones del compilador
-    3. Perfila antes de optimizar
-    4. Prioriza la legibilidad
-    5. Usa iteradores y closures sin miedo
+}
+```
   </div>
   </slot>
 </Challenge>

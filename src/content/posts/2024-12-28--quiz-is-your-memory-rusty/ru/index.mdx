@@ -542,47 +542,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Этот код не работает, потому что компилятор не может определить связь между временем жизни входных и выходных данных. Вот почему и как это исправить:
-    ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+Возвращаемая ссылка должна оставаться в пределах времени жизни, допустимого для обоих входных значений. Она не может пережить ни одно из заимствованных значений. Аннотации описывают связь, но не продлевают время жизни.
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
-    ```
-    Почему здесь нужны аннотации времени жизни:
-    1. У нескольких входных ссылок может быть разное время жизни
-    2. Возвращаемое значение должно жить так же долго, как оба входных параметра
-    3. Компилятор должен проверить эти отношения
-
-    Типовые шаблоны:
-    ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
-
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    Рекомендации:
-    1. Используйте сокращение времени жизни, когда это возможно
-    2. Указывайте явное время жизни, когда связи требуют ясности
-    3. Рассмотрите возврат владельческих типов, чтобы избежать сложности с временем жизни
-    4. Документируйте сложные отношения времени жизни
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -616,42 +582,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCell обеспечивает внутреннюю изменяемость, но всё ещё защищает правила заимствования Rust во время выполнения:
-    ```rust
-    use std::cell::RefCell;
+Освободите изменяемое заимствование до создания общих заимствований. Иначе этот пример вызывает панику во время выполнения.
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
-          
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
-          
-        // Now we can borrow again
-        let second = data.borrow_mut();
-          
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
-    ```
-    Ключевые концепции:
-    1. RefCell переносит проверки заимствования во время выполнения
-    2. Может вызывать паники при нарушении правил
-    3. Полезен для паттерна внутренней изменяемости
-
-    Частые случаи использования:
-    - Мок-объекты в тестах
-    - Реализация самоописывающихся структур
-    - Когда нужно изменять данные через общий указатель
-
-    Рекомендации:
-    1. Предпочтительно использовать заимствование на этапе компиляции, когда это возможно
-    2. Ограничивайте области заимствования RefCell
-    3. Рассмотрите использование drop() для явного завершения заимствования
-    4. Используйте RefCell, когда нужна внутренняя изменяемость
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -825,12 +769,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="RefCell"
   title="RefCell и потоки"
   options={[
-    {text: 'RefCell используется для изменяемых заимствований, Rw — для неизменяемых', hint: 'Оба типа поддерживают как изменяемые, так и неизменяемые заимствования'},
-    {text: 'Rw используется для изменяемых заимствований, RefCell — для неизменяемых', hint: 'Оба поддерживают оба типа заимствований'},
-    {text: 'RefCell и Rw используются для одной и той же цели', hint: 'Подумайте о потоковой безопасности'},
-    {text: 'RefCell используется только в однопоточных средах', isAnswer: true},
-    {text: 'Rw используется только в многопоточных средах', hint: 'Хотя обычно используется для потоков, это не ключевое различие'},
-  ]}
+  {
+    "text": "RefCell используется для изменяемых заимствований, Rw — для неизменяемых",
+    "hint": "Оба типа поддерживают как изменяемые, так и неизменяемые заимствования"
+  },
+  {
+    "text": "Rw используется для изменяемых заимствований, RefCell — для неизменяемых",
+    "hint": "Оба поддерживают оба типа заимствований"
+  },
+  {
+    "text": "RefCell и Rw используются для одной и той же цели",
+    "hint": "Подумайте о потоковой безопасности"
+  },
+  {
+    "text": "RefCell не реализует Sync; RwLock обеспечивает синхронизированный доступ",
+    "isAnswer": true
+  },
+  {
+    "text": "Rw используется только в многопоточных средах",
+    "hint": "Хотя обычно используется для потоков, это не ключевое различие"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -853,50 +812,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCell и RwLock выполняют схожие функции, но в разных контекстах:
-    ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
-      
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
-
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
-
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
-      
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
-
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
-    ```
-    Ключевые различия:
-    1. RefCell:
-    - Только однопоточный
-    - Нет накладных расходов на синхронизацию
-    - Вызывает панику при нарушении правил заимствования
-
-    2. RwLock:
-    - Потокобезопасный
-    - Имеет накладные расходы на синхронизацию
-    - Может блокировать потоки вместо вызова паники
-
-    Рекомендации:
-    1. Используйте RefCell для внутренней изменяемости в однопоточных средах
-    2. Используйте RwLock, когда требуется потоковая безопасность
-    3. Рассмотрите Mutex для более простой потоковой безопасной изменяемости
-    4. Четко документируйте требования к потоковой безопасности
+`RefCell<T>` проверяет заимствования во время выполнения и не реализует `Sync`: ссылку на него нельзя совместно использовать между потоками. Само значение можно передать другому потоку при `T: Send`. `RwLock<T>` обеспечивает синхронизированный доступ с учётом ограничений типов.
   </div>
   </slot>
 </Challenge>
@@ -907,12 +823,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Умные указатели"
   title="Arc и Mutex"
   options={[
-    {text: 'Выводит: 42', hint: 'Код никогда не дойдёт до строки вывода'},
-    {text: 'Выводит: 43', hint: 'Код зайдёт в тупик до вывода'},
-    {text: 'Ошибка компиляции', hint: 'Код синтаксически корректен'},
-    {text: 'Паника во время выполнения', hint: 'Это хуже, чем паника'},
-    {text: 'Дедлок', isAnswer: true},
-  ]}
+  {
+    "text": "Выводит: 42",
+    "hint": "Код никогда не дойдёт до строки вывода"
+  },
+  {
+    "text": "Выводит: 43",
+    "hint": "Код зайдёт в тупик до вывода"
+  },
+  {
+    "text": "Ошибка компиляции",
+    "hint": "Код синтаксически корректен"
+  },
+  {
+    "text": "Нормально возвращается без вывода",
+    "hint": "Второй вызов lock не может нормально вернуться."
+  },
+  {
+    "text": "Взаимная блокировка или паника",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -934,55 +865,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Этот код демонстрирует классический сценарий дедлока. Вот как это исправить:
-    ```rust
-    use std::sync::{Arc, Mutex};
+Повторная блокировка того же mutex в одном потоке без освобождения первого guard не возвращается нормально. API допускает взаимную блокировку или панику. Освободите guard перед повторной блокировкой.
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
-          
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
-          
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: &#123;&#125;", data2);
-    }
-
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
-          
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
-    ```
-    Рекомендации для предотвращения дедлоков:
-    1. Делайте критические секции маленькими
-    2. Сразу освобождайте блокировки, используя области видимости
-    3. Захватывайте несколько блокировок в последовательном порядке
-    4. Используйте parking_lot::Mutex для лучшей производительности
-    5. Рассмотрите использование RwLock для нагрузки с большим количеством чтений
-
-    Распространённые паттерны:
-    ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
-
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1197,55 +1090,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Давайте подробно разберемся с Copy и Clone:
-    ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
-
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
-
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
-
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
-    ```
-    Основные различия:
-    1. Copy:
-    - Неявная побитовая копия
-    - Должен быть безопасен для копирования (без выделений памяти на куче)
-    - Обычно для маленьких типов, только для стека
-
-    2. Clone:
-    - Явная, потенциально глубокая копия
-    - Может обрабатывать выделения памяти на куче
-    - Более гибкий, но может быть затратным
-
-    Рекомендации:
-    1. Реализуйте Copy для маленьких типов, только для стека
-    2. Используйте Clone для типов с собственными ресурсами
-    3. Документируйте производственные последствия Clone
-    4. Рассмотрите пользовательские реализации Clone для оптимизации
-    5. Будьте осторожны с автоматическим выводом
+`Copy` выполняет неявное побитовое копирование. `Clone` вызывается явно и может выделять память; здесь оба поля `String` копируются независимо. Расположение в стеке или куче не определяет реализацию `Copy`.
   </div>
   </slot>
 </Challenge>
@@ -1328,16 +1173,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Дополнительные паттерны"
   title="Нулевые затраты абстракций"
   options={[
-    {text: 'Перегрузка времени выполнения от Iterator', hint: 'В Rust итераторы — это абстракции с нулевыми затратами'},
-    {text: 'Та же производительность, что и у обычного цикла', isAnswer: true},
-    {text: 'Медленнее, но более читаемый', hint: 'Абстракция не влияет на производительность времени выполнения'},
-    {text: 'Зависит от уровня оптимизации', hint: 'Абстракция устраняется на этапе компиляции'},
-  ]}
+  {
+    "text": "Перегрузка времени выполнения от Iterator",
+    "hint": "В Rust итераторы — это абстракции с нулевыми затратами"
+  },
+  {
+    "text": "Код с итератором может быть столь же эффективным, как ручной цикл",
+    "isAnswer": true
+  },
+  {
+    "text": "Медленнее, но более читаемый",
+    "hint": "Абстракция не влияет на производительность времени выполнения"
+  },
+  {
+    "text": "Итераторы нельзя оптимизировать"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Как сравнится производительность этих двух реализаций?
-    ```rust
+Чего могут достичь абстракции итераторов с нулевой стоимостью в этих реализациях при включённой оптимизации?
+```rust
     // Implementation A: Iterator
     fn sum_iterator(v: &[i32]) -> i32 {
         v.iter().fold(0, |acc, &x| acc + x)
@@ -1356,51 +1212,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Абстракции с нулевыми затратами в Rust компилируются в эквивалентный эффективный код:
-    ```rust
-    use std::ops::Range;
+Абстракции с нулевой стоимостью позволяют получить эффективный оптимизированный код, но не гарантируют одинаковое время для всех компиляторов и уровней оптимизации. Функции вычисляют одну сумму. Если производительность важна, измеряйте реальную нагрузку.
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
     }
-
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
-
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
-
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
-    ```
-    Ключевые принципы:
-    1. За то, чем вы не пользуетесь, вы не платите
-    2. За то, чем пользуетесь, вы не напишете лучше вручную
-
-    Рекомендации:
-    1. Свободно используйте высокоуровневые абстракции
-    2. Доверяйте оптимизациям компилятора
-    3. Профилируйте перед оптимизацией
-    4. Сначала делайте акцент на читаемости
-    5. Используйте итераторы и замыкания без страха
+}
+```
   </div>
   </slot>
 </Challenge>

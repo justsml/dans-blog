@@ -407,6 +407,13 @@ const shouldCropMobileBanner =
       };
 
       const schedulePostWork = () => {
+        // Navigation and scoring must not wait for decorative hero effects.
+        const quiz = document.querySelector<HTMLElement>(".quiz-ui");
+        if (quiz) {
+          void import("../components/QuizUI/QuizRuntime").then(({ bootQuizRuntime }) => {
+            if (quiz.isConnected) bootQuizRuntime({ quiz });
+          });
+        }
         const codeBlock = document.querySelector("main.article pre");
         if (codeBlock && "IntersectionObserver" in window) {
           const codeObserver = new IntersectionObserver(

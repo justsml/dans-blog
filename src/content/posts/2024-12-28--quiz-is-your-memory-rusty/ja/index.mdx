@@ -536,47 +536,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    このコードは、コンパイラが入力と出力のライフタイムの関係を判断できないため失敗します。その理由と修正方法は次のとおりです。
-    ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+返す参照は、両方の入力に対して有効なライフタイムの範囲内でなければなりません。借用元のどちらよりも長く存続することはできません。注釈は関係を表し、ライフタイムを延長しません。
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
-    ```
-    なぜここでライフタイムが必要なのか:
-    1. 複数の入力参照が異なるライフタイムを持つ可能性がある
-    2. 戻り値は両方の入力と同じだけ生存しなければならない
-    3. コンパイラはこれらの関係を検証する必要がある
-
-    一般的なパターン:
-    ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
-
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    ベストプラクティス:
-    1. 可能な場合はライフタイムの省略に任せる
-    2. 関係を明確にする必要がある場合は明示的なライフタイムを使用する
-    3. ライフタイムの複雑さを避けるために所有型を返すことを検討する
-    4. 複雑なライフタイムの関係を文書化する
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -610,42 +576,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCellは内部可変性を提供しますが、Rustの借用ルールを実行時に強制します：
-    ```rust
-    use std::cell::RefCell;
+共有借用を作る前に可変借用を解放します。そうしないと、この例は実行時にパニックになります。
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
-          
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
-          
-        // Now we can borrow again
-        let second = data.borrow_mut();
-          
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
-    ```
-    主要な概念:
-    1. RefCellは借用チェックを実行時に移動する
-    2. ルールに違反するとパニックを引き起こす可能性がある
-    3. 内部可変性パターンに有用
-
-    一般的なユースケース:
-    - テストでのモックオブジェクト
-    - 自己参照構造体の実装
-    - 共有参照の背後でデータを変更する必要がある場合
-
-    ベストプラクティス:
-    1. 可能な限りコンパイル時の借用を優先する
-    2. RefCellの借用を狭いスコープに保つ
-    3. drop()を使用して明示的に借用を終了することを検討する
-    4. 内部可変性が必要な場合にRefCellを使用する
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -819,12 +763,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="RefCell"
   title="RefCellとスレッディング"
   options={[
-    {text: 'RefCellは可変借用に使われ、Rwは不変借用に使われる', hint: '両方の型が可変借用と不変借用をサポートしている'},
-    {text: 'Rwは可変借用に使われ、RefCellは不変借用に使われる', hint: '両方とも両方の借用タイプをサポートしている'},
-    {text: 'RefCellとRwは同じ目的で使われる', hint: 'スレッドセーフティについて考えてみよう'},
-    {text: 'RefCellはシングルスレッド環境でのみ使われる', isAnswer: true},
-    {text: 'Rwはマルチスレッド環境でのみ使われる', hint: '通常はスレッドで使われるが、それが主要な違いではない'},
-  ]}
+  {
+    "text": "RefCellは可変借用に使われ、Rwは不変借用に使われる",
+    "hint": "両方の型が可変借用と不変借用をサポートしている"
+  },
+  {
+    "text": "Rwは可変借用に使われ、RefCellは不変借用に使われる",
+    "hint": "両方とも両方の借用タイプをサポートしている"
+  },
+  {
+    "text": "RefCellとRwは同じ目的で使われる",
+    "hint": "スレッドセーフティについて考えてみよう"
+  },
+  {
+    "text": "RefCellはSyncではなく、RwLockは同期された共有を提供する",
+    "isAnswer": true
+  },
+  {
+    "text": "Rwはマルチスレッド環境でのみ使われる",
+    "hint": "通常はスレッドで使われるが、それが主要な違いではない"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -847,50 +806,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCellとRwLockは似た目的を持つが、異なるコンテキストで使われる：
-    ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
-      
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
-
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
-
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
-      
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
-
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
-    ```
-    主な違い：
-    1. RefCell:
-    - シングルスレッドのみ
-    - 同期オーバーヘッドなし
-    - 借用違反でパニック
-
-    2. RwLock:
-    - スレッドセーフ
-    - 同期オーバーヘッドあり
-    - パニックではなくスレッドをブロック可能
-
-    ベストプラクティス：
-    1. シングルスレッドの内部可変性にはRefCellを使う
-    2. スレッドセーフが必要な場合はRwLockを使う
-    3. よりシンプルなスレッドセーフ可変性にはMutexを検討する
-    4. スレッドセーフ要件を明確に文書化する
+`RefCell<T>` は実行時に借用を検査し、`Sync` ではないため参照をスレッド間で共有できません。ただし `T: Send` なら値を別のスレッドへ移動できます。`RwLock<T>` は型の制約に従い、同期されたアクセスを提供します。
   </div>
   </slot>
 </Challenge>
@@ -901,12 +817,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="スマートポインタ"
   title="ArcとMutex"
   options={[
-    {text: '出力: 42', hint: 'コードはprint文に到達しません'},
-    {text: '出力: 43', hint: 'コードは出力前に停止します'},
-    {text: 'コンパイルエラー', hint: 'コードは構文的に正しい'},
-    {text: '実行時パニック', hint: 'パニックよりも悪い'},
-    {text: 'デッドロック', isAnswer: true},
-  ]}
+  {
+    "text": "出力: 42",
+    "hint": "コードはprint文に到達しません"
+  },
+  {
+    "text": "出力: 43",
+    "hint": "コードは出力前に停止します"
+  },
+  {
+    "text": "コンパイルエラー",
+    "hint": "コードは構文的に正しい"
+  },
+  {
+    "text": "何も出力せず正常に戻る",
+    "hint": "2回目のロックは正常には戻りません。"
+  },
+  {
+    "text": "デッドロックまたはパニック",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -928,55 +859,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    このコードは古典的なデッドロックのシナリオを示しています。修正方法は以下の通りです：
-    ```rust
-    use std::sync::{Arc, Mutex};
+最初のガードを解放せず、同じスレッドで同じmutexを2回ロックすると正常には戻りません。APIはデッドロックまたはパニックを許容します。再ロック前にガードを解放してください。
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
-          
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
-          
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
-    }
-
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
-          
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
-    ```
-    デッドロックを防ぐためのベストプラクティス：
-    1. クリティカルセクションを小さく保つ
-    2. スコープを使ってロックを速やかに解放する
-    3. 複数のロックを一貫した順序で取得する
-    4. パフォーマンス向上のためにparking_lot::Mutexを使用する
-    5. 読み取りが多いワークロードにはRwLockを検討する
-
-    一般的なパターン：
-    ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
-
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1191,55 +1084,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    CopyとCloneの違いを詳しく見てみましょう：
-    ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
-
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
-
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
-
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
-    ```
-    主な違い：
-    1. Copy:
-    - 暗黙的、ビット単位のコピー
-    - Copy-safeである必要がある（ヒープ割り当てなし）
-    - 通常は小さなスタックのみの型に使用
-
-    2. Clone:
-    - 明示的、潜在的にディープコピー
-    - ヒープ割り当てを扱える
-    - より柔軟だがコストがかかる可能性あり
-
-    ベストプラクティス：
-    1. 小さなスタックのみの型にはCopyを実装する
-    2. 所有リソースを持つ型にはCloneを使用する
-    3. Cloneのパフォーマンスへの影響を文書化する
-    4. 最適化のためにカスタムClone実装を検討する
-    5. 自動導出には注意する
+`Copy` は暗黙のビット単位コピーです。`Clone` は明示的に呼び出し、メモリを確保する場合があります。ここでは両方の `String` フィールドが独立して複製されます。スタックかヒープかは `Copy` の実装可否を決めません。
   </div>
   </slot>
 </Challenge>
@@ -1322,16 +1167,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="高度なパターン"
   title="ゼロコスト抽象化"
   options={[
-    {text: 'イテレータによるランタイムオーバーヘッド', hint: 'Rustのイテレータはゼロコスト抽象化です'},
-    {text: '生のループと同じパフォーマンス', isAnswer: true},
-    {text: '遅いが読みやすい', hint: '抽象化は実行時のパフォーマンスに影響しません'},
-    {text: '最適化レベルに依存する', hint: '抽象化はコンパイル時に除去されます'},
-  ]}
+  {
+    "text": "イテレータによるランタイムオーバーヘッド",
+    "hint": "Rustのイテレータはゼロコスト抽象化です"
+  },
+  {
+    "text": "イテレータは手書きループと同程度に効率的になり得る",
+    "isAnswer": true
+  },
+  {
+    "text": "遅いが読みやすい",
+    "hint": "抽象化は実行時のパフォーマンスに影響しません"
+  },
+  {
+    "text": "イテレータは最適化できない"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    これら2つの実装のパフォーマンスはどのように比較されますか？
-    ```rust
+最適化を有効にした場合、この2つの実装でRustのゼロコストなイテレータ抽象化は何を可能にしますか？
+```rust
     // Implementation A: Iterator
     fn sum_iterator(v: &[i32]) -> i32 {
         v.iter().fold(0, |acc, &x| acc + x)
@@ -1350,51 +1206,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Rustのゼロコスト抽象化は同等の効率的なコードにコンパイルされます：
-    ```rust
-    use std::ops::Range;
+ゼロコスト抽象化は効率的な最適化コードを可能にしますが、すべてのコンパイラや最適化レベルで同じ実行時間を保証しません。両関数は同じ合計を計算します。性能が重要なら実際の負荷で測定してください。
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
     }
-
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
-
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
-
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
-    ```
-    主要な原則：
-    1. 使わないものにはコストを払わない
-    2. 使うものは手書きコードより優れている
-
-    ベストプラクティス：
-    1. 高レベル抽象化を自由に使う
-    2. コンパイラの最適化を信頼する
-    3. 最適化の前にプロファイリングする
-    4. まず可読性に集中する
-    5. 恐れずにイテレータとクロージャを使う
+}
+```
   </div>
   </slot>
 </Challenge>

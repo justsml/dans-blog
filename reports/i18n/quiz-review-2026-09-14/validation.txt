@@ -1,0 +1,93 @@
+he 1  $ bun ./src/scripts/i18n/validate.ts --slug quiz-is-your-memory-rusty --locale he --skip-global
+256 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+257 |   const comparison = compareMdxStructure(input);
+258 |   if (comparison.valid) return;
+259 | 
+260 |   const targetLabel = input.targetPath ?? "translation";
+261 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2024-12-28--quiz-is-your-memory-rusty/he/index.mdx failed structural parity with score 0.978 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-12-28--quiz-is-your-memory-rusty/he/index.mdx: MDX component order changed. Differences: {"components":-2,"componentSequence":8}. Differences: {"components":-2,"componentSequence":8}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+
+de 1  $ bun ./src/scripts/i18n/validate.ts --slug "quiz-postgres-sql-mastery-pt1" --locale de --skip-global
+256 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+257 |   const comparison = compareMdxStructure(input);
+258 |   if (comparison.valid) return;
+259 | 
+260 |   const targetLabel = input.targetPath ?? "translation";
+261 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/de/index.mdx failed structural parity with score 0.905 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/de/index.mdx: Headings changed or moved. Differences: {"h2":-1,"headingSequence":1}. Differences: {"h2":-1,"headingSequence":1}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+
+hi 1  $ bun ./src/scripts/i18n/validate.ts --slug "quiz-postgres-sql-mastery-pt1" --locale hi --skip-global
+256 | export function assertStructuralParity(input: CompareMdxStructureInput) {
+257 |   const comparison = compareMdxStructure(input);
+258 |   if (comparison.valid) return;
+259 | 
+260 |   const targetLabel = input.targetPath ?? "translation";
+261 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/hi/index.mdx failed structural parity with score 0.905 (minimum 0.980). /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/hi/index.mdx: Headings changed or moved. Differences: {"h2":-1,"headingSequence":1}. Differences: {"h2":-1,"headingSequence":1}
+      at assertStructuralParity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:261:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:33:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+
+fr 1  $ bun ./src/scripts/i18n/validate.ts --slug quiz-advanced-js-error-mastery --locale fr --skip-global
+149 | 
+150 |   for (const slotName of ["hints", "explanation"] as const) {
+151 |     const sourceSlots = countSlot(sourceContents, slotName);
+152 |     const targetSlots = countSlot(targetContents, slotName);
+153 |     if (sourceSlots !== targetSlots) {
+154 |       throw new Error(
+                      ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/fr/index.mdx changed hints slot count from 14 to 0
+      at assertQuizStructure (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:154:17)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:36:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+
+zh 1  $ bun ./src/scripts/i18n/validate.ts --slug "js-quiz-14-date-time-questions-test-your-knowledge" --locale zh --skip-global
+104 | 
+105 | export function assertTranslationIntegrity(input: IntegrityCheckInput) {
+106 |   const issues = analyzeTranslationIntegrity(input).filter((issue) => issue.severity !== "low");
+107 |   if (issues.length === 0) return;
+108 | 
+109 |   throw new Error(
+                  ^
+error: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx failed translation integrity checks:
+- [high] quiz-option-missing-field: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 1 option 2 is missing expected field(s): RangeError.
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 1 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 2 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-option-missing-field: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 3 option 5 is missing expected field(s): RangeError.
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 3 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 9 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-option-missing-field: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 10 option 2 is missing expected field(s): RangeError.
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 10 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-unexpected-hints-slot: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 10 adds unexpected hints slot.
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 11 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-missing-hints-slot: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 11 is missing expected hints slot.
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 12 changed code-like quiz option "RangeError: Invalid argument.".
+- [high] quiz-code-option-preservation: /Users/dan/code/oss/dans-blog/src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/zh/index.mdx Challenge 13 changed code-like quiz option "RangeError: Invalid argument.".
+      at assertTranslationIntegrity (/Users/dan/code/oss/dans-blog/src/scripts/i18n/integrity-checks.ts:109:13)
+      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:38:1
+      at loadAndEvaluateModule (2:1)
+
+Bun v1.3.1 (macOS arm64)
+error: script "i18n:validate" exited with code 1
+

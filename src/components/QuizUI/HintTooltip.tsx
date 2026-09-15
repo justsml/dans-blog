@@ -1,10 +1,13 @@
+import { getQuizMessages } from "./messages";
 export function HintTooltip({
   hint,
   className,
   title,
   showHint,
   onClose,
+  messages = getQuizMessages(),
 }: {
+  messages?: ReturnType<typeof getQuizMessages>;
   hint: string;
   className?: string;
   title?: string;
@@ -28,10 +31,10 @@ export function HintTooltip({
       </div>
       <div className="flex justify-end gap-2">
         <button type="button" onClick={() => onClose?.()}>
-          Dismiss
+          {messages.dismiss}
         </button>
         <button type="button" onClick={() => onClose?.(5)}>
-          Hide next 5 Hints
+          {messages.hideHints}
         </button>
       </div>
     </aside>

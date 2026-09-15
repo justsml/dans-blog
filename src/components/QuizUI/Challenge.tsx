@@ -1,3 +1,4 @@
+import { getQuizMessages } from "./messages";
 import {
   MouseEvent,
   useContext,
@@ -68,6 +69,8 @@ export default function Challenge({
   objectives?: string[];
   standards?: string[];
 }) {
+  const [messages, setMessages] = useState(() => getQuizMessages());
+  useEffect(() => setMessages(getQuizMessages(document.documentElement.lang)), []);
   const siteDomain = `DanLevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
@@ -94,7 +97,7 @@ export default function Challenge({
     setTotalQuestions(questions?.length);
     setCorrectAnswers(correct?.length);
     // @ts-ignore
-    window?.__updateCounts();
+    window.__updateCounts?.();
   };
 
   useEffect(() => {
@@ -347,9 +350,10 @@ export default function Challenge({
             }
           }}
         >
-          <label>{option.text}</label>
+          <label><bdi dir="auto">{option.text}</bdi></label>
           <HintTooltip
-            title={`💡 Hint`}
+            title={`💡 ${messages.hint}`}
+            messages={messages}
             hint={_showHint ? _showHint : ""}
             showHint={_showHint ? true : false}
             onClose={(ignoreHintBy) => {
@@ -390,7 +394,7 @@ export default function Challenge({
           onClick={() => setShowExplanation(!showExplanation)}
           className={classList("toggle-explainer", { open: showExplanation })}
         >
-          {showExplanation ? "Hide" : "Hint"} Explainer{" "}
+          {showExplanation ? messages.hideExplanation : messages.showExplanation}
         </button>
       </aside>
       <section

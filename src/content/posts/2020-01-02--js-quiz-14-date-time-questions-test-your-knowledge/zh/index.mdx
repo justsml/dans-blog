@@ -26,7 +26,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 > **证明你的 JavaScript 技能！** 🚀  
 > *无需登录或注册。* ✨  
-> *多选题。* 🤖 ... _这能有多难，对吧？_
+> *单项选择题。* 🤖 ... _这能有多难，对吧？_
 
 ### 内容概要
 
@@ -56,7 +56,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -84,12 +84,12 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
   options={[
     {text: '1月 01 2020', isAnswer: true},
     {text: '2月 01 2020'},
-    {text: 'RangeError：无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -120,7 +120,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
     {text: '当前日期，UTC/GMT时间'},
     {text: '当前日期', isAnswer: true},
     {text: 'NaN'},
-    {text: 'RangeError: 无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
@@ -138,11 +138,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
 
   <slot name='explanation'>
   <div className="explanation">
-    别忘了`new`关键字！`Date`是一个类，应该用`new`调用。
-
-    不带`new`的`Date('...')`会忽略你传入的内容。它似乎总是通过`new Date()`（无参数）生成当前日期和时间。
-
-    这是一个**常见陷阱**，**容易被忽视**，即使是在代码审查中也是如此。
+不带 `new` 调用 `Date()` 会忽略所有参数，并返回表示当前日期和时间的字符串。使用 `new Date(...)` 才会创建日期对象并处理传入的参数。
   </div>
   </slot>
 </Challenge>
@@ -158,11 +154,12 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
     {text: '2019'},
     {text: '2020'},
     {text: '2021'},
-    {text: '范围错误：无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
+假设本地时区固定为 GMT−7。
     输出将包含什么？
     ```js
     const date = new Date(2020)
@@ -201,6 +198,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
 >
   <slot name="question">
   <div className="question">
+假设本地时区固定为 GMT−7。
     什么值会打印到控制台？
     ```js
     const d1 = new Date('2020-01-01')
@@ -284,12 +282,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
 
   <slot name='explanation'>
   <div className="explanation">
-    你会得到 `TypeError: date.toUTCString is not a function`，因为 [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) 返回的是毫秒整数而非日期实例。
-
-    {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) 方法会使用你的本地时区偏移（假设这些题目中为 GMT-07:00）
-    这意味着它会给出前一年（新年夜-7小时）。
-    [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) 方法会返回我们通过 `Date.UTC()` 提供的年份，即 2020。
-    */}
+`Date.UTC()` 接受年份、月份等数值参数。这里传入的字符串不能转换为有效年份，因此先得到 `NaN`。`NaN` 是数字而不是 `Date` 对象，调用它的 `.toUTCString()` 会抛出 `TypeError`。
   </div>
   </slot>
 </Challenge>
@@ -341,6 +334,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
 >
   <slot name="question">
   <div className="question">
+假设本地时区固定为 GMT−7。
     输出将包含什么？
     ```js
     // Assume local TZ is -07:00
@@ -355,9 +349,7 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
 
   <slot name='explanation'>
   <div className="explanation">
-    日期对象会以本地时间隐式呈现，其 [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) 会保持（实际上）不变。
-
-    `Date` 实例不会存储时区数据。它们存储的是自 Unix 纪元（1970 年 1 月 1 日）以来的毫秒数。时区在日期字符串解析和渲染时被考虑。默认显示行为基于系统或浏览器的区域设置自动确定。
+`Date` 对象存储的是自 Unix 纪元以来的毫秒数，不保存时区。`getTimezoneOffset()` 根据该日期所在的本地时区规则返回 UTC 与本地时间相差的分钟数。这里固定为 GMT−7，所以是 `420`。在采用夏令时的地区，不同日期可能得到不同的偏移量。
   </div>
   </slot>
 </Challenge>
@@ -370,12 +362,12 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
   options={[
     {text: '2020年1月1日', isAnswer: true},
     {text: '2020年2月1日'},
-    {text: 'RangeError: 无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -406,21 +398,18 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
   options={[
     {text: '1月 1日 2020年'},
     {text: '2月 1日 2020年', isAnswer: true},
-    {text: 'RangeError：无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
     console.log(d)
     ```
   </div>
-  </slot>
-  <slot name='hints'>
-
   </slot>
 
   <slot name='explanation'>
@@ -441,12 +430,12 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
     {text: '2020年1月1日'},
     {text: '2021年1月1日', isAnswer: true},
     {text: '2020年2月1日'},
-    {text: 'RangeError: 无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -464,6 +453,10 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
     在这里我们看到年份被调整为 2021 年，因为 `setMonth(12)` 比 11（12 月）多 1。
   </div>
   </slot>
+
+  <slot name='hints'>
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -476,12 +469,12 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
     {text: '2020年2月1日'},
     {text: '2021年1月1日'},
     {text: '2021年2月1日', isAnswer: true},
-    {text: 'RangeError: 无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -519,12 +512,12 @@ JavaScript 中的 `Date` 类拥有臭名昭著的复杂 API。它从 Java 继承
     {text: '2020年2月1日'},
     {text: '2019年1月1日'},
     {text: '2019年12月1日', isAnswer: true},
-    {text: 'RangeError: 无效参数。'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    输出将包含什么？
+    这个对象表示哪个本地日期？（控制台显示格式可能不同。）
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)

@@ -569,47 +569,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    يفشل هذا الكود لأن المترجم لا يستطيع تحديد العلاقة بين أعمار الإدخال والإخراج. إليك السبب وكيفية إصلاحه:
-    ```rust
-    // Correct version with explicit lifetime annotation
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2
-        }
-    }
+يجب أن يبقى المرجع المعاد ضمن عمر صالح لكلا المدخلين، وألا يتجاوز عمر أي من القيمتين المستعارتين. تصف تعليقات العمر هذه العلاقة ولا تمدد الأعمار.
 
-    // Alternative with different lifetimes
-    fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-        if text1.len() > text2.len() {
-            text1
-        } else {
-            text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-        }
-    }
-    ```
-    لماذا تحتاج الأعمار هنا:
-    1. مراجع الإدخال المتعددة قد تكون لها أعمار مختلفة
-    2. يجب أن تكون قيمة الإرجاع حية طوال عمر كلا الإدخالين
-    3. يحتاج المترجم إلى التحقق من هذه العلاقات
-
-    الأنماط الشائعة:
-    ```rust
-    // Single input reference - elision works
-    fn first_word(s: &str) -> &str { /* ... */ }
-
-    // Multiple references, same lifetime needed
-    fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-    // Different lifetimes possible
-    fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    أفضل الممارسات:
-    1. دع استنتاج العمر يعمل عندما يكون ذلك ممكنًا
-    2. استخدم أعمارًا صريحة عندما تحتاج العلاقات إلى وضوح
-    3. فكر في إرجاع أنواع مملوكة لتجنب تعقيد العمر
-    4. وثّق العلاقات المعقدة للأعمار
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -650,42 +616,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    RefCell يوفر القابلية للتغيير الداخلي لكنه لا يزال يفرض قواعد الاستعارة في Rust أثناء وقت التشغيل:
-    ```rust
-    use std::cell::RefCell;
+حرر الاستعارة القابلة للتغيير قبل إنشاء استعارات مشتركة، وإلا يؤدي هذا المثال إلى panic أثناء التشغيل.
 
-    fn demonstrate_refcell() {
-        let data = RefCell::new(42);
-          
-        // Correct way to use RefCell
-        {
-            let mut first = data.borrow_mut();
-            *first += 1;
-        } // first is dropped here
-          
-        // Now we can borrow again
-        let second = data.borrow_mut();
-          
-        // Or multiple immutable borrows
-        let read1 = data.borrow();
-        let read2 = data.borrow(); // This is OK
-    }
-    ```
-    المفاهيم الأساسية:
-    1. RefCell ينقل فحوصات الاستعارة إلى وقت التشغيل
-    2. يمكن أن يسبب panics إذا تم خرق القواعد
-    3. مفيد لنمط القابلية للتغيير الداخلي
-
-    حالات الاستخدام الشائعة:
-    - كائنات mock في الاختبارات
-    - تنفيذ هياكل ذات مراجع ذاتية
-    - عندما تحتاج إلى تعديل بيانات خلف مرجع مشترك
-
-    أفضل الممارسات:
-    1. فضل الاستعارة في وقت التجميع عندما يكون ذلك ممكنًا
-    2. حافظ على استعارات RefCell في نطاقات ضيقة
-    3. فكر في استخدام drop() لإنهاء الاستعارات صراحةً
-    4. استخدم RefCell فقط عندما تحتاج إلى القابلية للتغيير الداخلي
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -879,12 +823,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "استخدام بدائل التزامن الصحيحة بناءً على متطلبات الخيوط",
   ]}
   options={[
-    {text: 'يُستخدم RefCell للاستعارات القابلة للتغيير، بينما يُستخدم Rw للقراءة فقط', hint: 'كلا النوعين يدعمان الاستعارات القابلة للتغيير وغير القابلة للتغيير'},
-    {text: 'يُستخدم Rw للاستعارات القابلة للتغيير، وRefCell للقراءة فقط', hint: 'كلاهما يدعم كلا النوعين من الاستعارات'},
-    {text: 'يُستخدم RefCell وRw لنفس الغرض', hint: 'فكّر في أمان الخيوط'},
-    {text: 'RefCell يُستخدم فقط في بيئات ذات خيط واحد', isAnswer: true},
-    {text: 'Rw يُستخدم فقط في بيئات متعددة الخيوط', hint: 'على الرغم من أنه يُستخدم عادةً مع الخيوط، إلا أن هذا ليس الفرق الأساسي'},
-  ]}
+  {
+    "text": "يُستخدم RefCell للاستعارات القابلة للتغيير، بينما يُستخدم Rw للقراءة فقط",
+    "hint": "كلا النوعين يدعمان الاستعارات القابلة للتغيير وغير القابلة للتغيير"
+  },
+  {
+    "text": "يُستخدم Rw للاستعارات القابلة للتغيير، وRefCell للقراءة فقط",
+    "hint": "كلاهما يدعم كلا النوعين من الاستعارات"
+  },
+  {
+    "text": "يُستخدم RefCell وRw لنفس الغرض",
+    "hint": "فكّر في أمان الخيوط"
+  },
+  {
+    "text": "RefCell لا يحقق Sync؛ ويوفر RwLock مشاركة متزامنة",
+    "isAnswer": true
+  },
+  {
+    "text": "Rw يُستخدم فقط في بيئات متعددة الخيوط",
+    "hint": "على الرغم من أنه يُستخدم عادةً مع الخيوط، إلا أن هذا ليس الفرق الأساسي"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -908,50 +867,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    يخدم RefCell و RwLock أغراضًا مشابهة لكن في سياقات مختلفة:
-    ```rust
-    // Single-threaded scenario with RefCell
-    use std::cell::RefCell;
-      
-    struct SingleThreaded {
-        data: RefCell<Vec<i32>>,
-    }
-
-    impl SingleThreaded {
-        fn modify(&self) {
-            self.data.borrow_mut().push(42);
-        }
-    }
-
-    // Multi-threaded scenario with RwLock
-    use std::sync::RwLock;
-      
-    struct ThreadSafe {
-        data: RwLock<Vec<i32>>,
-    }
-
-    impl ThreadSafe {
-        fn modify(&self) {
-            self.data.write().unwrap().push(42);
-        }
-    }
-    ```
-    الاختلافات الرئيسية:
-    1. RefCell:
-    - يعمل في خيط واحد فقط
-    - لا يوجد عبء تزامن
-    - يثير panic عند انتهاك الاستعارة
-
-    2. RwLock:
-    - آمن للخيوط
-    - يضيف عبء تزامن
-    - يمكن أن يحجب الخيوط بدلاً من إحداث panic
-
-    أفضل الممارسات:
-    1. استخدم RefCell للمتغيرية الداخلية في بيئة خيط واحد
-    2. استخدم RwLock عندما تكون أمان الخيوط مطلوبًا
-    3. فكر في Mutex لتبسيط المتغيرية الآمنة للخيوط
-    4. وثّق متطلبات أمان الخيوط بوضوح
+يفحص `RefCell<T>` الاستعارات أثناء التشغيل ولا يحقق `Sync`، فلا تشارك مرجعًا إليه بين خيوط التنفيذ. يمكن نقل القيمة إلى خيط آخر عندما يكون `T: Send`. يوفر `RwLock<T>` وصولًا متزامنًا وفق قيود النوع.
   </div>
   </slot>
 </Challenge>
@@ -968,12 +884,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "تطبيق أنماط المزامنة الصحيحة لمنع الـ deadlock",
   ]}
   options={[
-    {text: 'يطبع: 42', hint: 'الكود لن يصل أبداً إلى جملة الطباعة'},
-    {text: 'يطبع: 43', hint: 'الكود سيتعطل قبل الطباعة'},
-    {text: 'خطأ في التجميع', hint: 'الكود صحيح نحويًا'},
-    {text: 'ذعر أثناء التشغيل', hint: 'إنه أسوأ من الذعر'},
-    {text: 'توقف', isAnswer: true},
-  ]}
+  {
+    "text": "يطبع: 42",
+    "hint": "الكود لن يصل أبداً إلى جملة الطباعة"
+  },
+  {
+    "text": "يطبع: 43",
+    "hint": "الكود سيتعطل قبل الطباعة"
+  },
+  {
+    "text": "خطأ في التجميع",
+    "hint": "الكود صحيح نحويًا"
+  },
+  {
+    "text": "يعود بشكل طبيعي دون طباعة",
+    "hint": "لا يمكن لمحاولة القفل الثانية أن تعود بشكل طبيعي."
+  },
+  {
+    "text": "جمود متبادل أو panic",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -996,55 +927,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    هذا الكود يوضح سيناريو deadlock كلاسيكي. إليك طريقة إصلاحه:
-    ```rust
-    use std::sync::{Arc, Mutex};
+قفل mutex نفسه مرتين في خيط واحد دون تحرير الحارس الأول لا يعود بشكل طبيعي. تسمح الواجهة بجمود متبادل أو panic. حرر الحارس قبل القفل مرة أخرى.
 
-    // Correct way - Release lock before acquiring it again
-    fn safe_mutex() {
-        let lock = Arc::new(Mutex::new(42));
-          
-        {
-            let mut data = lock.lock().unwrap();
-            *data += 1;
-        } // Lock is released here
-          
-        // Now we can acquire it again
-        let data2 = lock.lock().unwrap();
-        println!("Value: {}", data2);
-    }
-
-    // Using multiple mutexes safely
-    fn multiple_mutexes() {
-        let lock1 = Arc::new(Mutex::new(42));
-        let lock2 = Arc::new(Mutex::new(43));
-          
-        // Always acquire locks in the same order
-        let guard1 = lock1.lock().unwrap();
-        let guard2 = lock2.lock().unwrap();
-    }
-    ```
-    أفضل الممارسات لمنع الـ deadlock:
-    1. إبقاء الأقسام الحرجة صغيرة
-    2. تحرير الأقفال بسرعة باستخدام النطاقات
-    3. الحصول على أقفال متعددة بترتيب ثابت
-    4. استخدام parking_lot::Mutex لأداء أفضل
-    5. النظر في استخدام RwLock للأحمال الثقيلة للقراءة
-
-    الأنماط الشائعة:
-    ```rust
-    // Thread-safe counter
-    struct Counter {
-        count: Arc<Mutex<i32>>,
-    }
-
-    impl Counter {
-        fn increment(&self) {
-            let mut count = self.count.lock().unwrap();
-            *count += 1;
-        } // Lock automatically released here
-    }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1265,55 +1158,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    دعونا نفهم Copy vs Clone بالتفصيل:
-    ```rust
-    // Types that can be Copy
-    #[derive(Copy, Clone)]
-    struct Point {
-        x: i32,
-        y: i32,
-    }
-
-    // Types that can only be Clone
-    #[derive(Clone)]
-    struct ComplexData {
-        name: String,    // String can't be Copy
-        points: Vec<i32> // Vec can't be Copy
-    }
-
-    // Manual implementation example
-    #[derive(Debug)]
-    struct Custom {
-        data: Vec<i32>,
-        identifier: u32,
-    }
-
-    impl Clone for Custom {
-        fn clone(&self) -> Self {
-            Custom {
-                data: self.data.clone(),
-                identifier: self.identifier,  // Copy type
-            }
-        }
-    }
-    ```
-    الاختلافات الرئيسية:
-    1. Copy:
-    - نسخ ضمني على مستوى البت
-    - يجب أن يكون آمنًا للـ Copy (بدون تخصيصات على الـ heap)
-    - عادةً للأنواع الصغيرة التي تُخزن على الـ stack فقط
-
-    2. Clone:
-    - صريح، قد يكون نسخة عميقة
-    - يمكنه التعامل مع تخصيصات الـ heap
-    - أكثر مرونة لكنه قد يكون مكلفًا
-
-    أفضل الممارسات:
-    1. تنفيذ Copy للأنواع الصغيرة التي تُخزن على الـ stack فقط
-    2. استخدام Clone للأنواع التي تمتلك موارد
-    3. توثيق تأثيرات الأداء لـ Clone
-    4. النظر في تنفيذات Clone مخصصة للتحسين
-    5. توخي الحذر مع الاستنتاج التلقائي
+ينفذ `Copy` نسخًا ضمنيًا بتًا ببت. أما `Clone` فيُستدعى صراحة وقد يحجز ذاكرة؛ هنا يحصل حقلا `String` على نسختين مستقلتين. وجود القيمة في المكدس أو الكومة لا يحدد تطبيق النوع لـ `Copy`.
   </div>
   </slot>
 </Challenge>
@@ -1409,16 +1254,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     "تطبيق التجريدات دون تكلفة أداء",
   ]}
   options={[
-    {text: 'تكلفة تشغيلية من المكرّر', hint: 'المكررات في Rust هي تجريدات بلا تكلفة'},
-    {text: 'نفس الأداء كالحلقة الخام', isAnswer: true},
-    {text: 'أبطأ لكن أكثر قابلية للقراءة', hint: 'التجريد لا يؤثر على الأداء أثناء التشغيل'},
-    {text: 'يعتمد على مستوى التحسين', hint: 'يتم إلغاء التجريد أثناء وقت التجميع'},
-  ]}
+  {
+    "text": "تكلفة تشغيلية من المكرّر",
+    "hint": "المكررات في Rust هي تجريدات بلا تكلفة"
+  },
+  {
+    "text": "يمكن أن يكون كود المكرر بكفاءة الحلقة اليدوية نفسها",
+    "isAnswer": true
+  },
+  {
+    "text": "أبطأ لكن أكثر قابلية للقراءة",
+    "hint": "التجريد لا يؤثر على الأداء أثناء التشغيل"
+  },
+  {
+    "text": "لا يمكن تحسين المكررات"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    كيف يقارن أداء هذين التنفيذين؟
-    ```rust
+عند تفعيل التحسينات، ما الذي تتيحه تجريدات المكررات عديمة التكلفة في هذين التنفيذين؟
+```rust
     // Implementation A: Iterator
     fn sum_iterator(v: &[i32]) -> i32 {
         v.iter().fold(0, |acc, &x| acc + x)
@@ -1438,51 +1294,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    تتحول تجريدات Rust بلا تكلفة إلى شفرة فعّالة مكافئة عند التجميع:
-    ```rust
-    use std::ops::Range;
+تتيح التجريدات عديمة التكلفة كودًا محسنًا فعالًا، لكنها لا تضمن زمنًا مطابقًا لكل مترجم أو مستوى تحسين. تحسب الدالتان المجموع نفسه. قس حمل العمل الفعلي عندما يكون الأداء مهمًا.
 
-    // High-level abstraction
-    trait ZeroCost {
-        fn process(&self) -> u32;
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
     }
-
-    impl ZeroCost for Range<u32> {
-        fn process(&self) -> u32 {
-            self.fold(0, |acc, x| acc + x)
-        }
-    }
-
-    // Compiles to essentially the same code as:
-    fn manual_process(range: Range<u32>) -> u32 {
-        let mut sum = 0;
-        let mut i = range.start;
-        while i < range.end {
-            sum += i;
-            i += 1;
-        }
-        sum
-    }
-
-    // Even more abstractions, still zero-cost
-    fn complex_processing<T>(data: &[T]) -> u32 
-    where T: AsRef<str> {
-        data.iter()
-            .map(|s| s.as_ref().len())
-            .filter(|&n| n > 3)
-            .fold(0, |acc, n| acc + n as u32)
-    }
-    ```
-    المبادئ الأساسية:
-    1. ما لا تستخدمه لا تدفع ثمنه
-    2. ما تستخدمه لا يمكنك كتابة شفرة يدوية أفضل منه
-
-    أفضل الممارسات:
-    1. استخدم التجريدات عالية المستوى بحرية
-    2. ثق بتحسينات المترجم
-    3. قم بالتحليل قبل التحسين
-    4. ركّز على القابلية للقراءة أولاً
-    5. استخدم المكررات والإغلاق دون خوف
+}
+```
   </div>
   </slot>
 </Challenge>

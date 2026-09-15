@@ -1545,3 +1545,18 @@ html {
     transform: none;
   }
 }
+
+/* Code keeps its syntax direction inside translated prose. */
+.quiz-ui pre,
+.quiz-ui code {
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: left;
+}
+.quiz-ui :not(pre) > code {
+  display: inline-block;
+  max-inline-size: 100%;
+}
+[dir="rtl"] .quiz-nav-arrow svg {
+  transform: scaleX(-1);
+}

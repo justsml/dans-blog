@@ -536,47 +536,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    यह कोड फेल हो जाता है क्योंकि कंपाइलर इनपुट और आउटपुट लाइफटाइम्स के बीच के संबंध को समझ नहीं पाता। यहाँ बताया गया है कि ऐसा क्यों होता है और इसे कैसे ठीक करें:
-    ```rust
-      // Correct version with explicit lifetime annotation
-      fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
-          if text1.len() > text2.len() {
-              text1
-          } else {
-              text2
-          }
-      }
+लौटा हुआ रेफ़रेंस ऐसी लाइफ़टाइम के भीतर रहना चाहिए जो दोनों इनपुट के लिए मान्य हो। वह किसी भी उधार लिए गए मान से अधिक समय तक नहीं रह सकता। एनोटेशन संबंध बताते हैं, लाइफ़टाइम बढ़ाते नहीं।
 
-      // Alternative with different lifetimes
-      fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
-          if text1.len() > text2.len() {
-              text1
-          } else {
-              text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
-          }
-      }
-    ```
-    यहाँ लाइफटाइम्स की ज़रूरत क्यों है:
-      1. कई इनपुट रेफरेंस की लाइफटाइम अलग-अलग हो सकती है
-      2. रिटर्न वैल्यू को दोनों इनपुट्स जितनी देर तक जीवित रहना चाहिए
-      3. कंपाइलर को इन संबंधों को वेरिफाई करने की ज़रूरत होती है
-
-      कॉमन पैटर्न:
-    ```rust
-      // Single input reference - elision works
-      fn first_word(s: &str) -> &str { /* ... */ }
-
-      // Multiple references, same lifetime needed
-      fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
-
-      // Different lifetimes possible
-      fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-    ```
-    बेस्ट प्रैक्टिसेज़:
-      1. जहाँ संभव हो, लाइफटाइम एलिज़न को काम करने दें
-      2. जब संबंध स्पष्ट करने हों, तो एक्सप्लिसिट लाइफटाइम्स का उपयोग करें
-      3. लाइफटाइम की जटिलता से बचने के लिए ओन्ड टाइप्स रिटर्न करने पर विचार करें
-      4. कॉम्प्लेक्स लाइफटाइम संबंधों को डॉक्युमेंट करें
+```rust
+fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
+    if a.len() > b.len() { a } else { b }
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -610,42 +576,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCell इंटीरियर म्यूटेबिलिटी प्रदान करता है, लेकिन यह रनटाइम पर Rust के borrowing नियमों को लागू करता रहता है:
-    ```rust
-      use std::cell::RefCell;
+साझा उधार लेने से पहले mutable borrow छोड़ें। ऐसा न करने पर यह उदाहरण रनटाइम में panic करता है।
 
-      fn demonstrate_refcell() {
-          let data = RefCell::new(42);
-          
-          // Correct way to use RefCell
-          {
-              let mut first = data.borrow_mut();
-              *first += 1;
-          } // first is dropped here
-          
-          // Now we can borrow again
-          let second = data.borrow_mut();
-          
-          // Or multiple immutable borrows
-          let read1 = data.borrow();
-          let read2 = data.borrow(); // This is OK
-      }
-    ```
-    मुख्य अवधारणाएँ:
-      1. RefCell borrowing चेक को रनटाइम पर शिफ्ट कर देता है
-      2. नियमों का उल्लंघन होने पर पैनिक हो सकता है
-      3. इंटीरियर म्यूटेबिलिटी पैटर्न के लिए उपयोगी
-
-      सामान्य उपयोग के मामले:
-      - टेस्ट में मॉक ऑब्जेक्ट्स
-      - सेल्फ-रेफरेंशियल स्ट्रक्चर्स को इम्प्लीमेंट करना
-      - जब आपको शेयर्ड रेफरेंस के पीछे डेटा को म्यूटेट करना हो
-      
-      बेस्ट प्रैक्टिसेज़:
-      1. जहाँ तक संभव हो, कंपाइल-टाइम borrowing को प्राथमिकता दें
-      2. RefCell borrows को छोटे स्कोप में रखें
-      3. borrows को स्पष्ट रूप से समाप्त करने के लिए drop() का उपयोग करने पर विचार करें
-      4. जब आपको इंटीरियर म्यूटेबिलिटी की आवश्यकता हो, तभी RefCell का उपयोग करें
+```rust
+use std::cell::RefCell;
+fn main() {
+    let data = RefCell::new(42);
+    let mut second = data.borrow_mut();
+    *second += 1;
+    drop(second);
+    let read1 = data.borrow();
+    let read2 = data.borrow();
+    println!("{} {}", *read1, *read2);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -819,12 +763,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="RefCell"
   title="RefCell और थ्रेडिंग"
   options={[
-    {text: 'RefCell का उपयोग म्यूटेबल बॉरो के लिए होता है, Rw का इम्यूटेबल बॉरो के लिए', hint: 'दोनों ही टाइप्स म्यूटेबल और इम्यूटेबल बॉरो दोनों सपोर्ट करते हैं'},
-    {text: 'Rw का उपयोग म्यूटेबल बॉरो के लिए होता है, RefCell का इम्यूटेबल बॉरो के लिए', hint: 'दोनों ही बॉरो के दोनों प्रकारों को सपोर्ट करते हैं'},
-    {text: 'RefCell और Rw का उपयोग एक ही उद्देश्य के लिए किया जाता है', hint: 'थ्रेड सेफ्टी के बारे में सोचें'},
-    {text: 'RefCell का उपयोग केवल सिंगल-थ्रेडेड एनवायरनमेंट में होता है', isAnswer: true},
-    {text: 'Rw का उपयोग केवल मल्टी-थ्रेडेड एनवायरनमेंट में होता है', hint: 'हालाँकि यह आमतौर पर थ्रेड्स के लिए उपयोग होता है, लेकिन यह मुख्य अंतर नहीं है'},
-  ]}
+  {
+    "text": "RefCell का उपयोग म्यूटेबल बॉरो के लिए होता है, Rw का इम्यूटेबल बॉरो के लिए",
+    "hint": "दोनों ही टाइप्स म्यूटेबल और इम्यूटेबल बॉरो दोनों सपोर्ट करते हैं"
+  },
+  {
+    "text": "Rw का उपयोग म्यूटेबल बॉरो के लिए होता है, RefCell का इम्यूटेबल बॉरो के लिए",
+    "hint": "दोनों ही बॉरो के दोनों प्रकारों को सपोर्ट करते हैं"
+  },
+  {
+    "text": "RefCell और Rw का उपयोग एक ही उद्देश्य के लिए किया जाता है",
+    "hint": "थ्रेड सेफ्टी के बारे में सोचें"
+  },
+  {
+    "text": "RefCell, Sync नहीं है; RwLock सिंक्रनाइज़ किया गया साझाकरण देता है",
+    "isAnswer": true
+  },
+  {
+    "text": "Rw का उपयोग केवल मल्टी-थ्रेडेड एनवायरनमेंट में होता है",
+    "hint": "हालाँकि यह आमतौर पर थ्रेड्स के लिए उपयोग होता है, लेकिन यह मुख्य अंतर नहीं है"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -847,50 +806,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    RefCell और RwLock समान उद्देश्यों की पूर्ति करते हैं, लेकिन अलग-अलग संदर्भों में:
-    ```rust
-      // Single-threaded scenario with RefCell
-      use std::cell::RefCell;
-      
-      struct SingleThreaded {
-          data: RefCell<Vec<i32>>,
-      }
-
-      impl SingleThreaded {
-          fn modify(&self) {
-              self.data.borrow_mut().push(42);
-          }
-      }
-
-      // Multi-threaded scenario with RwLock
-      use std::sync::RwLock;
-      
-      struct ThreadSafe {
-          data: RwLock<Vec<i32>>,
-      }
-
-      impl ThreadSafe {
-          fn modify(&self) {
-              self.data.write().unwrap().push(42);
-          }
-      }
-    ```
-    मुख्य अंतर:
-      1. RefCell:
-         - केवल सिंगल-थ्रेडेड
-         - कोई सिंक्रनाइज़ेशन ओवरहेड नहीं
-         - बॉरो नियमों के उल्लंघन पर पैनिक करता है
-         
-      2. RwLock:
-         - थ्रेड-सेफ
-         - सिंक्रनाइज़ेशन ओवरहेड होता है
-         - पैनिक करने के बजाय थ्रेड्स को ब्लॉक कर सकता है
-
-      सर्वोत्तम प्रथाएँ:
-      1. सिंगल-थ्रेडेड इंटीरियर म्यूटेबिलिटी के लिए RefCell का उपयोग करें
-      2. थ्रेड सेफ्टी की आवश्यकता होने पर RwLock का उपयोग करें
-      3. सरल थ्रेड-सेफ म्यूटेबिलिटी के लिए Mutex पर विचार करें
-      4. थ्रेड सेफ्टी की आवश्यकताओं को स्पष्ट रूप से डॉक्यूमेंट करें
+`RefCell<T>` रनटाइम में borrow की जाँच करता है और `Sync` नहीं है: उसका रेफ़रेंस थ्रेडों के बीच साझा न करें। `T: Send` होने पर उसे दूसरे थ्रेड में भेजा जा सकता है। `RwLock<T>` अपनी टाइप शर्तों के अनुसार सिंक्रनाइज़ किया गया एक्सेस देता है।
   </div>
   </slot>
 </Challenge>
@@ -901,12 +817,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="स्मार्ट पॉइंटर्स"
   title="Arc और Mutex"
   options={[
-    {text: 'आउटपुट: 42', hint: 'कोड प्रिंट स्टेटमेंट तक कभी नहीं पहुँचेगा'},
-    {text: 'आउटपुट: 43', hint: 'कोड प्रिंट होने से पहले ही अटक जाएगा'},
-    {text: 'कंपाइलेशन एरर', hint: 'कोड का सिंटैक्स बिल्कुल सही है'},
-    {text: 'रनटाइम पैनिक', hint: 'यह पैनिक से भी बदतर स्थिति है'},
-    {text: 'डेडलॉक', isAnswer: true},
-  ]}
+  {
+    "text": "आउटपुट: 42",
+    "hint": "कोड प्रिंट स्टेटमेंट तक कभी नहीं पहुँचेगा"
+  },
+  {
+    "text": "आउटपुट: 43",
+    "hint": "कोड प्रिंट होने से पहले ही अटक जाएगा"
+  },
+  {
+    "text": "कंपाइलेशन एरर",
+    "hint": "कोड का सिंटैक्स बिल्कुल सही है"
+  },
+  {
+    "text": "बिना प्रिंट किए सामान्य रूप से लौटता है",
+    "hint": "दूसरी lock कॉल सामान्य रूप से नहीं लौट सकती।"
+  },
+  {
+    "text": "डेडलॉक या panic",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -928,55 +859,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    यह कोड एक क्लासिक डेडलॉक स्थिति को दर्शाता है। इसे ठीक करने का तरीका यहाँ दिया गया है:
-    ```rust
-      use std::sync::{Arc, Mutex};
+पहला guard छोड़े बिना एक ही थ्रेड में उसी mutex को दोबारा lock करने पर कॉल सामान्य रूप से नहीं लौटती। API डेडलॉक या panic दोनों की अनुमति देता है। दोबारा lock करने से पहले guard छोड़ें।
 
-      // Correct way - Release lock before acquiring it again
-      fn safe_mutex() {
-          let lock = Arc::new(Mutex::new(42));
-          
-          {
-              let mut data = lock.lock().unwrap();
-              *data += 1;
-          } // Lock is released here
-          
-          // Now we can acquire it again
-          let data2 = lock.lock().unwrap();
-          println!("Value: {}", data2);
-      }
-
-      // Using multiple mutexes safely
-      fn multiple_mutexes() {
-          let lock1 = Arc::new(Mutex::new(42));
-          let lock2 = Arc::new(Mutex::new(43));
-          
-          // Always acquire locks in the same order
-          let guard1 = lock1.lock().unwrap();
-          let guard2 = lock2.lock().unwrap();
-      }
-    ```
-    डेडलॉक से बचने के लिए बेस्ट प्रैक्टिसेज़:
-      1. क्रिटिकल सेक्शन को जितना हो सके छोटा रखें
-      2. स्कोप्स का उपयोग करके लॉक्स को तुरंत रिलीज़ करें
-      3. हमेशा एक ही क्रम में मल्टीपल लॉक्स अक्वायर करें
-      4. बेहतर परफॉर्मेंस के लिए parking_lot::Mutex का इस्तेमाल करें
-      5. रीड-हेवी वर्कलोड के लिए RwLock पर विचार करें
-
-      कॉमन पैटर्न:
-    ```rust
-      // Thread-safe counter
-      struct Counter {
-          count: Arc<Mutex<i32>>,
-      }
-
-      impl Counter {
-          fn increment(&self) {
-              let mut count = self.count.lock().unwrap();
-              *count += 1;
-          } // Lock automatically released here
-      }
-    ```
+```rust
+use std::sync::Mutex;
+fn main() {
+    let lock = Mutex::new(42);
+    { let mut guard = lock.lock().unwrap(); *guard += 1; }
+    let guard = lock.lock().unwrap();
+    println!("{}", *guard);
+}
+```
   </div>
   </slot>
 </Challenge>
@@ -1191,55 +1084,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    आइए Copy और Clone को विस्तार से समझें:
-    ```rust
-      // Types that can be Copy
-      #[derive(Copy, Clone)]
-      struct Point {
-          x: i32,
-          y: i32,
-      }
-
-      // Types that can only be Clone
-      #[derive(Clone)]
-      struct ComplexData {
-          name: String,    // String can't be Copy
-          points: Vec<i32> // Vec can't be Copy
-      }
-
-      // Manual implementation example
-      #[derive(Debug)]
-      struct Custom {
-          data: Vec<i32>,
-          identifier: u32,
-      }
-
-      impl Clone for Custom {
-          fn clone(&self) -> Self {
-              Custom {
-                  data: self.data.clone(),
-                  identifier: self.identifier,  // Copy type
-              }
-          }
-      }
-    ```
-    मुख्य अंतर:
-      1. Copy:
-         - इम्प्लिसिट, बिटवाइज़ कॉपी
-         - Copy-safe होना चाहिए (कोई हीप अलोकेशन नहीं)
-         - आमतौर पर छोटे, स्टैक-ओनली टाइप्स के लिए
-         
-      2. Clone:
-         - एक्सप्लिसिट, संभावित रूप से डीप कॉपी
-         - हीप अलोकेशन को हैंडल कर सकता है
-         - अधिक लचीला लेकिन संभावित रूप से महंगा
-
-      सर्वोत्तम प्रथाएं:
-      1. छोटे, स्टैक-ओनली टाइप्स के लिए Copy इम्प्लीमेंट करें
-      2. ओन्ड रिसोर्सेज वाले टाइप्स के लिए Clone का उपयोग करें
-      3. Clone के परफॉर्मेंस प्रभावों को डॉक्यूमेंट करें
-      4. ऑप्टिमाइज़ेशन के लिए कस्टम Clone इम्प्लीमेंटेशन पर विचार करें
-      5. ऑटोमैटिक डेरिवेशन के प्रति सावधान रहें
+`Copy` अपने आप बिट-दर-बिट कॉपी करता है। `Clone` स्पष्ट रूप से बुलाया जाता है और मेमोरी आवंटित कर सकता है; यहाँ दोनों `String` फ़ील्ड की स्वतंत्र कॉपी बनती है। स्टैक या हीप पर होने से यह तय नहीं होता कि टाइप `Copy` लागू करता है।
   </div>
   </slot>
 </Challenge>
@@ -1322,16 +1167,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="उन्नत पैटर्न"
   title="शून्य-लागत अमूर्तन"
   options={[
-    {text: 'Iterator के कारण रनटाइम ओवरहेड', hint: 'Rust iterators शून्य-लागत अमूर्तन हैं'},
-    {text: 'raw loop जैसा ही प्रदर्शन', isAnswer: true},
-    {text: 'धीमा लेकिन अधिक पठनीय', hint: 'यह अमूर्तन रनटाइम प्रदर्शन को प्रभावित नहीं करता है'},
-    {text: 'ऑप्टिमाइज़ेशन लेवल पर निर्भर करता है', hint: 'कंपाइल समय पर इस अमूर्तन को हटा दिया जाता है'},
-  ]}
+  {
+    "text": "Iterator के कारण रनटाइम ओवरहेड",
+    "hint": "Rust iterators शून्य-लागत अमूर्तन हैं"
+  },
+  {
+    "text": "इटरेटर का कोड मैनुअल लूप जितना कुशल हो सकता है",
+    "isAnswer": true
+  },
+  {
+    "text": "धीमा लेकिन अधिक पठनीय",
+    "hint": "यह अमूर्तन रनटाइम प्रदर्शन को प्रभावित नहीं करता है"
+  },
+  {
+    "text": "इटरेटर ऑप्टिमाइज़ नहीं किए जा सकते"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    इन दोनों इम्प्लीमेंटेशन के प्रदर्शन की तुलना कैसे होगी?
-    ```rust
+ऑप्टिमाइज़ेशन चालू होने पर इन दोनों कार्यान्वयनों में Rust के zero-cost iterator abstraction क्या कर सकते हैं?
+```rust
       // Implementation A: Iterator
       fn sum_iterator(v: &[i32]) -> i32 {
           v.iter().fold(0, |acc, &x| acc + x)
@@ -1350,51 +1206,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Rust के शून्य-लागत अमूर्तन समान रूप से कुशल कोड में कंपाइल होते हैं:
-    ```rust
-      use std::ops::Range;
+Zero-cost abstraction कुशल ऑप्टिमाइज़्ड कोड संभव बनाते हैं; वे हर कंपाइलर या ऑप्टिमाइज़ेशन स्तर पर एक समान समय की गारंटी नहीं देते। दोनों फ़ंक्शन समान योग निकालते हैं। प्रदर्शन महत्वपूर्ण हो तो वास्तविक काम को मापें।
 
-      // High-level abstraction
-      trait ZeroCost {
-          fn process(&self) -> u32;
-      }
-
-      impl ZeroCost for Range<u32> {
-          fn process(&self) -> u32 {
-              self.fold(0, |acc, x| acc + x)
-          }
-      }
-
-      // Compiles to essentially the same code as:
-      fn manual_process(range: Range<u32>) -> u32 {
-          let mut sum = 0;
-          let mut i = range.start;
-          while i < range.end {
-              sum += i;
-              i += 1;
-          }
-          sum
-      }
-
-      // Even more abstractions, still zero-cost
-      fn complex_processing<T>(data: &[T]) -> u32 
-      where T: AsRef<str> {
-          data.iter()
-              .map(|s| s.as_ref().len())
-              .filter(|&n| n > 3)
-              .fold(0, |acc, n| acc + n as u32)
-      }
-    ```
-    मुख्य सिद्धांत:
-      1. जो आप उपयोग नहीं करते, उसके लिए आपको कीमत नहीं चुकानी पड़ती
-      2. जो आप उपयोग करते हैं, उसे आप मैन्युअल कोडिंग से इससे बेहतर नहीं लिख सकते
-
-      सर्वोत्तम प्रथाएँ:
-      1. हाई-लेवल अमूर्तनों का बेझिझक उपयोग करें
-      2. कंपाइलर के ऑप्टिमाइज़ेशन पर भरोसा रखें
-      3. ऑप्टिमाइज़ करने से पहले प्रोफाइलिंग करें
-      4. सबसे पहले कोड की पठनीयता पर ध्यान दें
-      5. iterators और closures का बिना किसी डर के उपयोग करें
+```rust
+use std::ops::Range;
+trait ZeroCost {
+    fn process(&self) -> u32;
+}
+impl ZeroCost for Range<u32> {
+    fn process(&self) -> u32 {
+        self.clone().fold(0, |acc, x| acc + x)
+    }
+}
+```
   </div>
   </slot>
 </Challenge>

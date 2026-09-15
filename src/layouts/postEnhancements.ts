@@ -23,7 +23,6 @@ export function bootPostEnhancements() {
   ensureArticleExternalLinksOpenInNewWindow();
   checkForEmptyShareCounts();
   void bootBannerEffects();
-  bootQuizEnhancements();
 }
 
 export function ensureArticleExternalLinksOpenInNewWindow() {
@@ -51,46 +50,6 @@ async function bootBannerEffects() {
     distortionStrength: 0.5,
     scrollSensitivity: 0.125,
   });
-}
-
-async function bootQuizEnhancements() {
-  const quiz = document.querySelector<HTMLElement>(".quiz-ui");
-  if (!quiz) return;
-
-  deferUntilAfterStartup(async () => {
-    const { bootQuizRuntime } = await import("../components/QuizUI/QuizRuntime");
-    bootQuizRuntime({ quiz });
-  });
-}
-
-function deferUntilAfterStartup(work: () => void | Promise<void>) {
-  let hasRun = false;
-  let fallbackTimer: ReturnType<typeof globalThis.setTimeout> | undefined;
-  const run = () => {
-    if (hasRun) return;
-    hasRun = true;
-    if (fallbackTimer) globalThis.clearTimeout(fallbackTimer);
-    deferWork(work, 12000);
-  };
-
-  for (const eventName of ["pointerdown", "keydown", "scroll", "touchstart"]) {
-    window.addEventListener(eventName, run, { once: true, passive: true });
-  }
-
-  fallbackTimer = globalThis.setTimeout(run, 12000);
-}
-
-function deferWork(work: () => void | Promise<void>, timeout = 1200) {
-  if ("requestIdleCallback" in window) {
-    window.requestIdleCallback(() => {
-      void work();
-    }, { timeout });
-    return;
-  }
-
-  globalThis.setTimeout(() => {
-    void work();
-  }, 350);
 }
 
 function patchOptionsListWithActualHeight(

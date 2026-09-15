@@ -1,3 +1,5 @@
+import ts from "typescript";
+
 /**
  * Structured quiz parser.
  *
@@ -222,32 +224,48 @@ function splitPropSegments(propsText: string): string[][] {
 }
 
 function parseOptions(propsText: string): QuizOption[] {
-  const optionsMatch = propsText.match(/options=\{\[([\s\S]*?)\]\}/);
-  if (!optionsMatch) return [];
-
-  const optionsText = optionsMatch[1];
-  const options: QuizOption[] = [];
-
-  // Match each option object with optional hint and isAnswer
-  const optionRegex = /\{[\s\S]*?text:\s*(["'\x60])(.*?)\1[\s\S]*?\}/gs;
-  let match: RegExpExecArray | null;
-
-  while ((match = optionRegex.exec(optionsText)) !== null) {
-    const fullOption = match[0];
-    const text = match[2];
-    const isAnswer = fullOption.includes("isAnswer: true");
-
-    // Extract hint if present
-    const hintMatch = fullOption.match(/hint:\s*(['"`])(.*?)\1/);
-    const hint = hintMatch ? hintMatch[2] : undefined;
-
-    const opt: QuizOption = { text };
-    if (isAnswer) opt.isAnswer = true;
-    if (hint) opt.hint = hint;
-    options.push(opt);
+  // Parse syntax only: never evaluate expressions supplied by translated MDX.
+  const file = ts.createSourceFile("quiz.tsx", `<Challenge ${propsText} />`,
+    ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const statement = file.statements[0];
+  if (!statement || !ts.isExpressionStatement(statement)
+    || !ts.isJsxSelfClosingElement(statement.expression)) {
+    throw new Error("Invalid Challenge props");
   }
-
-  return options;
+  const attribute = statement.expression.attributes.properties.find(
+    (prop) => ts.isJsxAttribute(prop) && prop.name.getText(file) === "options",
+  );
+  if (!attribute || !ts.isJsxAttribute(attribute)) return [];
+  const initializer = attribute.initializer;
+  if (!initializer || !ts.isJsxExpression(initializer)
+    || !initializer.expression || !ts.isArrayLiteralExpression(initializer.expression)) {
+    throw new Error("Quiz options must be an array literal");
+  }
+  return initializer.expression.elements.map((element) => {
+    if (!ts.isObjectLiteralExpression(element)) throw new Error("Quiz option must be an object literal");
+    const option: QuizOption = { text: "" };
+    let hasText = false;
+    for (const property of element.properties) {
+      if (!ts.isPropertyAssignment(property)) throw new Error("Quiz option fields must be literal values");
+      const name = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)
+        ? property.name.text : "";
+      const value = property.initializer;
+      if (name === "text" || name === "hint") {
+        if (!ts.isStringLiteral(value) && !ts.isNoSubstitutionTemplateLiteral(value)) {
+          throw new Error(`Quiz option ${name} must be a string literal`);
+        }
+        option[name] = value.text;
+        if (name === "text") hasText = true;
+      } else if (name === "isAnswer") {
+        if (value.kind === ts.SyntaxKind.TrueKeyword) option.isAnswer = true;
+        else if (value.kind !== ts.SyntaxKind.FalseKeyword) throw new Error("isAnswer must be a boolean literal");
+      } else {
+        throw new Error(`Unsupported quiz option field: ${name}`);
+      }
+    }
+    if (!hasText) throw new Error("Quiz option is missing text");
+    return option;
+  });
 }
 
 function parseSlot(raw: string, slotName: string): QuizSlot {

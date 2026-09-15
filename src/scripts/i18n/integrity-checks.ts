@@ -1,3 +1,4 @@
+import ts from "typescript";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { analyzeHeadingAnchorLinks } from "./heading-link-validation.ts";
 import { stripFencedCodeBlocks, stripHtmlPreCodeBlocks } from "./localized-mdx.ts";
@@ -458,7 +459,11 @@ function checkQuizOptions(sourceContents: string, targetContents: string, target
     }
 
     for (const sourceOption of sourceOptions.filter((option) => isCodeLikeQuizOption(option.text))) {
-      if (!targetOptions.some((targetOption) => targetOption.text === sourceOption.text)) {
+      // “Prints:” is prose; preserve the output payload while allowing a localized prefix.
+      const output = sourceOption.text.match(/^Prints:\s*(.+)$/)?.[1];
+      if (!targetOptions.some((targetOption) => output
+        ? targetOption.text.endsWith(output)
+        : targetOption.text === sourceOption.text)) {
         issues.push({
           code: "quiz-code-option-preservation",
           severity: "high",
@@ -747,21 +752,31 @@ function countStringArrayPropValues(challengeOpening: string, propName: string) 
 }
 
 function extractQuizOptions(challengeOpening: string) {
-  const optionsMatch = challengeOpening.match(/\boptions=\{\[([\s\S]*?)\]\}/);
-  if (optionsMatch == null) return [];
-
-  return [...optionsMatch[1].matchAll(/\{([\s\S]*?)\}/g)].map((optionMatch) => {
-    const raw = optionMatch[1];
-    const textMatch = raw.match(/\btext\s*:\s*(['"`])((?:\\.|(?!\1)[\s\S])*?)\1/);
-    const hintMatch = raw.match(/\bhint\s*:\s*(['"`])((?:\\.|(?!\1)[\s\S])*?)\1/);
-    const answerMatch = raw.match(/\bisAnswer\s*:\s*(true|false)\b/);
+  // Inspect syntax, never execute translated expressions or scan inside strings.
+  const file = ts.createSourceFile("quiz.tsx", challengeOpening.replace(/>\s*$/, "/>"),
+    ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const statement = file.statements[0];
+  if (!statement || !ts.isExpressionStatement(statement)
+    || !ts.isJsxSelfClosingElement(statement.expression)) return [];
+  const attribute = statement.expression.attributes.properties.find(
+    (prop) => ts.isJsxAttribute(prop) && prop.name.getText(file) === "options",
+  );
+  if (!attribute || !ts.isJsxAttribute(attribute) || !attribute.initializer
+    || !ts.isJsxExpression(attribute.initializer) || !attribute.initializer.expression
+    || !ts.isArrayLiteralExpression(attribute.initializer.expression)) return [];
+  return attribute.initializer.expression.elements.filter(ts.isObjectLiteralExpression).map((element) => {
+    const fields = new Map(element.properties.filter(ts.isPropertyAssignment).map((property) => [
+      ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : property.name.getText(file),
+      property.initializer,
+    ]));
+    const text = fields.get("text");
     return {
-      text: textMatch?.[2]?.replace(/\\'/g, "'").replace(/\\"/g, "\"") ?? "",
-      isAnswer: answerMatch?.[1] === "true",
-      hasHint: hintMatch != null,
-      keys: new Set([...raw.matchAll(/\b([A-Za-z_$][\w$]*)\s*:/g)].map((match) => match[1])),
+      text: text && (ts.isStringLiteral(text) || ts.isNoSubstitutionTemplateLiteral(text)) ? text.text : "",
+      isAnswer: fields.get("isAnswer")?.kind === ts.SyntaxKind.TrueKeyword,
+      hasHint: fields.has("hint"),
+      keys: new Set(fields.keys()),
     };
-  }).filter((option) => option.text !== "");
+  });
 }
 
 function extractSlotContent(challengeBlock: string, slotName: string) {

@@ -1,3 +1,4 @@
+import { getQuizMessages, quizCount } from "./messages";
 /**
  * QuizSlideManager - CSS-first single-question quiz view.
  *
@@ -21,6 +22,8 @@ export function initQuizSlideManager(
   { onReset, progress }: QuizSlideManagerOptions = {},
 ): QuizSlideManagerController | null {
   if (!quizSection) return null;
+  const messages = getQuizMessages(document.documentElement.lang);
+  const rtl = document.documentElement.dir === "rtl";
 
   const quizUI = quizSection.querySelector(".quiz-ui") as HTMLElement;
   if (!quizUI) return null;
@@ -159,13 +162,13 @@ export function initQuizSlideManager(
   const topBar = document.createElement("div");
   topBar.className = "quiz-nav-bar";
   topBar.innerHTML = `
-    <button class="quiz-nav-arrow quiz-nav-prev" aria-label="Previous question" disabled>
+    <button class="quiz-nav-arrow quiz-nav-prev" aria-label="${messages.previous}" disabled>
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
     </button>
     <div class="quiz-nav-dots">
-      ${Array.from({ length: totalQuestions }, (_, i) => `<button class="quiz-dot ${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Go to question ${i + 1}"></button>`).join("")}
+      ${Array.from({ length: totalQuestions }, (_, i) => `<button class="quiz-dot ${i === 0 ? "active" : ""}" data-index="${i}" aria-label="${quizCount(messages.goTo, i + 1)}"></button>`).join("")}
     </div>
-    <button class="quiz-nav-arrow quiz-nav-next" aria-label="Next question">
+    <button class="quiz-nav-arrow quiz-nav-next" aria-label="${messages.next}">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
     </button>
   `;
@@ -182,11 +185,11 @@ export function initQuizSlideManager(
         <div class="quiz-score-bar-fill" style="width: ${(1 / totalQuestions) * 100}%"></div>
       </div>
       <div class="quiz-score-bar-result">
-        <span class="quiz-score-bar-label">Score</span>
+        <span class="quiz-score-bar-label">${messages.score}</span>
         <span class="quiz-score-bar-value">0/${totalQuestions}</span>
       </div>
-      <button class="quiz-reset-button" type="button" aria-label="Reset quiz progress">
-        Retake quiz
+      <button class="quiz-reset-button" type="button" aria-label="${messages.resetLabel}">
+        ${messages.reset}
       </button>
     </div>
     <div class="quiz-score-bar-congrats" style="display:none"></div>
@@ -199,8 +202,8 @@ export function initQuizSlideManager(
   completionCard.setAttribute("hidden", "");
   completionCard.innerHTML = `
     <div class="quiz-completion-card__shine"></div>
-    <div class="quiz-completion-card__eyebrow">Celebration unlocked</div>
-    <div class="quiz-completion-card__title">Quiz Completed</div>
+    <div class="quiz-completion-card__eyebrow">${messages.celebrate}</div>
+    <div class="quiz-completion-card__title">${messages.completed}</div>
     <div class="quiz-completion-card__misses"></div>
   `;
 
@@ -302,8 +305,8 @@ export function initQuizSlideManager(
         const isPerfect = missCount === 0;
         congrats.style.display = "block";
         congrats.textContent = isPerfect
-          ? `Perfect! ${correctCount}/${totalQuestions}`
-          : `All done! ${correctCount}/${totalQuestions} (${missCount} missed)`;
+          ? `${messages.perfect} ${correctCount}/${totalQuestions}`
+          : `${messages.done} ${correctCount}/${totalQuestions} (${quizCount(messages.misses, missCount)})`;
         scoreBar.classList.toggle("quiz-score-bar--perfect", isPerfect);
         scoreBar.classList.toggle("quiz-score-bar--success", !isPerfect);
       } else if (congrats) {
@@ -368,9 +371,7 @@ export function initQuizSlideManager(
       );
       if (misses) {
         misses.textContent =
-          missCount === 0
-            ? "0 misses. Clean sweep."
-            : `${missCount} ${missCount === 1 ? "miss" : "misses"} / wrong ${missCount === 1 ? "answer" : "answers"}`;
+          quizCount(messages.misses, missCount);
       }
 
       completionCard.removeAttribute("hidden");
@@ -799,7 +800,7 @@ export function initQuizSlideManager(
     listen(document, "keydown", ((e: Event) => {
       const keyboardEvent = e as KeyboardEvent;
       if (
-        keyboardEvent.key === "ArrowRight" ||
+        keyboardEvent.key === (rtl ? "ArrowLeft" : "ArrowRight") ||
         keyboardEvent.key === "ArrowDown"
       ) {
         const rect = quizSection.getBoundingClientRect();
@@ -808,7 +809,7 @@ export function initQuizSlideManager(
           goToQuestion(currentIndex + 1, "next");
         }
       } else if (
-        keyboardEvent.key === "ArrowLeft" ||
+        keyboardEvent.key === (rtl ? "ArrowRight" : "ArrowLeft") ||
         keyboardEvent.key === "ArrowUp"
       ) {
         const rect = quizSection.getBoundingClientRect();
@@ -835,7 +836,7 @@ export function initQuizSlideManager(
     }
   }
 
-  // Wait for all astro-island elements to finish hydrating before modifying DOM.
+  // Wait only for the first question; later questions hydrate when navigated to.
   // Hydration is signaled by the island having rendered React content.
   // We poll with a reasonable timeout.
   let attempts = 0;
@@ -844,9 +845,9 @@ export function initQuizSlideManager(
   function checkHydration() {
     if (destroyed) return;
     attempts++;
-    // Check if all islands have been hydrated by looking for React internals
+    // Check the first island without forcing hidden questions to hydrate
     // After hydration, React adds __reactFiber$ or __reactInternalInstance$ properties
-    const allHydrated = islands.every((island) => {
+    const firstHydrated = islands.slice(0, 1).every((island) => {
       const challenge = island.querySelector(".challenge");
       if (!challenge) return false;
       // React attaches internal properties after hydration
@@ -857,7 +858,7 @@ export function initQuizSlideManager(
       );
     });
 
-    if (allHydrated || attempts >= maxAttempts) {
+    if (firstHydrated || attempts >= maxAttempts) {
       activate();
     } else {
       hydrationTimer = window.setTimeout(checkHydration, 100);

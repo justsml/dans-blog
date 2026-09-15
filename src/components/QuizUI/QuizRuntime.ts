@@ -1,3 +1,4 @@
+import { getQuizMessages, quizCount } from "./messages";
 import { createQuizProgress, type QuizProgress } from "./QuizProgress";
 import {
   initQuizSlideManager,
@@ -142,6 +143,7 @@ function createQuizRuntime(quiz: HTMLElement): QuizRuntimeController {
 }
 
 function updateQuizCounts(quizProgress: QuizProgress) {
+  const messages = getQuizMessages(document.documentElement.lang);
   const quizUI = document.querySelectorAll(".quiz-ui");
   const questions = document.querySelectorAll("main .challenge");
   const isQuizPage = quizUI.length > 0;
@@ -185,14 +187,14 @@ function updateQuizCounts(quizProgress: QuizProgress) {
   if (totalQuestions === correctCount) {
     scoreEl.classList.add("all-correct");
     if (congratsMsg) {
-      const winningMessage = isPerfect ? "WOW! Perfect!" : "All correct!";
+      const winningMessage = isPerfect ? messages.perfect : messages.done;
       const hTag = isPerfect ? "h2" : "h3";
-      congratsMsg.innerHTML = `<${hTag}>${winningMessage} ${correctCount} / ${totalQuestions} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}</${hTag}>`;
+      congratsMsg.innerHTML = `<${hTag}>${winningMessage} ${correctCount} / ${totalQuestions} ${tries > 0 ? `<sup>(${quizCount(messages.tries, tries)})</sup>` : ""}</${hTag}>`;
     }
     scoreWrapper?.classList.toggle("pulse");
     scoreEl?.classList.add("success");
   } else {
-    scoreLabel.innerHTML = `${correctCount} / ${totalQuestions} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}`;
+    scoreLabel.innerHTML = `${correctCount} / ${totalQuestions} ${tries > 0 ? `<sup>(${quizCount(messages.tries, tries)})</sup>` : ""}`;
   }
   return true;
 }
