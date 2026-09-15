@@ -90,7 +90,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Знаю. Сумасшедше, как быстро экранирование делает строки трудными для разбора. Представьте, как экранировать другие языки в Bash‑строках — со всеми этими кавычками, апострофами и символами `$`, которые могут вас сломать. 🫠
 
-    Single quotes need escaping inside single-quoted strings. The close-quote, escaped-quote, reopen-quote sequence (`'\''`) allows output of:
+    Внутри одинарных кавычек апостроф нельзя экранировать обратным слешем. Нужно закрыть кавычки, экранировать апостроф снаружи и снова открыть кавычки (`'\''`). Получится:
     ```plaintext
     It's 🔨 Time!
     ```
@@ -139,13 +139,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Переменные"
   title="Экранирование символов"
   options={[
-    {text: 'Стоимость: $$100'},
-    {text: 'Стоимость: $100'},
-    {text: 'Стоимость: 100'},
-    {text: 'Стоимость: 00', isAnswer: true},
-    {text: 'Стоимость:'},
-    {text: 'Ошибка'},
-  ]}
+  {
+    "text": "Cost: $$100"
+  },
+  {
+    "text": "Cost: $100"
+  },
+  {
+    "text": "Cost: 100"
+  },
+  {
+    "text": "Cost: 00",
+    "isAnswer": true
+  },
+  {
+    "text": "Cost:"
+  },
+  {
+    "text": "Ошибка"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -177,12 +190,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Замена подстрок"
   title="Заменитьподстроку"
   options={[
-    {text: 'meow meow'},
-    {text: 'Meow meow'},
-    {text: 'Гав мяу', isAnswer: true},
-    {text: 'Гав гав'},
-    {text: 'Ошибка'},
-  ]}
+  {
+    "text": "meow meow"
+  },
+  {
+    "text": "Meow meow"
+  },
+  {
+    "text": "Bark meow",
+    "isAnswer": true
+  },
+  {
+    "text": "Bark bark"
+  },
+  {
+    "text": "Ошибка"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -253,12 +277,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Условные конструкции"
   title="Базовый If-Else"
   options={[
-    {text: 'Файл существует'},
-    {text: 'Файл не существует, после диагностического сообщения', isAnswer: true},
-    {text: 'Только ошибка'},
-    {text: 'Отсутствуют двойные квадратные скобки'},
-    {text: 'Ничего'},
-  ]}
+  {
+    "text": "File exists"
+  },
+  {
+    "text": "File does not exist, после диагностического сообщения проверки",
+    "isAnswer": true
+  },
+  {
+    "text": "Только ошибка"
+  },
+  {
+    "text": "Отсутствуют двойные квадратные скобки"
+  },
+  {
+    "text": "Ничего"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -299,11 +334,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Условные конструкции"
   title="Сравнение строк"
   options={[
-    {text: 'Та же кошка'},
-    {text: 'Разные кошки, после тестовой синтаксической ошибки', isAnswer: true},
-    {text: 'Zalgo'},
-    {text: 'Только ошибка'},
-  ]}
+  {
+    "text": "Same cat"
+  },
+  {
+    "text": "Different cats, после синтаксической ошибки проверки",
+    "isAnswer": true
+  },
+  {
+    "text": "Zalgo"
+  },
+  {
+    "text": "Только ошибка"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -338,13 +382,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Функции"
   title="Объявление функции"
   options={[
-    {text: 'Привет', isAnswer: true},
-    {text: 'Dan'},
-    {text: 'Привет Dan'},
-    {text: 'привет'},
-    {text: 'Ошибка'},
-    {text: 'Синтаксическая ошибка'},
-  ]}
+  {
+    "text": "Hi",
+    "isAnswer": true
+  },
+  {
+    "text": "Dan"
+  },
+  {
+    "text": "Hi Dan"
+  },
+  {
+    "text": "greet"
+  },
+  {
+    "text": "Ошибка"
+  },
+  {
+    "text": "Синтаксическая ошибка"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -425,6 +482,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
     Или для условных выражений:
     ```bash
+
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
@@ -471,11 +529,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Работа со строками"
   title="Извлечение подстроки"
   options={[
-    {text: 'Плохой кот'},
-    {text: 'Плохой кот, хороший кот:9'},
-    {text: 'хороший кот', isAnswer: true},
-    {text: 'Ошибка'},
-  ]}
+  {
+    "text": "Bad cat"
+  },
+  {
+    "text": "Bad cat, good cat:9"
+  },
+  {
+    "text": "good cat",
+    "isAnswer": true
+  },
+  {
+    "text": "Ошибка"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -514,14 +581,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Что НЕ ❌ является ключевым словом для циклов в Bash?
+    Что НЕ ❌ является ключевым словом синтаксиса циклов Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `each` не является ключевым словом цикла в Bash. Основные ключевые слова циклов — `for`, `while` и `until`.
-
-    Хотя `do` технически не считается ключевым словом цикла, оно является важной частью синтаксиса цикла.
+    `each` не является ключевым словом Bash. Циклы задаются через `for`, `while` и `until`; `do` начинает тело цикла, которое закрывается словом `done`.
   </div>
   </slot>
 </Challenge>
@@ -588,6 +653,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+
+[Подробнее о подстроках в BashFAQ](https://mywiki.wooledge.org/BashFAQ/055). Спасибо [OneTurnMore](https://www.reddit.com/user/OneTurnMore/) за разбор.
 
 <p className="inset">Оставил ли мой Bash‑квиз вас в полном разруше‑нном состоянии?</p>
 

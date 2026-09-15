@@ -19,8 +19,8 @@ sourceHash: "2f893bc4aee3"
 ---
 ## Quiz: JavaScript Interfaces, Symbols, and Enumerables
 
-> * **Докажите своё мастерство в JavaScript!** 🚀  
-> * Регистрации и входа не требуется. ✨  
+> * **Докажите своё мастерство в JavaScript!** 🚀
+> * Регистрации и входа не требуется. ✨
 > * Выбор из нескольких вариантов. 🤖 … _Насколько это может быть сложным, а?_
 
 import Challenge from '../../../../components/QuizUI/Challenge';
@@ -59,6 +59,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     В этом примере прямой доступ к `obj.val` вызывает геттер и выводит `got it!`.
   </div>
   </slot>
+  <slot name="hints">
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -89,6 +92,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Symbol — уникальный и неизменяемый примитивный тип, который можно использовать в качестве ключей свойств объекта. Это помогает избегать конфликтов имён, особенно в больших кодовых базах или при написании переиспользуемых библиотек.
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -124,6 +130,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Свойство `enumerable` в `Object.defineProperty()` определяет, будет ли свойство появляться в методах перечисления, таких как `for...in`. В этом примере, поскольку `enumerable: true`, свойство `age` будет перечислено при итерации.
   </div>
   </slot>
+  <slot name="hints">
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -155,6 +164,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Если вы вызываете `Object.defineProperty()` без указания `enumerable`, его значение по умолчанию — `false`. Это означает, что свойство `make` не появится в `Object.keys()` и других методах перечисления.
   </div>
   </slot>
+  <slot name="hints">
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -183,6 +195,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Каждый вызов `Symbol()` создаёт уникальное и неизменяемое значение, даже если описание одинаково. В данном случае `sym1` и `sym2` — разные символы, поэтому сравнение возвращает `false`.
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -218,6 +233,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Свойства, ключи которых являются Symbol, могут иметь собственный флаг `enumerable`, но `for...in` и `Object.keys()` обходят только перечислимые свойства с строковыми ключами. В данном примере в список попадёт лишь `regularKey`, а свойство с Symbol‑ключом — нет.
   </div>
   </slot>
+  <slot name="hints">
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -252,6 +270,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     // [Symbol(id), Symbol(name)]
     ```
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 

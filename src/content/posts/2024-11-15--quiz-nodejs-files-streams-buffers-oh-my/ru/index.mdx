@@ -56,7 +56,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Buffer.alloc(size)` создаёт новый Buffer указанного размера, заполненный нулями.
     Вывод будет: `<Buffer 00 00 00 00 00>`
 
-    Если хотите создать Buffer со случайными данными, используйте `Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` пропускает заполнение нулями: байты могут содержать прежнее содержимое памяти. Это не генератор случайных чисел. Инициализируйте каждый байт перед чтением или передачей наружу; для случайных байтов используйте `crypto.randomBytes(5)`.
 
     [Узнайте больше о выделении Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -69,12 +69,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Разминка: Буферы"
   title="Преобразование буфера в строку"
   options={[
-    {text: 'A', isAnswer: true},
-    {text: '65'},
-    {text: '[Object object]'},
-    {text: 'Неопределено'},
-    {text: 'Бинарные данные'},
-  ]}
+  {
+    "text": "A",
+    "isAnswer": true
+  },
+  {
+    "text": "65"
+  },
+  {
+    "text": "[Object object]"
+  },
+  {
+    "text": "Undefined"
+  },
+  {
+    "text": "Бинарные данные"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -130,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Чтобы дождаться чтения файла, можно использовать версию на основе Promise:
     ```js
     import { promises as fs } from 'fs';
-    
+
     async function read() {
       const data = await fs.readFile('test.txt', 'utf8');
       console.log(data);
@@ -213,11 +224,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Потоки"
   title="Потоковое конвейерирование"
   options={[
-    {text: 'Копирует файл с компрессией'},
-    {text: 'Копирует файл без буферизации в памяти', isAnswer: true},
-    {text: 'Загружает весь файл в память'},
-    {text: 'Создаёт символическую ссылку'},
-  ]}
+  {
+    "text": "Копирует файл со сжатием"
+  },
+  {
+    "text": "Копирует файл по частям, не буферизуя его целиком",
+    "isAnswer": true
+  },
+  {
+    "text": "Загружает весь файл в память"
+  },
+  {
+    "text": "Создаёт символическую ссылку"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -280,11 +300,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Потоки"
   title="Трансформирующие потоки"
   options={[
-    {text: 'привет мир'},
-    {text: 'ПРИВЕТ МИР', isAnswer: true},
-    {text: 'Ошибка'},
-    {text: 'неопределено'},
-  ]}
+  {
+    "text": "hello world"
+  },
+  {
+    "text": "HELLO WORLD",
+    "isAnswer": true
+  },
+  {
+    "text": "Ошибка"
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -494,7 +523,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Потоки могут работать в:
     1. Двоичный режим (по умолчанию): для буферов и строк
-    2. Объектный режим: для любого значения JavaScript
+    2. Объектный режим: для любого значения JavaScript, кроме `null`, которое обозначает конец читаемого потока
 
     Пример объектного режима:
     ```js

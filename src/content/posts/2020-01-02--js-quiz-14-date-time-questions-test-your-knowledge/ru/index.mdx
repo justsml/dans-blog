@@ -55,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Что будет включено в вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -68,6 +68,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     'February' имеет индекс 1. (Думайте об этом как о поиске в массиве.)
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -84,7 +87,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Что будет включено в вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -97,6 +100,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     'January' имеет индекс 0. (Это как поиск в массиве.)
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -111,7 +117,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'Текущая дата в UTC/GMT'},
     {text: 'Текущая дата', isAnswer: true},
     {text: 'NaN'},
-    {text: 'RangeError: Неверный аргумент.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
@@ -125,12 +131,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Не забудьте ключевое слово `new`! `Date` — это класс, его нужно вызывать с `new`.
-
-    `Date('...')` без `new` игнорирует переданное значение. Похоже, что он всегда возвращает текущие дату и время, как `new Date()` (без аргументов).
-
-    Это **распространённый подводный камень**, который **легко упустить**, даже при ревью кода.
+    Без `new` функция `Date(...)` игнорирует аргументы и возвращает строку с текущими датой и временем. Конструктор `new Date(...)` создаёт объект даты с учётом аргументов. Это разные режимы вызова, поэтому здесь не получится дата эпохи Unix.
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -145,15 +150,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '2019'},
     {text: '2020'},
     {text: '2021'},
-    {text: 'RangeError: Недопустимый аргумент.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
+    Предположим, что локальный часовой пояс имеет фиксированное смещение GMT−7.
+
     Что будет включено в вывод?
     ```js
-    const date = new Date(2020)
-    console.log(date.getFullYear())
+      const date = new Date(2020)
+      console.log(date.getFullYear())
     ```
   </div>
   </slot>
@@ -167,6 +174,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Можно обойти смещение локального часового пояса, используя [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -184,11 +194,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
+    Предположим, что локальный часовой пояс имеет фиксированное смещение GMT−7.
+
     Какое значение будет выведено в консоль?
     ```js
-    const d1 = new Date('2020-01-01')
-    const d2 = new Date('2020-01-01T00:00')
-    console.log(d1.getFullYear(), d2.getFullYear())
+      const d1 = new Date('2020-01-01')
+      const d2 = new Date('2020-01-01T00:00')
+      console.log(d1.getFullYear(), d2.getFullYear())
     ```
   </div>
   </slot>
@@ -203,6 +215,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Первая дата интерпретируется как `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.
     Вторая дата интерпретируется как `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -230,6 +245,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Ознакомьтесь с [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) методом. Его поведение задокументировано в [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
   </div>
   </slot>
+  <slot name="hints">
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -248,17 +266,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что будет включено в вывод?
     ```js
-    var date = Date.UTC('2020-01-02T00:00')
-    console.log(date.toUTCString())
+      var date = Date.UTC('2020-01-02T00:00')
+      console.log(date.toUTCString())
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Вы получите `TypeError: date.toUTCString is not a function`, поскольку [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) возвращает целое число в миллисекундах, а не экземпляр даты.
+    Вы получите `TypeError: date.toUTCString is not a function`, поскольку [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) возвращает число, а не объект даты. Здесь строка не является допустимым числовым годом, поэтому результат — `NaN`. У числа нет метода `toUTCString`.
 
     {/* Метод `getFullYear()` использует ваш локальный смещение (предположим GMT-07:00 для этих вопросов). Это значит, что он вернёт предыдущий год (NYE -7 часов). Метод `getUTCFullYear()` вернёт год, который мы передали в `Date.UTC()`, 2020. */}
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -278,15 +299,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что будет включено в вывод?
     ```js
-    const d = Date.UTC(2020, 0, 1)
-    console.log(d)
+      const d = Date.UTC(2020, 0, 1)
+      console.log(d)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Вспомогательный метод [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) не возвращает экземпляр даты. Он возвращает целое число в миллисекундах.
+    Вспомогательный метод `Date.UTC` не возвращает экземпляр даты. Он возвращает целое число в миллисекундах.
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -307,18 +331,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что будет включено в вывод?
     ```js
-    // Assume local TZ is -07:00
-    const d = new Date(Date.UTC(2020, 0, 1))
-    console.log(d.getTimezoneOffset())
+      // Assume local TZ is -07:00
+      const d = new Date(Date.UTC(2020, 0, 1))
+      console.log(d.getTimezoneOffset())
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Дата будет неявно представлена в локальном времени, с (по‑сути) неизменным [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+    Дата будет неявно представлена в локальном времени, с (по‑сути) неизменным `.getTimezoneOffset()`.
 
     `Date`‑объекты не хранят данные о часовом поясе. Они хранят количество миллисекунд, прошедших с эпохи Unix (1 янв 1970). Часовой пояс учитывается при разборе и выводе строк даты. Поведение по умолчанию определяется автоматически на основе настроек локали системы или браузера.
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -330,16 +357,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   options={[
     {text: 'Jan 01 2020', isAnswer: true},
     {text: 'Feb 01 2020'},
-    {text: 'RangeError: Недопустимый аргумент.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что будет включено в вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setDate(1)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setDate(1)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -351,6 +378,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     <aside class="hint">`setDate` устанавливает день месяца, обычно в диапазоне 1-31.</aside>
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -367,11 +397,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Что будет включено в вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(1)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(1)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -398,11 +428,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Что будет включать вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(12)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(12)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -414,6 +444,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Здесь мы видим, что год меняется на 2021, потому что `setMonth(12)` на 1 больше, чем 11 (декабрь).
   </div>
+  </slot>
+  <slot name="hints">
+
   </slot>
 </Challenge>
 
@@ -427,16 +460,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '01 фев 2020'},
     {text: '01 янв 2021'},
     {text: '01 фев 2021', isAnswer: true},
-    {text: 'RangeError: Недопустимый аргумент.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что будет включено в вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(13)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(13)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -454,6 +487,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     </aside>
   </div>
   </slot>
+  <slot name="hints">
+
+  </slot>
 </Challenge>
 
 <Challenge
@@ -466,27 +502,31 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '01 фев 2020'},
     {text: '01 янв 2019'},
     {text: '01 дек 2019', isAnswer: true},
-    {text: 'RangeError: Недопустимый аргумент.'},
+    {text: 'RangeError: Invalid argument.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что будет включать вывод?
+    Какую локальную календарную дату представляет этот объект? Формат вывода в консоли зависит от среды.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(-1)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(-1)
+      console.log(d)
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Метод `.setMonth()`([https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth]) устанавливает месяц указанного экземпляра даты.
+    Метод [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) устанавливает месяц указанного экземпляра даты.
 
     Аргумент месяца считается с нуля и может принимать значения от 0 до 11 (по западному календарю).
 
     Здесь мы видим, как месяц и год откатываются к декабрю 2019 года, потому что `setMonth(-1)` меньше 0 (январь).
   </div>
+  </slot>
+  <slot name="hints">
+    <aside class="hint">В месяцах от 28 до 31 дня.</aside>
+    <aside class="hint">`setDate` задаёт день месяца. Значения вне обычного диапазона 1–31 могут изменить месяц и год.</aside>
   </slot>
 </Challenge>
 

@@ -59,6 +59,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Объекты Error имеют неперечислимые свойства (`message`, `name`, `stack`), поэтому `JSON.stringify()` возвращает `{}`. Это распространённый подводный камень при отправке ошибок в ответах API. Используйте `JSON.stringify(error, Object.getOwnPropertyNames(error))` или создайте обычный объект вместо него.
   </div>
   </slot>
+  <slot name="hints">
+    Подумайте о перечисляемых свойствах Error.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -88,6 +91,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `console.log(err)` показывает ошибку с её сообщением и трассировкой стека, потому что консоль имеет специальную обработку объектов Error. `JSON.stringify(err)` возвращает `'{}'`, так как свойства Error не перечисляемы. Эта разница сбивает с толку многих разработчиков, отлаживающих API.
   </div>
   </slot>
+  <slot name="hints">
+    Консоль и JSON по-разному отображают объекты.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -108,7 +114,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```js
     class CustomError extends Error {}
     const err = new CustomError('test');
-    
+
     console.log(err instanceof CustomError);
     console.log(err instanceof Error);
     console.log(err instanceof Object);
@@ -119,6 +125,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Все три возвращают `true`. `CustomError` наследует `Error`, который наследует `Object`. Оператор `instanceof` проверяет всю цепочку прототипов, поэтому экземпляр `CustomError` также является экземпляром `Error` и `Object`.
   </div>
+  </slot>
+  <slot name="hints">
+    Вспомните цепочку прототипов.
   </slot>
 </Challenge>
 
@@ -138,17 +147,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что происходит с `instanceof Error` между iframe‑ами?
     ```js
-    // In iframe:
-    const iframeError = new Error('test');
-    // In parent window:
-    console.log(iframeError instanceof Error);
+console.log(iframeError instanceof Error);
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof` может возвращать `false` в разных контекстах выполнения (iframe‑ы, воркеры), потому что каждый контекст имеет собственный конструктор `Error`. Используйте `Object.prototype.toString.call(obj) === '[object Error]'` для надёжного определения ошибки в разных контекстах.
+    У разных контекстов выполнения (например, iframe) свои конструкторы `Error`, поэтому `instanceof Error` может вернуть `false` для ошибки из другого контекста. `Object.prototype.toString.call(obj)` обычно распознаёт такие ошибки, но результат можно подделать через `Symbol.toStringTag`. Это удобная проверка, а не гарантия подлинности.
   </div>
+  </slot>
+  <slot name="hints">
+    У разных контекстов свои конструкторы Error.
   </slot>
 </Challenge>
 
@@ -158,11 +167,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Бросание не‑Error"
   title="Бросок строки"
   options={[
-    {text: 'TypeError: строка не является объектом Error'},
-    {text: 'false, "string"', isAnswer: true},
-    {text: 'Создаёт объект Error автоматически'},
-    {text: 'неопределённое поведение'},
-  ]}
+  {
+    "text": "TypeError: string is not an Error"
+  },
+  {
+    "text": "false, \"string\"",
+    "isAnswer": true
+  },
+  {
+    "text": "Автоматически создаёт объект Error"
+  },
+  {
+    "text": "Неопределённое поведение"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -181,6 +199,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     JavaScript позволяет бросать любое значение. Здесь `e instanceof Error` равно `false`, а `typeof e` — `"string"`. Это может сломать код обработки ошибок, который предполагает, что все пойманные исключения являются объектами Error. Всегда бросайте экземпляры Error для лучшей отладки.
   </div>
+  </slot>
+  <slot name="hints">
+    В JavaScript можно выбросить любое значение.
   </slot>
 </Challenge>
 
@@ -216,6 +237,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `err.name` равно `"CustomError"`, потому что `this.constructor.name` возвращает имя класса. Установка `this.name = this.constructor.name` — распространённый приём, чтобы пользовательские классы ошибок показывали правильное имя в трассировках стека и сообщениях об ошибке.
   </div>
   </slot>
+  <slot name="hints">
+    Чему равно `this.constructor.name`?
+  </slot>
 </Challenge>
 
 <Challenge
@@ -247,6 +271,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Если явно не задать `this.name`, ошибка наследует свойство `name` по умолчанию из класса `Error`, которое равно `"Error"`. Поэтому в пользовательских классах ошибок всегда следует устанавливать `this.name = this.constructor.name` в конструкторе.
   </div>
   </slot>
+  <slot name="hints">
+    Каково унаследованное значение name у Error?
+  </slot>
 </Challenge>
 
 <Challenge
@@ -255,18 +282,27 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Причина ошибки"
   title="Современный Error.cause"
   options={[
-    {text: '"Исходная ошибка"', isAnswer: true},
-    {text: 'undefined'},
-    {text: 'Оборачивающая ошибка'},
-    {text: 'SyntaxError'},
-  ]}
+  {
+    "text": "\"Original error\"",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Оборачивающая ошибка"
+  },
+  {
+    "text": "SyntaxError"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
     Что возвращает `wrapper.cause.message`?
     ```js
     const original = new Error('Original error');
-    const wrapper = new Error('Wrapper', 
+    const wrapper = new Error('Wrapper',
       { cause: original }
     );
     console.log(wrapper.cause.message);
@@ -277,6 +313,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `Error.cause` (ES2022) позволяет цепочкой связывать ошибки, сохраняя исходный контекст ошибки. `wrapper.cause` ссылается на исходную ошибку, поэтому `wrapper.cause.message` возвращает `"Original error"`. Это полезно для оборачивания ошибок нижнего уровня в контекст более высокого уровня.
   </div>
+  </slot>
+  <slot name="hints">
+    cause сохраняет ссылку на исходную ошибку.
   </slot>
 </Challenge>
 
@@ -310,6 +349,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `Error.captureStackTrace` (V8/Node.js) удаляет указанную функцию (`createError`) из трассировки стека, делая функции‑фабрики ошибок невидимыми для конечных пользователей. Это создаёт более чистые трассировки стека, указывающие на место вызова фабрики, а не на саму фабрику.
   </div>
   </slot>
+  <slot name="hints">
+    Это возможность V8 для управления трассировкой.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -318,11 +360,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Шаблоны сообщений"
   title="Шаблонные строки в ошибках"
   options={[
-    {text: '"Значение ${value} недействительно"'},
-    {text: '"Значение undefined недействительно"', isAnswer: true},
-    {text: 'ReferenceError: value не определено'},
-    {text: '"Значение  недействительно"'},
-  ]}
+  {
+    "text": "\"Value ${value} is invalid\""
+  },
+  {
+    "text": "\"Value undefined is invalid\"",
+    "isAnswer": true
+  },
+  {
+    "text": "ReferenceError: value is not defined"
+  },
+  {
+    "text": "\"Value  is invalid\""
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -347,6 +398,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Шаблонные строки преобразуют `undefined` в строку `"undefined"` при интерполяции. Сообщение об ошибке становится `"Value undefined is invalid"`. Для более чистых сообщений рекомендуется использовать `value ?? 'null'` или аналогичные проверки перед интерполяцией.
   </div>
+  </slot>
+  <slot name="hints">
+    Как шаблонная строка преобразует undefined?
   </slot>
 </Challenge>
 
@@ -379,6 +433,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `res.json()` использует `JSON.stringify()` внутри, поэтому объект Error превращается в `{}`. Клиент получает `{"error":{}}`. Чтобы исправить, используйте `res.json({ error: error.message })` или `res.json({ error: { message: error.message, name: error.name } })`.
   </div>
   </slot>
+  <slot name="hints">
+    Вспомните сериализацию Error через JSON.stringify.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -397,13 +454,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что может принимать `Promise.reject()`?
     ```js
-    Promise.reject('string').catch(e => 
+    Promise.reject('string').catch(e =>
       console.log(typeof e)
     );
-    Promise.reject({code: 404}).catch(e => 
+    Promise.reject({code: 404}).catch(e =>
       console.log(e.code)
     );
-    Promise.reject(42).catch(e => 
+    Promise.reject(42).catch(e =>
       console.log(e)
     );
     ```
@@ -413,6 +470,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Как и `throw`, `Promise.reject()` принимает любое значение — строки, объекты, числа и т.д. Это выводит `"string"`, `404` и `42`. Всегда проверяйте тип перехваченных значений в цепочках промисов, особенно при работе с кодом сторонних библиотек, который может отклонять не объектами Error.
   </div>
+  </slot>
+  <slot name="hints">
+    Отклонение промиса похоже на throw.
   </slot>
 </Challenge>
 
@@ -447,6 +507,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Свойства вроде `code` и `errno` зависят от среды (в данном случае Node.js) и не входят в стандартный объект Error. Ошибки в браузере этих свойств не имеют. Всегда проверяйте их наличие: `if (err.code === 'ENOENT')` вместо того, чтобы полагаться на их существование.
   </div>
   </slot>
+  <slot name="hints">
+    Свойства ошибок зависят от среды и типа ошибки.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -470,7 +533,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       message: 'Fake error',
       stack: 'fake stack'
     };
-    
+
     console.log(fakeError instanceof Error);
     console.log(Object.prototype.toString.call(
       fakeError
@@ -480,8 +543,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `instanceof Error` возвращает `false`, потому что объект не был создан конструктором Error. `Object.prototype.toString.call()` также возвращает `false` (он возвращает `'[object Object]'`) потому что проверяет внутренний слот `[[Class]]`. Оба метода правильно определяют, что это поддельный объект ошибки.
+    Обе проверки дают `false`: у обычного объекта нет `Error.prototype` в цепочке прототипов, а `Object.prototype.toString.call(fakeError)` возвращает `[object Object]`. Свойства `name`, `message` и `stack` сами по себе не делают объект ошибкой.
+
+    `Symbol.toStringTag` может изменить строковый тег, поэтому проверка через `toString` не является гарантией подлинности Error.
   </div>
+  </slot>
+  <slot name="hints">
+    Одна проверка обходит прототипы, другая читает тег объекта, на который влияет Symbol.toStringTag.
   </slot>
 </Challenge>
 

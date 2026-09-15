@@ -150,15 +150,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Какой селектор лучше всего соответствует следующему HTML?
     ```html
-    <a id="home" name="home" href="/home">Home</a>
+      <a id="home" name="home" href="/home">Home</a>
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Правильный ответ — `a#home[name='home']`, который соответствует как атрибуту `id`, так и атрибуту `name`. Селекторы CSS чувствительны к регистру, поэтому `#Home` не сработает, а пробелы означают дочерние элементы, что здесь не применимо.
+    Правильный ответ — `a#home[name='home']`: он совпадает с атрибутами `id` и `name`. В HTML в стандартном режиме значения ID чувствительны к регистру, поэтому `#Home` не подходит. Пробел в `a [id='home']` — комбинатор потомка: он ищет элемент внутри `<a>`, а не саму ссылку.
 
-    Селектор `:contains()` не является стандартным селектором CSS, но доступен в некоторых JS‑библиотеках.
+    `:contains()` не является стандартным селектором CSS, хотя встречается в JS-библиотеках.
   </div>
   </slot>
 </Challenge>
@@ -180,7 +180,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Какой селектор соответствует следующей HTML‑кнопке?
     ```html
-    <button onclick="openModal()">Contact</button>
+      <button onclick="openModal()">Contact</button>
     ```
   </div>
   </slot>
@@ -236,11 +236,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Какой селектор соответствует последней ссылке в приведённом ниже HTML?
     ```html
-    <nav>
-      <a name="home" href="/home">Home</a>
-      <a name="login" href="/login">Login</a>
-      <a name="help" href="/help">Help</a>
-    </nav>
+      <nav>
+        <a name="home" href="/home">Home</a>
+        <a name="login" href="/login">Login</a>
+        <a name="help" href="/help">Help</a>
+      </nav>
     ```
   </div>
   </slot>
@@ -290,14 +290,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Как центрировать «shit» в коробке?
+    Как центрировать текст и другое строчное содержимое по горизонтали внутри блочного контейнера?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Использование `text-align: center;` — правильный способ центрировать текст в блочном элементе. Свойства `align` применяются в flexbox‑верстке, а `margin: 0 auto;` используется для горизонтального центрирования блочных элементов.
+    `text-align: center;` центрирует строчное содержимое по горизонтали внутри блочного контейнера. `margin: 0 auto;` может центрировать сам блочный элемент с ограниченной шириной.
 
-    Свойство `align-content` применяется в grid‑верстке, а `text-content` не является допустимым CSS‑свойством.
+    Свойств `align` и `text-content` в CSS нет. `align-content` управляет выравниванием содержимого в применимых режимах раскладки, но не заменяет горизонтальное выравнивание текста.
   </div>
   </slot>
 </Challenge>
@@ -348,11 +348,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Какой пиксельный размер текста ссылки `<a>` в приведённом ниже HTML?
     ```html
-    <body style="font-size: 40px !important;">
-      <nav style="font-size: 50%;">
-        <a style="font-size: 25%;">HOME</a>
-      </nav>
-    </body>
+      <body style="font-size: 40px !important;">
+        <nav style="font-size: 50%;">
+          <a style="font-size: 25%;">HOME</a>
+        </nav>
+      </body>
     ```
   </div>
   </slot>
@@ -381,11 +381,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Какой будет размер в пикселях у `1.2rem` для ссылки "HOME" в следующем HTML?
     ```html
-    <html style="font-size: 10px;">
-      <body style="font-size: 20px;">
-        <a style="font-size: 1.2rem;">HOME</a>
-      </body>
-    </html>
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2rem;">HOME</a>
+        </body>
+      </html>
     ```
   </div>
   </slot>
@@ -414,11 +414,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Как и в предыдущем вопросе, каков будет размер в пикселях у `1.2em` для ссылки "HOME" в приведённом HTML?
     ```html
-    <html style="font-size: 10px;">
-      <body style="font-size: 20px;">
-        <a style="font-size: 1.2em;">HOME</a>
-      </body>
-    </html>
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2em;">HOME</a>
+        </body>
+      </html>
     ```
   </div>
   </slot>

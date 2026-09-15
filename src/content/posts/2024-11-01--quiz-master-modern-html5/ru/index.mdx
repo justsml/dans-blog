@@ -65,11 +65,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Продвинутый семантический HTML"
   title="Использование `<dd>`"
   options={[
-    {text: 'Description definition (Определение описания)'},
-    {text: 'Description term (Термин описания)'},
-    {text: 'Data display (Отображение данных)'},
-    {text: 'Description Details (Детали описания)', isAnswer: true},
-  ]}
+  {
+    "text": "Объявление, определяющее поле базы данных"
+  },
+  {
+    "text": "Термин списка описаний"
+  },
+  {
+    "text": "Отображение данных"
+  },
+  {
+    "text": "Описание, определение или значение термина в списке описаний",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -91,6 +100,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     <dt>HTML</dt>
     <dd>Client-side</dd>
     </dl>
+
     ```
   </div>
   </slot>
@@ -102,11 +112,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Продвинутый семантический HTML"
   title="Использование `<figure>/<figcaption>`"
   options={[
-    {text: 'Для изображений с отображаемой информацией об авторских правах'},
-    {text: 'Для описания изображений, графиков и т. д.', isAnswer: true},
-    {text: 'Для аннотирования таблиц, вычислений и т. д.'},
-    {text: 'Для создания подписей к видео'},
-  ]}
+  {
+    "text": "Только для изображений с информацией об авторских правах"
+  },
+  {
+    "text": "Группировка самодостаточного содержимого с подписью",
+    "isAnswer": true
+  },
+  {
+    "text": "Исключительно для таблиц и математических вычислений"
+  },
+  {
+    "text": "Только для субтитров при воспроизведении видео"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -121,7 +140,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Это полезно для изображений, диаграмм, фрагментов кода и многого другого.
     ```html
     <figure>
-    <img src="../image.jpg" alt="Description of image">
+    <img src="image.jpg" alt="Description of image">
     <figcaption>Image caption</figcaption>
     </figure>
     ```

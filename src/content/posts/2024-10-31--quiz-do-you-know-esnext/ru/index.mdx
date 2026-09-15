@@ -55,13 +55,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Оператор объединения с null (`??`) возвращает правый операнд (`b`), если левый операнд (`a`) равен `null` или `undefined`. В данном случае `a` равно `null`, поэтому `result` равно `100`.
   </div>
   </slot>
+  <slot name="hints">
+    ?? подставляет значение только для null и undefined.
+  </slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ES2020"
-  title="Оператор нулевого слияния"
+  title="Оператор объединения с null"
   options={[
     {text: 'false', isAnswer: true},
     {text: '42'},
@@ -82,8 +85,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Оператор нулевого слияния (`??`) рассматривает ложные значения, такие как `false`, как допустимые. Поскольку `value` равно `false`, оно считается допустимым значением и возвращается.
+    Оператор объединения с null (`??`) рассматривает ложные значения, такие как `false`, как допустимые. Поскольку `value` равно `false`, оно считается допустимым значением и возвращается.
   </div>
+  </slot>
+  <slot name="hints">
+    false не равен null или undefined.
   </slot>
 </Challenge>
 
@@ -114,6 +120,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Оператор опциональной цепочки (`?.`) прекращает вычисление, если левый операнд равен `null` или `undefined`. Поскольку `obj.foo` равно `null`, `obj.foo?.bar` оценивается как `undefined`.
   </div>
   </slot>
+  <slot name="hints">
+    Опциональная цепочка останавливается на null или undefined.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -122,11 +131,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="BigInt"
   title="Использование BigInt"
   options={[
-    {text: 'TypeError: Нельзя смешивать BigInt и number'},
-    {text: '42n'},
-    {text: '84n', isAnswer: true},
-    {text: 'undefined'},
-  ]}
+  {
+    "text": "TypeError: Cannot mix BigInt and number"
+  },
+  {
+    "text": "42n"
+  },
+  {
+    "text": "84n",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -142,6 +160,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Значения BigInt создаются добавлением `n` к числу. Нельзя смешивать BigInt с обычными числами в арифметических операциях. Здесь оба значения являются BigInt, поэтому умножение работает, в результате получается `84n`.
   </div>
+  </slot>
+  <slot name="hints">
+    Оба операнда имеют суффикс n.
   </slot>
 </Challenge>
 
@@ -172,6 +193,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Функция `import()` возвращает `Promise`, который разрешается в объект модуля. Поскольку экземпляры `Promise` являются объектами, `typeof modulePromise` выводит `'object'`.
   </div>
   </slot>
+  <slot name="hints">
+    Вызов import() возвращает промис; какой у него typeof?
+  </slot>
 </Challenge>
 
 <Challenge
@@ -180,11 +204,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'выполнено: success', isAnswer: true},
-    {text: 'Отклонено: error'},
-    {text: 'Ожидание'},
-    {text: 'null'},
-  ]}
+  {
+    "text": "fulfilled: success",
+    "isAnswer": true
+  },
+  {
+    "text": "Rejected: error"
+  },
+  {
+    "text": "Pending"
+  },
+  {
+    "text": "null"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -204,6 +237,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `Promise.allSettled` возвращает массив объектов, описывающих результат каждого промиса. Первый промис `fulfilled` со значением `'success'`, поэтому оператор вывода напечатает `fulfilled: success`.
   </div>
+  </slot>
+  <slot name="hints">
+    Проверьте первый элемент результатов и буквальное значение status.
   </slot>
 </Challenge>
 
@@ -233,6 +269,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     `String.matchAll` возвращает итератор совпадений, а не массив. Этот итератор можно использовать, чтобы получить все группы совпадений из строки.
   </div>
   </slot>
+  <slot name="hints">
+    Итератор можно преобразовать в массив, но это не одно и то же.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -259,6 +298,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `import.meta` — это объект, содержащий метаданные о текущем модуле. Свойство `import.meta.url` представляет URL текущего модуля, который можно использовать для получения информации о том, где выполняется скрипт.
   </div>
+  </slot>
+  <slot name="hints">
+    URL относится к модулю, содержащему этот код.
   </slot>
 </Challenge>
 
@@ -289,6 +331,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Оператор логического ИЛИ присваивания (`||=`) присваивает значение справа, если значение слева ложно (`null`, `undefined`, `0`, `false` и т.д.). Поскольку `a` равно `null`, ему присваивается значение `10`.
   </div>
   </slot>
+  <slot name="hints">
+    Оператор ||= проверяет ложность значения.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -318,6 +363,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Оператор присваивания с nullish‑слиянием (`??=`) присваивает значение справа, если значение слева равно `null` или `undefined`. Поскольку `b` равно `null`, ему присваивается значение `10`.
   </div>
   </slot>
+  <slot name="hints">
+    Оператор ??= проверяет только null и undefined.
+  </slot>
 </Challenge>
 
 <Challenge
@@ -346,6 +394,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `WeakRef` предоставляет слабую ссылку на объект, что позволяет сборщику мусора удалить объект, если нет других ссылок. Поскольку `obj` здесь всё ещё сильно ссылается, `deref()` возвращает исходный объект. Если цель была бы освобождена, `deref()` вернёт `undefined`.
   </div>
+  </slot>
+  <slot name="hints">
+    Пока существует сильная ссылка, цель WeakRef не освобождается.
   </slot>
 </Challenge>
 

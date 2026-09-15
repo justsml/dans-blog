@@ -39,6 +39,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={0}
   group="Владение"
   title="Основы семантики перемещения"
+  difficulty={2}
+  objectives={["Объяснить правила владения и семантику перемещения Rust", "Распознать ошибки компиляции после перемещения значений", "Исправить ошибки, связанные с перемещением"]}
   options={[
     {text: 'Hello, !', hint: 'Подумайте, что происходит с \'philosopher\' после перемещения'},
     {text: 'Hello, Zeno of Citium!', hint: 'После перемещения значения можно ли его использовать?'},
@@ -52,13 +54,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что происходит при запуске этого кода? Попробуйте предсказать вывод или ошибку:
     ```rust
-    fn main() {
-        let philosopher =
-            String::from("Zeno of Citium");
-        let greeting = philosopher;
+      fn main() {
+          let philosopher =
+              String::from("Zeno of Citium");
+          let greeting = philosopher;
 
-        println!("Hello, &#123;&#125;!", philosopher);
-    }
+          println!("Hello, {}!", philosopher);
+      }
     ```
   </div>
   </slot>
@@ -70,15 +72,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     1. Склонируйте строку (создаст новую копию):
     ```rust
-    let greeting = philosopher.clone();
+      let greeting = philosopher.clone();
     ```
     2. Используйте ссылку (займите значение):
     ```rust
-    let greeting = &philosopher;
+      let greeting = &philosopher;
     ```
     3. Используйте строковый срез (займите часть строки):
     ```rust
-    let greeting = &philosopher[..];
+      let greeting = &philosopher[..];
     ```
     Каждое решение имеет свои сценарии использования и последствия для производительности. Клонирование дороже, но даёт владение, а ссылки дешевле, но имеют ограничения по времени жизни.
   </div>
@@ -90,6 +92,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={1}
   group="Владение"
   title="Семантика перемещения с функциями"
+  difficulty={2}
+  objectives={["Понять передачу владения при вызове функции", "Распознать ошибки владения при вызовах", "Применить разные способы управления владением в функциях"]}
   options={[
     {text: 'Выводит обе строки', hint: 'Подумайте, что происходит с \'wisdom\' после передачи её в функцию'},
     {text: 'Выводит только первую строку', hint: 'Код и не скомпилируется, чтобы добраться до времени выполнения'},
@@ -101,16 +105,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что происходит при запуске этого кода? Подумайте о передаче владения:
     ```rust
-    fn take_knowledge(knowledge: String) {
-        println!("Knowledge: &#123;&#125;", knowledge);
-    }
+      fn take_knowledge(knowledge: String) {
+          println!("Knowledge: {}", knowledge);
+      }
 
-    fn main() {
-        let wisdom = String::from("know thyself");
-        take_knowledge(wisdom);
-        // What happens to our wisdom?
-        println!("Do you &#123;&#125;", wisdom);
-    }
+      fn main() {
+          let wisdom = String::from("know thyself");
+          take_knowledge(wisdom);
+          // What happens to our wisdom?
+          println!("Do you {}", wisdom);
+      }
     ```
   </div>
   </slot>
@@ -120,16 +124,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Вот три способа исправить эту проблему:
 
-    1. Передать по ссылке (забрать значение):
+    1. Передать по ссылке (заимствовать значение):
     ```rust
-    fn borrow_it(text: &String) {
-        println!("Inside: &#123;&#125;", text);
-    }
-    borrow_it(&wisdom);  // Now wisdom can be used after
+      fn borrow_it(text: &String) {
+          println!("Inside: {}", text);
+      }
+      borrow_it(&wisdom);  // Now wisdom can be used after
     ```
     2. Склонировать значение (создать новую копию):
     ```rust
-    take_knowledge(wisdom.clone());  // Original wisdom remains valid
+      take_knowledge(wisdom.clone());  // Original wisdom remains valid
     ```
     3. Вернуть владение из функции:
     Каждый подход имеет свои случаи использования:
@@ -139,18 +143,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Рекомендация: Используйте ссылки, если не требуется передача владения.
     ```rust
-    fn take_and_return(text: String) -> String {
-        println!("Inside: &#123;&#125;", text);
-        text  // Return ownership back
-    }
-    let wisdom = take_and_return(wisdom);  // Reassign returned ownership
+      fn take_and_return(text: String) -> String {
+          println!("Inside: {}", text);
+          text  // Return ownership back
+      }
+      let wisdom = take_and_return(wisdom);  // Reassign returned ownership
     ```
-    Each approach has different use cases:
-    - References: Most efficient, but need lifetime management
-    - Cloning: Simple but potentially expensive
-    - Returning ownership: Useful for transforming values
 
-    Best practice: Use references unless you need ownership transfer.
   </div>
   </slot>
 </Challenge>
@@ -160,24 +159,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={2}
   group="Заимствование"
   title="Изменяемые ссылки"
+  difficulty={3}
+  objectives={["Понять правила изменяемых ссылок Rust", "Распознать нарушения правил заимствования", "Использовать области видимости для последовательных изменяемых ссылок"]}
   options={[
     {text: 'Успешно компилируется', hint: 'Можем ли мы иметь несколько изменяемых ссылок одновременно?'},
     {text: 'Ошибка: нельзя заимствовать `wisdom` как изменяемый более одного раза', isAnswer: true},
     {text: 'Ошибка: отсутствует спецификатор времени жизни', hint: 'Проблема здесь не в сроках жизни'},
-    {text: 'Паника во время выполнения', hint: 'Раст обнаруживает такие проблемы на этапе компиляции'},
+    {text: 'Паника во время выполнения', hint: 'Rust обнаруживает такие проблемы на этапе компиляции'},
   ]}
 >
   <slot name="question">
   <div className="question">
     Что происходит с несколькими изменяемыми ссылками?
     ```rust
-    fn main() {
-        let mut wisdom = String::from("He who laughs at");
-        let ref1 = &mut wisdom;  // First mutable borrow
-        let ref2 = &mut wisdom;  // Second mutable borrow
-        ref1.push_str(" himself never runs");
-        ref2.push_str(" out of things to laugh at.");
-    }
+      fn main() {
+          let mut wisdom = String::from("He who laughs at");
+          let ref1 = &mut wisdom;  // First mutable borrow
+          let ref2 = &mut wisdom;  // Second mutable borrow
+          ref1.push_str(" himself never runs");
+          ref2.push_str(" out of things to laugh at.");
+      }
     ```
     Подумайте о правилах Rust для изменяемых ссылок.
   </div>
@@ -193,19 +194,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     1. Используйте последовательное зонирование:
     ```rust
-    let mut wisdom = String::from("He who laughs at");
-    {
-        let ref1 = &mut wisdom;
-        ref1.push_str(" himself never runs");
-    }  // ref1 goes out of scope
-    let ref2 = &mut wisdom;  // Now this is valid
-    ref2.push_str(" out of things to laugh at.");
+      let mut wisdom = String::from("He who laughs at");
+      {
+          let ref1 = &mut wisdom;
+          ref1.push_str(" himself never runs");
+      }  // ref1 goes out of scope
+      let ref2 = &mut wisdom;  // Now this is valid
+      ref2.push_str(" out of things to laugh at.");
     ```
     2. Либо измените строку в одиночном заимствовании:
     ```rust
-    let mut wisdom = String::from("He who laughs at");
-    let ref1 = &mut wisdom;
-    ref1.push_str(" himself never runs out of things to laugh at.");
+      let mut wisdom = String::from("He who laughs at");
+      let ref1 = &mut wisdom;
+      ref1.push_str(" himself never runs out of things to laugh at.");
     ```
     Эти правила предотвращают конфликты данных на этапе компиляции, делая Rust потокобезопасным по умолчанию.
 
@@ -220,6 +221,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={3}
   group="Упрощение времён жизни"
   title="Неявные времена жизни"
+  difficulty={3}
+  objectives={["Понять правила неявного вывода времён жизни", "Определить, когда явные аннотации не нужны", "Применить правила вывода времён жизни в сигнатурах"]}
   options={[
     {text: 'Успешно компилируется', isAnswer: true},
     {text: 'Ошибка: отсутствует спецификатор времени жизни', hint: 'Помните правила упрощения времён жизни — они здесь, чтобы помочь!'},
@@ -231,18 +234,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Скомпилируется ли этот код? Если да, то почему? Если нет, что не так?
     ```rust
-    fn first_word(s: &str) -> &str {  // No explicit lifetimes?
-        match s.find(' ') {
-            Some(pos) => &s[0..pos],
-            None => s,
-        }
-    }
+      fn first_word(s: &str) -> &str {  // No explicit lifetimes?
+          match s.find(' ') {
+              Some(pos) => &s[0..pos],
+              None => s,
+          }
+      }
 
-    fn main() {
-        let name = String::from("Seneca the Younger");
-        let first = first_word(&name);
-        println!("Hello, &#123;&#125;", first);
-    }
+      fn main() {
+          let name = String::from("Seneca the Younger");
+          let first = first_word(&name);
+          println!("Hello, {}", first);
+      }
     ```
   </div>
   </slot>
@@ -258,20 +261,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Эта функция эквивалентна:
     ```rust
-    fn first_word<'a>(s: &'a str) -> &'a str {
-        // ... same implementation
-    }
+      fn first_word<'a>(s: &'a str) -> &'a str {
+          // ... same implementation
+      }
     ```
     Распространённые паттерны, где работает упрощение:
     ```rust
-    // These don't need explicit lifetimes
-    fn get_str(s: &str) -> &str { s }
-    fn get_first(s: &str) -> &str { &s[0..1] }
+      // These don't need explicit lifetimes
+      fn get_str(s: &str) -> &str { s }
+      fn get_first(s: &str) -> &str { &s[0..1] }
 
-    // These would need explicit lifetimes
-    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
-        if x.len() > y.len() { x } else { y }
-    }
+      // These would need explicit lifetimes
+      fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+          if x.len() > y.len() { x } else { y }
+      }
     ```
     Рекомендация: Позволяйте упрощению работать за вас, когда это возможно, но понимайте, когда нужны явные времена жизни.
   </div>
@@ -283,22 +286,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={4}
   group="Умные указатели"
   title="Умный указатель Box"
+  difficulty={4}
+  objectives={["Понять рекурсивные типы и их требования к памяти", "Определить случаи, где нужен Box<T>", "Исправить рекурсивную структуру с Box<T>"]}
   options={[
     {
       text: '5',
-      hint: "The code won't even compile to produce a value"
+      hint: "Код не скомпилируется и не сможет вывести значение"
     },
     {
       text: 'null',
-      hint: "Rust doesn't have null values"
+      hint: "В Rust нет значения null"
     },
     {
-      text: 'Compilation Error',
-      hint: "The compiler can't determine a finite size for this recursive type.",
+      text: 'Ошибка компиляции',
+      hint: "Компилятор не может определить конечный размер рекурсивного типа.",
       isAnswer: true
     },
     {
-      text: 'Stack overflow'
+      text: 'Переполнение стека'
     }
   ]}
 >
@@ -306,18 +311,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что не так с этим рекурсивным определением типа?
     ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, CatList),  // Recursive without indirection
-        Nil,
-    }
+      #[derive(Debug)]
+      enum CatList {
+          Cons(i32, CatList),  // Recursive without indirection
+          Nil,
+      }
 
-    fn main() {
-        let catlist = CatList::Cons(1,
-            CatList::Cons(2,
-                CatList::Cons(3,
-                    CatList::Nil)));
-    }
+      fn main() {
+          let catlist = CatList::Cons(1,
+              CatList::Cons(2,
+                  CatList::Cons(3,
+                      CatList::Nil)));
+      }
     ```
   </div>
   </slot>
@@ -327,18 +332,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Вот как можно исправить это с помощью `Box<T>`:
     ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
-        Nil,
-    }
+      #[derive(Debug)]
+      enum CatList {
+          Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
+          Nil,
+      }
 
-    fn main() {
-        let catlist = CatList::Cons(1,
-            Box::new(CatList::Cons(2,
-                Box::new(CatList::Cons(3,
-                    Box::new(CatList::Nil))))));
-    }
+      fn main() {
+          let catlist = CatList::Cons(1,
+              Box::new(CatList::Cons(2,
+                  Box::new(CatList::Cons(3,
+                      Box::new(CatList::Nil))))));
+      }
     ```
     Почему `Box<T>` работает:
     1. Box предоставляет указатель фиксированного размера (обычно 8 байт на 64-битных системах)
@@ -363,22 +368,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={5}
   group="Счетчик ссылок"
   title="Указатель Rc"
+  difficulty={3}
+  objectives={["Понять подсчёт ссылок в Rust", "Применить Rc<T> для совместного владения", "Проследить изменение счётчика ссылок"]}
   options={[
     {
       text: 'Reference count: 1',
-      hint: "Count the initial creation plus each clone"
+      hint: "Учтите исходную ссылку и каждый вызов clone"
     },
     {
       text: 'Reference count: 2',
-      hint: "Don't forget the original reference"
+      hint: "Не забудьте исходную ссылку"
     },
     {
       text: 'Reference count: 3',
       isAnswer: true
     },
     {
-      text: 'Compilation Error',
-      hint: "Rc<T> is designed for exactly this use case"
+      text: 'Ошибка компиляции',
+      hint: "Rc<T> предназначен именно для такого совместного владения"
     }
   ]}
 >
@@ -386,17 +393,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что выведет этот код? Посчитайте внимательно!
     ```rust
-    use std::rc::Rc;
+      use std::rc::Rc;
 
-    fn main() {
-        let text = Rc::new(String::from("Meditations"));  // Count: 1
-        let marcus = Rc::clone(&text);    // What happens here?
-        let aurelius = Rc::clone(&text);  // And here?
-        println!(
-            "Reference count: &#123;&#125;",
-            Rc::strong_count(&text)
-        );
-    }
+      fn main() {
+          let text = Rc::new(String::from("Meditations"));  // Count: 1
+          let marcus = Rc::clone(&text);    // What happens here?
+          let aurelius = Rc::clone(&text);  // And here?
+          println!(
+              "Reference count: {}",
+              Rc::strong_count(&text)
+          );
+      }
     ```
   </div>
   </slot>
@@ -410,19 +417,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Важные особенности Rc:
     ```rust
-    use std::rc::Rc;
-      
-    fn demonstrate_rc() {
-        let original = Rc::new(String::from("Shared"));
-        println!("Count after creation: &#123;&#125;", Rc::strong_count(&original)); // 1
-          
-        {
-            let copy = Rc::clone(&original);
-            println!("Count inside scope: &#123;&#125;", Rc::strong_count(&original)); // 2
-        } // copy is dropped here
-          
-        println!("Count after scope: &#123;&#125;", Rc::strong_count(&original)); // 1
-    }
+      use std::rc::Rc;
+
+      fn demonstrate_rc() {
+          let original = Rc::new(String::from("Shared"));
+          println!("Count after creation: {}", Rc::strong_count(&original)); // 1
+
+          {
+              let copy = Rc::clone(&original);
+              println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
+          } // copy is dropped here
+
+          println!("Count after scope: {}", Rc::strong_count(&original)); // 1
+      }
     ```
     Ключевые моменты:
     - `Rc::clone()` дешево - он увеличивает только счетчик
@@ -443,10 +450,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={6}
   group="Жизненные циклы"
   title="Жизненные циклы структур"
+  difficulty={3}
+  objectives={["Понять аннотации времени жизни в структурах", "Определить поля, которым нужны параметры времени жизни", "Правильно аннотировать время жизни структуры"]}
   options={[
-    {text: 'Успешно компилируется', hint: 'Структуры с ссылками требуют аннотаций жизненных циклов'},
-    {text: 'Ошибка: отсутствует спецификатор жизненного цикла', isAnswer: true},
-    {text: 'Ошибка: несоответствие жизненных циклов', hint: 'Мы еще не указали никаких жизненных циклов'},
+    {text: 'Успешно компилируется', hint: 'Структуры с ссылками требуют аннотаций времён жизни'},
+    {text: 'Ошибка: отсутствует спецификатор времени жизни', isAnswer: true},
+    {text: 'Ошибка: несоответствие времён жизни', hint: 'Мы еще не указали никаких времён жизни'},
     {text: 'Ошибка: недопустимая ссылка', hint: 'Ссылки допустимы, но что-то еще отсутствует'},
   ]}
 >
@@ -454,55 +463,55 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Скомпилируется ли эта структура? Почему да или почему нет?
     ```rust
-    struct Philosopher {
-        name: &str,    // Reference without lifetime
-        quote: &str,   // Another reference without lifetime
-    }
+      struct Philosopher {
+          name: &str,    // Reference without lifetime
+          quote: &str,   // Another reference without lifetime
+      }
 
-    fn main() {
-        let phil = Philosopher {
-            name: "Seneca",
-            quote: "Luck happens when preparation meets opportunity",
-        };
-    }
+      fn main() {
+          let phil = Philosopher {
+              name: "Seneca",
+              quote: "Luck happens when preparation meets opportunity",
+          };
+      }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ошибка возникает, потому что структуры с ссылками должны указывать временные циклы. Вот как это исправить:
+    Ошибка возникает, потому что структуры с ссылками должны указывать времена жизни. Вот как это исправить:
     ```rust
-    // Single lifetime parameter
-    struct Philosopher<'a> {
-        name: &'a str,
-        quote: &'a str,
-    }
+      // Single lifetime parameter
+      struct Philosopher<'a> {
+          name: &'a str,
+          quote: &'a str,
+      }
 
-    // Or different lifetimes if needed
-    struct PhilosopherFlex<'n, 'q> {
-        name: &'n str,
-        quote: &'q str,
-    }
+      // Or different lifetimes if needed
+      struct PhilosopherFlex<'n, 'q> {
+          name: &'n str,
+          quote: &'q str,
+      }
     ```
     Частые паттерны:
     ```rust
-    // Own the data instead
-    struct PhilosopherOwned {
-        name: String,
-        quote: String,
-    }
+      // Own the data instead
+      struct PhilosopherOwned {
+          name: String,
+          quote: String,
+      }
 
-    // Mixed ownership
-    struct PhilosopherMixed<'a> {
-        name: String,      // Owned
-        quote: &'a str,    // Borrowed
-    }
+      // Mixed ownership
+      struct PhilosopherMixed<'a> {
+          name: String,      // Owned
+          quote: &'a str,    // Borrowed
+      }
     ```
     Рекомендации:
     1. Используйте собственные типы (String), если нужно хранить данные неограниченно долго
-    2. Используйте ссылки, когда жизненный цикл структуры явно короче данных
-    3. Учитывайте несколько параметров жизненных циклов, если ссылки могут иметь разные временные циклы
-    4. Документируйте отношения временных циклов в сложных структурах
+    2. Используйте ссылки, когда время жизни структуры явно короче данных
+    3. Учитывайте несколько параметров времён жизни, если ссылки могут иметь разные времена жизни
+    4. Документируйте отношения времён жизни в сложных структурах
   </div>
   </slot>
 </Challenge>
@@ -512,6 +521,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   index={7}
   group="Время жизни"
   title="Аннотации времени жизни"
+  difficulty={4}
+  objectives={["Определить необходимость аннотаций по сигнатуре", "Аннотировать функции с несколькими ссылками", "Оценить связь времён жизни входных и выходных ссылок"]}
   options={[
     {text: 'Result: Seneca the Younger', hint: 'Код не скомпилируется, чтобы выдать какой-либо вывод'},
     {text: 'Ошибка: отсутствует спецификатор времени жизни', isAnswer: true},
@@ -523,20 +534,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
     Что происходит с этой функцией, которая возвращает более длинный из двух срезов строк?
     ```rust
-    fn longest(text1: &str, text2: &str) -> &str {
-        if text1.len() > text2.len() {
-            text1    // Returning a reference, but which lifetime?
-        } else {
-            text2    // Could be this reference instead
-        }
-    }
+      fn longest(text1: &str, text2: &str) -> &str {
+          if text1.len() > text2.len() {
+              text1    // Returning a reference, but which lifetime?
+          } else {
+              text2    // Could be this reference instead
+          }
+      }
 
-    fn main() {
-        println!("&#123;&#125;", longest(
-            "Seneca the Younger",
-            "Marcus Aurelius"
-        ));
-    }
+      fn main() {
+          println!("{}", longest(
+              "Seneca the Younger",
+              "Marcus Aurelius"
+          ));
+      }
     ```
   </div>
   </slot>
@@ -558,6 +569,8 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   index={8}
   group="RefCell"
   title="Поведение RefCell"
+  difficulty={4}
+  objectives={["Понять внутреннюю изменяемость через RefCell", "Проанализировать проверки заимствования во время выполнения", "Применить RefCell для контролируемого изменяемого доступа"]}
   options={[
     {text: 'Выводит: 42', hint: 'Можем ли мы иметь два изменяемых заимствования одновременно?'},
     {text: 'Паника во время выполнения: RefCell уже заимствован', isAnswer: true},
@@ -569,20 +582,20 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   <div className="question">
     Что происходит, когда запускается этот код?
     ```rust
-    use std::cell::RefCell;
+      use std::cell::RefCell;
 
-    fn main() {
-        let data = RefCell::new(42);
-        let _borrow1 = data.borrow_mut();  // First mutable borrow
-        let _borrow2 = data.borrow_mut();  // Second mutable borrow
-        println!("Value: &#123;&#125;", _borrow2);
-    }
+      fn main() {
+          let data = RefCell::new(42);
+          let _borrow1 = data.borrow_mut();  // First mutable borrow
+          let _borrow2 = data.borrow_mut();  // Second mutable borrow
+          println!("Value: {}", _borrow2);
+      }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Освободите изменяемое заимствование до создания общих заимствований. Иначе этот пример вызывает панику во время выполнения.
+Первое изменяемое заимствование `_borrow1` всё ещё действует, поэтому второй вызов `borrow_mut()` вызывает панику во время выполнения. Освободите изменяемое заимствование перед созданием следующего или общих заимствований.
 
 ```rust
 use std::cell::RefCell;
@@ -605,6 +618,8 @@ fn main() {
   index={9}
   group="Изменяемость"
   title="Cell против RefCell"
+  difficulty={3}
+  objectives={["Различать сценарии Cell и RefCell", "Применить Cell для простой внутренней изменяемости", "Сравнить поведение типов Copy и не-Copy с Cell"]}
   options={[
     {text: 'Выведет: 42, 43', isAnswer: true},
     {text: 'Выведет: 43, 43', hint: 'Cell::get() возвращает значение на момент вызова'},
@@ -616,15 +631,15 @@ fn main() {
   <div className="question">
     Что выведет этот код?
     ```rust
-    use std::cell::Cell;
+      use std::cell::Cell;
 
-    fn main() {
-        let life = Cell::new(42);
-        let meaning = &life;        // Shared reference
-        println!("&#123;&#125;", life.get()); // What prints here?
-        meaning.set(43);            // Mutation through shared ref
-        println!("&#123;&#125;", life.get()); // And here?
-    }
+      fn main() {
+          let life = Cell::new(42);
+          let meaning = &life;        // Shared reference
+          println!("{}", life.get()); // What prints here?
+          meaning.set(43);            // Mutation through shared ref
+          println!("{}", life.get()); // And here?
+      }
     ```
   </div>
   </slot>
@@ -632,29 +647,29 @@ fn main() {
   <div className="explanation">
     Cell и RefCell служат разным целям для внутренней изменяемости:
     ```rust
-    use std::cell::{Cell, RefCell};
+      use std::cell::{Cell, RefCell};
 
-    // Cell for Copy types
-    struct Counter {
-        count: Cell<i32>,
-    }
+      // Cell for Copy types
+      struct Counter {
+          count: Cell<i32>,
+      }
 
-    impl Counter {
-        fn increment(&self) {
-            self.count.set(self.count.get() + 1);
-        }
-    }
+      impl Counter {
+          fn increment(&self) {
+              self.count.set(self.count.get() + 1);
+          }
+      }
 
-    // RefCell for non-Copy types
-    struct Logger {
-        messages: RefCell<Vec<String>>,
-    }
+      // RefCell for non-Copy types
+      struct Logger {
+          messages: RefCell<Vec<String>>,
+      }
 
-    impl Logger {
-        fn log(&self, msg: &str) {
-            self.messages.borrow_mut().push(msg.to_string());
-        }
-    }
+      impl Logger {
+          fn log(&self, msg: &str) {
+              self.messages.borrow_mut().push(msg.to_string());
+          }
+      }
     ```
     Основные различия:
     1. Cell:
@@ -681,6 +696,8 @@ fn main() {
   index={10}
   group="Счетчик ссылок"
   title="Понимание Rc"
+  difficulty={3}
+  objectives={["Понять назначение и ограничения Rc", "Различать однопоточный и многопоточный подсчёт ссылок", "Правильно применять Rc для совместного владения"]}
   options={[
     {text: 'Rc используется в однопоточных средах', isAnswer: true},
     {text: 'Rc используется в многопоточных средах', hint: 'Подумайте о потоковой безопасности — Rc не имеет синхронизации'},
@@ -695,22 +712,22 @@ fn main() {
 
     Рассмотрите этот пример:
     ```rust
-    use std::rc::Rc;
+      use std::rc::Rc;
 
-    struct SharedConfig {
-        name: String,
-        value: i32,
-    }
+      struct SharedConfig {
+          name: String,
+          value: i32,
+      }
 
-    fn main() {
-        let config = Rc::new(SharedConfig {
-            name: "settings".to_string(),
-            value: 42,
-        });
-          
-        let config2 = Rc::clone(&config);
-        // Both config and config2 share ownership
-    }
+      fn main() {
+          let config = Rc::new(SharedConfig {
+              name: "settings".to_string(),
+              value: 42,
+          });
+
+          let config2 = Rc::clone(&config);
+          // Both config and config2 share ownership
+      }
     ```
   </div>
   </slot>
@@ -720,24 +737,24 @@ fn main() {
 
     Типичные случаи использования:
     ```rust
-    use std::rc::Rc;
-    use std::cell::RefCell;
+      use std::rc::Rc;
+      use std::cell::RefCell;
 
-    // Shared ownership in data structures
-    struct Node {
-        next: Option<Rc<Node>>,
-        value: i32,
-    }
+      // Shared ownership in data structures
+      struct Node {
+          next: Option<Rc<Node>>,
+          value: i32,
+      }
 
-    // Combining with interior mutability
-    struct SharedState {
-        data: Rc<RefCell<Vec<String>>>,
-    }
+      // Combining with interior mutability
+      struct SharedState {
+          data: Rc<RefCell<Vec<String>>>,
+      }
 
-    // Multiple owners of same data
-    let original = Rc::new(vec![1, 2, 3]);
-    let clone1 = Rc::clone(&original);
-    let clone2 = Rc::clone(&original);
+      // Multiple owners of same data
+      let original = Rc::new(vec![1, 2, 3]);
+      let clone1 = Rc::clone(&original);
+      let clone2 = Rc::clone(&original);
     ```
     Ключевые моменты:
     1. Используйте Rc, когда:
@@ -768,6 +785,8 @@ fn main() {
   index={11}
   group="RefCell"
   title="RefCell и потоки"
+  difficulty={4}
+  objectives={["Различать RefCell и потокобезопасные альтернативы", "Выбрать между RefCell и RwLock", "Выбрать примитив синхронизации по требованиям потоков"]}
   options={[
   {
     "text": "RefCell используется для изменяемых заимствований, Rw — для неизменяемых",
@@ -797,16 +816,16 @@ fn main() {
 
     Рассмотрите эти примеры:
     ```rust
-    use std::cell::RefCell;
-    use std::sync::RwLock;
+      use std::cell::RefCell;
+      use std::sync::RwLock;
 
-    // Example 1
-    let data = RefCell::new(vec![1, 2, 3]);
-    let borrowed = data.borrow_mut();
+      // Example 1
+      let data = RefCell::new(vec![1, 2, 3]);
+      let borrowed = data.borrow_mut();
 
-    // Example 2
-    let shared = RwLock::new(vec![1, 2, 3]);
-    let locked = shared.write().unwrap();
+      // Example 2
+      let shared = RwLock::new(vec![1, 2, 3]);
+      let locked = shared.write().unwrap();
     ```
   </div>
   </slot>
@@ -822,6 +841,8 @@ fn main() {
   index={12}
   group="Умные указатели"
   title="Arc и Mutex"
+  difficulty={5}
+  objectives={["Проанализировать доступ через Arc и Mutex", "Распознать риск взаимной блокировки", "Правильно организовать синхронизацию для предотвращения блокировок"]}
   options={[
   {
     "text": "Выводит: 42",
@@ -849,17 +870,17 @@ fn main() {
   <div className="question">
     Что происходит при запуске этого кода?
     ```rust
-    use std::sync::{Arc, Mutex};
+      use std::sync::{Arc, Mutex};
 
-    fn main() {
-        let lock = Arc::new(Mutex::new(42));
-        let lock2 = Arc::clone(&lock);
-          
-        let _guard1 = lock.lock().unwrap();   // First lock
-        let _guard2 = lock2.lock().unwrap();  // Second lock attempt
-          
-        println!("Value: &#123;&#125;", _guard2);
-    }
+      fn main() {
+          let lock = Arc::new(Mutex::new(42));
+          let lock2 = Arc::clone(&lock);
+
+          let _guard1 = lock.lock().unwrap();   // First lock
+          let _guard2 = lock2.lock().unwrap();  // Second lock attempt
+
+          println!("Value: {}", _guard2);
+      }
     ```
   </div>
   </slot>
@@ -885,26 +906,28 @@ fn main() {
   index={13}
   group="Умные указатели"
   title="Слабые ссылки"
+  difficulty={4}
+  objectives={["Понять назначение слабых ссылок", "Определить случаи предотвращения утечек памяти", "Разорвать циклы ссылок с помощью Weak<T>"]}
   options={[
     {
       text: 'Prints: Some("Wisdom")',
-      hint: "What happens to the data when all strong references are dropped?"
+      hint: "Что происходит с данными после удаления всех сильных ссылок?"
     },
     {
       text: 'Prints: None',
       isAnswer: true
     },
     {
-      text: 'Compilation Error',
-      hint: "The code is syntactically correct"
+      text: 'Ошибка компиляции',
+      hint: "Код синтаксически корректен"
     },
     {
-      text: 'Runtime Panic',
-      hint: "Weak references gracefully handle dropped values"
+      text: 'Паника во время выполнения',
+      hint: "Слабая ссылка позволяет проверить, сохранилось ли значение"
     },
     {
-      text: 'Existential Panic',
-      hint: "While philosophical, not a real Rust error!"
+      text: 'Экзистенциальная паника',
+      hint: "Философская паника — не ошибка Rust!"
     }
   ]}
 >
@@ -912,15 +935,15 @@ fn main() {
   <div className="question">
     Что происходит при запуске этого кода со слабыми ссылками?
     ```rust
-    use std::rc::{Rc, Weak};
+      use std::rc::{Rc, Weak};
 
-    fn main() {
-        let data = Rc::new(String::from("Wisdom"));
-        let weak = Rc::downgrade(&data);  // Create weak reference
-        drop(data);                       // Drop strong reference
-          
-        println!("Value: {:?}", weak.upgrade());
-    }
+      fn main() {
+          let data = Rc::new(String::from("Wisdom"));
+          let weak = Rc::downgrade(&data);  // Create weak reference
+          drop(data);                       // Drop strong reference
+
+          println!("Value: {:?}", weak.upgrade());
+      }
     ```
   </div>
   </slot>
@@ -928,33 +951,33 @@ fn main() {
   <div className="explanation">
     Слабые ссылки не препятствуют освобождению их целевых объектов. Пример подробно:
     ```rust
-    use std::rc::{Rc, Weak};
-    use std::cell::RefCell;
+      use std::rc::{Rc, Weak};
+      use std::cell::RefCell;
 
-    // Parent-child tree structure avoiding reference cycles
-    struct Node {
-        next: Option<Rc<Node>>,
-        parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
-        value: i32,
-    }
+      // Parent-child tree structure avoiding reference cycles
+      struct Node {
+          next: Option<Rc<Node>>,
+          parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
+          value: i32,
+      }
 
-    impl Node {
-        fn new(value: i32) -> Rc<Node> {
-            Rc::new(Node {
-                next: None,
-                parent: RefCell::new(Weak::new()),
-                value,
-            })
-        }
+      impl Node {
+          fn new(value: i32) -> Rc<Node> {
+              Rc::new(Node {
+                  next: None,
+                  parent: RefCell::new(Weak::new()),
+                  value,
+              })
+          }
 
-        fn set_parent(&self, parent: &Rc<Node>) {
-            *self.parent.borrow_mut() = Rc::downgrade(parent);
-        }
+          fn set_parent(&self, parent: &Rc<Node>) {
+              *self.parent.borrow_mut() = Rc::downgrade(parent);
+          }
 
-        fn get_parent(&self) -> Option<Rc<Node>> {
-            self.parent.borrow().upgrade()
-        }
-    }
+          fn get_parent(&self) -> Option<Rc<Node>> {
+              self.parent.borrow().upgrade()
+          }
+      }
     ```
     Частые случаи использования:
     1. Структуры кэша, где записи могут быть очищены
@@ -976,6 +999,8 @@ fn main() {
   index={14}
   group="Паттерны памяти"
   title="RAII паттерн"
+  difficulty={3}
+  objectives={["Понять RAII в Rust", "Реализовать освобождение ресурсов через Drop", "Применить RAII для управления ресурсами"]}
   options={[
     {text: 'Ресурс освобождается после выхода из области видимости', isAnswer: true, hint: 'Поле File имеет свою реализацию Drop'},
     {text: 'Утечка ресурса', hint: 'Оболочка не имеет пользовательской реализации Drop, но её поля всё равно удаляются'},
@@ -987,18 +1012,18 @@ fn main() {
   <div className="question">
     Что происходит с файловым дескриптором в этом примере RAII?
     ```rust
-    use std::fs::File;
-      
-    struct FileWrapper {
-        file: File,
-    }
-      
-    fn main() {
-        let file = File::create("test.txt").unwrap();
-        let wrapper = FileWrapper { file };
-        // ... use wrapper ...
-        // No Drop implementation
-    }
+      use std::fs::File;
+
+      struct FileWrapper {
+          file: File,
+      }
+
+      fn main() {
+          let file = File::create("test.txt").unwrap();
+          let wrapper = FileWrapper { file };
+          // ... use wrapper ...
+          // No Drop implementation
+      }
     ```
   </div>
   </slot>
@@ -1008,34 +1033,34 @@ fn main() {
 
     Пользовательская реализация `Drop` нужна только если оболочке требуется дополнительная очистка помимо удаления её полей:
     ```rust
-    use std::fs::File;
-    use std::io::{self, Write};
+      use std::fs::File;
+      use std::io::{self, Write};
 
-    struct FileWrapper {
-        file: File,
-        path: String,
-    }
+      struct FileWrapper {
+          file: File,
+          path: String,
+      }
 
-    impl FileWrapper {
-        fn new(path: &str) -> io::Result<FileWrapper> {
-            Ok(FileWrapper {
-                file: File::create(path)?,
-                path: path.to_string(),
-            })
-        }
+      impl FileWrapper {
+          fn new(path: &str) -> io::Result<FileWrapper> {
+              Ok(FileWrapper {
+                  file: File::create(path)?,
+                  path: path.to_string(),
+              })
+          }
 
-        fn write(&mut self, content: &str) -> io::Result<()> {
-            self.file.write_all(content.as_bytes())
-        }
-    }
+          fn write(&mut self, content: &str) -> io::Result<()> {
+              self.file.write_all(content.as_bytes())
+          }
+      }
 
-    impl Drop for FileWrapper {
-        fn drop(&mut self) {
-            // Ensure file is properly closed
-            // Could also do cleanup like deletion
-            println!("Closing file: &#123;&#125;", self.path);
-        }
-    }
+      impl Drop for FileWrapper {
+          fn drop(&mut self) {
+              // Ensure file is properly closed
+              // Could also do cleanup like deletion
+              println!("Closing file: {}", self.path);
+          }
+      }
     ```
     Паттерны RAII:
     1. Конструктор получает ресурсы
@@ -1059,6 +1084,8 @@ fn main() {
   index={15}
   group="Паттерны проектирования"
   title="Копирование vs Клонирование"
+  difficulty={3}
+  objectives={["Различать трейты Copy и Clone", "Определить, когда реализовать каждый трейт", "Правильно использовать derive для Copy и Clone"]}
   options={[
     {text: 'Ошибка компиляции', hint: 'Атрибут derive используется правильно'},
     {text: 'Создана глубокая копия', isAnswer: true},
@@ -1068,23 +1095,23 @@ fn main() {
 >
   <slot name="question">
   <div className="question">
-    Что происходит, когда мы клонируем этот структ Philosophy?
+    Что происходит, когда мы клонируем эту структуру Philosophy?
     ```rust
-    #[derive(Clone)]
-    struct Philosophy {
-        school: String,
-        founder: String,
-    }
+      #[derive(Clone)]
+      struct Philosophy {
+          school: String,
+          founder: String,
+      }
 
-    fn main() {
-        let stoicism = Philosophy {
-            school: String::from("Stoicism"),
-            founder: String::from("Zeno of Citium")
-        };
-        let new_school = stoicism.clone();
-        println!("&#123;&#125; - &#123;&#125;", 
-            stoicism.school, new_school.school);
-    }
+      fn main() {
+          let stoicism = Philosophy {
+              school: String::from("Stoicism"),
+              founder: String::from("Zeno of Citium")
+          };
+          let new_school = stoicism.clone();
+          println!("{} - {}",
+              stoicism.school, new_school.school);
+      }
     ```
   </div>
   </slot>
@@ -1100,6 +1127,8 @@ fn main() {
   index={16}
   group="Лучшие практики"
   title="Оптимизация памяти"
+  difficulty={4}
+  objectives={["Проанализировать компоновку и выравнивание структуры", "Оценить порядок полей для экономии памяти", "Применить выравнивание для уменьшения размера"]}
   options={[
     {text: '16 байт', hint: 'Учитывайте требования выравнивания'},
     {text: '24 байта'},
@@ -1111,11 +1140,11 @@ fn main() {
   <div className="question">
     Каков размер этой структуры на типичном современном 64-битном целевом устройстве Rust?
     ```rust
-    struct Metadata {
-        id: u32,        // How many bytes?
-        name: String,   // How many bytes?
-        active: bool    // How many bytes + padding?
-    }
+      struct Metadata {
+          id: u32,        // How many bytes?
+          name: String,   // How many bytes?
+          active: bool    // How many bytes + padding?
+      }
     ```
   </div>
   </slot>
@@ -1123,28 +1152,28 @@ fn main() {
   <div className="explanation">
     Разберём компоновку памяти структуры и оптимизацию:
     ```rust
-    // Typical current 64-bit Rust layout: 32 bytes
-    struct Metadata {
-        id: u32,       // 4 bytes
-        name: String,  // 24 bytes on 64-bit systems
-        active: bool   // 1 byte + padding/alignment
-    }
+      // Typical current 64-bit Rust layout: 32 bytes
+      struct Metadata {
+          id: u32,       // 4 bytes
+          name: String,  // 24 bytes on 64-bit systems
+          active: bool   // 1 byte + padding/alignment
+      }
 
-    // Reordering fields may reduce padding for repr(C) structs,
-    // but default Rust layout is not a stable ABI guarantee.
-    struct OptimizedMetadata {
-        name: String,   // 24 bytes
-        id: u32,       // 4 bytes
-        active: bool    // 1 byte + 3 padding
-    }
+      // Reordering fields may reduce padding for repr(C) structs,
+      // but default Rust layout is not a stable ABI guarantee.
+      struct OptimizedMetadata {
+          name: String,   // 24 bytes
+          id: u32,       // 4 bytes
+          active: bool    // 1 byte + 3 padding
+      }
 
-    // Further optimization with packing
-    #[repr(packed)]
-    struct PackedMetadata {
-        id: u32,
-        active: bool,
-        name: String,
-    }
+      // Further optimization with packing
+      #[repr(packed)]
+      struct PackedMetadata {
+          id: u32,
+          active: bool,
+          name: String,
+      }
     ```
     Во внимание принимаем:
     1. Требования выравнивания:
@@ -1172,9 +1201,11 @@ fn main() {
   index={17}
   group="Дополнительные паттерны"
   title="Нулевые затраты абстракций"
+  difficulty={5}
+  objectives={["Понять абстракции с нулевой стоимостью Rust", "Различать затраты компиляции и выполнения", "Применять абстракции без лишних накладных расходов"]}
   options={[
   {
-    "text": "Перегрузка времени выполнения от Iterator",
+    "text": "Накладные расходы во время выполнения от Iterator",
     "hint": "В Rust итераторы — это абстракции с нулевыми затратами"
   },
   {
@@ -1183,7 +1214,7 @@ fn main() {
   },
   {
     "text": "Медленнее, но более читаемый",
-    "hint": "Абстракция не влияет на производительность времени выполнения"
+    "hint": "Оптимизатор может убрать накладные расходы итератора, но итоговый код и нагрузка всё равно важны"
   },
   {
     "text": "Итераторы нельзя оптимизировать"
@@ -1194,19 +1225,19 @@ fn main() {
   <div className="question">
 Чего могут достичь абстракции итераторов с нулевой стоимостью в этих реализациях при включённой оптимизации?
 ```rust
-    // Implementation A: Iterator
-    fn sum_iterator(v: &[i32]) -> i32 {
-        v.iter().fold(0, |acc, &x| acc + x)
-    }
+      // Implementation A: Iterator
+      fn sum_iterator(v: &[i32]) -> i32 {
+          v.iter().fold(0, |acc, &x| acc + x)
+      }
 
-    // Implementation B: Raw loop
-    fn sum_loop(v: &[i32]) -> i32 {
-        let mut sum = 0;
-        for i in 0..v.len() {
-            sum += v[i];
-        }
-        sum
-    }
+      // Implementation B: Raw loop
+      fn sum_loop(v: &[i32]) -> i32 {
+          let mut sum = 0;
+          for i in 0..v.len() {
+              sum += v[i];
+          }
+          sum
+      }
     ```
   </div>
   </slot>
