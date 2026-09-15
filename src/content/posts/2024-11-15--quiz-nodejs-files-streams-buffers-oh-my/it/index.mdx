@@ -56,7 +56,7 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
     `Buffer.alloc(size)` crea un nuovo Buffer della dimensione specificata riempito di zeri.
     L'output sarà: `<Buffer 00 00 00 00 00>`
 
-    Se vuoi creare un Buffer con dati casuali, usa `Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` alloca memoria non inizializzata, che può contenere dati precedenti: va inizializzata prima di esporla. Non genera dati casuali; per byte casuali usa `crypto.randomBytes()`.
 
     [Approfondisci l'allocazione dei Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -72,7 +72,7 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
     {text: 'A', isAnswer: true},
     {text: '65'},
     {text: '[Object object]'},
-    {text: 'Non definito'},
+    {text: 'undefined'},
     {text: 'Dati binari'},
   ]}
 >
@@ -102,7 +102,7 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="Riscaldamento: File System"
-  title="Operazioni diFile Asincrone"
+  title="Operazioni di file Asincrone"
   options={[
     {text: 'Stampa il contenuto del file poi "Done"'},
     {text: 'Stampa "Done" poi il contenuto del file', isAnswer: true},
@@ -130,7 +130,7 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
     Per attendere che il file sia letto prima, puoi usare la versione basata su Promise:
     ```js
     import { promises as fs } from 'fs';
-    
+
     async function read() {
       const data = await fs.readFile('test.txt', 'utf8');
       console.log(data);
@@ -211,10 +211,10 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Stream"
-  title="Pipe diStream"
+  title="Pipe tra stream"
   options={[
     {text: 'Copia il file con compressione'},
-    {text: 'Copia il file senza buffer in memoria', isAnswer: true},
+    {text: 'Copia il file a blocchi senza caricarlo interamente in memoria', isAnswer: true},
     {text: 'Carica l\'intero file in memoria'},
     {text: 'Crea un collegamento simbolico'},
   ]}
@@ -280,10 +280,10 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
   group="Stream"
   title="Stream di trasformazione"
   options={[
-    {text: 'ciao mondo'},
-    {text: 'CIAO MONDO', isAnswer: true},
+    {text: 'hello world'},
+    {text: 'HELLO WORLD', isAnswer: true},
     {text: 'Errore'},
-    {text: 'non definito'},
+    {text: 'undefined'},
   ]}
 >
   <slot name="question">
@@ -305,7 +305,7 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Le stream di trasformazione modificano i dati mentre li attraversano. Qui, ogni chunk è:
+    Gli stream di trasformazione modificano i dati mentre li attraversano. Qui, ogni chunk è:
     1. Convertito in una stringa
     2. Trasformato in maiuscolo
     3. Inviato a stdout
@@ -494,7 +494,7 @@ Vediamo quanto conosci i tuoi stream rispetto ai buffer! 🚀
   <div className="explanation">
     Gli stream possono operare in:
     1. Modalità binaria (predefinita): per buffer e stringhe
-    2. Modalità oggetto: per qualsiasi valore JavaScript
+    2. Modalità oggetto: per valori JavaScript diversi da `null`, che segnala la fine di uno stream leggibile
 
     Esempio di modalità oggetto:
     ```js

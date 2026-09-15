@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Gestione della Memoria in Rust'
 subTitle: "(Borrow) controlla te stesso prima di rovinarti! \U0001F980"
-label: 'Memory, man'
+label: Memoria
 category: Quiz
 subCategory: Rust
 modified: '2024-12-29'
@@ -40,11 +40,13 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={0}
   group="Proprietà"
   title="Semantica di Base del Movimento"
+  objectives={["Spiegare proprietà e semantica di spostamento in Rust","Riconoscere errori di compilazione relativi a valori spostati","Correggere errori di compilazione dovuti agli spostamenti"]}
+  difficulty={2}
   options={[
-    {text: 'Ciao, !', hint: 'Pensa a cosa succede a \'philosopher\' dopo che è stato spostato'},
-    {text: 'Ciao, Zeno di Citium!', hint: 'Una volta che un valore è stato spostato, possiamo ancora usarlo?'},
-    {text: 'Ciao, Zeno di Elea!', hint: 'La stringa contiene \'Citium\', non \'Elea\''},
-    {text: 'Ciao, Marco Aurelio', hint: 'Verifica se corrisponde al contenuto della stringa'},
+    {text: 'Hello, !', hint: 'Pensa a cosa succede a \'philosopher\' dopo che è stato spostato'},
+    {text: 'Hello, Zeno of Citium!', hint: 'Una volta che un valore è stato spostato, possiamo ancora usarlo?'},
+    {text: 'Hello, Zeno of Elea!', hint: 'La stringa contiene \'Citium\', non \'Elea\''},
+    {text: 'Hello, Marcus Aurelius', hint: 'Verifica se corrisponde al contenuto della stringa'},
     {text: 'Errore di compilazione: valore preso in prestito dopo lo spostamento', isAnswer: true},
     {text: 'Errore di runtime: eccezione di puntatore nullo', hint: 'Rust intercetta questi problemi al momento della compilazione'},
   ]}
@@ -53,13 +55,13 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Cosa succede quando esegui questo codice? Prova a prevedere l'output o l'errore:
     ```rust
-    fn main() {
-        let philosopher =
-            String::from("Zeno of Citium");
-        let greeting = philosopher;
+      fn main() {
+          let philosopher =
+              String::from("Zeno of Citium");
+          let greeting = philosopher;
 
-        println!("Hello, {}!", philosopher);
-    }
+          println!("Hello, {}!", philosopher);
+      }
     ```
   </div>
   </slot>
@@ -71,15 +73,15 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
 
     1. Clonare la stringa (crea una nuova copia):
     ```rust
-    let greeting = philosopher.clone();
+      let greeting = philosopher.clone();
     ```
     2. Usa un riferimento (prende in prestito il valore):
     ```rust
-    let greeting = &philosopher;
+      let greeting = &philosopher;
     ```
     3. Usa una slice di stringa (prende in prestito una parte della stringa):
     ```rust
-    let greeting = &philosopher[..];
+      let greeting = &philosopher[..];
     ```
     Ogni soluzione ha casi d'uso e implicazioni di performance diversi. Clonare è più costoso ma ti dà la proprietà, mentre i riferimenti sono più leggeri ma hanno vincoli di lifetime.
   </div>
@@ -91,6 +93,8 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={1}
   group="Proprietà"
   title="Semantica di Move con le Funzioni"
+  objectives={["Comprendere il trasferimento di proprietà nelle chiamate di funzione","Riconoscere errori di proprietà nelle chiamate di funzione","Applicare strategie di gestione della proprietà nelle funzioni"]}
+  difficulty={2}
   options={[
     {text: 'Stampa entrambe le righe', hint: 'Considera cosa succede a \'wisdom\' dopo che è passato alla funzione'},
     {text: 'Stampa solo la prima riga', hint: 'Il codice non compila nemmeno per arrivare al runtime'},
@@ -102,16 +106,16 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Cosa succede quando esegui questo codice? Pensa al trasferimento di proprietà:
     ```rust
-    fn take_knowledge(knowledge: String) {
-        println!("Knowledge: {}", knowledge);
-    }
+      fn take_knowledge(knowledge: String) {
+          println!("Knowledge: {}", knowledge);
+      }
 
-    fn main() {
-        let wisdom = String::from("know thyself");
-        take_knowledge(wisdom);
-        // What happens to our wisdom?
-        println!("Do you {}", wisdom);
-    }
+      fn main() {
+          let wisdom = String::from("know thyself");
+          take_knowledge(wisdom);
+          // What happens to our wisdom?
+          println!("Do you {}", wisdom);
+      }
     ```
   </div>
   </slot>
@@ -123,22 +127,22 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
 
     1. Passare per riferimento (prendere in prestito il valore):
     ```rust
-    fn borrow_it(text: &String) {
-        println!("Inside: {}", text);
-    }
-    borrow_it(&wisdom);  // Now wisdom can be used after
+      fn borrow_it(text: &String) {
+          println!("Inside: {}", text);
+      }
+      borrow_it(&wisdom);  // Now wisdom can be used after
     ```
     2. Clonare il valore (creare una nuova copia):
     ```rust
-    take_knowledge(wisdom.clone());  // Original wisdom remains valid
+      take_knowledge(wisdom.clone());  // Original wisdom remains valid
     ```
     3. Restituire la proprietà dalla funzione:
     ```rust
-    fn take_and_return(text: String) -> String {
-        println!("Inside: {}", text);
-        text  // Return ownership back
-    }
-    let wisdom = take_and_return(wisdom);  // Reassign returned ownership
+      fn take_and_return(text: String) -> String {
+          println!("Inside: {}", text);
+          text  // Return ownership back
+      }
+      let wisdom = take_and_return(wisdom);  // Reassign returned ownership
     ```
     Ogni approccio ha casi d'uso diversi:
     - Riferimenti: i più efficienti, ma richiedono la gestione dei lifetimes
@@ -155,6 +159,8 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={2}
   group="Prestito"
   title="Riferimenti Mutabili"
+  objectives={["Comprendere le regole dei riferimenti mutabili","Riconoscere violazioni delle regole di prestito","Usare gli scope per gestire più riferimenti mutabili"]}
+  difficulty={3}
   options={[
     {text: 'Compila correttamente', hint: 'Possiamo avere più riferimenti mutabili contemporaneamente?'},
     {text: 'Errore: impossibile prendere in prestito `wisdom` come mutabile più di una volta', isAnswer: true},
@@ -166,13 +172,13 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Cosa succede con più riferimenti mutabili?
     ```rust
-    fn main() {
-        let mut wisdom = String::from("He who laughs at");
-        let ref1 = &mut wisdom;  // First mutable borrow
-        let ref2 = &mut wisdom;  // Second mutable borrow
-        ref1.push_str(" himself never runs");
-        ref2.push_str(" out of things to laugh at.");
-    }
+      fn main() {
+          let mut wisdom = String::from("He who laughs at");
+          let ref1 = &mut wisdom;  // First mutable borrow
+          let ref2 = &mut wisdom;  // Second mutable borrow
+          ref1.push_str(" himself never runs");
+          ref2.push_str(" out of things to laugh at.");
+      }
     ```
     Rifletti sulle regole di Rust per i riferimenti mutabili.
   </div>
@@ -188,19 +194,19 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
 
     1. Usa uno scoping sequenziale:
     ```rust
-    let mut wisdom = String::from("He who laughs at");
-    {
-        let ref1 = &mut wisdom;
-        ref1.push_str(" himself never runs");
-    }  // ref1 goes out of scope
-    let ref2 = &mut wisdom;  // Now this is valid
-    ref2.push_str(" out of things to laugh at.");
+      let mut wisdom = String::from("He who laughs at");
+      {
+          let ref1 = &mut wisdom;
+          ref1.push_str(" himself never runs");
+      }  // ref1 goes out of scope
+      let ref2 = &mut wisdom;  // Now this is valid
+      ref2.push_str(" out of things to laugh at.");
     ```
     2. Oppure modifica la stringa in un unico prestito:
     ```rust
-    let mut wisdom = String::from("He who laughs at");
-    let ref1 = &mut wisdom;
-    ref1.push_str(" himself never runs out of things to laugh at.");
+      let mut wisdom = String::from("He who laughs at");
+      let ref1 = &mut wisdom;
+      ref1.push_str(" himself never runs out of things to laugh at.");
     ```
     Queste regole impediscono le data race al momento della compilazione, rendendo Rust thread-safe per impostazione predefinita.
 
@@ -215,6 +221,8 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={3}
   group="Elisione delle Durate"
   title="Durate Implicite"
+  objectives={["Comprendere l’elisione dei lifetime","Riconoscere quando non servono annotazioni esplicite","Applicare l’elisione alle firme delle funzioni"]}
+  difficulty={3}
   options={[
     {text: 'Compila con successo', isAnswer: true},
     {text: 'Errore: specificatore di durata mancante', hint: 'Ricorda le regole di elisione delle durate – sono qui per aiutarti!'},
@@ -226,18 +234,18 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Questo codice compila? In tal caso, perché? Altrimenti, cosa c'è di sbagliato?
     ```rust
-    fn first_word(s: &str) -> &str {  // No explicit lifetimes?
-        match s.find(' ') {
-            Some(pos) => &s[0..pos],
-            None => s,
-        }
-    }
+      fn first_word(s: &str) -> &str {  // No explicit lifetimes?
+          match s.find(' ') {
+              Some(pos) => &s[0..pos],
+              None => s,
+          }
+      }
 
-    fn main() {
-        let name = String::from("Seneca the Younger");
-        let first = first_word(&name);
-        println!("Hello, {}", first);
-    }
+      fn main() {
+          let name = String::from("Seneca the Younger");
+          let first = first_word(&name);
+          println!("Hello, {}", first);
+      }
     ```
   </div>
   </slot>
@@ -253,20 +261,20 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
 
     Questa funzione è equivalente a:
     ```rust
-    fn first_word<'a>(s: &'a str) -> &'a str {
-        // ... same implementation
-    }
+      fn first_word<'a>(s: &'a str) -> &'a str {
+          // ... same implementation
+      }
     ```
     Pattern comuni in cui l'elisione funziona:
     ```rust
-    // These don't need explicit lifetimes
-    fn get_str(s: &str) -> &str { s }
-    fn get_first(s: &str) -> &str { &s[0..1] }
+      // These don't need explicit lifetimes
+      fn get_str(s: &str) -> &str { s }
+      fn get_first(s: &str) -> &str { &s[0..1] }
 
-    // These would need explicit lifetimes
-    fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
-        if x.len() > y.len() { x } else { y }
-    }
+      // These would need explicit lifetimes
+      fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+          if x.len() > y.len() { x } else { y }
+      }
     ```
     Buona pratica: lascia che l'elisione lavori per te quando possibile, ma comprendi quando sono necessarie durate esplicite.
   </div>
@@ -278,6 +286,8 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={4}
   group="Puntatori Smart"
   title="Puntatore Smart Box"
+  objectives={["Comprendere i tipi ricorsivi e la memoria richiesta","Riconoscere quando serve Box<T>","Usare Box<T> nelle strutture ricorsive"]}
+  difficulty={4}
   options={[
     {
       text: '5',
@@ -288,7 +298,7 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
       hint: "Rust doesn't have null values"
     },
     {
-      text: 'Compilation Error',
+      text: 'Errore di compilazione',
       hint: "The compiler can't determine a finite size for this recursive type.",
       isAnswer: true
     },
@@ -301,18 +311,18 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Cosa c'è di sbagliato in questa definizione di tipo ricorsivo?
     ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, CatList),  // Recursive without indirection
-        Nil,
-    }
+      #[derive(Debug)]
+      enum CatList {
+          Cons(i32, CatList),  // Recursive without indirection
+          Nil,
+      }
 
-    fn main() {
-        let catlist = CatList::Cons(1,
-            CatList::Cons(2,
-                CatList::Cons(3,
-                    CatList::Nil)));
-    }
+      fn main() {
+          let catlist = CatList::Cons(1,
+              CatList::Cons(2,
+                  CatList::Cons(3,
+                      CatList::Nil)));
+      }
     ```
   </div>
   </slot>
@@ -322,18 +332,18 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
 
     Ecco come correggerlo usando `Box<T>`:
     ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
-        Nil,
-    }
+      #[derive(Debug)]
+      enum CatList {
+          Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
+          Nil,
+      }
 
-    fn main() {
-        let catlist = CatList::Cons(1,
-            Box::new(CatList::Cons(2,
-                Box::new(CatList::Cons(3,
-                    Box::new(CatList::Nil))))));
-    }
+      fn main() {
+          let catlist = CatList::Cons(1,
+              Box::new(CatList::Cons(2,
+                  Box::new(CatList::Cons(3,
+                      Box::new(CatList::Nil))))));
+      }
     ```
     Perché `Box<T>` funziona:
     1. Box fornisce un puntatore a dimensione fissa (di solito 8 byte su sistemi a 64 bit)
@@ -358,10 +368,12 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={5}
   group="Conteggio dei Riferimenti"
   title="Puntatore Smart Rc"
+  objectives={["Comprendere il conteggio dei riferimenti","Applicare Rc<T> alla proprietà condivisa","Analizzare il conteggio dei riferimenti nel codice"]}
+  difficulty={3}
   options={[
     {
       text: 'Reference count: 1',
-      hint: "Count the initial creation plus each clone"
+      hint: "Conta la creazione iniziale e ogni clone"
     },
     {
       text: 'Reference count: 2',
@@ -372,8 +384,8 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
       isAnswer: true
     },
     {
-      text: 'Compilation Error',
-      hint: "Rc<T> is designed for exactly this use case"
+      text: 'Errore di compilazione',
+      hint: "Rc<T> è progettato proprio per questo caso"
     }
   ]}
 >
@@ -381,17 +393,17 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Cosa stamperà questo codice? Conta attentamente!
     ```rust
-    use std::rc::Rc;
+      use std::rc::Rc;
 
-    fn main() {
-        let text = Rc::new(String::from("Meditations"));  // Count: 1
-        let marcus = Rc::clone(&text);    // What happens here?
-        let aurelius = Rc::clone(&text);  // And here?
-        println!(
-            "Reference count: {}",
-            Rc::strong_count(&text)
-        );
-    }
+      fn main() {
+          let text = Rc::new(String::from("Meditations"));  // Count: 1
+          let marcus = Rc::clone(&text);    // What happens here?
+          let aurelius = Rc::clone(&text);  // And here?
+          println!(
+              "Reference count: {}",
+              Rc::strong_count(&text)
+          );
+      }
     ```
   </div>
   </slot>
@@ -405,19 +417,19 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
 
     Caratteristiche importanti di Rc:
     ```rust
-    use std::rc::Rc;
-      
-    fn demonstrate_rc() {
-        let original = Rc::new(String::from("Shared"));
-        println!("Count after creation: {}", Rc::strong_count(&original)); // 1
-          
-        {
-            let copy = Rc::clone(&original);
-            println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
-        } // copy is dropped here
-          
-        println!("Count after scope: {}", Rc::strong_count(&original)); // 1
-    }
+      use std::rc::Rc;
+
+      fn demonstrate_rc() {
+          let original = Rc::new(String::from("Shared"));
+          println!("Count after creation: {}", Rc::strong_count(&original)); // 1
+
+          {
+              let copy = Rc::clone(&original);
+              println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
+          } // copy is dropped here
+
+          println!("Count after scope: {}", Rc::strong_count(&original)); // 1
+      }
     ```
     Punti chiave:
     - `Rc::clone()` è economico - incrementa solo un contatore
@@ -438,6 +450,8 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={6}
   group="Durata"
   title="Durata delle struct"
+  objectives={["Comprendere i lifetime nelle definizioni di struct","Riconoscere quando i campi richiedono parametri lifetime","Annotare correttamente i lifetime nelle struct"]}
+  difficulty={3}
   options={[
     {text: 'Compila correttamente', hint: 'Le struct con riferimenti necessitano di annotazioni di lifetime'},
     {text: 'Errore: specificatore di lifetime mancante', isAnswer: true},
@@ -449,17 +463,17 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Questa definizione di struct compila? Perché o perché no?
     ```rust
-    struct Philosopher {
-        name: &str,    // Reference without lifetime
-        quote: &str,   // Another reference without lifetime
-    }
+      struct Philosopher {
+          name: &str,    // Reference without lifetime
+          quote: &str,   // Another reference without lifetime
+      }
 
-    fn main() {
-        let phil = Philosopher {
-            name: "Seneca",
-            quote: "Luck happens when preparation meets opportunity",
-        };
-    }
+      fn main() {
+          let phil = Philosopher {
+              name: "Seneca",
+              quote: "Luck happens when preparation meets opportunity",
+          };
+      }
     ```
   </div>
   </slot>
@@ -467,31 +481,31 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="explanation">
     Il codice fallisce perché le struct che contengono riferimenti devono specificare i lifetimes. Ecco come correggerlo:
     ```rust
-    // Single lifetime parameter
-    struct Philosopher<'a> {
-        name: &'a str,
-        quote: &'a str,
-    }
+      // Single lifetime parameter
+      struct Philosopher<'a> {
+          name: &'a str,
+          quote: &'a str,
+      }
 
-    // Or different lifetimes if needed
-    struct PhilosopherFlex<'n, 'q> {
-        name: &'n str,
-        quote: &'q str,
-    }
+      // Or different lifetimes if needed
+      struct PhilosopherFlex<'n, 'q> {
+          name: &'n str,
+          quote: &'q str,
+      }
     ```
     Pattern comuni:
     ```rust
-    // Own the data instead
-    struct PhilosopherOwned {
-        name: String,
-        quote: String,
-    }
+      // Own the data instead
+      struct PhilosopherOwned {
+          name: String,
+          quote: String,
+      }
 
-    // Mixed ownership
-    struct PhilosopherMixed<'a> {
-        name: String,      // Owned
-        quote: &'a str,    // Borrowed
-    }
+      // Mixed ownership
+      struct PhilosopherMixed<'a> {
+          name: String,      // Owned
+          quote: &'a str,    // Borrowed
+      }
     ```
     Buone pratiche:
     1. Usa tipi posseduti (String) quando devi memorizzare dati indefinitamente
@@ -507,8 +521,10 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   index={7}
   group="Lifetime"
   title="Annotazioni di Lifetime"
+  objectives={["Analizzare le firme per individuare i lifetime necessari","Annotare funzioni con più riferimenti","Valutare la relazione tra lifetime in ingresso e in uscita"]}
+  difficulty={4}
   options={[
-    {text: 'Risultato: Seneca il Giovane', hint: 'Il codice non compila per produrre alcun output'},
+    {text: 'Stampa: Seneca the Younger', hint: 'Il codice non compila per produrre alcun output'},
     {text: 'Errore: specificatore di lifetime mancante', isAnswer: true},
     {text: 'Errore: impossibile restituire un riferimento a una variabile locale', hint: 'Il riferimento è a un parametro di input, non a una variabile locale'},
     {text: 'Errore: mismatch di lifetime', hint: 'Non abbiamo ancora specificato i lifetime, quindi si verifica un mismatch'},
@@ -518,20 +534,20 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="question">
     Cosa succede con questa funzione che restituisce la più lunga tra due slice di stringa?
     ```rust
-    fn longest(text1: &str, text2: &str) -> &str {
-        if text1.len() > text2.len() {
-            text1    // Returning a reference, but which lifetime?
-        } else {
-            text2    // Could be this reference instead
-        }
-    }
+      fn longest(text1: &str, text2: &str) -> &str {
+          if text1.len() > text2.len() {
+              text1    // Returning a reference, but which lifetime?
+          } else {
+              text2    // Could be this reference instead
+          }
+      }
 
-    fn main() {
-        println!("{}", longest(
-            "Seneca the Younger",
-            "Marcus Aurelius"
-        ));
-    }
+      fn main() {
+          println!("{}", longest(
+              "Seneca the Younger",
+              "Marcus Aurelius"
+          ));
+      }
     ```
   </div>
   </slot>
@@ -539,11 +555,11 @@ Che tu sia un Rustacean esperto o stia appena iniziando a gestire la memoria, qu
   <div className="explanation">
 Il riferimento restituito deve rimanere entro un lifetime valido per entrambi gli input. Non può sopravvivere a nessuno dei valori presi in prestito. Le annotazioni descrivono questa relazione, senza prolungare i lifetime.
 
-```rust
+    ```rust
 fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
     if a.len() > b.len() { a } else { b }
 }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -553,6 +569,8 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   index={8}
   group="RefCell"
   title="Comportamento di RefCell"
+  objectives={["Comprendere la mutabilità interna con RefCell","Analizzare i controlli dei prestiti a runtime","Usare RefCell per accesso mutabile controllato"]}
+  difficulty={4}
   options={[
     {text: 'Stampa: 42', hint: 'Possiamo avere due prestiti mutabili contemporaneamente?'},
     {text: 'Panico a runtime: RefCell già preso in prestito', isAnswer: true},
@@ -564,22 +582,22 @@ fn longest<'a>(a: &'a str, b: &'a str) -> &'a str {
   <div className="question">
     Cosa succede quando questo codice viene eseguito?
     ```rust
-    use std::cell::RefCell;
+      use std::cell::RefCell;
 
-    fn main() {
-        let data = RefCell::new(42);
-        let _borrow1 = data.borrow_mut();  // First mutable borrow
-        let _borrow2 = data.borrow_mut();  // Second mutable borrow
-        println!("Value: {}", _borrow2);
-    }
+      fn main() {
+          let data = RefCell::new(42);
+          let _borrow1 = data.borrow_mut();  // First mutable borrow
+          let _borrow2 = data.borrow_mut();  // Second mutable borrow
+          println!("Value: {}", _borrow2);
+      }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Rilascia il prestito mutabile prima di creare prestiti condivisi. Altrimenti questo esempio genera un panic a runtime.
+Il primo prestito mutabile `_borrow1` è ancora attivo quando viene richiesto il secondo con `borrow_mut()`. `RefCell` controlla i prestiti a runtime e genera un panic. Nel codice corretto seguente, `drop(second)` rilascia il prestito mutabile prima di creare quelli condivisi.
 
-```rust
+    ```rust
 use std::cell::RefCell;
 fn main() {
     let data = RefCell::new(42);
@@ -590,7 +608,7 @@ fn main() {
     let read2 = data.borrow();
     println!("{} {}", *read1, *read2);
 }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -600,6 +618,8 @@ fn main() {
   index={9}
   group="Mutabilità"
   title="Cell vs RefCell"
+  objectives={["Distinguere i casi d’uso di Cell e RefCell","Usare Cell per mutabilità interna semplice","Confrontare tipi Copy e non-Copy con Cell"]}
+  difficulty={3}
   options={[
     {text: 'Stampa: 42, 43', isAnswer: true},
     {text: 'Stampa: 43, 43', hint: 'Cell::get() restituisce il valore al momento della chiamata'},
@@ -611,15 +631,15 @@ fn main() {
   <div className="question">
     Cosa stamperà questo codice?
     ```rust
-    use std::cell::Cell;
+      use std::cell::Cell;
 
-    fn main() {
-        let life = Cell::new(42);
-        let meaning = &life;        // Shared reference
-        println!("{}", life.get()); // What prints here?
-        meaning.set(43);            // Mutation through shared ref
-        println!("{}", life.get()); // And here?
-    }
+      fn main() {
+          let life = Cell::new(42);
+          let meaning = &life;        // Shared reference
+          println!("{}", life.get()); // What prints here?
+          meaning.set(43);            // Mutation through shared ref
+          println!("{}", life.get()); // And here?
+      }
     ```
   </div>
   </slot>
@@ -627,29 +647,29 @@ fn main() {
   <div className="explanation">
     Cell e RefCell servono a scopi diversi per la mutabilità interna:
     ```rust
-    use std::cell::{Cell, RefCell};
+      use std::cell::{Cell, RefCell};
 
-    // Cell for Copy types
-    struct Counter {
-        count: Cell<i32>,
-    }
+      // Cell for Copy types
+      struct Counter {
+          count: Cell<i32>,
+      }
 
-    impl Counter {
-        fn increment(&self) {
-            self.count.set(self.count.get() + 1);
-        }
-    }
+      impl Counter {
+          fn increment(&self) {
+              self.count.set(self.count.get() + 1);
+          }
+      }
 
-    // RefCell for non-Copy types
-    struct Logger {
-        messages: RefCell<Vec<String>>,
-    }
+      // RefCell for non-Copy types
+      struct Logger {
+          messages: RefCell<Vec<String>>,
+      }
 
-    impl Logger {
-        fn log(&self, msg: &str) {
-            self.messages.borrow_mut().push(msg.to_string());
-        }
-    }
+      impl Logger {
+          fn log(&self, msg: &str) {
+              self.messages.borrow_mut().push(msg.to_string());
+          }
+      }
     ```
     Differenze chiave:
     1. Cell:
@@ -676,6 +696,8 @@ fn main() {
   index={10}
   group="Conteggio dei Riferimenti"
   title="Comprendere Rc"
+  objectives={["Comprendere scopo e limiti di Rc","Distinguere conteggio dei riferimenti a uno e più thread","Applicare Rc alla proprietà condivisa"]}
+  difficulty={3}
   options={[
     {text: 'Rc è usato per ambienti single‑thread', isAnswer: true},
     {text: 'Rc è usato per ambienti multi‑thread', hint: 'Pensa alla sicurezza dei thread: Rc non ha sincronizzazione'},
@@ -690,49 +712,49 @@ fn main() {
 
     Considera questo esempio:
     ```rust
-    use std::rc::Rc;
+      use std::rc::Rc;
 
-    struct SharedConfig {
-        name: String,
-        value: i32,
-    }
+      struct SharedConfig {
+          name: String,
+          value: i32,
+      }
 
-    fn main() {
-        let config = Rc::new(SharedConfig {
-            name: "settings".to_string(),
-            value: 42,
-        });
-          
-        let config2 = Rc::clone(&config);
-        // Both config and config2 share ownership
-    }
+      fn main() {
+          let config = Rc::new(SharedConfig {
+              name: "settings".to_string(),
+              value: 42,
+          });
+
+          let config2 = Rc::clone(&config);
+          // Both config and config2 share ownership
+      }
     ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Rc (Reference Counting) è progettato per scenari single‑thread in cui è necessario possedere condiviso.
+    Rc (Reference Counting) è progettato per scenari single‑thread in cui serve la proprietà condivisa.
 
     Casi d'uso comuni:
     ```rust
-    use std::rc::Rc;
-    use std::cell::RefCell;
+      use std::rc::Rc;
+      use std::cell::RefCell;
 
-    // Shared ownership in data structures
-    struct Node {
-        next: Option<Rc<Node>>,
-        value: i32,
-    }
+      // Shared ownership in data structures
+      struct Node {
+          next: Option<Rc<Node>>,
+          value: i32,
+      }
 
-    // Combining with interior mutability
-    struct SharedState {
-        data: Rc<RefCell<Vec<String>>>,
-    }
+      // Combining with interior mutability
+      struct SharedState {
+          data: Rc<RefCell<Vec<String>>>,
+      }
 
-    // Multiple owners of same data
-    let original = Rc::new(vec![1, 2, 3]);
-    let clone1 = Rc::clone(&original);
-    let clone2 = Rc::clone(&original);
+      // Multiple owners of same data
+      let original = Rc::new(vec![1, 2, 3]);
+      let clone1 = Rc::clone(&original);
+      let clone2 = Rc::clone(&original);
     ```
     Punti chiave:
     1. Usa Rc quando:
@@ -763,6 +785,8 @@ fn main() {
   index={11}
   group="RefCell"
   title="RefCell e Threading"
+  objectives={["Confrontare RefCell con alternative sicure tra thread","Scegliere tra RefCell e RwLock","Scegliere primitive di sincronizzazione adatte ai thread"]}
+  difficulty={4}
   options={[
   {
     "text": "RefCell è usato per prestiti mutabili, Rw per immutabili",
@@ -792,16 +816,16 @@ fn main() {
 
     Considera questi esempi:
     ```rust
-    use std::cell::RefCell;
-    use std::sync::RwLock;
+      use std::cell::RefCell;
+      use std::sync::RwLock;
 
-    // Example 1
-    let data = RefCell::new(vec![1, 2, 3]);
-    let borrowed = data.borrow_mut();
+      // Example 1
+      let data = RefCell::new(vec![1, 2, 3]);
+      let borrowed = data.borrow_mut();
 
-    // Example 2
-    let shared = RwLock::new(vec![1, 2, 3]);
-    let locked = shared.write().unwrap();
+      // Example 2
+      let shared = RwLock::new(vec![1, 2, 3]);
+      let locked = shared.write().unwrap();
     ```
   </div>
   </slot>
@@ -817,6 +841,8 @@ fn main() {
   index={12}
   group="Puntatori Intelligenti"
   title="Arc e Mutex"
+  objectives={["Analizzare l’accesso concorrente con Arc e Mutex","Riconoscere possibili deadlock","Applicare una sincronizzazione corretta per evitare deadlock"]}
+  difficulty={5}
   options={[
   {
     "text": "Stampa: 42",
@@ -844,17 +870,17 @@ fn main() {
   <div className="question">
     Cosa succede quando questo codice viene eseguito?
     ```rust
-    use std::sync::{Arc, Mutex};
+      use std::sync::{Arc, Mutex};
 
-    fn main() {
-        let lock = Arc::new(Mutex::new(42));
-        let lock2 = Arc::clone(&lock);
-          
-        let _guard1 = lock.lock().unwrap();   // First lock
-        let _guard2 = lock2.lock().unwrap();  // Second lock attempt
-          
-        println!("Value: {}", _guard2);
-    }
+      fn main() {
+          let lock = Arc::new(Mutex::new(42));
+          let lock2 = Arc::clone(&lock);
+
+          let _guard1 = lock.lock().unwrap();   // First lock
+          let _guard2 = lock2.lock().unwrap();  // Second lock attempt
+
+          println!("Value: {}", _guard2);
+      }
     ```
   </div>
   </slot>
@@ -862,7 +888,7 @@ fn main() {
   <div className="explanation">
 Bloccare due volte lo stesso mutex in un thread senza rilasciare il primo guard non ritorna normalmente. L’API consente deadlock o panic; rilascia il guard prima di acquisire nuovamente il lock.
 
-```rust
+    ```rust
 use std::sync::Mutex;
 fn main() {
     let lock = Mutex::new(42);
@@ -870,7 +896,7 @@ fn main() {
     let guard = lock.lock().unwrap();
     println!("{}", *guard);
 }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -880,26 +906,28 @@ fn main() {
   index={13}
   group="Puntatori intelligenti"
   title="Riferimenti deboli"
+  objectives={["Comprendere scopo e comportamento dei riferimenti deboli","Riconoscere quando i riferimenti deboli evitano perdite di memoria","Usare Weak<T> per interrompere cicli di riferimenti"]}
+  difficulty={4}
   options={[
     {
-      text: 'Prints: Some("Wisdom")',
-      hint: "What happens to the data when all strong references are dropped?"
+      text: 'Stampa: Some("Wisdom")',
+      hint: "Cosa succede ai dati quando tutti i riferimenti forti vengono rilasciati?"
     },
     {
       text: 'Prints: None',
       isAnswer: true
     },
     {
-      text: 'Compilation Error',
-      hint: "The code is syntactically correct"
+      text: 'Errore di compilazione',
+      hint: "Il codice è sintatticamente corretto"
     },
     {
-      text: 'Runtime Panic',
-      hint: "Weak references gracefully handle dropped values"
+      text: 'Panic a runtime',
+      hint: "I riferimenti deboli gestiscono anche valori già rilasciati"
     },
     {
-      text: 'Existential Panic',
-      hint: "While philosophical, not a real Rust error!"
+      text: 'Panico esistenziale',
+      hint: "È filosofico, ma non è un vero errore Rust!"
     }
   ]}
 >
@@ -907,15 +935,15 @@ fn main() {
   <div className="question">
     Cosa succede quando esegui questo codice con riferimenti deboli?
     ```rust
-    use std::rc::{Rc, Weak};
+      use std::rc::{Rc, Weak};
 
-    fn main() {
-        let data = Rc::new(String::from("Wisdom"));
-        let weak = Rc::downgrade(&data);  // Create weak reference
-        drop(data);                       // Drop strong reference
-          
-        println!("Value: {:?}", weak.upgrade());
-    }
+      fn main() {
+          let data = Rc::new(String::from("Wisdom"));
+          let weak = Rc::downgrade(&data);  // Create weak reference
+          drop(data);                       // Drop strong reference
+
+          println!("Value: {:?}", weak.upgrade());
+      }
     ```
   </div>
   </slot>
@@ -923,33 +951,33 @@ fn main() {
   <div className="explanation">
     I riferimenti deboli non impediscono la deallocazione dei loro target. Ecco un esempio dettagliato:
     ```rust
-    use std::rc::{Rc, Weak};
-    use std::cell::RefCell;
+      use std::rc::{Rc, Weak};
+      use std::cell::RefCell;
 
-    // Parent-child tree structure avoiding reference cycles
-    struct Node {
-        next: Option<Rc<Node>>,
-        parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
-        value: i32,
-    }
+      // Parent-child tree structure avoiding reference cycles
+      struct Node {
+          next: Option<Rc<Node>>,
+          parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
+          value: i32,
+      }
 
-    impl Node {
-        fn new(value: i32) -> Rc<Node> {
-            Rc::new(Node {
-                next: None,
-                parent: RefCell::new(Weak::new()),
-                value,
-            })
-        }
+      impl Node {
+          fn new(value: i32) -> Rc<Node> {
+              Rc::new(Node {
+                  next: None,
+                  parent: RefCell::new(Weak::new()),
+                  value,
+              })
+          }
 
-        fn set_parent(&self, parent: &Rc<Node>) {
-            *self.parent.borrow_mut() = Rc::downgrade(parent);
-        }
+          fn set_parent(&self, parent: &Rc<Node>) {
+              *self.parent.borrow_mut() = Rc::downgrade(parent);
+          }
 
-        fn get_parent(&self) -> Option<Rc<Node>> {
-            self.parent.borrow().upgrade()
-        }
-    }
+          fn get_parent(&self) -> Option<Rc<Node>> {
+              self.parent.borrow().upgrade()
+          }
+      }
     ```
     Casistiche comuni:
     1. Strutture tipo cache dove le voci possono essere svuotate
@@ -971,9 +999,11 @@ fn main() {
   index={14}
   group="Pattern di Memoria"
   title="Pattern RAII"
+  objectives={["Comprendere RAII in Rust","Implementare la pulizia delle risorse con Drop","Applicare RAII alla gestione delle risorse"]}
+  difficulty={3}
   options={[
     {text: 'La risorsa viene liberata dopo lo scope', isAnswer: true, hint: 'Il campo File ha la sua implementazione Drop.'},
-    {text: 'La risorsa perde', hint: 'Il wrapper non ha un Drop personalizzato, ma i suoi campi vengono comunque droppati.'},
+    {text: 'La risorsa non viene liberata', hint: 'Il wrapper non ha un Drop personalizzato, ma i suoi campi vengono comunque droppati.'},
     {text: 'Errore di compilazione', hint: 'Il codice compila con successo'},
     {text: 'Errore di runtime', hint: 'Il problema riguarda la pulizia delle risorse'},
   ]}
@@ -982,18 +1012,18 @@ fn main() {
   <div className="question">
     Cosa accade al handle del file in questo esempio RAII?
     ```rust
-    use std::fs::File;
-      
-    struct FileWrapper {
-        file: File,
-    }
-      
-    fn main() {
-        let file = File::create("test.txt").unwrap();
-        let wrapper = FileWrapper { file };
-        // ... use wrapper ...
-        // No Drop implementation
-    }
+      use std::fs::File;
+
+      struct FileWrapper {
+          file: File,
+      }
+
+      fn main() {
+          let file = File::create("test.txt").unwrap();
+          let wrapper = FileWrapper { file };
+          // ... use wrapper ...
+          // No Drop implementation
+      }
     ```
   </div>
   </slot>
@@ -1003,34 +1033,34 @@ fn main() {
 
     Implementi `Drop` solo quando il wrapper stesso ha un comportamento di pulizia aggiuntivo oltre a droppare i suoi campi:
     ```rust
-    use std::fs::File;
-    use std::io::{self, Write};
+      use std::fs::File;
+      use std::io::{self, Write};
 
-    struct FileWrapper {
-        file: File,
-        path: String,
-    }
+      struct FileWrapper {
+          file: File,
+          path: String,
+      }
 
-    impl FileWrapper {
-        fn new(path: &str) -> io::Result<FileWrapper> {
-            Ok(FileWrapper {
-                file: File::create(path)?,
-                path: path.to_string(),
-            })
-        }
+      impl FileWrapper {
+          fn new(path: &str) -> io::Result<FileWrapper> {
+              Ok(FileWrapper {
+                  file: File::create(path)?,
+                  path: path.to_string(),
+              })
+          }
 
-        fn write(&mut self, content: &str) -> io::Result<()> {
-            self.file.write_all(content.as_bytes())
-        }
-    }
+          fn write(&mut self, content: &str) -> io::Result<()> {
+              self.file.write_all(content.as_bytes())
+          }
+      }
 
-    impl Drop for FileWrapper {
-        fn drop(&mut self) {
-            // Ensure file is properly closed
-            // Could also do cleanup like deletion
-            println!("Closing file: {}", self.path);
-        }
-    }
+      impl Drop for FileWrapper {
+          fn drop(&mut self) {
+              // Ensure file is properly closed
+              // Could also do cleanup like deletion
+              println!("Closing file: {}", self.path);
+          }
+      }
     ```
     Pattern RAII:
     1. Il costruttore acquisisce le risorse
@@ -1054,6 +1084,8 @@ fn main() {
   index={15}
   group="Pattern di Progettazione"
   title="Copia vs Clona"
+  objectives={["Distinguere Copy e Clone","Capire quando implementare ciascun trait","Derivare Copy e Clone quando opportuno"]}
+  difficulty={3}
   options={[
     {text: 'Errore di compilazione', hint: 'L\'attributo derive è usato correttamente'},
     {text: 'Creata copia profonda', isAnswer: true},
@@ -1065,21 +1097,21 @@ fn main() {
   <div className="question">
     Cosa succede quando cloni questa struct Philosophy?
     ```rust
-    #[derive(Clone)]
-    struct Philosophy {
-        school: String,
-        founder: String,
-    }
+      #[derive(Clone)]
+      struct Philosophy {
+          school: String,
+          founder: String,
+      }
 
-    fn main() {
-        let stoicism = Philosophy {
-            school: String::from("Stoicism"),
-            founder: String::from("Zeno of Citium")
-        };
-        let new_school = stoicism.clone();
-        println!("{} - {}", 
-            stoicism.school, new_school.school);
-    }
+      fn main() {
+          let stoicism = Philosophy {
+              school: String::from("Stoicism"),
+              founder: String::from("Zeno of Citium")
+          };
+          let new_school = stoicism.clone();
+          println!("{} - {}",
+              stoicism.school, new_school.school);
+      }
     ```
   </div>
   </slot>
@@ -1095,6 +1127,8 @@ fn main() {
   index={16}
   group="Buone Pratiche"
   title="Ottimizzazione della Memoria"
+  objectives={["Analizzare layout e allineamento delle struct","Ottimizzare l’ordine dei campi per la memoria","Applicare l’allineamento per ridurre la dimensione delle struct"]}
+  difficulty={4}
   options={[
     {text: '16 byte', hint: 'Considera i requisiti di allineamento'},
     {text: '24 byte'},
@@ -1106,11 +1140,11 @@ fn main() {
   <div className="question">
     Su un tipico target Rust a 64-bit attuale, qual è la dimensione di questa struct?
     ```rust
-    struct Metadata {
-        id: u32,        // How many bytes?
-        name: String,   // How many bytes?
-        active: bool    // How many bytes + padding?
-    }
+      struct Metadata {
+          id: u32,        // How many bytes?
+          name: String,   // How many bytes?
+          active: bool    // How many bytes + padding?
+      }
     ```
   </div>
   </slot>
@@ -1118,28 +1152,28 @@ fn main() {
   <div className="explanation">
     Analizziamo la disposizione della memoria della struct e l'ottimizzazione:
     ```rust
-    // Typical current 64-bit Rust layout: 32 bytes
-    struct Metadata {
-        id: u32,       // 4 bytes
-        name: String,  // 24 bytes on 64-bit systems
-        active: bool   // 1 byte + padding/alignment
-    }
+      // Typical current 64-bit Rust layout: 32 bytes
+      struct Metadata {
+          id: u32,       // 4 bytes
+          name: String,  // 24 bytes on 64-bit systems
+          active: bool   // 1 byte + padding/alignment
+      }
 
-    // Reordering fields may reduce padding for repr(C) structs,
-    // but default Rust layout is not a stable ABI guarantee.
-    struct OptimizedMetadata {
-        name: String,   // 24 bytes
-        id: u32,       // 4 bytes
-        active: bool    // 1 byte + 3 padding
-    }
+      // Reordering fields may reduce padding for repr(C) structs,
+      // but default Rust layout is not a stable ABI guarantee.
+      struct OptimizedMetadata {
+          name: String,   // 24 bytes
+          id: u32,       // 4 bytes
+          active: bool    // 1 byte + 3 padding
+      }
 
-    // Further optimization with packing
-    #[repr(packed)]
-    struct PackedMetadata {
-        id: u32,
-        active: bool,
-        name: String,
-    }
+      // Further optimization with packing
+      #[repr(packed)]
+      struct PackedMetadata {
+          id: u32,
+          active: bool,
+          name: String,
+      }
     ```
     Considerazioni sul layout della memoria:
     1. Requisiti di allineamento:
@@ -1167,6 +1201,8 @@ fn main() {
   index={17}
   group="Pattern avanzati"
   title="Astrazioni a costo zero"
+  objectives={["Comprendere le astrazioni a costo zero","Analizzare costi di compilazione e di esecuzione","Applicare astrazioni senza costi aggiuntivi quando ottimizzabili"]}
+  difficulty={5}
   options={[
   {
     "text": "Overhead di runtime da Iterator",
@@ -1188,20 +1224,20 @@ fn main() {
   <slot name="question">
   <div className="question">
 Con le ottimizzazioni attive, cosa possono ottenere le astrazioni degli iteratori a costo zero in queste implementazioni?
-```rust
-    // Implementation A: Iterator
-    fn sum_iterator(v: &[i32]) -> i32 {
-        v.iter().fold(0, |acc, &x| acc + x)
-    }
+    ```rust
+      // Implementation A: Iterator
+      fn sum_iterator(v: &[i32]) -> i32 {
+          v.iter().fold(0, |acc, &x| acc + x)
+      }
 
-    // Implementation B: Raw loop
-    fn sum_loop(v: &[i32]) -> i32 {
-        let mut sum = 0;
-        for i in 0..v.len() {
-            sum += v[i];
-        }
-        sum
-    }
+      // Implementation B: Raw loop
+      fn sum_loop(v: &[i32]) -> i32 {
+          let mut sum = 0;
+          for i in 0..v.len() {
+              sum += v[i];
+          }
+          sum
+      }
     ```
   </div>
   </slot>
@@ -1209,7 +1245,7 @@ Con le ottimizzazioni attive, cosa possono ottenere le astrazioni degli iterator
   <div className="explanation">
 Le astrazioni a costo zero consentono codice ottimizzato efficiente; non garantiscono tempi identici per ogni compilatore o livello di ottimizzazione. Le funzioni calcolano la stessa somma. Misura il carico reale quando le prestazioni contano.
 
-```rust
+    ```rust
 use std::ops::Range;
 trait ZeroCost {
     fn process(&self) -> u32;
@@ -1219,7 +1255,7 @@ impl ZeroCost for Range<u32> {
         self.clone().fold(0, |acc, x| acc + x)
     }
 }
-```
+    ```
   </div>
   </slot>
 </Challenge>

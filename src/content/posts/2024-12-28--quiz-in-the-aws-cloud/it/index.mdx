@@ -1,7 +1,7 @@
 ---
 title: 'Quiz:Archiviazione AWS: oltre 20 domande!'
 subTitle: Riesci a orientarti nel labirinto del cloud?
-label: AWS Storage
+label: Archiviazione AWS
 category: Quiz
 subCategory: Cloud
 modified: '2024-12-29'
@@ -37,10 +37,12 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={0}
   group="Riscaldamento"
   title="Curiosità S3"
+  objectives={["Ricordare il significato del nome AWS S3","Riconoscere i servizi AWS fondamentali di archiviazione"]}
+  difficulty={1}
   options={[
     {text: 'Archiviazione Server v3'},
     {text: 'Archiviazione come Servizio'},
-    {text: 'Servizio di Archiviazione Semplice', isAnswer: true},
+    {text: 'Simple Storage Service (servizio di archiviazione semplice)', isAnswer: true},
     {text: 'Servizio di Archiviazione Sfrontato'},
     {text: 'Archivio Semplice Sincronizzato'},
   ]}
@@ -72,6 +74,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={1}
   group="Senza schema"
   title="DynamoDB"
+  objectives={["Definire le caratteristiche dei database senza schema","Spiegare il modello dati flessibile di DynamoDB"]}
+  difficulty={2}
   options={[
     {text: 'Memorizza proprietà arbitrarie', isAnswer: true},
     {text: 'Chiavi di partizione dinamiche'},
@@ -99,6 +103,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={2}
   group="Senza schema"
   title="DynamoDB"
+  objectives={["Confrontare le operazioni batch di DynamoDB","Ottimizzare gli aggiornamenti DynamoDB","Valutare la scalabilità degli aggiornamenti"]}
+  difficulty={4}
   options={[
     {text: 'PutItem', hint: 'Crea un nuovo elemento o sostituisce un elemento esistente con uno nuovo.'},
     {text: 'BatchUpdateItem', hint: 'Non esiste.'},
@@ -137,7 +143,9 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Capacità di query"
-  title="Funzionalità diricerca avanzata"
+  title="Funzionalità di ricerca avanzata"
+  objectives={["Comprendere le query avanzate nei servizi AWS","Confrontare le funzionalità di ricerca full-text"]}
+  difficulty={3}
   options={[
     {text: 'ElastiCache', hint: 'Principalmente una cache in‑memory; le versioni più recenti di Valkey includono funzionalità di ricerca.'},
     {text: 'OpenSearch', isAnswer: true},
@@ -169,6 +177,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={4}
   group="RDS"
   title="Distribuzione Multi-AZ"
+  objectives={["Identificare lo scopo principale delle distribuzioni Multi-AZ","Distinguere alta disponibilità e scalabilità delle letture"]}
+  difficulty={2}
   options={[
     {text: 'Riduce i costi di storage'},
     {text: 'Risolvi il problema di egress'},
@@ -204,6 +214,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={5}
   group="WebSocket"
   title="Magia dei WebSocket"
+  objectives={["Confrontare il supporto WebSocket nei servizi AWS","Identificare i limiti architetturali dei servizi AWS","Valutare le opzioni di implementazione WebSocket"]}
+  difficulty={3}
   options={[
     {text: 'API Gateway', isAnswer: true},
     {text: 'EKS', hint: 'EKS può eseguire i tuoi propri servizi WebSocket a lungo termine.'},
@@ -226,13 +238,13 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
     API Gateway supporta API WebSocket bidirezionali, ma l'implementazione è gestita da API Gateway anziché essere un socket diretto verso il tuo processo server.
     API Gateway mantiene la connessione client e instrada i messaggi a Lambda, endpoint HTTP o altre integrazioni. I messaggi possono essere inviati nuovamente ai client connessi tramite l'API di gestione di API Gateway.
 
-    Gli altri sono molto più amichevoli con i WebSocket:
+    Le alternative hanno modelli di distribuzione diversi:
     - Lightsail: Perfetto per configurazioni WebSocket semplici 👌
     - AppSync: Usa i WebSocket per le sottoscrizioni GraphQL gestite
     - EC2: La tua classica opzione "fai quello che vuoi" per i WebSocket
     - EKS: Ottimo per eseguire cluster WebSocket scalabili
 
-    Pro tip: Se ti serve la potenza grezza dei WebSocket, resta sui servizi di calcolo!
+    Scegli un’API gestita o un server eseguito sui tuoi servizi di calcolo in base al controllo richiesto, alle integrazioni e all’onere operativo.
   </div>
   </slot>
 </Challenge>
@@ -242,6 +254,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={6}
   group="Sicurezza S3"
   title="Politica del bucket S3"
+  objectives={["Applicare le buone pratiche di sicurezza a S3","Applicare il principio del minimo privilegio"]}
+  difficulty={2}
   options={[
     {text: 'Rendi pubblici i nuovi bucket', hint: 'Principio del minimo privilegio, prima.'},
     {text: 'Sposta S3 on-premises per controllare completamente le ACL'},
@@ -257,7 +271,7 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Nella quasi TUTTI i sistemi, adottare un design a "minimo privilegio" è un modo fondamentale per rinforzare e garantire il futuro. Cercare di bloccare un sistema esistente è difficile quanto spostare un intero edificio ufficio su una nuova fondazione.
+    In quasi tutti i sistemi, adottare un design a "minimo privilegio" è un modo fondamentale per rinforzare e garantire il futuro. Cercare di bloccare un sistema esistente è difficile quanto spostare un intero edificio ufficio su una nuova fondazione.
 
     I bucket S3 non fanno eccezione. Per applicare il principio del minimo privilegio, inizia senza permessi e concedi solo l'accesso necessario. Usa ruoli e policy IAM per controllare l'accesso e verifica regolarmente i permessi dei bucket.
 
@@ -280,6 +294,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={7}
   group="Aurora"
   title="Aurora Serverless"
+  objectives={["Identificare le caratteristiche di Aurora Serverless","Distinguere database serverless e con capacità provisionata"]}
+  difficulty={2}
   options={[
     {text: 'Sempre più economico rispetto a quello provisionato'},
     {text: 'Scala automaticamente la capacità di calcolo', isAnswer: true},
@@ -312,6 +328,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={8}
   group="Batch, parte 1!"
   title="Limiti di BatchGetItem"
+  objectives={["Ricordare i limiti di BatchGetItem","Confrontare BatchGetItem con altre operazioni batch"]}
+  difficulty={2}
   options={[
     {text: '1', hint: '... Insisto sul batching.'},
     {text: '25', hint: 'Questo è il limite per `BatchWriteItem`.'},
@@ -319,7 +337,7 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
     {text: '75', hint: 'Vicino, ma c\'è un numero tondo.'},
     {text: '50', hint: 'Un po\' più alto per `BatchGetItem`.'},
     {text: '200', hint: 'Un po\' troppo alto...'},
-    {text: 'Unlimited', hint: 'Esiste un limite fisso per `BatchGetItem`.'},
+    {text: 'Illimitato', hint: 'Esiste un limite fisso per `BatchGetItem`.'},
   ]}
 >
   <slot name="question">
@@ -335,7 +353,7 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
 
     Comprendere questi limiti è fondamentale per ottimizzare le prestazioni della tua applicazione e garantire operazioni di dati efficienti.
 
-    **Nota:** È possibile superare _alcuni_ di questi limiti – se riesci a convincere il tuo account manager AWS. 😎
+    Il massimo di 100 elementi è un limite fisso dell’API, insieme al limite di 16 MB della risposta. Per leggere più dati, suddividi le richieste e riprova le `UnprocessedKeys` con backoff. Le quote di throughput modificabili sono un limite distinto.
   </div>
   </slot>
 </Challenge>
@@ -345,26 +363,26 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={9}
   group="Batch, parte 2!"
   title="Operazioni Batch"
+  objectives={["Comprendere i limiti delle operazioni batch DynamoDB","Distinguere operazioni singole e batch"]}
+  difficulty={4}
   options={[
     {text: '1', isAnswer: true},
     {text: '10'},
     {text: '25', hint: 'Buona ipotesi...'},
     {text: '50'},
     {text: '100', hint: 'Stai pensando al limite di GetItem?'},
-    {text: '100 when streaming'},
-    {text: 'None of the above', hint: 'È un po\' complicato...'},
+    {text: '100 durante lo streaming'},
+    {text: 'Nessuna delle precedenti', hint: 'È un po\' complicato...'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qual è il numero massimo di documenti che DynamoDB può `UPDATE` in un batch?
+    Quanti elementi può aggiornare una singola chiamata DynamoDB `UpdateItem`?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    I client DynamoDB sono sostanzialmente tutti wrapper per la sua API HTTP. L'operazione `BatchWriteItem` può `PUT` o `DELETE` fino a **25** documenti per richiesta HTTP, ma non può `UPDATE` più documenti.
-
-    Mentre DynamoDB può `INSERT` fino a **25** documenti per richiesta HTTP, può `UPDATE` solo **1** documento per richiesta usando l'operazione `UpdateItem`.
+    `UpdateItem` modifica un solo elemento per richiesta. `BatchWriteItem` supporta fino a 25 operazioni PUT o DELETE, ma non UPDATE. Questo limite di `UpdateItem` non riguarda tutte le API DynamoDB: transazioni e richieste batch PartiQL possono coordinare più aggiornamenti.
   </div>
   </slot>
 </Challenge>
@@ -374,11 +392,13 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={10}
   group="DynamoDB"
   title="Capacità Provisionata vs On-Demand"
+  objectives={["Confrontare le modalità di capacità DynamoDB","Scegliere la modalità adatta al carico","Valutare i costi delle scelte di capacità"]}
+  difficulty={3}
   options={[
     {text: 'La modalità provisionata è sempre migliore'},
     {text: 'On-Demand ha capacità illimitata'},
     {text: 'Funzionano identicamente'},
-    {text: 'On-Demand è più economico per carichi di lavoro imprevedibili', isAnswer: true},
+    {text: 'On-Demand evita di pianificare capacità provisionata per traffico sporadico o imprevedibile', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -399,6 +419,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
     - Maggiore controllo sulle prestazioni
     - Possibili risparmi sui costi
 
+    On-Demand non è sempre più economico: confronta costi e profilo del carico.
+
     [Modalità di Capacità DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
   </div>
   </slot>
@@ -409,6 +431,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={11}
   group="Prestazioni S3"
   title="Ottimizzazione delle prestazioni S3"
+  objectives={["Ottimizzare S3 per molte richieste","Applicare buone pratiche per i nomi delle chiavi S3","Progettare la distribuzione tra partizioni S3"]}
+  difficulty={3}
   options={[
     {text: 'Usa prefissi casuali/hash'},
     {text: 'Usa prefissi logici; la randomizzazione non è necessaria', isAnswer: true},
@@ -441,6 +465,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={12}
   group="Backup RDS"
   title="Strategia di backup RDS"
+  objectives={["Identificare buone strategie di backup RDS","Comprendere il ripristino a un punto nel tempo"]}
+  difficulty={2}
   options={[
     {text: 'Solo snapshot manuali'},
     {text: 'Nessun backup necessario'},
@@ -476,6 +502,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={13}
   group="ElastiCache"
   title="Redis vs Memcached"
+  objectives={["Confrontare Redis e Memcached","Distinguere le funzionalità dei motori di cache"]}
+  difficulty={2}
   options={[
     {text: 'Redis supporta più strutture dati e operazioni', isAnswer: true},
     {text: 'Identico in tutti gli aspetti'},
@@ -511,6 +539,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={14}
   group="Indici DynamoDB"
   title="Indice Secondario Globale"
+  objectives={["Comprendere lo scopo dei GSI","Valutare i pattern di accesso DynamoDB","Progettare query efficienti"]}
+  difficulty={3}
   options={[
     {text: 'Identico alla chiave primaria'},
     {text: 'Senza costi aggiuntivi'},
@@ -543,6 +573,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={15}
   group="Ciclo di vita S3"
   title="Gestione del ciclo di vita S3"
+  objectives={["Comprendere la gestione del ciclo di vita S3","Ottimizzare i costi S3"]}
+  difficulty={2}
   options={[
     {text: 'Sposta manualmente gli oggetti'},
     {text: 'Transizione automatica degli oggetti tra classi di storage', isAnswer: true},
@@ -574,6 +606,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={16}
   group="Scalabilità Aurora"
   title="Scalare le letture con Amazon Aurora"
+  objectives={["Ricordare i limiti delle repliche di lettura Aurora","Comprendere la scalabilità delle letture Aurora"]}
+  difficulty={2}
   options={[
     {text: 'Limitato a una singola replica di lettura', hint: 'Pensa alle funzionalità di scalabilità di Aurora.'},
     {text: 'Nessuna scalabilità di lettura possibile', hint: 'È coerente con le capacità di Aurora?'},
@@ -606,6 +640,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={17}
   group="Sicurezza RDS"
   title="Crittografia RDS"
+  objectives={["Identificare le funzionalità di cifratura RDS","Comprendere la protezione dei dati in RDS"]}
+  difficulty={2}
   options={[
     {text: 'Cifra i dati a riposo e in transito', isAnswer: true},
     {text: 'La crittografia è facoltativa'},
@@ -637,10 +673,12 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={18}
   group="Flussi DynamoDB"
   title="Scopo di DynamoDB Streams"
+  objectives={["Comprendere i casi d’uso di DynamoDB Streams","Progettare architetture basate su eventi con DynamoDB","Valutare l’elaborazione tramite stream"]}
+  difficulty={3}
   options={[
     {text: 'Archivia copie aggiuntive dei dati'},
     {text: 'Crediti DynamoDB per fornitori green', hint: 'Davvero?'},
-    {text: 'Aumentare le prestazioni di scrittura', hint: 'I flussi sono '},
+    {text: 'Aumentare le prestazioni di scrittura', hint: 'Gli stream catturano le modifiche; non aumentano la capacità di scrittura.'},
     {text: 'Catturare le modifiche a livello di elemento per architetture basate su eventi', isAnswer: true},
     {text: 'Alternativa agli indici secondari globali', hint: 'Stai indovinando?'},
   ]}
@@ -668,7 +706,9 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   client:visible={{rootMargin: "150px"}}
   index={19}
   group="Trasferimento S3"
-  title="Trasferimento diFile di grandi dimensioni"
+  title="Trasferimento di file di grandi dimensioni"
+  objectives={["Identificare buone pratiche per caricare file grandi","Comprendere i vantaggi del caricamento multiparte"]}
+  difficulty={2}
   options={[
     {text: 'Usa sempre una singola richiesta PUT'},
     {text: 'Usa Multipart Upload per file di grandi dimensioni', isAnswer: true},
@@ -700,6 +740,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={20}
   group="Ottimizzazione dei Costi"
   title="Analisi dei Costi di Storage"
+  objectives={["Confrontare i costi di archiviazione AWS","Valutare i costi delle scelte di archiviazione","Applicare strategie di ottimizzazione dei costi"]}
+  difficulty={4}
   options={[
     {text: 'S3 Standard per tutti i dati'},
     {text: 'Usa sempre lo storage più economico'},
@@ -735,6 +777,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={21}
   group="Coerenza DynamoDB"
   title="Modelli di coerenza"
+  objectives={["Comprendere i modelli di coerenza DynamoDB","Valutare i compromessi tra livelli di coerenza","Applicare i modelli di coerenza a casi reali"]}
+  difficulty={4}
   options={[
     {text: '100 letture al secondo', isAnswer: true},
     {text: '50 letture al secondo'},
@@ -772,6 +816,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={22}
   group="Alta Disponibilità Aurora"
   title="Meccanismo di Failover di Aurora"
+  objectives={["Comprendere il failover Aurora","Identificare configurazioni ad alta disponibilità","Applicare buone pratiche di ripristino dai disastri"]}
+  difficulty={3}
   options={[
     {text: 'È necessaria un\'intervento manuale'},
     {text: 'Richiede la riconfigurazione dell\'applicazione'},
@@ -806,31 +852,23 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={23}
   group="Coerenza S3"
   title="Coerenza Forte di S3"
+  objectives={["Comprendere il modello di coerenza S3","Identificare le garanzie delle operazioni S3","Applicare la coerenza alla progettazione delle applicazioni"]}
+  difficulty={3}
   options={[
     {text: 'Solo per nuovi oggetti'},
-    {text: 'Coerenza forte per tutte le operazioni', isAnswer: true},
+    {text: 'Coerenza forte per le successive operazioni GET e LIST sugli oggetti', isAnswer: true},
     {text: 'Consistenza eventuale per aggiornamenti'},
     {text: 'Dipende dalla regione'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    A partire dalla fine del 2020, quale modello di coerenza fornisce S3 per tutte le operazioni?
+    Quale coerenza offre S3 per le successive operazioni GET e LIST dopo una PUT o DELETE riuscita su un oggetto?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Modello di Coerenza S3:
-    - Coerenza forte di lettura-dopo-scrittura per tutte le operazioni
-    - Si applica a PUT e DELETE
-    - Non serve più le soluzioni alternative usate in precedenza
-    - Nessun costo aggiuntivo
-
-    Impatto:
-    - Logica dell'applicazione semplificata
-    - Non servono controlli di coerenza
-    - Letture immediate affidabili dopo le scritture
-    - Affidabilità dell'applicazione migliorata
+    S3 offre coerenza forte di lettura dopo scrittura per le operazioni sugli oggetti: dopo una PUT o DELETE riuscita, le successive GET e LIST riflettono la modifica. Questo riduce la necessità dei precedenti espedienti per tali letture, ma non significa che ogni impostazione o funzionalità di S3 abbia la stessa garanzia.
   </div>
   </slot>
 </Challenge>
@@ -840,6 +878,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={24}
   group="Funzionalità di DynamoDB"
   title="Tempo di vita (TTL)"
+  objectives={["Comprendere la funzionalità TTL di DynamoDB","Applicare TTL al ciclo di vita dei dati","Progettare strategie efficienti di scadenza"]}
+  difficulty={3}
   options={[
     {text: 'Elimina gli elementi immediatamente alla scadenza'},
     {text: 'Richiede un trigger di cancellazione manuale'},
@@ -874,6 +914,8 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
   index={25}
   group="Aurora Serverless"
   title="Comportamento di scaling"
+  objectives={["Comprendere la scalabilità di Aurora Serverless","Identificare gli eventi che attivano lo scaling","Ottimizzare i costi per carichi variabili"]}
+  difficulty={4}
   options={[
     {text: 'La velocità di scaling dipende dalla capacità corrente e configurata', isAnswer: true},
     {text: 'Scala istantaneamente su richiesta'},
@@ -904,9 +946,9 @@ Preparati a dimostrare la tua expertise nel cloud! 🚀
 
 </QuizUI>
 
-Wow, quell’avventura è finita davvero nei dettagli! 🚀☁️  
+Wow, quell’avventura è finita davvero nei dettagli! 🚀☁️
 Spero ti sia piaciuto il percorso e, chissà, magari hai imparato qualcosa sui servizi di storage di AWS.
 
-Dai un’occhiata ad altre [sfide di Dan](/challenges/)! 🧠  
+Dai un’occhiata ad altre [sfide di Dan](/challenges/)! 🧠
 
 Nota legale: questo quiz è solo a scopo didattico. Tutti i marchi e i diritti d’autore appartengono ai rispettivi proprietari, in particolare ai grandi nomi.

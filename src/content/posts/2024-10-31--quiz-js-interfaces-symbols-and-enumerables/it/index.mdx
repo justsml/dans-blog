@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Simboli e Enumerabili'
 subTitle: Conosci le parti meno famose di ES2015?
-label: Symbols
+label: Simboli
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -19,9 +19,9 @@ sourceHash: "2f893bc4aee3"
 ---
 ## Quiz: Interfacce JavaScript, Symbol e Enumerabili
 
-> * **Metti alla prova le tue abilità JavaScript!** 🚀  
-> * Nessun login o registrazione richiesti. ✨  
-> * Scelta multipla. 🤖 … _Quanto può essere difficile, vero?_  
+> * **Metti alla prova le tue abilità JavaScript!** 🚀
+> * Nessun login o registrazione richiesti. ✨
+> * Scelta multipla. 🤖 … _Quanto può essere difficile, vero?_
 
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
@@ -55,10 +55,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In JavaScript, un getter può essere accesso come una proprietà normale. Non è necessario chiamarlo come una funzione.
+    In JavaScript, si può accedere a un getter come una proprietà normale. Non è necessario chiamarlo come una funzione.
     In questo esempio, accedere a `obj.val` direttamente invoca il metodo getter e restituisce `got it!`.
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 <Challenge
@@ -90,6 +91,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     I Symbol sono un tipo primitivo unico e immutabile che può essere usato come chiave per le proprietà degli oggetti. Questo aiuta a evitare collisioni di nomi, soprattutto in grandi codebase o quando si scrivono librerie riutilizzabili.
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 <Challenge
@@ -124,6 +126,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     La proprietà `enumerable` in `Object.defineProperty()` controlla se la proprietà apparirà nei metodi di enumerazione come `for...in`. In questo esempio, poiché `enumerable: true`, la proprietà `age` verrà elencata durante l'iterazione.
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 <Challenge
@@ -135,7 +138,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'true'},
     {text: 'false', isAnswer: true},
     {text: 'undefined'},
-    {text: 'Depends on context'},
+    {text: 'Dipende dal contesto'},
   ]}
 >
   <slot name="question">
@@ -155,6 +158,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Quando usi `Object.defineProperty()` senza specificare `enumerable`, il valore predefinito è `false`. Ciò significa che la proprietà `make` non comparirà in `Object.keys()` né in altri metodi di enumerazione.
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 <Challenge
@@ -184,13 +188,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Ogni chiamata a `Symbol()` crea un valore unico e immutabile, anche se la descrizione è identica. In questo caso, `sym1` e `sym2` sono simboli diversi, quindi il confronto restituisce `false`.
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Interfacce avanzate"
-  title="Simboli come chiavi non enumerabili"
+  title="Chiavi Symbol e iterazione"
   options={[
     {text: 'No, non lo farà', isAnswer: true},
     {text: 'Sì, verrà elencata'},
@@ -218,6 +223,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Le proprietà indicizzate da Symbol possono avere il proprio flag `enumerable`, ma `for...in` e `Object.keys()` visitano solo le proprietà enumerabili con chiave stringa. In questo esempio, verrà elencata solo `regularKey`, non la proprietà indicizzata da Symbol.
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 <Challenge
@@ -253,6 +259,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
+  <slot name="hints"></slot>
 </Challenge>
 
 </QuizUI>

@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Delizie della destrutturazione'
 subTitle: Sei unmaestro del destructuring?
-label: Destructuring
+label: Destrutturazione
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -37,12 +37,12 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Riscaldamento: Oggetti"
   title="Destrutturazione di Oggetti Base"
   options={[
-    {text: 'Nome: Dan Levy, Età: 20'},
-    {text: 'Nome: Dan Levy, Età: 40'},
-    {text: 'Nome: Dan Levy, Età: Infinity'},
-    {text: 'Nome: Dan Levy, Età: undefined', isAnswer: true},
+    {text: 'Name: Dan Levy, Age: 20'},
+    {text: 'Name: Dan Levy, Age: 40'},
+    {text: 'Name: Dan Levy, Age: Infinity'},
+    {text: 'Name: Dan Levy, Age: undefined', isAnswer: true},
     {text: 'Errore: Impossibile leggere la proprietà \'age\''},
-    {text: 'Nome: undefined, Età: 40'},
+    {text: 'Name: undefined, Age: 40'},
   ]}
 >
   <slot name="question">
@@ -76,12 +76,12 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Riscaldamento: Array"
   title="Valore predefinito nella destrutturazione di oggetti"
   options={[
-    {text: 'Nome: Dan Levy, Età: NaN'},
-    {text: 'Nome: Dan Levy, Età: null'},
-    {text: 'Nome: Dan Levy, Età: undefined', isAnswer: true},
-    {text: 'Nome: Dan Levy, Età: 40'},
+    {text: 'Name: Dan Levy, Age: NaN'},
+    {text: 'Name: Dan Levy, Age: null'},
+    {text: 'Name: Dan Levy, Age: undefined', isAnswer: true},
+    {text: 'Name: Dan Levy, Age: 40'},
     {text: 'Errore: Impossibile destrutturare la proprietà \'age\''},
-    {text: 'SyntaxError: Token inaspettato \',\''},
+    {text: 'SyntaxError: Unexpected token \',\''},
   ]}
 >
   <slot name="question">
@@ -161,10 +161,10 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Predefiniti"
   title="Valori predefiniti nella destrutturazione di oggetti"
   options={[
-    {text: 'Ciao Dan da Sconosciuto'},
-    {text: 'Ciao Dan da Denver'},
-    {text: 'Ciao Sconosciuto da Sconosciuto'},
-    {text: 'Ciao Sconosciuto da Denver'},
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
     {text: 'Errore', isAnswer: true},
   ]}
 >
@@ -189,16 +189,13 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La proprietà `birth` non esiste su `person`, quindi l'intero oggetto ha ancora bisogno di un valore predefinito, non solo la proprietà annidata. In pratica manca un valore predefinito ` = {}`.
+    Il valore predefinito di `place` si applica solo dopo aver ottenuto l’oggetto che lo contiene. Qui `person.birth` è `undefined`, quindi la destrutturazione fallisce prima di poter usare `Unknown`. Serve un valore predefinito anche per l’oggetto: `birth: { place = "Unknown" } = {}`.
 
-    In questo modo si dice "se `person.birth` è `undefined`, allora `place` è `Unknown`". Ma `person.birth` è `undefined`, quindi tenta di destrutturare `undefined`, il che genera un errore.
     ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
-
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
+    TypeError
     ```
+
+    Il testo esatto del messaggio varia tra browser e runtime.
   </div>
   </slot>
 </Challenge>
@@ -209,11 +206,11 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Predefiniti"
   title="Valori predefiniti nella destrutturazione di oggetti"
   options={[
-    {text: 'Ciao Dan da Denver'},
-    {text: 'Ciao Dan da Johannesburg'},
-    {text: 'Ciao Dan da Sconosciuto', isAnswer: true},
-    {text: 'Ciao Sconosciuto da Sconosciuto'},
-    {text: 'Ciao Sconosciuto da Denver'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Dan from Johannesburg'},
+    {text: 'Hi Dan from Unknown', isAnswer: true},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
     {text: 'Errore'},
   ]}
 >
@@ -249,11 +246,11 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Argomenti della Funzione"
   title="Destrutturare i Parametri della Funzione con Valori Predefiniti"
   options={[
-    {text: 'Ciao Dan da undefined'},
-    {text: 'Ciao Dan da Unknown'},
-    {text: 'Ciao Dan da Denver'},
-    {text: 'Ciao Unknown da Unknown'},
-    {text: 'Ciao Unknown da Denver'},
+    {text: 'Hi Dan from undefined'},
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
     {text: 'Errore', isAnswer: true},
   ]}
 >
@@ -287,13 +284,13 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Argomenti della funzione"
   title="Destructuring con valori predefiniti nidificati"
   options={[
-    {text: 'Sconosciuto, Sconosciuto, Joburg'},
-    {text: 'Sconosciuto, Sconosciuto, Sconosciuto'},
-    {text: 'Sconosciuto, `undefined`, Joburg'},
-    {text: 'N/D, `undefined`, Joburg'},
-    {text: 'N/D, Sconosciuto, Joburg'},
-    {text: 'N/D, N/D, Joburg', isAnswer: true},
-    {text: 'Sconosciuto, N/D, Joburg'},
+    {text: 'Unknown, Unknown, Joburg'},
+    {text: 'Unknown, Unknown, Unknown'},
+    {text: 'Unknown, `undefined`, Joburg'},
+    {text: 'N/A, `undefined`, Joburg'},
+    {text: 'N/A, Unknown, Joburg'},
+    {text: 'N/A, N/A, Joburg', isAnswer: true},
+    {text: 'Unknown, N/A, Joburg'},
     {text: 'Errore'},
   ]}
 >
@@ -317,9 +314,9 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La funzione `displayPlace` utilizzerà UNICAMENTE un oggetto predefinito se non viene passato alcun oggetto. Quindi, l'unico modo per ottenere il valore predefinito `{ place: "Unknown" }` è chiamare la funzione senza argomenti `displayPlace()`.
+    L’oggetto predefinito `{ place: "Unknown" }` viene usato se l’argomento è omesso oppure è esplicitamente `undefined`: sia `displayPlace()` sia `displayPlace(undefined)` lo attivano.
 
-    Un altro comportamento notevole è che passare `undefined` per `place` farà sì che venga usato il valore di default, un po' simile al comportamento di `JSON.stringify` (ignora `undefined`, riconosce `null`).
+    Quando l’oggetto è presente, una proprietà `place` mancante o uguale a `undefined` attiva invece il valore predefinito della proprietà, `N/A`.
 
     Questo produce:
     ```js
@@ -339,18 +336,18 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   options={[
     {text: 'N/A, N/A'},
     {text: 'N/A, undefined'},
-    {text: 'Sconosciuto, N/A'},
-    {text: 'Sconosciuto, Sconosciuto'},
-    {text: 'Sconosciuto, undefined'},
+    {text: 'Unknown, N/A'},
+    {text: 'Unknown, Unknown'},
+    {text: 'Unknown, undefined'},
     {text: 'null, N/A', isAnswer: true},
-    {text: 'null, Sconosciuto'},
+    {text: 'null, Unknown'},
     {text: 'null, undefined'},
     {text: 'Errore'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Simile al precedente... come viene gestito `null`?_
+    Simile al precedente... come viene gestito `null`?
     ```js
     function displayPlace({
       name = "N/A",
@@ -366,7 +363,7 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In questo caso, la proprietà `place` è impostata a `null` nella prima chiamata e a `undefined` nella seconda. Il valore predefinito per `place` viene usato solo se l'intero oggetto è mancante **o** `undefined`. I null arriveranno come `null`.
+    Il valore predefinito della proprietà `place` si applica quando la proprietà manca o vale `undefined`, anche se l’oggetto è presente. `null` viene conservato. Le due chiamate stampano quindi `null` e `N/A`.
   </div>
   </slot>
 </Challenge>
@@ -377,9 +374,9 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="Tipi Inline TypeScript"
   title="Destructuring con Valori Predefiniti Annidati"
   options={[
-    {text: 'N/D'},
+    {text: 'N/A'},
     {text: 'undefined'},
-    {text: 'Sconosciuto'},
+    {text: 'Unknown'},
     {text: '\'null\''},
     {text: 'Errore TypeScript', isAnswer: true},
   ]}
@@ -422,8 +419,8 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   options={[
     {text: 'undefined'},
     {text: 'null'},
-    {text: 'N/D'},
-    {text: 'Sconosciuto'},
+    {text: 'N/A'},
+    {text: 'Unknown'},
     {text: 'Denver', isAnswer: true},
     {text: 'SyntaxError'},
     {text: 'Errore: Tipo non valido'},
@@ -505,10 +502,10 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
   group="TypeScript + Assegnazione"
   title="Destrutturazione con Valori Annidati, Assegnazione e Tipi"
   options={[
-    {text: 'Ciao Dan Levy da N/A'},
-    {text: 'Ciao Dan Levy da Cape Town'},
-    {text: 'Ciao N/A N/A da N/A'},
-    {text: 'Ciao N/A N/A da Cape Town'},
+    {text: 'Hi Dan Levy from N/A'},
+    {text: 'Hi Dan Levy from Cape Town'},
+    {text: 'Hi N/A N/A from N/A'},
+    {text: 'Hi N/A N/A from Cape Town'},
     {text: 'Errore', isAnswer: true},
   ]}
 >
@@ -555,3 +552,7 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
 </Challenge>
 
 </QuizUI>
+
+## Come te la sei cavata?
+
+La destrutturazione può essere insidiosa: valori predefiniti, rinomina e tipi si intrecciano. Continua ad allenarti con [altre sfide](/challenges/).

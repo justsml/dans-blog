@@ -2,7 +2,7 @@
 social_image: ../mobile.webp
 title: 'Quiz: Postgres in profondità, parte 2'
 subTitle: Sei un duro dell'SQL? O un rammollito?
-label: 'Deep PostgreSQL #2'
+label: 'PostgreSQL avanzato #2'
 category: Quiz
 subCategory: Database
 modified: '2024-12-02'
@@ -123,23 +123,13 @@ In bocca al lupo! 🍀
 >
   <slot name="question">
   <div className="question">
-    Quale di queste funzionalità di PostgreSQL **NON** ❌ fa parte dello standard ANSI SQL?
+    Quale clausola è documentata da PostgreSQL come un’estensione allo standard SQL?
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    Esempi di estensioni PostgreSQL rispetto ad ANSI SQL:
-    - La clausola `RETURNING`.
-    - `ILIKE` per il matching case-insensitive.
-    - Tipi array e relative operazioni.
-    - Tipi JSON/JSONB.
-
-    Lo standard ANSI SQL originale include:
-    - `WITH` (Common Table Expressions).
-    - `LIKE` per il pattern matching.
-    - Join `LATERAL`.
-    - Window functions.
+    La clausola `RETURNING` è documentata da PostgreSQL come un’estensione. Anche `ILIKE` è un’estensione, e `jsonb` è un tipo specifico di PostgreSQL. Array e JSON hanno invece funzionalità definite nello standard SQL: non vanno classificati in blocco come non standard. `WITH`, `LATERAL` e le funzioni finestra sono entrati in edizioni successive dello standard SQL, non nell’originale ANSI SQL.
   </div>
   </slot>
 </Challenge>
@@ -440,7 +430,7 @@ In bocca al lupo! 🍀
 
     Sono utili per ridurre l'uso del disco e velocizzare le query quando viene interrogato tipicamente solo un sottoinsieme di righe.
 
-    Postgres utilizzerà l'indice solo quando la condizione `status = 'active'` è presente nella query.
+    Il planner può considerare l’indice quando riesce a dimostrare che il predicato della query implica `status = 'active'`. Non serve necessariamente lo stesso testo, ma il riconoscimento ha limiti. L’idoneità non garantisce che l’indice venga scelto.
 
     **Promemoria:** Postgres non supporta le 'query hints' come altri RDBMS. Il query planner deciderà autonomamente quando utilizzare gli indici appropriati.
   </div>
@@ -484,16 +474,16 @@ In bocca al lupo! 🍀
     postgres=# SELECT count(*)
       FROM students
       WHERE age = null;
-    count 
+    count
     -------
         0
     (1 row)
 
-    postgres=# 
+    postgres=#
     postgres=# SELECT count(*)
       FROM students
       WHERE age is null;
-    count 
+    count
     -------
         3
     (1 row)

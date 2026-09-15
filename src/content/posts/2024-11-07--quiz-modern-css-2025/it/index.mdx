@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Conosci il CSS moderno? (per il 2025)'
 subTitle: Sei abbastanza front‑end?
-label: Advanced CSS
+label: CSS avanzato
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -75,7 +75,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 250px;'},
     {text: 'width: 500px;'},
     {text: 'width: max(50%, 200px);'},
-    {text: 'Invalid syntax'},
+    {text: 'Sintassi non valida'},
   ]}
 >
   <slot name="question">
@@ -122,7 +122,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Dato un contenitore largo 200 px, qual è la larghezza calcolata del `<div>`?
+    Dato un contenitore largo 200 px e un font dell’elemento radice di 16px, qual è la larghezza calcolata del `<div>`?
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -132,7 +132,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La funzione `max()` accetta 2 o più valori e utilizza automaticamente il più grande. Supponendo che la dimensione del font radice sia il valore predefinito del browser `16px`, la larghezza risulta `96px`.
+    La funzione `max()` accetta uno o più valori e utilizza automaticamente il più grande. Supponendo che la dimensione del font radice sia il valore predefinito del browser `16px`, la larghezza risulta `96px`.
 
     Per capire il valore calcolato, dobbiamo convertire le unità relative in pixel:
 
@@ -313,7 +313,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'background-color: red'},
     {text: 'background-color: white', isAnswer: true},
     {text: 'background-color: blue'},
-    {text: 'Invalid syntax'},
+    {text: 'Sintassi non valida'},
   ]}
 >
   <slot name="question">

@@ -25,7 +25,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 ## Metti alla prova le tue basi di SQL
 
-Usare un ORM ti ha rammollito – dal punto di vista delle competenze?  
+Usare un ORM ti ha rammollito – dal punto di vista delle competenze?
 Tranquillo, capita a un sacco di sviluppatori.
 
 Tuffati subito e dimostra le tue conoscenze fondamentali di SQL! 👇
@@ -141,7 +141,7 @@ Tuffati subito e dimostra le tue conoscenze fondamentali di SQL! 👇
     {text: 'Una sottoquery che viene eseguita una volta in totale'},
     {text: 'Una sottoquery utilizzata solo nelle clausole JOIN'},
     {text: 'Una sottoquery che restituisce solo più colonne'},
-    {text: 'Una sottoquery che viene eseguita una volta per ogni riga della query esterna', isAnswer: true},
+    {text: 'Una sottoquery che fa riferimento a colonne della query esterna', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -151,7 +151,7 @@ Tuffati subito e dimostra le tue conoscenze fondamentali di SQL! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Una sottoquery correlata viene valutata una volta per ogni riga della query esterna. Fa riferimento alle colonne della query esterna, rendendola dipendente da ogni riga.
+    Una sottoquery correlata fa riferimento a colonne della query esterna. La sua dipendenza logica dalla riga esterna non impone una specifica esecuzione fisica: l’ottimizzatore può trasformare il piano ed evitare una valutazione separata per ogni riga.
   </div>
   </slot>
 </Challenge>
@@ -182,8 +182,8 @@ Tuffati subito e dimostra le tue conoscenze fondamentali di SQL! 👇
     La sintassi è:
     ```sql
     WITH cte_name AS (
-      SELECT column_name
-      FROM table_name
+    SELECT column_name
+    FROM table_name
     )
     SELECT *
     FROM cte_name;
@@ -235,11 +235,7 @@ Tuffati subito e dimostra le tue conoscenze fondamentali di SQL! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'operatore `IN` filtra le righe per far corrispondere qualsiasi valore in un elenco specificato, spesso come alternativa a più condizioni OR.
-
-    Anche se *potrebbe* restituire "righe uniche" (e spesso lo fa), non è necessariamente lo scopo principale.
-
-    L'indicizzazione non è richiesta qui, anche se è certamente una buona pratica usare `IN` su una colonna con un indice, preferibilmente un indice `UNIQUE`, poiché può migliorare le prestazioni.
+    L’operatore `IN` filtra le righe che corrispondono a un valore dell’elenco, spesso come alternativa a più condizioni OR. Non elimina i duplicati e non richiede un indice. Un indice B-tree adatto può aiutare una query selettiva, ma non deve essere `UNIQUE`: il planner può scegliere una scansione sequenziale in base a costi e dati.
   </div>
   </slot>
 </Challenge>

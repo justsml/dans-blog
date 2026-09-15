@@ -135,7 +135,7 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Trappole comuni"
-  title="Il Metacarattere Punto"
+  title="Caratteri di parola e nuove righe"
   options={[
     {text: '["hello\nworld"]'},
     {text: '["hello", "world"]', isAnswer: true},
@@ -158,7 +158,7 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
     - Numeri (0-9)
     - Underscore (_)
 
-    Quindi il newline funge da confine di parola, e otteniamo due corrispondenze. Se avessimo usato `.*`, non corrisponderebbe al newline per impostazione predefinita (bisognerebbe il flag `s` per farlo).
+    Quindi il newline funge da confine di parola, e otteniamo due corrispondenze. Se avessimo usato `.*`, non corrisponderebbe al newline per impostazione predefinita (servirebbe il flag `s` per farlo).
 
     [Scopri di più sui metacaratteri](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
   </div>
@@ -188,7 +188,7 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Questo pattern non corrisponde a nulla perché il look-ahead è al contrario! Se vuoi cifre precedute da `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
+    Questo pattern non trova corrispondenze perché controlla i simboli di valuta dopo le cifre, mentre nell’input le precedono. Se vuoi cifre precedute da `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
 
     I look-ahead controllano cosa viene *dopo* la posizione corrente. Il pattern così scritto cerca:
     - Una o più cifre (`\d+`)
@@ -370,7 +370,8 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il look-ahead negativo `(?![a-z])` assicura che non ci siano lettere minuscole dopo le cifre. Poiché la parte "3aBc" contiene una lettera minuscola dopo le cifre, la sua porzione non corrisponde. Quindi solo l'inizio "12" corrisponde.
+    Il flag `i` rende `[a-z]` valido per lettere ASCII sia maiuscole sia minuscole. Il quantificatore greedy `\d+` prova prima `123`, ma il look-ahead fallisce davanti ad `a`. Il motore torna indietro a `12`: il carattere successivo è `3`, non una lettera, quindi la corrispondenza riesce.
+
 
     [Approfondisci il look-ahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -544,14 +545,14 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La flag `u` abilita:
+    Il flag `u` abilita:
     - le escape di proprietà Unicode (`\p{...}`)
     - la corretta gestione delle coppie surrogate
 
-    Senza `u`, le emoji e altri caratteri Unicode potrebbero non corrispondere correttamente.
-    Il pattern `\p{Emoji}` corrisponde ai caratteri con la proprietà Unicode `Emoji`. In questa stringa, ciò significa le due pictogrammi emoji.
+    Il flag `u` abilita la modalità Unicode; nei motori moderni anche `v` abilita una modalità Unicode con funzionalità aggiuntive.
+    Il pattern `\p{Emoji}` corrisponde ai caratteri con la proprietà Unicode `Emoji`. In questa stringa, ciò significa i due pittogrammi emoji.
 
-    Nota: le escape di proprietà Unicode richiedono la flag `u`.
+    Nota: le escape di proprietà Unicode richiedono la modalità Unicode, attivata con `u` oppure `v`.
 
     [Approfondisci la modalità Unicode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
   </div>

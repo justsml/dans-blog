@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: L''HTML ha ancora senso sul tuo CV?'
 subTitle: Mettiti alla prova!
-label: Semantic HTML5
+label: HTML5 semantico
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: HTML
@@ -65,12 +65,7 @@ In fondo, sai distinguere un `<div>` da uno `<span>`, giusto? Ma quanto conosci 
   index={1}
   group="HTML Semantico Avanzato"
   title="Utilizzo di `<dd>`"
-  options={[
-    {text: 'Description definition', hint: 'Definizione della descrizione'},
-    {text: 'Description term', hint: 'Questo è il ruolo di `<dt>`'},
-    {text: 'Data display', hint: 'Troppo generico'},
-    {text: 'Description Details', isAnswer: true, hint: 'Quasi, ma non è il termine tecnico corretto'},
-  ]}
+  options={[{"text":"Una dichiarazione che definisce un campo di database"},{"text":"Il termine di una lista di descrizioni"},{"text":"La visualizzazione di dati"},{"text":"Una descrizione, definizione o valore per un termine in una lista di descrizioni","isAnswer":true}]}
 >
   <slot name="question">
   <div className="question">
@@ -92,6 +87,7 @@ In fondo, sai distinguere un `<div>` da uno `<span>`, giusto? Ma quanto conosci 
     <dt>HTML</dt>
     <dd>Client-side</dd>
     </dl>
+
     ```
   </div>
   </slot>
@@ -102,16 +98,11 @@ In fondo, sai distinguere un `<div>` da uno `<span>`, giusto? Ma quanto conosci 
   index={2}
   group="HTML Semantico Avanzato"
   title="Utilizzo di `<figure>/<figcaption>`"
-  options={[
-    {text: 'Per immagini con informazioni sul copyright da visualizzare'},
-    {text: 'Per descrivere immagini, grafici, ecc.', isAnswer: true},
-    {text: 'Per annotare tabelle, calcoli, ecc.'},
-    {text: 'Utilizzato per aggiungere didascalie ai video'},
-  ]}
+  options={[{"text":"Solo per immagini con informazioni sul copyright"},{"text":"Raggruppare contenuto autonomo con la sua didascalia","isAnswer":true},{"text":"Esclusivamente per tabelle e calcoli matematici"},{"text":"Solo per aggiungere sottotitoli alla riproduzione video"}]}
 >
   <slot name="question">
   <div className="question">
-    Quando dovrebbero essere utilizzati gli elementi `<figure>` e `<figcaption>`?
+    Qual è lo scopo generale di usare `<figure>` insieme a `<figcaption>`?
   </div>
   </slot>
 
@@ -122,7 +113,7 @@ In fondo, sai distinguere un `<div>` da uno `<span>`, giusto? Ma quanto conosci 
     Questo è utile per immagini, diagrammi, frammenti di codice e altro ancora.
     ```html
     <figure>
-    <img src="../image.jpg" alt="Description of image">
+    <img src="image.jpg" alt="Description of image">
     <figcaption>Image caption</figcaption>
     </figure>
     ```
@@ -175,10 +166,10 @@ In fondo, sai distinguere un `<div>` da uno `<span>`, giusto? Ma quanto conosci 
   group="HTML Semantico Avanzato"
   title="Utilizzo di `<fieldset>/<legend>`"
   options={[
-    {text: 'Raggruppare elementi di un form sotto un titolo', isAnswer: true, hint: 'Pensa all\'organizzazione logica e all\'accessibilità.'},
-    {text: 'Definire istruzioni per i campi del form', hint: 'Le istruzioni solitamente usano altri tag o attributi.'},
-    {text: 'Non è un uso valido di <legend>', hint: 'In realtà, questo è proprio il suo scopo principale.'},
-    {text: 'Definisce una sezione espandibile', hint: 'Per quello si usano solitamente `<details>` e `<summary>`.'},
+    {text: 'Raggruppare elementi di un form sotto un titolo', isAnswer: true},
+    {text: 'Definire istruzioni per i campi del form'},
+    {text: 'Non è un uso valido di <legend>'},
+    {text: 'Definisce una sezione espandibile'},
   ]}
 >
   <slot name="question">

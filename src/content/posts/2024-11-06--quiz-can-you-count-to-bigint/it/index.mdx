@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Puoi contare su JavaScript?'
 subTitle: Sai distinguere `parseInt` da `parseFloat`?
-label: Numbers
+label: Numeri
 modified: '2024-11-09'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -21,6 +21,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <>
 <QuizUI>
+
+Benvenuto alla sfida sui numeri in JavaScript!
+
+Questo quiz mette alla prova le tue conoscenze su numeri, `parseInt`, `parseFloat` e `BigInt`: conversioni in basi diverse, precisione in virgola mobile e stranezze del sistema numerico di JavaScript.
+
+> Sono solo numeri: quanto potrà essere difficile? 🤓
+
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -298,7 +305,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Il primo elemento, `24`, viene interpretato come `24` in base 0 (rilevamento automatico), quindi rimane `24`. Il secondo elemento, `'One'`, viene interpretato come `NaN` in base 1. Il terzo elemento, `42`, viene interpretato usando la base 2. In base 2, `'42'` è `NaN`, quindi il risultato è `[24, NaN, NaN]`.
 
-    Questo è un errore comune con `parseInt` e `map`. Se vuoi convertire un array di stringhe in numeri, l'unico metodo "built-in" sicuro è `.map(Number)` o aggiungere un callback/closure <code>{`.map(x => parseInt(x, 10))`}</code>.
+    È un’insidia comune di `parseInt` e `map`. Usa `.map(Number)` per convertire l’intera stringa in un numero, oppure `.map(x => parseInt(x, 10))` per analizzarne il prefisso intero in base 10. Le due operazioni hanno regole diverse: scegli quella adatta al risultato desiderato.
   </div>
   </slot>
 </Challenge>
@@ -415,7 +422,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       <tr><td>Ignora spazi bianchi</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
       <tr><td><code>.map(FN)</code></td><td>❌</td><td>☑️</td><td>✅</td><td>✅</td></tr>
       <tr><td>Supporta argomento radix</td><td>✅</td><td>❌</td><td>❌</td><td>❌</td></tr>
-      <tr><td>Letterali binari/ottali/esadecimali</td><td>✅</td><td>❌</td><td>✅</td><td>✅</td></tr>
+      <tr><td>Prefissi binari/ottali/esadecimali nelle stringhe</td><td>Solo esadecimale <code>0x</code>; <code>0b</code>/<code>0o</code> non vengono dedotti</td><td>❌</td><td>✅</td><td>✅</td></tr>
       <tr><td>Caratteri non validi <code>42 oh no</code></td><td><code>42</code></td><td><code>42</code></td><td><code>NaN</code></td><td><code>SyntaxError</code></td></tr>
     </tbody>
   </table>

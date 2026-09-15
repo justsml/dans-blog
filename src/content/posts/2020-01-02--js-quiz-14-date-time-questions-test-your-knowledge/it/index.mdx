@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: 14 domande su JavaScript Date'
 subTitle: Impara a stupire alle feste con le curiosità su JS! ✨
-label: Dates & Times
+label: Date e orari
 modified: '2024-11-27'
 tags:
   - quiz
@@ -57,7 +57,7 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Quale sarà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -90,7 +90,7 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Cosa includerà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -139,11 +139,7 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 
   <slot name='explanation'>
   <div className="explanation">
-    Non dimenticare la keyword `new`! `Date` è una classe e dovrebbe essere chiamata con `new`.
-
-    `Date('...')` senza `new` ignora l'argomento fornito. Sembra produrre sempre la data e l'ora correnti come farebbe `new Date()` (senza argomenti).
-
-    Questo è un **errore comune** che è **facile da trascurare**, persino durante una code review.
+    Chiamare `Date()` senza `new` ignora tutti gli argomenti e restituisce una stringa con la data e l’ora correnti. Usa `new Date(...)` per creare un oggetto Date a partire dagli argomenti forniti.
   </div>
   </slot>
 </Challenge>
@@ -164,10 +160,12 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
+    Assumi un fuso orario locale fisso GMT−7.
+
     Quale sarà l'output incluso?
     ```js
-    const date = new Date(2020)
-    console.log(date.getFullYear())
+      const date = new Date(2020)
+      console.log(date.getFullYear())
     ```
   </div>
   </slot>
@@ -202,11 +200,13 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
+    Assumi un fuso orario locale fisso GMT−7.
+
     Quale valore verrà stampato nella console?
     ```js
-    const d1 = new Date('2020-01-01')
-    const d2 = new Date('2020-01-01T00:00')
-    console.log(d1.getFullYear(), d2.getFullYear())
+      const d1 = new Date('2020-01-01')
+      const d2 = new Date('2020-01-01T00:00')
+      console.log(d1.getFullYear(), d2.getFullYear())
     ```
   </div>
   </slot>
@@ -251,7 +251,7 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 
   <slot name='explanation'>
   <div className="explanation">
-    Il metodo `toLocaleFormat()` non è standard! Potrebbe sembrarti familiare perché appartiene a una vecchia libreria di terze parti.
+    Il metodo `toLocaleFormat()` non fa parte dello standard ECMAScript. Per codice portabile usa `toLocaleDateString()` o `toLocaleString()`.
 
     Dai un'occhiata alla [documentazione di `toLocaleDateString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString). Il suo comportamento è documentato sotto [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
   </div>
@@ -274,8 +274,8 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   <div className="question">
     Cosa includerà l'output?
     ```js
-    var date = Date.UTC('2020-01-02T00:00')
-    console.log(date.toUTCString())
+      var date = Date.UTC('2020-01-02T00:00')
+      console.log(date.toUTCString())
     ```
   </div>
   </slot>
@@ -285,12 +285,7 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 
   <slot name='explanation'>
   <div className="explanation">
-    Otterrai `TypeError: date.toUTCString is not a function`, poiché [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) restituisce un intero in millisecondi, non un'istanza di date.
-
-    {/* Il metodo [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) utilizza il tuo offset locale (assumi GMT-07:00 per queste domande).
-    Il che significa che restituirebbe l'anno precedente (Capodanno -7 ore).
-    Il metodo [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) restituirebbe l'anno così come fornito a `Date.UTC()`, ovvero 2020.
-    */}
+    `Date.UTC()` si aspetta argomenti numerici per anno, mese e così via. Questa stringa non può essere convertita in un anno valido, quindi restituisce prima `NaN`. Si tratta di un numero, non di un oggetto Date: chiamare `.toUTCString()` su quel valore genera un `TypeError`.
   </div>
   </slot>
 </Challenge>
@@ -311,8 +306,8 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   <div className="question">
     Cosa includerà l'output?
     ```js
-    const d = Date.UTC(2020, 0, 1)
-    console.log(d)
+      const d = Date.UTC(2020, 0, 1)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -344,9 +339,9 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
   <div className="question">
     Quale sarà l'output incluso?
     ```js
-    // Assume local TZ is -07:00
-    const d = new Date(Date.UTC(2020, 0, 1))
-    console.log(d.getTimezoneOffset())
+      // Assume local TZ is -07:00
+      const d = new Date(Date.UTC(2020, 0, 1))
+      console.log(d.getTimezoneOffset())
     ```
   </div>
   </slot>
@@ -356,9 +351,7 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 
   <slot name='explanation'>
   <div className="explanation">
-    Le istanze di `Date` verranno presentate implicitamente nell'ora locale, con un valore di [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) (effettivamente) invariato.
-
-    Le istanze di `Date` non memorizzano i dati sul fuso orario. Memorizzano il numero di millisecondi trascorsi dall'epoca Unix (1 gennaio 1970). Il fuso orario viene preso in considerazione durante il parsing e il rendering delle stringhe di data. Il comportamento di visualizzazione predefinito è determinato automaticamente in base alle impostazioni locali del sistema o del browser.
+    Gli oggetti Date memorizzano i millisecondi dall’epoca Unix, non un fuso orario. `getTimezoneOffset()` usa le regole del fuso locale per quella data e restituisce la differenza rispetto a UTC in minuti. Con l’offset GMT−7 indicato, il risultato è `420`. Nelle regioni con ora legale, l’offset può cambiare tra date diverse.
   </div>
   </slot>
 </Challenge>
@@ -376,11 +369,11 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Quale sarà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setDate(1)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setDate(1)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -412,11 +405,11 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Quale sarà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(1)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(1)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -444,11 +437,11 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Cosa includerà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(12)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(12)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -482,11 +475,11 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Cosa includerà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(13)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(13)
+      console.log(d)
     ```
   </div>
   </slot>
@@ -525,11 +518,11 @@ Questo quiz è progettato per testare (e approfondire) la tua conoscenza dell'AP
 >
   <slot name="question">
   <div className="question">
-    Cosa includerà l'output?
+    Quale data del calendario locale rappresenta questo oggetto? Il formato mostrato dalla console può variare.
     ```js
-    const d = new Date(2020, 0, 1)
-    d.setMonth(-1)
-    console.log(d)
+      const d = new Date(2020, 0, 1)
+      d.setMonth(-1)
+      console.log(d)
     ```
   </div>
   </slot>

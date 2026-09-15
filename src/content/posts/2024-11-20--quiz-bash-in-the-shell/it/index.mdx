@@ -90,7 +90,7 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   <div className="explanation">
     Lo so. È pazzesco quanto rapidamente l'escaping renda le stringhe difficili da analizzare. Immagina di fare l'escaping di altri linguaggi nelle stringhe Bash – con tutte quelle virgolette, apostrofi e simboli `$` pronti a farti impazzire. 🫠
 
-    Le virgolette singole devono essere escapeate all'interno di stringhe delimitate da virgolette singole. La sequenza chiudi-virgoletta, escape-virgoletta, riapri-virgoletta (`'\''`) permette di stampare:
+    Una virgoletta singola non può essere preceduta da escape all’interno di una stringa delimitata da virgolette singole. Bisogna chiudere la stringa, inserire la virgoletta con escape fuori dalla stringa e riaprirla. La sequenza chiudi-virgoletta, escape-virgoletta, riapri-virgoletta (`'\''`) permette di stampare:
     ```plaintext
     It's 🔨 Time!
     ```
@@ -139,11 +139,11 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Variabili"
   title="Escaping dei caratteri"
   options={[
-    {text: 'Costo: $$100'},
-    {text: 'Costo: $100'},
-    {text: 'Costo: 100'},
-    {text: 'Costo: 00', isAnswer: true},
-    {text: 'Costo:'},
+    {text: 'Cost: $$100'},
+    {text: 'Cost: $100'},
+    {text: 'Cost: 100'},
+    {text: 'Cost: 00', isAnswer: true},
+    {text: 'Cost:'},
     {text: 'Errore'},
   ]}
 >
@@ -253,8 +253,8 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Condizionali"
   title="If-Else di base"
   options={[
-    {text: 'Il file esiste'},
-    {text: 'Il file non esiste, dopo una diagnostica di test', isAnswer: true},
+    {text: 'File exists'},
+    {text: 'File does not exist, dopo un messaggio diagnostico del comando di test', isAnswer: true},
     {text: 'Solo errore'},
     {text: 'Mancano le doppie parentesi quadre'},
     {text: 'Niente'},
@@ -299,8 +299,8 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Condizionali"
   title="Confronto di stringhe"
   options={[
-    {text: 'Stesso gatto'},
-    {text: 'Gatti diversi, dopo un errore di sintassi di test', isAnswer: true},
+    {text: 'Same cat'},
+    {text: 'Different cats, dopo un messaggio diagnostico del comando di test', isAnswer: true},
     {text: 'Zalgo'},
     {text: 'Solo errore'},
   ]}
@@ -338,9 +338,9 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Funzioni"
   title="Dichiarazione di Funzione"
   options={[
-    {text: 'Ciao', isAnswer: true},
+    {text: 'Hi', isAnswer: true},
     {text: 'Dan'},
-    {text: 'Ciao Dan'},
+    {text: 'Hi Dan'},
     {text: 'greet'},
     {text: 'Errore'},
     {text: 'Errore di Sintassi'},
@@ -425,6 +425,7 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
     ```
     Oppure per espressioni condizionali:
     ```bash
+
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
@@ -471,9 +472,9 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
   group="Manipolazione di Stringhe"
   title="Estrazione di Sottostringa"
   options={[
-    {text: 'Gatto cattivo'},
-    {text: 'Gatto cattivo, gatto buono:9'},
-    {text: 'gatto buono', isAnswer: true},
+    {text: 'Bad cat'},
+    {text: 'Bad cat, good cat:9'},
+    {text: 'good cat', isAnswer: true},
     {text: 'Errore'},
   ]}
 >
@@ -514,14 +515,12 @@ Affina (o dimostra) le tue **competenze** di scripting shell!
 >
   <slot name="question">
   <div className="question">
-    Quale NON è una parola chiave per i cicli in Bash?
+    Quale NON è una parola chiave usata nella sintassi dei cicli Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `each` non è una parola chiave di loop in Bash. Le principali parole chiave di loop sono `for`, `while` e `until`.
-
-    Sebbene `do` non sia tecnicamente una parola chiave di loop, è una parte fondamentale della sintassi del loop.
+    `each` non è una parola chiave dei cicli Bash. `for`, `while` e `until` introducono cicli; `do` introduce il corpo del ciclo ed è anch’essa una parola chiave della sintassi.
   </div>
   </slot>
 </Challenge>
