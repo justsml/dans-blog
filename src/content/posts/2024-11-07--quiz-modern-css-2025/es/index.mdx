@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: ¿Conoces CSS moderno? (para 2025)'
 subTitle: ¿Eres lo suficientemente front‑end?
-label: Advanced CSS
+label: "CSS moderno"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -75,7 +75,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 250px;'},
     {text: 'width: 500px;'},
     {text: 'width: max(50%, 200px);'},
-    {text: 'Invalid syntax'},
+    {text: 'Sintaxis inválida'},
   ]}
 >
   <slot name="question">
@@ -117,12 +117,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'width: 10px;'},
     {text: 'width: 50px;'},
     {text: 'width: 96px;', isAnswer: true},
-    {text: 'Invalid syntax'},
+    {text: 'Sintaxis inválida'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Dado un contenedor con un ancho de 200px, ¿cuál sería el ancho calculado del `<div>`?
+    Dado un contenedor de 200px de ancho y un tamaño de fuente raíz de 16px, ¿cuál es el ancho calculado del `<div>`?
     ```css
     div {
       width: max(50px, 10%, 6rem);
@@ -132,7 +132,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La función `max()` acepta 2 o más entradas y usará automáticamente el valor más grande. Suponiendo que el tamaño de fuente raíz es el valor predeterminado del navegador `16px`, el ancho resulta en `96px`.
+    La función `max()` acepta una o más entradas y usará automáticamente el valor más grande. Suponiendo que el tamaño de fuente raíz es el valor predeterminado del navegador `16px`, el ancho resulta en `96px`.
 
     Para entender el valor calculado, necesitamos convertir las unidades relativas a píxeles:
 
@@ -283,7 +283,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Es este un uso correcto del nesting nativo de CSS?
+    ¿Es este un uso correcto del anidamiento nativo de CSS?
     ```css
     .container {
       color: black;
@@ -313,7 +313,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'background-color: red'},
     {text: 'background-color: white', isAnswer: true},
     {text: 'background-color: blue'},
-    {text: 'Invalid syntax'},
+    {text: 'Sintaxis inválida'},
   ]}
 >
   <slot name="question">

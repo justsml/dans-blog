@@ -1,7 +1,7 @@
 ---
 title: 'Cuestionario: Símbolos y Enumerables'
 subTitle: ¿Dominaslos rincones menos conocidos de ES2015?
-label: Symbols
+label: "Símbolos y propiedades"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -59,6 +59,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     En este ejemplo, acceder a `obj.val` invoca directamente el método getter y muestra `got it!`.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -90,6 +92,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Los Symbols son un tipo primitivo único e inmutable que pueden usarse como claves para propiedades de objetos. Esto ayuda a evitar colisiones de nombres, especialmente en bases de código grandes o al escribir bibliotecas reutilizables.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -124,6 +128,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     La propiedad `enumerable` en `Object.defineProperty()` controla si la propiedad aparecerá en métodos de enumeración como `for...in`. En este ejemplo, como `enumerable: true`, la propiedad `age` se listará durante la iteración.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -132,11 +138,20 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Trabajando con Objetos"
   title="Enumerabilidad predeterminada con Object.defineProperty()"
   options={[
-    {text: 'verdadero'},
-    {text: 'falso', isAnswer: true},
-    {text: 'indefinido'},
-    {text: 'Depende del contexto'},
-  ]}
+  {
+    "text": "true"
+  },
+  {
+    "text": "false",
+    "isAnswer": true
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Depende del contexto"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -155,6 +170,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Cuando usas `Object.defineProperty()` sin especificar `enumerable`, su valor predeterminado es `false`. Esto significa que la propiedad `make` no aparecerá en `Object.keys()` ni en otros métodos de enumeración.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -184,6 +201,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Cada llamada a `Symbol()` crea un valor único e inmutable, incluso si la descripción es la misma. En este caso, `sym1` y `sym2` son símbolos diferentes, por lo que la comparación devuelve `false`.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -218,6 +237,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     Las propiedades con clave Symbol pueden tener su propia bandera `enumerable`, pero `for...in` y `Object.keys()` solo recorren propiedades enumerables con clave de tipo string. En este ejemplo, solo se listará `regularKey`, no la propiedad con clave Symbol.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -253,6 +274,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 </QuizUI>

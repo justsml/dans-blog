@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: ¿Puedes contar con JavaScript?'
 subTitle: ¿Conoces la diferencia entre `parseInt` y `parseFloat`?
-label: Numbers
+label: "Números"
 modified: '2024-11-09'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -21,6 +21,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <>
 <QuizUI>
+
+¡Bienvenido al reto de números de JavaScript!
+
+Pon a prueba tus conocimientos de números en JavaScript, incluidos `parseInt`, `parseFloat` y `BigInt`.
+
+Veremos cómo interpretar expresiones numéricas en distintas bases, manejar la precisión de punto flotante y entender las peculiaridades del sistema numérico de JavaScript.
+
+> Solo son números, ¿qué tan difícil puede ser? 🤓
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -240,7 +248,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Cualquier cadena de entrada que empiece con `0x` se trata automáticamente como hexadecimal (radix `16`).
+    Cuando la base se omite o es `0`, `parseInt` reconoce el prefijo `0x` (o `0X`) como hexadecimal (base `16`). No infiere binario u octal a partir de los prefijos `0b` o `0o`.
     Por lo tanto es equivalente a pasar un radix de 16. Así, `parseInt("0x2A")` es lo mismo que `parseInt("2a", 16)`. (No distingue mayúsculas de minúsculas.)
   </div>
   </slot>
@@ -413,7 +421,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     </thead>
     <tbody>
       <tr>
-        <td>Ignores Whitespace</td>
+        <td>Ignora espacios en blanco</td>
         <td>✅</td>
         <td>✅</td>
         <td>✅</td>
@@ -427,21 +435,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         <td>✅</td>
       </tr>
       <tr>
-        <td>Supports Radix Arg</td>
+        <td>Admite argumento de base</td>
         <td>✅</td>
         <td>❌</td>
         <td>❌</td>
         <td>❌</td>
       </tr>
       <tr>
-        <td>Binary/Octal/Hex literals</td>
-        <td>✅</td>
+        <td>Cadenas con prefijos binarios, octales o hexadecimales</td>
+        <td>Solo hexadecimal <code>0x</code>; no infiere <code>0b</code>/<code>0o</code></td>
         <td>❌</td>
         <td>✅</td>
         <td>✅</td>
       </tr>
       <tr>
-        <td>Invalid chars <code>42 oh no</code></td>
+        <td>Caracteres inválidos: <code>42 oh no</code></td>
         <td><code>42</code></td>
         <td><code>42</code></td>
         <td><code>NaN</code></td>
@@ -455,6 +463,6 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 {/* <h4>¿Estás bien?</h4> */}
 
-<p class="inset">¿Necesitas un descanso después de tanto binario?<br />Pftt, recuerda: ¡rompe *después* de las habilidades! <br /><br />¡Entra en [mi gimnasio]("../challenges/") para aplastar más retos! 💪</p>
+<p class="inset">¿Necesitas un descanso después de tanto binario?<br />Primero las habilidades, luego el descanso. <br /><br />¡Entra en <a href="/challenges/">mi gimnasio</a> para superar más retos! 💪</p>
 </div>
 </>

@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: 14 preguntas sobre JavaScript Date'
 subTitle: ¡Aprende a impresionar en fiestas con curiosidades de JS! ✨
-label: Dates & Times
+label: "Fechas y horas"
 modified: '2024-11-27'
 tags:
   - quiz
@@ -57,7 +57,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
@@ -90,7 +90,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
@@ -139,11 +139,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 
   <slot name='explanation'>
   <div className="explanation">
-    ¡No olvides la palabra clave `new`! `Date` es una clase y debe llamarse con `new`.
-
-    `Date('...')` sin `new` ignora lo que le pases. Parece producir siempre la fecha y hora actuales, de forma similar a `new Date()` (sin argumentos).
-
-    Este es un **error común** que es **fácil de pasar por alto**, incluso en una revisión de código.
+`Date(...)` se puede llamar sin `new`: ignora los argumentos y devuelve una cadena con la fecha y hora actuales en la zona horaria local. `new Date(...)` crea un objeto `Date` y sí interpreta los argumentos. La diferencia entre ambas llamadas es fácil de pasar por alto.
   </div>
   </slot>
 </Challenge>
@@ -164,6 +160,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
+    Supón que la zona horaria local tiene un desplazamiento GMT−07:00 en este instante.
     ¿Qué incluirá la salida?
     ```js
     const date = new Date(2020)
@@ -202,6 +199,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
+    Supón que la zona horaria local tiene un desplazamiento GMT−07:00 en este instante.
     ¿Qué valor se imprimirá en la consola?
     ```js
     const d1 = new Date('2020-01-01')
@@ -285,12 +283,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 
   <slot name='explanation'>
   <div className="explanation">
-    Obtendrás `TypeError: date.toUTCString is not a function`, ya que [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) devuelve un entero en milisegundos, no una instancia de fecha.
-
-    {/* El método [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) utiliza tu desfase local (asume GMT-07:00 para estas preguntas).
-    Lo que significa que daría el año anterior (Nochevieja -7 horas).
-    El método [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) daría el año tal como se lo pasamos a `Date.UTC()`, 2020.
-    */}
+`Date.UTC()` espera componentes numéricos, no una cadena de fecha para analizar. En este caso devuelve `NaN`, que es un valor de tipo `number`. Los números no tienen el método `toUTCString()`, así que la siguiente llamada lanza un `TypeError` antes de que `console.log` imprima un valor.
   </div>
   </slot>
 </Challenge>
@@ -342,6 +335,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
+    Supón que la zona horaria local tiene un desplazamiento GMT−07:00 en este instante.
     ¿Qué incluirá la salida?
     ```js
     // Assume local TZ is -07:00
@@ -356,7 +350,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 
   <slot name='explanation'>
   <div className="explanation">
-    Las fechas se presentarán implícitamente en la hora local, con un [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) que (efectivamente) no cambia.
+    Con el desplazamiento local GMT−07:00 indicado, `.getTimezoneOffset()` devuelve `420` minutos: UTC menos hora local. El valor puede variar según el instante en zonas con horario de verano; no es una constante universal de la zona.
 
     Las instancias de `Date` no almacenan datos de la zona horaria. Almacenan el número de milisegundos desde la Época Unix (1 de enero de 1970). La zona horaria se tiene en cuenta al analizar y renderizar cadenas de fecha. El comportamiento de visualización predeterminado se determina automáticamente según la configuración regional del sistema o del navegador.
   </div>
@@ -376,7 +370,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d = new Date(2020, 0, 1)
     d.setDate(1)
@@ -412,7 +406,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(1)
@@ -444,7 +438,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(12)
@@ -482,7 +476,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(13)
@@ -525,7 +519,7 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 >
   <slot name="question">
   <div className="question">
-    ¿Qué incluirá la salida?
+    ¿Qué fecha local representa el objeto `Date`? El formato de `console.log` depende del entorno; elige la fecha, no una representación literal de la consola.
     ```js
     const d = new Date(2020, 0, 1)
     d.setMonth(-1)

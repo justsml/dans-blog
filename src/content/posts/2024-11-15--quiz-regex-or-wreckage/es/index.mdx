@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Dominio de Expresiones Regulares'
 subTitle: ¿Dominas alguna expresión regular salvaje?
-label: RegEx
+label: "Expresiones regulares"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: RegEx
@@ -188,7 +188,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Este patrón no coincidirá con nada porque el look-ahead está al revés. Si quieres dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
+    Este patrón no encuentra coincidencias en esta cadena: busca dígitos seguidos de un símbolo monetario, pero aquí los símbolos preceden a los números. Si quieres dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
 
     Los look-aheads verifican lo que viene *después* de la posición actual. El patrón tal como está busca:
     - Uno o más dígitos (`\d+`)
@@ -370,7 +370,7 @@ Pon a prueba tu conocimiento de RegEx con preguntas que cubren patrones básicos
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El lookahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte "3aBc" contiene una letra minúscula después de los dígitos, esa porción no coincide. Por lo tanto, solo coincide el comienzo "12".
+    El modificador `i` hace que `[a-z]` también reconozca mayúsculas. El cuantificador codicioso `\d+` intenta consumir `123`, pero la aserción negativa falla ante `a`. El motor retrocede a `12`; el carácter siguiente es `3`, que no es una letra, y la aserción pasa. Por eso la coincidencia es `12`.
 
     [Aprende más sobre lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>

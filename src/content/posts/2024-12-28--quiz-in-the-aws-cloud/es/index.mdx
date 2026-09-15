@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Almacenamiento en AWS: ¡más de 20 preguntas!'
 subTitle: ¿Puedes sortear el laberinto de la nube?
-label: AWS Storage
+label: "Almacenamiento en AWS"
 category: Quiz
 subCategory: Cloud
 modified: '2024-12-29'
@@ -33,17 +33,30 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 <QuizUI>
 
 <Challenge
+  difficulty={1}
+  objectives={["Recordar el significado del nombre AWS S3","Identificar servicios fundamentales de almacenamiento de AWS"]}
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Calentamiento"
   title="Trivia de S3"
   options={[
-    {text: 'Almacenamiento de Servidor v3'},
-    {text: 'Almacenamiento como Servicio'},
-    {text: 'Servicio de Almacenamiento Simple', isAnswer: true},
-    {text: 'Servicio de Almacenamiento Atrevido'},
-    {text: 'Almacén Sincronizado Simple'},
-  ]}
+  {
+    "text": "Server Storage v3"
+  },
+  {
+    "text": "Storage as a Service"
+  },
+  {
+    "text": "Simple Storage Service",
+    "isAnswer": true
+  },
+  {
+    "text": "Sassy Storage Service"
+  },
+  {
+    "text": "Simple Synchronized Store"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -68,6 +81,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Definir las características de una base de datos sin esquema","Explicar el modelo de datos flexible de DynamoDB"]}
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Sin esquema"
@@ -95,6 +110,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comparar las operaciones por lotes de DynamoDB","Optimizar las actualizaciones de DynamoDB","Evaluar el escalado de las actualizaciones"]}
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="Sin esquema"
@@ -120,7 +137,7 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
     Mientras `BatchWriteItem` puede manejar múltiples operaciones, está limitado a PUTs y DELETEs. `TransactWriteItems` es más potente, pero es como usar un martillo neumático para actualizaciones simples.
     Para actualizaciones simples, `UpdateItem` es la mejor opción. Permite ACTUALIZAR, o modificar uno o más atributos en un elemento existente.
 
-    La operación `UpdateItem` modifica un elemento por solicitud. Para grandes retroalimentaciones o actualizaciones masivas, normalmente orquestas muchas llamadas a `UpdateItem` o utilizas un flujo de trabajo mayor como ejecución por lotes de PartiQL, Step Functions, Glue, EMR, o un proceso de trabajador personalizado.
+    La operación `UpdateItem` modifica un elemento por solicitud. Para grandes cargas de datos históricos o actualizaciones masivas, normalmente orquestas muchas llamadas a `UpdateItem` o utilizas un flujo de trabajo mayor como ejecución por lotes de PartiQL, Step Functions, Glue, EMR, o un proceso de trabajador personalizado.
 
     La operación `UpdateItem`:
     - Actualiza los atributos de un elemento existente.
@@ -134,6 +151,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprender las consultas avanzadas de los servicios de AWS","Comparar las funciones de búsqueda de texto completo"]}
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Capacidades de consulta"
@@ -165,6 +184,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Identificar el objetivo principal de los despliegues Multi-AZ","Distinguir la alta disponibilidad del escalado de lecturas"]}
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="RDS"
@@ -200,6 +221,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comparar el soporte de WebSocket entre servicios de AWS","Identificar limitaciones arquitectónicas de los servicios de AWS","Evaluar opciones de implementación de WebSocket"]}
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="WebSockets"
@@ -226,18 +249,20 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
     API Gateway admite APIs WebSocket bidireccionales, pero la implementación es gestionada por API Gateway en lugar de ser un socket directo a tu propio proceso de servidor.
     API Gateway mantiene la conexión del cliente y enruta los mensajes a Lambda, endpoints HTTP u otras integraciones. Los mensajes pueden enviarse de vuelta a los clientes conectados mediante la API de gestión de API Gateway.
 
-    Los demás son mucho más amigables con WebSocket:
-    - Lightsail: Perfecto para configuraciones WebSocket simples 👌
+    Otros servicios ofrecen distintas ventajas y responsabilidades:
+    - Lightsail: Ejecuta y administra tu servidor WebSocket en una instancia
     - AppSync: Usa WebSockets para suscripciones GraphQL gestionadas
     - EC2: Tu clásica opción de "haz lo que quieras" para WebSockets
-    - EKS: Ideal para ejecutar clústeres WebSocket escalables
+    - EKS: Ejecuta tus servicios WebSocket en Kubernetes
 
-    Consejo profesional: Si necesitas potencia WebSocket cruda, quédate con los servicios de cómputo!
+    Elige según el protocolo, los límites de conexiones, el modelo de despliegue y la responsabilidad operativa. El enrutamiento gestionado de API y el alojamiento de tu propio servidor resuelven necesidades diferentes.
   </div>
   </slot>
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Aplicar buenas prácticas de seguridad a S3","Implementar el principio de privilegio mínimo"]}
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Seguridad S3"
@@ -270,12 +295,14 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 
     Evita configuraciones demasiado permisivas que puedan exponer datos sensibles.
 
-    [S3 Security Best Practices](https://aws.amazon.com/s3/security/)
+    [Buenas prácticas de seguridad de S3](https://aws.amazon.com/s3/security/)
   </div>
   </slot>
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Identificar las funciones clave de Aurora Serverless","Distinguir bases de datos serverless de las aprovisionadas"]}
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Aurora"
@@ -308,6 +335,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Recordar los límites de BatchGetItem de DynamoDB","Comparar BatchGetItem con otras operaciones por lotes"]}
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Lotes, parte 1!"
@@ -319,7 +348,7 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
     {text: '75', hint: 'Cerca, pero hay un número redondo.'},
     {text: '50', hint: 'Un poco más alto para `BatchGetItem`.'},
     {text: '200', hint: 'Un poco demasiado alto...'},
-    {text: 'Unlimited', hint: 'Hay un límite fijo para `BatchGetItem`.'},
+    {text: 'Sin límite', hint: 'Hay un límite fijo para `BatchGetItem`.'},
   ]}
 >
   <slot name="question">
@@ -335,12 +364,14 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 
     Comprender estos límites es crucial para optimizar el rendimiento de tu aplicación y garantizar operaciones de datos eficientes.
 
-    **Nota:** Es posible superar _algunos_ de estos límites, si sabes convencer a tu gerente de cuenta de AWS. 😎
+    El límite de 100 elementos es fijo para esta operación. Divide las lecturas mayores en varias solicitudes y reintenta las claves `UnprocessedKeys` con esperas crecientes. Las cuotas ajustables de rendimiento son otro tipo de límite.
   </div>
   </slot>
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comprender los límites de las operaciones por lotes de DynamoDB","Distinguir las operaciones individuales de las operaciones por lotes"]}
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Lotes, parte 2!"
@@ -351,25 +382,27 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
     {text: '25', hint: 'Buena suposición...'},
     {text: '50'},
     {text: '100', hint: '¿Pensando en el límite de GetItem?'},
-    {text: '100 when streaming'},
-    {text: 'None of the above', hint: 'Esto es un poco complicado...'},
+    {text: '100 al usar streaming'},
+    {text: 'Ninguna de las anteriores', hint: 'Esto es un poco complicado...'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el número máximo de documentos que DynamoDB puede `UPDATE` por lote?
+    ¿Cuántos elementos puede modificar una sola llamada `UpdateItem` de DynamoDB?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     Los clientes de DynamoDB son esencialmente wrappers de su API HTTP. La operación `BatchWriteItem` puede `PUT` o `DELETE` hasta **25** documentos por solicitud HTTP, pero no puede `UPDATE` varios documentos.
 
-    Mientras DynamoDB puede `INSERT` hasta **25** documentos por solicitud HTTP, solo puede `UPDATE` **1** documento por solicitud usando la operación `UpdateItem`.
+    `UpdateItem` modifica **un** elemento. Es un límite de esa llamada, no de todas las solicitudes de DynamoDB: las API de transacciones y lotes de PartiQL pueden incluir varias actualizaciones.
   </div>
   </slot>
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comparar los modos de capacidad de DynamoDB","Elegir el modo de capacidad según la carga de trabajo","Evaluar el coste de las opciones de capacidad"]}
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="DynamoDB"
@@ -378,12 +411,12 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
     {text: 'La capacidad provisionada siempre es mejor'},
     {text: 'La capacidad On-Demand tiene capacidad ilimitada'},
     {text: 'Rinden idénticamente'},
-    {text: 'La capacidad On-Demand es más barata para cargas de trabajo impredecibles', isAnswer: true},
+    {text: 'On-Demand evita aprovisionar capacidad para tráfico esporádico e impredecible', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuándo deberías usar la capacidad On-Demand de DynamoDB?
+    ¿Cuál es una razón para elegir la capacidad On-Demand de DynamoDB?
   </div>
   </slot>
   <slot name='explanation'>
@@ -399,12 +432,16 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
     - Mayor control sobre el rendimiento
     - Posibles ahorros de costos
 
+    On-Demand no siempre es más barato. Compara el volumen de solicitudes, la utilización y los precios actuales; un tráfico sostenido y predecible puede favorecer la capacidad aprovisionada.
+
     [Modos de capacidad de DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
   </div>
   </slot>
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Optimizar S3 para altas tasas de solicitudes","Aplicar buenas prácticas para nombres de claves S3","Diseñar la distribución entre particiones de S3"]}
   client:visible={{rootMargin: "150px"}}
   index={11}
   group="Rendimiento de S3"
@@ -437,6 +474,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Identificar buenas prácticas de copias de seguridad RDS","Comprender la recuperación a un punto en el tiempo"]}
   client:visible={{rootMargin: "150px"}}
   index={12}
   group="Copia de Seguridad de RDS"
@@ -472,6 +511,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Comparar las capacidades de Redis y Memcached","Distinguir las características de los motores de caché"]}
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="ElastiCache"
@@ -507,6 +548,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprender el propósito de un índice secundario global","Evaluar patrones de acceso en DynamoDB","Diseñar estrategias de consulta eficientes"]}
   client:visible={{rootMargin: "150px"}}
   index={14}
   group="Índices de DynamoDB"
@@ -539,6 +582,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Comprender la gestión del ciclo de vida en S3","Aplicar estrategias de optimización de costes en S3"]}
   client:visible={{rootMargin: "150px"}}
   index={15}
   group="Ciclo de vida de S3"
@@ -570,6 +615,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Recordar los límites de réplicas de lectura Aurora","Comprender el escalado de lecturas de Aurora"]}
   client:visible={{rootMargin: "150px"}}
   index={16}
   group="Escalado de Aurora"
@@ -602,6 +649,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Identificar las capacidades de cifrado de RDS","Comprender los mecanismos de protección de datos en RDS"]}
   client:visible={{rootMargin: "150px"}}
   index={17}
   group="Seguridad de RDS"
@@ -633,6 +682,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprender los usos de DynamoDB Streams","Diseñar arquitecturas orientadas a eventos con DynamoDB","Evaluar patrones de procesamiento de flujos de datos"]}
   client:visible={{rootMargin: "150px"}}
   index={18}
   group="DynamoDB Streams"
@@ -640,7 +691,7 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
   options={[
     {text: 'Almacenar copias de datos adicionales'},
     {text: 'Créditos de DynamoDB para proveedores verdes', hint: '¿En serio?'},
-    {text: 'Incrementar el rendimiento de escritura', hint: 'Los streams son'},
+    {text: 'Incrementar el rendimiento de escritura', hint: 'Los streams capturan cambios; no aumentan la capacidad de escritura de la tabla.'},
     {text: 'Capturar cambios a nivel de ítem para arquitecturas orientadas a eventos', isAnswer: true},
     {text: 'Alternativa a los índices secundarios globales', hint: '¿Estás adivinando?'},
   ]}
@@ -665,6 +716,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={2}
+  objectives={["Identificar buenas prácticas de carga de archivos grandes","Comprender las ventajas de la carga multiparte"]}
   client:visible={{rootMargin: "150px"}}
   index={19}
   group="Transferencia S3"
@@ -696,6 +749,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comparar costes de almacenamiento entre servicios de AWS","Evaluar el coste de las opciones de almacenamiento","Aplicar estrategias de optimización de costes"]}
   client:visible={{rootMargin: "150px"}}
   index={20}
   group="Optimización de Costos"
@@ -731,16 +786,27 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comprender los modelos de consistencia de DynamoDB","Evaluar las ventajas y limitaciones de los niveles de consistencia","Aplicar modelos de consistencia a casos reales"]}
   client:visible={{rootMargin: "150px"}}
   index={21}
   group="Consistencia de DynamoDB"
   title="Modelos de consistencia"
   options={[
-    {text: '100 reads per second', isAnswer: true},
-    {text: '50 reads per second'},
-    {text: '200 reads per second'},
-    {text: 'Unlimited reads per second'},
-  ]}
+  {
+    "text": "100 lecturas por segundo",
+    "isAnswer": true
+  },
+  {
+    "text": "50 lecturas por segundo"
+  },
+  {
+    "text": "200 lecturas por segundo"
+  },
+  {
+    "text": "Lecturas ilimitadas por segundo"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -768,6 +834,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprender la conmutación por error de Aurora","Identificar configuraciones de alta disponibilidad","Aplicar buenas prácticas de recuperación ante desastres"]}
   client:visible={{rootMargin: "150px"}}
   index={22}
   group="Alta disponibilidad de Aurora"
@@ -775,7 +843,7 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
   options={[
     {text: 'Se requiere intervención manual'},
     {text: 'Requiere reconfiguración de la aplicación'},
-    {text: 'Siempre cambia al réplica más antigua'},
+    {text: 'Siempre cambia a la réplica más antigua'},
     {text: 'Promoción automática basada en el nivel de prioridad de conmutación por error', isAnswer: true},
   ]}
 >
@@ -802,33 +870,35 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprender el modelo de consistencia de S3","Identificar las garantías de las operaciones S3","Aplicar los conocimientos de consistencia al diseño de aplicaciones"]}
   client:visible={{rootMargin: "150px"}}
   index={23}
   group="Consistencia de S3"
   title="Consistencia fuerte de S3"
   options={[
     {text: 'Solo para objetos nuevos'},
-    {text: 'Consistencia fuerte para todas las operaciones', isAnswer: true},
+    {text: 'Consistencia fuerte de lectura tras escritura para escrituras, eliminaciones y listados de objetos', isAnswer: true},
     {text: 'Consistente eventual para actualizaciones'},
     {text: 'Depende de la región'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    A finales de 2020, ¿qué modelo de consistencia ofrece S3 para todas las operaciones?
+    Tras un PUT o DELETE exitoso de un objeto S3, ¿qué consistencia se aplica a las solicitudes GET y LIST posteriores?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
     Modelo de consistencia de S3:
-    - Consistencia fuerte de lectura después de escritura para todas las operaciones
+    - Consistencia fuerte de lectura después de escritura para operaciones con objetos
     - Se aplica a PUTs y DELETEs
     - No se necesitan soluciones alternativas usadas antes
     - Sin costo adicional
 
     Impacto:
     - Lógica de aplicación simplificada
-    - No se requieren verificaciones de consistencia
+    - No hay que esperar consistencia eventual para leer un objeto escrito correctamente
     - Lecturas inmediatas fiables después de escrituras
     - Mejora de la fiabilidad de la aplicación
   </div>
@@ -836,6 +906,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={3}
+  objectives={["Comprender la función TTL de DynamoDB","Aplicar TTL a la gestión del ciclo de vida de los datos","Diseñar estrategias eficientes de caducidad de datos"]}
   client:visible={{rootMargin: "150px"}}
   index={24}
   group="Características de DynamoDB"
@@ -870,6 +942,8 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 </Challenge>
 
 <Challenge
+  difficulty={4}
+  objectives={["Comprender el escalado de Aurora Serverless","Identificar qué activa el escalado","Optimizar costes para cargas variables"]}
   client:visible={{rootMargin: "150px"}}
   index={25}
   group="Aurora Serverless"
@@ -907,6 +981,6 @@ Sumérgete en los servicios de almacenamiento de AWS. Este cuestionario pondrá 
 ¡Vaya, esa aventura se metió hasta lo más profundo! 🚀☁️  
 Espero que hayas disfrutado el recorrido y, de paso, aprendido algo sobre los servicios de almacenamiento de AWS.
 
-Descubre más de los [retos de Dan](/../challenges/)! 🧠  
+Descubre más de los [retos de Dan](/challenges/)! 🧠
 
 Legal: Este cuestionario es solo para fines educativos. Todas las marcas registradas y derechos de autor pertenecen a sus respectivos propietarios, especialmente a los grandes.

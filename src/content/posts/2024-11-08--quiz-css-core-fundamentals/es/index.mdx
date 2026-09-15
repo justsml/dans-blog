@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: ¿Conoces los fundamentos de CSS? (2025)'
 subTitle: ¿Eres lo suficientemente front‑end?
-label: CSS Fundamentals
+label: "Fundamentos de CSS"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: CSS
@@ -81,7 +81,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Puedes encontrar el <em class="highlight">UN</em> código hex válido 👍?
+    ¿Puedes encontrar el <em class="highlight">ÚNICO</em> código hexadecimal válido 👍?
   </div>
   </slot>
   <slot name='explanation'>
@@ -156,9 +156,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La respuesta correcta es `a#home[name='home']`, que coincide tanto con los atributos `id` como `name`. Los selectores CSS distinguen mayúsculas y minúsculas, por lo que `#Home` no funcionaría, y los espacios implican elementos hijos, lo que no aplica aquí.
+La respuesta es `a#home[name='home']`: selecciona el enlace por su tipo, ID y atributo `name`. En HTML en modo estándar, los valores de ID distinguen mayúsculas y minúsculas, de modo que `#Home` no coincide con `home`; los nombres de etiquetas HTML no distinguen mayúsculas y minúsculas. El espacio en `a [id='home']` es un combinador de descendientes: buscaría un elemento dentro del enlace, no el propio enlace.
 
-    El selector `:contains()` no es un selector CSS estándar, aunque está disponible en algunas bibliotecas JS.
+    `:contains()` no es un selector CSS estándar, aunque algunas bibliotecas JavaScript lo ofrecen.
   </div>
   </slot>
 </Challenge>
@@ -295,9 +295,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Usar `text-align: center;` es la forma correcta de centrar texto en un elemento de bloque. Las propiedades `align` se usan en diseños flexbox, y `margin: 0 auto;` se usa para centrar elementos de bloque horizontalmente.
-
-    La propiedad `align-content` se usa en diseños grid, y `text-content` no es una propiedad CSS válida.
+`text-align: center;` centra horizontalmente el texto y otro contenido en línea dentro de un bloque. No existe una propiedad CSS `align` ni `text-content`. `align-content` distribuye o alinea contenido en diseños compatibles, y `margin: 0 auto;` puede centrar horizontalmente un bloque con ancho limitado; ninguna sustituye a `text-align` para esta pregunta.
   </div>
   </slot>
 </Challenge>

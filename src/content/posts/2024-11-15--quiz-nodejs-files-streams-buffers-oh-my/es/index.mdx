@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Dominio de IO en NodeJS'
 subTitle: 'Pon a prueba tus conocimientos sobre archivos, flujos y buffers'
-label: NodeJS
+label: "Archivos, flujos y buffers"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: NodeJS
@@ -56,7 +56,7 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
     `Buffer.alloc(size)` crea un nuevo Buffer del tamaño especificado relleno de ceros.
     La salida será: `<Buffer 00 00 00 00 00>`
 
-    Si deseas crear un Buffer con datos aleatorios, usa `Buffer.allocUnsafe(5)`.
+    `Buffer.allocUnsafe(5)` omite la inicialización a cero: sus bytes pueden contener datos anteriores de memoria. No genera números aleatorios. Inicializa todos los bytes antes de leerlos o exponerlos; usa `crypto.randomBytes(5)` si necesitas bytes aleatorios.
 
     [Aprende más sobre la asignación de Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
@@ -72,7 +72,7 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
     {text: 'A', isAnswer: true},
     {text: '65'},
     {text: '[Object object]'},
-    {text: 'Indefinido'},
+    {text: 'Undefined'},
     {text: 'Datos binarios'},
   ]}
 >
@@ -214,7 +214,7 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
   title="Encadenamiento de Streams"
   options={[
     {text: 'Copia el archivo con compresión'},
-    {text: 'Copia el archivo sin almacenamiento en memoria', isAnswer: true},
+    {text: 'Copia el archivo por fragmentos sin almacenar todo el archivo en memoria', isAnswer: true},
     {text: 'Carga todo el archivo en memoria'},
     {text: 'Crea un enlace simbólico'},
   ]}
@@ -232,7 +232,7 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `pipe()` conecta un stream legible a un stream escribible, gestionando automáticamente la presión inversa y copiando los datos en fragmentos sin cargar todo el archivo en memoria.
+    `pipe()` conecta un stream legible a un stream escribible, gestionando automáticamente la contrapresión (backpressure) y copiando los datos en fragmentos sin cargar todo el archivo en memoria.
 
     Esto es eficiente en memoria para archivos grandes en comparación con `fs.readFile()` seguido de `fs.writeFile()`.
 
@@ -280,11 +280,20 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
   group="Flujos"
   title="Flujos de Transformación"
   options={[
-    {text: 'hola mundo'},
-    {text: 'HOLA MUNDO', isAnswer: true},
-    {text: 'Error'},
-    {text: 'indefinido'},
-  ]}
+  {
+    "text": "hello world"
+  },
+  {
+    "text": "HELLO WORLD",
+    "isAnswer": true
+  },
+  {
+    "text": "Error"
+  },
+  {
+    "text": "undefined"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -403,7 +412,7 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
     {text: 'Previene desbordamiento de memoria', isAnswer: true},
     {text: 'Aumenta la velocidad de lectura'},
     {text: 'Comprime datos'},
-    {text: 'Encripta datos'},
+    {text: 'Cifra datos'},
   ]}
 >
   <slot name="question">
@@ -494,7 +503,7 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
   <div className="explanation">
     Los streams pueden operar en:
     1. Modo binario (por defecto): para buffers y cadenas
-    2. Modo objeto: para cualquier valor de JavaScript
+    2. Modo objeto: para valores de JavaScript excepto `null`, que señala el final de un flujo de lectura
 
     Ejemplo de modo objeto:
     ```js
@@ -596,4 +605,4 @@ Este cuestionario pondrá a prueba tu comprensión de las operaciones de IO de N
 
 </QuizUI>
 
-¡Espero que hayas disfrutado poniendo a prueba tus conocimientos de NodeJS IO! ¿Quieres más? Consulta mi <a href="../challenges/">Colección de quizzes</a> para nuevos desafíos.
+¡Espero que hayas disfrutado poniendo a prueba tus conocimientos de NodeJS IO! ¿Quieres más? Consulta mi <a href="/challenges/">Colección de quizzes</a> para nuevos desafíos.

@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: Delicias dedesestructuración'
 subTitle: ¿Dominas la desestructuración?
-label: Destructuring
+label: "Desestructuración"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -37,13 +37,26 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Calentamiento: Objetos"
   title="Desestructuración Básica de Objetos"
   options={[
-    {text: 'Nombre: Dan Levy, Edad: 20'},
-    {text: 'Nombre: Dan Levy, Edad: 40'},
-    {text: 'Nombre: Dan Levy, Edad: Infinity'},
-    {text: 'Nombre: Dan Levy, Edad: undefined', isAnswer: true},
-    {text: 'Error: No se puede leer la propiedad \'age\''},
-    {text: 'Nombre: undefined, Edad: 40'},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: 20"
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Name: Dan Levy, Age: Infinity"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Error: Cannot read property 'age'"
+  },
+  {
+    "text": "Name: undefined, Age: 40"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -76,13 +89,26 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Calentamiento: Arreglos"
   title="Valor predeterminado en la desestructuración de objetos"
   options={[
-    {text: 'Nombre: Dan Levy, Edad: NaN'},
-    {text: 'Nombre: Dan Levy, Edad: null'},
-    {text: 'Nombre: Dan Levy, Edad: undefined', isAnswer: true},
-    {text: 'Nombre: Dan Levy, Edad: 40'},
-    {text: 'Error: No se puede desestructurar la propiedad \'age\''},
-    {text: 'SyntaxError: Token inesperado \',\''},
-  ]}
+  {
+    "text": "Name: Dan Levy, Age: NaN"
+  },
+  {
+    "text": "Name: Dan Levy, Age: null"
+  },
+  {
+    "text": "Name: Dan Levy, Age: undefined",
+    "isAnswer": true
+  },
+  {
+    "text": "Name: Dan Levy, Age: 40"
+  },
+  {
+    "text": "Error: Cannot destructure property 'age'"
+  },
+  {
+    "text": "SyntaxError: Unexpected token ','"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -96,7 +122,7 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La variable `age` no está presente en el arreglo `tuple`, así que será `undefined`.
+    La variable `age` no está presente en el arreglo `person`, así que será `undefined`.
 
     Esto resulta en:
     ```plaintext
@@ -112,12 +138,23 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Desestructuración anidada"
   title="Desestructuración anidada"
   options={[
-    {text: 'Primero: Dan, Ciudad: Denver'},
-    {text: 'Primero: undefined, Ciudad: Denver'},
-    {text: 'Error: No se puede leer la propiedad \'first\''},
-    {text: 'Primero: Dan, Ciudad: undefined'},
-    {text: 'Error', isAnswer: true},
-  ]}
+  {
+    "text": "First: Dan, City: Denver"
+  },
+  {
+    "text": "First: undefined, City: Denver"
+  },
+  {
+    "text": "Error: Cannot read property 'first'"
+  },
+  {
+    "text": "First: Dan, City: undefined"
+  },
+  {
+    "text": "Error",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -161,12 +198,23 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Valores predeterminados"
   title="Valores predeterminados en la desestructuración de objetos"
   options={[
-    {text: 'Hola Dan de Desconocido'},
-    {text: 'Hola Dan de Denver'},
-    {text: 'Hola Desconocido de Desconocido'},
-    {text: 'Hola Desconocido de Denver'},
-    {text: 'Error', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Error",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -189,16 +237,13 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La propiedad `birth` no existe en `person`, así que todo el objeto aún necesita un valor predeterminado, no solo la propiedad anidada. Básicamente falta un ` = {}` predeterminado allí.
+El valor predeterminado de `place` solo se puede aplicar después de obtener un objeto del que extraer esa propiedad. Aquí `person.birth` es `undefined`, por lo que la desestructuración falla antes de aplicar `place = 'Unknown'`. Falta el valor predeterminado del objeto: `birth: { place = 'Unknown' } = {}`.
 
-    La forma en que está escrito dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que está intentando desestructurar `undefined`, lo que produce un error.
-    ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+```plaintext
+TypeError
+```
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
-    ```
+La redacción exacta del error varía entre navegadores y entornos de ejecución.
   </div>
   </slot>
 </Challenge>
@@ -209,13 +254,26 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Valores predeterminados"
   title="Valores predeterminados en la desestructuración de objetos"
   options={[
-    {text: 'Hola Dan de Denver'},
-    {text: 'Hola Dan de Johannesburgo'},
-    {text: 'Hola Dan de Desconocido', isAnswer: true},
-    {text: 'Hola Desconocido de Desconocido'},
-    {text: 'Hola Desconocido de Denver'},
-    {text: 'Error'},
-  ]}
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Dan from Johannesburg"
+  },
+  {
+    "text": "Hi Dan from Unknown",
+    "isAnswer": true
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -249,13 +307,26 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Argumentos de Función"
   title="Desestructuración de Parámetros de Función con Valores Predeterminados"
   options={[
-    {text: 'Hola Dan de undefined'},
-    {text: 'Hola Dan de Unknown'},
-    {text: 'Hola Dan de Denver'},
-    {text: 'Hola Unknown de Unknown'},
-    {text: 'Hola Unknown de Denver'},
-    {text: 'Error', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan from undefined"
+  },
+  {
+    "text": "Hi Dan from Unknown"
+  },
+  {
+    "text": "Hi Dan from Denver"
+  },
+  {
+    "text": "Hi Unknown from Unknown"
+  },
+  {
+    "text": "Hi Unknown from Denver"
+  },
+  {
+    "text": "Error",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -287,15 +358,32 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Argumentos de función"
   title="Desestructuración con valores predeterminados anidados"
   options={[
-    {text: 'Desconocido, Desconocido, Joburg'},
-    {text: 'Desconocido, Desconocido, Desconocido'},
-    {text: 'Desconocido, `undefined`, Joburg'},
-    {text: 'N/D, `undefined`, Joburg'},
-    {text: 'N/D, Desconocido, Joburg'},
-    {text: 'N/D, N/D, Joburg', isAnswer: true},
-    {text: 'Desconocido, N/D, Joburg'},
-    {text: 'Error'},
-  ]}
+  {
+    "text": "Unknown, Unknown, Joburg"
+  },
+  {
+    "text": "Unknown, Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, `undefined`, Joburg"
+  },
+  {
+    "text": "N/A, Unknown, Joburg"
+  },
+  {
+    "text": "N/A, N/A, Joburg",
+    "isAnswer": true
+  },
+  {
+    "text": "Unknown, N/A, Joburg"
+  },
+  {
+    "text": "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -317,9 +405,9 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La función `displayPlace` SOLO usará un objeto predeterminado si no se pasa ningún objeto. Así, la única forma de obtener el valor predeterminado `{ place: "Unknown" }` es con cero argumentos `displayPlace()`.
+    El objeto predeterminado `{ place: "Unknown" }` se usa si el argumento se omite o es explícitamente `undefined`: tanto `displayPlace()` como `displayPlace(undefined)` imprimen `Unknown`.
 
-    Otro comportamiento notable aquí es que pasar `undefined` para `place` hará que se use el valor predeterminado, algo similar al comportamiento de `JSON.stringify` (ignora `undefined`, reconoce `null`).
+    Si se proporciona un objeto, una propiedad `place` ausente o con valor `undefined` usa el valor predeterminado de la propiedad, `"N/A"`. Los valores predeterminados del parámetro y de la propiedad se aplican a niveles distintos.
 
     Esto produce:
     ```js
@@ -337,20 +425,39 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Argumentos de función"
   title="Desestructuración con valores predeterminados anidados"
   options={[
-    {text: 'N/A, N/A'},
-    {text: 'N/A, undefined'},
-    {text: 'Desconocido, N/A'},
-    {text: 'Desconocido, Desconocido'},
-    {text: 'Desconocido, undefined'},
-    {text: 'null, N/A', isAnswer: true},
-    {text: 'null, Desconocido'},
-    {text: 'null, undefined'},
-    {text: 'Error'},
-  ]}
+  {
+    "text": "N/A, N/A"
+  },
+  {
+    "text": "N/A, undefined"
+  },
+  {
+    "text": "Unknown, N/A"
+  },
+  {
+    "text": "Unknown, Unknown"
+  },
+  {
+    "text": "Unknown, undefined"
+  },
+  {
+    "text": "null, N/A",
+    "isAnswer": true
+  },
+  {
+    "text": "null, Unknown"
+  },
+  {
+    "text": "null, undefined"
+  },
+  {
+    "text": "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    Similar al anterior... ¿cómo se maneja `null`?_
+    Similar al anterior... ¿cómo se maneja `null`?
     ```js
     function displayPlace({
       name = "N/A",
@@ -366,10 +473,12 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En este caso, la propiedad `place` se establece en `null` en la primera llamada y en `undefined` en la segunda. El valor predeterminado para `place` solo se usa si el objeto completo falta **o** es `undefined`. Los `null` pasarán como `null`.
+    En este caso, la propiedad `place` se establece en `null` en la primera llamada y en `undefined` en la segunda. El valor predeterminado `"N/A"` de la propiedad se usa si `place` falta o es `undefined`, incluso cuando se proporciona el objeto. `null` no activa ese valor predeterminado: las salidas son `null` y `N/A`.
   </div>
   </slot>
 </Challenge>
+
+## A continuación, TypeScript
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
@@ -377,12 +486,23 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="Tipos en línea de TypeScript"
   title="Desestructuración con valores predeterminados anidados"
   options={[
-    {text: 'N/A'},
-    {text: 'undefined'},
-    {text: 'Desconocido'},
-    {text: '\'null\''},
-    {text: 'Error de TypeScript', isAnswer: true},
-  ]}
+  {
+    "text": "N/A"
+  },
+  {
+    "text": "undefined"
+  },
+  {
+    "text": "Unknown"
+  },
+  {
+    "text": "'null'"
+  },
+  {
+    "text": "Error de TypeScript",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -505,12 +625,23 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
   group="TypeScript + Asignación"
   title="Desestructuración con Valores Anidados, Asignación y Tipos"
   options={[
-    {text: 'Hola Dan Levy de N/A'},
-    {text: 'Hola Dan Levy de Ciudad del Cabo'},
-    {text: 'Hola N/A N/A de N/A'},
-    {text: 'Hola N/A N/A de Ciudad del Cabo'},
-    {text: 'Error', isAnswer: true},
-  ]}
+  {
+    "text": "Hi Dan Levy from N/A"
+  },
+  {
+    "text": "Hi Dan Levy from Cape Town"
+  },
+  {
+    "text": "Hi N/A N/A from N/A"
+  },
+  {
+    "text": "Hi N/A N/A from Cape Town"
+  },
+  {
+    "text": "Error",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -555,3 +686,5 @@ Este quiz evaluará tu dominio del Destructuring en JavaScript: desde la sintaxi
 </Challenge>
 
 </QuizUI>
+
+¿Quieres seguir practicando? Visita la [colección de cuestionarios](/challenges/).

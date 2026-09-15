@@ -2,7 +2,7 @@
 social_image: ../desktop-social.webp
 title: 'Quiz: 9 preguntas sobre Promesas de JavaScript'
 subTitle: ¡Nunca vuelvas a romper una promesa!
-label: Promise Gotchas
+label: "Trampas de las promesas"
 modified: '2024-11-28'
 tags:
   - promises
@@ -130,7 +130,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Al encadenar `.then` y `.catch` es útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu "paso" encontró un error, cualquier "paso" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si deseas sobrescribir un error, solo necesitas devolver un valor que no sea un error. Ese valor puede ser accedido en cualquier `.then` posterior.
+Cada `.then` recibe el valor con el que se cumple la promesa anterior. Un rechazo omite los manejadores de éxito hasta encontrar un manejador de rechazo. Aquí, `.catch` imprime el error y devuelve `undefined` (el resultado de `console.log`); el siguiente `.then` imprime `undefined`. Devolver un valor normal, incluso un objeto `Error`, cumple la promesa; lanzar una excepción o devolver una promesa rechazada mantiene el rechazo.
   </div>
   </slot>
 </Challenge>
@@ -197,9 +197,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** `.catch`'s pueden usarse para ignorar (o sobrescribir) errores simplemente devolviendo un valor regular.
-
-    Este truco funciona solo cuando hay un `.then` posterior que reciba el valor.
+El primer `.catch` maneja el rechazo y devuelve la cadena `"actually, that worked"`, por lo que la promesa resultante se cumple. El segundo `.catch` se omite y no se imprime nada. No hace falta un `.then` posterior para que el rechazo quede manejado.
   </div>
   </slot>
 </Challenge>
@@ -232,7 +230,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** `.then`'s pasan datos secuencialmente, desde `return value` al siguiente `.then(value => /* handle value */)`.
+    **Pista:** `.then`'s pasan datos secuencialmente, desde `return value` al siguiente `.then(value => /* handle value */)`.
 
     Un `return` es clave para pasar un valor al siguiente `.then`.
   </div>
@@ -302,7 +300,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    **Hint:** `.then`'s pasan datos secuencialmente, desde `return value` al siguiente `.then(value => /* handle value */)`.
+    **Pista:** `.then`'s pasan datos secuencialmente, desde `return value` al siguiente `.then(value => /* handle value */)`.
 
     Un `return` es clave para pasar un valor al siguiente `.then`.
   </div>
@@ -315,12 +313,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Manejo de datos"
   title="Flujo entre `.then` y `.catch`"
   options={[
-    {text: 'imprimir "¡Oh noes!" y "¡The fails!"'},
-    {text: 'imprimir "¡Oh noes!"'},
-    {text: 'imprimir "¡The fails!"', isAnswer: true},
-    {text: 'imprimir "en realidad, eso funcionó"'},
-    {text: 'no se imprime nada'},
-  ]}
+  {
+    "text": "imprimir \"Oh noes!\" y \"The fails!\""
+  },
+  {
+    "text": "imprimir \"Oh noes!\""
+  },
+  {
+    "text": "imprimir \"The fails!\"",
+    "isAnswer": true
+  },
+  {
+    "text": "imprimir \"actually, that worked\""
+  },
+  {
+    "text": "no se imprime nada"
+  }
+]}
 >
   <slot name="question">
   <div className="question">

@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: ¡Demuestra tus habilidades en SQL!'
 subTitle: ¿Eres del equipo SQL o NoSQL?
-label: SQL 101
+label: "Consultas SQL"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: Database
@@ -141,7 +141,7 @@ No te preocupes, le pasa a un montón de devs.
     {text: 'Una subconsulta que se ejecuta una sola vez en total'},
     {text: 'Una subconsulta usada solo en sentencias JOIN'},
     {text: 'Una subconsulta que solo devuelve múltiples columnas'},
-    {text: 'Una subconsulta que se ejecuta una vez por cada fila de la consulta externa', isAnswer: true},
+    {text: 'Una subconsulta que hace referencia a columnas de la consulta externa', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -151,7 +151,7 @@ No te preocupes, le pasa a un montón de devs.
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Una subconsulta correlacionada se evalúa una vez por cada fila de la consulta externa. Hace referencia a columnas de la consulta externa, lo que la vuelve dependiente de cada fila.
+Una subconsulta correlacionada hace referencia a columnas de su consulta externa. Su resultado depende conceptualmente de la fila externa actual; el optimizador puede transformar la ejecución, por lo que no se garantiza una ejecución física independiente por cada fila.
   </div>
   </slot>
 </Challenge>
@@ -239,7 +239,7 @@ No te preocupes, le pasa a un montón de devs.
 
     Aunque *puede* devolver "filas únicas" (y a menudo lo hace), no es necesariamente su objetivo principal.
 
-    No se requiere indexación aquí, aunque ciertamente es una buena práctica usar `IN` sobre una columna con índice, preferiblemente un índice `UNIQUE`, ya que puede mejorar el rendimiento.
+    No se requiere un índice. Un índice B-tree adecuado puede ayudar con un filtro `IN` selectivo, pero el planificador puede preferir un recorrido secuencial si hay muchas coincidencias o la tabla es pequeña. `UNIQUE` impone una restricción sobre los datos; no es un requisito para optimizar `IN`.
   </div>
   </slot>
 </Challenge>
@@ -254,7 +254,7 @@ No te preocupes, le pasa a un montón de devs.
     {text: 'Devuelve el último argumento no NULL'},
     {text: 'Devuelve el primer argumento no NULL', isAnswer: true},
     {text: 'Limitado a columnas IDENTITY'},
-    {text: 'Originalmente de Printer Coalation'},
+    {text: 'Proviene de la clasificación de hojas de impresora'},
   ]}
 >
   <slot name="question">

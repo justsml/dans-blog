@@ -1,7 +1,7 @@
 ---
 title: 'Cuestionario: Estructuras de datos y algoritmos'
 subTitle: ¿Puedes hacer BS en un árbol binario?
-label: Algorithms & DS
+label: "Algoritmos y estructuras de datos"
 modified: '2024-11-08'
 social_image: ../desktop-social.webp
 category: Quiz
@@ -53,6 +53,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Las pilas son las más adecuadas para patrones de acceso LIFO. Las colas son las más adecuadas para patrones de acceso FIFO (First In, First Out).
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -77,6 +79,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     O(1) representa complejidad temporal constante. Significa que el algoritmo siempre tarda la misma cantidad de tiempo en ejecutarse, sin importar el tamaño de la entrada.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -94,7 +98,7 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es la complejidad temporal para calcular la longitud de una lista enlazada simple?
+    Si una lista simplemente enlazada no almacena su longitud, ¿cuál es la complejidad temporal de calcularla recorriendo los nodos?
   </div>
   </slot>
   <slot name='explanation'>
@@ -102,6 +106,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Para calcular la longitud de una lista enlazada simple, debes recorrer cada nodo desde la cabeza hasta el final, lo que resulta en una complejidad temporal O(n).
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -127,6 +133,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     En un BST balanceado, la complejidad temporal promedio para la búsqueda es O(log n) porque cada nivel reduce a la mitad el espacio de búsqueda.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -152,6 +160,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Merge Sort siempre opera con una complejidad de peor caso de O(n log n) ya que divide repetidamente el arreglo a la mitad y fusiona los subarreglos ordenados.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -177,6 +187,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     BFS utiliza una Cola para explorar los nodos nivel por nivel, procesando los nodos de forma amplia (por "fila").
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -185,16 +197,27 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
   group="Grafos"
   title="Detección de ciclos en grafos"
   options={[
-    {text: 'Quick Sort'},
-    {text: 'Breadth-First Search'},
-    {text: 'Merge Sort'},
-    {text: 'Depth-First Search', isAnswer: true},
-    {text: 'Bubble Sort'},
-  ]}
+  {
+    "text": "Ordenación rápida (Quick Sort)"
+  },
+  {
+    "text": "Búsqueda en anchura (BFS)"
+  },
+  {
+    "text": "Ordenación por mezcla (Merge Sort)"
+  },
+  {
+    "text": "Búsqueda en profundidad (DFS)",
+    "isAnswer": true
+  },
+  {
+    "text": "Ordenación burbuja (Bubble Sort)"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    ¿Qué algoritmo se usa comúnmente para detectar ciclos en un grafo dirigido?
+    ¿Qué recorrido detecta ciclos en un grafo dirigido manteniendo una pila de recursión o marcas de nodos activos?
   </div>
   </slot>
   <slot name='explanation'>
@@ -202,6 +225,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     La búsqueda en profundidad (DFS) se usa típicamente para detectar ciclos en un grafo manteniendo una pila de recursión que rastrea los nodos visitados.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -227,6 +252,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Heap Sort mantiene una complejidad temporal de peor caso de O(n log n), ya que construye un heap y extrae repetidamente el elemento máximo.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -252,6 +279,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Las tablas hash tienen una complejidad de tiempo promedio de O(1) para acceder a los elementos, asumiendo una buena función hash que minimice colisiones.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -276,6 +305,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Las operaciones principales de una pila son Push (añadir elemento), Pop (eliminar elemento) y Peek (ver el elemento superior sin eliminarlo).
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -284,16 +315,27 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
   group="Algoritmos de Grafos"
   title="Algoritmo de Ruta Más Corta"
   options={[
-    {text: 'Kruskal\'s Algorithm'},
-    {text: 'Prim\'s Algorithm'},
-    {text: 'Bellman-Ford Algorithm'},
-    {text: 'Dijkstra\'s Algorithm', isAnswer: true},
-    {text: 'Floyd-Warshall Algorithm'},
-  ]}
+  {
+    "text": "Algoritmo de Kruskal"
+  },
+  {
+    "text": "Algoritmo de Prim"
+  },
+  {
+    "text": "Algoritmo de Bellman-Ford"
+  },
+  {
+    "text": "Algoritmo de Dijkstra",
+    "isAnswer": true
+  },
+  {
+    "text": "Algoritmo de Floyd-Warshall"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
-    ¿Qué algoritmo se usa comúnmente para encontrar la ruta más corta en un grafo ponderado con aristas no negativas?
+    ¿Qué algoritmo encuentra caminos mínimos desde un origen eligiendo vorazmente el vértice no visitado con menor distancia, si las aristas tienen pesos no negativos?
   </div>
   </slot>
   <slot name='explanation'>
@@ -301,6 +343,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     El algoritmo de Dijkstra se usa frecuentemente para encontrar la ruta más corta en grafos con pesos de arista no negativos. Emplea una cola de prioridad para determinar la distancia mínima de manera eficiente.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -325,6 +369,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Los árboles AVL y los árboles Rojo‑Negro son tipos de árboles autobalanceados, que garantizan que el árbol permanezca equilibrado después de cada inserción o eliminación.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -350,6 +396,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Un caso base es necesario en una función recursiva para detener las llamadas recursivas cuando se cumple una condición específica, evitando la recursión infinita.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -374,6 +422,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Las dos operaciones principales en una cola son Enqueue (agregar un elemento al final) y Dequeue (eliminar un elemento del frente).
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -398,6 +448,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     El ordenamiento topológico se puede realizar en un grafo si es dirigido y acíclico (DAG). Este tipo de ordenación es útil en problemas de planificación de tareas.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -423,6 +475,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     La implementación recursiva ingenua de la serie de Fibonacci tiene una complejidad temporal de O(2^n) debido a los extensos cálculos repetidos para cada número de Fibonacci.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -448,6 +502,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     Una cola de prioridad se implementa normalmente usando un montículo porque permite extraer de forma eficiente el elemento de mayor o menor prioridad.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -472,6 +528,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     En orden, preorden y postorden son los tres órdenes de recorrido en profundidad comunes para los árboles binarios, cada uno con un orden diferente de visita a los nodos. El recorrido en anchura también es común, pero pertenece a una categoría de recorrido distinta.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -496,6 +554,8 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
     En un min‑heap, la raíz siempre es el elemento más pequeño y la altura del árbol es O(log n), lo que hace que la inserción y la extracción sean eficientes.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 <Challenge
@@ -513,14 +573,16 @@ Este quiz evaluará tu dominio de las estructuras de datos (pilas, listas, árbo
 >
   <slot name="question">
   <div className="question">
-    ¿Es estable el algoritmo Bubble Sort?
+    ¿Es estable Bubble Sort cuando solo intercambia elementos adyacentes si el de la izquierda es estrictamente mayor que el de la derecha?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Bubble Sort es un algoritmo de ordenamiento estable porque preserva el orden relativo de los elementos iguales durante la ordenación.
+    Con una comparación estricta, Bubble Sort no intercambia elementos iguales y preserva su orden relativo, por lo que es estable. Una variante que también intercambie valores iguales puede perder esa propiedad.
   </div>
   </slot>
+<slot name="hints">
+</slot>
 </Challenge>
 
 </QuizUI>

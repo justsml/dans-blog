@@ -90,7 +90,7 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   <div className="explanation">
     Lo sé. Es una locura lo rápido que el escape complica el análisis de cadenas. Imagina escapar otros lenguajes dentro de strings de Bash, con todas esas comillas, apóstrofes y símbolos `$` que te joden. 🫠
 
-    Las comillas simples necesitan escaparse dentro de cadenas entre comillas simples. La secuencia de cerrar‑comilla, escapar‑comilla, volver‑a‑abrir (`'\''`) permite la salida de:
+    Dentro de comillas simples no se pueden escapar otras comillas simples con una barra invertida. Hay que cerrar la cadena, emitir una comilla escapada fuera de ella y volver a abrirla. La secuencia de cerrar‑comilla, escapar‑comilla, volver‑a‑abrir (`'\''`) permite la salida de:
     ```plaintext
     It's 🔨 Time!
     ```
@@ -139,13 +139,26 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Variables"
   title="Escapando Caracteres"
   options={[
-    {text: 'Costo: $$100'},
-    {text: 'Costo: $100'},
-    {text: 'Costo: 100'},
-    {text: 'Costo: 00', isAnswer: true},
-    {text: 'Costo:'},
-    {text: 'Error'},
-  ]}
+  {
+    "text": "Cost: $$100"
+  },
+  {
+    "text": "Cost: $100"
+  },
+  {
+    "text": "Cost: 100"
+  },
+  {
+    "text": "Cost: 00",
+    "isAnswer": true
+  },
+  {
+    "text": "Cost:"
+  },
+  {
+    "text": "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -253,8 +266,8 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Condicionales"
   title="If-Else Básico"
   options={[
-    {text: 'El archivo existe'},
-    {text: 'El archivo no existe, después de un diagnóstico de prueba', isAnswer: true},
+    {text: 'File exists'},
+    {text: 'File does not exist, después de un diagnóstico de `test`', isAnswer: true},
     {text: 'Solo error'},
     {text: 'Faltan corchetes dobles'},
     {text: 'Nada'},
@@ -299,11 +312,20 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Condicionales"
   title="Comparación de Cadenas"
   options={[
-    {text: 'Mismo gato'},
-    {text: 'Gatos diferentes, después de un error de sintaxis de prueba', isAnswer: true},
-    {text: 'Zalgo'},
-    {text: 'Solo error'},
-  ]}
+  {
+    "text": "Same cat"
+  },
+  {
+    "text": "Different cats, después de un diagnóstico de sintaxis de test",
+    "isAnswer": true
+  },
+  {
+    "text": "Zalgo"
+  },
+  {
+    "text": "Solo error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -338,13 +360,26 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Funciones"
   title="Declaración de Función"
   options={[
-    {text: 'Hola', isAnswer: true},
-    {text: 'Dan'},
-    {text: 'Hola Dan'},
-    {text: 'greet'},
-    {text: 'Error'},
-    {text: 'Error de sintaxis'},
-  ]}
+  {
+    "text": "Hi",
+    "isAnswer": true
+  },
+  {
+    "text": "Dan"
+  },
+  {
+    "text": "Hi Dan"
+  },
+  {
+    "text": "greet"
+  },
+  {
+    "text": "Error"
+  },
+  {
+    "text": "Error de sintaxis"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -471,11 +506,20 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   group="Manipulación de Cadenas"
   title="Extracción de Subcadenas"
   options={[
-    {text: 'Gato malo'},
-    {text: 'Gato malo, gato bueno:9'},
-    {text: 'gato bueno', isAnswer: true},
-    {text: 'Error'},
-  ]}
+  {
+    "text": "Bad cat"
+  },
+  {
+    "text": "Bad cat, good cat:9"
+  },
+  {
+    "text": "good cat",
+    "isAnswer": true
+  },
+  {
+    "text": "Error"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -521,7 +565,7 @@ Afila (o demuestra) tus **habilidades** de scripting en shell!
   <div className="explanation">
     `each` no es una palabra clave de bucle en Bash. Las principales palabras clave de bucle son `for`, `while` y `until`.
 
-    Mientras `do` no es técnicamente una palabra clave de bucle, es una parte clave de la sintaxis del bucle.
+    `do` también es una palabra reservada de Bash: inicia el cuerpo del bucle. `each` es la única opción que no pertenece a esa sintaxis.
   </div>
   </slot>
 </Challenge>

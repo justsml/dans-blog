@@ -1,7 +1,7 @@
 ---
 title: 'Quiz: ¿El HTML sigue en tu currículum?'
 subTitle: ¡Demuestra tu valía!
-label: Semantic HTML5
+label: "HTML moderno"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: HTML
@@ -64,11 +64,20 @@ Al fin y al cabo, sabes diferenciar un `<div>` de un `<span>`, ¿no? Pero, ¿qu�
   group="HTML Semántico Avanzado"
   title="Uso de `<dd>`"
   options={[
-    {text: 'Definición de descripción'},
-    {text: 'Término de descripción'},
-    {text: 'Visualización de datos'},
-    {text: 'Detalles de descripción', isAnswer: true },
-  ]}
+  {
+    "text": "Una declaración que define un campo de base de datos"
+  },
+  {
+    "text": "Término de descripción"
+  },
+  {
+    "text": "Visualización de datos"
+  },
+  {
+    "text": "Una descripción, definición o valor de un término en una lista de descripciones",
+    "isAnswer": true
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -100,11 +109,20 @@ Al fin y al cabo, sabes diferenciar un `<div>` de un `<span>`, ¿no? Pero, ¿qu�
   group="HTML Semántico Avanzado"
   title="Uso de `<figure>/<figcaption>`"
   options={[
-    {text: 'Para mostrar imágenes con información de copyright'},
-    {text: 'Describir imágenes, gráficos, etc.', isAnswer: true },
-    {text: 'Para anotar tablas, cálculos, etc.'},
-    {text: 'Usado para subtitular videos'},
-  ]}
+  {
+    "text": "Solo para imágenes con información de derechos de autor"
+  },
+  {
+    "text": "Agrupar contenido independiente con su leyenda",
+    "isAnswer": true
+  },
+  {
+    "text": "Exclusivamente para tablas y cálculos matemáticos"
+  },
+  {
+    "text": "Solo para añadir subtítulos a la reproducción de vídeo"
+  }
+]}
 >
   <slot name="question">
   <div className="question">
@@ -479,9 +497,7 @@ Al fin y al cabo, sabes diferenciar un `<div>` de un `<span>`, ¿no? Pero, ¿qu�
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El atributo `role` describe
-
-    el propósito de un elemento a las tecnologías de asistencia, ayudando a mejorar la accesibilidad.
+    El atributo `role` describe el propósito de un elemento a las tecnologías de asistencia, ayudando a mejorar la accesibilidad.
   </div>
   </slot>
 </Challenge>
