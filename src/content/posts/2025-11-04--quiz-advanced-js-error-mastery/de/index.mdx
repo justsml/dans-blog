@@ -60,6 +60,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Welche Eigenschaften eines Error-Objekts sind aufzählbar?
+</div>
 </slot>
 </Challenge>
 
@@ -91,6 +94,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Vergleiche die spezielle Objektanzeige der Konsole mit der JSON-Serialisierung.
+</div>
 </slot>
 </Challenge>
 
@@ -125,6 +131,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+instanceof folgt der gesamten Prototypkette.
+</div>
 </slot>
 </Challenge>
 
@@ -154,6 +163,9 @@ console.log(iframeError instanceof Error);
 </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Unterschiedliche Ausführungskontexte besitzen eigene Error-Konstruktoren.
+</div>
 </slot>
 </Challenge>
 
@@ -163,7 +175,7 @@ console.log(iframeError instanceof Error);
   group="Werfen von Nicht-Error-Objekten"
   title="String-Ausnahmen"
   options={[
-    {text: 'TypeError: Zeichenkette ist kein Error'},
+    {text: 'TypeError: string is not an Error'},
     {text: 'false, "string"', isAnswer: true},
     {text: 'Erzeugt automatisch ein Error-Objekt'},
     {text: 'undefiniertes Verhalten'},
@@ -188,6 +200,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+JavaScript erlaubt es, jeden Wert zu werfen, nicht nur Error-Objekte.
+</div>
 </slot>
 </Challenge>
 
@@ -224,6 +239,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Welchen Wert liefert this.constructor.name für diese Instanz?
+</div>
 </slot>
 </Challenge>
 
@@ -257,6 +275,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Welchen Standardwert erbt die Eigenschaft name von Error.prototype?
+</div>
 </slot>
 </Challenge>
 
@@ -299,6 +320,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+cause verweist auf den ursprünglichen Fehler. Seine message bleibt unverändert.
+</div>
 </slot>
 </Challenge>
 
@@ -333,6 +357,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Diese V8-Funktion kann Hilfsfunktionen aus dem Stack-Trace ausblenden.
+</div>
 </slot>
 </Challenge>
 
@@ -373,6 +400,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Wie wird undefined bei der Interpolation eines Template-Literals in Text umgewandelt?
+</div>
 </slot>
 </Challenge>
 
@@ -406,6 +436,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Welche Error-Eigenschaften berücksichtigt JSON.stringify?
+</div>
 </slot>
 </Challenge>
 
@@ -443,6 +476,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Wie throw kann auch Promise.reject beliebige Werte verwenden.
+</div>
 </slot>
 </Challenge>
 
@@ -478,6 +514,9 @@ console.log(iframeError instanceof Error);
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+code und errno sind keine universellen Eigenschaften jedes JavaScript-Fehlers.
+</div>
 </slot>
 </Challenge>
 
@@ -516,6 +555,9 @@ Für dieses gewöhnliche Objekt liefern beide Vergleiche `false`: Es erbt nicht 
 </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Die eine Prüfung folgt der Prototypkette; die andere liefert einen Objekttag, den Symbol.toStringTag beeinflussen kann.
+</div>
 </slot>
 </Challenge>
 

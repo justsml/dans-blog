@@ -304,7 +304,7 @@ Teste dein Wissen über Zahlen in JS, `parseInt`, `parseFloat` und `BigInt`. Es 
 
     Das erste Element, `24`, wird in Basis 0 (automatische Erkennung) als `24` geparst, also bleibt es `24`. Das zweite Element, `'One'`, wird in Basis 1 zu `NaN` geparst. Das dritte Element, `42`, wird mit Basis 2 geparst. In Basis 2 ist `'42'` kein gültiger Wert, also ergibt das Ergebnis `[24, NaN, NaN]`.
 
-    Das ist ein häufiger Stolperstein bei `parseInt` und `map`. Wenn du ein Array von Strings in Zahlen umwandeln willst, ist die einzige sichere „eingebaute“ Methode `.map(Number)` oder ein Callback/Wrapper wie <code>{`.map(x => parseInt(x, 10))`}</code>.
+    Das ist ein häufiger Stolperstein bei `parseInt` und `map`. Verwende `.map(Number)`, um jeweils den gesamten String in eine Zahl umzuwandeln, oder <code>{`.map(x => parseInt(x, 10))`}</code>, um ein ganzzahliges Präfix zur Basis 10 einzulesen. Beide Varianten haben unterschiedliche Parsing-Regeln; wähle die beabsichtigte Bedeutung.
   </div>
   </slot>
 </Challenge>
@@ -440,8 +440,8 @@ Teste dein Wissen über Zahlen in JS, `parseInt`, `parseFloat` und `BigInt`. Es 
         <td>❌</td>
       </tr>
       <tr>
-        <td>Binär/Octal/Hex‑Literale</td>
-        <td>✅</td>
+        <td>Binär-/Oktal-/Hex-Präfixe in Strings</td>
+        <td>Nur hexadezimales <code>0x</code>; <code>0b</code>/<code>0o</code> werden nicht automatisch erkannt</td>
         <td>❌</td>
         <td>✅</td>
         <td>✅</td>

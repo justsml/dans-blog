@@ -56,6 +56,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Prüfe, ob der linke Operand null oder undefined ist; andere falsy-Werte werden nicht ersetzt.
+</div>
 </slot>
 </Challenge>
 
@@ -88,6 +91,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+false ist ein boolescher Wert und weder null noch undefined.
+</div>
 </slot>
 </Challenge>
 
@@ -119,6 +125,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Die optionale Verkettung beendet den Zugriff, sobald der geprüfte Wert null oder undefined ist.
+</div>
 </slot>
 </Challenge>
 
@@ -128,7 +137,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="BigInt"
   title="BigInt-Verwendung"
   options={[
-    {text: 'TypeError: BigInt und number dürfen nicht gemischt werden'},
+    {text: 'TypeError: Cannot mix BigInt and number'},
     {text: '42n'},
     {text: '84n', isAnswer: true},
     {text: 'undefined'},
@@ -150,6 +159,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Beide Operanden tragen das Suffix n. Werden hier unterschiedliche Zahlentypen gemischt?
+</div>
 </slot>
 </Challenge>
 
@@ -192,6 +204,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Ein dynamischer Import liefert sofort ein Promise. Welchen Typ meldet typeof für ein Promise?
+</div>
 </slot>
 </Challenge>
 
@@ -236,6 +251,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+allSettled liefert Ergebnisobjekte mit status und value beziehungsweise reason.
+</div>
 </slot>
 </Challenge>
 
@@ -266,6 +284,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+matchAll ermöglicht schrittweisen Zugriff auf die Treffer. Das Ergebnis ist noch kein Array.
+</div>
 </slot>
 </Challenge>
 
@@ -295,6 +316,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+import.meta beschreibt das aktuell ausgeführte Modul, nicht den Zeitpunkt des Imports.
+</div>
 </slot>
 </Challenge>
 
@@ -326,6 +350,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Die logische ODER-Zuweisung greift bei falsy-Werten.
+</div>
 </slot>
 </Challenge>
 
@@ -357,6 +384,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+Die Nullish-Zuweisung greift nur bei null oder undefined.
+</div>
 </slot>
 </Challenge>
 
@@ -388,6 +418,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </div>
   </slot>
 <slot name='hints'>
+<div className="hint">
+obj hält noch eine starke Referenz auf das Zielobjekt.
+</div>
 </slot>
 </Challenge>
 

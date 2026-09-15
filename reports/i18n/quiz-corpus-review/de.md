@@ -8,7 +8,7 @@ Reviewed 2026-09-14: all 19 German quiz translations, 267 questions. Review cove
 - Propagated source corrections for Node Buffer allocation/object mode, correlated SQL and indexing, DynamoDB UpdateItem and capacity, S3 consistency, HTML dd/figure choices, DSA ambiguity, CSS text alignment, and Promise recovery.
 - Clarified Date function versus constructor, NaN from Date.UTC, timezone assumptions on individual slides, and variable console formatting.
 - Corrected cross-realm Error recognition and spoofable toStringTag; distinguished missing destructuring objects from missing properties.
-- Restored 44 difficulty/objective sets for Rust/AWS with German objectives, missing empty hint slots, BigInt introduction, and the TypeScript heading and final quiz-collection link.
+- Restored 44 difficulty/objective sets for Rust/AWS with German objectives, missing hint slots, BigInt introduction, and the TypeScript heading and final quiz-collection link. Filled all omitted source hints: 11 ESNext and 20 DSA hints are now specific to each question; all 14 Errors hints are translated.
 - Replaced incomplete or generic AWS hints with explanations tied to the selected option. Standardized lifetime as Lebensdauer, SQL clauses as Klausel, BFS/DFS as Breitensuche/Tiefensuche with English identifiers. Corrected backup data protection from Datenschutz to Datensicherung and point-in-time recovery to Wiederherstellung zu einem bestimmten Zeitpunkt.
 
 ## Terminology evidence
@@ -19,7 +19,7 @@ The existing German [Visualizing Promises article](../../../src/content/posts/20
 
 A fresh parser comparison confirms all 267 questions have the same number of options and same correct-answer positions as their English sources, and every question/explanation/hint code fence matches modulo whitespace. All offered choices were read for meaning and literal-output consistency. Actual browser selection and rendering are covered by the parent task's corpus-wide Playwright run; this ledger does not claim a separate German browser run.
 
-All 19 files pass structural parity after restoring missing links and aligning the PostgreSQL geometry explanation. Scoped i18n validation still flags overbroad preservation rules rejecting valid German prose such as “Nur in Node.js” or “gibt undefined aus”. The parent task owns validator fixes and final rerun. Exact current source hashes below allow detecting later source edits.
+Final source alignment: all 19 English sources were rechecked against frozen commit 35c81f213. Late changes to BigInt parsing/table, CSS standards-mode ID matching, the destructuring TypeError example, and the Error prototype/tag hint are incorporated. All 19 scoped i18n validators pass. The strengthened corpus regression suite also passes all 19 German cases (2,296 assertions), including preservation of nonempty source hints. The hashes below identify exactly the reviewed final English and German texts.
 
 ## Per-question answer audit
 
@@ -70,7 +70,7 @@ Numbers are one-based choice positions, not proof of independent program executi
 
 - Questions: 20
 - English SHA-256: `bbe16f991f17d61caaf6a3d510caa7d4dd771d1113bbbdd157319831abc66dd7`
-- German SHA-256: `3bb7bb3a6a1206a895222f0ee668b5e50763e366a729f109df5a98fe9a4eafd0`
+- German SHA-256: `f8273f9fad188f66f626f822b045b245c450f438326520e3d216a5d0570ded0d`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -99,7 +99,7 @@ Numbers are one-based choice positions, not proof of independent program executi
 
 - Questions: 11
 - English SHA-256: `63cd3ddef63907f8281b7060db5b8004bf7bac2067f84fcdf01ca8bd8b18c3fb`
-- German SHA-256: `8e91ab70997e365f8181184af68df8d8f01666b3db3d2d1b72d0b9c894fc93ca`
+- German SHA-256: `f596242342d406f2504241f54aeee107e53fedbcaf784eae19da4bebbcac61dc`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -157,8 +157,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-can-you-count-to-bigint
 
 - Questions: 13
-- English SHA-256: `15d65ba75475634f5d393dbf2afecb70b7496d8a0b56b7fe7f36a9f0b32726d1`
-- German SHA-256: `e6acec4bce63c9b4f05891d335ba7cf7b04f66c093b2b945837dc7b0ab283a3b`
+- English SHA-256: `f7af3ca5f8ef55272d24882cc3612f0492277f3ce73ad21ddc7a952a7f4d6a8e`
+- German SHA-256: `5f999fa4175d33c7b896f8f20c103e13d8c7d038274a675147e5ba8f5a9abb00`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -199,8 +199,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-css-core-fundamentals
 
 - Questions: 14
-- English SHA-256: `2788fc04e78db4ccdb705b06b915c55e4c625810b09885221f455cf12e3edaaf`
-- German SHA-256: `5f31eb767d7d66e3cba215fd48c023d3a98b00b30793d3db90a911dbcaf9e329`
+- English SHA-256: `ee5866dcab74b29fcaf99765c78fd8c474d51fbd357ed07af1c02059c59d81c7`
+- German SHA-256: `430bb4ecf8ffc095b06226251ccdb96287ad255ced3fa268aab489f334f62d5e`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -242,8 +242,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-destructuring-delights
 
 - Questions: 12
-- English SHA-256: `467e43bad93a2cacd7b0996c571584dcceb98969f924aa31ef9ba672a077ef90`
-- German SHA-256: `8c6a9a86bc46f06f43b5fcb3f00374d7964b515d20075fcc23c8a3f72ef5863c`
+- English SHA-256: `0aa930822ea8a6b38914c30bcdb73e22de3e8910a0f92e5f0f6ab8c090fabd4d`
+- German SHA-256: `f6fc5d446d539dfb8923ad03bf4d7692e679b88f8ff8e2e106ad2ec39fad37d0`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|
@@ -443,8 +443,8 @@ Numbers are one-based choice positions, not proof of independent program executi
 ### quiz-advanced-js-error-mastery
 
 - Questions: 14
-- English SHA-256: `f0ef81ef5c1727d2a8a11e8a819b501a09ccb4f36e8014f758f36aa09b22961a`
-- German SHA-256: `bde5ed692d8fdcab469eebd85ae5cafb3850ace711abd481fbac50bb0286417f`
+- English SHA-256: `e00c048b44ae6dec4bee8aedf31356a8c002564399f9e3525175ace3b2fe3bbb`
+- German SHA-256: `f820eea0fbd24754e2f6879d75db01637f14a4f1e63c809707b1b97b5511c6fc`
 
 | Question | Correct choice | Reviewed answer |
 |---|---:|---|

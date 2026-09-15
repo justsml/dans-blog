@@ -106,7 +106,7 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
     "text": "Fehler: Kann Eigenschaft 'age' nicht destrukturieren"
   },
   {
-    "text": "SyntaxError: Unerwartetes Token ','"
+    "text": "SyntaxError: Unexpected token ','"
   }
 ]}
 >
@@ -237,17 +237,14 @@ Leg gleich mit dem Aufwärmen los – zeig, dass du Destructuring beherrschst! �
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `birth`‑Eigenschaft existiert nicht auf `person`, also benötigt das gesamte Objekt immer noch einen Standardwert, nicht nur die verschachtelte Eigenschaft. Im Grunde fehlt hier ein ` = {}`‑Standard.
+Die Eigenschaft `birth` fehlt. JavaScript versucht deshalb, `place` aus `undefined` zu destrukturieren. Das löst einen Fehler aus, bevor der Standardwert für `place` greifen kann:
 
-    Der Standard `place = "Unknown"` greift erst innerhalb eines vorhandenen oder als Standard eingesetzten `birth`-Objekts. Er ersetzt nicht das fehlende Objekt `person.birth`: Das Destrukturieren von `undefined` löst zuerst einen Fehler aus.
-    ```plaintext
-    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+```plaintext
+TypeError
+```
 
-    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
-
-    Exact wording varies between browsers and runtimes.
-    ```
-  </div>
+Der genaue Meldungstext hängt von der Laufzeit ab. Ein Eigenschaftsstandard greift erst, wenn das umgebende Objekt verfügbar ist und die Eigenschaft fehlt oder `undefined` ist. Mit `birth: { place = "Unknown" } = {}` setzt du ein Standardobjekt ein, wenn `birth` selbst fehlt oder `undefined` ist.
+</div>
   </slot>
 </Challenge>
 
