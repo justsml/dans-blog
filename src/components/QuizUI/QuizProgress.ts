@@ -38,6 +38,15 @@ export function createQuizProgress(slug: string) {
   const storedValue = storage?.getItem(storageKey) ?? legacyValue ?? "[]";
   const questions = parseStoredQuestions(storedValue);
 
+  // Each hydrated question owns a controller. Re-read the shared persisted
+  // state before reads and writes so an older controller cannot erase answers
+  // recorded by a different question (or resurrect progress after reset).
+  const refresh = () => {
+    if (!storage) return;
+    const latest = parseStoredQuestions(storage.getItem(storageKey) ?? "[]");
+    questions.splice(0, questions.length, ...latest);
+  };
+
   const save = () => {
     storage?.setItem(storageKey, JSON.stringify(questions));
   };
@@ -48,6 +57,7 @@ export function createQuizProgress(slug: string) {
   }
 
   const getSnapshot = (): QuizProgressSnapshot => {
+    refresh();
     const knownQuestions = questions.filter(Boolean);
 
     return {
@@ -69,11 +79,13 @@ export function createQuizProgress(slug: string) {
     getSnapshot,
 
     getQuestion(index: number) {
+      refresh();
       return questions[index];
     },
 
     registerQuestion(question: QuizQuestionInfo) {
       assertQuestionIndex(question);
+      refresh();
 
       if (!questions[question.index]) {
         questions[question.index] = {
@@ -90,17 +102,19 @@ export function createQuizProgress(slug: string) {
     answerQuestion(questionIndex: number, option: Option): QuizAnswerResult {
       if (!option) throw Error("Missing option arg");
       if (questionIndex == null) throw Error("Missing question.index");
+      refresh();
       if (!questions[questionIndex]) {
         throw Error(`Question ${questionIndex} not found`);
       }
 
       const question = questions[questionIndex];
-      question.isCorrect = option.isAnswer;
+      const isCorrect = Boolean(option.isAnswer);
+      question.isCorrect = isCorrect;
       question.tries++;
       save();
 
       return {
-        isCorrect: option.isAnswer,
+        isCorrect,
         question,
         snapshot: getSnapshot(),
       };

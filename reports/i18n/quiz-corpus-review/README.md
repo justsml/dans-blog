@@ -47,6 +47,8 @@ The English source was corrected alongside translations so the fixes remain avai
 
 Two Promise questions use client-only rendering. Navigation previously counted only question elements already in the DOM, so startup timing could turn the nine-question quiz into a seven-question navigation list. The manager now retains those islands in order and waits for their markup. A controlled slow-load regression reproduced seven navigation buttons before the fix; the full corpus test also checks the navigation count against authored questions.
 
+Separate hydrated questions previously held independent snapshots of saved progress. A later answer could overwrite an earlier correct answer; the browser regression reproduced a score falling from 2/9 to 1/9 after reload. Progress reads and writes now refresh the shared saved state, and wrong answers persist as explicit `false` values. Every full-corpus browser case also reloads the completed quiz and checks its score.
+
 A wrong answer previously scheduled automatic navigation after 950 ms. Navigation now advances only after a correct answer, cancels stale timers, and checks that the reader is still on the answered slide. The final celebration requires every answer to be correct.
 
 Translation checks now parse option fields instead of confusing quoted colons and braces with properties. They distinguish natural prose from executable output, preserve inline code, and recognize indented MDX fences and JSX attributes. Added optional hints remain visible as editorial review findings rather than invalid component fields.
@@ -63,7 +65,7 @@ Translation checks now parse option fields instead of confusing quoted colons an
 |---|---|
 | Final source alignment | 19 source hashes represented in every language ledger |
 | Scoped translation validation | 190/190 passed |
-| Static corpus and targeted unit tests | 342 passed |
+| Static corpus and targeted unit tests | 343 passed |
 | Astro type check | 0 errors; 94 hints |
 | Site-wide content check | 0 errors; 64 warnings |
 | Production build | Passed; 1,597 pages |
@@ -76,6 +78,6 @@ Browser testing uses Chromium against a stable production preview, with no devel
 To repeat the regression with the project's configured local test server:
 
 ```sh
-bun test src/scripts/i18n/quiz-corpus.test.ts src/scripts/i18n/quiz-parser.test.ts src/scripts/i18n/structural-validation.test.ts src/scripts/i18n/judge.test.ts
+bun test src/components/QuizUI/QuizProgress.test.ts src/scripts/i18n/quiz-corpus.test.ts src/scripts/i18n/quiz-parser.test.ts src/scripts/i18n/structural-validation.test.ts src/scripts/i18n/judge.test.ts
 bunx playwright test tests/e2e/quiz-corpus.spec.ts tests/e2e/quiz-runtime.spec.ts --workers=8
 ```

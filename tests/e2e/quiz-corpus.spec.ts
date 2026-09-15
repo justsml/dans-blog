@@ -49,6 +49,10 @@ for (const entry of corpus) {
       });
     }
     await expect(page.locator(".quiz-score-bar-value")).toHaveText(`${entry.quiz.challenges.length}/${entry.quiz.challenges.length}`);
+    await page.reload({ waitUntil: "domcontentloaded" });
+    await expect(page.locator(".quiz-score-bar-value")).toHaveText(
+      `${entry.quiz.challenges.length}/${entry.quiz.challenges.length}`, { timeout: 15000 },
+    );
     expect(errors).toEqual([]);
   });
 }

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export type OptionSelection = unknown; //number | null;
 /** @deprecated */
 export type Answer = { option: OptionSelection; correct: boolean };
-export type Option = { text: string; isAnswer: boolean; hint?: string };
+export type Option = { text: string; isAnswer?: boolean; hint?: string };
 
 export interface ChallengeProps {
   children: ReactNode;

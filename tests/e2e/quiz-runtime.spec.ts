@@ -54,3 +54,26 @@ test("client-only questions keep their positions when React loads slowly", async
   await page.locator(".quiz-dot").nth(2).click();
   await expect(page.locator("#qq-3").locator("xpath=..")).toHaveClass(/quiz-slide--active/);
 });
+
+test("answers from independently hydrated questions survive reload", async ({ page }) => {
+  test.setTimeout(60000);
+  await page.goto("/javascript-promises-quiz/");
+  const first = page.locator("#qq-1");
+  await first.scrollIntoViewIfNeeded();
+  await expect(page.locator(".quiz-dot")).toHaveCount(9);
+  await first.locator(".option").nth(1).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/9");
+  await page.locator(".quiz-dot").nth(2).click();
+  const third = page.locator("#qq-3");
+  await third.locator(".option").first().focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".quiz-score-bar-value")).toHaveText("2/9");
+  await page.locator(".quiz-dot").nth(1).click();
+  await page.locator("#qq-2 .option").first().focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#qq-2")).toHaveAttribute("data-question-correct", "false");
+  await page.reload();
+  await expect(page.locator(".quiz-score-bar-value")).toHaveText("2/9", { timeout: 15000 });
+  await expect(page.locator("#qq-2")).toHaveAttribute("data-question-correct", "false");
+});

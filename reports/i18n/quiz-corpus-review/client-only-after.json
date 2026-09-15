@@ -1,0 +1,926 @@
+{
+  "config": {
+    "argv": [
+      "/Users/dan/.nvm/versions/node/v24.14.1/bin/node",
+      "/Users/dan/code/oss/dans-blog/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/quiz-corpus.spec.ts",
+      "tests/e2e/quiz-runtime.spec.ts",
+      "--config=/tmp/quiz-playwright.config.ts",
+      "--grep",
+      "javascript-promises-quiz:|client-only questions",
+      "--workers=6",
+      "--output=/tmp/quiz-client-only-after"
+    ],
+    "configFile": "/tmp/quiz-playwright.config.ts",
+    "rootDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 6
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/quiz-client-only-after",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 6
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/i18n/quiz-corpus-review/client-only-after.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 6,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "quiz-corpus.spec.ts",
+      "file": "quiz-corpus.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "en/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 38459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 3321
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 3959
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 3647
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 3623
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 3700
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 2608
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 4878
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 3275
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 4046
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:47:46.077Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-b3052aa1b38e07204888",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "es/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 37738,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 3624
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 3462
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 3071
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 3178
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 2206
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 4216
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 4153
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 3797
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 3322
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:47:46.475Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-5901375e0877e6795d7c",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "hi/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 41346,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 3787
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 2907
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 3347
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 4301
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 3699
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 4507
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 4382
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 4274
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 2960
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:47:46.620Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-770900b360f02a05835d",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "ja/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 40287,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 4069
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 2666
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 4021
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 3894
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 3027
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 6278
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 3915
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 2347
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 3065
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:47:46.372Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-738324c2f2c2a9c3d629",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "ru/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 37140,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 2682
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 3802
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 4172
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 3182
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 3274
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 3771
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 4153
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 4808
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 4816
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:47:44.354Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-d05c94abb36e538eea0e",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "de/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 38516,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 3525
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 4248
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 3704
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 3889
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 3373
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 3252
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 4749
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 3154
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 4340
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:47:45.952Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-fbafba8fd7490bed6ba6",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "fr/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 4,
+                  "status": "passed",
+                  "duration": 28482,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 1676
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 3783
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 4444
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 2580
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 2400
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 2516
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 2601
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 2456
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 2735
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:48:23.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-03675113e41427d0f5df",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "it/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 27219,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 2259
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 3667
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 3043
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 2594
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 2619
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 2669
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 2830
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 2161
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 2445
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:48:25.936Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-c6b0730548060a036c5b",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "ar/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 27633,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 2704
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 4151
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 2897
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 2234
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 1985
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 1966
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 2686
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 2846
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 2216
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:48:26.358Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-f3d1415bc94d8b07b15b",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "he/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 5,
+                  "status": "passed",
+                  "duration": 27786,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 2990
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 3334
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 2932
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 2350
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 2459
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 2577
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 2149
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 2419
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 1948
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:48:26.391Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-0043da60453e677f9317",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        },
+        {
+          "title": "zh/javascript-promises-quiz: every choice is represented and selectable",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 3,
+                  "status": "passed",
+                  "duration": 26815,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Question 1: all 4 choices",
+                      "duration": 3459
+                    },
+                    {
+                      "title": "Question 2: all 4 choices",
+                      "duration": 2158
+                    },
+                    {
+                      "title": "Question 3: all 4 choices",
+                      "duration": 2770
+                    },
+                    {
+                      "title": "Question 4: all 4 choices",
+                      "duration": 2195
+                    },
+                    {
+                      "title": "Question 5: all 4 choices",
+                      "duration": 3066
+                    },
+                    {
+                      "title": "Question 6: all 4 choices",
+                      "duration": 2377
+                    },
+                    {
+                      "title": "Question 7: all 4 choices",
+                      "duration": 2572
+                    },
+                    {
+                      "title": "Question 8: all 4 choices",
+                      "duration": 2483
+                    },
+                    {
+                      "title": "Question 9: all 5 choices",
+                      "duration": 1732
+                    }
+                  ],
+                  "startTime": "2026-09-15T03:48:28.458Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c36732f0c7e1cd546dd0-b270d1efbdb32ccae231",
+          "file": "quiz-corpus.spec.ts",
+          "line": 10,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "quiz-runtime.spec.ts",
+      "file": "quiz-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "client-only questions keep their positions when React loads slowly",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 2,
+                  "status": "passed",
+                  "duration": 5894,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-15T03:48:29.981Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "129089a2d928a9470de5-380bcb18780182c38cbf",
+          "file": "quiz-runtime.spec.ts",
+          "line": 43,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-15T03:47:36.705Z",
+    "duration": 78680.84,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

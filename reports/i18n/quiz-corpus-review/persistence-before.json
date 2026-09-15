@@ -1,0 +1,155 @@
+{
+  "config": {
+    "argv": [
+      "/Users/dan/.nvm/versions/node/v24.14.1/bin/node",
+      "/Users/dan/code/oss/dans-blog/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/quiz-runtime.spec.ts",
+      "--config=/tmp/quiz-playwright.config.ts",
+      "--grep",
+      "independently hydrated",
+      "--workers=1",
+      "--output=/tmp/quiz-persistence-before"
+    ],
+    "configFile": "/tmp/quiz-playwright.config.ts",
+    "rootDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/tmp/quiz-persistence-before",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/dan/code/oss/dans-blog/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/tmp/quiz-persistence-before.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "quiz-runtime.spec.ts",
+      "file": "quiz-runtime.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "answers from independently hydrated questions survive reload",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10897,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.quiz-score-bar-value')\nExpected: \u001b[32m\"\u001b[7m2\u001b[27m/9\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m1\u001b[27m/9\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.quiz-score-bar-value') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.quiz-score-bar-value')\u001b[22m\n\u001b[2m    24 × locator resolved to <span class=\"quiz-score-bar-value\">1/9</span>\u001b[22m\n\u001b[2m       - unexpected value \"1/9\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.quiz-score-bar-value')\nExpected: \u001b[32m\"\u001b[7m2\u001b[27m/9\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m1\u001b[27m/9\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.quiz-score-bar-value') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.quiz-score-bar-value')\u001b[22m\n\u001b[2m    24 × locator resolved to <span class=\"quiz-score-bar-value\">1/9</span>\u001b[22m\n\u001b[2m       - unexpected value \"1/9\"\u001b[22m\n\n    at /Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts:73:55",
+                    "location": {
+                      "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                      "column": 55,
+                      "line": 73
+                    },
+                    "snippet": "  71 |   await expect(page.locator(\".quiz-score-bar-value\")).toHaveText(\"2/9\");\n  72 |   await page.reload();\n> 73 |   await expect(page.locator(\".quiz-score-bar-value\")).toHaveText(\"2/9\", { timeout: 10000 });\n     |                                                       ^\n  74 | });\n  75 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                        "column": 55,
+                        "line": 73
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.quiz-score-bar-value')\nExpected: \u001b[32m\"\u001b[7m2\u001b[27m/9\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7m1\u001b[27m/9\"\u001b[39m\nTimeout:  10000ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('.quiz-score-bar-value') with timeout 10000ms\u001b[22m\n\u001b[2m  - waiting for locator('.quiz-score-bar-value')\u001b[22m\n\u001b[2m    24 × locator resolved to <span class=\"quiz-score-bar-value\">1/9</span>\u001b[22m\n\u001b[2m       - unexpected value \"1/9\"\u001b[22m\n\n\n  71 |   await expect(page.locator(\".quiz-score-bar-value\")).toHaveText(\"2/9\");\n  72 |   await page.reload();\n> 73 |   await expect(page.locator(\".quiz-score-bar-value\")).toHaveText(\"2/9\", { timeout: 10000 });\n     |                                                       ^\n  74 | });\n  75 |\n    at /Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts:73:55"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-09-15T04:02:29.580Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/quiz-persistence-before/quiz-runtime-answers-from--5c411-ed-questions-survive-reload-chromium/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/dan/code/oss/dans-blog/tests/e2e/quiz-runtime.spec.ts",
+                    "column": 55,
+                    "line": 73
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "129089a2d928a9470de5-fd7097722a9ed843a0fb",
+          "file": "quiz-runtime.spec.ts",
+          "line": 58,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-15T04:02:29.163Z",
+    "duration": 11711.256,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}
