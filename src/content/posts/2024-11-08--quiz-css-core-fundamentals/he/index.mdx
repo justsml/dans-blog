@@ -298,15 +298,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    איך אפשר למרכז טקסט בתוך קופסה?
+    כיצד ממרכזים טקסט ותוכן שורה אופקית בתוך מיכל בלוק?
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    שימוש ב-`text-align: center;` הוא הדרך הנכונה למרכז טקסט באלמנט בלוק. המאפיינים `align` משמשים לפריסות flexbox, ו-`margin: 0 auto;` משמש למירכוז אלמנטים בלוק אופקית.
+    שימוש ב-`text-align: center;` הוא הדרך הנכונה למרכז טקסט באלמנט בלוק. אין מאפיין CSS בשם `align`. המאפיין `margin: 0 auto;` יכול למרכז את אלמנט הבלוק עצמו אופקית כאשר לרוחבו יש מגבלה.
 
-    המאפיין `align-content` משמש לפריסות grid, ו-`text-content` אינו מאפיין CSS חוקי.
+    המאפיין `align-content` מטפל ביישור תוכן בפריסות נתמכות ולא ביישור אופקי של טקסט,  ו-`text-content` אינו מאפיין CSS חוקי.
   </div>
   </slot>
 </Challenge>
