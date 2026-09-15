@@ -66,3 +66,7 @@ Final checks:
 - `git diff --check` passed.
 
 The validator issues described in the earlier section are historical baseline findings; shared fixes now allow the final Hebrew corpus to pass without restoring untranslated prose.
+
+### Build-driven MDX correction
+
+The production build exposed incorrect indentation of the PostgreSQL II Q3 explanation list: its closing `div` was parsed inside a list item. Matched the source indentation and added a blank line before the closing tag. All 19 Hebrew MDX bodies subsequently compiled with Astro's underlying `@mdx-js/mdx` compiler; PostgreSQL II locale integrity also passed. The parent task reruns the full Astro build. `he-final-alignment.json` now includes final translation SHA-256 values as well as the unchanged source evidence.
