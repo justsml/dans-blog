@@ -1,0 +1,257 @@
+---
+title: "Your Fast List Is Too Slow"
+subTitle: "How To: Use Agents to Tune Performance."
+date: 2026-09-15
+modified: 2026-09-15
+category: Code
+subCategory: Frontend
+tags: [performance, frontend, css, react, astro, javascript, testing, architecture]
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+related:
+  - upgrade-from-gatsby-to-astro
+  - you-might-not-need-algolia
+---
+
+We applied a sensible CSS optimization to an emoji grid. Rapid scrolling got three times worse.
+
+It even had a good explanation: let the browser skip off-screen cards. Less rendering, less work, faster page. And in one test, jumping directly to the bottom, it worked.
+
+Then we scrolled back and forth.
+
+That was the most useful part of tuning [Emoji Brain](https://github.com/justsml/emoji-brain), a searchable, selectable collection of a few hundred stickers. It forced us to stop treating performance advice as a shopping list. We tried containment, layer hints, still previews, workers, deferred storage, and server rendering. Some helped. Some moved the bill to a worse moment. A few made a number prettier while making the product worse.
+
+The biggest wins came from asking a less glamorous question: **why is this work happening right now?**
+
+Why is a cat animating before anyone looks at it? Why does scrolling trigger downloads? Why does selecting one card update its neighbors? Why does the browser need the export code before someone clicks Export?
+
+Those questions apply to product grids, search results, dashboards, and content sites just as well as they apply to dancing cats.
+
+## The Fastest Animation Is the One Waiting Its Turn
+
+The early catalog had 402 emoji, including 92 animated WebPs. With dozens playing simultaneously, scrolling could reveal blank tiles that painted in late. The browser was trying to move the page while continually decoding and rasterizing changing images.
+
+We generated first-frame stills ahead of time and used those in the grid. Hover, keyboard focus, or a tap could start playback. The selection tray got stills too; its thumbnails sit over a blurred backdrop, an especially unhelpful place to keep changing the pixels.
+
+The [recorded comparison](https://github.com/justsml/emoji-brain/commit/9ab1f627a36e8d132b5227f12952e29973e6fe9c) used three traced, 30-step scroll runs. These are medians across the whole sequence:
+
+| Work | Autoplay | Still previews | Saved |
+| --- | ---: | ---: | ---: |
+| Raster time | 1,859 ms | 844 ms | 55% |
+| Image decoding | 440 ms | 149 ms | 66% |
+| Raster tasks | 1,228 | 458 | 63% |
+
+The image payload for those 92 items fell from **5.45 MB to 0.20 MB**. Same collection, animation still available, far less work just to browse it.
+
+This is the kind of optimization I like: it improves delivery and scrolling without taking away the feature. A video catalog doesn't need to play every video to prove it has videos. A sticker picker can afford the same restraint.
+
+### Scrolling Is Not Consent to Download
+
+Hover-to-play needed one more refinement. The pointer might be sitting perfectly still while the user scrolls cards underneath it. Each brief crossing could start an animation download.
+
+We added **120 ms of hover intent**. Stay over the card and it plays. Leave sooner and the timer is canceled. Click and keyboard focus remain immediate.
+
+A browser test crossed a card for 20 ms. Before the change: an animation request. Afterward: none. Deliberate hover and focus still worked. The measured win here was avoided requests; we didn't isolate a separate FPS gain from that delay.
+
+That distinction matters for other interfaces too. Delay the expensive guess about what someone might want. Keep the response to what they actually did immediate.
+
+Even the “this sticker is animated” badge stays still: a `✦` pseudo-element on an existing wrapper, with “animated” also included in the button's accessible label. No icon import, extra DOM element, or tiny animation advertising the availability of a larger animation.
+
+## Deferred Work Can Arrive at Exactly the Wrong Time
+
+[`content-visibility: auto`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content-visibility) gives the browser permission to skip rendering off-screen content while retaining it in the document. That's useful. Eventually, though, some of that content comes on screen.
+
+Our grid used containment with an exception for selected cards. The first visit selected the entire collection, so removing that exception looked like an easy win: let the browser skip all those off-screen selections too.
+
+Here's what happened in the [three-run comparison](https://github.com/justsml/emoji-brain/blob/5f6c209/docs/performance/selection-scrolling.md), using a production build at 1440 × 1000 with 2× CPU slowdown:
+
+| Interaction | Existing behavior: p95 frame gap | Contain selected cards too |
+| --- | ---: | ---: |
+| Slow wheel scrolling | 16.8 ms | 33.3 ms |
+| Rapid reversals | 16.8 ms | 50.0 ms |
+| Instant end/home jumps | 16.8 ms | 16.8 ms |
+
+The main-thread totals explain why a single test could mislead us. Jumping between the ends of the page used **319 ms instead of 437 ms**. But rapid reversals used **1,335 ms instead of 824 ms**: about 62% more work. Slow scrolling rose from 1,160 to 1,446 ms too.
+
+The optimization helped us jump past the content. It made browsing through it worse.
+
+We kept the exception. Selected, hovered, and focused cards remain visible to the rendering system; other cards can use containment:
+
+```css
+.emoji-cell {
+  /* Fixed for this card design, regardless of image loading. */
+  height: calc(var(--emoji-size) + 1.509375rem);
+  content-visibility: auto;
+  contain: layout style paint;
+}
+
+.emoji-cell:hover,
+.emoji-cell:focus-within,
+.emoji-cell:has(.emoji-card-selected) {
+  content-visibility: visible;
+  contain: layout style;
+}
+```
+
+The useful thing to borrow is the experiment, not the oddly specific height. Test a long list in both directions, crossing the same boundaries repeatedly. Measure when the browser has to reveal content, not just when it gets to skip it.
+
+### We Kept the Shadows
+
+We also tried `will-change: transform` on every image. Rapid XL scrolling got worse in the software-rendered test, so out it went. That doesn't predict every GPU, but it was enough to reject the change for that workload.
+
+Blanket layer hints are a folk remedy. [The actual guidance for `will-change`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/will-change) is considerably more cautious: preparation consumes resources. Hint a bounded set of elements when measurements justify it.
+
+Removing visual effects wasn't an automatic win either. Dropping the toolbar and tray's backdrop blur bought only about another 8% in the early investigation and lost the frosted design. A later shadow-removal experiment improved one worst-frame measurement while worsening rapid-scroll p95.
+
+We kept both effects. Their cost bought a visible part of the design. Autoplaying dozens of stickers nobody was watching bought much less.
+
+Performance work needs that judgment. Otherwise you eventually optimize the product into an empty white rectangle and congratulate yourself on the frame rate.
+
+## Let the Browser Lay Out the Grid
+
+Rendering earlier exposed another problem.
+
+We changed the Astro island from `client:only="react"` to `client:load`, so the initial HTML contained the cards before React hydrated them. The server had been guessing the container width. The browser then measured the real width and rearranged more than 350 cells.
+
+We were maintaining a second layout engine in React, and it disagreed with the first one.
+
+CSS Grid already knew how to fit columns into the available space. We gave it the chosen tile size and used `repeat(auto-fill, minmax(...))`. Keyboard navigation reads the resulting cell positions when an arrow-key operation needs the column count. No continuously synchronized width state required.
+
+We also reserved room above the grid for an export estimate. Its short placeholder became a longer sentence after hydration, pushing the whole collection down. Showing content sooner is more useful when it stays where you put it.
+
+The [server-rendering and layout work](https://github.com/justsml/emoji-brain/commit/e881fc68011e2d917d394b14b5d60466d6c225cf) recorded grid readiness going from about **1,022 to 540 ms** on the 4G/half-CPU profile, and **2,328 to 936 ms** on the 3G/half-CPU profile. That's the combined change, not a claim that one CSS declaration halved load time.
+
+For image-heavy lists, reserve image dimensions, card geometry, and space for text that changes after hydration. Let CSS calculate what it can. Measure the result only when an interaction actually needs the measurement.
+
+This also helped make an ordinary DOM grid practical. The repository has used virtualization before; the current implementation keeps its cards mounted, with still previews, memoization, and selective containment. That suits a collection of a few hundred items with keyboard navigation and drag selection.
+
+We haven't proved virtualization slower. For tens of thousands of expensive rows, it may be the right answer. But first establish whether your bottleneck is the number of mounted rows or what those rows keep doing. A smaller window of constantly repainting images can still be expensive.
+
+## One Click Shouldn't Wake the Whole List
+
+The cards were memoized. Selecting one still caused unrelated cards to render.
+
+The keyboard callback captured the entire selection. Every selection change created a different callback, which every card received as a changed prop. The memoization was doing exactly what we'd asked; our props were defeating it.
+
+Each cell already knew whether it was selected. Passing that flag into a stable handler fixed the dependency. In the three-card regression fixture, toggling one card went from rendering all three to rendering only the changed one.
+
+Two other changes followed the same principle. Saved-selection reconciliation moved into a lazy reducer initializer, taking a regression test from four lookup/reconciliation calls across initialization and one interaction to one. The provider value became memoized, and reducers returned the existing state for unchanged values, avoiding duplicate consumer notifications.
+
+These are render and call counts, not milliseconds. They're still useful evidence: they show that an action stopped recruiting unrelated work.
+
+### Save the Selection After Showing It
+
+Persistence was another passenger on the interaction path. A card needs to look selected immediately. Serializing the selection and writing it to storage can usually wait.
+
+We update React state immediately, capture the committed value in a layout effect, and defer **both `JSON.stringify` and `localStorage.setItem`**. Rapid changes replace the pending value, so only the latest selection needs writing.
+
+The hook schedules that work with [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback), using a one-second timeout and a 250 ms timer fallback. It flushes on `pagehide`, hidden visibility, and unmount.
+
+The order matters. Our first attempt had an immediate-navigation race: someone could change a selection and reload before the pending snapshot was recorded. Capturing it during the commit phase fixed that; tests now change the selection and immediately reload.
+
+Storage is still synchronous when the write happens. Idle scheduling neither makes it interruptible nor guarantees an exact completion time, and lifecycle flushing isn't crash-proof durability. For a small saved selection, coalescing was a useful trade. Larger or durable records need storage chosen for that job.
+
+## An Export Can Be Busy Without Making the Page Busy
+
+Bulk export is a different workload: download assets, assemble bytes, encode data, build an archive, report progress. Putting `async` on the function doesn't move that computation off the main thread.
+
+We create an [export worker](https://github.com/justsml/emoji-brain/blob/ce5f61f/src/lib/exportCore.ts) when needed. It fetches at most four assets concurrently and caches them within the export, so retries don't download unchanged files again. It sends progress roughly four times per second; hundreds of progress messages would just hand React a new problem. ZIP results come back as a transferred `ArrayBuffer`, and completion, errors, or cancellation terminate the worker.
+
+We also use ZIP's `STORE` mode. The WebPs are already compressed. Another deflate pass costs computation for whatever additional savings it can find; we chose to skip it.
+
+The larger saving came from choosing the right assets before downloading them. Pre-generated variants and size estimates let the planner bypass obviously oversized combinations, then check the actual finished output. In the [September 10 comparison](https://github.com/justsml/emoji-brain/blob/5f6c209/docs/slack-export-performance.md), keeping stills at 128px while using 64px animations saved **37.6% of downloaded image bytes** and **38.2% of the embedded payload**, compared with all-128px images. Later controls let people choose other tiers.
+
+That is a useful quality tradeoff to make explicit: spend resolution where it helps, preserve motion where it matters, and show people what they're getting.
+
+The generated script had its own bottleneck. Converting a 9.6 MB decoded payload in one pass with `Uint8Array.from(atob(...), callback)` blocked badly. Using 64 KiB base64 chunks and yielding between them improved both elapsed time and responsiveness in an isolated Chromium test at 2× CPU slowdown:
+
+| Conversion | Elapsed | Largest frame gap |
+| --- | ---: | ---: |
+| Whole payload | 2,043 ms | 2,048 ms |
+| Bounded chunks with yields | 923 ms | 20 ms |
+
+That measures conversion, not clipboard handling, DevTools paste parsing, uploads, or the full export. It does demonstrate why “finish this loop as soon as possible” and “keep the application usable” deserve separate measurements.
+
+Workers alone hadn't solved everything. The September 11 export runs still had 50 ms p95 frame gaps, and the 3G profile recorded a 507 ms main-thread task. The September 12 profiles passed after further fixes. Moving work is a starting point; the page still needs to survive the rest of the operation.
+
+## Astro: Do the Work Before the Visitor Arrives
+
+Many of these decisions become easier when the application has a build step that can do useful work on behalf of every future visitor.
+
+Astro's [islands architecture](https://docs.astro.build/en/concepts/islands/) gives us that division: pre-render the page, then hydrate the pieces that need interaction. Static Astro components don't require a client component runtime. Our interactive React grid still does.
+
+In Emoji Brain's page, the build reads the full catalog and delivery manifest, then passes only the browser's working data across the island boundary. Hashes and bookkeeping timestamps stay behind. Per-image export estimates go across. The fixed overhead of the export script is calculated during the build, so the UI can receive a number instead of importing a script generator to calculate it.
+
+An earlier metadata cleanup cut the generated HTML from **304,014 to 225,898 bytes**, or **25.7%**. That was before the grid was pre-rendered; today's HTML includes the cards themselves. Smaller HTML was useful then. Earlier useful content justified more HTML later.
+
+> **Choose hydration by the job.** The primary interactive grid uses `client:load`. An island farther down a page may suit `client:visible`; lower-priority interaction may suit `client:idle`. Omit the client directive when rendered HTML is enough. `client:only` skips server rendering, which made our grid wait for JavaScript before it existed. Astro's [directive reference](https://docs.astro.build/en/reference/directives-reference/#client-directives) explains the choices.
+
+The same thinking applies beyond the framework. Generate image variants once. Build a static search index once. Ship the browser the answer when it doesn't need the machinery that produced it.
+
+### A 14 KB Chunk, and the Rest of the Bill
+
+The explorer application chunk is **14.2 KB gzipped**. That's small, and I'm happy with it. It also isn't the whole application.
+
+Here is the September 15 production build at commit `ce5f61f`, with 351 rendered cards:
+
+| Output | Raw bytes | Gzip bytes |
+| --- | ---: | ---: |
+| Explorer application chunk | 42,522 | 14,170 |
+| Theme-toggle entry chunk | 1,588 | 774 |
+| **All initial external JS, including the above, React, and shared UI** | **271,780** | **87,614** |
+| Both homepage stylesheets | 47,523 | 10,709 |
+| Homepage HTML, including cards and island props | 658,712 | 51,525 |
+| Export worker and its dependencies, loaded on demand | 122,755 | 37,582 |
+
+These are local gzip-9 artifact measurements, with decimal KB. Shared dependencies are counted once in the JS total. Inline bootstrap code is already in the HTML; images, fonts, and lazy Pagefind assets are outside this table. CDN transfer sizes can differ.
+
+The tiny theme entry shares dependencies too. The export worker contains the ZIP machinery, keeping that **37.6 KB gzipped** out of the initial JS graph. An older build had a separate lazy JSZip chunk; today's worker total already accounts for its current packaging.
+
+The payoff is knowing what each visitor pays for and when. Astro makes that separation convenient. The decisions about imports, data, and optional features produce the savings.
+
+## Watch the Dependencies Around the Fast Part
+
+We made the grid faster and still found a font stylesheet capable of holding up startup.
+
+The external Google Fonts stylesheet could stay pending while the then-client-only island remained blank. A test deliberately held that request open. We moved the fonts to local WOFF2 files, kept `font-display: swap`, and preloaded the two Latin subsets.
+
+Those subsets total about **107 KB**. More bytes than the initial gzipped JavaScript graph. Self-hosting removed the external stylesheet dependency; it didn't make typography free. We kept the typefaces as a design choice. A system-font stack would make a different one.
+
+Other small changes kept unnecessary dependencies off the browsing path:
+
+- **Search:** one lazy Pagefind loader shares its in-flight promise and warms on focus. An ID facet maps matches to catalog data already in memory, avoiding per-result fragment fetches on that path. A fallback handles indexes without the facet. This follows the same logic as [building search with the static site](/you-might-not-need-algolia).
+- **Controls:** a native `popover="auto"` replaced the export dropdown dependency, and the theme menu became a toggle. [Popover](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) supplies display and dismissal behavior; semantics and keyboard behavior still need attention. Other Radix components remain.
+- **Images:** generated 64, 128, and 256px previews use `srcset`, reserved dimensions, lazy loading, and asynchronous decoding. Animation arrives for playback. Apply that policy to a browsing grid deliberately; don't blindly give an important above-the-fold hero the same loading priority.
+
+A fast component is only one part of a fast page. Check what has to finish before it can appear.
+
+## Test the Person Who Changes Their Mind
+
+A neat downward scroll is a generous benchmark. People reverse direction. They jump to the end, change the card size, select everything, and leave the pointer in an inconvenient place.
+
+Our useful test covered slow wheel input, rapid reversals, and twelve alternating instant end/home jumps. It moved the pointer across the grid, retained the first-visit full selection, and asserted stable document height and actual endpoints.
+
+The endpoint assertions mattered because our first Home/End test didn't reliably reach the top. Wheel inertia leaked between phases. We fixed the harness and excluded those jump results. A benchmark can pass while quietly failing to perform the action in its title.
+
+We also recorded the renderer. Default headless Chromium on the test machine used SwiftShader software rendering; full Chromium used Apple M2 Metal GPU compositing and rasterization. [Playwright distinguishes the headless modes](https://playwright.dev/docs/browsers#chromium-new-headless-mode), but verify the renderer rather than assuming the channel name guarantees GPU acceleration.
+
+The final September 12 matrix ran three repetitions each for desktop and phone widths, small and XL cards, with 351 selected emoji and 2× CPU slowdown. Median p95 animation-frame gaps landed around **16.7–16.8 ms**, with **zero scroll long tasks**. Two focused compositor traces recorded 59 and 60 native scroll results, with no janky results in those traces.
+
+That was a good result, with some unfinished business. Initial rendering still had an approximately 80–100 ms task under slowdown. Dense desktop rapid scrolling had a median worst frame gap of 116.6 ms. Main-thread frame sampling isn't physical display FPS, and a narrow browser window on an M2 isn't a low-end phone.
+
+Keep those distinctions in the report. A good percentile doesn't erase an ugly outlier.
+
+*Measurement notes: these experiments span September 9–13, 2026, with source checked and bundle sizes measured on September 15. The catalog changed during that period. The animation and later layout figures are recorded in their linked commits; the containment and final scroll results have [checked-in reports and raw measurements](https://github.com/justsml/emoji-brain/tree/5f6c209/docs/performance). They are separate experiments, not one controlled before-and-after run.*
+
+## Spend the Frame on What Someone Asked For
+
+For another list, I'd start with the moment that feels bad. Separate startup from scrolling, selection from persistence, and export duration from responsiveness during export. Then trace what that moment causes: requests, decoding, rendering, state updates, storage, background work reporting back to the page.
+
+Remove work that serves no current purpose. Move predictable work to the build. Defer optional work until there is intent. Keep necessary feedback immediate. Only then start negotiating with rendering hints.
+
+That's how we ended up with a faster grid that still has shadows, blur, and animated cats.
+
+The cat just has to wait its turn.
