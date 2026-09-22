@@ -1,8 +1,5 @@
-@tailwind base;
-@tailwind utilities;
-/*
-@tailwind components;
-*/
+@import "tailwindcss";
+@config "../../tailwind.config.mjs";
 
 /* From @fontsource/raleway */
 @font-face {
@@ -584,7 +581,7 @@ main.content-grid:not(.home-page) > h1:first-of-type::after {
     margin: 1.25rem 0rem .5rem 0;
   }
 
-  @screen sm {
+  @media (width >= 40rem) {
     a {
       padding-left: 0;
     }
@@ -592,11 +589,11 @@ main.content-grid:not(.home-page) > h1:first-of-type::after {
     column-gap: 0rem;
   }
 
-  @screen md {
+  @media (width >= 48rem) {
     column-gap: 1rem;
   }
 
-  @screen lg {
+  @media (width >= 64rem) {
     column-gap: 2rem;
   }
 
@@ -605,7 +602,7 @@ main.content-grid:not(.home-page) > h1:first-of-type::after {
     justify-self: flex-end;
     align-self: self-start;
 
-    @screen sm {
+    @media (width >= 40rem) {
       margin-top: 1.5rem;
     }
   }
@@ -690,12 +687,12 @@ main .info {
   font-size: 1.4rem;
   margin-top: 0;
 
-  @screen sm {
+  @media (width >= 40rem) {
     font-size: 1.8rem;
     margin-top: -0.5rem;
   }
 
-  @screen lg {
+  @media (width >= 64rem) {
     font-size: 2rem;
     margin-top: -1.25rem;
   }
@@ -747,7 +744,7 @@ main .info {
   margin: 0rem 3rem 1.5rem 3rem;
   height: 4rem;
 
-  @screen sm {
+  @media (width >= 40rem) {
     /* margin: 0rem 2rem 1.5rem 2rem; */
     margin: 0rem 3rem 1.5rem 3rem;
     height: 2.75rem;
@@ -821,11 +818,11 @@ pre.astro-code {
   code {
     font-size: .8rem;
 
-    @screen sm {
+    @media (width >= 40rem) {
       font-size: 1.0rem;
     }
 
-    @screen md {
+    @media (width >= 48rem) {
       font-size: 1.125rem;
     }
   }
@@ -989,7 +986,7 @@ figure {
   margin-left: -1.25rem;
   margin-right: -2rem;
 
-  @screen sm {
+  @media (width >= 40rem) {
     margin: 2.25rem auto;
   }
 

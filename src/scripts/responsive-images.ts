@@ -140,14 +140,13 @@ async function getImageInfo(img: Sharp) {
 
 const getValidImageType = (ext: string): keyof FormatEnum | undefined => {
   ext = `${ext}`.toLowerCase().trim().replace(".", "");
-  if (ext === "avif") return "avif";
+  if (ext === "avif") return "heif";
   if (ext === "dz") return "dz";
   if (ext === "fits") return "fits";
   if (ext === "gif") return "gif";
   if (ext === "heif") return "heif";
-  if (ext === "input") return "input";
   if (ext === "jpeg") return "jpeg";
-  if (ext === "jpg") return "jpg";
+  if (ext === "jpg") return "jpeg";
   if (ext === "jp2") return "jp2";
   if (ext === "jxl") return "jxl";
   if (ext === "magick") return "magick";
@@ -158,8 +157,8 @@ const getValidImageType = (ext: string): keyof FormatEnum | undefined => {
   if (ext === "raw") return "raw";
   if (ext === "svg") return "svg";
   if (ext === "tiff") return "tiff";
-  if (ext === "tif") return "tif";
-  if (ext === "v") return "v";
+  if (ext === "tif") return "tiff";
+  if (ext === "v") return "vips";
   if (ext === "webp") return "webp";
 };
 // Replace './images' with your target folder path

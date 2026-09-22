@@ -15,7 +15,16 @@ declare global {
 
 export type SearchCommitsResponse =
   Endpoints["GET /search/commits"]["response"]["data"];
-export type SearchIssuesResponse = Endpoints["GET /search/issues"]["response"]["data"];
+type OctokitSearchIssuesResponse =
+  Endpoints["GET /search/issues"]["response"]["data"];
+
+// GitHub's REST response does not always include the newer search metadata
+// fields modeled as required by @octokit/types.
+export type SearchIssuesResponse = Omit<
+  OctokitSearchIssuesResponse,
+  "search_type"
+> &
+  Partial<Pick<OctokitSearchIssuesResponse, "search_type">>;
 
 
 /**

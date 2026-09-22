@@ -8,7 +8,7 @@ import { unified } from "@astrojs/markdown-remark";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import pagefind from "astro-pagefind";
 import { rehypeExternalArticleLinks } from "./src/shared/rehypeExternalArticleLinks.mjs";
 
@@ -67,6 +67,7 @@ export default defineConfig({
     }),
   },
   vite: {
+    plugins: [tailwindcss()],
     build: {
       assetsInlineLimit: 2048, // 2kb - default is 4096
     },
@@ -121,10 +122,6 @@ export default defineConfig({
 
         return isIgnoredPath;
       },
-    }),
-    tailwind({
-      applyBaseStyles: false,
-      nesting: true,
     }),
     // partytown(),
   ],

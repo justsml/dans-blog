@@ -365,7 +365,7 @@ pre {
       outline-offset: 0.2rem;
     }
 
-    @screen sm {
+    @media (width >= 40rem) {
       padding: 0;
     }
   }
@@ -380,7 +380,7 @@ pre {
     flex: 0 0 auto;
     transition: color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
     
-    @screen sm {
+    @media (width >= 40rem) {
       height: 1.55rem;
       width: 1.55rem;
     }
@@ -430,7 +430,7 @@ body.search-panel-open .searchToggle button::before {
   z-index: 250;
 }
 
-@screen sm {
+@media (width >= 40rem) {
   .ViewportPosition {
     top: 4.5rem;
     /* margin-right: -50px; */
@@ -464,7 +464,7 @@ body.search-panel-open .searchToggle button::before {
   position: relative;
   overflow: hidden;
 
-  @screen sm {
+  @media (width >= 40rem) {
     font-size: 1.12rem;
     padding: 0.7rem 1rem;
   }
@@ -554,32 +554,32 @@ body.search-panel-open .searchToggle button::before {
 }
 .NavigationMenuContent[data-motion="from-start"] {
   overflow: scroll;
-  @screen md { overflow: hidden; }
+  @media (width >= 48rem) { overflow: hidden; }
   animation-name: enterFromLeft;
 }
 .NavigationMenuContent[data-motion="from-end"] {
   overflow: scroll;
-  @screen md { overflow: hidden; }
+  @media (width >= 48rem) { overflow: hidden; }
   animation-name: enterFromRight;
 }
 .NavigationMenuContent[data-motion="to-start"] {
   overflow: scroll;
-  @screen md { overflow: hidden; }
+  @media (width >= 48rem) { overflow: hidden; }
   animation-name: exitToLeft;
 }
 .NavigationMenuContent[data-motion="to-end"] {
   overflow: scroll;
-  @screen md { overflow: hidden; }
+  @media (width >= 48rem) { overflow: hidden; }
   animation-name: exitToRight;
 }
 
-@screen sm {
+@media (width >= 40rem) {
   .NavigationMenuContent {
     width: 95%;
     min-width: 90vw;
   }
 }
-@screen md {
+@media (width >= 48rem) {
   .NavigationMenuContent {
     max-width: 85vw;
     width: auto;
@@ -785,7 +785,7 @@ body.search-panel-open .searchToggle button::before {
   }
 }
 
-@screen sm {
+@media (width >= 40rem) {
   .List {
     /* padding: 1.5rem 2rem; */
   }
@@ -800,7 +800,7 @@ body.search-panel-open .searchToggle button::before {
   }
 }
 
-@screen md {
+@media (width >= 48rem) {
   .List {
     /* padding: 1.5rem 2rem; */
   }
@@ -1020,10 +1020,10 @@ body.search-panel-open .searchToggle button::before {
   perspective: 600px;
   transition: top 250ms ease;
 
-  @screen sm {
+  @media (width >= 40rem) {
     width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
   }
-  @screen md {
+  @media (width >= 48rem) {
     width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
   }
 }
