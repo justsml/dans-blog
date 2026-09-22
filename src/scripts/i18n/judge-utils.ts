@@ -57,7 +57,9 @@ export function extractJsonObject(output: string): string | undefined {
     .filter((line) => !line.trim().startsWith('{"usage"'))
     .join("\n")
     .trim();
-  const fenced = withoutUsage.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  // Only strip a Markdown wrapper on its own lines. Suggestions can contain
+  // literal code fences inside JSON strings; those are data, not wrappers.
+  const fenced = withoutUsage.match(/(?:^|\n)[ \t]*```(?:json)?[ \t]*\r?\n([\s\S]*?)\r?\n[ \t]*```[ \t]*(?=\r?\n|$)/i);
   const candidate = fenced?.[1]?.trim() ?? withoutUsage;
   const firstBrace = candidate.indexOf("{");
   const lastBrace = candidate.lastIndexOf("}");

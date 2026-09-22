@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"43c6018932c1\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 76,\n    \"technicalAccuracy\": 77,\n    \"coherence\": 75,\n    \"relevance\": 97,\n    \"translationQuality\": 72,\n    \"mdxPreservation\": 57,\n    \"culturalAdaptation\": 65,\n    \"languagePurity\": 84\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"social_image: ../desktop-social.webp\",\n      \"replacement\": \"social_image: ./desktop-social.webp\",\n      \"reason\": \"The relative asset path was changed and may no longer resolve.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"replacement\": \"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"reason\": \"These non-reader-facing asset paths must retain their original values.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"subTitle: 名前をつけるか、つけないか？\\nmodified: 2024-08-01\",\n      \"replacement\": \"subTitle: 名前をつけるか、つけないか？\\ndate: 2023-08-10\\nmodified: 2024-08-01\",\n      \"reason\": \"The source publication date is missing from the frontmatter.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"sourceHash: \\\"438740274604\\\"\\n---\",\n      \"replacement\": \"---\",\n      \"reason\": \"Remove metadata that is not present in the source unless the publishing pipeline explicitly requires it.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"### 弱い引数だな、おい\",\n      \"replacement\": \"### その主張、弱くないか？\",\n      \"reason\": \"“Args” means arguments or claims here, not function arguments. The replacement also preserves the informal tone.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 引数 #1：\",\n      \"replacement\": \"- 主張 #1：\",\n      \"reason\": \"“Arg #1” labels a claim in the discussion.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 引数 #2：\",\n      \"replacement\": \"- 主張 #2：\",\n      \"reason\": \"Keep the claim labels consistent and avoid the misleading programming sense of 引数.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 引数 #3：\",\n      \"replacement\": \"- 主張 #3：\",\n      \"reason\": \"Keep the claim labels consistent and avoid the misleading programming sense of 引数.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\n      \"replacement\": \"（言いにくいけど、変数に何ができるか知ったら驚くぞ！）\",\n      \"reason\": \"The candidate reverses the joke: the source invites readers to consider what variables can do.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 間違い（もう）。ツールを設定・更新しよう。\",\n      \"replacement\": \"- 今となっては間違いだ。ツールを設定・更新しよう。\",\n      \"reason\": \"This conveys “Incorrect (any more)” naturally and makes clear the claim is no longer true.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。\",\n      \"replacement\": \"| ❌                | ✅              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。\",\n      \"reason\": \"A row describing multiple named exports cannot mark named exports as absent. Correcting the cell preserves the technical meaning.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\n      \"replacement\": \"「関連するロジックはこちら。クラスのような振る舞いも期待してほしい。」\",\n      \"reason\": \"The table cell has a broken closing quotation mark and unnatural phrasing.\"\n    }\n  ],\n  \"rationale\": \"The translation retains most of the article’s structure and technical examples, and its localized same-page link matches the translated heading. Broken asset paths, missing metadata, misleading terminology, and a contradictory summary-table cell require fixes before publication.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 3406,
+    "inputTokenDetails": {
+      "noCacheTokens": 3406,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3403
+    },
+    "outputTokens": 1144,
+    "outputTokenDetails": {
+      "textTokens": 1144,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 4550
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3406,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1144,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 4550,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0199535
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

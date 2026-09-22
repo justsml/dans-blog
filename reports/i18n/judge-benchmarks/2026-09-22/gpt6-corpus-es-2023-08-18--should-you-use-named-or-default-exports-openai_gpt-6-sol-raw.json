@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"1b1beb59a544\",\"selectedModel\":null,\"scores\":{\"readability\":85,\"technicalAccuracy\":87,\"coherence\":84,\"relevance\":98,\"translationQuality\":83,\"mdxPreservation\":72,\"culturalAdaptation\":75,\"languagePurity\":78},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"The candidate changes the source asset path. Restore it unless the target file location specifically requires a different relative path.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"These non-reader-facing asset paths were changed. Restore the source values unless target-path rules explicitly require the ../ prefix.\"},{\"priority\":\"medium\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The publication date is missing from the frontmatter.\"},{\"priority\":\"medium\",\"match\":\"| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. |\",\"replacement\":\"| ❌                | ✅              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. |\",\"reason\":\"This row describes multiple named exports, so its Named column must be checked. The source appears internally inconsistent here; correct the technical claim rather than reproducing the inconsistency.\"},{\"priority\":\"medium\",\"match\":\"> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._\",\"replacement\":\"> Les estamos indicando a quienes hacen `import` _cómo usar algo._\",\"reason\":\"The mixed-language `import`ers is awkward reader-facing prose. This keeps the API name while making the sentence natural Spanish.\"}],\"rationale\":\"The translation largely preserves the article’s meaning, structure, code, and localized heading link. It is not yet publish-ready because frontmatter is missing a date, asset paths may be broken, and the summary table contains a misleading technical row.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3100,
+    "inputTokenDetails": {
+      "noCacheTokens": 3100,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3097
+    },
+    "outputTokens": 562,
+    "outputTokenDetails": {
+      "textTokens": 562,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 3662
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3100,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 562,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 3662,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0133685
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

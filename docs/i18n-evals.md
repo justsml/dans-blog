@@ -248,3 +248,20 @@ upstream costs are separate; completion tokens already include reasoning.
 A small synthetic accuracy check and agreement with Opus are not substitutes
 for independently reviewed translation quality. The September 22 pilot and its
 limitations are recorded under `reports/i18n/judge-benchmarks/2026-09-22/`.
+
+The comparison also includes GPT-6 Astra and Sol. To add models to an existing
+run without replacing its earlier phase artifacts, give the new invocation a
+unique `--phase` and the matching report `--cohort` (`baseline`, `corpus`, or
+`calibrated-corpus`). Supply a refreshed `--catalog` containing the new IDs.
+`--effort lowest` reads each model's supported efforts from that catalog: Sol
+uses `none`, while Astra requires `low`. Resolved settings and the catalog
+snapshot are saved per phase, and reports show the settings beside model names.
+GPT-6 Terra was unavailable in both catalogs on September 22 and was not
+substituted with GPT-5.6 Terra.
+
+Judge benchmarking and the core `scoreTranslation` function now default to
+16,000 output tokens, including reasoning. Use `--max-output-tokens 8000` to
+reproduce the original comparison budget. `--fixture <id>` selects a single
+frozen row for a targeted retry; give changed-budget retries their own phase
+and `--cohort output-limit-recovery` so the report keeps the original failures
+and shows recovery separately.

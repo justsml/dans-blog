@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"95ea068929bd\",\n  \"selectedModel\": null,\n  \"scores\": {\n    \"readability\": 82,\n    \"technicalAccuracy\": 84,\n    \"coherence\": 81,\n    \"relevance\": 96,\n    \"translationQuality\": 82,\n    \"mdxPreservation\": 60,\n    \"culturalAdaptation\": 73,\n    \"languagePurity\": 85\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"social_image: ../desktop-social.webp\",\n      \"replacement\": \"social_image: ./desktop-social.webp\",\n      \"reason\": \"The relative asset path changed and may no longer resolve.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"replacement\": \"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"reason\": \"All three cover asset paths were changed from the source values, risking broken images.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"subTitle: أن تسمي أم لا تسمي؟\\nmodified:\",\n      \"replacement\": \"subTitle: أن تسمي أم لا تسمي؟\\ndate: 2023-08-10\\nmodified:\",\n      \"reason\": \"The original publication date is missing from the front matter.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"sourceHash: \\\"438740274604\\\"\\n\",\n      \"replacement\": \"\",\n      \"reason\": \"This metadata field was not in the source and should not be introduced without a publishing requirement.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- الحجة رقم 3: التصديرات المُسماة لها دعم أفضل لاستيراد IDE أو إعادة التسمية. [المصدر](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\\n\\n- غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\n      \"replacement\": \"- الحجة رقم 3: التصديرات المُسماة تحظى بدعم أفضل للاستيراد أو إعادة التسمية في بيئات التطوير. [المصدر](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\\n\\n  - لم يعد هذا صحيحًا. اضبط أدواتك أو حدّثها.\",\n      \"reason\": \"The response to argument 3 became a separate top-level list item instead of a nested rebuttal, changing the structure and making the argument harder to follow.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"  - **ملاحظة:** لأسباب تاريخية، لا يمكنك الجمع بين `export default` وتعبير `const`.\\n\\n    ```tsx\\n    export default const Knife = () => {...blade, ...handle}\\n    // ^ ❌ غير مدعوم ❌ ^\\n    // لا يمكن تصدير const كافتراضي ....\\n    // ==========================\\n\\n    // ومع ذلك، بمجرد التصريح، يمكنك تصدير متغير const كافتراضي.\\n    const Knife = () => {...blade, ...handle}\\n    export default Knife;\\n    // ^ ✅ صالح\\n\\n    // للاكتمال:\\n    export default class anyoneStillUseThese {}\\n    // ^ ✅ صالح أيضاً لتصدير كلاس كافتراضي\\n    ```\",\n      \"replacement\": \"  - **ملاحظة:** لأسباب تاريخية، لا يمكنك الجمع بين `export default` وتعبير `const`.\\n\\n    ```tsx\\n    export default const Knife = () => {...blade, ...handle}\\n    // ^ ❌ Not Supported ❌ ^\\n    // Cannot export default const ....\\n    // ==========================\\n\\n    // However, once declared you can export a const var as the default.\\n    const Knife = () => {...blade, ...handle}\\n    export default Knife;\\n    // ^ ✅ Valid\\n\\n    // For completeness:\\n    export default class anyoneStillUseThese {}\\n    // ^ ✅ Also valid to export a class as default\\n    ```\",\n      \"reason\": \"The fenced code example should be preserved verbatim, including its comments, to keep code-adjacent instructional material unchanged.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"**_الشيء الأكثر أهمية_**\",\n      \"replacement\": \"**_الشيء الوحيد الأهم على الإطلاق_**\",\n      \"reason\": \"The source specifically claims this is the single most important export; the current translation omits 'single'.\"\n    }\n  ],\n  \"rationale\": \"The Arabic prose is largely faithful and the link to the translated Summary heading is correctly localized. Asset paths, missing metadata, and a broken list hierarchy prevent publication.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 3208,
+    "inputTokenDetails": {
+      "noCacheTokens": 3208,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3205
+    },
+    "outputTokens": 1150,
+    "outputTokenDetails": {
+      "textTokens": 1150,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 4358
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3208,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1150,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 4358,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0195185
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

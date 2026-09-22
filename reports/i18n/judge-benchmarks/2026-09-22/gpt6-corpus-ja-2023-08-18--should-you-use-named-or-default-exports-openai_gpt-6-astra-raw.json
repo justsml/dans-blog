@@ -1,0 +1,48 @@
+{
+  "text": "{\n  \"selectedCommit\": \"43c6018932c1\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 84,\n    \"technicalAccuracy\": 84,\n    \"coherence\": 87,\n    \"relevance\": 98,\n    \"translationQuality\": 83,\n    \"mdxPreservation\": 79,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 89\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"### 弱い引数だな、おい\",\n      \"replacement\": \"### その主張、弱いぞ\",\n      \"reason\": \"Args means arguments in a debate here, not function parameters. The current heading introduces an incorrect technical meaning.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- 引数 #1：\",\n      \"replacement\": \"- 主張 #1：\",\n      \"reason\": \"This labels a debated claim, not a function argument.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- 引数 #2：\",\n      \"replacement\": \"- 主張 #2：\",\n      \"reason\": \"This labels a debated claim, not a function argument.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- 引数 #3：\",\n      \"replacement\": \"- 主張 #3：\",\n      \"reason\": \"This labels a debated claim, not a function argument.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\n      \"replacement\": \"（残念なお知らせだが、変数で何ができるか知ったら、もっと驚くぞ！）\",\n      \"reason\": \"The source sarcastically anticipates the reader discovering variable renaming; the translation instead says there is no need to learn what variables can do.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"間違い（もう）。ツールを設定・更新しよう。\",\n      \"replacement\": \"今ではもう正しくない。ツールを設定・更新しよう。\",\n      \"reason\": \"The parenthetical is unnatural Japanese and obscures the important qualification that the claim is no longer true.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\n      \"replacement\": \"「関連するロジックをまとめたもの。クラスっぽい動作も想定してほしい。」\",\n      \"reason\": \"Repairs the broken quotation and makes the explanation of expected class-like behavior natural.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"social_image: ../desktop-social.webp\",\n      \"replacement\": \"social_image: ./desktop-social.webp\",\n      \"reason\": \"The source asset path was changed without a supplied target location or relocation rule that would justify it.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"replacement\": \"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"reason\": \"Preserve the supplied asset references unless an explicit localization asset-path rule requires moving them.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"modified: 2024-08-01\",\n      \"replacement\": \"date: 2023-08-10\\nmodified: 2024-08-01\",\n      \"reason\": \"The publication date is non-reader-facing metadata and must not be omitted.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"sourceHash: \\\"438740274604\\\"\\n\",\n      \"replacement\": \"\",\n      \"reason\": \"This metadata was added without a corresponding source field or an instruction authorizing its generation.\"\n    }\n  ],\n  \"rationale\": \"The translation retains the article's content, examples, table structure, and most technical claims, with an appropriate overall length. The localized #まとめ link correctly targets the translated heading. However, repeated mistranslation of rhetorical arguments as function parameters, a reversed joke, awkward prose, and unsupported frontmatter changes prevent publication as-is.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 3406,
+    "inputTokenDetails": {
+      "noCacheTokens": 3406,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3403
+    },
+    "outputTokens": 1069,
+    "outputTokenDetails": {
+      "textTokens": 1040,
+      "reasoningTokens": 29
+    },
+    "totalTokens": 4475
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsvGrK-66Fc-episaYorHTxEp3UHVDQOib_rA8asutLFwm_nzngsF9DW_Q7gPvD-zMoWZMCKLO6uqprpSpgNXewBuCS5yz0bjczZyBkVDI2s9FhoDkDmR2bqO-arGj5p_d6pr7lvNbVIXbucEX-fr4IAdgdk0W4XYYgtuhFIHsHNI_xU4jg4EOys1xwb24tzirrgsTXDwzRtOV9eZjB8faVyxuYtpMgpNPl5cZ4Iny6l-sMmitZq4_pjeojmf3iSu0AEdHvgRltWDiYKw6X1f3plPUhdHmLC-KCZYxSgy0i-lprpnH_vuXbaQ0qnVLteCtxGeQUwBlYPmpBAtKWiQ6br-uTj98zqhlW8BiXHCE6H8FJSHg7qfrHHdvlhUL2ud-Evv8mSsN_9BxzgKR7aZF_dcPVsZrd2x28ae4WiFtVWyifTh2mb9ur3masYvQt-TezJeAOh4Om9H2QNa_uQSLPGiB30Sb2DKFU3uRjo0ULqPKuGPKmyt5ESVwt4ius6Bt7te8yx-sGTKsuBhZBNIjv2SkXniQzpr5sXSi-bWlXrpSKxRFB5VT61xY27tSU3Nspi6Tl7G8OzmAI-hL-BR7OitgUs8T5fcoqgMIdJIVZCNi2E-YzMW4CplkR9gQD29WPTWnnlODtufthjF3hwq1IUEoI6JbzeoNAeKjRfR41-pRwBu2Ef1Gq0DjX-HDKUeRYVzqokCcHFTW28JcIAMxrO-ygBqt6ea6hCyvpdyzgcn1h4h7qkidOLNrdBb9t_CJPGpM3D6yCx__N-KH7R5fmg-z28mzhgDuZoBxcH7vKsiN3WByS73sya7JKsHRG-UlphrN6xkJmv1GMRRpn6rt0MWBcMeBNbZ0t0rsDHNfAePhfnetCxT80vIi7nFDkytGyjzMhMyAkaBvbfGRK6_12RJctrCpIPegMe80Rjzryvf9IRE_0YAe_9TkIvQoliMlWn-JjZgPQ2LKuwnL6gwsVSPsIjYrhjop48ZRKFYGaBxS-T8ZIfaDZ_vqo3m-W6Iuvpk_GqFnRrIbroMnQARx2XyOYhld0OCb7LgSh7J4ngMBMksUvAnUN07SeztLRY0S_jEzJfn0F4-06FROzwdJJSv-k9ninUzh9AV7CKH2oV5X0Btd-FtOq7Z9i1G_NnhrB77K--I90kUeY8UvNEffyHuwfjYi2fvfBToul78PPD1XQjLEcAldDiKXgLhWCIWZPD_kTxd4cKzlm1-9bYmQll8mNAmeQi9TOwTRFhIsMWpYas9ZT9BJmTqz4dWzoAtb3k5LOpgzP9lIs5V-58CKduGbi25d3DBmvFqV1yCX9skuS1zezAnnIjjuqRliecHJ0d14K03QqVlMNL8TGJBtRRAKMXDssziRitO7oeK67ybEef9OCO4YRTHsST3fWb20p7BUcJvf0bsNN-Duh4gPv-RhOfFIJE0PrrYIrTRZ3UXluOxEnYRXa86Ree1KrcTrz_g0uSuSWVeT2n5I9z4yNJUiaFjfqcPUhWPR_3RafzNs0bvtxHnkqMlKURbQuoWVYIE.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWFzdHJhLTIwMjYwOTAzfG9wZW5haSJ9",
+          "id": "rs_07b036975979c626016ab2f1a9732487d183befb356828b820",
+          "format": "openai-responses-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 3406,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1069,
+        "completionTokensDetails": {
+          "reasoningTokens": 29
+        },
+        "totalTokens": 4475,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0960175
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

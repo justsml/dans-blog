@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"1b1beb59a544\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 88,\n    \"technicalAccuracy\": 96,\n    \"coherence\": 94,\n    \"relevance\": 100,\n    \"translationQuality\": 88,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 85,\n    \"languagePurity\": 88\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"| Default (Exports) | Named (Exports) | Private Fns |\",\n      \"replacement\": \"| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas |\",\n      \"reason\": \"These are reader-facing table headings, not API names or controlled metadata. Leaving them in English makes the localization incomplete.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._\",\n      \"replacement\": \"> Les estamos indicando a quienes usan `import` _cómo usar algo._\",\n      \"reason\": \"The English-derived form '`import`ers' is not natural Spanish. This central statement should clearly address consumers of the exported code.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"¿Acaso hemos perdido el punto de `export`ar en primer lugar?\",\n      \"replacement\": \"¿Acaso hemos olvidado para qué sirve `export` en primer lugar?\",\n      \"reason\": \"'Perder el punto' is a literal calque of 'miss the point' and obscures the article's central rhetorical question.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Si el código es comunicación, por favor `export`a como si en verdad te importara. 💞\",\n      \"replacement\": \"Si el código es comunicación, por favor usa `export` con intención, joder. 💞\",\n      \"reason\": \"The existing ending softens the emphatic profanity and shifts deliberate communication toward merely caring. Preserve the author's forceful closing and emphasis on intent.\"\n    }\n  ],\n  \"rationale\": \"The translation preserves technical examples, links, metadata, MDX structure, and an appropriate prose length. Parent-relative assets and the localized #resumen anchor are correct. Publication still needs a few targeted language and tone fixes, especially untranslated table labels and English calques.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 3234,
+    "inputTokenDetails": {
+      "noCacheTokens": 3234,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3231
+    },
+    "outputTokens": 525,
+    "outputTokenDetails": {
+      "textTokens": 525,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 3759
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3234,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 525,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 3759,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0666675
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

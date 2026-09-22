@@ -41,3 +41,42 @@ test('production fallback cost does not double-count reasoning tokens', async ()
   expect(result.telemetry.reasoningTokens).toBe(100);
   expect(result.cost.totalUsd).toBeCloseTo(0.0002, 8);
 });
+
+import { benchmarkReasoningEffort } from './judge-benchmark.ts';
+import { comparisonCohort } from './judge-benchmark-report.ts';
+test('lowest reasoning respects mandatory thinking and supported settings', () => {
+  expect(benchmarkReasoningEffort('lowest', {reasoning:{supported_efforts:['high','low','none']}})).toBe('none');
+  expect(benchmarkReasoningEffort('lowest', {reasoning:{mandatory:true,supported_efforts:['high','low','none']}})).toBe('low');
+  expect(benchmarkReasoningEffort('lowest', {reasoning:{supported_efforts:['low','minimal']}})).toBe('minimal');
+  expect(() => benchmarkReasoningEffort('lowest', {})).toThrow('Cannot determine');
+  expect(benchmarkReasoningEffort('medium', {})).toBe('medium');
+});
+test('supplemental phases join their named comparison without overwriting evidence', () => {
+  const row = {phase:'gpt6-baseline',cohort:'baseline',fixture:'es-clean',model:'openai/gpt-6-sol',split:'calibration',ok:true};
+  expect(comparisonCohort(row)).toBe('baseline');
+  expect(comparisonCohort({...row,cohort:undefined})).toBe('gpt6-baseline');
+});
+test('Astra and Sol scoring omit temperature at minimum reasoning', async () => {
+  for (const [model, effort] of [['astra','low'], ['sol','none']]) {
+    let captured: any;
+    await expect(scoreTranslation({model:`llm://openrouter/openai/gpt-6-${model}?reasoning_effort=${effort}`,locale:'es',sourceContents:'Hello',targetContents:'Hola',generateText:(async (options:any)=>{captured=options;throw new Error('offline capture');}) as any})).rejects.toThrow('offline capture');
+    expect(captured.temperature).toBeUndefined();
+    expect(captured.providerOptions.openrouter.reasoning.effort).toBe(effort);
+  }
+});
+test('catalog estimate applies cache-write premium to written input tokens', () => {
+  expect(catalogCost({inputTokens:3234,outputTokens:471,cacheReadTokens:0,cacheWriteTokens:3231}, {prompt:'0.000002',completion:'0.00001',input_cache_write:'0.0000025'})).toBeCloseTo(0.0127935, 9);
+});
+import { defaultBenchmarkEffort } from './judge-benchmark.ts';
+test('new Astra and Sol benchmark presets keep minimum reasoning by default', () => {
+  expect(defaultBenchmarkEffort('openai/gpt-6-astra')).toBe('lowest');
+  expect(defaultBenchmarkEffort('openai/gpt-6-sol')).toBe('lowest');
+  expect(defaultBenchmarkEffort('openai/gpt-6-luna')).toBe('low');
+});
+test('judge output budget defaults to 16k and respects an explicit smaller cap', async () => {
+  for (const [model, expected] of [['openrouter/openai/gpt-6-sol',16000],['llm://openrouter/openai/gpt-6-sol?max_tokens=8000',8000]] as const) {
+    let captured: any;
+    await expect(scoreTranslation({model,locale:'es',sourceContents:'Hello',targetContents:'Hola',generateText:(async (options:any)=>{captured=options;throw new Error('offline capture');}) as any})).rejects.toThrow('offline capture');
+    expect(captured.maxOutputTokens).toBe(expected);
+  }
+});

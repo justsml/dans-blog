@@ -199,8 +199,8 @@ export type TranslationScoreMap = {
 
 export async function scoreTranslation(input: ScoreTranslationInput): Promise<ScoreTranslationOutput> {
   const llmConfig = resolveLlmConfig(input.model, {
-    temperature: /gpt-(?:5\.6|6)-luna/.test(input.model) ? undefined : 0,
-    maxTokens: 8_000,
+    temperature: /gpt-(?:5\.6|6)-/.test(input.model) ? undefined : 0,
+    maxTokens: 16_000,
   });
   const generateText = input.generateText ?? defaultGenerateText;
   const startedAt = performance.now();

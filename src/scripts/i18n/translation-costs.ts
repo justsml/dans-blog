@@ -14,6 +14,12 @@ interface ModelPricing {
 }
 
 const MODEL_PRICING: Record<string, ModelPricing> = {
+  "openai/gpt-6-sol": {
+    inputPerMillionUsd: 2,
+    cachedInputPerMillionUsd: 0.2,
+    outputPerMillionUsd: 10,
+    source: "openrouter-2026-09-22",
+  },
   "anthropic/claude-opus-5.5": {
     inputPerMillionUsd: 4,
     cachedInputPerMillionUsd: 0.2,
@@ -60,7 +66,7 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     inputPerMillionUsd: 10,
     cachedInputPerMillionUsd: 1,
     outputPerMillionUsd: 50,
-    source: "openrouter-2026-09-13",
+    source: "openrouter-2026-09-22",
   },
   "openai/gpt-oss-120b:nitro": {
     inputPerMillionUsd: 0.03,

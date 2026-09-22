@@ -10,7 +10,19 @@ export const JUDGE_BENCHMARK_MODELS = [
   "openai/gpt-6-luna", "openai/gpt-5.6-luna", "google/gemini-3.8-flash",
   "google/gemini-3.5-flash-lite", "deepseek/deepseek-v4.1-flash",
   "z-ai/glm-5.3-flash", "z-ai/glm-5.3-flashx", "anthropic/claude-opus-5.5",
+  "openai/gpt-6-astra", "openai/gpt-6-sol",
 ];
+export function benchmarkReasoningEffort(requested: string, model: { reasoning?: { mandatory?: boolean; supported_efforts?: string[] } }) {
+  if (requested !== 'lowest') return requested;
+  const supported = model.reasoning?.supported_efforts;
+  const selected = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'].find(effort =>
+    supported?.includes(effort) && !(effort === 'none' && model.reasoning?.mandatory));
+  if (!selected) throw new Error('Cannot determine minimum reasoning effort from catalog metadata');
+  return selected;
+}
+export function defaultBenchmarkEffort(model: string) {
+  return ['openai/gpt-6-astra', 'openai/gpt-6-sol'].includes(model) ? 'lowest' : 'low';
+}
 type Fixture = { id: string; locale: ActiveLocale; source: string; target: string; expectedReady?: boolean; split: "calibration" | "heldout" | "corpus"; defect?: string };
 const arg = (name: string, fallback: string) => { const i = process.argv.indexOf(`--${name}`); return i < 0 ? fallback : process.argv[i + 1]!; };
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
@@ -51,8 +63,11 @@ function fixtures(): Fixture[] {
 async function main() {
   const out = arg('out', `reports/i18n/judge-benchmarks/${new Date().toISOString().replaceAll(':', '-')}`);
   const phase = arg('phase', 'baseline');
+  const cohort = arg('cohort', phase);
   const models = arg('models', JUDGE_BENCHMARK_MODELS.join(',')).split(',');
-  const effort = arg('effort', 'low');
+  const effort = arg('effort', 'default');
+  const maxOutputTokens = Number(arg('max-output-tokens', '16000'));
+  if (!Number.isSafeInteger(maxOutputTokens) || maxOutputTokens <= 0) throw new Error('max-output-tokens must be a positive integer');
   const tuningPath = arg('tuning', '');
   const tuning: JudgePromptTuning | undefined = tuningPath ? JSON.parse(readFileSync(tuningPath, 'utf8')) : undefined;
   mkdirSync(out, { recursive: true });
@@ -61,6 +76,9 @@ async function main() {
   try { cases = JSON.parse(readFileSync(fixturesPath, 'utf8')); } catch { cases = fixtures(); writeFileSync(fixturesPath, JSON.stringify(cases, null, 2)); }
   const split = arg('split', phase === 'baseline' ? 'calibration,corpus' : 'calibration');
   cases = cases.filter(c => split.split(',').includes(c.split));
+  const fixtureId = arg('fixture', '');
+  if (fixtureId) cases = cases.filter(c => c.id === fixtureId);
+  if (!cases.length) throw new Error('No fixtures match the requested split and fixture');
   const savedCatalogPath = join(out, 'catalog.json');
   const catalogPath = arg('catalog', await Bun.file(savedCatalogPath).exists() ? savedCatalogPath : '');
   const catalog = catalogPath ? JSON.parse(readFileSync(catalogPath, 'utf8')) : await (async () => {
@@ -70,10 +88,15 @@ async function main() {
     return { checkedAt: new Date().toISOString(), models: body.data.filter(m => [...JUDGE_BENCHMARK_MODELS, ...models].includes(m.id)) };
   })();
   for (const model of models) if (!catalog.models.some((m: any) => m.id === model)) throw new Error(`Model unavailable: ${model}`);
-  writeFileSync(join(out, 'catalog.json'), JSON.stringify(catalog, null, 2));
+  const effortByModel = Object.fromEntries(models.map(model => [model, benchmarkReasoningEffort(effort === 'default' ? defaultBenchmarkEffort(model) : effort, catalog.models.find((m: any) => m.id === model))]));
   const manifestPath = join(out, `${phase}-manifest.json`);
   if (await Bun.file(manifestPath).exists()) throw new Error(`Phase already exists: ${phase}`);
-  writeFileSync(manifestPath, JSON.stringify({ phase, models, effort, tuning, split, fixtureHash: hash(readFileSync(fixturesPath, 'utf8')), startedAt: new Date().toISOString(), maxRetries: 0, concurrency: 4 }, null, 2));
+  writeFileSync(join(out, `${phase}-catalog.json`), JSON.stringify(catalog, null, 2));
+  const previousCatalog = await Bun.file(savedCatalogPath).exists() ? JSON.parse(readFileSync(savedCatalogPath, 'utf8')) : catalog;
+  // Preserve the original rates for existing rows when adding new models later.
+  const mergedCatalog = { ...previousCatalog, models: [...previousCatalog.models, ...catalog.models.filter((m: any) => !previousCatalog.models.some((p: any) => p.id === m.id))] };
+  writeFileSync(savedCatalogPath, JSON.stringify(mergedCatalog, null, 2));
+  writeFileSync(manifestPath, JSON.stringify({ phase, cohort, models, effort, effortByModel, maxOutputTokens, fixtureId: fixtureId || undefined, catalogCheckedAt: catalog.checkedAt, tuning, split, fixtureHash: hash(readFileSync(fixturesPath, 'utf8')), startedAt: new Date().toISOString(), maxRetries: 0, concurrency: 4 }, null, 2));
   // Rotate model order across fixtures to reduce ordering/cache bias.
   const jobs = cases.flatMap((fixture, i) => [...models.slice(i % models.length), ...models.slice(0, i % models.length)].map(model => ({ fixture, model })));
   let next = 0;
@@ -85,7 +108,7 @@ async function main() {
       let captured: any;
       try {
         const result = await scoreTranslation({
-          model: `llm://openrouter/${model}?reasoning_effort=${effort}`, locale: fixture.locale,
+          model: `llm://openrouter/${model}?reasoning_effort=${effortByModel[model]}&max_tokens=${maxOutputTokens}`, locale: fixture.locale,
           sourceContents: fixture.source, targetContents: fixture.target, candidateId: hash(fixture.target).slice(0, 12),
           promptTuning: tuning,
           generateText: (async (options: any) => {
@@ -97,11 +120,11 @@ async function main() {
           }) as typeof generateText,
         });
         if (!result.judgeScores) throw new Error('Missing judge scores');
-        const row = { phase, fixture: fixture.id, split: fixture.split, model, expectedReady: fixture.expectedReady, ok: true, result };
+        const row = { phase, cohort, effort: effortByModel[model], fixture: fixture.id, split: fixture.split, model, expectedReady: fixture.expectedReady, ok: true, result };
         appendFileSync(join(out, 'results.jsonl'), JSON.stringify(row) + '\n');
         console.log(`${key}: ${result.overallScore}, ready=${result.publishReady}, cost=${result.telemetry.providerCostUsd ?? 'unknown'}`);
       } catch (error) {
-        const row = { phase, fixture: fixture.id, split: fixture.split, model, expectedReady: fixture.expectedReady, ok: false, durationMs: performance.now() - started, error: error instanceof Error ? error.message : String(error), captured };
+        const row = { phase, cohort, effort: effortByModel[model], fixture: fixture.id, split: fixture.split, model, expectedReady: fixture.expectedReady, ok: false, durationMs: performance.now() - started, error: error instanceof Error ? error.message : String(error), captured };
         appendFileSync(join(out, 'results.jsonl'), JSON.stringify(row) + '\n');
         console.error(`${key}: FAILED ${row.error.slice(0, 220)}`);
       }

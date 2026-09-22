@@ -176,6 +176,11 @@ describe("extractJsonObject", () => {
 // ---------------------------------------------------------------------------
 
 describe("parseJudgeOutput", () => {
+  test("preserves code fences inside JSON suggestion strings", () => {
+    const obj = { scores: { readability: 92 }, suggestions: [{ match: "```tsx\nconst value = {};\n```", replacement: "```tsx\nconst value = 1;\n```" }] };
+    expect(parseJudgeOutput(JSON.stringify(obj))).toEqual(obj);
+    expect(parseJudgeOutput(`\`\`\`json\n${JSON.stringify(obj)}\n\`\`\``)).toEqual(obj);
+  });
   test("parses valid JSON output", () => {
     const obj = { selectedCommit: SHA_A, rationale: "good" };
     expect(parseJudgeOutput(JSON.stringify(obj))).toEqual(obj);

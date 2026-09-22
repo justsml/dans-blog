@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"1b1beb59a544\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":89,\"technicalAccuracy\":83,\"coherence\":88,\"relevance\":98,\"translationQuality\":85,\"mdxPreservation\":94,\"culturalAdaptation\":82,\"languagePurity\":79},\"suggestions\":[{\"priority\":\"high\",\"match\":\"| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. |\",\"replacement\":\"| ❌                | ✅              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. |\",\"reason\":\"The row describes multiple named exports, so marking Named (Exports) as absent contradicts both the pattern and its meaning. The source has the same inconsistency, but it is a substantive technical error to fix before publication.\"},{\"priority\":\"medium\",\"match\":\"> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._\",\"replacement\":\"> Les estamos indicando a quienes hacen `import` _cómo usar algo._\",\"reason\":\"`import`ers is untranslated reader-facing English, and the current phrasing is unnatural in Spanish.\"},{\"priority\":\"medium\",\"match\":\"- Una `exportación nombrada` dice que es \\\"definitivamente **_UNA COSA_**.\\\"\",\"replacement\":\"- Una exportación con nombre (`named export`) dice que es \\\"definitivamente **_UNA COSA_**.\\\"\",\"reason\":\"The candidate puts a Spanish phrase in code formatting where the source uses an API-related English term. Keep the technical term identifiable without presenting a non-code Spanish phrase as code.\"},{\"priority\":\"medium\",\"match\":\"- Ahora dime, ¿cómo sostengo tu invento otra vez? Sin intención del autor.\",\"replacement\":\"- Ahora dime, ¿cómo se supone que use tu invento? No comunica la intención de quien escribió el código.\",\"reason\":\"The literal 'Sin intención del autor' does not convey the technical point: this import style gives no indication of the author's intended usage.\"}],\"rationale\":\"The translation preserves the article’s structure, code, asset paths, and localized summary link. It reads well overall, but a contradictory table entry and several terminology or meaning issues need correction.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3234,
+    "inputTokenDetails": {
+      "noCacheTokens": 3234,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3231
+    },
+    "outputTokens": 471,
+    "outputTokenDetails": {
+      "textTokens": 471,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 3705
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3234,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 471,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 3705,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0127935
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

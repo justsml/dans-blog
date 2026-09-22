@@ -1,0 +1,25 @@
+{
+  "scope": "All saved results.jsonl rows checked for token-limit errors and length finish reasons",
+  "requestedMaxOutputTokens": 16000,
+  "limitHitCount": 1,
+  "recoveries": [
+    {
+      "originalPhase": "calibrated-corpus",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "fixture": "es-2023-08-18--should-you-use-named-or-default-exports",
+      "originalFinishReason": "length",
+      "originalOutputTokens": 8000,
+      "retry": [
+        {
+          "phase": "deepseek-16k-recovery",
+          "ok": true,
+          "outputTokens": 7907,
+          "reasoningTokens": 7597,
+          "finishReason": "stop",
+          "score": 93,
+          "durationMs": 28455
+        }
+      ]
+    }
+  ]
+}
