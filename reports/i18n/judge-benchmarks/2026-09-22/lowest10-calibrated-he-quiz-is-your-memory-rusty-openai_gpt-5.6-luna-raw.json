@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"0893c477b5a7\",\"selectedModel\":\"\",\"scores\":{\"readability\":82,\"technicalAccuracy\":94,\"coherence\":88,\"relevance\":98,\"translationQuality\":84,\"mdxPreservation\":78,\"culturalAdaptation\":82,\"languagePurity\":86},\"suggestions\":[{\"priority\":\"high\",\"match\":\"import Challenge from '../../../../components/QuizUI/Challenge';\\nimport QuizUI from '../../../../components/QuizUI/QuizUI';\",\"replacement\":\"import Challenge from '../../../components/QuizUI/Challenge';\\nimport QuizUI from '../../../components/QuizUI/QuizUI';\",\"reason\":\"The candidate changes the component import paths from the source's ../../../ depth to ../../../../. Unless the localized file is one directory deeper than the stated locale layout, this breaks MDX resolution. Imports and component paths must be preserved.\"},{\"priority\":\"medium\",\"match\":\"מה קורה עם הפונקציה שמחזירה את המקטע המחרוזת הארוך יותר משניים?\",\"replacement\":\"מה קורה לפונקציה שמחזירה את פרוסת המחרוזת הארוכה יותר מבין השתיים?\",\"reason\":\"The current Hebrew is grammatically awkward and translates “the longer of two string slices” imprecisely.\"},{\"priority\":\"medium\",\"match\":\"Cell ו‑RefCell משמשים למטרות שונות של שינוי פנימי (interior mutability):\",\"replacement\":\"Cell ו‑RefCell משמשים למטרות שונות של מוטביליות פנימית (interior mutability):\",\"reason\":\"“שינוי פנימי” is understandable but technically unnatural Hebrew terminology and can be confused with mutation itself; “מוטביליות פנימית” is clearer for this Rust concept.\"},{\"priority\":\"medium\",\"match\":\"הפשטות ללא עלות מאפשרות קוד יעיל לאחר אופטימיזציה\",\"replacement\":\"הפשטות בעלות־אפס מאפשרות קוד יעיל לאחר אופטימיזציה\",\"reason\":\"The current wording is understandable, but “zero-cost abstractions” is a technical term and should be rendered consistently as “הפשטות בעלות־אפס” rather than suggesting that the abstractions themselves have no price in an informal sense.\"}],\"rationale\":\"The candidate translates the complete quiz, preserves the Challenge structure, code fences, props, answers, URLs, and localized reader-facing headings. Technical content and quiz correctness are largely accurate. However, the changed import depth is a potentially publish-blocking MDX issue, and several Hebrew phrases are awkward or use inconsistent technical terminology.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 23313,
+    "inputTokenDetails": {
+      "noCacheTokens": 23313,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 23310
+    },
+    "outputTokens": 907,
+    "outputTokenDetails": {
+      "textTokens": 542,
+      "reasoningTokens": 365
+    },
+    "totalTokens": 24220
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsvzE0yjOxhqS6g5s-9a4nV0o_wPCqFoR1q3mI-BTOhY36EqQyK7kfm7Kaxjc-tyeOQ8l7KIT91Tbfhe_wfhQ1smXoaoQWkzWtMoa5CDVCqsdF0VR9lBVfyY0-WikuX1Q-OmprBDP4vrA6bgVmuzpPx1UPD8b7ds5YiOlV7755pHUDVBD_Tv2nXMzADVDQ0YL8QfXl0BAtpVb-eADQee9TGaLurfrOjQP6wjIO2VK5uY25eYgDnzSSwEUrfMrRgBLnXzeIFIeM_wCZEeVv5p8cH9muvEdv4QLmo9VqglGGJ6JvjbViASwS-nTdaemENGFJ6Nik3PHd0ZjOFUOKqNOt5pBYsv-m1FASF0c_injW8FhvokR7ZlSKFZPbv54dWSrB6XbJwiNgG3ulQcOY8O4nJsl88e880n7v3P4XTYUIED99L6QEsmGDQHFjlS4QWHxi1842KSjHYMnOXkR8sx415r8yl6fMkJj2cahx5XyGDFGcJZRQ3e2561-QdnNIHg1-rb3pzOK--FbA9jc2k9jsQdQak98Y5v811JifavXvFEpyxsQMvvgdwD41k8iLas0H9kjEWA9ZVxhYamW6CQ7FHBLKPlDb73y8xAEFihLTytJfrzqtXYDuJzzTcF_YTAdLvLuPpvuqIsGd8oStexRYCl7E91ZMIZWk97Gl2W8EtTFn2tctkwCo8hntEFTsjSOB406_rKGemZmelxwCFMXJXxUcK_yLCWXLfmAvL9lGYalR2mMT0ohWy4tec3Knog5Omd-SQ9Vp27wvugGHWmc8wnos1iXwJtMfzGBTwZasc901gi-hyvdG4VWx8u53FOMqKZfrqTd98XFXBX-DHL6xQ-Y2bdtH8orVQqEIi8d1PsGSCy2B60SuaGI-GO9RMsIjIw3VO-Vv_dqPAx85bg-ANSdixhdPFggeXGSolfiUgi8ftDJKApR3lkH9HlulGuoTRD5o0KJZvbc-2FVp_BT2hLf19ouPWo_aYDhgyuKJHAr5XwmeAJ4ii2Ek8gxOyjrvXvoGp7X1CNVBUcd4k9uSWEEr10hKsEaI070iWcG0Vw7esrCon5jQvNMRsdxfs2r_TF0l-9qhviBLsGmJdH0kCXZNjJuu6b4Wq_1YdbXWHC8aBnCJztxkCnXuerCohQ0ax4hDFCVPreVBezZzaUKlcbF_48beLKEMCOy0fSyvo49gquvxfSw3E3DCjwjeN_zhVme29Kknsq5UumDZzvXfRJm6iC1mnMgFvlYMXGkak9wzcAyJSqqurPu5nuMvFxbpvXrr8d5BfAUF6AnwAl_X8t1yksB4RSKakJ384AH8bj_CmTdozkAxoJ0Zb-PtWpdlAxTnGkJMRtENYDJYVnvtOT7Ja59mSEdvVfkSCF6qBPAj93XEr16lbDkmlRunTl_ia8YJ1oNDi_kJBvfcHcnbIsGO73_HsgJBl7BpftXLc-FTREKvLGXGFZll8UDGc_lolkKzfTZR3H8CnF3sRQdNGYvbD40fDMYvCRqKLNX4WAMuGSBh8ju6xjiDCPMuozVO1-mdw5nwhzmt-z9pEvwfPs3UUWt-3IAhlb1uHGUT2e5DMiYdfIJbyc4oMjM79kg_cv4RillqFG-E55oCwnrgqHdUvaWAqduCTeHtP7ZVKqQd3mr8cWxQXxgxueOLCSciuIuWxshcp_XtfT-Pg1QIKxT06vTTtyMUQ8WVT3oCG7hojApXoh1b2xSb89WIYKIghlUh8VAkL18PVHefwBIBjgkzru1L3KxW76U1Vq4DL4bltkg-ju-Q392RWccShWffhmiSUe4GngHLrjpnK2XhuysVzMUv_RYIBxSro6WQ-KKiU5z61_TxI3gwfJSBRsN_rrZRd0UcnpfCdyjxejEWTCNjAeYZqnB7X0NXjLLRS-O7vZdHuJ20byqFaWpO9Yo2vi8UCA6NWTpuRAqyA6hkwJmSJY8MZeOzfZ4ULj_jtH55-CxJwSBtbm-wEH158PMZVkCi0DL-0BErmI12Rgqbo9pmjpnUld8MQ-UDMCCXfODhHERVuybFKtcF3pS2bo_9Xjziqn1SmV-Vubl_TR-B8c3Qo9S80ObLimTEMCbe0DyhTzSFTG7wee1M3Uab7y2e0L8zJ4v9tQBXtVDrGjgCXmzX9Yatw8Pbuj5mTslbSAnWkdHcSqYj8EZt5XRbYNe8zaVgqBbqj66Xg1e2-XSaBAz6KmW2qKDfkFki2bk6XlA4XQF14UgW60tIUwvCglyILe3EKr2nkB-aKwVI59WCm6NdT1tLFaxfJdRbzhia3Tspam3v1-B4_qU9dnLO8D2RED_9Yuean7YAV91g3uzlkzsuMibExr7mWL6FZIg6e21zfJrNlTlhA31cJjkzxe5_nBJ5Ya7qx4P0UNu23eoheiHepGdx0T4xmsXKtHUX_gH-2v-eDFEpZGhQEjHbedV3LI4Gf8fukHUeDA4UYhIE2meTWtBauOFTgGACt-X5hRZSdYtMO6QCWnlq1nrTjdGz8m1jXHo3eNxGo5UqGPRylMwk5xDqpBUkskQHUc243zuIlsCfQPsFxlugnDcKKNhpaELso8MQOcM2FYejuJltctEJdLHGBuwZvo0qDc8o3DxUc0lroI_9Z6kirWvWx-9lK79tQJAo2llopKOtxCD5zQ0Ns5sf8eV5dhuAiugO8eSWaX-ROQJd4VThPmDCp4SRtnw-Zkz6L10t2hgw7ic5j42S8ZxfFXr4sGcKN4m9coqh0Qt6CJ9c35WwTwN6vYyK3J_y7-OExMv-4M6MXBTHn9SHATVxn8fGgLn57JsaduEW1KOGA_krhPTYa_-Up9DUbYPyL4_2z8YIG15Vy4AkfVr21IDSFN4e1lPTH-AKbIn1DmXaYg5-056xWg1M9kYM-Q20pir6ACV6uVAjHpJHp4fwKYSyXTJ55mu7n4HLR8Amfwb19Q5W7M0m4ZhBmoG1ViC36MSYcOd-znmsmvctwwethiqavpOOSxFAOHb7BGFem4GYKL8RTuUJSnRk_rIeTnwu6ruNLkv09V16NiSCDIoEMZUYXymPI2TPcQ2JjGcHUZE8ATPvgW7wgWaF7hihkpNYn9IW_ZtMNwSjpWu9_19lo6gpKnB5V4Z1uwzqmlYD6CVvd6QtK7M1eeCK_6fFyNqe-P5rbK8hzt92HNWkUYLThJyLSwnjaP_xj6BY8jTrby4SfXAfkIb7AnJA7UpEv4FYdFsm91fhtqeFE13yKLA71cYBCWwIweLeE5GYTaMUx_YsPEBdCuaT91tLI0SanQvoWkvLRSx404oXrMqLTIraqQW2hRj8Z_y1UtFs9yGult9EIl5mHpth4HbVVVxtb1tCdqrt-0iCUsOLrnD3tlaLunOOwuneafM1pcq_d3q-x15w-jh3E8olcByUJfJiaNbVp2JskLw80ZnLhgsgYK9yW2X5_SX7rsw4yIZblfo3h2M89C6u3kGefVOFk3yXBa95pJN3gQYM3W8MxMKKiljS2l4BU6UCJrszj0vvrkVXnnZY4z_Dl3_5Wi4FTmCr5ga-TAR7kyMIFlvS8MpY26xkkfKTub2HO-3q4bS0qc2uWv2HQKmGXRdYFd5d4V8p7aQyLnatmEY7B5RBbjECmmgFx00wYjB11B0HmgK24BXdyU2oGeoyL2GBlI774_uWTEifQJMCSins5B4CeaiXV3Osly1f2R-aob-dw27MIZEZOg9eQxaCROSsSe79a9VePembHaBeV77oDni9meU2h9kVJH7kVEK69j2Xc-5KyqbuhvovxHe8Eat9vh621c6SjN08uU2YfoPWlRsuTejuamo28I6PusMZ9of433jsKhO6iVyrV1f-y0mWTNgZC2WlGcDEIommy5QfrXKapvFtYEbXMle9pBsGv28Qmwxzj11fFgzalHTI-0vxfqE0RJnbXHinIxSdn3pdf_PAKsIn5TmpA==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+          "id": "rs_048e21b112774285016ab2fcc0187c87d197a900cb9c3b4056",
+          "format": "openai-responses-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 23313,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 907,
+        "completionTokensDetails": {
+          "reasoningTokens": 365
+        },
+        "totalTokens": 24220,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0069165
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

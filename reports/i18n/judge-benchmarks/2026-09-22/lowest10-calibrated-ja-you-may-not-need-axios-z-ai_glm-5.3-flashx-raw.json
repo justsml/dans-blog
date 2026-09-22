@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"1b7eea376e11\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 55,\n    \"technicalAccuracy\": 55,\n    \"coherence\": 60,\n    \"relevance\": 95,\n    \"translationQuality\": 75,\n    \"mdxPreservation\": 35,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 85\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\n      \"replacement\": \"- [概要](#overview)\\n- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>` の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [Fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\n      \"reason\": \"Nearly every TOC link points to the wrong anchor: 機能比較 links to #overview, Fetch レシピ to #目次, and the list is shifted by one anchor down the whole tree. Each entry must point to the matching section id used by its own translated heading.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\",\n      \"replacement\": \"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\",\n      \"reason\": \"Blank lines between table rows break the Markdown table: rows render as separate broken fragments and the header separator row is missing entirely. Remove blank lines and restore the separator row.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n\\n| リダイレクト                                        |✅        |✅         |✅       |\",\n      \"replacement\": \"| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n| リダイレクト                                        |✅        |✅         |✅       |\",\n      \"reason\": \"Additional blank lines inside the comparison table split it into invalid fragments that will not render as a single table.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\n      \"replacement\": \"> ユースケースがリストにない？ [お知らせください ✉️](/contact/)\",\n      \"reason\": \"The link was split out of the blockquote into a separate paragraph, losing the original structure where the CTA link lives inside the quote.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Progress Handlerは、[以下に示す手法でラップを回避](#source-progress-helper)し、`fetch`呼び出しをクロージャで囲みません。\",\n      \"replacement\": \"以下に示すProgress Handlerの手法は、`fetch`呼び出しをクロージャで[ラップしません](#source-progress-helper)。👍\",\n      \"reason\": \"The source says the technique avoids wrapping the fetch call in a closure; the candidate misreads it as 'avoids wrapping, and does not enclose in a closure' in a garbled, doubled construction, and drops the 👍 emoji placement.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"IE8まで遡ることも可能です - _結果は保証できません_.\",\n      \"replacement\": \"[IE8](https://github.com/camsong/fetch-ie8)まで遡ることも可能です - _Your mileage may vary_（結果は環境によります）.\",\n      \"reason\": \"The hyperlink to the fetch-ie8 repo was dropped, losing a technical reference.\"\n    }\n  ],\n  \"rationale\": \"Translation prose is fluent and faithful overall, but MDX integrity is seriously damaged: the feature-comparison Markdown table is broken by blank lines and a missing separator row, and the table of contents anchors are almost entirely misaligned. A few meaning/structure defects (blockquote link, Progress Handler sentence, dropped IE8 link) remain. Not publish-ready until the table and TOC are fixed.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 5705,
+    "inputTokenDetails": {
+      "noCacheTokens": 5705,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1757,
+    "outputTokenDetails": {
+      "textTokens": 1660,
+      "reasoningTokens": 97
+    },
+    "totalTokens": 7462
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5705,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1757,
+        "completionTokensDetails": {
+          "reasoningTokens": 97
+        },
+        "totalTokens": 7462,
+        "cost": 0.0043071,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0043071
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

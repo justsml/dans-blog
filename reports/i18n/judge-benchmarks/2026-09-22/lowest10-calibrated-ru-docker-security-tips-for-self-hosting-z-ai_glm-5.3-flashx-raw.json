@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":70,\"coherence\":55,\"relevance\":95,\"translationQuality\":70,\"mdxPreservation\":40,\"culturalAdaptation\":85,\"languagePurity\":80},\"suggestions\":[{\"priority\":\"high\",\"match\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n}\",\"replacement\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n*/}\",\"reason\":\"The commented-out Placeholder Validation block is closed with a bare '}' instead of '*/}', so MDX breaks and the CodeTabs/placeholder content renders outside a comment.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n\",\"reason\":\"The block-china.sh fence is duplicated; the English source has only one such block, and the duplication also loses the introductory sentence 'Check out this script to block all traffic from China:' context.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\",\"reason\":\"The whitelist-ingress-from-cloudflare.sh code fence is closed prematurely, leaving the CloudFlare IP lines outside the bash block followed by a stray fence — broken rendering.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\",\"replacement\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\",\"reason\":\"The lsof commands fence is closed after the first command, leaving the rest of the commands outside the code block with a stray fence later — broken structure vs. the English source.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"fswatch -r /path/to/directory\\n```\",\"reason\":\"Stray extra closing fence after the fswatch block breaks MDX code-fence pairing.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Тестирование внутри вашей сети\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Тестирование внутри вашей сети\",\"reason\":\"Extra stray closing fence after the nmap External Scan block breaks subsequent fence pairing.\"},{\"priority\":\"high\",\"match\":\"- 🔄 [Танец `:latest`](#-the-latest-dance)\",\"replacement\":\"- 🔄 [Танец `:latest`](#-танец-latest)\",\"reason\":\"Same-page TOC fragment is a stale English ID; it must target the fragment generated from the translated heading 'Танец `:latest`'.\"},{\"priority\":\"high\",\"match\":\"- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\",\"replacement\":\"- 🔐 [Управление секретами: правильный путь](#-управление-секретами-правильный-путь)\",\"reason\":\"TOC fragment must match the localized heading 'Управление секретами: правильный путь', not the English-derived '#-secrets-management' variant.\"},{\"priority\":\"high\",\"match\":\"- 🔍 [Мониторинг и проверка](#-monitoring--verification)\",\"replacement\":\"- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\",\"reason\":\"Stale English fragment; the heading is translated, so the fragment must be localized.\"},{\"priority\":\"high\",\"match\":\"- [Генерация надёжных секретов](#генерировать-надёжных-секретов)\",\"replacement\":\"- [Генерация надёжных секретов](#генерировать-надёжные-секреты)\",\"reason\":\"Fragment does not match the translated heading 'Генерировать надёжные секреты'; anchor will be dead.\"},{\"priority\":\"high\",\"match\":\"- [Блокировка стран!](#blocking-country)\",\"replacement\":\"- [Блокировка стран!](#блокировка-по-странам)\",\"reason\":\"Stale English fragment; heading was translated to 'Блокировка по странам!' so the anchor must be localized.\"},{\"priority\":\"high\",\"match\":\"- [Ужесточение CloudFlare Proxy Host](#hardening-cloudflare-proxy-host)\",\"replacement\":\"- [Ужесточение CloudFlare Proxy Host](#ужесточение-хоста-прокси-cloudflare)\",\"reason\":\"Stale English fragment; heading was translated so the anchor must target the localized heading ID.\"},{\"priority\":\"high\",\"match\":\"## 🚀 Production Checklist\",\"replacement\":\"## 🚀 Контрольный список для продакшна\",\"reason\":\"Reader-facing heading left in English while TOC links to a Russian fragment; translate the heading for consistency.\"},{\"priority\":\"high\",\"match\":\"## 📚 Further Reading\",\"replacement\":\"## 📚 Дополнительные материалы\",\"reason\":\"Reader-facing heading left in English while the TOC entry is translated to 'Дополнительные материалы'.\"},{\"priority\":\"high\",\"match\":\"- [Check Your Ports](#check-your-ports)\\n- [View Open Ports](#view-open-ports)\\n- [File Monitoring](#file-monitoring)\",\"replacement\":\"- [Проверьте свои порты](#проверьте-свои-порты)\\n- [Просмотр открытых портов](#просмотр-открытых-портов)\\n- [Мониторинг файлов](#мониторинг-файлов)\",\"reason\":\"In-page mini-TOC entries are untranslated English and their fragments point at stale English heading IDs, so all three links are broken and reader-facing text is untranslated.\"},{\"priority\":\"medium\",\"match\":\"Мы такжесравним домашние сети\",\"replacement\":\"Мы также сравним домашние сети\",\"reason\":\"Missing space between words ('такжесравним').\"},{\"priority\":\"medium\",\"match\":\"Вот небольшойскрипт для генерации\",\"replacement\":\"Вот небольшой скрипт для генерации\",\"reason\":\"Missing space between words ('небольшойскрипт').\"}],\"rationale\":\"Translation prose quality is good and faithful, but the candidate suffers from multiple broken code fences and a malformed comment block, duplicated content, and many stale English anchor fragments that must be localized to match translated heading IDs.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 17553,
+    "inputTokenDetails": {
+      "noCacheTokens": 17553,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1969,
+    "outputTokenDetails": {
+      "textTokens": 1613,
+      "reasoningTokens": 356
+    },
+    "totalTokens": 19522
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 17553,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1969,
+        "completionTokensDetails": {
+          "reasoningTokens": 356
+        },
+        "totalTokens": 19522,
+        "cost": 0.00895586,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00895586
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

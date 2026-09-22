@@ -80,3 +80,14 @@ test('judge output budget defaults to 16k and respects an explicit smaller cap',
     expect(captured.maxOutputTokens).toBe(expected);
   }
 });
+import { isOutputLimitFailure } from './judge-benchmark.ts';
+test('limit retries exclude parser failures, transport errors and successful calls', () => {
+  expect(isOutputLimitFailure({ok:false,error:'Judge hit maxOutputTokens=16000'})).toBe(true);
+  expect(isOutputLimitFailure({ok:false,captured:{finishReason:'length'}})).toBe(true);
+  expect(isOutputLimitFailure({ok:false,error:'Missing judge scores',captured:{finishReason:'stop'}})).toBe(false);
+  expect(isOutputLimitFailure({ok:false,error:'Connection timed out'})).toBe(false);
+  expect(isOutputLimitFailure({ok:true,captured:{finishReason:'length'}})).toBe(false);
+});
+test('Gemini overlapping cache reads and writes add storage charges without negative input cost', () => {
+  expect(catalogCost({inputTokens:7090,outputTokens:1291,cacheReadTokens:6930,cacheWriteTokens:6930},{prompt:'0.00000075',completion:'0.00000375',input_cache_read:'0.000000075',input_cache_write:'0.0000000416666666666667'},'google/gemini-3.8-flash')).toBeCloseTo(0.00576975,9);
+});

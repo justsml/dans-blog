@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d18f75c20ad6\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 75,\n    \"technicalAccuracy\": 78,\n    \"coherence\": 80,\n    \"relevance\": 90,\n    \"translationQuality\": 75,\n    \"mdxPreservation\": 60,\n    \"culturalAdaptation\": 82,\n    \"languagePurity\": 85\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Block all incoming!!!\\nufw default allow outgoing # Allow all outgoing\\nufw allow ssh # Allow SSH\\n\\n# Allow access for local subnet (preferably dedicated DMZ/VLAN for hosted services)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# Allow CloudFlare IPs\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Add IPv6 support\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"The code block for 'whitelist-ingress-from-cloudflare.sh' was prematurely closed with a markdown fence, spilling raw script commands into the document body as markdown text and breaking the document structure.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# नोट: सुनिश्चित करें कि `target_host` वांछित IP है\\n\\n# विशिष्ट पोर्ट्स स्कैन करें:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# टॉप 100 पोर्ट्स:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# सभी पोर्ट्स\\nnmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# Note: Ensure `target_host` is the desired IP\\n\\n# Scan specific ports:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# Top 100 ports:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\",\n      \"reason\": \"There is a stray unclosed code block fence (```) appended after the code block, which corrupts subsequent MDX parsing.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# LISTEN स्थिति देखें\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# IP पते के बजाय नेटवर्क नाम दिखाने के लिये (रिवर्स DNS लुकअप धीमा हो सकता है)\\nsudo lsof -i -P | grep LISTEN\\n\\n# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"lsof Commands\\\"\\n# Monitor specific port\\nsudo lsof -i:80 -Pn\\n\\n# Monitor ESTABLISHED connections\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# View LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# to see network names instead of IP addresses (can be very slow to do reverse DNS lookups)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Monitor all network connections\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\n      \"reason\": \"The lsof code block was split in half by an accidental closing fence, leaving the remaining bash commands leaking as plain prose followed by a stray closing fence.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash\\nfswatch -r /path/to/directory\\n```\\n\\n```\",\n      \"replacement\": \"```bash\\nfswatch -r /path/to/directory\\n```\",\n      \"reason\": \"Stray triple backticks after fswatch code block corrupts MDX rendering.\"\n    }\n  ],\n  \"rationale\": \"The translation text itself is of good quality, but several code fences throughout the document are broken, causing commands to leak into the prose as plain text and adding stray unclosed fences that severely break MDX parsing.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 18674,
+    "inputTokenDetails": {
+      "noCacheTokens": 160,
+      "cacheReadTokens": 18514,
+      "cacheWriteTokens": 18514
+    },
+    "outputTokens": 1450,
+    "outputTokenDetails": {
+      "textTokens": 1450,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20124
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+17Uu4y+uoIou1qbA1ShCuJIir5JizOwkNVZoUyky0ymcrl53FwRWEFjs6R98yJl6Aq/fGFh/druAX7MYxPrjyBfXV1naej5Aa",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 18674,
+        "promptTokensDetails": {
+          "cachedTokens": 18514
+        },
+        "completionTokens": 1450,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20124,
+        "cost": 0.007717466666666666,
+        "costDetails": {
+          "upstreamInferenceCost": 0.007717466666666666
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

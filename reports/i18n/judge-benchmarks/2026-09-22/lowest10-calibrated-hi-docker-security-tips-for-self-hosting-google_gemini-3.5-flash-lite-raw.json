@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d18f75c20ad6\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 90,\n    \"technicalAccuracy\": 95,\n    \"coherence\": 90,\n    \"relevance\": 95,\n    \"translationQuality\": 92,\n    \"mdxPreservation\": 85,\n    \"culturalAdaptation\": 90,\n    \"languagePurity\": 92\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"Fix code block fence breaking syntax error by removing the stray backticks.\"\n    }\n  ],\n  \"rationale\": \"The Hindi translation is high quality, highly readable, maintains technical accuracy, and correctly localizes paths and frontmatter. Minor markdown fencing artifact needs correction.\",\n  \"publishReady\": true\n}\n```",
+  "usage": {
+    "inputTokens": 18674,
+    "inputTokenDetails": {
+      "noCacheTokens": 160,
+      "cacheReadTokens": 18514,
+      "cacheWriteTokens": 18514
+    },
+    "outputTokens": 437,
+    "outputTokenDetails": {
+      "textTokens": 437,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19111
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19zqjJOcYgq4rdPRqaI51tN8qenEZaH8IP0yQbWF1oNkhmmkKlw6VkUwJVVvhOwp1Si+aZAJ+j3QsaVZD/GAdW9whj4D/bDFNEGX1p332s=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 18674,
+        "promptTokensDetails": {
+          "cachedTokens": 18514
+        },
+        "completionTokens": 437,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19111,
+        "cost": 0.003238753333333333,
+        "costDetails": {
+          "upstreamInferenceCost": 0.003238753333333333
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

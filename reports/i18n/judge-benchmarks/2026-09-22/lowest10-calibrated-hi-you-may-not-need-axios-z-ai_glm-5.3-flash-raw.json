@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"8455713b3333\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 70,\n    \"technicalAccuracy\": 75,\n    \"coherence\": 70,\n    \"relevance\": 95,\n    \"translationQuality\": 72,\n    \"mdxPreservation\": 55,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 70\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [अवलोकन](#overview)\\n- [फ़ीचर तुलना](#overview)\\n- [Fetch रेसिपी](#feature-comparison)\\n  - [URL से JSON प्राप्त करें](#fetch-recipes)\\n  - [कस्टम हेडर्स](#get-json-from-a-url)\\n  - [HTTP त्रुटि संभालना](#custom-headers)\\n  - [CORS उदाहरण](#http-error-handling)\\n  - [JSON भेजना](#cors-example)\\n  - [HTML `<form>` पोस्ट करना](#posting-json)\\n  - [फ़ॉर्म‑एन्कोडेड डेटा](#form-encoded-data)\\n  - [फ़ाइल अपलोड करना](#form-encoded-data)\\n  - [कई फ़ाइलें अपलोड करना](#uploading-a-file)\\n  - [टाइमआउट्स](#uploading-multiple-files)\\n  - [डाउनलोड प्रोग्रेस हेल्पर](#timeouts)\\n  - [रिकर्सिव रीट्राई हेल्पर](#download-progress-helper)\\n  - [fetch अनुरोध को रद्द करना](#recursive-retry-helper) ✨new✨\\n- [अनुकूलता](#handling-http-redirects)\",\n      \"replacement\": \"- [अवलोकन](#overview)\\n- [फ़ीचर तुलना](#feature-comparison)\\n- [Fetch रेसिपी](#fetch-recipes)\\n  - [URL से JSON प्राप्त करें](#get-json-from-a-url)\\n  - [कस्टम हेडर्स](#custom-headers)\\n  - [HTTP त्रुटि संभालना](#http-error-handling)\\n  - [CORS उदाहरण](#cors-example)\\n  - [JSON भेजना](#posting-json)\\n  - [HTML `<form>` पोस्ट करना](#posting-an-html-form)\\n  - [फ़ॉर्म‑एन्कोडेड डेटा](#form-encoded-data)\\n  - [फ़ाइल अपलोड करना](#uploading-a-file)\\n  - [कई फ़ाइलें अपलोड करना](#uploading-multiple-files)\\n  - [टाइमआउट्स](#timeouts)\\n  - [डाउनलोड प्रोग्रेस हेल्पर](#download-progress-helper)\\n  - [रिकर्सिव रीट्राई हेल्पर](#recursive-retry-helper)\\n  - [HTTP रीडायरेक्ट्स को संभालना](#handling-http-redirects)\\n  - [fetch अनुरोध को रद्द करना](#canceling-a-fetch-request) ✨new✨\\n- [अनुकूलता](#compatibility)\",\n      \"reason\": \"The table of contents is off by one: nearly every entry links to the previous section's fragment (e.g. 'फ़ीचर तुलना' links to #overview, 'Fetch रेसिपी' to #feature-comparison), and the 'Handling HTTP Redirects' entry is missing entirely. Every TOC link must point to the matching heading's id.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"यह **Axios** (https://www.npmjs.com/package/axios) पर कोई हमला नहीं है।\",\n      \"replacement\": \"यह [Axios](https://www.npmjs.com/package/axios) पर कोई हमला नहीं है।\",\n      \"reason\": \"The source has a markdown link on 'Axios'; the candidate turned it into plain text with a bare URL, breaking the link and the call-to-action styling.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"अपलोड प्रोग्रेस वर्तमान में Chrome के बाहर थोड़ा बगgy है।\",\n      \"replacement\": \"अपलोड प्रोग्रेस वर्तमान में Chrome के अलावा अन्य ब्राउज़रों में थोड़ी बग्गी है।\",\n      \"reason\": \"Mixed-script typo 'बगgy' (Devanagari + Latin 'gy') is a visible defect in reader-facing prose.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"यह लेख उन “ग़ायब” `fetch` कोड स्निपेट्स और सामान्य उपयोग‑केसेज़ का संग्रह है जिसे मैं आसान से नहीं मिलता हूँ।\",\n      \"replacement\": \"यह लेख उन “ग़ायब” `fetch` कोड स्निपेट्स और सामान्य उपयोग‑केसेज़ का संग्रह है जिन्हें ढूँढना मैं कहीं आसान पाता।\",\n      \"reason\": \"The clause 'जिसे मैं आसान से नहीं मिलता हूँ' is ungrammatical Hindi (a person 'मिलता हूँ' to a snippet) and inverts the source meaning ('I wish were easier to find').\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"प्रोग्रेस हैंडलर [नीचे दिखाया गया तकनीक क्लोजर में `fetch` कॉल को लपेटने से बचाता है](#source-progress-helper) 👍\",\n      \"replacement\": \"प्रोग्रेस हैंडलर [नीचे दिखाई गई तकनीक `fetch` कॉल को क्लोज़र में लपेटने से बचती है](#source-progress-helper) 👍\",\n      \"reason\": \"The link text is garbled word salad ('तकनीक क्लोजर में ... लपेटने से बचाता है') and the subject/verb agreement is wrong; the source says the technique avoids wrapping the fetch call in a closure.\"\n    }\n  ],\n  \"rationale\": \"Translation is largely faithful and idiomatic with good localization of headings and correct asset paths, but the table of contents is systematically mis-linked (off-by-one fragments, one missing entry), the Axios call-to-action link was flattened to plain text, and there are several grammar/typo defects in reader-facing prose.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 7570,
+    "inputTokenDetails": {
+      "noCacheTokens": 7570,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2143,
+    "outputTokenDetails": {
+      "textTokens": 1954,
+      "reasoningTokens": 189
+    },
+    "totalTokens": 9713
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 7570,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2143,
+        "completionTokensDetails": {
+          "reasoningTokens": 189
+        },
+        "totalTokens": 9713,
+        "cost": 0.002207,
+        "costDetails": {
+          "upstreamInferenceCost": 0.002207
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

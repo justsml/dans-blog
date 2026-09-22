@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"e46961b699c2\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 70,\n    \"technicalAccuracy\": 82,\n    \"coherence\": 78,\n    \"relevance\": 95,\n    \"translationQuality\": 72,\n    \"mdxPreservation\": 80,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 70\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\n      \"replacement\": \"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना?\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\n      \"reason\": \"The JSX comment block is closed after the first bullet, so the remaining three list items of the intentionally commented-out Bonus section are rendered as visible content. The closing */ must be moved to the end of the bonus list (after the 'सुनिश्चित करें...' line) so the whole section stays commented out as in the English source.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"उत्तर: **एसक्वेश मर्ज** करें अपने PR को `main` में।\",\n      \"replacement\": \"उत्तर: अपने PRs को `main` में **स्क्वैश मर्ज** करें।\",\n      \"reason\": \"Typo 'एसक्वेश' misspells 'Squash' and the sentence structure is garbled ('करें अपने PR को'). The English answer is 'SQUASH MERGE your PRs onto main'.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"जो प्रत्येक शाखा के HEAD का विश्लेषण करके असहमति को टालते हैं।\",\n      \"replacement\": \"जो प्रत्येक शाखा के HEAD का विश्लेषण करके संघर्षों से बचते हैं।\",\n      \"reason\": \"'असहमति' means 'disagreement (opinion)'; the technical term here is merge conflicts (संघर्ष), used consistently elsewhere in the candidate.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"हमेशा **`git merge ...`** की तुलना में अवनत होगा।\",\n      \"replacement\": \"हमेशा **`git merge ...`** की तुलना में नुकसानदेह स्थिति में रहेगा।\",\n      \"reason\": \"'अवनत' is not a valid Hindi word (likely a typo for 'अधिक खराब/पिछड़ी'). The English says rebasing 'will always be at a disadvantage'.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"चलिए इस प्रक्रिया की तुलना करते हैं जिसमें `मेन` पर कुछ हालिया कमिट्स को छोड़कर\",\n      \"replacement\": \"चलिए इस प्रक्रिया की तुलना करते हैं जिसमें `main` पर कुछ हालिया कमिट्स को छोड़कर\",\n      \"reason\": \"The branch name `main` is a code-adjacent identifier and must not be translated to `मेन` inside backticks.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"आपके कमिट ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं?\",\n      \"replacement\": \"आपके कमिट ध्यानपूर्वक चुनकर तराशी हुई कलाकृतियाँ हैं?\",\n      \"reason\": \"'आकृति-विहीन कला' means 'formless art', the opposite of the English 'sculpted work of art'. Also inconsistent with 'सुसज्जित कला' used later in the Summary.\"\n    }\n  ],\n  \"rationale\": \"Overall a faithful, well-structured Hindi translation with correct code, commands, image paths (../), and localized frontmatter. However, the Bonus section's JSX comment is closed too early, leaking commented-out content into the rendered page (high). Several terminology/typo issues (एसक्वेश, अवनत, असहमति, आकृति-विहीन, `मेन`) and some awkward phrasing ('दीखने में अनंत चक्र', 'अपनाहीन') keep it below publish-ready.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 8077,
+    "inputTokenDetails": {
+      "noCacheTokens": 8077,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1863,
+    "outputTokenDetails": {
+      "textTokens": 1540,
+      "reasoningTokens": 323
+    },
+    "totalTokens": 9940
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 8077,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1863,
+        "completionTokensDetails": {
+          "reasoningTokens": 323
+        },
+        "totalTokens": 9940,
+        "cost": 0.00214305,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00214305
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

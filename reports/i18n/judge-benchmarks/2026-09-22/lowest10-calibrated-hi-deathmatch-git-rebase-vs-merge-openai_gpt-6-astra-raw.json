@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"e46961b699c2\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 62,\n    \"technicalAccuracy\": 70,\n    \"coherence\": 65,\n    \"relevance\": 94,\n    \"translationQuality\": 62,\n    \"mdxPreservation\": 70,\n    \"culturalAdaptation\": 60,\n    \"languagePurity\": 65\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"--- CHUNK END ---\",\n      \"replacement\": \"\",\n      \"reason\": \"Remove leaked translation-processing text from the rendered article.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"चलिए इस प्रक्रिया की तुलना करते हैं जिसमें `मेन` पर कुछ हालिया कमिट्स को छोड़कर एक टैग रिलीज बनाया जाता है।\",\n      \"replacement\": \"आइए `main` के कुछ हालिया कमिट्स को छोड़कर रिलीज टैग बनाने की प्रक्रियाओं की तुलना करें।\",\n      \"reason\": \"The literal branch identifier main must not be translated inside code.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"मैंने 16 मर्ज के बाद एक गलती की है\",\n      \"replacement\": \"मैंने 16 मर्ज पहले एक गलती की थी\",\n      \"reason\": \"The source says the mistake occurred 16 merges ago, not after 16 merges.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"या फिर, आपके कमिट ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं?\",\n      \"replacement\": \"या फिर, आपके कमिट सावधानी से चुनी और तराशी गई कलाकृतियाँ हैं?\",\n      \"reason\": \"आकृति-विहीन means shapeless, reversing the carefully sculpted metaphor central to the argument.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"कमिट इतिहास के बिना? \\n*/}\",\n      \"replacement\": \"कमिट इतिहास के बिना?\",\n      \"reason\": \"The source comments out the entire bonus section. Remove this premature closing comment and close it after the final bullet instead.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\n      \"replacement\": \"- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\\n*/}\",\n      \"reason\": \"Together with the preceding fix, keeps all bonus instructions hidden as in the source, including its illustrative checkout command.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"और हमारी पहचान/अहंकार से जुड़ी कोई भी प्रथा निष्पक्ष रूप से विश्लेषित करने के लिए असंभव हो सकती है, न कि बदलने के लिए।\",\n      \"replacement\": \"और हमारी पहचान या अहंकार से जुड़ी किसी भी आदत का निष्पक्ष विश्लेषण करना ही असंभव हो सकता है—उसे बदलना तो दूर की बात है।\",\n      \"reason\": \"The current rendering of 'never mind change' loses the intended escalation and is unnatural Hindi.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"इसके अलावा, झगड़ा और `--continue` के दीखने में अनंत चक्र में फंस सकते हैं।\",\n      \"replacement\": \"इसके अलावा, मैं कॉन्फ्लिक्ट और `--continue` के ऐसे चक्र में फँस सकता हूँ जिसका अंत ही नज़र न आए।\",\n      \"reason\": \"Git conflicts are not interpersonal quarrels; the sentence also needs a consistent first-person subject.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"मर्ज झगड़े को ठीक करें\",\n      \"replacement\": \"मर्ज कॉन्फ्लिक्ट सुलझाएँ\",\n      \"reason\": \"Use an intelligible technical term for merge conflicts.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"आप झगड़ा और `--continue` के दीखने वाले अनंत चक्र में फंस सकते हैं।\",\n      \"replacement\": \"आप कॉन्फ्लिक्ट और `--continue` के ऐसे चक्र में फँस सकते हैं जिसका अंत ही नज़र न आए।\",\n      \"reason\": \"Correct the repeated mistranslation of technical conflicts and the malformed idiom.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"🦺 अपरिवर्तित।\",\n      \"replacement\": \"🦺 मौजूदा इतिहास को नष्ट नहीं करता।\",\n      \"reason\": \"Non-destructive does not mean unchanged; merging changes state while retaining existing history.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"एक और वजह है कि **रीबेसिंग** एक संशोधित इतिहास बनाने में हमेशा **`git merge ...`** की तुलना में अवनत होगा। `git merge` कमांड `git` CLI को उन्नत एल्गोरिदम लागू करने देता है जो प्रत्येक शाखा के HEAD का विश्लेषण करके असहमति को टालते हैं।\",\n      \"replacement\": \"एक और वजह है कि संशोधित इतिहास बनाने के लिए **रीबेसिंग हमेशा `git merge ...` की तुलना में नुकसान में रहेगी।** `git merge` कमांड `git` CLI को हर शाखा के HEAD का विश्लेषण करके कॉन्फ्लिक्ट से बचने के लिए उन्नत एल्गोरिदम लागू करने देती है।\",\n      \"reason\": \"अवनत and असहमति misrepresent the comparative disadvantage and technical conflicts.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"जबकि **रीबेसिंग कमिट इतिहास को फिर से खेलना (या छोड़ देना) पड़ता है** जैसा कि निर्दिष्ट किया गया है।\",\n      \"replacement\": \"जबकि **रीबेसिंग में कमिट इतिहास को निर्दिष्ट क्रम में दोबारा लागू करना (या कमिट छोड़ना) पड़ता है।**\",\n      \"reason\": \"Restore the explicit sequencing constraint and translate replay as applying commits, not playing.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"या फिर आपको \\\"बिगड़े हुए\\\" कमिट लॉग से बस नहीं रहता?\",\n      \"replacement\": \"या फिर आप बस \\\"अव्यवस्थित\\\" कमिट लॉग बर्दाश्त नहीं कर सकते?\",\n      \"reason\": \"The current phrase is not idiomatic or readily understandable Hindi.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"**एसक्वेश मर्ज**\",\n      \"replacement\": \"**स्क्वैश मर्ज**\",\n      \"reason\": \"Correct the technical term in the central recommendation and make it consistent with the rest of the article.\"\n    }\n  ],\n  \"rationale\": \"The candidate retains most of the argument, commands, and valid localized asset paths, and its length is appropriate. However, processing-text leakage, an accidentally exposed commented section, a translated branch identifier, reversed temporal meaning, and several unnatural or misleading technical translations prevent publication.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 4842,
+    "inputTokenDetails": {
+      "noCacheTokens": 4842,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 4839
+    },
+    "outputTokens": 1568,
+    "outputTokenDetails": {
+      "textTokens": 1568,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 6410
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 4842,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1568,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 6410,
+        "cost": 0.1389175,
+        "costDetails": {
+          "upstreamInferenceCost": 0.1389175
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

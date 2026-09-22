@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"04df4e77477c\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 55,\n    \"technicalAccuracy\": 82,\n    \"coherence\": 70,\n    \"relevance\": 100,\n    \"translationQuality\": 55,\n    \"mdxPreservation\": 95,\n    \"culturalAdaptation\": 60,\n    \"languagePurity\": 35,\n    \"translationQualityProse\": 55\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"कोई एहसास करने से पहले ही, आपकी टीम somehow `P00` टिकटों में डूब रही है!\",\n      \"replacement\": \"किसी को एहसास होने से पहले ही, आपकी टीम किसी तरह `P00` टिकटों में डूब जाती है!\",\n      \"reason\": \"Untranslated English word 'somehow' left in prose and grammatical structure is broken.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"अक्सर urgency, importance, resource availability, और cost/risk analysis के बीच एक जटिल अंतर्संबंध होता है जिसे एक साधारण ड्रॉपडाउन कैप्चर नहीं कर सकता, खासकर समय के साथ। (टिकट rot।)\",\n      \"replacement\": \"अक्सर तात्कालिकता, महत्व, संसाधन उपलब्धता और लागत/जोखिम विश्लेषण के बीच एक जटिल अंतर्संबंध होता है जिसे एक साधारण ड्रॉपडाउन पकड़ नहीं सकता, खासकर समय के साथ। (टिकटों का क्षरण।)\",\n      \"reason\": \"Reader-facing prose should be translated, not left as English fragments ('urgency, importance, resource availability', 'rot').\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"ज़्यादा leg और headroom देने के लिए, एक \\\"neutral\\\" starting value चुनें, जैसे 100 या 1,000।\",\n      \"replacement\": \"अधिक जगह और संभावना देने के लिए, एक \\\"तटस्थ\\\" प्रारंभिक मान चुनें, जैसे 100 या 1,000।\",\n      \"reason\": \"Multiple untranslated English words in reader-facing bullet prose.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"एक multidimensional prioritization system लागू करें जो business value, urgency, और required effort जैसे factors को ध्यान में रखे। (sorting और filtering आसान बनाने के लिए एक `composite` score बनाएं।)\",\n      \"replacement\": \"एक बहुआयामी प्राथमिकता-क्रम प्रणाली लागू करें जो व्यावसायिक मूल्य, तात्कालिकता और आवश्यक प्रयास जैसे कारकों को ध्यान में रखे। (छँटाई और फ़िल्टरिंग आसान बनाने के लिए एक `composite` स्कोर बनाएं।)\",\n      \"reason\": \"Heavy English code-mixing in target-language prose; only API-ish tokens like `composite` should stay in English.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"क्या यह एक worthy thought experiment है?\\n- ever-increasing Priority का idea horrifying है? anxiety inducing है?\",\n      \"replacement\": \"क्या यह एक सार्थक विचार-प्रयोग है?\\n- लगातार बढ़ती प्राथमिकता का विचार भयावह है? चिंता पैदा करने वाला है?\",\n      \"reason\": \"Discussion questions are reader-facing prose and must be fully translated.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"एक deep backlog एक Bizzaro Trophy Room की तरह हो जाता है, जो उस shit को celebrate करता है जो आप कभी ship नहीं करेंगे।\",\n      \"replacement\": \"एक गहरा बैकलॉग एक विचित्र ट्रॉफ़ी कक्ष जैसा हो जाता है, जो उस बकवास का जश्न मनाता है जिसे आप कभी शिप नहीं करेंगे।\",\n      \"reason\": \"Punchline mixes untranslated English including a vulgarism left as-is; localize naturally while keeping Dan's blunt tone.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"मैंने कई कंपनियों को `Severity` और `Priority` को mix up करते देखा है।\",\n      \"replacement\": \"मैंने कई कंपनियों को `Severity` और `Priority` को आपस में मिलाते देखा है।\",\n      \"reason\": \"Untranslated phrasal verb 'mix up' left in Hindi prose.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Unbounded Priority field deploy करने के लिए थोड़ी planning और discipline की ज़रूरत होती है!\",\n      \"replacement\": \"असीमित (unbounded) Priority फ़ील्ड तैनात करने के लिए थोड़ी योजना और अनुशासन की ज़रूरत होती है!\",\n      \"reason\": \"Half-translated sentence; reader-facing words should be Hindi with only necessary technical tokens in English.\"\n    }\n  ],\n  \"rationale\": \"Structure, frontmatter rules, image paths, code tokens, links, and MDX components are all correctly preserved. However, the body is pervasively Hinglish — many reader-facing sentences leave key words and even whole phrases in English, violating language purity and readability, which prevents publish readiness.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 6082,
+    "inputTokenDetails": {
+      "noCacheTokens": 5634,
+      "cacheReadTokens": 448,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1874,
+    "outputTokenDetails": {
+      "textTokens": 1848,
+      "reasoningTokens": 26
+    },
+    "totalTokens": 7956
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 6082,
+        "promptTokensDetails": {
+          "cachedTokens": 448
+        },
+        "completionTokens": 1874,
+        "completionTokensDetails": {
+          "reasoningTokens": 26
+        },
+        "totalTokens": 7956,
+        "cost": 0.00446068,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00446068
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"9e718f4fdf81\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":62,\"technicalAccuracy\":76,\"coherence\":68,\"relevance\":91,\"translationQuality\":65,\"mdxPreservation\":78,\"culturalAdaptation\":72,\"languagePurity\":58},\"suggestions\":[{\"priority\":\"high\",\"match\":\"subTitle: इतना शुद्ध किदर्द देता है\",\"replacement\":\"subTitle: इतना शुद्ध कि दर्द देता है\",\"reason\":\"The subtitle contains a typo that makes the Hindi incorrect and less readable.\"},{\"priority\":\"high\",\"match\":\"## II. Over-Abstraction: When Simplicity Turns to Chaos\",\"replacement\":\"## II. अति-अमूर्तन: जब सरलता अराजकता में बदल जाती है\",\"reason\":\"This reader-facing heading is left in English despite the rest of the article being translated, causing a significant language-purity defect.\"},{\"priority\":\"high\",\"match\":\"> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\"replacement\":\"> हमारे आर्किटेक्ट का ज़ोर है कि 5 लाइनों से लंबा हर फ़ंक्शन 'कोड स्मेल' है। अब हमारा कोडबेस अनजान हताशा की हल्की-सी गंध देता है।\",\"reason\":\"A full reader-facing quotation remains untranslated, breaking language consistency and weakening the localized tone.\"},{\"priority\":\"high\",\"match\":\"##II. Over-Abstraction: When Simplicity Turns to Chaos\",\"replacement\":\"## II. अति-अमूर्तन: जब सरलता अराजकता में बदल जाती है\",\"reason\":\"The missing space after the Markdown heading markers can prevent correct heading rendering and breaks the document structure.\"},{\"priority\":\"high\",\"match\":\"-   **फ़ाइल‑सिस्टम शरापें:**\",\"replacement\":\"-   **फ़ाइल-सिस्टम के छर्रे:**\",\"reason\":\"“शरापें” is a spelling/error artifact and does not convey “shrapnel,” making this prominent list item unclear.\"},{\"priority\":\"medium\",\"match\":\"5 डायरेक्टरी में 8 फ़ाइलों नहीं... मैं तुम्हें देख रहा हूँ, React/Redux.\",\"replacement\":\"5 डायरेक्टरी में 8 फ़ाइलों को नहीं... मैं तुम्हें देख रहा हूँ, React/Redux।\",\"reason\":\"The sentence is grammatically broken and loses the source meaning of “8 files across 5 directories.”\"},{\"priority\":\"medium\",\"match\":\"अच्छा सलाह।\",\"replacement\":\"अच्छी सलाह।\",\"reason\":\"The adjective does not agree with the feminine noun “सलाह.”\"},{\"priority\":\"medium\",\"match\":\"कार्यात्मक शुद्धता के किसी अमूर्त आदर्श के³।\",\"replacement\":\"कार्यात्मक शुद्धता के किसी अमूर्त आदर्श के आधार पर नहीं।\",\"reason\":\"The translated sentence is grammatically incomplete, and the superscript ³ has no corresponding footnote in the source or candidate.\"},{\"priority\":\"medium\",\"match\":\"इसलिए जब आप “Single‑Purpose People” से मिलें, जो किसी भी फ़ंक्शन को जो तीन पंक्तियों से अधिक हो, युद्ध की घोषणा करने को तैयार हों, तो एक साँस लें।\",\"replacement\":\"इसलिए जब आप “Single-Purpose People” से मिलें—जो तीन पंक्तियों से लंबे किसी भी फ़ंक्शन के ख़िलाफ़ युद्ध छेड़ने को तैयार रहते हैं—तो एक गहरी साँस लें।\",\"reason\":\"The current Hindi is syntactically awkward and incorrectly places the relative clause, making the sentence difficult to read.\"}],\"rationale\":\"The candidate conveys the article’s central argument and preserves most MDX components, code identifiers, images, and relative asset paths. However, several prominent prose defects remain: an untranslated section heading and quotation, a malformed heading marker, grammatical errors, a typo in the subtitle and a list label, and an unsupported footnote marker. These require fixes before publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 5605,
+    "inputTokenDetails": {
+      "noCacheTokens": 5605,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5602
+    },
+    "outputTokens": 1084,
+    "outputTokenDetails": {
+      "textTokens": 834,
+      "reasoningTokens": 250
+    },
+    "totalTokens": 6689
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Evaluating JSON output issues**\n\nI need to ensure that the output is strict JSON. There are quite a few issues: there's a mix of English headings and quotes that could impact readability. The MDX format has a structural defect with missing heading space for \"##II,\" and there are untranslated sections. I’ve noticed a bad subtitle typo, along with some mistranslations and grammar errors. It seems like the fidelity and structure need to be improved, especially with alt text and footnotes. This is quite a complex task!",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsv2Q_biPfOUY9VQu_QG0B5bQrdzI0h7CwMm3Yl57yUbllIoyQ5ZnaoNq9vq6jBrPjrxi3JPiFXs-F7oY_yZUXMsYTnebQchXYuzvsDqfak82xZeyaXAJwNTb32TtXLNGxjiKyV_pc1oryxPwNMf5v41TN7srv9u7aQ_uNh_0jrKKd67pD22ONG-RAgk8yHE11nDVJVY3es6hxH7EcM7Q6299WyR6CPlfaU1kDYsen2EtPGl6qdC_n9mL6rntDDmr6u0WuZe5YqIx_7CuHa9H4iTMryiPFUyhhmcvH64mRM0FORyBCP_KZ5i0oFgK60oQpHKrMvWqc-moYmQ7ruVZ0Q9gnrGiD9rCd12RKDNErQNMkmYaODPo5NGkU4Dot6fIkTH8BirBRZ5VRRxekvbCFpEiRqjn-fjOK_hO0-gtFBHddfDcVSrLec3nSHGl9uQ_Dp7d0PCUFmZP_WHJa1AaHA3A5DU9K-3rCfxlFzNCJxDW0oTVxbYDA38O73lq-yi2jsGvMPBCief2MCIITmYri08hmYkOrPF9ob87jQZLv1eDljfc_cIw_SQfRH2UFO893QjGF73bly4KDnvE9bD4xto8LnGlVdATLer10DYevi5JGzGiE2E-IwB306YGjnuJWLF55BiPRR9n8m29_RWaItnM1IswVU0tyM-9hMojMfxYbKzoIGYGZo7OsfdM1OCF8krvzApVLKsB6wq23DUQyVF5HXTQnAz-l-wAgBmrOsOuxI9j1yjYD4g4BrKNaOLdtIjQ0r0f1dQBcqiN2VIXQIZKei4uumtaZjRHSmHJLnWIMUcTdVPtpAE4l4lr-QgtqfI1_94ii5wRjnCls5KQEJcAxcjfHzKXL_LU10EOpqbQyOJLdGCkOAI8sHmrTPG6n-vQFhMHYX_aBONMNjoaVg25fQjcqN7NXXvA0UGqAP7tYoNWveBTPFZ_UMzBdqFie8i5UnxqP3p0KGZN3acDCTnhGhQdl9VUMJT0fZ3y2kdvKtLJjxU9T4Ya-GV2ti523ATfocs2hVBhCD7d569UJJhFCpBe2PmB3W0Jmh7zJzT8eoWLq9xbClpChnLovhWgzHDLT6h-aoL-PdJX8OheyUh5ORe8rnciDpTMOM_2GTvb1t0kk0E_WG6z9jJmPZLsdO6WHKPOQ6czKCv-w2EMTxpdS1lal2CGnXcN_fFNHCVAwJyMAzRn6Cips1ql_-5ASl2xTiYJJHIS3zzSllaZH2p3QDpaimbqAxknMOXO0JeLi9LtiGicNB3HKw6Io2RLZV5_Q_UMv_n7LFbsfs21RyXjN6YbEBiAtjxz6LZJ90jiq5tpEAGOJkX-ZFHzybqe0KGAGu63r__ML6ZvHXxK92FWlQpJ1lwOSEAFLeLao2COrv4tcx8Yv9JFtBbH-ZUteZE_FJPpG3SwtVI_XG1kqRYhHrAzLwhQzYsnq0eOmj39dK0adD9Hp_MpOoyB6Hnx1lbMzrqNW1oznpQJl7aXEsklGUmrajx2P-YjqJmH5VDDmhWoeDK1SuPLYGpshSrxBTiBIDOaQPO9c6qqDresS-JU3cEdhHkrrAJoBpzno8cE8c9GzYHFkD_dnmOZZiGG0P67yuaGLuCr4EzMJxFy4C9FxwZQBQnKG-You31u7Bbndfw9z331bHM6AJnRjIFGisfvVqW5d7lMTN7cnuQ19hUIu6f534_fTngdsB9SXQUf6S8kc9A4CAoZ7yk3lnPgwPe0bVcaRumZbKhzkartS_vK5zHaJBhHVyNMhwdcQEDFXdNdRH0XFXW0sYXdrRqLt4zCA0-XWbmNInSpN-nsYlVk0FS9l8sS03x2WrQDOXmYkjyLq-gHziVsZcT6RO0acSwQ5vAEvh_nJMyiQxiMlNEzetczfHNELEehgZ87n2EA4Ns0Uv1D5nm0AE9BI4h0jH4W4CchtQvzPmJAcoAuAH5RGz0ptvEvpyL3Cti8O69ssg4IfH7Cw9Y9g-WHrP5-e6re-q6mgx8vJqCtapIoxUuCqwIyKPiLMtUtCPnCjkH_KpEK16SvQCmROmLehS0OHuHkMf9nAZO1UkMD_KZfw0EdYf6N3NsNBntgHPbrnwJMQpAOXEeq9qCl6a4gxnk0072F-ITJ2k8j842hXg4KCc6-MlIjHu9LnYC5tpUEZjAfR_vFxZkchgQLgjhbdk7h6XRDTBQ_W__hvfeXg-RDDet6RS76Z_Eox9mT2tnOuJ4-Epg9jIGy1Wso5so7TZq8ot1PYu86RsRK839Yo_o8651DmzqRFBy0X0DJVVbO-4Cv78aDKsymIiPgV3KscDg7V7Q7-elLSS6nwtMpHM6FhcsEa8nUt0DGCejl3KSSwFRgpToKbN3H5e_Uc0S5-wOf75mikfDFGOfJOPE0dLZ5XhPJlDpOTf23MTMlA7R-frndrrbIdR_OzxpuF2s6taY97HFHTV9Modsad5SQCbgHvOFkWeH2hYh9eh5dW4CcmrXVhdlhsLH5ORsAMNrJiYJX8plB17cLilWVnBoIvCL5iUdR2sQTvOfsUYN0_MGaZRlz97qwYkArpOBVvJpEefcTmQkjAAcW7ER7faDOMjPMrJDmIFyR5PKlP32DazHtQlBsYgWE0mDvW1FOzP8Nb-jJuTSqGvlLXajZq9IsvU4KPCQ4MQl_gn3TwZsePjRzC4PEYwCevbuXIDXD7Kl8dwftiX-vFdsA0aMjzvBxEU6f1Capuki7lE5VMInKtp7kKNY6UeNqAdliAiWuDwp8NtpGGucEwV0SYGN3dMvs06WNvaH40llBjSJkh1HPmBbYLBbCtwzdUwdSOEamTlZy5RGIjw90LbTVXFCJsiO5V6Y3P9UkGSd8_7kqdjVtDfxdkAb4Y6pWvL8iUoRGH9JqgvEgodyyC2qYgSoVWTRTFVvQWTBi7-ElOsvhEfDvzqBMH4EgYV45AghBgkmKZZIivGQde28wv2Yx1jkvlvzinC_LyoRMJ5msYVIuouThMYlM-THtVUyjmpvMJn8yVUVrqVH_h_5dhq7l_Qr45r8RGVvv4WDcQCj0WjaH28KnzY2gq0JtCr2C_LTIAWpy0sdqZCjW2MGWGULUUWZa3Yr5wM18_U4ORA==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+          "id": "rs_038eb80c8c202359016ab2fd8c7d4c87d18340dfe0dfacc142",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 5605,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1084,
+        "completionTokensDetails": {
+          "reasoningTokens": 250
+        },
+        "totalTokens": 6689,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0027019
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

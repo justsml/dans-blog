@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d9e2ed508e21\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 70,\n    \"technicalAccuracy\": 92,\n    \"coherence\": 72,\n    \"relevance\": 95,\n    \"translationQuality\": 68,\n    \"mdxPreservation\": 82,\n    \"culturalAdaptation\": 75,\n    \"languagePurity\": 60\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"<link href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"../pagefind/pagefind-ui.js\\\"></script>\",\n      \"replacement\": \"<link href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"/pagefind/pagefind-ui.js\\\"></script>\",\n      \"reason\": \"The Pagefind asset URLs inside the code fence were altered from '/pagefind/...' to '../pagefind/...'. The parent-relative ../ rule applies to image assets in frontmatter, not to executable code content; changing these paths breaks the code example.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"## Not another Vector DB article\\n\\nHere is the decision rule I wish I had used earlier:\",\n      \"replacement\": \"## अब कोई और वेक्टर DB आर्टिकल नहीं\\n\\nयहाँ वह निर्णय नियम है जिसका उपयोग मैंने पहले करना चाहिए था:\",\n      \"reason\": \"Heading and intro line remain in English although the surrounding rule is translated; reader-facing headings and prose must be localized in Hindi.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"That is the useful line. Not \\\"serverless is the future.\\\" Not \\\"vector databases changed everything.\\\" Those sentences have already been printed on enough conference lanyards.\\n\\nAI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was \\\"run Postgres with pgvector\\\" or \\\"operate OpenSearch/Elasticsearch\\\" or \\\"buy a managed search service.\\\" Those are still good answers when the workload deserves them.\\n\\nBut many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.\",\n      \"replacement\": \"उपयोगी पंक्ति यही है। न \\\"serverless ही भविष्य है\\\" और न \\\"वेक्टर डेटाबेस ने सब बदल दिया।\\\" ये वाक्य पहले ही काफ़ी कॉन्फ़्रेंस लैनियार्ड्स पर छप चुके हैं।\\n\\nAI ने निश्चित रूप से बहुत सी सर्च समस्याओं की प्रकृति बदल दी। अचानक छोटी टीमों को सिमैंटिक सर्च, हाइब्रिड रैंकिंग, डॉक्यूमेंट चैट, मल्टीमॉडल लुकअप, और ऑब्जेक्ट स्टोरेज में पड़ी फ़ाइलों पर एनालिटिक्स चाहिए था। पुराना जवाब था \\\"pgvector के साथ Postgres चलाओ\\\", \\\"OpenSearch/Elasticsearch ऑपरेट करो\\\", या \\\"मैनेज्ड सर्च सर्विस खरीदो।\\\" जब वर्कलोड उनके लायक हो, तो ये आज भी अच्छे जवाब हैं।\\n\\nपर बहुत से वर्कलोड ऐसे नहीं हैं। वे रीड‑हेवी, पुनर्निर्माण‑योग्य हैं, और सामग्री बदलने व खोज के अपडेट होने के बीच छोटे विलंब को सहन करते हैं। दस्तावेज़ीकरण। कैटलॉग स्नैपशॉट। स्थैतिक एक्सपोर्ट। आंतरिक नॉलेज बेस। लोकल एनालिटिक्स। प्रोटोटाइप RAG सिस्टम। इनके लिए टूल्स की एक नई श्रेणी ने उस उबाऊ आर्किटेक्चर को असाधारण रूप से शक्तिशाली बना दिया है: एक इंडेक्स बनाओ, उसे फ़ाइलों के रूप में स्टोर करो, और HTTP पर सर्व करो।\",\n      \"reason\": \"Three full paragraphs of reader-facing prose are left untranslated in English; this is a large unlocalized section that breaks reader experience and violates language purity.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"### Battle of the Checkboxes\\n\\n| Feature | [Pagefind](https://pagefind.app)\",\n      \"replacement\": \"### चेकबॉक्स की तुलना\\n\\n| फीचर | [Pagefind](https://pagefind.app)\",\n      \"reason\": \"Table heading and 'Feature' header are reader-facing labels left in English; translate them while keeping product names and URLs intact.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"*September 2025 snapshot: Chroma requires a server runtime and does not support direct S3 object storage in the way the object-file tools do ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).\",\n      \"replacement\": \"*सितंबर 2025 स्नैपशॉट: Chroma को सर्वर रनटाइम की आवश्यकता है और यह ऑब्जेक्ट‑फ़ाइल टूल्स की तरह सीधे S3 ऑब्जेक्ट स्टोरेज का समर्थन नहीं करता ([issue #1736](https://github.com/chroma-core/chroma/issues/1736))।\",\n      \"reason\": \"This technical caveat footnote remains untranslated in English while the equivalent 'Snapshot note' earlier was localized; consistency and reader accessibility require translating it.\"\n    }\n  ],\n  \"rationale\": \"The candidate preserves structure, code, links, and correct image path localization well, but several large reader-facing sections (intro paragraphs, one heading, the comparison table header, a footnote) remain in English, and a code fence's asset paths were incorrectly rewritten. These leave medium/high fixes outstanding, so it is not publish-ready.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 9846,
+    "inputTokenDetails": {
+      "noCacheTokens": 9846,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2069,
+    "outputTokenDetails": {
+      "textTokens": 1926,
+      "reasoningTokens": 143
+    },
+    "totalTokens": 11915
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 9846,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2069,
+        "completionTokensDetails": {
+          "reasoningTokens": 143
+        },
+        "totalTokens": 11915,
+        "cost": 0.00622927,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00622927
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

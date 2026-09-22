@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":52,\"technicalAccuracy\":62,\"coherence\":48,\"relevance\":91,\"translationQuality\":50,\"mdxPreservation\":35,\"culturalAdaptation\":58,\"languagePurity\":51},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\\n\\nमानसिक मॉडल:\",\"replacement\":\"### (स्क्वैश) मर्ज तरीका\\n\\nमानसिक मॉडल:\",\"reason\":\"The literal chunk marker is not part of the source and would appear in the published article, breaking the document's structure.\"},{\"priority\":\"high\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"{/*\\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी किसी शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर चाहिए होते हैं—कमिट इतिहास के बिना?\\n\\n- आप `git checkout` के साथ विशेष `--` separator का उपयोग करके निर्दिष्ट फ़ाइलों को कॉपी करते हुए वर्तमान शाखा में रह सकते हैं:\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- पहले उन सभी बदलावों को कमिट करना सुनिश्चित करें जिन्हें आप रखना चाहते हैं, क्योंकि यह किसी भी स्थानीय बदलाव को ओवरराइट कर देगा।\\n*/}\",\"reason\":\"The source keeps the entire bonus tip inside an HTML comment. Here the comment closes before the instructions, making content that was hidden in the source visible in the rendered article.\"},{\"priority\":\"medium\",\"match\":\"या फिर, आपके कमिट ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं?\",\"replacement\":\"या फिर, क्या आपके कमिट ध्यान से चुनी और तराशी गई कलाकृति की तरह हैं?\",\"reason\":\"“आकृति-विहीन” means shapeless, reversing the source's image of commits as carefully sculpted works of art.\"},{\"priority\":\"medium\",\"match\":\"🙀 महत्वपूर्ण सहयोग विशेषताओं को तोड़ देता है: खोए हुए/अपनाहीन PR टिप्पणियाँ। असभ्य।\",\"replacement\":\"🙀 सहयोग की अहम सुविधाएँ टूट जाती हैं: PR टिप्पणियाँ खो जाती हैं या अनाथ हो जाती हैं। यह तो बदतमीज़ी है।\",\"reason\":\"“अपनाहीन” is not a natural or accurate translation of orphaned comments, and the current phrasing is difficult to understand.\"},{\"priority\":\"medium\",\"match\":\"- 🖇️ परमानंत लिंक्स वास्तव में इतने परमानंत नहीं रहते।\",\"replacement\":\"- 🖇️ स्थायी लिंक उतने स्थायी नहीं रह जाते।\",\"reason\":\"The current sentence contains a misspelling and an unnatural rendering of permalinks.\"},{\"priority\":\"medium\",\"match\":\"एक और वजह है कि **रीबेसिंग** एक संशोधित इतिहास बनाने में हमेशा **`git merge ...`** की तुलना में अवनत होगा।\",\"replacement\":\"एक और वजह है कि संशोधित इतिहास बनाने के लिए **रीबेसिंग** हमेशा **`git merge ...`** से कमतर होगी।\",\"reason\":\"“अवनत होगा” is an unnatural and unclear translation of “will always be at a disadvantage.”\"},{\"priority\":\"medium\",\"match\":\"- 💃 उत्तर: **एसक्वेश मर्ज** करें अपने PR को `main` में।\",\"replacement\":\"- 💃 जवाब: अपने PR को `main` में **Squash Merge** करें।\",\"reason\":\"The transliteration “एसक्वेश” is incorrect and makes the recommended Git operation hard to recognize.\"}],\"rationale\":\"The translation covers most of the article and retains code, but a stray chunk marker and a prematurely closed comment damage rendered structure. Several awkward or inaccurate Hindi phrases also need revision before publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 4842,
+    "inputTokenDetails": {
+      "noCacheTokens": 4842,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 4839
+    },
+    "outputTokens": 1207,
+    "outputTokenDetails": {
+      "textTokens": 955,
+      "reasoningTokens": 252
+    },
+    "totalTokens": 6049
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Assessing candidate comments**\n\nI'm noticing that the actual candidate has a literal marker, which is interesting. I see that the translated content has some JSX comments that are valid, but there’s a critical typo with the permalink, \"परमानंत.\" There’s also a technical inaccuracy in the conclusion where \"एक शाखा की अंतिम स्थिति\" is singular but should refer to each branch. I think I should suggest exact edits for varying severity, possibly including JSON scores.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsv2nEd80XNT1h1RPr0YnZNpuEmgkEp9uHqyb3RXwU0-Xz0SrNG9mVqrO6QfhIz5ReYijz0CkOiPQ24G1H4f9m9BjA42J0ljyM7J8oCQ7vQKb-eyHbrZ9z4xmC2nvcyBd6t2horfEs-FRgIa5F297ysrBtoycQL93CNdkgfa9t7LXNgO_ECjwbGkNE8wjkyJbjC5wGVDZyFWrDcuwPWmCuKXQgWlcIdLLeqtLEO7bSeRW4pF4rAJd04YeAWliUSa4LDp1NuFxKR4vA43h1_XhjkMBhA28XFnu2b7XUtgjSISc2CXz70wjw03Y1fLH3ivODEySSgPMXLjXloRBc9OqbYZ9uH8ra3FHNe84UM07ISO_rLtkos_x4nNa0aHle2gXbPudw2FMs9C1pVc0Ayh7SbWbksu5MttChLJ7Bj81GbhH5CRGjcKghFd5mGTXUp6RNXdzOaDEq0cC_yUo_VcB5Va0-Rh5ueffHhjIjFGPt0eAL-FbN5kCTqUxjQt_FeehToEaHrgjCBMyH0SsTsgurNf4s_ivMvkBV_U-THG-2OflKL6VtgIYnuxCVAQQ1r-rQufTYaN5YqlrUf-wspS8LSt4j2fWucsKKmmdTOJPf3DTXn3G89vyhHYtQuIZJVPRC4UauzFomy03ZUEQc4bCHem0PdhaG1hydbNUzRJNW0qkxlpnXEXhXh3yxPYmBeOMdMyj0qayswdSo_nMAU26Vlq3UZgH6ApH0jb2lpbReOsLh2B4YBwDEVFc90UaZDannWrP_QbvXQlg2CWpnohIULmB7MRK6veK5XaBsqv3x-hkz499RbgiG2ISYBfLiAKl27jCmmeQONGHXwL7eF5XsS7ZQ1Cy8TBQu87_AIh_1DsCcpgbHovU3dtlFqBKm86ESyOZn52mhqOaUldO9RWsKmiee1TZBbQv8iOurF57yJJ_9UvLzptGKshwQkXDLf1FKYdkHp4wAeX86lUuqO2enyEvwPvRgg8FH_KonYl6PLLW4IdN6omE43dnh2vdwsiCcCH0rzjO4XT7Q29i1v_-Y7Gt3pTJA-H3PLrfHJkrVbG575vcWdfvPdgKzPbK1XgulvTTu6dL-IYLNwbhaR8C9aGmYw_Y97BZKTuF_wS5cwyHkybqtchFihXorKHBbDKKepn83YEBZNboI8wImBWmfx00mOUDRix4NWhdBgE7X8taMkfgM6kZ9gyG-Iym67VVJs4_wM_Ki1clou3xzG5Yli3_O5t9zO0XQa9vw54s6YiLyaQoGBUv4nNYUOjGnQ8X4wOydwersK7_Gv0K9eRAVOKUQFXmdQZI7L3anDkUlHqA_8qWAWmpKIj3fEN6T1_Ue9J1-TJIaVuHsD35e9noSHvvWSb6PR1unHW0upo7bVJxzZWGW__olUmTjptGVBMNYxKiNicEL3E-HSouI-YNSKHyx9Ig0MRGjNE2zudngxjyXi88ecq06Swk8t40g5epFO8OjXVPjpqD30E76S_XbLW04nIjx8QJH7l0wS4-c-j-zbPsrw-4egR8oB2xgx1Ky7-ZRgdae5x3JQMZIuM92aCnxCDmtkwOGAD2qvVqIKS71sPmCRo_MnJmqD1zgSLH6mfe--c7ztIDvFer-lfmU4Gh08CRbd5G-DlI-4DkBJSjdon3T6uZv283MknnlgZvAj45pd_WgVOabYH7SM5pgjZqwRpMWFJKxACT6kj7ztAnK4NuAAH9T49QOFj7c6eZPqF0a6sdvPzlA2__I7NCI21VNeIExcZsVdpuOsig_42saw1UM7_ErJ-DfFXK-JR2BoIWuYnkvbiP-7Y1BQ0pgy2OgeZzeUhnK9txhH69pM1LPbyExdoH1ou8b7Qkf1eeUwIjS6TGSwYDsraGSOkOpQY49Mk1oxPAZ4wkPbjGO4I103PWHbui4TBJEGsGVlYBWO46F1encXSYUtSitFpZozDt36acADbdL_BRoASVC6EeHx6fFTNZy83f_ObyTPDzgi_3egO_TuYZW0trlwRCNApR0uG2_orfuYXsNEdy2Jvh01f23Cj7brNEguh7fAGSbJU9Xt7liVLDR8yvRVFS-MBbAqHR8JBGumOwwawT56YTjRBStvtVudeZLbjjCoCGuG1c1YpkQymPrcjgOVXYMJlwVLYZGN9G2zwxHZn0xGu3YTeAsdpkywGg1H9nlHlRWayV2D2GNXHlrIZI06QFpnrZCOc-d_M5PJ6uPEvXvCnXQGK0RUzd87R2HJDt7JutDLkYbwxbbswcL1iRdVS3RIRZmOtUa6B32QLMwOnfLOZSwMTTdaKOCHIM-eqGRcjzO1zaf2oFou-WGns_wIiyz4O43mb1-9dhvAxCx_mT9LctYre_qn4EMwskrNpnkk03YkSnug4wpJppeEXjy8t59km_TGlSl5nSyghF8D1-hNKmLy3LaGf6eGEunpxSRxb5IyhzEImNzVoUk-R0V8Tf3jBGDIICUQT3LCWruP7F3SnkvphrP-hRODE_InFvD3MNxhpztA0RiCK_0swN9EcJdJE5YlZw9Z8gv4ju8sZUAl1078g7NfOFSjvxxlE744BRphAkOLD7l_aZcjXu-gu_M1iMzuWEAZ9AzEyq6x3IA6PnLYpasT587o3q8xtM1dG-gmOE-jTT8YmN3CbktJPjmzhELwKGf39tHu6JCI1EYIaIFTlrgsKlYL4AzlxcxNeq-jSbuF3P7mc78g1lp49ih3bHlJQyyEGWKar2L5rLJuidA851-OOilvorV579esOz4VPzWASp6mkOnxn3SyBdld1y7uEjvLMO5ubQxHdDic0CRtLWksje4lHUXLfZwNdqpN6wPL4t1zmZge74tglNl7L0PuieDOSC_NIZPR2yHkjmzRlmDs8pwVhIpkf_WsgmE2QHc1K36_tzaXIqkccCisUj8-a5FADwLzm39bguQ3s_j-TJSPlE5DcioPeR5qBl4CJvxImXb8OtheU0FZuudNFBT-ZssafJXS3W8Y5-rsPzpcgxDy814XYGJHaRkJ6kn57kXil_VkF4LmakkuhGhHMFkrD-UPcf6dKl4_XViuz3fsGCDRffUH5N3JJQprEY0zY7V6bfqp38CLAkc-FUGi8cMzYPrFRslyfh6pwAvsyB_f-owXJswf0xOSYqX9OdUtAQb2mRY7zQsouvbq2qo8F4syyAWeo4qDEBlsPnglUMzxxYGAYjpNv9l4GvR2-re81uFni5VVDXgLds4vZS7OOPYQ==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_061968e90af200f6016ab2fda33ad087d1a98790e286355c4b",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 4842,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1207,
+        "completionTokensDetails": {
+          "reasoningTokens": 252
+        },
+        "totalTokens": 6049,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.001208675
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

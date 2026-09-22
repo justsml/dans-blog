@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":62,\"technicalAccuracy\":60,\"coherence\":68,\"relevance\":88,\"translationQuality\":58,\"mdxPreservation\":45,\"culturalAdaptation\":65,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\\n\\nमानसिक मॉडल:\",\"replacement\":\"### (स्क्वैश) मर्ज तरीका  \\n\\nमानसिक मॉडल:\",\"reason\":\"The `--- CHUNK END ---` marker is an untranslated artifact not present in the English source and would render as visible content.\"},{\"priority\":\"high\",\"match\":\"*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\\n*/}\",\"reason\":\"The English bonus section is entirely commented out. The candidate closes the MDX comment before the bullet list, causing the bonus bullets to render as live content.\"},{\"priority\":\"high\",\"match\":\"`मेन` पर\",\"replacement\":\"`main` पर\",\"reason\":\"`main` is a branch name and must remain unchanged, not localized to `मेन`.\"},{\"priority\":\"medium\",\"match\":\"**एसक्वेश मर्ज**\",\"replacement\":\"**स्क्वैश मर्ज**\",\"reason\":\"`एसक्वेश` is an incorrect transliteration of Squash; the standard Hindi rendering is `स्क्वैश`.\"},{\"priority\":\"medium\",\"match\":\"- 🦺 अपरिवर्तित। आप कभी भी पीछे जा सकते हैं और/या नई शाखाएँ बना सकते हैं।\",\"replacement\":\"- 🦺 गैर-विनाशकारी। आप कभी भी पीछे जा सकते हैं और/या नई शाखाएँ बना सकते हैं।\",\"reason\":\"`अपरिवर्तित` means unchanged, but the source says non-destructive.\"},{\"priority\":\"medium\",\"match\":\"परिचय और सर्वाइवरशिप बायास\",\"replacement\":\"परिचितता और सर्वाइवरशिप बायास\",\"reason\":\"`Familiarity` is mistranslated as `परिचय`; `परिचितता` preserves the intended meaning.\"},{\"priority\":\"medium\",\"match\":\"आकृति-विहीन कला के टुकड़े\",\"replacement\":\"तराशी हुई कलाकृति\",\"reason\":\"`sculpted work of art` is mistranslated as formless art; `तराशी हुई कलाकृति` matches the source.\"},{\"priority\":\"medium\",\"match\":\"यह तय करना कि कमिट रणनीति के आसपास कितने अलग-अलग मानसिक मॉडल हैं, इसलिए गिट का उपयोग करने का \\\"सही\\\" तरीका क्या है इस बारे में इतना भ्रम होना अजीब नहीं है।\",\"replacement\":\"यह देखते हुए कि कमिट रणनीति के आसपास बहुत अलग-अलग मानसिकताएँ हैं, इसमें आश्चर्य नहीं कि गिट का उपयोग करने का \\\"सही\\\" तरीका क्या है, इस बारे में इतना भ्रम है।\",\"reason\":\"The candidate changes the meaning from 'given that there are very different mindsets' to 'deciding how many different mental models there are'.\"},{\"priority\":\"medium\",\"match\":\"मैंने 16 मर्ज के बाद एक गलती की है\",\"replacement\":\"मैंने 16 मर्ज पहले एक गलती की है\",\"reason\":\"`16 merges ago` means 16 merges earlier, not after 16 merges.\"},{\"priority\":\"medium\",\"match\":\"![मेन ब्रांच से गिट टैग रिलीज करना, जिसमें 2 फीचर ब्रांच हैं](../git-branching-with-main-simplified.svg)\",\"replacement\":\"![main ब्रांच से गिट टैग रिलीज करना, जिसमें 2 फीचर ब्रांच हैं](../git-branching-with-main-simplified.svg)\",\"reason\":\"The branch name `main` should remain unchanged in alt text as well.\"}],\"rationale\":\"The translation is broadly understandable and preserves most structure, but it has high-priority MDX defects: an inserted `--- CHUNK END ---` artifact and a broken comment around the bonus section that makes commented-out content render. It also localizes the branch name `main` and contains several meaning-level mistranslations. Publish readiness is false until these are fixed.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 6415,
+    "inputTokenDetails": {
+      "noCacheTokens": 6031,
+      "cacheReadTokens": 384,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 10273,
+    "outputTokenDetails": {
+      "textTokens": 1488,
+      "reasoningTokens": 8785
+    },
+    "totalTokens": 16688
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Together",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 6415,
+        "promptTokensDetails": {
+          "cachedTokens": 384
+        },
+        "completionTokens": 10273,
+        "completionTokensDetails": {
+          "reasoningTokens": 8785
+        },
+        "totalTokens": 16688,
+        "cost": 0.014139204,
+        "costDetails": {
+          "upstreamInferenceCost": 0.014139204
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

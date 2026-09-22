@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"9e718f4fdf81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 58,\n    \"technicalAccuracy\": 85,\n    \"coherence\": 83,\n    \"relevance\": 96,\n    \"translationQuality\": 65,\n    \"mdxPreservation\": 79,\n    \"culturalAdaptation\": 62,\n    \"languagePurity\": 57\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"language: English\",\n      \"replacement\": \"language: Hindi\",\n      \"reason\": \"The localized article is incorrectly labeled as English in its frontmatter.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"`SingleResponsibility Principle`\",\n      \"replacement\": \"`Single Responsibility Principle`\",\n      \"reason\": \"The name of the technical principle must retain its spaces.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"##II. Over-Abstraction: When Simplicity Turns to Chaos\\n\\n> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\n      \"replacement\": \"## II. अति-अमूर्तीकरण: जब सरलता अव्यवस्था बन जाती है\\n\\n> हमारे आर्किटेक्ट का ज़ोर है कि पाँच पंक्तियों से लंबा हर फ़ंक्शन 'कोड स्मेल' है। अब हमारे कोडबेस से नासमझ हताशा की हल्की-सी बू आती है।\",\n      \"reason\": \"The missing space breaks the Markdown heading, and the heading and reader-facing quotation remain untranslated.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"subTitle: इतना शुद्ध किदर्द देता है\",\n      \"replacement\": \"subTitle: इतनी शुद्धता कि दर्द हो\",\n      \"reason\": \"The subtitle contains a joined-word typo and reads unnaturally.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"समस्या यह है कि “छोटा” को “संगत” का विकल्प मान लिया गया है।\",\n      \"replacement\": \"समस्या यह है कि “छोटे आकार” को “आपसी जुड़ाव” का विकल्प मान लिया गया है।\",\n      \"reason\": \"Here, 'cohesive' means that related code belongs together; 'संगत' does not convey that distinction clearly.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"**फ़ाइल‑सिस्टम शरापें:**\",\n      \"replacement\": \"**फ़ाइल-सिस्टम के छर्रे:**\",\n      \"reason\": \"The current heading contains a conspicuous mistranslation or typo that obscures the shrapnel metaphor.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"एक बार आयात की गई फ़ाइलें वहाँ रह‑जाहिर पुन: उपयोग योग्य दिखती हैं।\",\n      \"replacement\": \"ठीक एक जगह आयात की जाने वाली फ़ाइलें भी वहाँ ऐसे पड़ी रहती हैं मानो उनका दोबारा उपयोग होना हो।\",\n      \"reason\": \"The current sentence is difficult to parse and obscures the point that these files have only one importer.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"टेस्ट सूट सुरक्षा जाल से एक खनन‑क्षेत्र में बदल जाता है।\",\n      \"replacement\": \"टेस्ट सूट सुरक्षा जाल के बजाय बारूदी सुरंगों का मैदान बन जाता है।\",\n      \"reason\": \"A 'minefield' is a field of explosive mines, not a mining area.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"कौन‑सी व्यवस्था कोड पर काम करने के लिए आवश्यक मानसिक जुगलबंदी को न्यूनतम करती है?\",\n      \"replacement\": \"कोड पर काम करते समय किस तरह की व्यवस्था डेवलपर को सबसे कम चीज़ें एक साथ दिमाग में रखने पर मजबूर करती है?\",\n      \"reason\": \"The replacement makes the cognitive-load point clearer and more natural in Hindi.\"\n    }\n  ],\n  \"rationale\": \"The candidate preserves most of the article's meaning, structure, code identifiers, and required parent-relative asset paths. It is not ready to publish because the locale metadata is wrong, a technical name is altered, one heading does not render as a heading, reader-facing English remains, and several Hindi passages contain noticeable language or meaning defects.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 5605,
+    "inputTokenDetails": {
+      "noCacheTokens": 5605,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5602
+    },
+    "outputTokens": 969,
+    "outputTokenDetails": {
+      "textTokens": 969,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 6574
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5605,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 969,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 6574,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.023701
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

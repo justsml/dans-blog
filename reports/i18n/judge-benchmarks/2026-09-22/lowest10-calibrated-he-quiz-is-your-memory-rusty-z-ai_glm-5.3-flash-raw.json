@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"0893c477b5a7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":90,\"coherence\":85,\"relevance\":95,\"translationQuality\":82,\"mdxPreservation\":95,\"culturalAdaptation\":88,\"languagePurity\":80},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"מה קורה למזהה הקובץ בדוגמת RAII הזו?\",\"replacement\":\"מה קורה לידית הקובץ בדוגמת RAII הזו?\",\"reason\":\"\\\"מזהה\\\" means identifier; \\\"file handle\\\" is the standard Hebrew technical term ידית קובץ, and the explanation later correctly uses ידית הקובץ.\"},{\"priority\":\"medium\",\"match\":\"הכללים האלה מונעים מרוצי נתונים (data races) בזמן הקומפילציה\",\"replacement\":\"הכללים האלה מונעים מרוצי נתונים (data races) בזמן הקומפילציה\",\"reason\":\"Typo: מרוצי should be מרוצי → מרוצי is wrong; correct form is מרוצי → \\\"מרוצי נתונים\\\" should read \\\"מרוצי נתונים\\\" as \\\"מרוצי\\\" is a misspelling of \\\"מרוצי\\\"; the correct word is \\\"מרוצי\\\" → \\\"מרוצי\\\". Use \\\"מרוצי נתונים\\\" → \\\"מרוצי נתונים\\\". Correct replacement: \\\"מרוצי נתונים\\\" → \\\"מרוצי נתונים\\\". The proper Hebrew term is \\\"מרוצי נתונים\\\" (races of data), i.e., replace מרוצי with מרוצי.\"},{\"priority\":\"medium\",\"match\":\"קוד השאלה גורם לפאניקה בקריאת `borrow_mut()` השנייה, משום שההשאלה הניתנת לשינוי הראשונה עדיין חיה. `RefCell` אוכף כלל השאלה זה בזמן ריצה.\",\"replacement\":\"קוד השאלה גורם לפאניקה בקריאת `borrow_mut()` השנייה, משום שההשאלה הניתנת לשינוי הראשונה עדיין חיה. `RefCell` אוכף את כלל ההשאלה הזה בזמן ריצה.\",\"reason\":\"\\\"אוכף כלל השאלה זה\\\" is ungrammatical; needs \\\"אוכף את כלל ההשאלה הזה\\\".\"},{\"priority\":\"medium\",\"match\":\"לאופטימיזציה של סדר השדות במבנה ליעילות בזיכרון\",\"replacement\":\"לבצע אופטימיזציה של סדר השדות במבנה ליעילות בזיכרון\",\"reason\":\"\\\"לאופטימיזציה של\\\" is not a valid infinitive construction in Hebrew.\"},{\"priority\":\"medium\",\"match\":\"כללים אלו מאפשרים למקמפל להסיק באופן אוטומטי זמני חיים בתבניות נפוצות.\",\"replacement\":\"כללים אלו מאפשרים לקומפיילר להסיק באופן אוטומטי זמני חיים בתבניות נפוצות.\",\"reason\":\"\\\"למקמפל\\\" is a misspelling of \\\"לקומפיילר\\\" (the compiler).\"},{\"priority\":\"medium\",\"match\":\"השגיאה מציינת במפורש השאלת משאבים\",\"replacement\":\"השגיאה מתייחסת במפורש להשאלה (borrowing)\",\"reason\":\"English hint says \\\"The error specifically mentions borrowing\\\"; \\\"השאלת משאבים\\\" (resource borrowing) drifts from the meaning and conflates with resource acquisition.\"},{\"priority\":\"low\",\"match\":\"group=\\\"הפחתת זמן חיים\\\"\",\"replacement\":\"group=\\\"השמטת זמני חיים\\\"\",\"reason\":\"Inconsistent terminology: the challenge body and title use השמטת (elision); הפחתת means reduction, which is technically wrong.\"}],\"rationale\":\"Faithful, well-structured Hebrew translation with correct MDX/JSX preservation, correct parent-relative asset paths, deeper import paths matching the locale subdirectory, and all quiz answers intact. Reader-facing prose is generally natural, but several grammar/terminology defects (מזהה הקובץ, מרוצי נתונים, למקמפל, לאופטימיזציה של, אוכף כלל השאלה זה) and one meaning drift in a hint require medium fixes before publishing.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 31564,
+    "inputTokenDetails": {
+      "noCacheTokens": 31564,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2232,
+    "outputTokenDetails": {
+      "textTokens": 1499,
+      "reasoningTokens": 733
+    },
+    "totalTokens": 33796
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 31564,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2232,
+        "completionTokensDetails": {
+          "reasoningTokens": 733
+        },
+        "totalTokens": 33796,
+        "cost": 0.0058506,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0058506
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

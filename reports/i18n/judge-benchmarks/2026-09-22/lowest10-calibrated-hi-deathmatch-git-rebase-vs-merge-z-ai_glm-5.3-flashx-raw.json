@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":78,\"coherence\":75,\"relevance\":90,\"translationQuality\":72,\"mdxPreservation\":65,\"culturalAdaptation\":75,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\",\"replacement\":\"\",\"reason\":\"Internal chunking marker leaked into the published MDX body and must be removed.\"},{\"priority\":\"high\",\"match\":\"कभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\"replacement\":\"कभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\"reason\":\"The HTML comment around the Bonus section was converted to a JSX comment block that closes mid-section, leaving the following bullets (git checkout tip) uncommented and visible in the published post even though they belong inside the commented-out section.\"},{\"priority\":\"medium\",\"match\":\"`मेन` पर कुछ हालिया कमिट्स को छोड़कर\",\"replacement\":\"`main` पर कुछ हालिया कमिट्स को छोड़कर\",\"reason\":\"Branch name `main` is code-adjacent and must be preserved, not transliterated.\"},{\"priority\":\"medium\",\"match\":\"**एसक्वेश मर्ज** करें अपने PR को `main` में।\",\"replacement\":\"**स्क्वैश मर्ज** करें अपने PR को `main` में।\",\"reason\":\"Typo 'एसक्वेश' miswrites 'squash' and breaks consistency with '(स्क्वैश) मर्ज तरीका' elsewhere.\"},{\"priority\":\"medium\",\"match\":\"खोए हुए/अपनाहीन PR टिप्पणियाँ\",\"replacement\":\"खोई हुई/अनाथ PR टिप्पणियाँ\",\"reason\":\"'अपनाहीन' is not a valid Hindi word; correct term is 'अनाथ' (orphaned).\"},{\"priority\":\"medium\",\"match\":\"\\\"सुसज्जित कला\\\" माइंडसेट की तुलना में\",\"replacement\":\"\\\"तराशी हुई कला\\\" माइंडसेट की तुलना में\",\"reason\":\"'सुसज्जित' means 'equipped/furnished', mistranslating 'sculpted art' mindset; earlier body also says 'आकृति-विहीन' which should be aligned to 'तराशी हुई कला'.\"},{\"priority\":\"medium\",\"match\":\"**रीबेसिंग** एक संशोधित इतिहास बनाने में हमेशा **`git merge ...`** की तुलना में अवनत होगा।\",\"replacement\":\"**रीबेसिंग** एक संशोधित इतिहास बनाने में हमेशा **`git merge ...`** की तुलना में कमज़ोर स्थिति में रहेगा।\",\"reason\":\"'अवनत' is an unnatural/archaic choice here; the source means 'will always be at a disadvantage'.\"}],\"rationale\":\"Translation is largely faithful and code/commands are preserved, but a leaked chunk marker, a broken comment block that publishes hidden content, transliterated branch name, and several Hindi typos/mistranslations need fixes before publishing.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 8077,
+    "inputTokenDetails": {
+      "noCacheTokens": 7629,
+      "cacheReadTokens": 448,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1414,
+    "outputTokenDetails": {
+      "textTokens": 1129,
+      "reasoningTokens": 285
+    },
+    "totalTokens": 9491
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 8077,
+        "promptTokensDetails": {
+          "cachedTokens": 448
+        },
+        "completionTokens": 1414,
+        "completionTokensDetails": {
+          "reasoningTokens": 285
+        },
+        "totalTokens": 9491,
+        "cost": 0.00462383,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00462383
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

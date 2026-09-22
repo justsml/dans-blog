@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"e46961b699c2\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 53,\n    \"technicalAccuracy\": 68,\n    \"coherence\": 58,\n    \"relevance\": 89,\n    \"translationQuality\": 55,\n    \"mdxPreservation\": 35,\n    \"culturalAdaptation\": 50,\n    \"languagePurity\": 61\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\",\n      \"replacement\": \"### (स्क्वैश) मर्ज तरीका\",\n      \"reason\": \"The leaked chunk marker and horizontal rule render as unintended article content and disrupt the section structure.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\n      \"replacement\": \"{/*\\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी किसी शाखा से कमिट इतिहास के बिना सिर्फ़ एक फ़ाइल या कुछ फ़ोल्डर चाहिए होते हैं?\\n\\n- निर्दिष्ट फ़ाइलों को कॉपी करते समय वर्तमान शाखा में बने रहने के लिए `git checkout` के साथ विशेष `--` विभाजक का उपयोग करें।\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- पहले वे सभी बदलाव कमिट कर लें जिन्हें आप रखना चाहते हैं, क्योंकि यह कमांड स्थानीय बदलावों को ओवरराइट कर देगी।\\n*/}\",\n      \"reason\": \"The source keeps the entire bonus section commented out. The candidate closes the comment early, exposing three bullets that should not render.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"`मेन` पर कुछ हालिया कमिट्स\",\n      \"replacement\": \"`main` पर कुछ हालिया कमिट्स\",\n      \"reason\": \"The branch name is a literal technical identifier and must not be translated.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"या फिर, आपके कमिट ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं?\",\n      \"replacement\": \"या फिर, आपके कमिट ध्यान से चुने और तराशे हुए कलात्मक काम हैं?\",\n      \"reason\": \"The source describes carefully curated, sculpted commits; 'आकृति-विहीन' means shapeless and reverses that meaning.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"🦺 अपरिवर्तित। आप कभी भी पीछे जा सकते हैं और/या नई शाखाएँ बना सकते हैं।\",\n      \"replacement\": \"🦺 गैर-विनाशकारी। आप कभी भी पीछे जा सकते हैं और/या नई शाखाएँ बना सकते हैं।\",\n      \"reason\": \"The technical claim is that the merge approach is non-destructive, not that nothing changes.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"झगड़ा और `--continue`\",\n      \"replacement\": \"कॉन्फ़्लिक्ट और `--continue`\",\n      \"reason\": \"This phrase appears twice. 'झगड़ा' sounds like a personal quarrel rather than a Git merge conflict.\"\n    }\n  ],\n  \"rationale\": \"The candidate retains most commands, assets, and the article’s overall argument, but leaked text and an incorrectly closed comment change the rendered MDX. Several translations also distort technical meaning or read unnaturally.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 4842,
+    "inputTokenDetails": {
+      "noCacheTokens": 4842,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 4839
+    },
+    "outputTokens": 900,
+    "outputTokenDetails": {
+      "textTokens": 900,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5742
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 4842,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 900,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5742,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0211035
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

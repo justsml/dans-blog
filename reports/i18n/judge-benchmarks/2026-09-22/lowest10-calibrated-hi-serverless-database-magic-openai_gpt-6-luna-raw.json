@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"d9e2ed508e21\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":63,\"technicalAccuracy\":82,\"coherence\":70,\"relevance\":94,\"translationQuality\":56,\"mdxPreservation\":78,\"culturalAdaptation\":70,\"languagePurity\":43},\"suggestions\":[{\"priority\":\"high\",\"match\":\"That is the useful line. Not \\\"serverless is the future.\\\" Not \\\"vector databases changed everything.\\\" Those sentences have already been printed on enough conference lanyards.\",\"replacement\":\"यही उपयोगी कसौटी है। न कि “सर्वरलेस ही भविष्य है,” और न ही “वेक्टर डेटाबेस ने सब कुछ बदल दिया।” ये वाक्य पहले ही इतने कॉन्फ़्रेंस लैनयार्ड पर छप चुके हैं कि अब और जगह नहीं बची।\",\"reason\":\"यह पूरा पाठक-सामने का अनुच्छेद अंग्रेज़ी में रह गया है, जिससे हिंदी अनुवाद में भाषा की निरंतरता टूटती है।\"},{\"priority\":\"high\",\"match\":\"AI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was \\\"run Postgres with pgvector\\\" or \\\"operate OpenSearch/Elasticsearch\\\" or \\\"buy a managed search service.\\\" Those are still good answers when the workload deserves them.\",\"replacement\":\"AI ने कई सर्च समस्याओं का स्वरूप ज़रूर बदला। अचानक छोटी टीमों को ऑब्जेक्ट स्टोरेज में रखी फ़ाइलों पर सिमैंटिक सर्च, हाइब्रिड रैंकिंग, दस्तावेज़ों से चैट, मल्टीमॉडल खोज और एनालिटिक्स चाहिए थे। पुराने जवाब थे: “pgvector के साथ Postgres चलाएँ,” “OpenSearch/Elasticsearch संचालित करें,” या “मैनेज्ड सर्च सेवा खरीदें।” जब वर्कलोड इसकी माँग करता है, तब ये अब भी अच्छे विकल्प हैं।\",\"reason\":\"पूरा अनुच्छेद अंग्रेज़ी में है; यह लेख के मुख्य तर्क और तकनीकी संदर्भ को पाठकों के लिए दुर्गम छोड़ता है।\"},{\"priority\":\"high\",\"match\":\"But many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.\",\"replacement\":\"लेकिन कई वर्कलोड ऐसे नहीं होते। उनमें पढ़ना ज़्यादा होता है, डेटा को फिर से बनाया जा सकता है, और सामग्री बदलने के बाद सर्च अपडेट होने तक थोड़ी देरी स्वीकार्य होती है। जैसे: दस्तावेज़, कैटलॉग स्नैपशॉट, स्टैटिक एक्सपोर्ट, आंतरिक नॉलेज बेस, लोकल एनालिटिक्स और शुरुआती RAG सिस्टम। इनके लिए टूल्स की एक नई श्रेणी ने साधारण आर्किटेक्चर को असाधारण रूप से शक्तिशाली बना दिया है: इंडेक्स बनाएँ, उसे फ़ाइलों में रखें और HTTP पर उपलब्ध कराएँ।\",\"reason\":\"यह पूरा अनुच्छेद अंग्रेज़ी में छूटा है और लेख के समाधान की व्याख्या करता है; इसे अनूदित करना आवश्यक है।\"},{\"priority\":\"medium\",\"match\":\"<link href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"../pagefind/pagefind-ui.js\\\"></script>\",\"replacement\":\"<link href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"/pagefind/pagefind-ui.js\\\"></script>\",\"reason\":\"उदाहरण के मूल absolute URLs को ../ में बदलने से पेज की लोकेशन के अनुसार गलत Pagefind संसाधन पथ बन सकता है; कोड उदाहरण का व्यवहार स्रोत जैसा रखें।\"},{\"priority\":\"medium\",\"match\":\"### Battle of the Checkboxes\",\"replacement\":\"### फ़ीचर तुलना\",\"reason\":\"यह पाठक-सामने का शीर्षक अंग्रेज़ी में है, जबकि आसपास की सामग्री हिंदी में है; स्थानीयकृत शीर्षक भाषा की निरंतरता और पठनीयता बेहतर करेगा।\"},{\"priority\":\"medium\",\"match\":\"| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |\",\"replacement\":\"| फ़ीचर | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |\",\"reason\":\"तुलना तालिका के शीर्षक और सेल-लेबल अंग्रेज़ी में ही हैं; हिंदी पाठकों के लिए इन्हें स्थानीयकृत करना चाहिए, जबकि तकनीकी नाम और मान यथावत रहें।\"}],\"rationale\":\"कई अनुच्छेद और तुलना तालिका का पाठ अंग्रेज़ी में जस का तस है, इसलिए भाषा-गुणवत्ता और प्रकाशन-तत्परता कम हैं। अधिकांश हिंदी अंश अर्थ के अनुरूप हैं और कोड संरचना सुरक्षित है, लेकिन Pagefind उदाहरण में मूल absolute URL बदल गया है।\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 6947,
+    "inputTokenDetails": {
+      "noCacheTokens": 6947,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 6944
+    },
+    "outputTokens": 1509,
+    "outputTokenDetails": {
+      "textTokens": 1193,
+      "reasoningTokens": 316
+    },
+    "totalTokens": 8456
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Considering suggestions for text replacement**\n\nI’m thinking about how to approach exact string replacements without overhauling large passages. I want to make focused fixes for the English paragraphs while perhaps including some Hindi notes. It seems acceptable to use English for reader-facing labels in a table, while translations can be expected elsewhere. I need to come up with 3-4 specific suggestions and ensure the code-adjacent comments are retained properly, as well as address any mismatches in paths and headings.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsvvztLHIXWSCNSysmzf4N6swfRgxCSB_lq4aEki8OH1p2g8nJd-aWRLybnkm2AUiQ0mzgjFTKfpz54NKQguPgZ-m6FoubuTxihLWzetkP_negtlguI3sBIspFTNsDMWCMYxj70tuSNwgnExr5cLZKs75MtSuUvFHcVBc_e_ige-knZPOjv3cece6LkCKbC4hlvnAONvMNZUHmdCBeyw7XSyAt01alkY71r1iPmMeIWPOik6uXqWkyr_XT0EG8hNx4AHqIWItwi4j7G74Qs9t1_3g9x52ztZ5BWG5JeNV5nEIpg-UKrIQcNaQ1thtclsdxKVXnH7T85Qg65OdZe8M4XvmTus8oca_DpVsBImixIIrxhF8WL227pVyPl9v71J2Pe9lJLCOvx4O3gCE2hE0ERk3RcSjpj5xyih6il87piyDWSKR8QH9pIy1JXaDxth3eoJrCEImw3IiD53-3dNOv_UdmRDX8NfKK1DwGX-9DsFZtU_bb7ZgZX55VWAv4qqbTVRvBdHDUjeUBl2RcwZzy_UDot7iM7utWjjB5icpD9ISbXVb6xorZkXnYgK_3bVCeVWK4u6vHgqrTSXCw07H1j4Zu52F4wwxUjTlv3iAuqu2drQ5dzhw3eROXCYdUT1m_eTxgQMMRAoblmpERGQTu6Bu3VcsFFp4HL80Jm3sAFrCsW91Q3qws7b7EdLvCwJ7NxTQ1lfn6gku_TKngEvUujDIXHdn0VSdhoKyIs1LOk2o5vRcATHIoAwlOl-7l_GG3mwrK2j29IFp1vanz7PjMOppBk5QRIzjGFYskhOGAGrt4lIwzUSYG0Ggv6GWT4dyNZkTuR1t_Wbd1LozU2xjkJvLuplYnD1be2-4VHeCoUMeIwM5rOuBsCA4aq8T8HQB7SwiELmG2jjfrpKqbFeiDZN2zvH6Zv6pEoK1wFY_t8VqvLTUthQkuUqUlrGBQEIdCDR64DcCt-2WGLfrlXfe-ZnoZZF7yMnV9r74ysiFUPKSUP_5QdaAVDocTDEQsSkgA__R5frGBFDAEUDB4jFGnoPNdJ6BMwEY7be40QvGvDP3XJwropeffbL_9c2m-KtubJ6D8P-qA5OinPF4kkhupdo_bX8BcGQoii2gsPmhCB82v2VTNtvnvj1jeRu6IMlwCr6ivMO5-1yf84pmEelW4ANUGyQvu9zLPuybKiwicnhcqLWJ6FcJKDhB0CRJBnkbYevLKmmZljnJmiA3fypiUT4XA9eGeJCi_ZmRMTZgpeWuWM0Z7L4G5BqXtz2snVjCyv1do1PqHXmpdgNefzEdtl-TGKnWW31blHMw8q5m3SZ21eAstB6KgR8ACXd7CW2YJVAEKrgh6M_CONU-CAgwc4cZbwG6CUy8zbyGmuVkmm2_bCkOS5PFnR_2V9_-eSB7zPEGfooTZLioLVKjS6b6GBYHUFErC0-mvTewHpby4RRN11wk_gvRxtVmZtAwqa6jwcp10M_Mpy2JfE79JJJVHRUESXDBDnwP04tnFwuAvMD3WcbVN2zIjVrAMwNe-NfOx8bdD6HqPM7mAFSTh_ygeOArwK1nCExoFv9O6hNWDgQRNmaByhNDW5-pTd6lZ3nFz7RMvS1BERKj9qM3lmwHB6ay1Q8U5eu1YsCrYxRmbhuftxoOo1ITbIFQx7BDRLCW4IiqiW8nvvObOQ55zlUMg2UmJgyT8bJQ8YS5CfGSIzUhh9oLSZ1UBwATlM-puneqns2HzGIaRSoHK-aceDWz2utREYrVgMwLs19odg-5DitaK9X7knNiMO0Hbdny0AJ93dJGVKGUb6CKvocGClmbzq16jkK_z8y1bY42SX9pBeL-Nx7qE7fMdoWGsMjW--0EhX-tJw9CFCZK0NB50cejMx3-_S8IYB939-4p8PnL-EQ8PkygS5TwfsyWsQeVrTvoXxS92lOvLPvcE5dcW0ZqBiEtl7SKqQeVxfPmZF9-tf5PqAISbLPhHg7JCgwODzOJztmkNJRWbCHJ27Ay2Q3IgZ5r_CHuRcBDhlO-F8u17AnxHUS84weSgK8O7FevcZaBGuNdPVf7taAq2xh1Adq2zGL9fQ25Z3Gn8C-qA1ewV-czG-hjoRtDRaetHwClQPvn-bbalhoTGN7LdyPZvWqtggGQNvSrUHiS3xzdNpabtfTkJvupDkObXxHiVFBv4k_VuKfNzGnBjQNQYLhshdii_dTc97gmPI8AcjkQFNPmseYM5QWorapOU7nwykgh-vrwJ5SjX8xO3kpT9OY6O3ud9mkX-MjPs6f7cT2s6j4an8O-jqtbTngYL0SnVKMVbuu5f7db0jDp1d_FBVsc5jQVmiuQ4TwZ8k4SPQZslQysHpaO2iEnav6ENmpLbc68cqdCq9UsNLD9RnZ_IBveMhAYbXkQHhDi1Akx-zojTNJkq71HhKymLle6uRa9wihhIYL_PMU1tEhG8yQ2g8eTRpDeff3HW597Vo6_UYqs2Ko5iBDEaP8XKg1HftjkF4mqqj21XBtSRl9I8YwNR5ACqa4uNH7j9ZF1flUXgt3rF03ayGnXJKedtOH3Cz_7iW2nR-oBEeEIZxc7QbUiqBVMMhC6wgAtO_-1qmIRMFdwIMHPB-aRu8UXNcB1CgYVC_rUalsKSC5j9QiGThRudT9Hp5LkDTasL0dcWS_QROe37uYzpikcdXUDWMeDN8r2kDdC7-y4c7zK3HyNvy3ekN96kIEdbBQNKdvajg1RraaYRZqTJKlnB9LlH8MLtXjlRvA7jf8J5KbLSaUtBPZb1-DjyVm3TixArDsRtKGDkoPNCxPIT6CR73XwzZFA8uumuFQWSGQ0Iiw8Slx7RKZnu97WH0bd0HiABEvfP5kd8FX7MdgL__QFvd7iYH7cX4LZyZ-Ty0uR4WXUCjiMa5mGdpvsj0UdkbHiL0tKUUSy3GA0gB2xN5JSPmLsPN-vtjwDzJMT4uVmg9e_zb1CLO-eZuH_x0VvkZ4VrbxFGp994kAupXOm6i6AQVtnqhAJXFUSfIAhzxjxMzm0AXn80VWabORnhrXSaRz0Dlo9pRGbYiBMvwXgzFLTYqEEnAoGc2PRoPQGg-DLCtx5aqta8CearWOlqx8IbX9itPapFPsabVWJEhaG02-pZBgCQubRwjCIIpSMJPQHQGdL3N5GW6W0OvsFzDIC9_aHnvVtn-C4N1DMn1bEi6FrP4XkrHJrJx1cgFLb3tzOvH-eiPT2iSeEhUFYMFpzrkcKIUjfvXFlhBQgV4dTIinByrgAXVgVShQPNt0JzS227gvY3uXu1Z9Qe33PsuGfXI0x5c1L1wJlvwSwmY25V6x2on28kenyybOj2SfoEvvuf7ocqYw6CBD2gzVZENWp606opCLL1WzV1xiccZdcYH1gkq_4wHJuAL_mDN2fM-pNHIJB-toMNL2ftUJTgCiUxe6K-Te9nRRBKvLJfR2jzmfQ_fXIj0wcR_622ZmZqRwDBNl8g0eEaI6IwqL-Ot0D3pmG9TaH1ksWAlW-TxNSBXE7To42vUAjPGEJJThyzKKh37uXm_akLEuRFbLIKePh11Zz_3Kh2WuakqvxCTMDdSt2lbsuC4VpL-9VwYK7AEA58tpUoOKqqaWzJipgThBZJny2Ma_sK-uAURm0w2iE8v9wAlQFaLPGmFUzMyr4LSvu84bOzK_p7z8c4wVGuUnovGOf1g==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_0586aea2e5b756fa016ab2fbef2ddc87d192d919acc22c67fe",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 6947,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1509,
+        "completionTokensDetails": {
+          "reasoningTokens": 316
+        },
+        "totalTokens": 8456,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0016228
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

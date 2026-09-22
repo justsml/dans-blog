@@ -23,7 +23,10 @@ export function benchmarkReasoningEffort(requested: string, model: { reasoning?:
 export function defaultBenchmarkEffort(model: string) {
   return ['openai/gpt-6-astra', 'openai/gpt-6-sol'].includes(model) ? 'lowest' : 'low';
 }
-type Fixture = { id: string; locale: ActiveLocale; source: string; target: string; expectedReady?: boolean; split: "calibration" | "heldout" | "corpus"; defect?: string };
+export function isOutputLimitFailure(row: { ok: boolean; error?: string; captured?: { finishReason?: string } }) {
+  return !row.ok && (/hit maxOutputTokens=/.test(row.error ?? '') || ['length', 'max_tokens'].includes(row.captured?.finishReason ?? ''));
+}
+type Fixture = { id: string; locale: ActiveLocale; source: string; target: string; expectedReady?: boolean; split: "calibration" | "heldout" | "corpus" | "lowest-scoring"; defect?: string };
 const arg = (name: string, fallback: string) => { const i = process.argv.indexOf(`--${name}`); return i < 0 ? fallback : process.argv[i + 1]!; };
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
 
@@ -64,20 +67,35 @@ async function main() {
   const out = arg('out', `reports/i18n/judge-benchmarks/${new Date().toISOString().replaceAll(':', '-')}`);
   const phase = arg('phase', 'baseline');
   const cohort = arg('cohort', phase);
-  const models = arg('models', JUDGE_BENCHMARK_MODELS.join(',')).split(',');
+  const retryLimitsOf = arg('retry-limits-of', '');
+  const retryRows = retryLimitsOf ? readFileSync(join(out, 'results.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line)).filter(row => row.phase === retryLimitsOf && isOutputLimitFailure(row)) : undefined;
+  if (retryRows && !retryRows.length) throw new Error(`No output-limit failures in ${retryLimitsOf}`);
+  const models: string[] = retryRows ? [...new Set<string>(retryRows.map(row => row.model))] : arg('models', JUDGE_BENCHMARK_MODELS.join(',')).split(',');
   const effort = arg('effort', 'default');
   const maxOutputTokens = Number(arg('max-output-tokens', '16000'));
   if (!Number.isSafeInteger(maxOutputTokens) || maxOutputTokens <= 0) throw new Error('max-output-tokens must be a positive integer');
   const tuningPath = arg('tuning', '');
   const tuning: JudgePromptTuning | undefined = tuningPath ? JSON.parse(readFileSync(tuningPath, 'utf8')) : undefined;
   mkdirSync(out, { recursive: true });
-  const fixturesPath = join(out, 'fixtures.json');
+  const customFixturesPath = arg('fixtures', '');
+  const fixturesPath = customFixturesPath || join(out, 'fixtures.json');
   let cases: Fixture[];
-  try { cases = JSON.parse(readFileSync(fixturesPath, 'utf8')); } catch { cases = fixtures(); writeFileSync(fixturesPath, JSON.stringify(cases, null, 2)); }
+  if (customFixturesPath) cases = JSON.parse(readFileSync(fixturesPath, 'utf8'));
+  else {
+    try { cases = JSON.parse(readFileSync(fixturesPath, 'utf8')); } catch { cases = fixtures(); writeFileSync(fixturesPath, JSON.stringify(cases, null, 2)); }
+  }
   const split = arg('split', phase === 'baseline' ? 'calibration,corpus' : 'calibration');
   cases = cases.filter(c => split.split(',').includes(c.split));
   const fixtureId = arg('fixture', '');
   if (fixtureId) cases = cases.filter(c => c.id === fixtureId);
+  if (retryRows) {
+    const retryManifest = JSON.parse(readFileSync(join(out, `${retryLimitsOf}-manifest.json`), 'utf8'));
+    if (retryManifest.fixtureHash !== hash(readFileSync(fixturesPath, 'utf8'))) throw new Error('Retry fixtures differ from original phase');
+    if (JSON.stringify(retryManifest.tuning) !== JSON.stringify(tuning)) throw new Error('Retry tuning differs from original phase');
+    const retryIds = new Set(retryRows.map(row => row.fixture));
+    cases = cases.filter(c => retryIds.has(c.id));
+    if (cases.length !== retryIds.size) throw new Error('Retry split omits a failed fixture');
+  }
   if (!cases.length) throw new Error('No fixtures match the requested split and fixture');
   const savedCatalogPath = join(out, 'catalog.json');
   const catalogPath = arg('catalog', await Bun.file(savedCatalogPath).exists() ? savedCatalogPath : '');
@@ -89,6 +107,7 @@ async function main() {
   })();
   for (const model of models) if (!catalog.models.some((m: any) => m.id === model)) throw new Error(`Model unavailable: ${model}`);
   const effortByModel = Object.fromEntries(models.map(model => [model, benchmarkReasoningEffort(effort === 'default' ? defaultBenchmarkEffort(model) : effort, catalog.models.find((m: any) => m.id === model))]));
+  if (retryRows?.some(row => row.effort !== effortByModel[row.model])) throw new Error('Retry reasoning differs from original phase');
   const manifestPath = join(out, `${phase}-manifest.json`);
   if (await Bun.file(manifestPath).exists()) throw new Error(`Phase already exists: ${phase}`);
   writeFileSync(join(out, `${phase}-catalog.json`), JSON.stringify(catalog, null, 2));
@@ -96,9 +115,9 @@ async function main() {
   // Preserve the original rates for existing rows when adding new models later.
   const mergedCatalog = { ...previousCatalog, models: [...previousCatalog.models, ...catalog.models.filter((m: any) => !previousCatalog.models.some((p: any) => p.id === m.id))] };
   writeFileSync(savedCatalogPath, JSON.stringify(mergedCatalog, null, 2));
-  writeFileSync(manifestPath, JSON.stringify({ phase, cohort, models, effort, effortByModel, maxOutputTokens, fixtureId: fixtureId || undefined, catalogCheckedAt: catalog.checkedAt, tuning, split, fixtureHash: hash(readFileSync(fixturesPath, 'utf8')), startedAt: new Date().toISOString(), maxRetries: 0, concurrency: 4 }, null, 2));
+  writeFileSync(manifestPath, JSON.stringify({ phase, cohort, models, effort, effortByModel, maxOutputTokens, retryLimitsOf: retryLimitsOf || undefined, retryPairs: retryRows?.map(row => ({ model: row.model, fixture: row.fixture })), fixtureId: fixtureId || undefined, catalogCheckedAt: catalog.checkedAt, tuning, split, fixturesPath, fixtureHash: hash(readFileSync(fixturesPath, 'utf8')), startedAt: new Date().toISOString(), maxRetries: 0, concurrency: 4 }, null, 2));
   // Rotate model order across fixtures to reduce ordering/cache bias.
-  const jobs = cases.flatMap((fixture, i) => [...models.slice(i % models.length), ...models.slice(0, i % models.length)].map(model => ({ fixture, model })));
+  const jobs = cases.flatMap((fixture, i) => [...models.slice(i % models.length), ...models.slice(0, i % models.length)].map(model => ({ fixture, model }))).filter(job => !retryRows || retryRows.some(row => row.fixture === job.fixture.id && row.model === job.model));
   let next = 0;
   await Promise.all(Array.from({ length: 4 }, async () => {
     while (next < jobs.length) {

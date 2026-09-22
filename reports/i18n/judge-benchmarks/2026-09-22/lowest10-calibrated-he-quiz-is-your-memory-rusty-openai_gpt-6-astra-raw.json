@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"0893c477b5a7\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 80,\n    \"technicalAccuracy\": 93,\n    \"coherence\": 84,\n    \"relevance\": 99,\n    \"translationQuality\": 82,\n    \"mdxPreservation\": 94,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 86\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"group=\\\"הפחתת זמן חיים\\\"\",\n      \"replacement\": \"group=\\\"השמטת ציוני זמן חיים\\\"\",\n      \"reason\": \"Lifetime elision omits explicit annotations; it does not reduce a lifetime. The current group label misnames the technical concept.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"1. השתמשו בתחומי זמן רצופים:\",\n      \"replacement\": \"1. השתמשו בתחומי נראות עוקבים:\",\n      \"reason\": \"Sequential scoping refers to lexical scopes, not consecutive time intervals.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"5. שקול להשתמש בתבניות guard לפעולות בתחומי זמן\",\n      \"replacement\": \"5. שקול להשתמש בתבניות guard לפעולות המוגבלות לתחום נראות\",\n      \"reason\": \"Scoped operations are bounded by program scope, not a time interval.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"3. תבניות מתצפית שבהן נושאים יכולים להיות מוסרים\",\n      \"replacement\": \"3. תבניות צופה (Observer) שבהן ניתן לשחרר את האובייקטים הנצפים\",\n      \"reason\": \"The malformed translation obscures the Observer design pattern and mistranslates its subjects as generic topics.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- אובייקטים של traits כשצריך דינמיקה של dispatch\",\n      \"replacement\": \"- אובייקטים של traits כשצריך שיגור דינמי (dynamic dispatch)\",\n      \"reason\": \"The current wording does not clearly name dynamic dispatch and reads as an untranslated, malformed technical phrase.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"1. הסתמך על מימושי Drop של ספריית הסטנדרט כאשר הם כבר מודלים את המשאב\",\n      \"replacement\": \"1. הסתמך על מימושי Drop של הספרייה הסטנדרטית כאשר הם כבר מייצגים את המשאב ומנהלים את שחרורו\",\n      \"reason\": \"The invented verb 'מודלים' makes this resource-management recommendation unclear.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"2. להשתמש בהתייחסות (שואלת את הערך):\",\n      \"replacement\": \"2. להשתמש בהפניה (משאילה את הערך):\",\n      \"reason\": \"A Rust reference is a הפניה, not an התייחסות. Consistent terminology is important in an introductory ownership explanation.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"מה קורה עם הפונקציה שמחזירה את המקטע המחרוזת הארוך יותר משניים?\",\n      \"replacement\": \"מה קורה בפונקציה הזו, שמחזירה את הארוך מבין שני מקטעי מחרוזת?\",\n      \"reason\": \"The current question has broken Hebrew syntax that obscures the comparison between two string slices.\"\n    }\n  ],\n  \"rationale\": \"The candidate retains all quiz questions, correct answers, executable code, and substantive explanations, with prose length within the requested range. Locale-relative assets and adjusted imports are appropriate for the additional directory depth. Most prose is understandable, but several technical terms are mistranslated and some sentences require substantive Hebrew editing. Nested bullet lists are also flattened compared with the source, weakening the rendered hierarchy. These issues prevent publication as-is.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 23313,
+    "inputTokenDetails": {
+      "noCacheTokens": 23313,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 23310
+    },
+    "outputTokens": 865,
+    "outputTokenDetails": {
+      "textTokens": 865,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 24178
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Azure",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 23313,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 865,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 24178,
+        "cost": 0.334655,
+        "costDetails": {
+          "upstreamInferenceCost": 0.334655
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

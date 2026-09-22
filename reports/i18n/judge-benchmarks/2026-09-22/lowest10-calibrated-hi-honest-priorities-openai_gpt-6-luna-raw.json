@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"04df4e77477c\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":72,\"technicalAccuracy\":86,\"coherence\":78,\"relevance\":96,\"translationQuality\":69,\"mdxPreservation\":98,\"culturalAdaptation\":78,\"languagePurity\":57},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"{/* *आखिरकार, हम दुनिया की हर चीज़ को अपनी प्राथमिकताओं के ड्रॉपडाउन में neatly लेबल कर सकते हैं! (…evil laugh…)* */}\",\"replacement\":\"{/* *आखिरकार, हम दुनिया की हर चीज़ को अपनी प्राथमिकताओं के ड्रॉपडाउन में करीने से लेबल कर सकते हैं! (…evil laugh…)* */}\",\"reason\":\"The untranslated “neatly” breaks the Hindi prose. The commented-out joke is preserved, so localizing this reader-facing text does not affect MDX structure.\"},{\"priority\":\"medium\",\"match\":\"कोई एहसास करने से पहले ही, आपकी टीम somehow `P00` टिकटों में डूब रही है!\",\"replacement\":\"किसी को एहसास होने से पहले ही, आपकी टीम `P00` टिकटों में डूब रही है!\",\"reason\":\"“कोई एहसास करने” is unidiomatic Hindi, and “somehow” is unnecessary untranslated English.\"},{\"priority\":\"medium\",\"match\":\"<b>इस सिली इंजीनियरिंग थिएटर के खेल से हम कैसे बच सकते हैं?</b>\",\"replacement\":\"<b>इंजीनियरिंग के इस बेतुके नाटक से हम कैसे बच सकते हैं?</b>\",\"reason\":\"The current phrasing is awkward and leaves “सिली” as a transliteration; a natural Hindi rendering preserves the dismissive tone.\"},{\"priority\",\"medium\",\"match\":\"`Z-index` एक समय ~32,000 तक limited था। हालाँकि, मैंने हाल ही में एक snippet देखा जिसमें अरबों `z-index: 1000000000` था!\",\"replacement\":\"`Z-index` की सीमा कभी लगभग 32,000 थी। हालाँकि, मैंने हाल ही में एक snippet देखा जिसमें `z-index: 1000000000` था—यानी एक अरब!\",\"reason\":\"“अरबों” means multiple billions, but the value shown is one billion. The sentence also has awkward untranslated wording.\"},{\"priority\":\"medium\",\"match\":\"- क्या यह एक worthy thought experiment है?\\n- ever-increasing Priority का idea horrifying है? anxiety inducing है?\\n- क्या यह inevitable है कि यह approach अंततः 64-bit integer limits से exceed कर जाए?\",\"replacement\":\"- क्या यह विचार-प्रयोग करने लायक है?\\n- क्या लगातार बढ़ती Priority का विचार डरावना या चिंता पैदा करने वाला है?\\n- क्या यह अनिवार्य है कि यह तरीका अंततः 64-bit integer की सीमा पार कर जाए?\",\"reason\":\"These discussion questions contain several unnecessary English phrases and read as unfinished Hindi, reducing language quality.\"}],\"rationale\":\"MDX structure, links, code-adjacent terms, and localized image paths are largely preserved, and the central argument remains intact. However, several passages contain awkward Hindi or unnecessary English insertions; one sentence also misstates one billion as billions.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3969,
+    "inputTokenDetails": {
+      "noCacheTokens": 3969,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3966
+    },
+    "outputTokens": 910,
+    "outputTokenDetails": {
+      "textTokens": 681,
+      "reasoningTokens": 229
+    },
+    "totalTokens": 4879
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsv1QD6q_gFwPTuUab8ZSS5IFejgH6fEq1qL5Y1xsCPEUu5xiibrnzlmLmLZ41IaA-BN7r08N-NiTpV6trgO2HwNzpnakrI_yzEWp5XXZu6Y1IuSLkACRNFufK3jCpZ1zXS6OYvp00OG2vbrSIjWQ2uTcOq37gJZrFCeYjMN3LyahxonvIeuG1crOOwQi8ch1tia7fzxa8D0NEZw7WMFNZzoRzxmQVPi24dbO_NGCvCISUwrqxmLGiszkuWk1rXzDKOnEWfNW8TrNm6u2Gi8mspvWLpFlV7Ov89a-OvG7h5jZeFNB3arQCh46jSjV7HdNJ_6XY6OMdOFj3kvCGxFZHnV3TIYdS6s_LcasPEjT7H_7Xz8P4atwWY8lwChINb8F2RgAXonB5ABHtV4Ztvor0QY1iSOOlwE50aNbxbQZ9yd8DN4qkkp50EyGuxR6fhaHQlGtkAy9vyqJk2r7n5zVgOjMn9XKvbWm3zm63jwsybtXEBzaxyZmyE4QIOAw6VllpIFqDG1dSTEPPm-qqz0w1FI0zHjoqxN7tnQrwkPi5sgFoLF26-TJWeXWoNDNa8yc4fusLvwi2J_lNlOyN4pDMcbYq_fYgZcrg6DCfOVeOXhOFGLh6bGqGM0qxfULrZLs9Bs5pd9zFSIaLCzMXkcanZ6o5APm3PPhXOJ60AVbcNEQfES-TlbsT4wWMbPSovrvClIfozLYpUqgBnQ6kE1mJnGlDfMjAzQPor1XoAAh_VgDvNDSIGUJMxnCly95hAC28SDWqrz3NHkr8DBbFQXVpexSiEf6AVp6eV_wDJc7K_VYygiZqUCbAcFWEns0ZqE4iIHozIVQmJtdyHcZBiLa4ggehE209_pbmnv-fE2_qY567CZojASlQzsxkGhrjcjHu8PeX64LR6lEyUlaN5Pf48wmtOMXounqr1roAN9BfMrydc6tawidyuNKEbETE5hLank4InUYQGVQzGZIG8TfZXYuRRpC-LLUcY3Lu5bb_EEfWTgjCVI2_2fSC8oRV9SreLlZBJ1SPOYSWYiV_Lzal1drplJofKbGU3iSOifEXwJxM7JkIkochjryJUeC5XkofnmBnc3NJpAgBRmVH0CeSBnN2emdmC8B32xhkn9__3R2K6FXWn2D398zMD-B3YtkJ8iw2YyjqDg2Sy3Gj8H9zznBxK-TfgZPtQ215ZhFYpmRsTB0PDuvgWVf_EbzuvJlG_2X9wOaOTed8wbQWzmy6toXovcSfw8SrUev3zqWiD0ImMg9KkFc47jIImeQ6KCDXtZnbBo84Xc2Fj1_LHu610d0zSzmQxFsjoGjlM78yb9vCsXEIdIWKr40MP846QYy4C-OIimCWyA_ovpQyN7AMOIVX70nMnUf_JH9tGAOK7TUfbs6nFKBCFSGA4xQGoc1mnvOHy99J8iAA2a5ExCnpvZtFwd4JZI97ieW8a_FqYTW3Ds8dX03t6dC-diOw7V4dUCni1324JyVav8zpGbqrpA8oamIK1-lqsEDtRFuggshWcL8692OgpjIsRLMvHkh3FMYpyYHlrwRngXIkfcA4IaUbMfllZJ8W8aHvT6HQ4UeHFqEwKbU4ifwlUOx8ip7Oz7vLhzs2lbBrsCD_khdE9NEd1MHXzx745yRG8F6tNK0W3km5sOjOk5K_S_2KfLGjGzZuQygGVtC5Rw9TiaN415o6dfrOqBUkkIkGeklT41zmQfnd63UFVzzC65NGtHmCmGKvIjlmA0gLLxZDT1egx5zR_VPluh75h-pK3OVndNZa-YJay3eqvA-Wv5wlpo8ntcS1Fso0ConOb4HH4MwleaniS5zz7gJYrSzanD6ceIqa3sEkjgonh36iuoYA9C2PiQI8VCQmnv_xEcppGtekH7i8uttNFfeY3EXhs6pKjyB3YeagyeuJf_SSyGLsR1kX3ygE1Wb55gRoqKAf7ecfQcFikk86mSCRr6XhdW9x06quZj_cpI9IB8MvW4LCoI0B_6ZAdAPbqMBK8TRv6QVeQ1EddAq04AFX1HaNiSpi3c4w5kTSmE4KSXMIrTbrN8FGbauKtpS2P3f215A2kxwv0AalDFYQPaECGF4UxE-NeU6eXGjsvbhi46Hyh8_BjSSeJ6M43h5LoaOiKXYBEinxIhrVN3aqn-SETW-wuAELWSkD-iizyL9PlynNjkwfNjBK2hGPW_k_XWMVag-lU1Rteo2o4pWAqmxn8MIHg0csGv0bdTrO04zx6CaZ2_A-IhU5Pu2ZgdzJx_9M7y9Zzelp6TwVcANBzQv1YmnlhXqm9GPvV8jLYb9-p4OczaoZwl9D9a0QtUx8pFNybqjWH4DGX1XMC0YEzFYQJ3ly5WR0YUC0Stq6s8stBFjX9HPMRsouEH7PCqvXFmEjtUFR4d6DGfYy-_l7t_DIm1ogeYFiBFb-F8ebyWJFOF9xk5mNU2a4EtHR_LLiV_b6rWZsHsKeWvHlxnti2loWAJVSwTqdS_7-jq23dL52dpdTJnlpz14Dp2REgR7c-Spu8bm2zvTOTkO-aQ9eQ1okDzaltNNNsgo-IDQBT3YQCxSGIIYVnsAudha0GOUtYxAD1yLU3QhClHKJpq5iyOb-4zfqXmCw6fyC0q2vLHik5IM5Z2jlt9PC4xwztG1378IbnaqfZ34IAragFYyikuxIVK04re0RCQKWR2hiG4wFvMsFaVrNd_fejX_14TKdM1OEIyONs4GZn8NCivDkh0oudEVSOD73L3kR0qq-IcBbiOVsK2oQa9ptn3urrs138DDish_qful_3ZrtXssObRYYkfUFk5yRiSJxXul3WoGDbtSEysakzWUIvgwGcTRbfntofAZA61cUSXd6OWVb0nGi68902iwwU8O9BT3RIyPvSCZ84nDso5hplg7hJN_y_rqFT1_faNU9klVyo_9t-dZLdcJrKt4kVRDvOim0F0-rmlx4K-__xCTifsgsXlOHZ41OS7TSEyPTeuNgAjxFRNrnncOD1jdJA-fju5FIAtmhJJ2Ld3mB9QV9Tpmt6XOJxliwrI0H9VumJj7Xg==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_0d4137036c693ea1016ab2fd4de0c087d18da3fa8d482fa821",
+          "format": "openai-responses-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 3969,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 910,
+        "completionTokensDetails": {
+          "reasoningTokens": 229
+        },
+        "totalTokens": 4879,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00095105
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

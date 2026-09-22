@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":77,\"technicalAccuracy\":86,\"coherence\":83,\"relevance\":92,\"translationQuality\":77,\"mdxPreservation\":93,\"culturalAdaptation\":78,\"languagePurity\":78},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"## Schwindelerregende Datentypen\\n\\n\",\"replacement\":\"## Schwindelerregende Datentypen\\n\\nIch bin sicher, du hast in PostgreSQL schon *so viele* Datentypen verwendet, oder?\\n\\nBei den nächsten Fragen geht es um die nativen Datentypen von Postgres v17. 🤯\\n\\nFinde bei jeder Frage den **einen ungültigen Typ**. 🕵️‍♂️\\n\\n<p class=\\\"inset\\\">Weiter geht’s!</p>\\n\\n\",\"reason\":\"The candidate omits the source’s introductory context, including the PostgreSQL v17 reference and the instruction to identify one invalid type in each question.\"},{\"priority\":\"medium\",\"match\":\"Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?\",\"replacement\":\"Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?\",\"reason\":\"This wording is grammatically incorrect in German and recurs in multiple quiz questions. Apply the replacement to each occurrence.\"},{\"priority\":\"medium\",\"match\":\"Welche ist KEINE eingebaute Aggregatfunktion in PostgreSQL?\",\"replacement\":\"Welche dieser Funktionen ist KEINE eingebaute Aggregatfunktion in PostgreSQL?\",\"reason\":\"The current question is awkward and unidiomatic; the replacement makes the referent explicit.\"},{\"priority\":\"medium\",\"match\":\"{text: 'Sie sind identisch.'}\",\"replacement\":\"{text: 'Sie sind seit Pg v10 austauschbar.'}\",\"reason\":\"The source’s incorrect distractor specifically claims interchangeability since PostgreSQL v10. The candidate changes that claim to merely saying they are identical.\"},{\"priority\":\"medium\",\"match\":\"Gut gemacht! Du hast inmehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\"replacement\":\"Gut gemacht! Du hast in mehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\"reason\":\"There is a missing space in the closing text.\"},{\"priority\":\"medium\",\"match\":\"Das ist gewalttätig, Sir!\",\"replacement\":\"Das ist brutal, Sir!\",\"reason\":\"“Gewalttätig” is an overly literal and unnatural translation of the joke’s “violent” in this context.\"}],\"rationale\":\"The translation preserves the quiz structure, code, component props, routes, and most technical explanations. Main issues are omitted introductory copy, several ungrammatical question prompts, a weakened distractor, and a typo. The timestamp-precision question and keyed answer are internally inconsistent in the English source as well, so that source-level issue is not treated as a translation defect.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9617,
+    "inputTokenDetails": {
+      "noCacheTokens": 9617,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 9614
+    },
+    "outputTokens": 1134,
+    "outputTokenDetails": {
+      "textTokens": 619,
+      "reasoningTokens": 515
+    },
+    "totalTokens": 10751
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Identifying issues in quiz precision**\n\nI need to figure out the timestamp precision question from the semantic quiz. It asks for the fewest fractional digits beyond six-digit precision. The options include first with zero, second with six, third with nine, and fourth with seven. The English wording seems to suggest the first option is correct, but it's marked fourth. There's an inconsistency in the source. The translations should reflect accuracy, yet the source may have an error in the quiz answer.**Evaluating quiz question flaws**\n\nI believe the question and answer might come from a flawed source, but I need to ensure the candidate matches the source accurately. There are more clear errors, especially with date types and translations like \"Welche dieser.\" It seems better fixes are needed for the medium language used. The section on Dizzying is missing critical introductory paragraphs, which will likely leave it at around 70% completeness. I need to restore translated equivalents and consider replacing headings and paragraphs for clarity while preserving code comments.**Analyzing HTML structure and grammar issues**\n\nI'm evaluating the HTML structure, where there's an omission of frontmatter that might be allowed. Imports seem to have changed depth, and there could be localized directory rules affecting this. Missing introductory paragraphs create a gap that's an issue at a medium clarity level. I noticed a typo, \"inmehreren,\" which is a significant language defect. There are also ungrammatical phrases like \"Welche dieser ist.\" The source contradicts itself on the candidate answer, but the overall length omission isn't too concerning.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsv0wur1ly_4eOUdlC0Qzdvdx-30m6YJi3dT_FO3PDlA5N6bnX6wiUYtZvBtMSTPp4yLXyJ0-rPO-R9kJ8o25tiy0KhaSHWXsYoT7WRE5BRlQITCdfZsR_aGeBoBcXULtyQnMlZX7tStFkrEO6EKr7UfQAC7hv9DczR0xWiELxOFI91-ogMiFnOr7nr1GXOrwrq9SlhJ_RnTz5CXJnDTDqw5bhVcDgvS5nwoCGzu0pNBeqjTMOKuhT-DGi0q20lWI6vqiUrryeZaicNHlJn_fqV_dQpCN5LNtRIDyS127jSffrrX2E-qPpZkZ-A9I0HJ6lDcIIe-C5Uhfnhjz7-yA8BS5IYvoG64YB8TJWdSH0eC_d-vlv0RB80ltWeWq_yK4Z0e4iMsevC2qhElYKrtGn6z_IxOU-PyBiEz7aUMJwLBrWwkleCPn5TctO4xFNoL-LH1ajOGOwRZcbShhbjE6an0BjoSTS7w4x1Aehmu-_uv8ig0wa3uCtvtp-nlxge1uzUMkLX89V7o9JkCikV5Fz1bBKM7OPsfGS5RNuUBJDSIpuF7fvpQ4unCi6WPMNsCmUvVUXJERNH_O52T3htuTCLJcLV4YkOMTGrTCdRZbzvvk4N53aqWxkhZBEpVzJz8osFhRfR9nKUlv2y_fgJ4zCC_aLXtu4JOkSgWrxp8RCkcMxEs-Bv3iT4AQ9ImBSDVoaf76puQAGQUn4ZRWPgSzT3zSW1wm19N3_Lg_yJ4VP577xU5_M3SzM8vPCEVHU2JVpWyk683zkbIuyNqKU0JXiDAeATjii2elfDdUZdhnWiemwDLJoAvfrL_UDosYZxV_MjhM7DcwNGlVavtpU85fMBMcJQTvN1YBrQcjd2RPUol7URblW_xUguchRipi1f-2crEDP38b1QQHXZy5ImuAwzSk9Nri3ciz8k4GFi8F7OGMgEjupZejWDfKw336OsiDL8nMydaDnKFlkgmFepknY8ibh57X3VUJzelrMsoLGScCdIvVeFILYhHws_Gz1zoWPZAbvA3Q4UhBhgTP7B_jQACFz_b85C2fjlYhbxjizwhtuhPOs7DcOrjSqB_U94c27l32y_E43GSBPJKE2rKygcF7neQVk9YXFCsl8AKJrF0WF-lsxVkUHHdHvobcYGYm2CQFTv2MrGLtZNYHOG1QaF5-qzgJGTAr-ERTMCZUO45PFEQyst0AJsJsuHj0Bsnecjr3fBMHOQ7XXJZjQI9Dudc1-AF1jC41ODi3YdDdLU8Y2_3_DYZj-hpbTposu0LQUR3E1SgEQedERAoKsld9qBeuLeUFvDQ5YSdQvLsNtcDhsSsBgI45ajWaCXj3vBxzz0g0QKNCj-rZiTN8gw-mBZlRftyotQAbzlx_rYIJJbmu0qeCrMdTXydAonOtSWRkHuqfMLkz4th5KD7eM3kUr3MlR8lfQihPlfaIbnLkPKWl-Bftu1rcI8JyTAr0FtqAloqROkfv6o5sdhYlmGOq3MVes5KQPdkwnDWpRNQGV8DAY1T_fLIE3wPAGmXAsHIBoaNz6zCy2rwfCEI0qDU0Hk2VObzTCAYuHtUW33b0fZjzCxfkUJYxMyMt2_-Al9o3o_VtrkcV-JsZjtBUvrdXDwQbMkIGJOMxOdUzMa6_wo8e_GMbqTG89p0CMO1GVaWtLzgHrEuNI7omk8PQoijCDltLaR3NoppQh7omZPZk2TpBhrKxdQvbektA80DrJfbEH3H_6dcz0-kb8_0adlKXsoaUXzBfQ1sg9gJ9a275sFpJ738G-PZNQPUwRhxDxbRGDlKfaBG4Z8SzSANWUMmutOLqX9-fZPjFIftDd5eUiyIRhh1SAa88NawSXQ0LjXbsjPa-v01G1fK6lgW6dbYJBT0jjoVvfJO3pCQ8Qq6UGoliufXXsjOwyRfEHJiVlizg0fpUIqmtVZFHg_lXy2y0rW5lZW2_MfvpQyCO5et-TLThi2aXDxNd4O1xZm4Zi3T1RlIRPiDoA-zjOPW4hfdtDFLikbLZu943lcvAv6SWrk4qmvQvpqQ5aoblEYD47DmsmsHyAm56hvFEwAwXh0CW1zblDnfaKzyNxllQj7LdAal-Qphsp4V6fCk9mKDpdpF4Gdy0ZdRpZbKH6XIUIQ9NPdTyHjadxWtCnwMJMH852ET5RTKiPDGpSWV6FVhHHpnLqp7WlzBmV6ePcm522qIfxNNb5ZjhEvL9qEwKUNqfL2LDXJbJUIBlb8ZJu2UQapoitB65oFflb_9Onlcc3NptbWnGO3VH6Iu9m5zRlwsLcACj0rwECnUzahN2YsSjlr0M__86msievUNETaY-ytcy-lgMftEt5XQYpiaz5Wrfm75Y4VGhJvMah6fpS9BeHD6PAbXdjCnhH8cqwscYJkfJqS8ut0X0nwqds1yGJ6PppkCUQhjw5WtAp3kRXKGeaxOZSS7F8_Eguhz0ln0U6y_SVEGFNexKyYrW5_MaDFTMU7R5HFvw9Emh2SgM-L7n-KCwbiaT6OIavQAjSzelSw3FIokXXH8XqTtlPyYtP-Ced9XA5UnR9LhaLoMoO4HYWNz0gWrG5XlD6ZRG2TjCdR1M1sdqSBrvVU2dX9nWxBBFkGvt5gtwROnyz2LOKHZP_Z34txzhXHLq1cB91xuViu1hdPoxzGdwC8rxJOzyZn2SqFlJjybJ-iD80_jhnwJpPdpVFeXMoc-1AJpPCNIaAVqj7hQwbs0IXUBjfLvFOKQXwWK63CoJ370mYyoPMUKrJLbPp8BMHWh6l2opRi4G77MNeDg4Ep7Lr6hCd3sDs9euZ79PgB8_eUEchsBP5zaww4J2MT8CThIkr_dDeWoLoWlAUvQwrdvrbto2jVhSO4T2KqbResyVd5zeEmTL5AfjcVLXh_VfhLiM0b01g4YRBcACdRrhNj-eEuyE3t-gHjjpHwLS1OwFntb5YoFStj_wfiIClGGLm2VkvGDMxKBjV9qFRvBYwRRC-vWZ4RJpho8xolMGYI7rpNmVcYCVF7_JyeiE-yNA5Pxxr_VYeWHyr6LU0taWXlDX-qgavMSgsKeXdTdtY74e1jbXmsrUuIYDnZy9T4aF7KtkR3dKS6qwcxIv6a2hfq7URIdrPIzaPGjrXFXFtE-NMjTxNDhtYItOGNc5o3Lt36klyoPdqiBnMWZNIwJjqPeFvUO1PGryQhmjB8Y0Pf8-z7JGifUbi4VrykAR7l42syShbxlQZBgz3gkgFy5O0X9LmXeIMTk4xnIEycmB8wlhaHWbfi4f2t048xezZN7PcD33j6XsdTribKFYnc6qzvb65BlkgZ55-GheZG_Baa4GUaQVOMs37b3w5lhnHR7xKthxyF31L9fXTr-IYifSvM7bYI5v_w11tI8AHr_PT1kkis0xzgmApa36EsR9fq3X3_2GGe_--wXfKJv5EO9npphFC1cxH_Knt-F-_9Obg2mg7G4-uMP1mMW6nzXeh3TddYu7MQmptoVb9CoWdf6l6EDqfT-FW-I0fjEUGU0GI4qEAaVXkeBVWFhPO1I7ypBHnJvCCOQbI1j186rka9FhTpk5egi7VGjG2PJcD4YQn-B65uM7FqLiHCdCma2o3wD963C14CAt-PiNOEWGVoD0r0dX69o7DZRP4lfBCZNzZT6UIcbDyxJoF8Q9b0AOE1eRs6b48Wl3C88ei85MMWzVEoE5J_tEBmks6sdZKYg1LkODB8lwc2GrWlwvk8Vvrv60txQpSVu4X1fkvx4WByoOgsNJKJAR5v-fYFju0gHyrMMiFvcNIRcxa20uaAJjV3fUAddpRBS_N-x2h-txb2wG02cm29l2OK7JH-pDhQnZ386EAtX7du1ChZAgi9XrUTb0yur2wTzBsUuo8Nlxw6ifiO1vmJlwk7Q-3k4VQfWiWOIBSn6g_Q0fdvQg3TaOWPRvbCuzBdt3VSmUOkQm5hvB5gzB3iEe_KrAl87qEh5maJwWVj0mui91d4_q5wUjPNY9JZcXcXJyXo39E3pL0dcUP20ZmTGY6mG-gq98j6XoCW7-2rUFKWzZ4O8l0keoGLlOyVsywYTwCU5tSF3r11Xy1nbmnsaRtRKEbBi8-_ssD53M1MztJpqxE5s4LblHxXhYkZiG5Go7Alb-JxkeT_pOfUKO10TTTBtldvSbHZqaMS93cXIk_gUNK-yDgRoWtfp5unSJApP0_Ex601iJ8hSPgMz2dnMH7wLdgFSexa_1N-DWihbLGNx06Li-MDvwIklopiJGjsNYFxfAfyuMZZxFosnJHiENH0g7ZS7uYVHdKiZNVp-gNZ0NWsaAHJ55FobkSpSNbeqHkjpWhO4RxzehTA-QUwbeyf9uoHL2kgcj9suEO8R_NETdj5j0Vp4cavNAegx1VWeW6i3nL-upmbON1kdISAWyXGnUsbsF_dLmys57AP_ovW0ivMcVrBz7Kq4jAw5Dpd44MVi9rZ65yrLYAoCaW0dlC0av5Gw2VRxlm0DgXviLOYQOT7Pm4p_xNhf25UXDa2ri1YO8xwlLvL2VVcBSL0Gs7T3mWol5OU2SVDErsyKtKS5khg3FlflTKrqlCzO8OMhP6X7hGaTXc1cgrTBmq2iOZPq8kVLsroWepjHqEcn9Ru8ArGIj_lKlRb3m1bwPuYsf3pnoyuN6c-wBLNtNrr2w1X3oIbcUoB_kkBWzbyk69Z5-_g9RINHbLtvfp-fg91NxGldSf2TfIxYhq3hF6bfTsLDDs1llCSekBWiTfwqBiO8_DFrq2M8xNLL_cmdSyawsW6ZKID27Lq5x_izVXuKNXlcIE1stoKtQpX5FX87w9kqjoF-LsCktKEdHOD9XMnDu3oSI103WrGyL5JNt-BXkAzSVGtG3XjJnKa5o_kQii-4piPVMTh8AzWToinehmbh_B8LJ7i2qdeidFZwAk7J1BQtD9Wc1EX-Wm1-rWELKNXSM7Rm4sxMLO8mW-cAoFw_n-8R54OBwG-3i1nVvZEV90jJZpZoiD__AXfbViqTeLhGXjcV_QlYIYX8kRi1J0ahbvEPU5pexkMpCNPy_9N-benwkkA_6bcf1kBE=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_09689b0e503508ec016ab2fd2957d087d19aae6224789e417a",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 9617,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1134,
+        "completionTokensDetails": {
+          "reasoningTokens": 515
+        },
+        "totalTokens": 10751,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00176905
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

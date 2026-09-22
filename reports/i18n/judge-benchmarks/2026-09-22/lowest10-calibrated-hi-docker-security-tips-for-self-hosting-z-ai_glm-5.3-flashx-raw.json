@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d18f75c20ad6\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 72,\n    \"technicalAccuracy\": 65,\n    \"coherence\": 70,\n    \"relevance\": 90,\n    \"translationQuality\": 82,\n    \"mdxPreservation\": 40,\n    \"culturalAdaptation\": 85,\n    \"languagePurity\": 82\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# Allow CloudFlare IPs\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Add IPv6 support\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"The CloudFlare whitelist script fence is broken: the fence closes early and the remaining commands are emitted as loose MDX text followed by a stray opening fence, corrupting the rendered page structure.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\n      \"replacement\": \"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\n      \"reason\": \"The lsof Commands code block is split: the fence closes after the first command and the rest of the commands render as prose, then a stray fence opens a spurious code block swallowing following text.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\n      \"replacement\": \"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\n      \"reason\": \"Stray closing/opening fence pair after the nmap External Scan block breaks structure and leaves an orphaned fence that swallows the next section.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\",\n      \"replacement\": \"```yaml\\nservices:\\n  webapp:\\n    volumes:\\n      - ./config:/config:ro\\n```\",\n      \"reason\": \"The read-only volumes YAML snippet inside the numbered tip has broken fencing (fence line separated from content, stray blank lines), so it renders as loose text and a broken code block.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash\\nfswatch -r /path/to/directory\\n```\\n\\n```\",\n      \"replacement\": \"```bash\\nfswatch -r /path/to/directory\\n```\",\n      \"reason\": \"A stray trailing fence after the fswatch block opens an unclosed code block that will swallow the Often Overlooked Tips section until the next fence.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```nginx\\n\\n# /etc/nginx/conf.d/secure-admin.conf\",\n      \"replacement\": \"```nginx\\n# /etc/nginx/conf.d/secure-admin.conf\",\n      \"reason\": \"Extra blank line and inconsistent fence hygiene around nginx blocks; combined with the split htpasswd block, fences are needlessly perturbed. Keep fence structure identical to source.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<p className='inset'>💡 सुनिश्चित करें कि सीक्रेट हमेशा अद्वितीय हों। असुरक्षित/हार्ड‑कोडेड डिफ़ॉल्ट्स के साथ चलना असंभव बनाएं।</p>\\n\\nयदि आप अपने सीक्रेट्स में `__WARNING_REPLACE_ME__` जैसे प्लेसहोल्डर उपयोग करते हैं, तो बढ़िया, शायद कोई इसे नोटिस कर ले!\\n\\nफिर भी, थोड़ी सी कोशिश से आप रनटाइम सुरक्षा जोड़ सकते हैं। यहाँ जावास्क्रिप्ट, रस्ट और गो में इसे कैसे लागू किया जा सकता है, दिखाया गया है:\\n\\n<CodeTabs client:load tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}>\",\n      \"replacement\": \"{/*\\n<p className='inset'>💡 Ensure secrets are always unique. Try make it impossible to run with unsafe/hard-coded defaults.</p>\\n\\nIf you use placeholders like `__WARNING_REPLACE_ME__` in your secrets, great, maybe someone will notice!\\n\\nJust in case, you can also add a little runtime safety with little effort.\\n\\n<CodeTabs client:load tabs={[\\\"Helper commands\\\", \\\"Persist secrets in environment\\\", \\\"Use secrets per command\\\"]}>\",\n      \"reason\": \"Content the author intentionally commented out (Placeholder Validation section inside the {/* TODO */} block) has been partially uncommented and translated, publishing hidden draft content and changing the CodeTabs tab labels. The entire section must remain inside the comment as in the source.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 🔐 [Secrets Management: The Right Way](#-सीक्रेट्स-मैनेजमेंट)\",\n      \"replacement\": \"- 🔐 [सीक्रेट्स मैनेजमेंट: सही तरीका](#-सीक्रेट्स-मैनेजमेंट)\",\n      \"reason\": \"TOC entry text left in English while the target heading is translated; reader-facing TOC should be localized consistently.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"## 🧗‍♀️ For the brave\",\n      \"replacement\": \"## 🧗‍♀️ बहादुरों के लिए\",\n      \"reason\": \"Section headings such as 'For the brave', 'Access Controls', 'Network Best Practices', 'Check Your Ports', 'File Monitoring' etc. are reader-facing and should be translated for consistency; corresponding TOC fragments must be updated to match the localized heading IDs.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"मूल <cite>क्रेडिट [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) और [Jan Schaumann](https://www.netmeister.org/)</cite> को जाता है।\",\n      \"replacement\": \"मूल श्रेय: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) और [Jan Schaumann](https://www.netmeister.org/)।\",\n      \"reason\": \"Introduced <cite> element not present in the source; MDX elements should be preserved as-is, not newly invented.\"\n    }\n  ],\n  \"rationale\": \"Hindi prose is fluent and faithful overall, but the candidate breaks multiple MDX code fences (CloudFlare whitelist, lsof, yaml volume, stray fences around nmap/fswatch/nginx), which corrupts the rendered page, and it publishes content the source intentionally left commented out inside the TODO block. Several headings and TOC entries remain untranslated while their anchors were localized, creating inconsistency. Publish-readiness is blocked by the fence corruption and un-commenting errors.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 27088,
+    "inputTokenDetails": {
+      "noCacheTokens": 26640,
+      "cacheReadTokens": 448,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2714,
+    "outputTokenDetails": {
+      "textTokens": 2197,
+      "reasoningTokens": 517
+    },
+    "totalTokens": 29802
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 27088,
+        "promptTokensDetails": {
+          "cachedTokens": 448
+        },
+        "completionTokens": 2714,
+        "completionTokensDetails": {
+          "reasoningTokens": 517
+        },
+        "totalTokens": 29802,
+        "cost": 0.0132829,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0132829
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

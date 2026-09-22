@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"35299bd7a6f7\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 78,\n    \"technicalAccuracy\": 80,\n    \"coherence\": 80,\n    \"relevance\": 88,\n    \"translationQuality\": 75,\n    \"mdxPreservation\": 68,\n    \"culturalAdaptation\": 82,\n    \"languagePurity\": 85\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"Broken code fence syntax. A closing fence was inserted prematurely, leaking code and bash comments as raw Markdown text, followed by an orphaned closing fence.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\n      \"reason\": \"Broken code fence structure in `lsof Commands`, causing bash commands to leak outside fences into raw Markdown.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\",\n      \"reason\": \"The `block-china.sh` code block is duplicated.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 🔄 [Танец `:latest`](#-the-latest-dance)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-monitoring--verification)\\n- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\\n- 🚀 [Контрольный список для продакшна](#-production-checklist)\\n- 📚 [Дополнительные материалы](#-further-reading)\",\n      \"replacement\": \"- 🔄 [Танец `:latest`](#-танец-latest)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\\n- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\\n- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\\n- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\n      \"reason\": \"TOC anchor fragments still point to English headings (e.g. `#-the-latest-dance`, `#-monitoring--verification`, `#-often-overlooked-tips`) or mismatched Russian headings instead of matching the localized IDs.\"\n    }\n  ],\n  \"rationale\": \"The candidate has severe code fence corruption in several blocks (`whitelist-ingress-from-cloudflare.sh`, `lsof Commands`, trailing orphan backticks in external scan and fswatch), an accidental code block duplication (`block-china.sh`), and several stale/broken TOC links.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 18798,
+    "inputTokenDetails": {
+      "noCacheTokens": 161,
+      "cacheReadTokens": 18637,
+      "cacheWriteTokens": 18637
+    },
+    "outputTokens": 1688,
+    "outputTokenDetails": {
+      "textTokens": 1688,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20486
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19GDoze5mjDFK7smcEOuVxWatfuk11aEWkYaqtYp+DC0IIFZ4Xrg6y8SZDz1uY7GWT8VN+Xuu7okONOqAtoYg01e3od/LQONlZQ",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 18798,
+        "promptTokensDetails": {
+          "cachedTokens": 18637
+        },
+        "completionTokens": 1688,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20486,
+        "cost": 0.008625066666666667,
+        "costDetails": {
+          "upstreamInferenceCost": 0.008625066666666667
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

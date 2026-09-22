@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"d18f75c20ad6\",\n  \"selectedModel\": null,\n  \"scores\": {\n    \"readability\": 58,\n    \"technicalAccuracy\": 76,\n    \"coherence\": 63,\n    \"relevance\": 94,\n    \"translationQuality\": 66,\n    \"mdxPreservation\": 35,\n    \"culturalAdaptation\": 68,\n    \"languagePurity\": 65\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"{/*\\nTODO: Move to Maintainer's Guide\\n// TODO: Move to Maintainer's Guide\\n\\n### Placeholder Validation\\n\\n<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n*/}\\n\\n<p className='inset'>\",\n      \"replacement\": \"{/*\\nTODO: Move to Maintainer's Guide\\n// TODO: Move to Maintainer's Guide\\n\\n### Placeholder Validation\\n\\n<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n\\n<p className='inset'>\",\n      \"reason\": \"The MDX comment closes too early. It exposes placeholder-validation guidance and code that are unpublished in the source; restore the comment boundary and close it after that CodeTabs block.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"</CodeTabs>\\n\\n### मजबूत सीक्रेट जनरेट करें\",\n      \"replacement\": \"</CodeTabs>\\n*/}\\n\\n### मजबूत सीक्रेट जनरेट करें\",\n      \"reason\": \"Completes the restored MDX comment around the placeholder-validation section.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"The fence closes before the Cloudflare commands, leaving shell syntax in rendered prose and an unmatched fence. Keep the whole script in one bash block.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\n      \"replacement\": \"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\n      \"reason\": \"The extra opening fence breaks the structure of the following heading and scan examples.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# LISTEN स्थिति देखें\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# IP पते के बजाय नेटवर्क नाम दिखाने के लिये (रिवर्स DNS लुकअप धीमा हो सकता है)\\nsudo lsof -i -P | grep LISTEN\\n\\n# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# LISTEN स्थिति देखें\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# IP पते के बजाय नेटवर्क नाम दिखाने के लिये (रिवर्स DNS लुकअप धीमा हो सकता है)\\nsudo lsof -i -P | grep LISTEN\\n\\n# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\n      \"reason\": \"Most lsof commands have been moved outside their code fence, and a stray fence changes how subsequent content renders.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash\\nfswatch -r /path/to/directory\\n```\\n\\n```\\n\\n## ⏰ अक्सर अनदेखे टिप्स\",\n      \"replacement\": \"```bash\\nfswatch -r /path/to/directory\\n```\\n\\n## ⏰ अक्सर अनदेखे टिप्स\",\n      \"reason\": \"Remove the unmatched fence so the tips section renders as prose and a heading.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"2. **जहाँ संभव हो रीड‑ओनली वॉल्यूम्स का उपयोग करें**:\\n   ```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\\n   अन्य सर्वोत्तम प्रथाओं\",\n      \"replacement\": \"2. **जहाँ संभव हो रीड‑ओनली वॉल्यूम्स का उपयोग करें**:\\n   ```yaml\\n   services:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n   ```\\n   अन्य सर्वोत्तम प्रथाओं\",\n      \"reason\": \"The altered indentation takes YAML lines out of the numbered item's code block and breaks the rendered checklist structure.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\\n- [कैनरी टोकन्स](#केनरी-टोकन)\\n- [`.env` से macOS कीचेन तक अपग्रेड करें](#upgrade-from-env-to-macos-keychain)\",\n      \"replacement\": \"- [मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\\n- [कैनरी टोकन्स](#केनरी-टोकन)\\n- [`.env` से macOS कीचेन तक अपग्रेड करें](#env-से-macos-कीचेन-में-अपग्रेड)\",\n      \"reason\": \"The Keychain link points to the old English heading ID rather than the ID generated from the translated heading. Check all same-page links against the site's actual slugger.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"आपको अपने उपयोग‑केस के अनुसार “सही” effort और security के स्तर का चयन करना होगा।\",\n      \"replacement\": \"आपको अपनी ज़रूरत के हिसाब से सुरक्षा और उसे लागू करने में लगने वाली मेहनत का सही स्तर चुनना होगा।\",\n      \"reason\": \"Reader-facing English words interrupt an otherwise Hindi sentence unnecessarily.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"ऑटोमेशन को बताएं कि कब आगे बढ़ना है।\",\n      \"replacement\": \"ऑटोमेशन से पता चलने दें कि अगला अपडेट कब करना है।\",\n      \"reason\": \"The source says automation should notify the reader when to update, not that the reader should tell automation when to proceed.\"\n    }\n  ],\n  \"rationale\": \"Most security guidance and runnable commands retain their meaning, and the localized asset paths and import depth are appropriate. However, multiple misplaced code fences and an early MDX-comment closure materially change rendered content; some heading links are also stale. The prose needs further Hindi editing.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 18032,
+    "inputTokenDetails": {
+      "noCacheTokens": 18032,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 18029
+    },
+    "outputTokens": 2004,
+    "outputTokenDetails": {
+      "textTokens": 2004,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20036
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 18032,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2004,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20036,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0651185
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

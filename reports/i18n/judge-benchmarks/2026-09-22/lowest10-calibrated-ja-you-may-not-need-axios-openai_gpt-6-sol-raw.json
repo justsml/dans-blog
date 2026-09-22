@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"1b7eea376e11\",\n  \"selectedModel\": null,\n  \"scores\": {\n    \"readability\": 73,\n    \"technicalAccuracy\": 88,\n    \"coherence\": 69,\n    \"relevance\": 90,\n    \"translationQuality\": 76,\n    \"mdxPreservation\": 35,\n    \"culturalAdaptation\": 82,\n    \"languagePurity\": 91\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"### 目次\\n\\n- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\n      \"replacement\": \"- [概要](#概要)\\n- [機能比較](#機能比較)\\n- [Fetch レシピ](#fetch-レシピ)\\n  - [URL から JSON を取得する](#url-から-json-を取得する)\\n  - [カスタムヘッダー](#カスタムヘッダー)\\n  - [HTTP エラーハンドリング](#http-エラーハンドリング)\\n  - [CORS の例](#cors-の例)\\n  - [JSON の送信](#json-の送信)\\n  - [HTML `<form>` の送信](#html-form-の送信)\\n  - [フォームエンコードデータ](#フォームエンコードデータ)\\n  - [ファイルのアップロード](#ファイルのアップロード)\\n  - [複数ファイルのアップロード](#複数ファイルのアップロード)\\n  - [タイムアウト](#タイムアウト)\\n  - [ダウンロード進捗ヘルパー](#ダウンロード進捗ヘルパー)\\n  - [再帰的リトライヘルパー](#再帰的リトライヘルパー)\\n  - [HTTP リダイレクトの処理](#http-リダイレクトの処理)\\n  - [fetch リクエストのキャンセル](#fetch-リクエストのキャンセル) ✨new✨\\n- [互換性](#互換性)\",\n      \"reason\": \"Most table-of-contents links point to the wrong section, and the HTTP redirects entry is missing. Remove the added heading to restore the source structure, then use fragments generated from the translated headings. The headings must also be changed from explicit English-ID HTML tags to Markdown headings for these fragments to work.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<h2 id=\\\"feature-comparison\\\">機能比較</h2>\",\n      \"replacement\": \"### 機能比較\",\n      \"reason\": \"The candidate replaces Markdown headings throughout the article with HTML headings carrying stale English IDs. Restore the source heading levels and Markdown syntax for all such headings, including the overview, recipes, recipe subsections, progress-helper source, and compatibility headings. This allows same-page links to target IDs generated from the translated heading text.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト\",\n      \"replacement\": \"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト\",\n      \"reason\": \"The feature table lacks its required Markdown delimiter row. Its additional blank lines between rows should also be removed so it renders as one table rather than broken paragraphs.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\n      \"replacement\": \"> ユースケースがリストにない？ [お知らせください ✉️](/contact/)\",\n      \"reason\": \"The blank line moves the contact link outside the blockquote, changing the rendered structure.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"確かに、[`axios`](https://www.npmjs.com/package/axios)や[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got)などのライブラリを正当化する特別な _ユースケース_ が存在します。\",\n      \"replacement\": \"きっと、[`axios`](https://www.npmjs.com/package/axios)や[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got)などのライブラリを使う理由になる特別な _ユースケース_ があるはずだと思っていました。\",\n      \"reason\": \"The source presents this as the author's former assumption, not a current factual claim that such use cases exist.\"\n    }\n  ],\n  \"rationale\": \"The technical prose and Gist references are largely preserved, and the Japanese is generally readable. Broken navigation, altered heading structure, and a malformed feature table are substantial publication blockers.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 5598,
+    "inputTokenDetails": {
+      "noCacheTokens": 5598,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5595
+    },
+    "outputTokens": 1437,
+    "outputTokenDetails": {
+      "textTokens": 1437,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 7035
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5598,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1437,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 7035,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0283635
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

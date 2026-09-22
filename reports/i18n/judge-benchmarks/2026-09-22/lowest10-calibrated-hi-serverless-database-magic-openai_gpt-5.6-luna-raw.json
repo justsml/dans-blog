@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"d9e2ed508e21\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":68,\"technicalAccuracy\":84,\"coherence\":78,\"relevance\":95,\"translationQuality\":55,\"mdxPreservation\":82,\"culturalAdaptation\":70,\"languagePurity\":48},\"suggestions\":[{\"priority\":\"high\",\"match\":\"That is the useful line. Not \\\"serverless is the future.\\\" Not \\\"vector databases changed everything.\\\" Those sentences have already been printed on enough conference lanyards.\\n\\nAI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was \\\"run Postgres with pgvector\\\" or \\\"operate OpenSearch/Elasticsearch\\\" or \\\"buy a managed search service.\\\" Those are still good answers when the workload deserves them.\\n\\nBut many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.\",\"replacement\":\"यही उपयोगी नियम है। “सर्वरलेस ही भविष्य है।” ऐसा नहीं। “वेक्टर डेटाबेस ने सब कुछ बदल दिया।” ऐसा भी नहीं। ये वाक्य पहले ही काफ़ी कॉन्फ़्रेंस लैनयार्डों पर छप चुके हैं।\\n\\nAI ने सचमुच कई सर्च समस्याओं का स्वरूप बदल दिया। अचानक छोटी टीमें सेमांटिक सर्च, हाइब्रिड रैंकिंग, डॉक्यूमेंट चैट, मल्टीमॉडल लुकअप और ऑब्जेक्ट स्टोरेज में रखी फ़ाइलों पर एनालिटिक्स चाहने लगीं। पुराना जवाब था “pgvector के साथ Postgres चलाएँ”, “OpenSearch/Elasticsearch संचालित करें” या “मैनेज्ड सर्च सर्विस खरीदें।” जब वर्कलोड इसकी माँग करता है, तब ये अब भी अच्छे जवाब हैं।\\n\\nलेकिन बहुत-से वर्कलोड ऐसे नहीं हैं। वे रीड-हेवी और फिर से बनाए जा सकने वाले होते हैं, और कंटेंट बदलने तथा सर्च के अपडेट होने के बीच थोड़ी देरी स्वीकार कर सकते हैं। दस्तावेज़ीकरण। कैटलॉग स्नैपशॉट। स्थैतिक एक्सपोर्ट। आंतरिक नॉलेज बेस। स्थानीय एनालिटिक्स। प्रोटोटाइप RAG सिस्टम। इनके लिए टूल्स की एक नई श्रेणी ने उबाऊ आर्किटेक्चर को असामान्य रूप से शक्तिशाली बना दिया है: इंडेक्स बनाएँ, उसे फ़ाइलों में रखें और HTTP पर सर्व करें।\",\"reason\":\"A substantial reader-facing section remains entirely in English, which materially lowers Hindi language purity and translation completeness.\"},{\"priority\":\"high\",\"match\":\"| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |\",\"replacement\":\"| सुविधा | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |\",\"reason\":\"The entire comparison table is still in English. Technical product names and API terms may remain unchanged, but reader-facing labels and descriptions should be localized for a Hindi translation.\"},{\"priority\":\"high\",\"match\":\"<link href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"../pagefind/pagefind-ui.js\\\"></script>\",\"replacement\":\"<link href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"/pagefind/pagefind-ui.js\\\"></script>\",\"reason\":\"The candidate changes executable code paths from the source's root-relative /pagefind paths to ../pagefind. This can break the example and is not an asset path in localized MDX that should be parent-relative.\"},{\"priority\":\"medium\",\"match\":\"## Not another Vector DB article\",\"replacement\":\"## एक और Vector DB लेख नहीं\",\"reason\":\"Most reader-facing headings are localized, but this prominent heading remains entirely in English. Localizing it would improve consistency and Hindi language purity.\"},{\"priority\":\"medium\",\"match\":\"#### Static site search with Pagefind\",\"replacement\":\"#### Pagefind के साथ स्थैतिक साइट सर्च\",\"reason\":\"This reader-facing subsection heading remains in English while surrounding implementation headings are localized.\"},{\"priority\":\"medium\",\"match\":\"*September 2025 snapshot: Chroma requires a server runtime and does not support direct S3 object storage in the way the object-file tools do ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).*\",\"replacement\":\"*सितंबर 2025 का स्नैपशॉट: Chroma को सर्वर रनटाइम की आवश्यकता है और यह object-file टूल्स की तरह सीधे S3 ऑब्जेक्ट स्टोरेज का समर्थन नहीं करता ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).*\",\"reason\":\"This explanatory footnote remains entirely in English and is reader-facing prose, so it should be translated while preserving the issue URL.\"}],\"rationale\":\"The candidate preserves most frontmatter, links, code structure, and core technical meaning, but a large amount of reader-facing prose and the comparison table remains untranslated. It also introduces an incorrect path change in the Pagefind HTML example. These are substantial fixes for a publishable Hindi localization.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 6947,
+    "inputTokenDetails": {
+      "noCacheTokens": 6947,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 6944
+    },
+    "outputTokens": 1413,
+    "outputTokenDetails": {
+      "textTokens": 1269,
+      "reasoningTokens": 144
+    },
+    "totalTokens": 8360
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Evaluating content translation**\n\nI need to assess major untranslated prose sections, like headings or tables, and check if code paths were altered correctly. The repository indicates that parent-relative images are fine, but reader-facing executable paths in English should be preserved. A candidate path change to ../pagefind likely breaks the site. Many English headings are fine for translation, but substantial prose remains untranslated, including paragraphs and footnotes. I'll need strict JSON adherence and provide several suggestions for improvement.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsvvyiyQ_lDaySl5pSFRj0oY58Qt8chnG8ZEdYDCgRDsvF__TwoUnl25M646HjhPm0NYoptsxaVtjEwO5ine75wU9tX5sfxyfbp118P8mJZZ5BqQ6t94E5gVp-l2DqNymc0b43vSsJIGAu_uvrthfkeYvq0viu084gbMt8iGYEtWmJzMfKOovOoF4jW0E8SYFzMSzuKRnaRPSVFoGoT03giTGGYfRg__i-ILaCGBOkr0Ba6JpZJdSPSvWQQWTAL87lqR2CpZ3I5YIq_gTd_Ej6OdUIJ64oguI-oC6HgMIfY5oW0qEhuARyV8CyX5Y7N9B1b4vXn1RKnz3xR97lS0nKtdTIi9EcbrzeFr0e9s66tSirznNb7nZoG3y-Ac2NQpeZD9gpZwvEZAKmUUP8EgvjlGoD9r8fyfbluI-HQCW9NpsBtvHu0jqr49vqdl1jALAP9VUJXZg8Y25CObMC9Wyf9w6tq-FVoZgY1U2lNPolsdHuH2S3DWKLvfjrCFZ3UObHVjJs016n32f6HDHXTRS3gw-UORo-WhusFUH88TPK02oMivxfVmSCkm5GwayuRPLP6ELGcZx-JOH94CmlDPUetoHX3i4btJ3jQooy8eiNzewo5AhoAYc1ZL5hyjMP2lb1ywqjPd2bKptAxRI8v3tFfmxtG6Cw1p4mnIbMs9EqQQpHNRUxp3-j6lQ-tSuKf6ncR7_gDTkLmlnA7aOZn1jA1fPtAwJrmsah-k27WkeVnogzzWAwas6hqQkIOBYzn-c8uGIvXQmeCHMwQrMMHiFsQM1RzzotbQy3XIgDRdaShDsO72JLVENCCZUSS9ByIv-3fYwsHWEScnIjYvwcW6kyGHin9WGC8072Z3lr3BJM9Lbn_7lG67p09fEdrSeFKcEeWaZ3lwZUiFsNbehluYlm1m1EzI5rxZ3aS3vB0TWj0zpS3qBwfL-B3nQsTQXjESE_Lq_U5mAgMrKeSPXyBvJC2A01rcGcVmBXTxzF4tYljRSf-Bolg8zc9Nf8235am8OoNhEY5acwxJlyQtnT7fLNLsgJa6AQ6It-4gITnbmIfAPrGxjmkpIBfOX7GGXsaNxhBtZTsbBNogPjvxrBa1VrMqdHtbKeAUkCM1n_w1rPltQxY1NGJoxhafVrr0xqtM3XtUYt3qIOx_a8z5_b2y6jsEWqt2P6Lz5PtLbNo1pRyCZ-hacPv5KYCHd0FWB8guKmzi6_32NlbO2eznP9s-FKe8-F9qz0kHQQqf-zJpOMOMdsePVGWsWAaWw8Yd9hi_F_A796JG04YynerwAQR5Bzb91gT5oJHuabwyoFGRWEV_orRqnksDT4G0NAee_Xd72Hl7fbl1KHrgH2nq5Ix9_oLH5xsnF0mEPKSnmECeTkaVoGrhjkQ_Wi199oXbdNu7LbVEb67FhSPFJptj7Wzh0Tc-jd03ttPgbF22C6oMu7X-Aa5GNHlbml6mAdOEbubqQYOHm1oqARfxqVREyul-tVw3R8XpuHydFt1FQ4kof7QtvHX3AGzeFkOJv6_s3zt9GCwKK-nrUKG-snHxcdW7Dq7NP97yAB5Q60dnLU99GhK9dAcbHw8mZE1-p7K4zivP2Rk31q6JcRKcX5_m3fEtjtgsk6KNezA6rInr-ICDhEOdXeibq8ChjjtcH3rNxC1JBXOgKSEO4-ISK-v8yRtLYtW55vPqT1KIaOQNuyn2_XLetKkRIfGdoyVRnfSfp7sJegAPQkTUNUYQxeawVhHXrryiW7JMNkWhexpuiI3o8wHe7_eCUfJ1tlgN06bzmWpNszocaQ8MX_YpuzdPCbhncKSwk-htfGWP43n-RgNZZP9oDlQgCe_ZZvA1L-w2koEahp8GObCjjWoGSi4ILwqlw_H3fX_ffH01omhqW5WdGPJNpcnlX7y8ls6pQodn5Unwpb6YqTnnikTonEMi1brX3dgZ8tkacpWWe-StwzJzT5RNuFm2OCSGEZFC-oXhhRRhjbnrfRyER8Wy2FMZy8knb8pfG0Fn-lOuxOE2-uxtw9yZAwZ5niw9bHHfEPg7W4SeMeSNkM0gP64WNAmMmhKgvJs5mXdq1MwisuKJE9eAqgpJdYEu7Qox0LVWEaoclHsKEIxOLP8WZDC1gkrfkOuir_M9jFY49cF8FewmPBs3AYJZVoAqe1C13Mc6aoLeriIQvv84EvBGMt9W54vw1d_ytz2LvP_CBHXb94jk9JJU1Q3R9d-YH4mronWJPpEejkZaeSdjCc8rqhVY-JgSJBzOxb4DbJztSvqEY-3AU0_NUDBnJzLinIn_eENrlH-SAAsXfqUVDwP5UmVQmjsuk4Ah7s2axMs21VwWlEvbvhDM0lZJUCiCxrLPu51ccquO97dvnDFlv7R5eeCIUi_1Fylugl1udHA==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+          "id": "rs_02f074432bf0b5b5016ab2fbef2d7887d1bcb49cea48c61a05",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 6947,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1413,
+        "completionTokensDetails": {
+          "reasoningTokens": 144
+        },
+        "totalTokens": 8360,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0034322
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

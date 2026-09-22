@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"9e718f4fdf81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 72,\n    \"technicalAccuracy\": 78,\n    \"coherence\": 80,\n    \"relevance\": 95,\n    \"translationQuality\": 80,\n    \"mdxPreservation\": 70,\n    \"culturalAdaptation\": 85,\n    \"languagePurity\": 78\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"##II. Over-Abstraction: When Simplicity Turns to Chaos\",\n      \"replacement\": \"## II. ओवर-एब्स्ट्रैक्शन: जब सरलता अराजकता में बदल जाती है\",\n      \"reason\": \"Section II heading is left in English (reader-facing heading must be localized) and is missing the space after ##, which breaks heading parsing and any same-page fragment targeting.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\n      \"replacement\": \"> हमारे आर्किटेक्ट का ज़िद है कि 5 लाइनों से लंबा हर फ़ंक्शन एक 'कोड स्मेल' है। हमारा कोडबेस अब असहाय निराशा की हल्की बदबू देता है।\",\n      \"reason\": \"The blockquote at the start of section II was left entirely untranslated; it is reader-facing prose.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"language: English\",\n      \"replacement\": \"language: Hindi\",\n      \"reason\": \"Frontmatter language marker should reflect the localized locale, not remain English.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"`SingleResponsibility Principle`\",\n      \"replacement\": \"`Single Responsibility Principle`\",\n      \"reason\": \"Space inside the inline code span was dropped, corrupting the technical term as rendered in code.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"अबstraction की परतों में\",\n      \"replacement\": \"एब्स्ट्रैक्शन की परतों में\",\n      \"reason\": \"Mixed-script typo 'अबstraction' is a language defect in published prose.\"\n    },\n    {\n      \"priority\": \"low\",\n      \"match\": \"![Components, components everywhere](../software-patterns__the-dismembered-architecture.webp \\\"Components, components everywhere\\\")\",\n      \"replacement\": \"![कंपोनेंट्स, हर जगह कंपोनेंट्स](../software-patterns__the-dismembered-architecture.webp \\\"कंपोनेंट्स, हर जगह कंपोनेंट्स\\\")\",\n      \"reason\": \"Alt/title of first image left in English while the second figure's alt was translated; inconsistent but reader-facing only, so low priority.\"\n    }\n  ],\n  \"rationale\": \"Solid Hindi translation with good idiomatic flavor and preserved MDX structure and asset paths, but an entire section heading plus its blockquote remain in English, the language frontmatter is wrong, and there are smaller code-span and mixed-script defects that block publishing.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 9998,
+    "inputTokenDetails": {
+      "noCacheTokens": 9550,
+      "cacheReadTokens": 448,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 988,
+    "outputTokenDetails": {
+      "textTokens": 835,
+      "reasoningTokens": 153
+    },
+    "totalTokens": 10986
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 9998,
+        "promptTokensDetails": {
+          "cachedTokens": 448
+        },
+        "completionTokens": 988,
+        "completionTokensDetails": {
+          "reasoningTokens": 153
+        },
+        "totalTokens": 10986,
+        "cost": 0.0048021,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0048021
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

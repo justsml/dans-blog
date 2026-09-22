@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"e46961b699c2\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 84,\n    \"technicalAccuracy\": 85,\n    \"coherence\": 86,\n    \"relevance\": 92,\n    \"translationQuality\": 83,\n    \"mdxPreservation\": 75,\n    \"culturalAdaptation\": 82,\n    \"languagePurity\": 84\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\",\n      \"replacement\": \"### (स्क्वैश) मर्ज तरीका\",\n      \"reason\": \"Translation artifact '--- CHUNK END ---' leaked into the published document prose and must be removed.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"जिसमें `मेन` पर कुछ हालिया कमिट्स को छोड़कर\",\n      \"replacement\": \"जिसमें `main` पर कुछ हालिया कमिट्स को छोड़कर\",\n      \"reason\": \"Branch name `main` was translated as `मेन` in code backticks, which breaks technical accuracy and consistency with Git conventions.\"\n    }\n  ],\n  \"rationale\": \"The translation is largely accurate and maintains tone well. However, it contains an instruction/pipeline leakage artifact ('--- CHUNK END ---') right in the middle of a section heading, and translates the branch name `main` into Devanagari in one place (`मेन`).\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 4853,
+    "inputTokenDetails": {
+      "noCacheTokens": 162,
+      "cacheReadTokens": 4691,
+      "cacheWriteTokens": 4691
+    },
+    "outputTokens": 376,
+    "outputTokenDetails": {
+      "textTokens": 376,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5229
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19B1DUrUY4yy6EsNHeUmfMTisg793+DwIh/vCxUjDi6pyvaw1EnsLijlU0VEN82KgaU2VwpDfkxNziFOR+ol7A5FJZzM4CjZRG5",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 4853,
+        "promptTokensDetails": {
+          "cachedTokens": 4691
+        },
+        "completionTokens": 376,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5229,
+        "cost": 0.0020787833333333334,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0020787833333333334
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

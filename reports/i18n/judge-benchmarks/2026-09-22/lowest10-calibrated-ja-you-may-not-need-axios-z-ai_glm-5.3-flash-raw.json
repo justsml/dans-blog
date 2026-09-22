@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"1b7eea376e11\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 55,\n    \"technicalAccuracy\": 70,\n    \"coherence\": 60,\n    \"relevance\": 95,\n    \"translationQuality\": 75,\n    \"mdxPreservation\": 35,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 80\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\",\n      \"replacement\": \"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\",\n      \"reason\": \"The table's header separator row is missing and blank lines split the table into fragments, so it will not render as a table in MDX.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\n      \"replacement\": \"- [概要](#概要)\\n- [機能比較](#機能比較)\\n- [Fetch レシピ](#fetch-レシピ)\\n  - [URL から JSON を取得する](#url-から-json-を取得する)\\n  - [カスタムヘッダー](#カスタムヘッダー)\\n  - [HTTP エラーハンドリング](#http-エラーハンドリング)\\n  - [CORS の例](#cors-の例)\\n  - [JSON の送信](#json-の送信)\\n  - [HTML `<form>`の送信](#html-form-の送信)\\n  - [フォームエンコードデータ](#フォームエンコードデータ)\\n  - [ファイルのアップロード](#ファイルのアップロード)\\n  - [複数ファイルのアップロード](#複数ファイルのアップロード)\\n  - [タイムアウト](#タイムアウト)\\n  - [ダウンロード進捗ヘルパー](#ダウンロード進捗ヘルパー)\\n  - [再帰的リトライヘルパー](#再帰的リトライヘルパー)\\n  - [Fetch リクエストのキャンセル](#fetch-リクエストのキャンセル) ✨new✨\\n- [互換性](#互換性)\",\n      \"reason\": \"Nearly every TOC link points to the wrong section (e.g. 機能比較 links to #overview, Fetch レシピ links to #目次), and fragments are stale English IDs instead of IDs matching the translated headings.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<h2 id=\\\"overview\\\">概要</h2>\",\n      \"replacement\": \"## 概要\",\n      \"reason\": \"Heading was converted to raw HTML with a stale English id; markdown headings with localized auto-generated IDs should be used so same-page links resolve.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\n      \"replacement\": \"> ユースケースがリストにない？[お知らせください ✉️](/contact/)\",\n      \"reason\": \"Splitting the blockquote into two blocks breaks the original single blockquote containing the contact link.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Progress Handlerは、[以下に示す手法でラップを回避](#source-progress-helper)し、`fetch`呼び出しをクロージャで囲みません。\",\n      \"replacement\": \"下記のProgress Handlerの[手法は、`fetch`呼び出しをクロージャでラップしません](#ソース-progress-helper)。\",\n      \"reason\": \"The translation inverts the meaning (it reads as if the handler avoids wrapping rather than the technique avoiding wrapping the fetch call in a closure), and the fragment should match the localized heading ID.\"\n    }\n  ],\n  \"rationale\": \"Prose translation is generally accurate and natural, but the feature-comparison table is structurally broken, the TOC links are almost all wrong/stale, and headings were converted to raw HTML with English IDs — all high-priority rendering/structure defects.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 5705,
+    "inputTokenDetails": {
+      "noCacheTokens": 5705,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1399,
+    "outputTokenDetails": {
+      "textTokens": 1297,
+      "reasoningTokens": 102
+    },
+    "totalTokens": 7104
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5705,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1399,
+        "completionTokensDetails": {
+          "reasoningTokens": 102
+        },
+        "totalTokens": 7104,
+        "cost": 0.00155525,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00155525
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

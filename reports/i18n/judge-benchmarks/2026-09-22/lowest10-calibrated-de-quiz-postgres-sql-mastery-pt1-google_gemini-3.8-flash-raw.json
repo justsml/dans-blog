@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"6a827cdac93a\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 94,\n    \"technicalAccuracy\": 98,\n    \"coherence\": 96,\n    \"relevance\": 98,\n    \"translationQuality\": 95,\n    \"mdxPreservation\": 92,\n    \"culturalAdaptation\": 92,\n    \"languagePurity\": 93\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"subTitle: Lässt SQL Sie kreischen?\",\n      \"replacement\": \"subTitle: Bringt SQL dich zum Quietschen?\",\n      \"reason\": \"The English post uses informal tone ('Does SQL make you squeal?', Dan's signature playful and informal voice throughout the post uses 'du'). Formal 'Sie' is inconsistent with the rest of the German translation.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"## Schwindelerregende Datentypen\\n\\n<Challenge\",\n      \"replacement\": \"## Schwindelerregende Datentypen\\n\\nIch bin sicher, du hast schon *so viele* Typen in PostgreSQL verwendet, oder?\\n\\nDie nächsten Fragen drehen sich um die nativen Typen von Postgres v17. 🤯\\n\\nFinde bei jeder Frage den **einen ungültigen Typ**. 🕵️‍♂️\\n\\n<p class=\\\"inset\\\">Weiter geht's!</p>\\n\\n<Challenge\",\n      \"reason\": \"An entire introductory prose section before Challenge 5 was dropped in the translation ('I'm sure you've used *so many* types in PostgreSQL, right?...').\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Gut gemacht! Du hast inmehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\n      \"replacement\": \"Gut gemacht! Du bist in mehreren Bereichen von PostgreSQL tief eingetaucht! 🐘\",\n      \"reason\": \"Typo ('inmehreren' missing space) and awkward phrasing ('tief gegraben' vs 'tief eingetaucht').\"\n    }\n  ],\n  \"rationale\": \"The translation preserves the MDX components and quiz semantics accurately, but it inadvertently dropped a paragraph of explanatory text before Challenge 5 ('Dizzying Types' section), contains an accidental formal 'Sie' in the subtitle, and has a typo ('inmehreren') in the closing text.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 10712,
+    "inputTokenDetails": {
+      "noCacheTokens": 159,
+      "cacheReadTokens": 10553,
+      "cacheWriteTokens": 10553
+    },
+    "outputTokens": 588,
+    "outputTokenDetails": {
+      "textTokens": 588,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 11300
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1/DgbFPMtAK7wgLiMcxm48VX0SbVSEIoWvzcms5K2ZzHtxdgHpf+fZ9QXcZ+BeBkMR7rSxbeV0PS9pZwKx2w1cdN0mvxpObqsm9",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 10712,
+        "promptTokensDetails": {
+          "cachedTokens": 10553
+        },
+        "completionTokens": 588,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 11300,
+        "cost": 0.0035554333333333334,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0035554333333333334
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

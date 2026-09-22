@@ -265,3 +265,30 @@ reproduce the original comparison budget. `--fixture <id>` selects a single
 frozen row for a targeted retry; give changed-budget retries their own phase
 and `--cohort output-limit-recovery` so the report keeps the original failures
 and shows recovery separately.
+
+To freeze ten additional low-scoring translations, run:
+
+```bash
+bun src/scripts/i18n/judge-benchmark-fixtures.ts reports/i18n/judge-benchmarks/my-run
+bun run i18n:judge:benchmark -- --out reports/i18n/judge-benchmarks/my-run \
+  --phase lowest10-calibrated --cohort lowest10-calibrated --split lowest-scoring \
+  --fixtures reports/i18n/judge-benchmarks/my-run/fixtures-lowest10.json \
+  --tuning reports/i18n/judge-benchmarks/my-run/site-conventions.json
+```
+
+The selector uses the latest score record per slug/locale from
+`reports/translations-log.jsonl`, sorts by score with stable slug/locale ties,
+excludes the existing corpus, and freezes full current texts plus hashes.
+Selection scores are historical metadata, not expected answers. Missing files
+or malformed timestamps stop selection rather than silently changing the
+cohort. Verify public status or authorization before submitting newly selected
+texts. `--fixtures` accepts a separate frozen file without changing earlier
+fixture hashes. The report writes `lowest10-summary.md` and includes the same
+section in the main summary; it keeps this larger-input 16k cohort separate.
+
+To retry only capped rows from that completed phase, use a unique phase name,
+`--cohort lowest10-limit-retry`, and
+`--retry-limits-of lowest10-calibrated`, with the same fixture file, split,
+tuning, and 16k cap. The runner rejects fixture, tuning, or reasoning drift and
+selects only model/fixture pairs with an output-limit failure. Each retry is a
+new preserved attempt; it never replaces original comparison statistics.

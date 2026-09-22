@@ -1,0 +1,61 @@
+{
+  "text": "{\"selectedCommit\":\"0893c477b5a7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":78,\"technicalAccuracy\":88,\"coherence\":86,\"relevance\":98,\"translationQuality\":76,\"mdxPreservation\":96,\"culturalAdaptation\":78,\"languagePurity\":75},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"group=\\\"הפחתת זמן חיים\\\"\",\"replacement\":\"group=\\\"השמטת זמני חיים\\\"\",\"reason\":\"“Lifetime Elision” means omission of lifetime annotations, not reduction of lifetimes; the current translation changes the technical concept.\"},{\"priority\":\"medium\",\"match\":\"הנתונים האמיתיים מאוחסנים על ההיפ\",\"replacement\":\"הנתונים האמיתיים מאוחסנים בערימה\",\"reason\":\"“ההיפ” is an awkward and unclear transliteration of “heap”; “ערימה” is a clearer Hebrew technical term.\"}],\"rationale\":\"The translation preserves the quiz structure, answers, code, links, and component props, and most technical explanations remain faithful. Some Hebrew is awkward, and the translated heading for Lifetime Elision misstates the concept; the heap transliteration also needs correction. These are focused fixes rather than blockers across the document.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 23313,
+    "inputTokenDetails": {
+      "noCacheTokens": 23313,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 23310
+    },
+    "outputTokens": 950,
+    "outputTokenDetails": {
+      "textTokens": 266,
+      "reasoningTokens": 684
+    },
+    "totalTokens": 24263
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Identifying issues in code**\n\nI need to address some issues around the MDX import path, which changed from ../../../ to ../../../../. This suggests the locale directory might be deeper, so I'll explore that. It's crucial to preserve translated code comments, and I've noted the need to clarify lifetime constraints and address errors within examples. I see some translation issues, particularly with Hebrew, which might be awkward. I should also consider the length and detail of different sources compared to the candidate. It looks like there are some significant omissions to review.**Addressing code translation issues**\n\nI’m noticing code issues with translated objective strings, particularly in candidate option #14 regarding the hint field order. The claim about \"RefCell<T> checking runtime and not Sync\" seems accurate, but there's vagueness around RwLock. I've spotted a minor Hebrew mismatch in the RefCell option, which talks about borrowing resources. It’s important to clarify the expected relative paths for source imports, especially regarding the major technical claim about metadata layout in Rust, which might reorder fields. This could lead to some confusion that needs addressing.**Translating Hebrew nuances**\n\nI'm noticing some awkward Hebrew translations, like \"זמני חיים,\" which may need clarity. The phrase \"time scopes\" seems fine, but there's a potential mistranslation in the title. The subtitle joke \"בדוק את עצמך לפני שאתה משמיד את עצמך\" keeps the meaning but might mislead, especially with the English phrase \"borrow check yo self.\" Also, using \"לקחתם את המבחן\" instead of \"quiz\" is acceptable. I should ensure the output scores include the requested dimensions. Maybe I need to flag \"ההיפ\" for typographical concerns.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsvy9ShYCE8BivUJ236G_Dar37QLKSigsKVUnuiwC_vk-BEf1fVoEJdY7Sq1JAkJ1NtcPz7w7QQGV77FCSuOhLqptTTLisV3CMwQ4oM4Xo4zuhS4GjBNNpDynRivaYhpIMayyEF9lrKVKgkkArGPvFjxjFz0hbB15YkUDJJ-nySQ26RTOSt6vYKE2Dxvlq8gYDOhj5jAmlq3d4JxnJzcQiubzIuTc3m3-8WVlKi6yjhBkLW6oIhDrtLjHeI4kxh7bZe_JoHL-5FU9AH86nBaXhfHpADexzRACCsM86O50i0xgCs0j5oSnSojH3Gaztg6G3SHG2tixIyrolP0QxigVhVoc_I0Iipmv9cK2TrJmDFZGS0eX3dJWPplrNk040982QVLGeqOj-2BKsp8702_TpHvlhhydNI1YzT4XVLQKr03YNIEpd_gmUB1nJD7Af6f00ohPpNS1HCauCo-A9VKXlKSA7uHo0nGyCasb0IzN0oOVob-v7jQ1-Va-d238Ld2D-Z0LjfIdnHbcxpBEyIzZElXsfDzWWQXthBCqm0XhCuaAoUIATow0v_hIMPjEmXH7HyVsv1XHguru2ziO4CWy6ZrixPKPmfEe83FkDGMgZW9ctQOnTPGs_IwBgcU887Wd00z96cXGkMB2jLbVfnd77_vCarchTu_BJ-6RQUdCRpChAR6fRDdcgNvxGaNgKCSCTr7_zSac7UItNdWknWnaJOjJcRKkkux69guWndGtF2aOOxMbtNe-5hdpdzODg0dXMX-6LZLjDTAbrlyrRZQiNILUrvPO0uR3pYiuofDdyshduTkMUFSkn6C-B1Xk_xGiO7Dp7RJqryCrk_jqjTu4Y6Ubl8taOT4AqYU2sa3N7z_HV3rxowFMS4wqKQ4SzIQCsvpVFL2TsWXdTnhBxYGWmp9FIZJXcDye9rxBXxQUg63quR3EiuZFLsAEWwx2GPXzh5CqVOhji7OzGeqismvBH_AmzAxd8ZXbxqJYdQQBpFBaEUa7JBsleNwHGGQfv-Q2Xy5cKuZuoA6cSQ51nXZ73W4PZcIYM5S9oDZJ9YaiRwcdmyW60JgABHEKmFh-hWmyymq3NF6fYyOPgEpXKK11BByHF5tE_LwQXL1SE0sbCdmpPQLz5-pNXfNFT4HHKaVCMLLmPObeqtofit3N9KbLzkrQbQZ-_jMEFOfgM6SD64DZjcFtKsmvSf7cQN0XXfeGs_thf-J0z56gv3yMl9d-swjIBhD_h2_rueE87Dbs3f1k9n641iwGwj9y_AkYR7JAf4olTmq9gEFI3PFE6H4Q2jDQ6InIqFHdA2lkPV2WNVFW9jkGYkddcLgk8PuF_ajVDearWO44las9bVw57uWzfquc3r_SbVVubokjL2N0jOV_k9Y_8jMh7U94W0oC4HgnqjR3jUZTQM9QkEEgsOqevJOHTNgBahknwEHuNDlWucPzaVEUc1SwPhFVGxF3lj3y4RaObhcDXzst8BCK5COojyM086b6x5ymhhCH3HH1RfyxkL5yxnxSmnalus7JOfcPGMYl65mxYh-gE1ditPH5qSPdJxLgpYzqcQh5z2ozygiEqDosw6s8TGm0KqNlM5Y_fCKs-_QJuRyeOeyhJzl3J0OAN8jfAVziCFdmL8asN0l_A-Cfxlpis48Ro0Yplh6y083GDniuXPdMyzaFMvkt2YmIIcD-UsRvSpgWWXuy6s76-dHW2Kb_h1eLQykiT5V1IAYuNRj5gZ6t5hlW_4EGNkVwSWQsjDN9KilrkL3SIUxMDXXuVi0l12XkgS0Jrpu71bl0r2PG-IRkE4NjnYIf5w2nwSw4bVrCcIF7hrrauBQNbVHDeqiUEk6HyyQCdfSXlIzioYeFlmQ1OFM6W08ZdXjbk0I8922s3dh_wM5bZJ-e-oBQH3V3ONIpvKbOIs7UGWLtmpLve99o7vE04BcHhC_HFnhpek2eGsm_-GC9sDCg407Vw3KnbIL6JWCut9aGViqf6ZPrnGG-tc8Ip2iA1ra03utDJFDgIOlPSmsu24EY4V_dWtXUSFCFcBfRsxTZoocpb8OFHmCq5zAiO74qwnU3wf3Mjn-xGCPrBrAa_yABT4416Kb_hgOuRzo3x2ZXmLwnkUMwv9ORzoYzm4fRPFQO9wiMNmGJ0gf16vEoNxjsZ815KQR1eKHHGhNs9bqHNO6Uwq0KQ25QNTA9q_PweodwSoJTtlOCcSm95oiFNDRPR1OtZ9hraAeZDqj3IKTy7NkvFRCUbev5FyEtK9QYo2ub7XgmK-PPOf5PZ_gT8F9JGjEeMlfm8tK4j_EEYgokwyKWDFmXuegKXafML0zp8WEr1CmhPidxxXYMLQT5wWLlgQ3LAkiBdv9jbQwOjZN3Zvr_8rfQZZ1B4bycKligNpw2QhJaRXxCvE2-ekPoNJyiC0AaZ36h4a9Tji2165g40mRt5C4zxPhilsysJWt1TYS4r5AJczO-nBFwoGAgp_BgueuVEeTu0lcrbiXDnh8zkXlr5D19izNANvZFM_PRmaQ2CTqzfFtOAjO4h6szybNorUVti1Gy_XPCz70cdEBZfTkMrB0dWLDyH2pqXM1YhwUaHlLABVzM8z89288I_jOudRwpROUlhM5dipN2yQGutDhvYF0GfPNJWmaCr4msFjJo9TUC8fNbmvKbwx7A1PToQ_2sg3ICojFkNiSJrF6VpKchKnNrLhLSNRp-cVmjGnhre_moSLtUuo9HD8snTeK0t89x2Wdc_6tlvV1yEI4Z1MvgazxDBSEvFo1awdUf9gs_wAM6Hk_jNGIMVXnhYjFHlglBH_w0R9Jdx9eqwELmYOKccXt2CA8OVK5yI63ERbN30gWl86qUqzRzGy7sf8LNPLuC6zb9J6oI_S_em2pFyMFZFScHqBfSwqdXEuWgJzI54Z7CciFU7ePEdbFG7CkRMP-Dss067M09XQRly_1RaWNSFd6omFV6ZF5rErEruxY5SNokQBa3u-E-KHWczUJ1dbXXfKIi86wUiIHnhBNu4lPVN_rmeJINd4Q3QABSkZI6A4nPPJddkkstC96-onQm3jbNmneOS9XDcUUdjYmqRlVmXXDKae5p9FBc2vRPXFkxDIA71RwonsR1c7ztxVYPj5PZSJiGG21fehZqoLT6poy2pnEt5rWmqNcK-FwsvamHdxNvvluB_GjLVi5MeiLFBqKrKp6vEkjzezzsIkTEwPBTZ9FH9dY6VPLQ0i56ixijlRjoQeca-OxbPmqBxsv8-ip2tzdWWONW9R22juH-1PAznCDgtIDLaCnyn4Zs1GCJB2AsbUuDvJkAnLWXa57TI0dRaXDnlWNMVSYdL1m2K98exxX69BO9xTgoQSYT6lKI1FbRz4AbzrLm3JbFrJKftNmtE5wkPjI0Kwd8ZJUyU9UzLrgO1KIMM7IUE8tdq0FFJKNyXNlE4DSAUcEV4PeBViN4V_DYuKo1cUo7vGdCjYzMlOtvpjTkGbmUubjYlKF77_H-KPryDaXarPs4FnyGsE9ZwU3mB3bEV8FGSYCE9MhJgovcCeFbaapmwFNF8tTuWilXEH8rPxkxFVZ8h9dIU7rWVNIiz6paBehSPSkkFiTDOGXwW0R-N7oMZ_CZqt497UJ3oZlk74vaQ56WGSTWGJGIM1bnI8butwzFWC14Xo5OmhmMLJqyvUOYMAY7rnpjJ3TCsBvz6KmFqAhQa1aqruPh4TpHmnRkvVUZpmbzanHrplDu3vmMFippGyYpjTbRvJ1N33_zPv3C8-TqRZZkuTnqF39q1modTG04xyoV6BNvpJOkZmLsgY6dHWSoDkoRMe3Se4RiH2D8HJ_iUN05RPDuienHmm5I4FnceBdt3eWrxa6dgY2tJHrPHcvc9lWsCzEcxPxx7rra8G2LTD1jwOxkTTsAPatRuGguVDTJzHk9tqbG2xc9WV5mz7TXMIM2jZsbjZwEH_Sw00lQjXeep_iAYQ4Dskfkc924zVxrrGbj5Xq8naEjqHRhSe7B3cHPpr8LIsCvwloUTohWQNM77bmxFOOXPf0Pb7A8TnbDNYAHFtJx9ARSetAP-G-4Iy6uOa7dF6GP1iIlnjOA8V03_wxuA6bQ60hxoed368pc7VAovKDmJYF7O2EG_OavDNFXJh5EmeJhuQhTahhNSsobmY4moL_9O6BN2jLiR_4b6hcP4NqkEuNbYeSZVJ1YgxAlLpjnk_9lVjcSe_ldmwfqiY9Amp60J7KBpV6Esio9inSHZUZAAZvvnPCETEZlJjyoAVha1WE7sEzD4RNcniqjL-JAmJCEebC8FiZzbC3rqMXhIvxo9eAxRRx8O8D-3CZvrKIoiMRLmsNYKdx2qadHlWMkL-y8EL4hVhTrTrIKFMsAlKkndPCp2gKPadWVjIeQqyhQjUbJPBPsUSe87XvgaXbYFh560m3ziBNkL7LMijm-lwMz2GK8BZqNs_yYcHM40wKVvlcCJ-UrNlGSUAsCU4XDzXKW8Jwy8rTL_gNkw_7A9sCzVavKsMbdShxJRHmBNUC7Fq_gwfrPf7puXMmWiBp6V0-t_SmziGS770v_5XgBVCNV-5PolwCB7WJhklQVu0H_xpvwFQMMGhPsnw5p0zGauDezIyY4WmrWUQe0SuwxCR5ujO_mkXg0iaOsRwXhyVCdBtNmPYgW1wQMFjwsBuu-ZLdmt4dHASw02WX_2Iall-yqk3t9-eVaTRKaux7234b9w1rLGSCKsnK7KSze7WwwkApFeDmbOxh_Mf8PS5nnfD7nvAgNEb4wiyR7ERK5e9XzbSlKKPVKkPbGuTF91yNc3f0sOAFzvwG5rfIbYJcBvt89c7C_06SEHtcDCYWDnPSAkGepBfN3-qXP6eINHeHT7Ho6i0h6KSrj_RXuXToALvcOoEN93I9QbA5pSaY6dcBSwpUI0jy6gB7ZxB6mNK0JGUZXu6YuqjSkZBXr92J_POWlsOK6L1pPSnGlvk6lxC9ca9ujUIyyvLfNV4ambppmhB2qmqt0X6w1a5egk-bhk9ItZ6OmW1wxC_gv0wzW72RI_XDOl_Y-HIp0yRfFt1E=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_0cc3b6d1eb13e8fc016ab2fcb680c487d1b050381b38a0037b",
+          "format": "openai-responses-v1",
+          "index": 1
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsvy-VFOpG3wh-Kc0QOWvYwxYhbfB3wGDN3WScdEqw2jEczvN0sWwOx1qoyP8iXtccZR8gY1w8iYaD3QIe47zWDW_9ksenRzHX0LSOFhIYmQ2TKJoDlbUQIRNE4G96W9ic7Zy4B3U6RO0dmL9IU_fNBXwquaCKFlnG5GLUN9xfIeGBvjnMMt44FiDMOyI0PbBwS7du7DV2qrmKtXMLQVQUlqUxYK7QIU_oB014r9CLpp7hq09NFYDNC_838odsC8UTmMF6i24iD2GjJlc_OYgov6syZEA_D6tTFfUhlPSoBaCwUYobjh8lSJgHOb-HjORBE3BoI4SnkinY_T7198sg507rSHMeTtUF5ZnIViHmT3vKJjCsI1_oLk6oajgNW6-JWuGgVOKv6OG9fv8eTs0odgNUt-gpwhcc29fqwb-w7fkFns0QcOW92-oXW_nC51VOFkaE1rrE3Ta9qUogUqTNp5nrutdXnSkCQJTN5p02RjYBA8DLF59doXcDt6D4nw2J8BBGfRxbINxND3Z4noaIlZw0_p32KYo0ZUmZ2gRb_gy0HS9myPKi8oLT40p6tasr-1HAZNYQmRrSdZ4rP296C-Iqu5MRumo9ec_R0XTqfliarB3uhFrHcUDmV6sCxTEuC69LmiiYdfyb7bOfVLScD5e9qyd-W-xYWyaXp_p6wk2EIGZR56VH2uYBxtJL46PL2x9nae1trGhB8pkfLAc1s6jjHuy0xaIrzCyiip4x4mnA8LHPq7LmMxmmRogUnymEls4XDIpOdciR_yjTsmGMCibGThVzNZNfUoS2_mMtA0wnqn6Q7ldp7UA_lMBHb26ZfNvEc524xkJ2kV6torlzpO1lYPYG4CZKvG6L2_cGE9SEDFvsM8bglBEA6gcLPDoD7XFIlSRSF2nm7XHAHQpF2ZvGKsjjvv2Yfo-aqDdjFGmyDOZsoiJrBXJHSj_PupmUGFFdFKLjPO29sV5ToSxNDzuROFn2QWtCwLoRIddRDHVgihweOGY4JhUS_ztchLmwJCqIwewbJZTQ7YvqlaM1sh0lHreXHys_L-OlR7UdYT1uKD75H-JGEtffVi2dqcuR3Mm00394dHNlAp6ZDX_DLyHreiWi6TkDT16xbZuRtLLbmEFOGM10SRX5D26qoTo7uYu7AQ9uFW2NsS2yznuMvW99sTIRf_esVdPYiZuXLuJzRM9xkgW2n6pSUGbx-H3Vw03J0PDMXk6-vRE1LHzQjKd9J_EzHPYyT4OCz7AU02YMhbmaz8UhEsMztUDN930CAnhZ2PnGpbDCbzas_R9rowyuvc4HIN-QS8L30q2tRxnTuShvUWA60xepS6cr1RSbliIQXanorsIpE2LV0uW27QLE78k7qv6DZrMjjV0iL-Zr_FygwNglCT48xtQc00kjKlIJuGfki6Ad5ItE5ejlF4aM7tFZDI46TtvzVrsBC8S0PyGEUyhuipwULvFIjCTZJ5KCvcZ6uCvpQc9de7sG6wpNMazt9S6rOlKhlEWzxtJvGr37FjG8LL32LUGcmEKpRHhaZPGtcaKX1zyK_OkIpiOaTA63riTtC8v6UrgxG4Qn-ufY0VMS6PE3W_dPBi1T2MIZEHt7cebAb__LuObU1RVSoApTdWQBYYUyVrw3EL-AME-xjbqjnAQRqFK4SeBMcbRImpHXxwbXZYMNoVi3yjCUeo3oV-QhkWzMvAR65QfH2KfpeLObOJH-k3yz3EqlYsD2lRoK5XFfu5t0KvyGOZe-wUmMNCGeoYUilvdBNyxepwJiVPmKZVpZJFjgvKzATCViTgj11079LcHG341M9gIKwyFxlhV_fZQgX10K5JdJcxHg6WXGnUbprGvnffbG_BiQ4BEdhJGwUxkf3XfTQAQBL09glMAvwSD-iTL5dURfLR8TqdVevZ-SLyitXoTApJo83vM2n0rq-Gm2-PYvY6WIp3red02zUHSwf4Ul39FSZ9XuPbon0sqWZQCcvcgdyGJdBBhCsFFVnuP56MCaBfQTFPOVbVlKc_NKjp3uQOwlxqalV88Er75Vhpv9yCViKAoFgqlgMju9b5RuNVCETQO3yOebnPQXe4zsqCEySwFT2xAkn_BfRYEXiCvbFuXKcTwCmLpb11a1k-rYZ-g0QZPWRgidyhlYNxq-inWuK0mjYCSC9u2IGeHJQ14klIBwnbBOf3I3YPAKaqYRSMjqU8czc_FKbhnfdIvKIFs-mOtEJrdCCUuY4roXtOwi_Y4d0AgubZIBblpNC1iWpMe6n-02jblS-q4k2BI0lgTgrPKjiMyn9iojwk_WvK73Qm66vLbACHbxth-HskTZjGgbxxTibduPSVi1FC4bppRexrlMI_ZwH7BJ7Ilp8Op88tjYeibBCCq4fcBckXUTQYfMfLcmK1OR75YIMrKuj2OzPXdk09vE7Zn-DtFsspFG3qqPLXk.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_0cc3b6d1eb13e8fc016ab2fcbdcdf487d1a8697dfc1d64ab8e",
+          "format": "openai-responses-v1",
+          "index": 2
+        }
+      ],
+      "usage": {
+        "promptTokens": 23313,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 950,
+        "completionTokensDetails": {
+          "reasoningTokens": 684
+        },
+        "totalTokens": 24263,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00338905
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

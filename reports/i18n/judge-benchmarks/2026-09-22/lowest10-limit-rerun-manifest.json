@@ -1,0 +1,43 @@
+{
+  "phase": "lowest10-limit-rerun",
+  "cohort": "lowest10-limit-retry",
+  "models": [
+    "deepseek/deepseek-v4.1-flash"
+  ],
+  "effort": "default",
+  "effortByModel": {
+    "deepseek/deepseek-v4.1-flash": "low"
+  },
+  "maxOutputTokens": 16000,
+  "retryLimitsOf": "lowest10-calibrated",
+  "retryPairs": [
+    {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "fixture": "ru-docker-security-tips-for-self-hosting"
+    },
+    {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "fixture": "he-quiz-is-your-memory-rusty"
+    },
+    {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "fixture": "ja-you-may-not-need-axios"
+    },
+    {
+      "model": "deepseek/deepseek-v4.1-flash",
+      "fixture": "hi-docker-security-tips-for-self-hosting"
+    }
+  ],
+  "catalogCheckedAt": "2026-09-22T20:40:09.292Z",
+  "tuning": {
+    "profileId": "site-conventions-v1",
+    "version": 1,
+    "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above."
+  },
+  "split": "lowest-scoring",
+  "fixturesPath": "reports/i18n/judge-benchmarks/2026-09-22/fixtures-lowest10.json",
+  "fixtureHash": "25ed96ca956c8028fcc0b114352515decb6ba22ad33e79a29e6fb0d8fc11da9c",
+  "startedAt": "2026-09-22T22:15:40.468Z",
+  "maxRetries": 0,
+  "concurrency": 4
+}

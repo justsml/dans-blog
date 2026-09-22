@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"9e718f4fdf81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 84,\n    \"technicalAccuracy\": 85,\n    \"coherence\": 86,\n    \"relevance\": 92,\n    \"translationQuality\": 82,\n    \"mdxPreservation\": 82,\n    \"culturalAdaptation\": 82,\n    \"languagePurity\": 80\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"##II. Over-Abstraction: When Simplicity Turns to Chaos\\n\\n> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\n      \"replacement\": \"## II. अत्यधिक अमूर्तन: जब सरलता अराजकता बन जाती है\\n\\n> हमारे आर्किटेक्ट का ज़िद है कि 5 पंक्तियों से लंबी कोई भी फ़ंक्शन 'कोड स्मेल' है। हमारे कोडबेस से अब अनजान हताशा की हल्की गंध आती है।\",\n      \"reason\": \"Section heading II is missing a space after '##' breaking Markdown formatting rules and was left completely untranslated along with its blockquote.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"language: English\",\n      \"replacement\": \"language: hi\",\n      \"reason\": \"The frontmatter language property should indicate Hindi ('hi'), not 'English'.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"subTitle: इतना शुद्ध किदर्द देता है\",\n      \"replacement\": \"subTitle: इतना शुद्ध कि दर्द देता है\",\n      \"reason\": \"Missing space between 'कि' and 'दर्द'.\"\n    }\n  ],\n  \"rationale\": \"The translation accurately captures Dan's voice and technical points overall, and adheres to MDX asset rules. However, Section II's heading and quote were accidentally left in English without translation, and the heading markdown syntax is missing a space ('##II.'). Frontmatter language tag was also left as 'English'.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 5344,
+    "inputTokenDetails": {
+      "noCacheTokens": 161,
+      "cacheReadTokens": 5183,
+      "cacheWriteTokens": 5183
+    },
+    "outputTokens": 500,
+    "outputTokenDetails": {
+      "textTokens": 500,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5844
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a193spdA+f7zU/rg1NDA1OIP9TI8xF8+ckIHH6FSRtyse3uqBzhEJilT9wbvwwWlSvlUVPG0alApEBEScaMSO+uk5qkrtdSbFLdw",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 5344,
+        "promptTokensDetails": {
+          "cachedTokens": 5183
+        },
+        "completionTokens": 500,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5844,
+        "cost": 0.0026004333333333332,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0026004333333333332
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

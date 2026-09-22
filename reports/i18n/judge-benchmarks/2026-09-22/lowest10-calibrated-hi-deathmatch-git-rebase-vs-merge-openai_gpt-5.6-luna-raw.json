@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":63,\"technicalAccuracy\":72,\"coherence\":68,\"relevance\":82,\"translationQuality\":64,\"mdxPreservation\":45,\"culturalAdaptation\":68,\"languagePurity\":78},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\",\"replacement\":\"### (स्क्वैश) मर्ज तरीका\",\"reason\":\"The literal chunk marker is not present in the English source and will render as unwanted page content, disrupting the document structure.\"},{\"priority\":\"high\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"{/*\\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी किसी शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर चाहिए होते हैं—वह भी कमिट इतिहास के बिना?\\n\\n- आप विशेष `--` सेपरेटर का उपयोग `git checkout` के साथ कर सकते हैं, ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते समय वर्तमान शाखा में बने रहें:\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- पहले उन सभी परिवर्तनों को कमिट करना सुनिश्चित करें जिन्हें आप रखना चाहते हैं, क्योंकि यह किसी भी स्थानीय परिवर्तन को ओवरराइट कर देगा।\\n*/}\",\"reason\":\"In the source, the entire bonus section is commented out. Here the comment closes before the bullets, causing hidden source material to render as visible content and changing the published structure.\"},{\"priority\":\"medium\",\"match\":\"या फिर, आपके कमिट ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं?\",\"replacement\":\"या फिर, आपके कमिट ध्यानपूर्वक चुनी और तराशी गई कला-कृतियाँ हैं?\",\"reason\":\"“आकृति-विहीन” means shapeless/formless and reverses the intended meaning of “carefully curated, sculpted work of art.”\"},{\"priority\":\"medium\",\"match\":\"एक और वजह है कि **रीबेसिंग** एक संशोधित इतिहास बनाने में हमेशा **`git merge ...`** की तुलना में अवनत होगा।\",\"replacement\":\"एक और वजह है कि संशोधित इतिहास बनाने के लिए **रीबेसिंग** हमेशा **`git merge ...`** की तुलना में नुकसान में रहेगी।\",\"reason\":\"“अवनत होगा” is unnatural and unclear Hindi for “will always be at a disadvantage,” weakening the technical comparison.\"},{\"priority\":\"medium\",\"match\":\"अंततः **रीबेसिंग का मतलब आपको अप्रासंगिक पुराने कमिट्स और संघर्षों का फिर से अनुभव करना पड़ सकता है**\",\"replacement\":\"अंततः **रीबेसिंग का मतलब है कि आपको अप्रासंगिक पुराने कमिट्स और संघर्षों का फिर से सामना करना पड़ सकता है**\",\"reason\":\"The current phrasing is grammatically awkward; adding “है कि” and using “सामना करना” makes the intended technical meaning clear and natural.\"}],\"rationale\":\"The translation conveys most of the article’s technical argument and preserves the commands and localized asset paths, but it contains a stray chunk marker and exposes a source section that should remain commented out. Several phrases are also awkward or semantically inaccurate, especially the translation of “sculpted work of art.”\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 4842,
+    "inputTokenDetails": {
+      "noCacheTokens": 4842,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 4839
+    },
+    "outputTokens": 1085,
+    "outputTokenDetails": {
+      "textTokens": 851,
+      "reasoningTokens": 234
+    },
+    "totalTokens": 5927
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsv2q4HSyu8y5wFPMwsZsz32kCCfmY0M0pYLm3ZZDmQVDBk7-iSOEcKTGwn54uF-febegOs3r5Td-KUHa-IA2K81-HryqXhEqLGinnZIwWrjIt2fYJgb_B_5OAE7RsMFq3z9OBBBrMiCpnC5Ci8T40AWi5GsoL7LUWAyquJRIazEkLbhcAz2RJELqNpVfq04UFigLom-gvMMAEOCLIhwms57scao48oTDaolIBDIjY31SnEtey2KwsLLjYkvP-R2_6nzfSXW_5SKdU6loxVNoR2pBDqTHIz_b1t779sFGcpj--MjsX3RK6LPmjyGzjzkPdab2FNHUqqPNHlZb4Z5qELhzsFK8NxvNhOaXMqnWgQcKJ0ey9QcobfTQ-OU0RjKhg-p-PaTUUflqueoRInkO4gOBYAfwtlt_IpxPN94WkIpcQekBlerFhU7i-1u2EMjtg5fWDg-Oj0_Y6gfZycRsEaNrz380VNoDbkmcq7zoAJ2xHoHb7mAXnQ1_Hx7CfmWkHPFQd2nQlMUb3SJmMbZ9uGd1Q2xlHOsSvBa57vpH2uS0yAiwa-v1pZXmWJxmi-6RRinr0zYDmHmf2GyEK57DcwNdYWmtP_g57TqOBJ1sH_0ruSiOwJh4WYwFA8axXIwMZcOQO5omqcmfl6_i9TkpPnXc5Z_NQfVwuwkp9rEQZTpmN6IsnAgGxZ9ahNhErbiLcl1YI7VOFlC4_QqN4tfiJ36u9ZMIGERzJ5fsaIh_bMeKV3ilL2KeoUMTzYTVKIo0qlHJp32L6p8UwYDnIjt6sEOHSw4HMDr1qXHC2imVzlrxWs5nKhjGiToKmbvqBNov2BVNF71rkhMlCLkeyjwEnfJwBM23Tyt5JrjxockSAk57xThRdyVUrPlvGRWAT-0qecqsqZeTikyvo44qrMoxgVAtuAFKNmvd16PRrcBZpDlKoGRsmtrFVH5p_ygNjm4ClIArHADjIctKOqVudgEL_U1ffB6g5TLSA6wfoRCYjCv0N5FyHuyO1nnTIkdELMHFPoyNo9GqpvnzRvByCfOCygFiTkQqRpZpKBdOa4xpoEAvH-J9ruyLyn87AVHb7NvXLBLbZ34LmqKHuuL_kG936ujp5cPrq4cEXvGP84HG5t7kJ1e5TwHGqgKL1jEkhSSR1EV4XL19zCPmk68CYGWSSb-lzSXBOc6ObxxigbPECci7GRBkcTrqbpFikfOyJP4BjldJT4j42izLBjVxLp23vwf6W41lVrUTH9vNWVFZZ0iorx6M6zkPTFAE3oeXUeGL103OtEWr4bP9OvflbKna12TiPBayTLJT7cArfCs1a8ZzX6p_Qjm8clyJgexH6nEVGh99AJXp3c8sguNwh6bed4e0FqE75WNq28N6OakUqfzWMG-zzAC7jhXNW3wGJPcFa3VoeBb6tIwd8l5TQr5lo2Z5_3ExCvlYt-tvt9zdM1UkWkYB0eWm2ZPwHDWa6f3hyTrd7TobyNUX-1iS5v0ntZO2N2lJeivQfPajJgzmDmm1Jk_LlQDu_um8gWun5cGju7naD5yZYzTOa7Vmgu6jbzB9rQv-RDpndR25JPPxROCFqYS0YGdr-RCZL_nVH7HNGlZkEJBA99p5Pd_3BNdzHlnc3zjNzA3cpFnkMZVZTkcfm3ezHSs9flMWXVRk2JwmcnW4uJPF9P19-HI5WqsgN6F5ehgBmK2veQUJNDKBnfWVo4e2mStAHG9vCz4m6IwVK2KmZH8N6X28bzvgnZzuMwcJwXjGznOEYTv1xZLi9eigvUYZvRf95gplfrMDwMnUAKvg_eU3LGnjXqjdV16vuYmroKfxLAlrGgTiexT_6l5ZIvlPBQ_4IXjV3f4WzNWt91GNzau32bsMWlLRX3ooFM7awkQpCkWCihVUNATWgroyGqLJ_u8hz222PkdOpYMk9Bbb0M436YC7P5zbI_R0lKNVkJQWCZqFJuEoPUKuJT9hPqBQyrFvVReS-WqS1C133g8lLsmwuj2AePmzFjWtsc9rZtS6OdiU6RgunEVV31fSGrNCMDfOMWfH8Vr3m4q7ciBKLPuyKI_f28WHeUc0asJldo43ln2Icl8E80Uu0aH14_7nBr5jeoNADSy7hMRqU34taspXFYouvDv0ceMmpwjvTKaowj9u5s4EoiD4skEcQbES5cS7UdIrXolgR62BkcC1-hv8GGAtIVKMPSWVr8_Rf3iNlV-96uqvRQTirJJ5BF1J8YX3o2XyRN7pSalzbii-KSwgz0XnqMl_bEAq3j280UL6yWxfiWjMYdpPM-PjbmkXwRirTiVtoRpDuuJeLNhTZq-PzRuXhdTFk9qfjwH_cYZp0wuWpImKCMAQbrKCZ8jGLCk-WHjC1pdZKWCm1VrgfUaBPKfkkf3CMRs-Yg16ynKbDbGX9zbwE_n9ihbooUFe-EfVy3jqGNkVeE0h0n3NxWNOkTmU2O2fZHsBNfFkrf8ADle344ovrlWfx4yCJQm_w61as8h0mby_jPhVKVaIrvezSaUeNHMO480e8uZhsKhcmd-sxvj5DrIK9DD79eTvrteyIuoBDMRf-yQdodZ_Z4e66ZQCY8yjlv5eu7NMo2DCM7SiXI5uum9bx49XUYZFsHwF_fpDwAU-uXLWAXBHlo6iVF29H87v2ij_8DUPspV9lx5rhBCvr2AsC62inqR6FwY0NrpnnhTqd4p2_oelTSFm_NUepY91HVf6s9wXr19jNHc81jwmPXL1LKpe1b3h6Osm-EyTbDvhPUrm8r2nVMvDcsQYTxCJ4d8huD_DUyi8p23u47EPSL_aZLCCbW9YUqfCMTNHbwEqqKBVMAYirMhNnsVIEjZcBh2fltwv3CVIJTR_FiIKquWyJX807DHoh4J5EGzjTEDaRhewrdFGUGrLgbmWZp62ht0i-N-ZGQ==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+          "id": "rs_09f97f7bd47e81bf016ab2fda85fb487d1aad1c630c57effad",
+          "format": "openai-responses-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 4842,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1085,
+        "completionTokensDetails": {
+          "reasoningTokens": 234
+        },
+        "totalTokens": 5927,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00251235
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

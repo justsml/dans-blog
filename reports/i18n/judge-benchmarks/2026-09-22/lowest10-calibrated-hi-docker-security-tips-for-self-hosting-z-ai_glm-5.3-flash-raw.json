@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":60,\"coherence\":65,\"relevance\":95,\"translationQuality\":78,\"mdxPreservation\":45,\"culturalAdaptation\":80,\"languagePurity\":82},\"suggestions\":[{\"priority\":\"high\",\"match\":\"<p className='inset'>💡 सुनिश्चित करें कि सीक्रेट हमेशा अद्वितीय हों। असुरक्षित/हार्ड‑कोडेड डिफ़ॉल्ट्स के साथ चलना असंभव बनाएं।</p>\",\"replacement\":\"{/* <p className='inset'>💡 सुनिश्चित करें कि सीक्रेट हमेशा अद्वितीय हों। असुरक्षित/हार्ड‑कोडेड डिफ़ॉल्ट्स के साथ चलना असंभव बनाएं।</p> */}\",\"reason\":\"In the English source this paragraph is inside the {/* */} TODO comment block (Placeholder Validation moved to Maintainer's Guide). The candidate published it, along with the following prose and the CodeTabs with validateSecrets code, changing the article's published content. The entire block from this paragraph through </CodeTabs> must be re-wrapped in {/* */}.\"},{\"priority\":\"high\",\"match\":\"<CodeTabs client:load tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}>\",\"replacement\":\"{/* <CodeTabs client:load tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}>\",\"reason\":\"This CodeTabs block (and its closing </CodeTabs>) belongs to the commented-out Placeholder Validation section in the English source; it must be commented out, not published.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"A stray closing fence after the ufw allow line splits the script into a broken code block plus raw markdown text, which will render as literal text and break the page structure.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"replacement\":\"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"reason\":\"A stray closing fence after `sudo lsof -i:80 -Pn` breaks the lsof Commands block; the remaining lsof commands render as raw markdown text instead of code.\"},{\"priority\":\"high\",\"match\":\"   ```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\",\"replacement\":\"   ```yaml\\nservices:\\n  webapp:\\n    volumes:\\n      - ./config:/config:ro\\n   ```\",\"reason\":\"The read-only volumes YAML snippet inside list item 2 has broken fencing (stray blank-line fence and wrong closing fence position), so it renders as raw text and breaks the ordered list.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\"reason\":\"Duplicate closing fence after the nmap External Scan block creates an empty stray code fence that breaks MDX rendering.\"},{\"priority\":\"high\",\"match\":\"```nginx\\n\\n# /etc/nginx/conf.d/secure-admin.conf\",\"replacement\":\"```nginx\\n# /etc/nginx/conf.d/secure-admin.conf\",\"reason\":\"Extra blank line plus stray extra closing fences around the nginx and htpasswd blocks (and the Example Scan Commands block) deviate from the source fences and risk broken rendering; remove the stray ``` lines around these blocks.\"},{\"priority\":\"high\",\"match\":\"- [मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\",\"replacement\":\"- [मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट्स-जेनरेट-करें)\",\"reason\":\"Same-page fragment does not match the localized heading '### मजबूत सीक्रेट जनरेट करें' slug (सीक्रेट्स vs सीक्रेट); the link will 404 the anchor.\"},{\"priority\":\"high\",\"match\":\"- [`.env` से macOS कीचेन तक अपग्रेड करें](#upgrade-from-env-to-macos-keychain)\",\"replacement\":\"- [`.env` से macOS कीचेन तक अपग्रेड करें](#env-से-macos-कीचेन-में-अपग्रेड)\",\"reason\":\"Stale English fragment; the heading is now '### `.env` से macOS कीचेन में अपग्रेड', so the anchor must target the localized heading slug.\"},{\"priority\":\"medium\",\"match\":\"- 🔐 [Secrets Management: The Right Way](#-सीक्रेट्स-मैनेजमेंट)\",\"replacement\":\"- 🔐 [सीक्रेट्स मैनेजमेंट: सही तरीका](#-सीक्रेट्स-मैनेजमेंट)\",\"reason\":\"TOC label is left in English while the heading is translated; localize the reader-facing label for consistency (fragment is correct).\"},{\"priority\":\"medium\",\"match\":\"- [कैनरी टोकन्स](#केनरी-टोकन)\",\"replacement\":\"- [केनरी टोकन्स](#केनरी-टोकन)\",\"reason\":\"Spelling inconsistency: body and heading use 'केनरी' but this TOC entry uses 'कैनरी'.\"}],\"rationale\":\"Translation prose is fluent and faithful, but the candidate publishes content that was commented out in the source (Placeholder Validation block) and contains multiple broken code fences (whitelist script, lsof block, read-only YAML, stray fences), plus stale/mismatched same-page anchors. These are high-priority structural and fidelity defects blocking publish.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 27088,
+    "inputTokenDetails": {
+      "noCacheTokens": 27088,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2809,
+    "outputTokenDetails": {
+      "textTokens": 2257,
+      "reasoningTokens": 552
+    },
+    "totalTokens": 29897
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Together",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 27088,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2809,
+        "completionTokensDetails": {
+          "reasoningTokens": 552
+        },
+        "totalTokens": 29897,
+        "cost": 0.0054677,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0054677
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":60,\"technicalAccuracy\":55,\"coherence\":55,\"relevance\":80,\"translationQuality\":60,\"mdxPreservation\":25,\"culturalAdaptation\":65,\"languagePurity\":60},\"suggestions\":[{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\",\"reason\":\"A premature fence closes the code block mid-script. Code then renders as prose and headings, and the fences after it become unbalanced.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"replacement\":\"sudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"reason\":\"A premature fence splits the lsof code block, and a stray fence follows it. This breaks the rendering of everything after it.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\"reason\":\"A stray extra fence opens an unclosed code block.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\\n\\n## ⏰\",\"replacement\":\"fswatch -r /path/to/directory\\n```\\n\\n## ⏰\",\"reason\":\"A stray extra fence breaks the structure of the rest of the document.\"},{\"priority\":\"high\",\"match\":\"*/}\\n\\n<p className='inset'>💡 सुनिश्चित करें\",\"replacement\":\"<p className='inset'>💡 सुनिश्चित करें\",\"reason\":\"The source keeps the whole Placeholder Validation section, including CodeTabs, inside a comment. The candidate closes the comment early, which publishes hidden content. It also changes the tabs prop. The whole block should stay commented, and a matching closing */} must be restored after </CodeTabs>.\"},{\"priority\":\"medium\",\"match\":\"[मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\\n- [कैनरी टोकन्स](#केनरी-टोकन)\\n- [`.env` से macOS कीचेन तक अपग्रेड करें](#upgrade-from-env-to-macos-keychain)\",\"replacement\":\"[मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\\n- [कैनरी टोकन्स](#केनरी-टोकन)\\n- [`.env` से macOS कीचेन तक अपग्रेड करें](#env-से-macos-कीचेन-में-अपग्रेड)\",\"reason\":\"This fragment points to the stale English ID and does not match the localized heading.\"},{\"priority\":\"medium\",\"match\":\"और ऑटोमेशन को बताएं कि कब आगे बढ़ना है।\",\"replacement\":\"और ऑटोमेशन को आपको बताने दें कि कब आगे बढ़ना है।\",\"reason\":\"The meaning is inverted: in the source, automation tells you when to move, not the other way around.\"},{\"priority\":\"medium\",\"match\":\"मूल <cite>क्रेडिट [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) और [Jan Schaumann](https://www.netmeister.org/)</cite> को जाता है।\",\"replacement\":\"मूल क्रेडिट: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) और [Jan Schaumann](https://www.netmeister.org/)।\",\"reason\":\"This adds a <cite> element that is not in the source.\"}],\"rationale\":\"The prose is mostly accurate. However, there are multiple broken code fences, an unintentionally uncommented section, stale anchors, and heading anchors that do not match the localized headings. This is not publishable.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 32450,
+    "inputTokenDetails": {
+      "noCacheTokens": 31689,
+      "cacheReadTokens": 761,
+      "cacheWriteTokens": 31433
+    },
+    "outputTokens": 1527,
+    "outputTokenDetails": {
+      "textTokens": 1527,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 33977
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Claude Platform on AWS",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 32450,
+        "promptTokensDetails": {
+          "cachedTokens": 761
+        },
+        "completionTokens": 1527,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 33977,
+        "cost": 0.1888812,
+        "costDetails": {
+          "upstreamInferenceCost": 0.1888812
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}
