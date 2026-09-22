@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":80,\"technicalAccuracy\":72,\"coherence\":85,\"relevance\":90,\"translationQuality\":78,\"mdxPreservation\":65,\"culturalAdaptation\":85,\"languagePurity\":85},\"suggestions\":[{\"priority\":\"high\",\"match\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"The code fence was prematurely terminated and broken into invalid MDX with extraneous closing fences.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"lsof Commands\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"```bash title=\\\"lsof Commands\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"The lsof command block was broken by premature fence closing, spilling bash code into markdown headers.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\",\"reason\":\"The `block-china.sh` code block was accidentally duplicated.\"},{\"priority\":\"medium\",\"match\":\"- 🔄 [Танец `:latest`](#-the-latest-dance)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-monitoring--verification)\\n- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\\n- 🚀 [Контрольный список для продакшна](#-production-checklist)\\n- 📚 [Дополнительные материалы](#-further-reading)\",\"replacement\":\"- 🔄 [Танец `:latest`](#-танец-latest)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\\n- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\\n- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\\n- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\"reason\":\"Several anchor links in the table of contents still point to stale English heading fragments instead of the localized Russian anchors.\"}],\"rationale\":\"The translation has severe markdown syntax errors where code blocks were split in two and closed prematurely (in `whitelist-ingress-from-cloudflare.sh` and `lsof Commands`), leaving bash code and comments rendered as top-level markdown text and headers. In addition, one code block is duplicated, and multiple table-of-contents anchor links point to stale English anchors.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 19005,
+    "inputTokenDetails": {
+      "noCacheTokens": 368,
+      "cacheReadTokens": 18637,
+      "cacheWriteTokens": 18637
+    },
+    "outputTokens": 1523,
+    "outputTokenDetails": {
+      "textTokens": 1523,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20528
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1845K9KooNUaeI5wUFO9BmySzUDwsSrkDb77MGTG0ElbAQ+C0vhwm4WDmQ5vDgvHaAkywiPkJ4EWgGlobDSNoC2SYLTtJ/u2oMm",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 19005,
+        "promptTokensDetails": {
+          "cachedTokens": 18637
+        },
+        "completionTokens": 1523,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20528,
+        "cost": 0.008161566666666667,
+        "costDetails": {
+          "upstreamInferenceCost": 0.008161566666666667
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

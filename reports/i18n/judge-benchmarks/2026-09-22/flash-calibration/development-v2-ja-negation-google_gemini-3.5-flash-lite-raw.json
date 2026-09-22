@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"119ffdf6cd81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 0,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 50,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 100,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"失敗した支払いは必ず自動的に再試行してください。\",\n      \"replacement\": \"失敗した支払いを自動的に再試行しないでください。\",\n      \"reason\": \"The source states 'Never retry a failed payment automatically', but the candidate translated it to mean the exact opposite ('always retry automatically').\"\n    }\n  ],\n  \"rationale\": \"The translation is fluent and natural, but contains a critical technical accuracy/fidelity error where a negative instruction ('Never retry...') was mistranslated as a positive instruction ('必ず...再試行してください').\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 969,
+    "inputTokenDetails": {
+      "noCacheTokens": 969,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 278,
+    "outputTokenDetails": {
+      "textTokens": 278,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1247
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1/9K1gOkTNCSkWSXbxydmaoGvYgZqEkMDo57kaxKKR+SozA9Zf8sMcqMTx+KzrrbQMxN7L1Ee4cqluq7+b+VfKp9Pv4g3HQyYnPTken+Tc=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 969,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 278,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1247,
+        "cost": 0.0009857,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009857
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

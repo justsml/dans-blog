@@ -1,0 +1,47 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":78,\"coherence\":85,\"relevance\":90,\"translationQuality\":80,\"mdxPreservation\":65,\"culturalAdaptation\":88,\"languagePurity\":82},\"suggestions\":[{\"priority\":\"high\",\"match\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # सभी इनकमिंग को ब्लॉक करें!!!\\nufw default allow outgoing # सभी आउटगोइंग की अनुमति दें\\nufw allow ssh # SSH की अनुमति दें\\n\\n# स्थानीय सबनेट के लिए एक्सेस दें (होस्टेड सर्विसेज़ के लिए समर्पित DMZ/VLAN बेहतर)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"The code fence for whitelist-ingress-from-cloudflare.sh was accidentally broken in two, leaking code and comments as regular markdown prose and leaving a dangling closing code fence.\"},{\"priority\":\"high\",\"match\":\"# सभी पोर्ट्स\\nnmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\",\"replacement\":\"# सभी पोर्ट्स\\nnmap -A -p1-65535 --open --reason $target_host\\n```\",\"reason\":\"An extraneous extra code block closure/fence was added, which corrupts the markdown structure.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# LISTEN स्थिति देखें\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# IP पते के बजाय नेटवर्क नाम दिखाने के लिये (रिवर्स DNS लुकअप धीमा हो सकता है)\\nsudo lsof -i -P | grep LISTEN\\n\\n# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"```bash title=\\\"lsof Commands\\\"\\n# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# LISTEN स्थिति देखें\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# IP पते के बजाय नेटवर्क नाम दिखाने के लिये (रिवर्स DNS लुकअप धीमा हो सकता है)\\nsudo lsof -i -P | grep LISTEN\\n\\n# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"The lsof command block was prematurely closed, ejecting the remaining commands and bash comments into raw markdown with an orphaned closing fence.\"},{\"priority\":\"medium\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"fswatch -r /path/to/directory\\n```\",\"reason\":\"There is an unnecessary trailing code block delimiter (` ``` `) after the fswatch code snippet.\"}],\"rationale\":\"The translation text itself is generally fluent and accurate in Hindi, but multiple code blocks were severely damaged during editing (prematurely closed code fences that spilled shell commands into markdown prose, accompanied by orphaned closing triple backticks). These syntax errors break MDX compilation/rendering and require high-priority fixes.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 18881,
+    "inputTokenDetails": {
+      "noCacheTokens": 367,
+      "cacheReadTokens": 18514,
+      "cacheWriteTokens": 18514
+    },
+    "outputTokens": 1104,
+    "outputTokenDetails": {
+      "textTokens": 1104,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19985
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+3ZZJaMIvDBcW9GySbe5shUf529E/yqgaIU9aeADTebkCmYKJABqbhxHtlIv6PnkeF3C4lh24AipxbcHY6PIm5mT6gHUwigwH7",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 18881,
+        "promptTokensDetails": {
+          "cachedTokens": 18514
+        },
+        "completionTokens": 1104,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19985,
+        "cost": 0.006575216666666666,
+        "costDetails": {
+          "upstreamInferenceCost": 0.006575216666666666
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

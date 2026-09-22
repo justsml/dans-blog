@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":65,\"coherence\":70,\"relevance\":95,\"translationQuality\":70,\"mdxPreservation\":45,\"culturalAdaptation\":80,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\"reason\":\"A stray closing fence after the nmap external scan block breaks the code fence structure and renders the following content incorrectly.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"replacement\":\"sudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"reason\":\"The lsof Commands fence is closed early and a stray ``` appears later; the whole lsof command set must remain inside one bash fence as in the source.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\",\"reason\":\"The whitelist-ingress-from-cloudflare.sh fence is closed mid-script, leaving the CloudFlare IP allow commands outside the code block, breaking the executable script rendering.\"},{\"priority\":\"high\",\"match\":\"```yaml\\n\\nservices:\\n     webapp:\",\"replacement\":\"```yaml\\nservices:\\n  webapp:\",\"reason\":\"A stray blank line/fence break inside the read-only volumes yaml snippet corrupts the code block; it must be a single intact yaml fence.\"},{\"priority\":\"high\",\"match\":\"secret isn't secret!</blockquote>\\n*/}\\n\\n<p className='inset'>💡 सुनिश्चित\",\"replacement\":\"secret isn't secret!</blockquote>\\n\\n<p className='inset'>💡 सुनिश्चित\",\"reason\":\"The Placeholder Validation section is commented out in the source ({/* ... */}) but the candidate renders the inset paragraph, placeholder prose, and the whole JavaScript/Rust/Go CodeTabs live. The comment must remain open through </CodeTabs> and close before the 'Generate Strong Secrets' heading.\"},{\"priority\":\"high\",\"match\":\"</CodeTabs>\\n\\n### मजबूत सीक्रेट जनरेट करें\",\"replacement\":\"</CodeTabs>\\n*/}\\n\\n### मजबूत सीक्रेट जनरेट करें\",\"reason\":\"Closes the Placeholder Validation comment block that was incorrectly left open, restoring source structure (this commented-out content must not render).\"},{\"priority\":\"medium\",\"match\":\"tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}\",\"replacement\":\"tabs={[\\\"Helper commands\\\", \\\"Persist secrets in environment\\\", \\\"Use secrets per command\\\"]}\",\"reason\":\"CodeTabs prop values were changed from the source tab labels; component prop values must be preserved.\"},{\"priority\":\"medium\",\"match\":\"मूल <cite>क्रेडिट [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) और [Jan Schaumann](https://www.netmeister.org/)</cite> को जाता है।\",\"replacement\":\"Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) और [Jan Schaumann](https://www.netmeister.org/).\",\"reason\":\"An unsupported <cite> element was invented; the source uses plain text 'Original credit:' with markdown links.\"},{\"priority\":\"medium\",\"match\":\"## 🧗‍♀️ For the brave\",\"replacement\":\"## 🧗‍♀️ बहादुरों के लिए\",\"reason\":\"Reader-facing heading left in English; headings should be localized, and the TOC fragment (#️-for-the-brave) must be updated to match the translated heading ID. Similar untranslated headings remain (The Safe Way to Update, Example Docker Compose, Network Best Practices, Access Controls, Limiting Container Capabilities, Docker Socket Access, View Open Ports, Further Reading, Production Checklist, etc.).\"},{\"priority\":\"medium\",\"match\":\"- 🔐 [Secrets Management: The Right Way](#-सीक्रेट्स-मैनेजमेंट)\",\"replacement\":\"- 🔐 [सीक्रेट्स मैनेजमेंट](#-सीक्रेट्स-मैनेजमेंट)\",\"reason\":\"TOC link text is English while the target heading is Hindi; TOC entries should match the localized headings they link to.\"}],\"rationale\":\"Prose translation is largely faithful and natural, but the candidate has multiple broken code fences (nmap, lsof, cloudflare whitelist, yaml volumes), renders source-commented-out Placeholder Validation content live, alters CodeTabs prop values, invents a <cite> element, and leaves many reader-facing headings and TOC entries in English. These medium/high defects block publish readiness.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 27289,
+    "inputTokenDetails": {
+      "noCacheTokens": 27289,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2715,
+    "outputTokenDetails": {
+      "textTokens": 1267,
+      "reasoningTokens": 1448
+    },
+    "totalTokens": 30004
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 27289,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2715,
+        "completionTokensDetails": {
+          "reasoningTokens": 1448
+        },
+        "totalTokens": 30004,
+        "cost": 0.00545085,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00545085
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

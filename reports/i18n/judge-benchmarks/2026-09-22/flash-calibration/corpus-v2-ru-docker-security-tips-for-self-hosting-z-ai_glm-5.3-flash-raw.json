@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":60,\"coherence\":55,\"relevance\":90,\"translationQuality\":60,\"mdxPreservation\":40,\"culturalAdaptation\":80,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"- 🔄 [Танец `:latest`](#-the-latest-dance)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-monitoring--verification)\\n- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\\n- 🚀 [Контрольный список для продакшна](#-production-checklist)\\n- 📚 [Дополнительные материалы](#-further-reading)\",\"replacement\":\"- 🔄 [Танец `:latest`](#-танец-latest)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\\n- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\\n- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\\n- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\"reason\":\"TOC fragments point to stale English heading IDs while the headings themselves are translated; same-page links must target localized heading IDs.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\\n\\nАналогично\",\"replacement\":\"Проверьте этот скрипт для блокировки всего трафика из Китая:\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\nАналогично\",\"reason\":\"The block-china.sh fence is duplicated and the introductory sentence 'Check out this script to block all traffic from China:' was dropped.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"The whitelist-ingress-from-cloudflare.sh code fence is broken: the CloudFlare IP loop was pushed outside the fence and a stray closing fence was added, breaking the rendered script.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"The lsof commands fence is broken: most commands were pushed outside the code block with a stray closing fence.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Тестирование внутри вашей сети\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Тестирование внутри вашей сети\",\"reason\":\"A stray empty code fence was inserted after the nmap external scan block, breaking MDX structure.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"fswatch -r /path/to/directory\\n```\",\"reason\":\"A stray closing fence after the fswatch block breaks the MDX structure.\"},{\"priority\":\"high\",\"match\":\"   ```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\",\"replacement\":\"   ```yaml\\nservices:\\n  webapp:\\n    volumes:\\n      - ./config:/config:ro\\n   ```\",\"reason\":\"The read-only volumes YAML fence is broken: the closing fence is misaligned/detached, so the YAML renders as prose.\"},{\"priority\":\"high\",\"match\":\"- [Check Your Ports](#check-your-ports)\\n- [View Open Ports](#view-open-ports)\\n- [File Monitoring](#file-monitoring)\",\"replacement\":\"- [Проверьте свои порты](#проверьте-свои-порты)\\n- [Просмотр открытых портов](#просмотр-открытых-портов)\\n- [Мониторинг файлов](#мониторинг-файлов)\",\"reason\":\"Sub-TOC links use stale English fragments while the headings are translated; they must target the localized heading IDs.\"},{\"priority\":\"high\",\"match\":\"- [Блокировка стран!](#blocking-country)\\n- [Ужесточение CloudFlare Proxy Host](#hardening-cloudflare-proxy-host)\",\"replacement\":\"- [Блокировка стран!](#блокировка-по-странам)\\n- [Ужесточение CloudFlare Proxy Host](#ужесточение-хоста-прокси-cloudflare)\",\"reason\":\"Stale English fragments for translated headings 'Блокировка по странам!' and 'Ужесточение хоста‑прокси CloudFlare'.\"},{\"priority\":\"high\",\"match\":\"## 📚 Further Reading\",\"replacement\":\"## 📚 Дополнительные материалы\",\"reason\":\"Reader-facing heading left in English; TOC already links to a translated fragment.\"},{\"priority\":\"medium\",\"match\":\"Мы такжесравним\",\"replacement\":\"Мы также сравним\",\"reason\":\"Missing space between words.\"},{\"priority\":\"medium\",\"match\":\"Вот небольшойскрипт\",\"replacement\":\"Вот небольшой скрипт\",\"reason\":\"Missing space between words.\"},{\"priority\":\"medium\",\"match\":\"может оказаться, что работы ещё не достаточно.\",\"replacement\":\"может оказаться, что работы ещё немало.\",\"reason\":\"Grammatical error: 'работы ещё не достаточно' is ungrammatical in Russian.\"}],\"rationale\":\"Translation prose is largely faithful and natural, but multiple code fences are broken (whitelist-ingress, lsof, fswatch, nmap, ro-yaml), a script block is duplicated with its intro sentence dropped, and many same-page links retain stale English fragments despite translated headings. These are high-priority MDX/technical defects blocking publish.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 17754,
+    "inputTokenDetails": {
+      "noCacheTokens": 346,
+      "cacheReadTokens": 17408,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2414,
+    "outputTokenDetails": {
+      "textTokens": 2015,
+      "reasoningTokens": 399
+    },
+    "totalTokens": 20168
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 17754,
+        "promptTokensDetails": {
+          "cachedTokens": 17408
+        },
+        "completionTokens": 2414,
+        "completionTokensDetails": {
+          "reasoningTokens": 399
+        },
+        "totalTokens": 20168,
+        "cost": 0.0021293,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0021293
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

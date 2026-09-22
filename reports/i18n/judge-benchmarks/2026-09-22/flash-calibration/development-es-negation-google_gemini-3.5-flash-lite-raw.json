@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d4b2b923c161\",\n  \"selectedModel\": \"gpt-4o\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 0,\n    \"coherence\": 0,\n    \"relevance\": 100,\n    \"translationQuality\": 0,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 0,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"Reintenta siempre automáticamente un pago fallido.\",\n      \"replacement\": \"Nunca reintentes automáticamente un pago fallido.\",\n      \"reason\": \"The source text states 'Never retry a failed payment automatically', but the candidate translated it as 'Always retry a failed payment automatically', which reverses the technical instruction.\"\n    }\n  ],\n  \"rationale\": \"The candidate mistranslated 'Never' as 'Always' ('Nunca' vs 'Siempre'), which completely reverses a critical business logic/technical instruction regarding failed payments.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 897,
+    "inputTokenDetails": {
+      "noCacheTokens": 897,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 272,
+    "outputTokenDetails": {
+      "textTokens": 272,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1169
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+VSowK3FIMhVsdI7bySsJaJX2mFpyFDCnUbQ11hRZIkHqrWX9+ORQPMlTvq5BNjSki0DjGLA+nB1cRtzYT4eG8AoYVJXdYZ+2BZRxkQSk=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 897,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 272,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1169,
+        "cost": 0.0009491,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009491
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

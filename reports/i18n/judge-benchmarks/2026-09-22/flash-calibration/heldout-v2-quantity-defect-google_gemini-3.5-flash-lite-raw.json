@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d1b6c0a69bd5\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 95,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 95,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Espera como máximo 12 segundos\",\n      \"replacement\": \"Espera al menos 12 segundos\",\n      \"reason\": \"The source says 'Wait at least 12 seconds', but 'como máximo' means 'at most', which contradicts the instruction.\"\n    }\n  ],\n  \"rationale\": \"The translation is generally accurate and natural, but 'at least' was incorrectly translated as 'como máximo' (at most), which changes the technical meaning.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 899,
+    "inputTokenDetails": {
+      "noCacheTokens": 899,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 264,
+    "outputTokenDetails": {
+      "textTokens": 264,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1163
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19ugTMcXKKHUt7rpHtEfhXLkpyPpzLGnm3EAYaHYjenBwlBMhjrV5m5gJyPZQWu1FOheWw2iFsiUraLMxqB/af7cWXSXKyNiU5f878CqBM=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 899,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 264,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1163,
+        "cost": 0.0009297,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009297
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

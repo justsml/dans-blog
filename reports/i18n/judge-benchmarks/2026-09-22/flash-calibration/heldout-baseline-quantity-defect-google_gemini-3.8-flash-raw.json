@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d1b6c0a69bd5\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 90,\n    \"technicalAccuracy\": 20,\n    \"coherence\": 85,\n    \"relevance\": 90,\n    \"translationQuality\": 40,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"Espera como máximo 12 segundos\",\n      \"replacement\": \"Espera al menos 12 segundos\",\n      \"reason\": \"Critical technical inversion: 'at least 12 seconds' means minimum 12 seconds ('al menos' / 'como mínimo'), but 'como máximo' means at most / maximum 12 seconds.\"\n    }\n  ],\n  \"rationale\": \"The translation commits a critical meaning inversion: 'at least' was translated as 'como máximo' (at most), which completely reverses the technical constraint.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 692,
+    "inputTokenDetails": {
+      "noCacheTokens": 692,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 274,
+    "outputTokenDetails": {
+      "textTokens": 274,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 966
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a186UTB6j+nYiX7qPH7zPaqeqGAo5s8jXXlBDAipnz/DKPjtRSxjyYiFDg3VJN6H/XXHjeSoubunMeNll8sd/cY4SR8smiRvLG1i",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 692,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 274,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 966,
+        "cost": 0.0015465,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0015465
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

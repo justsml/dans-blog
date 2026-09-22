@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"119ffdf6cd81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 0,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 0,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 100,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"失敗した支払いは必ず自動的に再試行してください。\",\n      \"replacement\": \"失敗した支払いは絶対に自動で再試行しないでください。\",\n      \"reason\": \"The source says 'Never retry a failed payment automatically.', but the candidate mistranslated it to mean the exact opposite ('必ず自動的に再試行してください', meaning 'Always retry automatically').\"\n    }\n  ],\n  \"rationale\": \"The translation has a critical technical/factual accuracy error, completely reversing the instruction regarding retrying failed payments ('Never' vs '必ず').\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 903,
+    "inputTokenDetails": {
+      "noCacheTokens": 903,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 277,
+    "outputTokenDetails": {
+      "textTokens": 277,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1180
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a182tnwFSl0WS8gpF0+4wnBS2jL1oZZzoWmP/X/ZDskTaxU0CHvqr8csmCbyFsgMBKA5VPGPXPXfigIICw7KzCVS1No/8f5LkCu8L+TxRIM=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 903,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 277,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1180,
+        "cost": 0.0009634,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009634
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

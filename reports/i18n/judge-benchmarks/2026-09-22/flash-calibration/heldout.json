@@ -1,0 +1,74 @@
+[
+  {
+    "id": "quantity-clean",
+    "locale": "es",
+    "source": "# Timeout\n\nWait at least 12 seconds before reconnecting.\n",
+    "target": "# Tiempo de espera\n\nEspera al menos 12 segundos antes de volver a conectarte.\n",
+    "expectedReady": true,
+    "split": "heldout",
+    "defect": null
+  },
+  {
+    "id": "quantity-defect",
+    "locale": "es",
+    "source": "# Timeout\n\nWait at least 12 seconds before reconnecting.\n",
+    "target": "# Tiempo de espera\n\nEspera como máximo 12 segundos antes de volver a conectarte.\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Minimum reversed into maximum"
+  },
+  {
+    "id": "coverage-clean",
+    "locale": "es",
+    "source": "# Backups\n\nBack up your files every week.\n\nStore a second copy on a separate drive. Test that you can restore it before deleting the original.\n",
+    "target": "# Copias de seguridad\n\nHaz una copia de seguridad de tus archivos cada semana.\n\nGuarda una segunda copia en otra unidad. Comprueba que puedes restaurarla antes de borrar el original.\n",
+    "expectedReady": true,
+    "split": "heldout",
+    "defect": null
+  },
+  {
+    "id": "coverage-defect",
+    "locale": "es",
+    "source": "# Backups\n\nBack up your files every week.\n\nStore a second copy on a separate drive. Test that you can restore it before deleting the original.\n",
+    "target": "# Copias de seguridad\n\nHaz una copia de seguridad de tus archivos cada semana.\n\nStore a second copy on a separate drive. Test that you can restore it before deleting the original.\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Whole English closing paragraph remains"
+  },
+  {
+    "id": "paths-clean",
+    "locale": "es",
+    "source": "---\ntitle: Search\ndate: 2026-09-01\ncover: ./cover.webp\n---\n# Search\n\nLoad the stylesheet.\n\n```html\n<link rel=\"stylesheet\" href=\"/search/ui.css\">\n```\n",
+    "target": "---\ntitle: Búsqueda\ncover: ../cover.webp\n---\n# Búsqueda\n\nCarga la hoja de estilos.\n\n```html\n<link rel=\"stylesheet\" href=\"/search/ui.css\">\n```\n",
+    "expectedReady": true,
+    "split": "heldout",
+    "defect": null
+  },
+  {
+    "id": "paths-defect",
+    "locale": "es",
+    "source": "---\ntitle: Search\ndate: 2026-09-01\ncover: ./cover.webp\n---\n# Search\n\nLoad the stylesheet.\n\n```html\n<link rel=\"stylesheet\" href=\"/search/ui.css\">\n```\n",
+    "target": "---\ntitle: Búsqueda\ncover: ../cover.webp\n---\n# Búsqueda\n\nCarga la hoja de estilos.\n\n```html\n<link rel=\"stylesheet\" href=\"../search/ui.css\">\n```\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Executable absolute path becomes relative; cover path and omitted date are correct"
+  },
+  {
+    "id": "anchors-clean",
+    "locale": "es",
+    "source": "# Guide\n\nSee the [summary](#summary).\n\n## Summary\n\nKeep a backup.\n",
+    "target": "# Guía\n\nConsulta el [resumen](#resumen).\n\n## Resumen\n\nConserva una copia de seguridad.\n",
+    "expectedReady": true,
+    "split": "heldout",
+    "defect": null
+  },
+  {
+    "id": "anchors-defect",
+    "locale": "es",
+    "source": "# Guide\n\nSee the [summary](#summary).\n\n## Summary\n\nKeep a backup.\n",
+    "target": "# Guía\n\nConsulta el [resumen](#summary).\n\n## Resumen\n\nConserva una copia de seguridad.\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Link fails to target localized heading"
+  }
+]

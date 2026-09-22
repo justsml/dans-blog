@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"6a827cdac93a\",\n  \"selectedModel\": \"gpt-4o\",\n  \"scores\": {\n    \"readability\": 98,\n    \"technicalAccuracy\": 98,\n    \"coherence\": 98,\n    \"relevance\": 100,\n    \"translationQuality\": 98,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 98\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"-- Use BIGINT\\n    SELECT 256::bigint * 256 * 256 * 256;\\n\\n    -- Or numeric for arbitrary precision\\n    SELECT 256::numeric * 256 * 256 * 256;\",\n      \"replacement\": \"-- Verwenden Sie BIGINT\\n    SELECT 256::bigint * 256 * 256 * 256;\\n\\n    -- Oder numeric für beliebige Präzision\\n    SELECT 256::numeric * 256 * 256 * 256;\",\n      \"reason\": \"Translate comment lines inside the SQL code block for consistency with target language readership.\"\n    }\n  ],\n  \"rationale\": \"The translation is extremely accurate, maintains all MDX structures and component props, correctly formats frontmatter with localized paths and sourceHash, and provides high-quality German prose. Minor untranslated SQL comments inside one block can be localized for completeness.\",\n  \"publishReady\": true\n}\n```",
+  "usage": {
+    "inputTokens": 10919,
+    "inputTokenDetails": {
+      "noCacheTokens": 366,
+      "cacheReadTokens": 10553,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 388,
+    "outputTokenDetails": {
+      "textTokens": 388,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 11307
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19K1CtZhE0zs3yGyQsz9XXtuOrNS5gsg06YrzhYCgOiPLPkyY3hNrKoN1XHkxAF6CQd8DjW1oAWCu9N7qRzA30aQXU59r3eQ7utQVUmjCc=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 10919,
+        "promptTokensDetails": {
+          "cachedTokens": 10553
+        },
+        "completionTokens": 388,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 11307,
+        "cost": 0.00139639,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00139639
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

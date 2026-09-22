@@ -49,6 +49,51 @@
       "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above.",
       "createdAt": "2026-09-22T00:00:00.000Z",
       "updatedAt": "2026-09-22T00:00:00.000Z"
+    },
+    {
+      "id": "judge-glm-5.3-flash-evidence-audit",
+      "kind": "judge",
+      "locale": "*",
+      "modelPattern": "z-ai/glm-5.3-flash",
+      "contentKind": "*",
+      "version": 1,
+      "status": "active",
+      "basedOn": "legacy-i18n-prompts",
+      "notes": "2026-09-22 limited calibration: two development rounds, eight new Spanish controls, and ten reused natural translations. See reports/i18n/judge-benchmarks/2026-09-22/flash-calibration/findings.md. Controls remained 8/8; this does not establish human-rated natural-translation recall. Quiz JSON recovered, but a different article hit the 16k limit.",
+      "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above.",
+      "appendDynamic": "Before assigning scores, compare source and target for omitted or untranslated prose (including tables and closing paragraphs), reversed claims, changed quantities, executable code and URL literals, and quiz answer flags. The locale-relative image rule does not permit changing absolute URLs inside executable code. Report concrete defects using short exact target snippets; do not invent defects or require stylistic rewrites of accurate natural translations. Reconcile publishReady with your findings: unresolved medium/high corrections mean false. Return one compact valid JSON object: numeric scores as digits, JSON booleans, escaped quotes/newlines in strings, no trailing commas. Do not print your audit checklist. Check the entire document, not just the first defect. Report each distinct serious defect category, including both untranslated paragraphs and changed code if both occur. Keep each match and replacement to the shortest useful exact span; do not rewrite whole paragraphs. Verify every suggestion object has priority, match, replacement and reason inside the same braces.",
+      "createdAt": "2026-09-22T00:00:00.000Z",
+      "updatedAt": "2026-09-22T00:00:00.000Z"
+    },
+    {
+      "id": "judge-gemini-3.8-flash-evidence-audit",
+      "kind": "judge",
+      "locale": "*",
+      "modelPattern": "google/gemini-3.8-flash",
+      "contentKind": "*",
+      "version": 1,
+      "status": "active",
+      "basedOn": "legacy-i18n-prompts",
+      "notes": "2026-09-22 limited calibration: two development rounds, eight new Spanish controls, and ten reused natural translations. See reports/i18n/judge-benchmarks/2026-09-22/flash-calibration/findings.md. Controls remained 8/8; this does not establish human-rated natural-translation recall.",
+      "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above.",
+      "appendDynamic": "Before assigning scores, compare source and target for omitted or untranslated prose (including tables and closing paragraphs), reversed claims, changed quantities, executable code and URL literals, and quiz answer flags. The locale-relative image rule does not permit changing absolute URLs inside executable code. Report concrete defects using short exact target snippets; do not invent defects or require stylistic rewrites of accurate natural translations. Reconcile publishReady with your findings: unresolved medium/high corrections mean false. Return one compact valid JSON object: numeric scores as digits, JSON booleans, escaped quotes/newlines in strings, no trailing commas. Do not print your audit checklist. Check the entire document, not just the first defect. Report each distinct serious defect category, including both untranslated paragraphs and changed code if both occur. Keep each match and replacement to the shortest useful exact span; do not rewrite whole paragraphs. Verify every suggestion object has priority, match, replacement and reason inside the same braces.",
+      "createdAt": "2026-09-22T00:00:00.000Z",
+      "updatedAt": "2026-09-22T00:00:00.000Z"
+    },
+    {
+      "id": "judge-gemini-3.5-flash-lite-evidence-audit",
+      "kind": "judge",
+      "locale": "*",
+      "modelPattern": "google/gemini-3.5-flash-lite",
+      "contentKind": "*",
+      "version": 1,
+      "status": "active",
+      "basedOn": "legacy-i18n-prompts",
+      "notes": "2026-09-22 limited calibration: two development rounds, eight new Spanish controls, and ten reused natural translations. See reports/i18n/judge-benchmarks/2026-09-22/flash-calibration/findings.md. Flash Lite improved controls from 6/8 to 8/8 but still misses full-document defects and produces readiness contradictions; require independent checks.",
+      "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above.",
+      "appendDynamic": "Before assigning scores, compare source and target for omitted or untranslated prose (including tables and closing paragraphs), reversed claims, changed quantities, executable code and URL literals, and quiz answer flags. The locale-relative image rule does not permit changing absolute URLs inside executable code. Report concrete defects using short exact target snippets; do not invent defects or require stylistic rewrites of accurate natural translations. Reconcile publishReady with your findings: unresolved medium/high corrections mean false. Return one compact valid JSON object: numeric scores as digits, JSON booleans, escaped quotes/newlines in strings, no trailing commas. Do not print your audit checklist. Check the entire document, not just the first defect. Report each distinct serious defect category, including both untranslated paragraphs and changed code if both occur. Keep each match and replacement to the shortest useful exact span; do not rewrite whole paragraphs. Verify every suggestion object has priority, match, replacement and reason inside the same braces.",
+      "createdAt": "2026-09-22T00:00:00.000Z",
+      "updatedAt": "2026-09-22T00:00:00.000Z"
     }
   ]
 }

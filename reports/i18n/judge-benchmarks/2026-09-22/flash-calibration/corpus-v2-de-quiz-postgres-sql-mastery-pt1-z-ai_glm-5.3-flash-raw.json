@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":72,\"coherence\":70,\"relevance\":95,\"translationQuality\":72,\"mdxPreservation\":60,\"culturalAdaptation\":85,\"languagePurity\":75},\"suggestions\":[{\"priority\":\"high\",\"match\":\"## Schwindelerregende Datentypen\\n\\n<Challenge\",\"replacement\":\"## Schwindelerregende Datentypen\\n\\nIch bin sicher, du hast *so viele* Typen in PostgreSQL verwendet, oder?\\n\\nDie nächsten Fragen handeln von Postgres' nativen Typen in v17. 🤯\\n\\nIdentifiziere bei jeder Frage den **einen ungültigen Typ**. 🕵️‍♂️\\n\\n<p class=\\\"inset\\\">Weiter geht's!</p>\\n\\n<Challenge\",\"reason\":\"Three prose paragraphs and the inset paragraph between the heading and the first Challenge were omitted entirely; this is untranslated/missing source content.\"},{\"priority\":\"high\",\"match\":\"{text: 'Sie sind identisch.'},\",\"replacement\":\"{text: 'Sie sind seit Pg v10 austauschbar'},\",\"reason\":\"Quiz option 2 in Challenge 4 changed meaning: source says 'They\\\\'re interchangeable since Pg v10', not 'they are identical'.\"},{\"priority\":\"high\",\"match\":\"Du hast inmehreren Bereichen\",\"replacement\":\"Du hast in mehreren Bereichen\",\"reason\":\"Missing space produces the non-word 'inmehreren' in the closing paragraph.\"},{\"priority\":\"medium\",\"match\":\"Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?\",\"replacement\":\"Welche davon ist ❌ kein gültiger PostgreSQL‑Typ?\",\"reason\":\"'Welche dieser ist' is ungrammatical German; occurs in several questions (also 'Welcher dieser ist' → 'Welcher davon ist').\"},{\"priority\":\"medium\",\"match\":\"Können vorhandene Zeilen später mit `VALIDATE CONSTRAINT` validieren\",\"replacement\":\"Können vorhandene Zeilen später mit `VALIDATE CONSTRAINT` validiert werden\",\"reason\":\"Grammatical error: the rows cannot 'validate'; passive construction is required.\"}],\"rationale\":\"Translation is largely faithful and well-localized, but an entire prose block under the 'Dizzying Types' heading was dropped, one quiz option's meaning was altered, and there are several grammar defects (missing space, 'Welche dieser', passive voice). These unresolved medium/high fixes block publish readiness.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9886,
+    "inputTokenDetails": {
+      "noCacheTokens": 158,
+      "cacheReadTokens": 9728,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 853,
+    "outputTokenDetails": {
+      "textTokens": 536,
+      "reasoningTokens": 317
+    },
+    "totalTokens": 10739
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 9886,
+        "promptTokensDetails": {
+          "cachedTokens": 9728
+        },
+        "completionTokens": 853,
+        "completionTokensDetails": {
+          "reasoningTokens": 317
+        },
+        "totalTokens": 10739,
+        "cost": 0.0009366,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009366
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

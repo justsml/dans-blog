@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":78,\"technicalAccuracy\":75,\"coherence\":78,\"relevance\":95,\"translationQuality\":75,\"mdxPreservation\":70,\"culturalAdaptation\":80,\"languagePurity\":75},\"suggestions\":[{\"priority\":\"high\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\",\"replacement\":\"<!--\\n#### बोनस: रिलीज टिप्स\",\"reason\":\"In the source the entire Bonus section including its bullet list is commented out; the candidate only comments the heading and first paragraph, leaving the following bullets rendered as visible content.\"},{\"priority\":\"high\",\"match\":\"- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\"replacement\":\"<!-- - आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\"reason\":\"These bonus bullets must remain inside the comment block as in the English source; uncommented they publish hidden draft content.\"},{\"priority\":\"medium\",\"match\":\"जिसमें `मेन` पर कुछ हालिया कमिट्स को छोड़कर\",\"replacement\":\"जिसमें `main` पर कुछ हालिया कमिट्स को छोड़कर\",\"reason\":\"Branch name `main` is a code-adjacent identifier and must not be translated to `मेन`.\"},{\"priority\":\"medium\",\"match\":\"**एसक्वेश मर्ज** करें अपने PR को\",\"replacement\":\"**स्क्वैश मर्ज** करें अपने PR को\",\"reason\":\"Misspelling of Squash Merge; the section elsewhere uses स्क्वैश, and this is the key quiz answer.\"},{\"priority\":\"medium\",\"match\":\"आपके कमिट ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं\",\"replacement\":\"आपके कमिट ध्यानपूर्वक चुने हुए, तराशे हुए कला के टुकड़े हैं\",\"reason\":\"\\\"आकृति-विहीन\\\" means shapeless, reversing the meaning of \\\"sculpted work of art\\\".\"},{\"priority\":\"medium\",\"match\":\"यह तय करना कि कमिट रणनीति के आसपास कितने अलग-अलग मानसिक मॉडल हैं, इसलिए\",\"replacement\":\"चूंकि कमिट रणनीति के आसपास बहुत अलग-अलग मानसिक मॉडल हैं, इसलिए\",\"reason\":\"\\\"Given that there are very different mindsets\\\" was mistranslated as deciding how many mindsets exist, distorting the sentence.\"},{\"priority\":\"medium\",\"match\":\"{/* पोस्टग्रेस जैसे ओपन सोर्स प्रोजेक्ट के लिए\",\"replacement\":\"<!-- पोस्टग्रेस जैसे ओपन सोर्स प्रोजेक्ट के लिए\",\"reason\":\"HTML comments were converted to JSX comments throughout; preserving the original <!-- --> comment syntax is safer for MDX structure fidelity.\"}],\"rationale\":\"Translation is largely faithful and natural, but the Bonus section's bullet list was incorrectly left uncommented (publishing hidden content), the branch name `main` was translated, the key answer 'Squash Merge' is misspelled, and several meaning distortions (sculpted art, mindset sentence) remain. Not publish-ready.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 8278,
+    "inputTokenDetails": {
+      "noCacheTokens": 8278,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1459,
+    "outputTokenDetails": {
+      "textTokens": 988,
+      "reasoningTokens": 471
+    },
+    "totalTokens": 9737
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 8278,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1459,
+        "completionTokensDetails": {
+          "reasoningTokens": 471
+        },
+        "totalTokens": 9737,
+        "cost": 0.0019712,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0019712
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"f61625d30150\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 80,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 90,\n    \"mdxPreservation\": 80,\n    \"culturalAdaptation\": 100,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"href=\\\"../search/ui.css\\\"\",\n      \"replacement\": \"href=\\\"/search/ui.css\\\"\",\n      \"reason\": \"Absolute URLs inside executable code (like HTML link hrefs) must not be changed to relative paths.\"\n    }\n  ],\n  \"rationale\": \"The translation is generally accurate and natural, but the CSS stylesheet URL inside the HTML code block was incorrectly changed from an absolute path ('/search/ui.css') to a relative path ('../search/ui.css'). Absolute URLs inside executable code must be preserved.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 972,
+    "inputTokenDetails": {
+      "noCacheTokens": 972,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 281,
+    "outputTokenDetails": {
+      "textTokens": 281,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1253
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a18fOzgpcugKVYPm3tXjUOGp07wTGti3Vm8gCYvodxXokIWuA9nlr8LaPlOaqV72X364s0fa4JrgeUqMOgix7Dru/h8wICOXKpXxlQKGsj0=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 972,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 281,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1253,
+        "cost": 0.0009941,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009941
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,47 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":84,\"coherence\":82,\"relevance\":90,\"translationQuality\":82,\"mdxPreservation\":70,\"culturalAdaptation\":80,\"languagePurity\":85},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\",\"replacement\":\"### (स्क्वैश) मर्ज तरीका\",\"reason\":\"Catastrophic translation artifact: raw prompt/chunk separator '--- CHUNK END ---' leaked into published body markdown.\"},{\"priority\":\"medium\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"{/*\\n#### Bonus: Releases Tip\\n\\nEver need just an individual file or a few folders from a branch? Without the commit history?\\n\\n- You can use the special \\\"--\\\" separator with `git checkout` to stay in the current branch while copying the specified files:\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- Make sure you've committed any changes you want to keep first, as this will overwrite any local changes.\\n*/}\",\"reason\":\"The entire 'Bonus: Releases Tip' block was commented out in the original source, but the candidate only commented out part of it, accidentally exposing the list items into the rendered document.\"}],\"rationale\":\"The translation leaks internal LLM/pipeline chunking artifacts ('--- CHUNK END ---') and exposes content that was originally commented out in the source file. These MDX structural errors must be fixed before publishing.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 5060,
+    "inputTokenDetails": {
+      "noCacheTokens": 369,
+      "cacheReadTokens": 4691,
+      "cacheWriteTokens": 4691
+    },
+    "outputTokens": 493,
+    "outputTokenDetails": {
+      "textTokens": 493,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5553
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+S3ri/9CUk3dylMgaQU284oIkjtlM6XFHGb/quVElEo3wRiqcxr1Y/BiAgAEJrKJA6vHRnz4HJ7E6gqU8iPXQxWLzDnjMeflnM",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 5060,
+        "promptTokensDetails": {
+          "cachedTokens": 4691
+        },
+        "completionTokens": 493,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5553,
+        "cost": 0.0026727833333333333,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0026727833333333333
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

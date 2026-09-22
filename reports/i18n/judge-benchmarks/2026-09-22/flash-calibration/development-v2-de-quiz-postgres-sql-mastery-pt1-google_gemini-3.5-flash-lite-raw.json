@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"6a827cdac93a\",\n  \"selectedModel\": \"gpt-4o\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 98,\n    \"coherence\": 98,\n    \"relevance\": 100,\n    \"translationQuality\": 96,\n    \"mdxPreservation\": 98,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 96\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"medium\",\n      \"match\": \"    ```sql\\n    -- Use BIGINT\\n    SELECT 256::bigint * 256 * 256 * 256;\\n\\n    -- Or numeric for arbitrary precision\\n    SELECT 256::numeric * 256 * 256 * 256;\\n    ```\",\n      \"replacement\": \"    ```sql\\n    -- BIGINT verwenden\\n    SELECT 256::bigint * 256 * 256 * 256;\\n\\n    -- Oder numeric für beliebige Präzision\\n    SELECT 256::numeric * 256 * 256 * 256;\\n    ```\",\n      \"reason\": \"Comments inside the SQL block were left in English while other code comments and explanations are translated.\"\n    },\n    {\n      \"priority\": \"low\",\n      \"match\": \"Du hast inmehreren Bereichen\",\n      \"replacement\": \"Du hast in mehreren Bereichen\",\n      \"reason\": \"Typo: missing space between 'in' and 'mehreren'.\"\n    }\n  ],\n  \"rationale\": \"The translation is extremely high quality, preserving all technical facts, code snippets, MDX components, and quiz answers correctly. Minor untranslated SQL comments inside one block and a small typographic spacing issue are noted.\",\n  \"publishReady\": true\n}\n```",
+  "usage": {
+    "inputTokens": 10919,
+    "inputTokenDetails": {
+      "noCacheTokens": 366,
+      "cacheReadTokens": 10553,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 462,
+    "outputTokenDetails": {
+      "textTokens": 462,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 11381
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a18XP+M2GAAKrS7lJLh8fTkRrv4Sk2vDO9LPmoDm2eaQWWMQntO42LhEnwq7WnQaewbAgQL5zo6cNlxqPbqK1MsvdD1PqiQn6mLvHM0pYAs=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 10919,
+        "promptTokensDetails": {
+          "cachedTokens": 10553
+        },
+        "completionTokens": 462,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 11381,
+        "cost": 0.00158139,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00158139
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"1b7eea376e11\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":75,\"technicalAccuracy\":65,\"coherence\":70,\"relevance\":95,\"translationQuality\":80,\"mdxPreservation\":45,\"culturalAdaptation\":85,\"languagePurity\":90},\"suggestions\":[{\"priority\":\"high\",\"match\":\"- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\"replacement\":\"- [概要](#overview)\\n- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>`の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [Fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\"reason\":\"Nearly every same-page TOC link points to the wrong fragment (e.g. 機能比較→#overview, Fetch レシピ→#目次, キャンセル→#source-progress-helper). The localized heading IDs exist in the document; the TOC must target the matching ones.\"},{\"priority\":\"high\",\"match\":\"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n\\n| リダイレクト                                        |✅        |✅         |✅       |\",\"replacement\":\"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n| リダイレクト                                        |✅        |✅         |✅       |\",\"reason\":\"Blank lines between rows break the Markdown table into separate fragments, and the delimiter row (|---|) is missing, so the feature comparison table will not render as a table.\"},{\"priority\":\"medium\",\"match\":\"Progress Handlerは、[以下に示す手法でラップを回避](#source-progress-helper)し、`fetch`呼び出しをクロージャで囲みません。\",\"replacement\":\"下記で示す手法は、`fetch`呼び出しをクロージャでラップすることを[回避します](#source-progress-helper)。\",\"reason\":\"The link text and sentence structure are scrambled; the source says the technique shown below avoids wrapping the fetch call in a closure, and the link text should describe the technique, not the avoidance.\"}],\"rationale\":\"Prose translation is faithful and natural, but the TOC fragment links are almost all wrong and the feature-comparison table is structurally broken by blank lines and a missing delimiter row, both high-priority rendering/accuracy defects.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 5906,
+    "inputTokenDetails": {
+      "noCacheTokens": 5906,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1760,
+    "outputTokenDetails": {
+      "textTokens": 1334,
+      "reasoningTokens": 426
+    },
+    "totalTokens": 7666
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5906,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1760,
+        "completionTokensDetails": {
+          "reasoningTokens": 426
+        },
+        "totalTokens": 7666,
+        "cost": 0.0017659,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0017659
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}
