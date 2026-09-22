@@ -76,6 +76,67 @@ Validation: focused `@mdx-js/mdx` compile passed (frontmatter stripped); `bun ru
 reported 0 errors and the same 64 pre-existing warnings, none for this draft. Budget-table comparisons
 are wrapped in backticks because bare `<15s` parses as JSX in MDX.
 
+## Retitle and de-emphasis (2026-09-22)
+
+Title changed from "Your Fast List Is Too Slow" to **"Trust, but Throttle"** — the old one used the
+"Your X Is a Y" explainer formula that dans-voice explicitly rejects; the new one is a known-phrase
+hijack where the swapped word is literally the harness technique (`Emulation.setCPUThrottlingRate`).
+Subtitle now "Making an agent prove a frontend performance win."
+
+De-emphasized the emoji framing per Dan: the subject is described as a wall of transparent image
+cards, some animated, with an explicit line generalizing to media galleries / asset pickers / photo
+grids / thumbnail search results. Removed "emoji grid", "stickers", "animated WebPs", "351 selected
+emoji", and the closing cat joke (replaced with a landing line that keeps the shape). CSS class names
+(`.emoji-cell`, `.emoji-card-image`) are left alone — they are real quoted source.
+
+Added a paragraph in "Give the Agent Hands" stating why Chromium + CDP is the required connection for
+this work (throttling, network emulation, CPU counters, tracing, GPU identity, all from one session),
+since the article's tooling advice had that implicit rather than stated.
+
+No measurements rerun; all scopes and forbidden claims unchanged.
+
+### Code audit and reformat (2026-09-22)
+
+All snippets re-verified against live emoji-brain source (`tests/performance/scroll.performance.spec.ts`,
+`tests/performance/metrics.ts`, `src/styles/emoji-cards.css`). Snippets are cleaned presentations of that
+source — the real files are written dense/unformatted, so article code is deliberately clearer, not a
+verbatim paste. Facts checked and unchanged: throttle rate 2, 60 wheel steps, 12 jump steps, flip every
+3 (rapid) / 30 (slow), 90px/35ms and 1200px/16ms, 500ms inter-phase wait, 150ms jump settle, 5px position
+slack, soft budgets 35/150/100, ScrollJankV4 `ph === 'b'`, the three `SCROLL_*_EXPERIMENT` flags.
+
+Correctness fixes made to the article's code (bugs in the prose version, not in the repo):
+
+- Sampler `state` declared `gaps: []` / `longTasks: []`, which TS infers as `never[]` — subsequent
+  `.push(number)` would not compile. Now `[] as number[]`, matching source.
+- Phase loop iterated a plain string array, so `WHEEL[phase]` would not type-check. Added `as const`
+  so the else branch narrows to `'slow' | 'rapid'`.
+- GPU snippet never released the browser CDP session; added `await session.detach()`, matching source.
+- Extracted the nested-ternary wheel delta into a `WHEEL` table. The original one-liner was accurate
+  but unreadable, and the article is teaching the technique.
+- `viewport.height` → a named `atBottom` constant; the source uses `scenario.viewport.height` and the
+  bare form in the excerpt was ambiguous.
+- CSS comment restored to the source's more informative wording.
+
+**Column width: article code blocks wrap at 53 columns** (Dan, 2026-09-22) — narrower than either
+repo's `.prettierrc` `printWidth: 80`, because the constraint is the rendered blog column, not the
+formatter. One unavoidable exception at line ~257: a compound CSS selector cannot be wrapped, since a
+newline inside it becomes a descendant combinator and silently changes what it matches. Left long with
+an inline comment saying why.
+
+Validation: MDX compile OK; `bun run content:check` 0 errors / same 64 pre-existing warnings;
+`bun run check` 0 errors.
+
+### Manual FPS claim added
+
+Dan's own DevTools frame-counter observation: worst-case scrolling ~12 fps at p99 before, 60+ after.
+Stated twice — once in the intro as stakes, once in "What Green Looks Like" — and **labeled both times
+as a manual observation, not a harness output**. This is deliberate: the harness records p95, never p99,
+and has no raw `gaps` array retained in the checked-in JSON, so p99 is not recomputable from
+`docs/performance/*.json`. The harness also samples `requestAnimationFrame` callbacks, which the article
+already says is not physical display FPS; the DevTools counter is. Presenting the two as separate
+instruments that happen to agree keeps the article's own honesty rule intact instead of breaking it —
+an unattributed "we hit 60 FPS" is the exact sentence the article warns agents write.
+
 ## Editorial rewrite
 
 Rewritten around the rejected containment experiment, with the recurring question of why work happens during a particular interaction. Updated title to “Your Fast List Is Doing Too Much.” Preserved measured scopes and supporting links; consolidated experiment chronology into measurement notes. Focused MDX compilation passed; content check again reported 0 errors and 64 existing warnings. No benchmark or bundle measurements were rerun for this prose revision.

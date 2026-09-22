@@ -1,6 +1,6 @@
 ---
-title: "Your Fast List Is Too Slow"
-subTitle: "How To: Use Agents to Tune Performance."
+title: "Trust, but Throttle"
+subTitle: "Making an agent prove a frontend performance win."
 date: 2026-09-15
 modified: 2026-09-20
 category: Code
@@ -16,7 +16,7 @@ related:
   - you-might-not-need-algolia
 ---
 
-The agent proposed a sensible CSS optimization for an emoji grid, applied it, measured it, and declared victory. Rapid scrolling had gotten three times worse.
+The agent proposed a sensible CSS optimization for a dense image grid, applied it, measured it, and declared victory. Rapid scrolling had gotten three times worse.
 
 It wasn't lying. It had a good explanation — let the browser skip off-screen cards, do less rendering, go faster — and a passing test to back it up. The test jumped straight to the bottom of the page. On that motion, the change genuinely helped.
 
@@ -26,7 +26,9 @@ That's the whole job. An agent tuning frontend performance is a very fast hill-c
 
 > Agents are good at performance tuning exactly to the degree your harness can prove them wrong.
 
-What follows is the loop we ended up with while tuning [Emoji Brain](https://github.com/justsml/emoji-brain), a searchable, selectable grid of a few hundred stickers: how to teach an agent to scroll like a person, what to measure, how to let it run CSS experiments without touching product code, and which decisions you have to keep for yourself.
+It was worth doing. Watching the frame counter by hand in DevTools, the worst of the scrolling went from **about 12 fps at the 99th percentile to a steady 60+**. That number is a manual observation, not a harness output — which is the whole reason the rest of this article is so pedantic about what the automated numbers do and don't prove.
+
+What follows is the loop we ended up with while tuning [Emoji Brain](https://github.com/justsml/emoji-brain): a wall of a few hundred selectable cards, every one of them a transparent image, a fraction of them animated. If your app renders a media gallery, an asset picker, a photo grid or a search results page made of thumbnails, it has the same shape and the same failure modes. Here's how to teach an agent to scroll like a person, what to measure, how to let it run CSS experiments without touching product code, and which decisions you have to keep for yourself.
 
 ## Give the Agent Hands Before You Give It Opinions
 
@@ -36,12 +38,16 @@ So the first thing to build is not a prompt. It's a script the agent can run tha
 
 Ours is a Playwright spec that boots a production preview, throttles the CPU, drives the grid, and prints a JSON blob. The agent's entire job becomes: change something, run it, read the blob, keep or revert. That's a loop it's genuinely good at — it's mechanical, it's fast, and the feedback is not a matter of opinion.
 
+Use Chromium, and talk to it over CDP. This is the one place where the browser choice isn't a preference: the Chrome DevTools Protocol is the only connection that hands an agent CPU throttling, network emulation, Chrome's own CPU counters, tracing, and the GPU identity of the machine it's running on — all from the same session that's driving the page. WebDriver gives you none of that. Every number in this article that an agent couldn't have fabricated came through a `newCDPSession`.
+
 Two setup details do most of the work:
 
 ```ts
 const cdp = await page.context().newCDPSession(page);
 await cdp.send('Performance.enable');
-await cdp.send('Emulation.setCPUThrottlingRate', {rate: 2});
+await cdp.send('Emulation.setCPUThrottlingRate', {
+  rate: 2,
+});
 ```
 
 CPU throttling matters because your laptop hides the bug. [CDP's throttling rate](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setCPUThrottlingRate) is a slowdown factor, not a phone: `2` approximates half-speed execution relative to the host, and simulates nothing about the GPU. It's enough to make the difference between two candidate fixes visible, which is all the agent needs to choose between them.
@@ -57,31 +63,63 @@ People are worse than that. They reverse direction mid-flick. They slam End, the
 So the harness defines the vocabulary explicitly, and the agent runs all of it every time:
 
 ```ts
-for (const phase of ['slow', 'rapid', 'jumps']) {
-  await page.waitForTimeout(500);  // let the previous wheel animation finish
+// Per phase: pixels, gap between wheel ticks, and
+// how many ticks before the direction flips.
+const WHEEL = {
+  slow: {delta: 90, waitMs: 35, flipEvery: 30},
+  rapid: {delta: 1200, waitMs: 16, flipEvery: 3},
+};
+
+// `as const` narrows phase to a union, so the
+// else branch below indexes WHEEL safely.
+const phases = ['slow', 'rapid', 'jumps'] as const;
+
+for (const phase of phases) {
+  // Let the preceding native wheel animation finish
+  // before we reset the metrics for this phase.
+  await page.waitForTimeout(500);
   await begin(page, phase);
+
   const before = await cpuMetrics(cdp);
   const positions: number[] = [];
 
   if (phase === 'jumps') {
     for (let i = 0; i < 12; i++) {
-      await page.evaluate(bottom => window.scrollTo({
-        top: bottom ? document.documentElement.scrollHeight : 0,
-        behavior: 'instant',
-      }), i % 2 === 0);
+      const toBottom = i % 2 === 0;
+      await page.evaluate(
+        (bottom) =>
+          window.scrollTo({
+            top: bottom
+              ? document.documentElement.scrollHeight
+              : 0,
+            behavior: 'instant',
+          }),
+        toBottom,
+      );
       await page.waitForTimeout(150);
-      positions.push(await page.evaluate(() => window.scrollY));
+      positions.push(
+        await page.evaluate(() => window.scrollY),
+      );
     }
   } else {
+    const {delta, waitMs, flipEvery} = WHEEL[phase];
     for (let i = 0; i < 60; i++) {
-      // slow: 90px every 35ms. rapid: 1200px every 16ms, reversing every 3 steps.
-      await page.mouse.wheel(0, (Math.floor(i / (phase === 'slow' ? 30 : 3)) % 2 ? -1 : 1)
-        * (phase === 'slow' ? 90 : 1200));
-      await page.waitForTimeout(phase === 'slow' ? 35 : 16);
+      const reversed =
+        Math.floor(i / flipEvery) % 2 === 1;
+      await page.mouse.wheel(
+        0,
+        reversed ? -delta : delta,
+      );
+      await page.waitForTimeout(waitMs);
     }
   }
 
-  report[phase] = {...await snapshot(page), positions, before, after: await cpuMetrics(cdp)};
+  report[phase] = {
+    ...(await snapshot(page)),
+    positions,
+    before,
+    after: await cpuMetrics(cdp),
+  };
 }
 ```
 
@@ -102,10 +140,19 @@ Our first Home/End test didn't reliably reach the top. Wheel inertia leaked in, 
 An agent handed that harness will tune against the lie for as long as you let it. So the phase asserts its own endpoints:
 
 ```ts
-expect.soft(Math.max(...positions)).toBeGreaterThan(height - viewport.height - 5);
-for (let i = 0; i < positions.length; i++) {
-  if (i % 2) expect.soft(positions[i]).toBeLessThan(10);
-  else expect.soft(positions[i]).toBeGreaterThan(height - viewport.height - 5);
+// 5px of slack for subpixel scroll rounding.
+const atBottom = height - viewport.height - 5;
+
+expect.soft(Math.max(...positions))
+  .toBeGreaterThan(atBottom);
+
+for (const [i, position] of positions.entries()) {
+  // Odd steps went Home, even steps went End.
+  if (i % 2) {
+    expect.soft(position).toBeLessThan(10);
+  } else {
+    expect.soft(position).toBeGreaterThan(atBottom);
+  }
 }
 ```
 
@@ -119,13 +166,29 @@ This is the rule that generalizes: **every benchmark phase must prove it did the
 
 ```ts
 await page.addInitScript(() => {
-  const state = {phase: 'load', started: performance.now(), gaps: [], longTasks: [], lastFrame: 0, /* … */};
+  const state = {
+    phase: 'load',
+    started: performance.now(),
+    gaps: [] as number[],
+    longTasks: [] as number[],
+    lastFrame: 0,
+    // … paints, lcp, layoutShiftSum
+  };
   (window as any).__perf = state;
-  new PerformanceObserver(l => {for (const e of l.getEntries())
-    if (e.startTime >= state.started) state.longTasks.push(e.duration);
+
+  new PerformanceObserver((list) => {
+    for (const entry of list.getEntries()) {
+      // Ignore tasks that began before this phase.
+      if (entry.startTime >= state.started) {
+        state.longTasks.push(entry.duration);
+      }
+    }
   }).observe({type: 'longtask', buffered: true});
+
   const frame = (now: number) => {
-    if (state.lastFrame) state.gaps.push(now - state.lastFrame);
+    if (state.lastFrame) {
+      state.gaps.push(now - state.lastFrame);
+    }
     state.lastFrame = now;
     requestAnimationFrame(frame);
   };
@@ -148,15 +211,26 @@ When you need ground truth for scrolling specifically, Chromium will hand it to 
 
 ```ts
 const scrollFrames = [];
+
 for (const event of events) {
   const data = event.args?.scroll_jank_v4;
-  // result_id is uint64 and loses precision in JSON.parse; count begin events
-  // directly rather than merging frames by rounded id.
-  if (event.name === 'ScrollJankV4' && event.ph === 'b' && data) scrollFrames.push(data);
+  // result_id is a uint64 and loses precision in
+  // JSON.parse, so count 'b' (begin) events
+  // directly instead of merging by a rounded id.
+  if (
+    event.name === 'ScrollJankV4' &&
+    event.ph === 'b' &&
+    data
+  ) {
+    scrollFrames.push(data);
+  }
 }
+
 report.compositor = {
   scrollFrames: scrollFrames.length,
-  jankyScrollFrames: scrollFrames.filter(f => f.is_janky).length,
+  jankyScrollFrames: scrollFrames.filter(
+    (frame) => frame.is_janky,
+  ).length,
 };
 ```
 
@@ -169,12 +243,37 @@ This is the trick that made the loop actually productive.
 Every rendering idea the agent wants to try — containment, layer hints, dropping shadows — goes in as an environment-gated stylesheet injected at test time, not as an edit to the CSS you ship:
 
 ```ts
-if (process.env.SCROLL_CONTAINMENT_EXPERIMENT)
-  await page.addStyleTag({content: '.emoji-cell:has(.emoji-card-selected):not(:hover):not(:focus-within) {content-visibility: auto; contain: layout style paint;}'});
-if (process.env.SCROLL_LAYER_EXPERIMENT)
-  await page.addStyleTag({content: '.emoji-card-image {will-change: transform;}'});
-if (process.env.SCROLL_PAINT_EXPERIMENT === 'shadows')
-  await page.addStyleTag({content: '.emoji-card-image {filter: none !important;}'});
+const {
+  SCROLL_CONTAINMENT_EXPERIMENT,
+  SCROLL_LAYER_EXPERIMENT,
+  SCROLL_PAINT_EXPERIMENT,
+} = process.env;
+
+if (SCROLL_CONTAINMENT_EXPERIMENT) {
+  await page.addStyleTag({
+    // Cannot wrap: a newline inside a compound
+    // selector becomes a descendant combinator.
+    content: `
+.emoji-cell:has(.emoji-card-selected):not(:hover):not(:focus-within) {
+  content-visibility: auto;
+  contain: layout style paint;
+}`,
+  });
+}
+
+if (SCROLL_LAYER_EXPERIMENT) {
+  await page.addStyleTag({
+    content:
+      '.emoji-card-image {will-change: transform;}',
+  });
+}
+
+if (SCROLL_PAINT_EXPERIMENT === 'shadows') {
+  await page.addStyleTag({
+    content:
+      '.emoji-card-image {filter: none !important;}',
+  });
+}
 ```
 
 Now an A/B is two runs of the same binary with one variable flipped, and the branch stays clean between them. The agent can propose five ideas, test all five, and land zero. Rejected experiments stay in the repo as named flags, which is genuinely useful: the next agent that suggests `will-change` can be told to go run `SCROLL_LAYER_EXPERIMENT=1` and read the result itself.
@@ -199,7 +298,8 @@ We kept the exception:
 
 ```css
 .emoji-cell {
-  /* Fixed for this card design, regardless of image loading. */
+  /* Preview + card padding + single-line label;
+     independent of image loading. */
   height: calc(var(--emoji-size) + 1.509375rem);
   content-visibility: auto;
   contain: layout style paint;
@@ -223,7 +323,7 @@ Left alone with a frame-gap budget, an agent will eventually optimize your produ
 
 It proposed removing the toolbar and tray backdrop blur: worth about 8% in the early investigation, and the frosted design goes with it. It proposed dropping card shadows: improved one worst-frame measurement while making rapid-scroll p95 worse, so that one wasn't even a trade. We kept both effects. Their cost buys a visible part of the design.
 
-Autoplaying 92 animated WebPs nobody is looking at buys much less. That's the same class of change — spend rendering, get something back — with a wildly different exchange rate, and the agent cannot tell them apart because the difference is product judgment, not milliseconds.
+Autoplaying 92 animated images nobody is looking at buys much less. That's the same class of change — spend rendering, get something back — with a wildly different exchange rate, and the agent cannot tell them apart because the difference is product judgment, not milliseconds.
 
 So say it in the prompt, in the repo, in the budgets file: **which effects are load-bearing design and off the table.** Otherwise every tuning session reopens the argument, and one of these days you'll be busy and it'll win.
 
@@ -231,7 +331,7 @@ So say it in the prompt, in the repo, in the budgets file: **which effects are l
 
 The agent's instinct is to reach for rendering hints, because that's what performance blog posts are made of. The bigger wins were all in a duller question: **why is this work happening right now?**
 
-Why is a cat animating before anyone looks at it? Why does scrolling trigger downloads? Why does selecting one card re-render its neighbors? Why does the browser have the export machinery before anyone clicked Export?
+Why is an image animating before anyone looks at it? Why does scrolling trigger downloads? Why does selecting one card re-render its neighbors? Why does the browser have the export machinery before anyone clicked Export?
 
 Make that the agent's first pass, and the rendering hints usually become unnecessary:
 
@@ -261,9 +361,20 @@ Two environment facts quietly invalidate results, and neither shows up in the me
 **The renderer.** Default headless Chromium on our test machine used SwiftShader software rendering. Full Chromium used Apple M2 Metal GPU compositing. That's not a small difference for a rasterization question — it's the whole question. [Playwright documents the headless modes](https://playwright.dev/docs/browsers#chromium-new-headless-mode), but don't take the channel name as proof of GPU acceleration. We record the GPU identity into the report:
 
 ```ts
-const session = await page.context().browser()!.newBrowserCDPSession();
-const {gpu} = await session.send('SystemInfo.getInfo');
-report.renderer = {devices: gpu.devices, features: gpu.featureStatus};
+const browser = page.context().browser()!;
+const session = await browser.newBrowserCDPSession();
+
+const info = await session.send(
+  'SystemInfo.getInfo',
+);
+await session.detach();
+
+const {gpu} = info;
+
+report.renderer = {
+  devices: gpu.devices,
+  features: gpu.featureStatus,
+};
 ```
 
 Now every result carries the renderer it was produced on, and a comparison across two different ones is visibly invalid rather than silently wrong.
@@ -293,11 +404,13 @@ Second rule: the per-phase soft assertions inside the spec are tighter than the 
 
 ## What Green Looks Like, Including the Ugly Parts
 
-The final matrix ran three repetitions each across desktop and phone widths, small and XL cards, 351 selected emoji, 2× CPU slowdown. Median p95 animation-frame gaps landed around **16.7–16.8 ms** with **zero scroll long tasks**. Two focused compositor traces recorded 59 and 60 native scroll results with no janky frames in those traces.
+The final matrix ran three repetitions each across desktop and phone widths, small and XL cards, 351 cards selected, 2× CPU slowdown. Median p95 animation-frame gaps landed around **16.7–16.8 ms** with **zero scroll long tasks**. Two focused compositor traces recorded 59 and 60 native scroll results with no janky frames in those traces.
 
 And the unfinished business, which belongs in the same paragraph: initial rendering still has an ~80–100 ms task under slowdown, and dense desktop rapid scrolling had a median worst frame gap of 116.6 ms. Main-thread frame sampling isn't physical display FPS, and a narrow window on an M2 is not a low-end phone.
 
-Keep those in the report. A good percentile doesn't erase an ugly outlier, and an agent writing the summary will drop the outlier unless the harness hands it over attached to the same JSON.
+The hand-checked version of that, from the DevTools frame counter rather than the harness: worst-case scrolling sat near 12 fps at the 99th percentile before any of this and holds 60+ after. Those two instruments agree, which is reassuring and not proof — the harness samples `requestAnimationFrame` callbacks and the frame counter watches presented frames, and only the second one is physical display FPS. The harness never claims that number, and neither should the agent.
+
+Keep all of it in the report. A good percentile doesn't erase an ugly outlier, and an agent writing the summary will drop the outlier unless the harness hands it over attached to the same JSON.
 
 *Measurement notes: these experiments span September 9–13, 2026, with source and bundle sizes checked September 15. The catalog changed during that period. Animation and layout figures come from their linked commits; containment and final scroll results have [checked-in reports and raw measurements](https://github.com/justsml/emoji-brain/tree/5f6c209/docs/performance). They are separate experiments, not one controlled before-and-after run.*
 
@@ -316,6 +429,6 @@ If you're pointing an agent at a slow list this week:
 
 Then let it run. It'll try things you wouldn't have bothered with, and some of them will work. It'll also try containment on selected cards, and your harness will scroll backwards and tell it no.
 
-We ended up with a faster grid that still has shadows, blur, and animated cats.
+We ended up with a faster grid that still has its shadows, its blur, and every animated frame we started with.
 
-The cat just has to wait its turn.
+They just have to wait their turn.
