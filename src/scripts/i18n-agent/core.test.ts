@@ -379,7 +379,7 @@ describe("scoreTranslation", () => {
         "openrouter/google/gemini-3-flash-preview",
         "openrouter/deepseek/deepseek-v4-flash",
       ],
-      escalationModels: ["openrouter/anthropic/claude-haiku"],
+      escalationModels: ["openrouter/anthropic/claude-haiku-4.5"],
       generateText: fakeGenerateText,
       reconsiderationRounds: 1,
     });
@@ -429,7 +429,7 @@ describe("scoreTranslation", () => {
         "openrouter/google/gemini-3-flash-preview",
         "openrouter/deepseek/deepseek-v4-flash",
       ],
-      escalationModels: ["openrouter/anthropic/claude-haiku"],
+      escalationModels: ["openrouter/anthropic/claude-haiku-4.5"],
       generateText: fakeGenerateText,
       reconsiderationRounds: 0,
     });

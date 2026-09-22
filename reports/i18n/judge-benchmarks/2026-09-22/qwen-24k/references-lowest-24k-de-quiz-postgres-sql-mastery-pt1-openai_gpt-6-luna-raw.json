@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":84,\"technicalAccuracy\":84,\"coherence\":85,\"relevance\":97,\"translationQuality\":84,\"mdxPreservation\":88,\"culturalAdaptation\":83,\"languagePurity\":90},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"-- Use BIGINT\",\"replacement\":\"-- BIGINT verwenden\",\"reason\":\"SQL comment text is reader-facing prose and remains in English; translate it for locale consistency.\"},{\"priority\":\"medium\",\"match\":\"-- Or numeric for arbitrary precision\",\"replacement\":\"-- Oder numeric für beliebige Genauigkeit\",\"reason\":\"The second SQL comment is also untranslated reader-facing prose.\"},{\"priority\":\"medium\",\"match\":\"Welche dieser ist ❌ kein gültiger PostgreSQL‑Typ?\",\"replacement\":\"Welcher dieser Typen ist ❌ kein gültiger PostgreSQL‑Typ?\",\"reason\":\"The current phrasing is grammatically incorrect German and recurs in several quiz questions.\"},{\"priority\":\"medium\",\"match\":\"Welche dieser ist KEINE eingebaute Aggregatfunktion in PostgreSQL?\",\"replacement\":\"Welche dieser Funktionen ist KEINE eingebaute Aggregatfunktion in PostgreSQL?\",\"reason\":\"The question is missing the noun that makes the German phrasing grammatical.\"},{\"priority\":\"medium\",\"match\":\"`VALIDATE CONSTRAINT` validieren\",\"replacement\":\"mit `VALIDATE CONSTRAINT` validiert werden\",\"reason\":\"The current bullet is ungrammatical and makes the constraint validation description unclear.\"},{\"priority\":\"medium\",\"match\":\"Du hast inmehreren Bereichen\",\"replacement\":\"Du hast in mehreren Bereichen\",\"reason\":\"There is a missing space in the closing paragraph.\"}],\"rationale\":\"The translation preserves the quiz structure, answer flags, code, and URLs, and most technical explanations are faithful. A few German grammar defects and untranslated code comments remain and should be corrected before publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9818,
+    "inputTokenDetails": {
+      "noCacheTokens": 9818,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 9815
+    },
+    "outputTokens": 395,
+    "outputTokenDetails": {
+      "textTokens": 395,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 10213
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 9818,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 395,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 10213,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.001424675
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

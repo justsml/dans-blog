@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d1b6c0a69bd5\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 80,\n    \"coherence\": 90,\n    \"relevance\": 90,\n    \"translationQuality\": 80,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 90,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"Espera como máximo 12 segundos\",\n      \"replacement\": \"Espera al menos 12 segundos\",\n      \"reason\": \"The source states 'Wait at least 12 seconds', which means 'al menos' (at least), not 'como máximo' (at most).\"\n    }\n  ],\n  \"rationale\": \"The translation is extremely concise and accurate to the MDX structure, but inverted the meaning of the timeout instruction ('at least' vs 'at most'). This is a technical accuracy/fidelity error.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 899,
+    "inputTokenDetails": {
+      "noCacheTokens": 899,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 272,
+    "outputTokenDetails": {
+      "textTokens": 272,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1171
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19DW0Dapag/hmp5c/oLDTVvl7UZdAr75HM9U8I+O/M0both2VQ/SVMgVHs8swXC9IY9fFJI0fsOPZy4qfav4lpvXvv/XQWykTIFfNiLA+o=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 899,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 272,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1171,
+        "cost": 0.0009497,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009497
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

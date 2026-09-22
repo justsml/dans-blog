@@ -1,0 +1,40 @@
+{
+  "text": "\n\n{\"selectedCommit\":\"1b7eea376e11\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":40,\"coherence\":50,\"relevance\":70,\"translationQuality\":60,\"mdxPreservation\":25,\"culturalAdaptation\":65,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\"replacement\":\"- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>`の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [HTTP リダイレクトの処理](#handling-http-redirects)\\n  - [Fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\"reason\":\"Almost every TOC anchor is shifted to the wrong section. Links are off by one or more positions, making the table of contents non-functional. Also missing the 'Handling HTTP Redirects' entry entirely.\"},{\"priority\":\"high\",\"match\":\"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n\\n| リダイレクト                                        |✅        |✅         |✅       |\",\"replacement\":\"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n| リダイレクト                                        |✅        |✅         |✅       |\",\"reason\":\"Blank lines between table rows break markdown table rendering. The separator row (|---|:---:|:---:|:---:|) is also missing. Without these, the table will not render as a table.\"},{\"priority\":\"high\",\"match\":\"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\"replacement\":\"> ユースケースがリストにない？ [お知らせください ✉️](/contact/)\",\"reason\":\"The link was moved outside the blockquote, changing the rendered structure. In the source, the entire sentence including the link is inside the blockquote.\"},{\"priority\":\"medium\",\"match\":\"確かに、[`axios`](https://www.npmjs.com/package/axios)や[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got)などのライブラリを正当化する特別な _ユースケース_ が存在します。\",\"replacement\":\"きっと、[`axios`](https://www.npmjs.com/package/axios)や[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got)などを正当化する特別な _ユースケース_ があるはずだ、と思っていました。\",\"reason\":\"The English 'Surely there are special Use Cases which justified...' is the author's initial (wrong) assumption, not a factual claim. The Japanese '存在します' states it as fact, reversing the rhetorical intent. The next paragraph then contradicts it awkwardly.\"},{\"priority\":\"medium\",\"match\":\"<h2 id=\\\"overview\\\">概要</h2>\",\"replacement\":\"### 概要\",\"reason\":\"The English source uses ### (h3) for Overview, not h2. Changing heading levels alters the document hierarchy and may break styling/layout expectations. If explicit IDs are needed, use ### with a custom ID syntax or keep the markdown heading.\"},{\"priority\":\"medium\",\"match\":\"<h2 id=\\\"feature-comparison\\\">機能比較</h2>\",\"replacement\":\"### 機能比較\",\"reason\":\"Same heading level issue: English uses ### for Feature Comparison. The candidate promotes it to h2, altering document structure.\"},{\"priority\":\"medium\",\"match\":\"<h2 id=\\\"compatibility\\\">互換性</h2>\",\"replacement\":\"### 互換性\",\"reason\":\"English uses ### for Compatibility section. Candidate promotes to h2, inconsistent with source hierarchy.\"}],\"rationale\":\"The translation has a catastrophic TOC link shift where nearly every anchor points to the wrong section, a broken markdown table (missing separator row and blank lines between rows), heading level promotions that alter document structure, a blockquote split, and a meaning reversal in the feature comparison narrative. The prose quality is generally acceptable but these structural defects make it unpublishable.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 6101,
+    "inputTokenDetails": {
+      "noCacheTokens": 6101,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 3704,
+    "outputTokenDetails": {
+      "textTokens": 1526,
+      "reasoningTokens": 2178
+    },
+    "totalTokens": 9805
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Modal",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 6101,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 3704,
+        "completionTokensDetails": {
+          "reasoningTokens": 2178
+        },
+        "totalTokens": 9805,
+        "cost": 0.034426,
+        "costDetails": {
+          "upstreamInferenceCost": 0.034426
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

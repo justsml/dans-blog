@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"scores\":{\"readability\":70,\"technicalAccuracy\":82,\"coherence\":75,\"relevance\":95,\"translationQuality\":80,\"mdxPreservation\":50,\"culturalAdaptation\":85,\"languagePurity\":75},\"suggestions\":[{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\",\"reason\":\"The whitelist-ingress-from-cloudflare.sh code block is closed early, so the remaining curl/ufw lines render as markdown instead of code; remove the premature closing fence.\"},{\"priority\":\"high\",\"match\":\"#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"Stray opening fence left after prematurely closing the whitelist script block breaks subsequent document structure.\"},{\"priority\":\"high\",\"match\":\"# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"replacement\":\"# विशिष्ट पोर्ट की निगरानी करें\\nsudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"reason\":\"The 'lsof Commands' bash block is closed after the first command, leaving the rest of the script as markdown text.\"},{\"priority\":\"high\",\"match\":\"# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"Stray fence needed to correctly close the lsof Commands block once the premature fence is removed.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\",\"reason\":\"Duplicate stray closing fence after the nmap External Scan block breaks rendering of following content.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\\n\\n## ⏰\",\"replacement\":\"fswatch -r /path/to/directory\\n```\\n\\n## ⏰\",\"reason\":\"Extra stray closing fence before the 'अक्सर अनदेखे टिप्स' section corrupts document structure.\"},{\"priority\":\"high\",\"match\":\"   ```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\",\"replacement\":\"   ```yaml\\n   services:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n   ```\",\"reason\":\"The read-only volumes YAML block inside the numbered list has broken fences (premature close and stray opener), rendering code as markdown and misaligning the list.\"},{\"priority\":\"medium\",\"match\":\"- 🔐 [Secrets Management: The Right Way](#-सीक्रेट्स-मैनेजमेंट)\",\"replacement\":\"- 🔐 [सीक्रेट्स मैनेजमेंट](#-सीक्रेट्स-मैनेजमेंट)\",\"reason\":\"TOC label is English while the corresponding heading is translated; the label should match the localized heading.\"},{\"priority\":\"medium\",\"match\":\"## 🧗‍♀️ For the brave\",\"replacement\":\"## 🧗‍♀️ बहादुरों के लिए\",\"reason\":\"Reader-facing headings should be translated; several headings (For the brave, Access Controls, View Open Ports, Production Checklist, Further Reading, Limiting Container Capabilities, Network Best Practices, Example Docker Compose) remain in English.\"},{\"priority\":\"medium\",\"match\":\"- [Limiting Container Capabilities](#limiting-container-capabilities)\\n- [Docker Socket Access](#docker-socket-access)\\n- [Blocking Country!](#blocking-country)\\n- [Hardening CloudFlare Proxy Host](#hardening-cloudflare-proxy-host)\",\"replacement\":\"- [कंटेनर क्षमताओं को सीमित करना](#limiting-container-capabilities)\\n- [Docker सॉकेट एक्सेस](#docker-socket-access)\\n- [देश ब्लॉकिंग!](#blocking-country)\\n- [क्लाउडफ़्लेर प्रॉक्सी होस्ट को हार्डन करना](#hardening-cloudflare-proxy-host)\",\"reason\":\"Sub-TOC labels remain English while the corresponding headings are (partially) localized; fragment IDs must match the localized headings used.\"}],\"rationale\":\"Prose translation is largely accurate and natural, but multiple fenced code blocks are split by stray fences (whitelist script, lsof, nmap, fswatch, read-only volumes YAML), breaking executable-code presentation and MDX structure. Several reader-facing headings and TOC labels remain untranslated. Not publish-ready until fences and headings are fixed.\",\"publishReadiness\":false,\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 27289,
+    "inputTokenDetails": {
+      "noCacheTokens": 26841,
+      "cacheReadTokens": 448,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2350,
+    "outputTokenDetails": {
+      "textTokens": 1437,
+      "reasoningTokens": 913
+    },
+    "totalTokens": 29639
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 27289,
+        "promptTokensDetails": {
+          "cachedTokens": 448
+        },
+        "completionTokens": 2350,
+        "completionTokensDetails": {
+          "reasoningTokens": 913
+        },
+        "totalTokens": 29639,
+        "cost": 0.01290227,
+        "costDetails": {
+          "upstreamInferenceCost": 0.01290227
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

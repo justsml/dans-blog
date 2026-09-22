@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":42,\"coherence\":48,\"relevance\":88,\"translationQuality\":48,\"mdxPreservation\":35,\"culturalAdaptation\":65,\"languagePurity\":58},\"suggestions\":[{\"priority\":\"high\",\"match\":\"import {CodeTabs} from '../../../../components/CodeTabs';\",\"replacement\":\"import {CodeTabs} from '../../../components/CodeTabs';\",\"reason\":\"The localized file is beside the English post, so the repository-relative import should preserve the source path depth; the added ../ changes the component import target and may break the MDX build.\"},{\"priority\":\"high\",\"match\":\"<p className='inset'>💡 सुनिश्चित करें कि सीक्रेट हमेशा अद्वितीय हों। असुरक्षित/हार्ड‑कोडेड डिफ़ॉल्ट्स के साथ चलना असंभव बनाएं।</p>\",\"replacement\":\"<p className='inset'>💡 Ensure secrets are always unique. Try make it impossible to run with unsafe/hard-coded defaults.</p>\",\"reason\":\"This prose was moved out of the source's commented TODO block and rendered as a live paragraph, changing the rendered structure and exposing content that is intentionally commented out.\"},{\"priority\":\"high\",\"match\":\"<CodeTabs client:load tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}>\",\"replacement\":\"<CodeTabs client:load tabs={[\\\"Helper commands\\\", \\\"Persist secrets in environment\\\", \\\"Use secrets per command\\\"]>\",\"reason\":\"The source's commented block contains three tabs with the specified labels, but the candidate renders the entire commented validation section and changes its tab structure. This is a substantial MDX/rendering change.\"},{\"priority\":\"high\",\"match\":\"# CloudFlare IPs की अनुमति दें\",\"replacement\":\"# Allow CloudFlare IPs\",\"reason\":\"This line is outside the bash code fence because the candidate closed the fence before it. It therefore renders as Markdown instead of executable/commented shell content and breaks the code block.\"},{\"priority\":\"high\",\"match\":\"```\\\\n\\\\n#### Test Inside Your Network\",\"replacement\":\"#### Test Inside Your Network\",\"reason\":\"An extra closing fence appears after the external-scan block, leaving the following heading and prose in an unintended code fence and corrupting rendered structure.\"},{\"priority\":\"high\",\"match\":\"```\\\\n\\\\n### View Open Ports\",\"replacement\":\"### View Open Ports\",\"reason\":\"The candidate closes the lsof code fence after the entire command block, but the fence placement leaves shell commands outside the intended code block and creates malformed rendered structure.\"},{\"priority\":\"high\",\"match\":\"```\\\\n\\\\n## ⏰ अक्सर अनदेखे टिप्स\",\"replacement\":\"## ⏰ अक्सर अनदेखे टिप्स\",\"reason\":\"An extra closing fence after the fswatch example changes the following section's rendering and indicates malformed fence structure.\"},{\"priority\":\"high\",\"match\":\"- [For the brave](#️-for-the-brave)\",\"replacement\":\"- [बहादुरों के लिए](#️-बहादुरों-के-लिए)\",\"reason\":\"The heading is translated but its table-of-contents label remains English, so the reader-facing navigation is inconsistent and the localized heading fragment is not targeted.\"},{\"priority\":\"high\",\"match\":\"- [The `:latest` Dance](#-the-latest-dance)\",\"replacement\":\"- [`:latest` का नृत्य](#-latest-का-नृत्य)\",\"reason\":\"The heading remains untranslated while surrounding reader-facing headings are localized; its fragment and label should match the localized heading.\"},{\"priority\":\"high\",\"match\":\"- [मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\",\"replacement\":\"- [मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट्स-जेनरेट-करें)\",\"reason\":\"The link fragment does not match the translated heading text, so the same-page link will not reliably navigate to the heading.\"},{\"priority\":\"high\",\"match\":\"- [कैनरी टोकन्स](#केनरी-टोकन)\",\"replacement\":\"- [कैनरी टोकन्स](#कैनरी-टोकन)\",\"reason\":\"The fragment spelling differs from the translated heading ('कैनरी' versus 'केनरी'), causing a broken same-page link.\"},{\"priority\":\"high\",\"match\":\"[Monitoring & Verification](#-monitoring--verification)\",\"replacement\":\"[मॉनिटरिंग एवं सत्यापन](#-मॉनिटरिंग-एवं-सत्यापन)\",\"reason\":\"The same-page link still targets the English heading fragment even though the heading was translated.\"},{\"priority\":\"high\",\"match\":\"[देश ब्लॉकिंग](#blocking-country)\",\"replacement\":\"[देश ब्लॉकिंग](#ब्लॉकिंग-कंट्री)\",\"reason\":\"The link targets the English fragment instead of the localized 'ब्लॉकिंग कंट्री!' heading.\"},{\"priority\":\"high\",\"match\":\"[Docker Networks](#-monitoring--verification)\",\"replacement\":\"[Docker Networks](#-मॉनिटरिंग-एवं-सत्यापन)\",\"reason\":\"This link is semantically wrong: the source points to monitoring and verification, but the candidate retains an English fragment while the target heading is localized.\"},{\"priority\":\"high\",\"match\":\"<p className=\\\"inset\\\">\",\"replacement\":\"<p className='inset'>\",\"reason\":\"The candidate changes quote style in an MDX JSX attribute in a way that is usually valid, but the larger issue is that several JSX/code fences were structurally altered; preserve the source component structure exactly while translating only reader-facing prose.\"},{\"priority\":\"medium\",\"match\":\"### Example Docker Compose\",\"replacement\":\"### उदाहरण Docker Compose\",\"reason\":\"This reader-facing heading remains untranslated amid an otherwise localized section, reducing language purity and navigation consistency.\"},{\"priority\":\"medium\",\"match\":\"## 🛡️ Access Controls\",\"replacement\":\"## 🛡️ एक्सेस कंट्रोल\",\"reason\":\"This reader-facing heading remains in English while the section prose is translated; localizing it would make the document consistent.\"},{\"priority\":\"medium\",\"match\":\"## 🚀 Production Checklist\",\"replacement\":\"## 🚀 प्रोडक्शन चेकलिस्ट\",\"reason\":\"This reader-facing heading remains untranslated despite the localized checklist content.\"},{\"priority\":\"medium\",\"match\":\"## 📚 Further Reading\",\"replacement\":\"## 📚 आगे पढ़ें\",\"reason\":\"This reader-facing heading remains untranslated and is inconsistent with the Hindi closing sections.\"}],\"rationale\":\"The candidate translates much of the prose and preserves most code literals, but it has serious MDX integrity problems: the CodeTabs commented block was incorrectly rendered, an import path was changed, multiple code fences are misplaced, and several same-page links still use stale or mismatched fragments. It also leaves numerous headings and navigation labels untranslated. These issues require correction before publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 18233,
+    "inputTokenDetails": {
+      "noCacheTokens": 18233,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 18230
+    },
+    "outputTokens": 1449,
+    "outputTokenDetails": {
+      "textTokens": 1449,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19682
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 18233,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1449,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19682,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0062969
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

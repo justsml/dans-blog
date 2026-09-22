@@ -1,0 +1,47 @@
+{
+  "text": "{\"selectedCommit\":\"d9e2ed508e21\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":65,\"technicalAccuracy\":70,\"coherence\":70,\"relevance\":75,\"translationQuality\":68,\"mdxPreservation\":75,\"culturalAdaptation\":65,\"languagePurity\":60},\"suggestions\":[{\"priority\":\"high\",\"match\":\"## Not another Vector DB article\\n\\nHere is the decision rule I wish I had used earlier:\\n\\n<p class=\\\"inset\\\">यदि आपका डेटा फ़ाइलों से पुनः निर्मित किया जा सकता है और उपयोगकर्ता मुख्यतः इसे पढ़ते हैं, तो पहले ऑब्जेक्ट‑स्टोरेज डेटाबेस आज़माएँ। यदि उपयोगकर्ता पूरे दिन लिख रहे हैं, तो वास्तविक डेटाबेस से शुरू करें और S3 को डेटाबेस जैसा बनाने की कोशिश बंद करें।</p>\\n\\nThat is the useful line. Not \\\"serverless is the future.\\\" Not \\\"vector databases changed everything.\\\" Those sentences have already been printed on enough conference lanyards.\\n\\nAI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was \\\"run Postgres with pgvector\\\" or \\\"operate OpenSearch/Elasticsearch\\\" or \\\"buy a managed search service.\\\" Those are still good answers when the workload deserves them.\\n\\nBut many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.\",\"replacement\":\"## एक और वेक्टर DB लेख नहीं\\n\\nयहाँ वह निर्णय नियम है जो काश मैंने पहले इस्तेमाल किया होता:\\n\\n<p class=\\\"inset\\\">यदि आपका डेटा फ़ाइलों से पुनः निर्मित किया जा सकता है और उपयोगकर्ता मुख्यतः इसे पढ़ते हैं, तो पहले ऑब्जेक्ट‑स्टोरेज डेटाबेस आज़माएँ। यदि उपयोगकर्ता पूरे दिन लिख रहे हैं, तो वास्तविक डेटाबेस से शुरू करें और S3 को डेटाबेस जैसा बनाने की कोशिश बंद करें।</p>\\n\\nयही काम की बात है। \\\"सर्वरलेस ही भविष्य है\\\" नहीं। \\\"वेक्टर डेटाबेस ने सब कुछ बदल दिया\\\" नहीं। ये वाक्य पहले ही पर्याप्त कॉन्फ्रेंस लैनयार्ड्स पर छप चुके हैं।\\n\\nAI ने खोज से जुड़ी कई समस्याओं का स्वरूप वाकई बदल दिया। अचानक छोटी टीमें सेमांटिक सर्च, हाइब्रिड रैंकिंग, डॉक्यूमेंट चैट, मल्टीमॉडल लुकअप, और ऑब्जेक्ट स्टोरेज में रखी फ़ाइलों पर एनालिटिक्स चाहने लगीं। पुराना जवाब था \\\"pgvector के साथ Postgres चलाएँ\\\" या \\\"OpenSearch/Elasticsearch संचालित करें\\\" या \\\"कोई मैनेज्ड सर्च सर्विस खरीदें।\\\" जब वर्कलोड इसके लायक हो, तब ये आज भी अच्छे जवाब हैं।\\n\\nलेकिन कई वर्कलोड ऐसे नहीं होते। वे रीड-हेवी होते हैं, दोबारा बनाए जा सकते हैं, और सामग्री बदलने व सर्च के अपडेट होने के बीच थोड़ी देरी बर्दाश्त कर सकते हैं। दस्तावेज़ीकरण। कैटलॉग स्नैपशॉट। स्टैटिक एक्सपोर्ट। आंतरिक नॉलेज बेस। स्थानीय एनालिटिक्स। प्रोटोटाइप RAG सिस्टम। इनके लिए, टूल्स के एक नए वर्ग ने इस उबाऊ आर्किटेक्चर को असामान्य रूप से शक्तिशाली बना दिया है: इंडेक्स बनाएँ, इसे फ़ाइलों के रूप में स्टोर करें, HTTP के माध्यम से सर्व करें।\",\"reason\":\"The candidate left multiple paragraphs and the main heading completely untranslated in English.\"},{\"priority\":\"high\",\"match\":\"href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"../pagefind/pagefind-ui.js\\\">\",\"replacement\":\"href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"/pagefind/pagefind-ui.js\\\">\",\"reason\":\"Corrupted web assets paths in code block. The rule for relative assets applies to markdown images, not root-relative script/stylesheet URLs in executable or sample HTML code.\"},{\"priority\":\"medium\",\"match\":\"title: 2025की डेटाबेस नवाचार लहर\",\"replacement\":\"title: \\\"2025 की डेटाबेस नवाचार लहर\\\"\",\"reason\":\"Missing space between 2025 and की.\"}],\"rationale\":\"The candidate left major portions of prose and headings completely in English (the opening sections under 'Not another Vector DB article'). It also modified root-relative URLs in an HTML code snippet to parent-relative paths ('../pagefind/pagefind-ui.css'), which breaks sample code. Frontmatter title has a spacing typo.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 7302,
+    "inputTokenDetails": {
+      "noCacheTokens": 369,
+      "cacheReadTokens": 6933,
+      "cacheWriteTokens": 6933
+    },
+    "outputTokens": 990,
+    "outputTokenDetails": {
+      "textTokens": 990,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 8292
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google AI Studio",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "EmcKZQFpFH0T/PB7tkGYh4nu3Bcjefq4MT4xSRO1orc4QmwAev5ZWANduI8EXH7OamHO8maBE4gfAcj1RxK6k6QIzjoIO0ncwDXP/G5aFLLo51HMwRqKD0w7KPecf323OGUl9g0N9OVJ",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 7302,
+        "promptTokensDetails": {
+          "cachedTokens": 6933
+        },
+        "completionTokens": 990,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 8292,
+        "cost": 0.0047981,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0047981
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

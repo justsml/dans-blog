@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"f61625d30150\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 80,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 90,\n    \"mdxPreservation\": 80,\n    \"culturalAdaptation\": 100,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"href=\\\"../search/ui.css\\\"\",\n      \"replacement\": \"href=\\\"/search/ui.css\\\"\",\n      \"reason\": \"Absolute URLs inside executable code/markup (like link hrefs) must not be changed to relative paths based on the image path rule.\"\n    }\n  ],\n  \"rationale\": \"The candidate correctly translates the title, heading, and text, but incorrectly changes the absolute URL in the HTML link tag to a relative path, violating the rule that absolute URLs in executable code must be preserved.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 972,
+    "inputTokenDetails": {
+      "noCacheTokens": 972,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 275,
+    "outputTokenDetails": {
+      "textTokens": 275,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1247
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+Q4dtQj4y4GEi1+CuMSERhMKUsjFrZSqjHgBY1Z0/A2sahtw4zGgtJrcLQ5VqDcaoRLEP8QNw2tgc2qnEe5btRQttL5iVzExlZuzXVib0=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 972,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 275,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1247,
+        "cost": 0.0009791,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009791
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

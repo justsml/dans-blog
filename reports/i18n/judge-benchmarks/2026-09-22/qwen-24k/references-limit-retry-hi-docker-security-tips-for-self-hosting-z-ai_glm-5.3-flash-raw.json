@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":75,\"coherence\":70,\"relevance\":95,\"translationQuality\":72,\"mdxPreservation\":45,\"culturalAdaptation\":80,\"languagePurity\":75},\"suggestions\":[{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\",\"reason\":\"The bash fence for whitelist-ingress-from-cloudflare.sh is closed too early; the remaining curl/ufw lines render as raw markdown text and the later ``` becomes a stray fence, breaking the code block structure.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"replacement\":\"sudo lsof -i:80 -Pn\\n\\n# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\",\"reason\":\"The 'lsof Commands' fence is closed after the first command, leaving the rest of the script as unformatted markdown with a stray trailing ``` fence.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\"reason\":\"A stray extra ``` fence after the nmap External Scan block breaks rendering of the following content.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\\n\\n## ⏰ अक्सर अनदेखे टिप्स\",\"replacement\":\"fswatch -r /path/to/directory\\n```\\n\\n## ⏰ अक्सर अनदेखे टिप्स\",\"reason\":\"Stray closing fence before the 'Often Overlooked Tips' section creates an empty code block and broken structure.\"},{\"priority\":\"high\",\"match\":\"<p className='inset'>💡 सुनिश्चित करें कि सीक्रेट हमेशा अद्वितीय हों।\",\"replacement\":\"{/*\\n<p className='inset'>💡 सुनिश्चित करें कि सीक्रेट हमेशा अद्वितीय हों।\",\"reason\":\"In the English source, the Placeholder Validation prose and the entire CodeTabs block are inside a {/* */} comment (TODO: Move to Maintainer's Guide). The candidate renders this content live, publishing a section the author deliberately commented out. The whole block from this paragraph through </CodeTabs> must be re-wrapped in the comment.\"},{\"priority\":\"medium\",\"match\":\"<CodeTabs client:load tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}>\",\"replacement\":\"<CodeTabs client:load tabs={[\\\"Helper commands\\\", \\\"Persist secrets in environment\\\", \\\"Use secrets per command\\\"]}>\",\"reason\":\"Tab labels were changed to language names; the source tabs are 'Helper commands', 'Persist secrets in environment', 'Use secrets per command'.\"},{\"priority\":\"medium\",\"match\":\"[देश ब्लॉकिंग](#blocking-country)\",\"replacement\":\"[देश ब्लॉकिंग](#ब्लॉकिंग-कंट्री)\",\"reason\":\"The heading was translated to 'ब्लॉकिंग कंट्री!' but the in-page link still targets the stale English fragment #blocking-country.\"},{\"priority\":\"medium\",\"match\":\"[मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\",\"replacement\":\"[मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट्स-जनरेट-करें)\",\"reason\":\"Link fragment does not match the localized heading 'मजबूत सीक्रेट जनरेट करें' (plural/form mismatch); anchor will not resolve.\"},{\"priority\":\"medium\",\"match\":\"[`.env` से macOS कीचेन तक अपग्रेड करें](#upgrade-from-env-to-macos-keychain)\",\"replacement\":\"[`.env` से macOS कीचेन तक अपग्रेड करें](#env-से-macos-कीचेन-में-अपग्रेड)\",\"reason\":\"Stale English fragment; the heading was translated to '`.env` से macOS कीचेन में अपग्रेड'.\"},{\"priority\":\"medium\",\"match\":\"-e AWS_SECRET_ACCESS_KEY ...\",\"replacement\":\"-e AWS_SECRET_ACCESS ...\",\"reason\":\"Executable usage comment in env-run.sh was altered from the source literal '-e AWS_SECRET_ACCESS ...'.\"}],\"rationale\":\"Prose translation is largely faithful and natural, but multiple broken code fences (cloudflare whitelist, lsof commands, two stray fences), a commented-out section incorrectly rendered live, altered CodeTabs props, and several stale same-page anchors make the document not publish-ready.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 27289,
+    "inputTokenDetails": {
+      "noCacheTokens": 27289,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2185,
+    "outputTokenDetails": {
+      "textTokens": 1309,
+      "reasoningTokens": 876
+    },
+    "totalTokens": 29474
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 27289,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2185,
+        "completionTokensDetails": {
+          "reasoningTokens": 876
+        },
+        "totalTokens": 29474,
+        "cost": 0.00518585,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00518585
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

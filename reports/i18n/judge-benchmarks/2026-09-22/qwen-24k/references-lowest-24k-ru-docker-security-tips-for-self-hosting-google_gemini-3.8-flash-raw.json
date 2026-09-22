@@ -1,0 +1,47 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":80,\"coherence\":85,\"relevance\":90,\"translationQuality\":78,\"mdxPreservation\":65,\"culturalAdaptation\":85,\"languagePurity\":88},\"suggestions\":[{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\",\"reason\":\"Duplicated code block.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"Broken code block fences split the bash script into invalid markdown prose with stray code fence endings.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"lsof Commands\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"```bash title=\\\"lsof Commands\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"Broken code fence cuts the lsof script in half, leaking commands into plain text and causing an unclosed fence.\"},{\"priority\":\"high\",\"match\":\"# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\",\"replacement\":\"# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\",\"reason\":\"Extraneous unclosed opening code fence breaks subsequent MDX rendering.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"fswatch -r /path/to/directory\\n```\",\"reason\":\"Extraneous dangling code fence.\"},{\"priority\":\"medium\",\"match\":\"- 🔄 [Танец `:latest`](#-the-latest-dance)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-monitoring--verification)\\n- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\\n- 🚀 [Контрольный список для продакшна](#-production-checklist)\\n- 📚 [Дополнительные материалы](#-further-reading)\",\"replacement\":\"- 🔄 [Танец `:latest`](#-танец-latest)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\\n- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\\n- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\\n- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\"reason\":\"TOC anchors still reference English headings instead of the localized Russian heading anchors.\"}],\"rationale\":\"The translation has severe MDX code fence corruption throughout multiple sections (split blocks, extraneous fences, leaked bash code into prose), duplicated blocks, and stale English anchor links in the TOC.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 19010,
+    "inputTokenDetails": {
+      "noCacheTokens": 370,
+      "cacheReadTokens": 18640,
+      "cacheWriteTokens": 18640
+    },
+    "outputTokens": 1562,
+    "outputTokenDetails": {
+      "textTokens": 1562,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20572
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google AI Studio",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "EmcKZQFpFH0T6L4WHNaY++X77VSs54HGgYEhlWSxvmqyWjOrYEyADNbL4DjRw+hMiKoZ3WQyGSzHyPqVexS/aQyLljc87w/ne6fOedZ/AtNUaTdxYJ9o9xctTbMetn7iOhMtjXkM1Z7f",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 19010,
+        "promptTokensDetails": {
+          "cachedTokens": 18640
+        },
+        "completionTokens": 1562,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20572,
+        "cost": 0.008309666666666667,
+        "costDetails": {
+          "upstreamInferenceCost": 0.008309666666666667
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

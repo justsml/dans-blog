@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"9e718f4fdf81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 60,\n    \"technicalAccuracy\": 85,\n    \"coherence\": 70,\n    \"relevance\": 90,\n    \"translationQuality\": 65,\n    \"mdxPreservation\": 40,\n    \"culturalAdaptation\": 75,\n    \"languagePurity\": 50\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"##II. Over-Abstraction: When Simplicity Turns to Chaos\\n\\n> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\n      \"replacement\": \"## II. अति-अमूर्तता: जब सरलता अराजकता में बदल जाती है\\n\\n> हमारे आर्किटेक्ट का कहना है कि 5 लाइनों से लंबी हर फ़ंक्शन एक 'कोड स्मेल' है। हमारा कोडबेस अब बेवकूफ निराशा की हल्की गंध दे रहा है।\",\n      \"reason\": \"The heading and the blockquote in Section II are completely untranslated (English). Additionally, there is a missing space after `##` in the heading markdown.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"subTitle: \\\"इतना शुद्ध किदर्द देता है\\\"\",\n      \"replacement\": \"subTitle: \\\"इतना शुद्ध कि दर्द देता है\\\"\",\n      \"reason\": \"Typo in subtitle: 'किदर्द' should be 'कि दर्द' (that hurts).\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"`SingleResponsibility Principle`\",\n      \"replacement\": \"`Single Responsibility Principle`\",\n      \"reason\": \"Missing spaces in the technical term inside the backticks. It should match the English source's capitalization and spacing for the principle name.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"अबstraction\",\n      \"replacement\": \"एब्स्ट्रैक्शन\",\n      \"reason\": \"Mixed script error ('abstraction' written with Devanagari prefix and Latin suffix). Should be fully transliterated or translated.\"\n    }\n  ],\n  \"rationale\": \"The candidate fails significantly on MDX preservation and language purity due to large chunks of untranslated text in Section II (heading and quote) and mixed-script errors. The frontmatter title/subtitle has typos. Technical terms like SRP are malformed in the first paragraph.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 6784,
+    "inputTokenDetails": {
+      "noCacheTokens": 6306,
+      "cacheReadTokens": 478,
+      "cacheWriteTokens": 5928
+    },
+    "outputTokens": 627,
+    "outputTokenDetails": {
+      "textTokens": 627,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 7411
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 6784,
+        "promptTokensDetails": {
+          "cachedTokens": 478
+        },
+        "completionTokens": 627,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 7411,
+        "cost": 0.001544638,
+        "costDetails": {
+          "upstreamInferenceCost": 0.001544638
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

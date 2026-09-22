@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":55,\"coherence\":50,\"relevance\":75,\"translationQuality\":55,\"mdxPreservation\":25,\"culturalAdaptation\":60,\"languagePurity\":55},\"suggestions\":[{\"priority\":\"high\",\"match\":\"validateSecrets();\\n```\\n\\n```rust\",\"replacement\":\"validateSecrets();\\n```\\n\\n```rust\",\"reason\":\"The Placeholder Validation section, which the source keeps inside an MDX comment, has been moved out of the comment and now renders on the page. The comment was closed early with '*/}' after the blockquote. Restore the original comment boundaries so the whole section, including the CodeTabs, is commented out again.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# CloudFlare IPs की अनुमति दें\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# CloudFlare IPs की अनुमति दें\",\"reason\":\"A stray code fence splits the Cloudflare script. The rest of the script now renders as a heading and prose, and the fences after it are unbalanced.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित\",\"replacement\":\"sudo lsof -i:80 -Pn\\n\\n# स्थापित\",\"reason\":\"A stray fence splits the lsof code block and breaks every fence after it.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Test Inside Your Network\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Test Inside Your Network\",\"reason\":\"An extra unmatched code fence has been inserted here and breaks the rendering.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\\n\\n## ⏰\",\"replacement\":\"fswatch -r /path/to/directory\\n```\\n\\n## ⏰\",\"reason\":\"An extra unmatched code fence swallows the next section.\"},{\"priority\":\"high\",\"match\":\"<CodeTabs client:load tabs={[\\\"JavaScript\\\", \\\"Rust\\\", \\\"Go\\\"]}>\",\"replacement\":\"<CodeTabs client:load tabs={[\\\"Helper commands\\\", \\\"Persist secrets in environment\\\", \\\"Use secrets per command\\\"]}>\",\"reason\":\"The component props were changed from the source values.\"},{\"priority\":\"medium\",\"match\":\"(#मजबूत-सीक्रेट-जनरेट-करें)\\n- [कैनरी टोकन्स](#केनरी-टोकन)\\n- [`.env` से macOS कीचेन तक अपग्रेड करें](#upgrade-from-env-to-macos-keychain)\",\"replacement\":\"(#मजबूत-सीक्रेट-जनरेट-करें)\\n- [कैनरी टोकन्स](#केनरी-टोकन)\\n- [`.env` से macOS कीचेन तक अपग्रेड करें](#env-से-macos-कीचेन-में-अपग्रेड)\",\"reason\":\"This link still targets the stale English ID, but the heading is now localized.\"},{\"priority\":\"medium\",\"match\":\"[Monitoring & Verification](#-monitoring--verification)\",\"replacement\":\"[मॉनिटरिंग एवं सत्यापन](#-मॉनिटरिंग-एवं-सत्यापन)\",\"reason\":\"The heading was translated, so the fragment is stale. The same applies to the other links to it and to #-network-hazard.\"},{\"priority\":\"medium\",\"match\":\"डॉकर इमेजेज़ में सीक्रेट्स को कभी भी हार्ड‑कोड न करें\",\"replacement\":\"सीक्रेट्स को मैनेज करने के कई तरीके हैं, लेकिन सबसे महत्वपूर्ण नियम है: **डॉकर इमेजेज़ में सीक्रेट्स को कभी भी हार्ड‑कोड न करें\",\"reason\":\"The introductory clause and the bold emphasis were omitted.\"},{\"priority\":\"medium\",\"match\":\"ऑटोमेशन को बताएं कि कब आगे बढ़ना है\",\"replacement\":\"ऑटोमेशन को आपको बताने दें कि कब आगे बढ़ना है\",\"reason\":\"The meaning is reversed: automation should tell you when to move, not the other way round.\"},{\"priority\":\"medium\",\"match\":\"`कम‑जाने‑जाने`\",\"replacement\":\"`कम‑जानी‑पहचानी`\",\"reason\":\"This phrasing is garbled Hindi.\"}],\"rationale\":\"The prose is mostly translated, but there are severe MDX structural breakages: stray fences, a comment block that now renders, and changed CodeTabs props. There are also stale anchors, one reversed claim and many untranslated headings.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 32811,
+    "inputTokenDetails": {
+      "noCacheTokens": 32050,
+      "cacheReadTokens": 761,
+      "cacheWriteTokens": 31433
+    },
+    "outputTokens": 1701,
+    "outputTokenDetails": {
+      "textTokens": 1701,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 34512
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Claude Platform on AWS",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 32811,
+        "promptTokensDetails": {
+          "cachedTokens": 761
+        },
+        "completionTokens": 1701,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 34512,
+        "cost": 0.1938052,
+        "costDetails": {
+          "upstreamInferenceCost": 0.1938052
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

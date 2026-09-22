@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":88,\"technicalAccuracy\":82,\"coherence\":90,\"relevance\":95,\"translationQuality\":86,\"mdxPreservation\":78,\"culturalAdaptation\":88,\"languagePurity\":92},\"suggestions\":[{\"priority\":\"high\",\"match\":\"import Challenge from '../../../../components/QuizUI/Challenge';\\nimport QuizUI from '../../../../components/QuizUI/QuizUI';\",\"replacement\":\"import Challenge from '../../../components/QuizUI/Challenge';\\nimport QuizUI from '../../../components/QuizUI/QuizUI';\",\"reason\":\"Import paths were changed from three levels up to four levels up. The English source uses ../../../components/...; the localized file lives in a locale subdirectory beside the English post, so the relative depth to the shared components directory is unchanged. The extra ../ breaks the imports.\"},{\"priority\":\"high\",\"match\":\"## Schwindelerregende Datentypen\\n\\n<Challenge\",\"replacement\":\"## Schwindelerregende Datentypen\\n\\nIch bin sicher, du hast *so viele* Typen in PostgreSQL verwendet, oder?\\n\\nDie nächsten Fragen drehen sich um die nativen Typen von Postgres v17. 🤯\\n\\nIdentifiziere bei jeder Frage den **einen ungültigen Typ**. 🕵️‍♂️\\n\\n<p class=\\\"inset\\\">Weiter geht's!</p>\\n\\n<Challenge\",\"reason\":\"An entire prose section between the heading and the first challenge was omitted: the paragraph about using many types, the v17 native types sentence, the instruction to identify the one invalid type, and the inset 'Onward!' paragraph. This is untranslated/omitted reader-facing content.\"},{\"priority\":\"medium\",\"match\":\"{text: 'Sie sind identisch.'},\",\"replacement\":\"{text: 'Sie sind austauschbar seit Pg v10'},\",\"reason\":\"The second answer option was changed from 'They're interchangeable since Pg v10' to 'They are identical.' This alters the technical claim and removes the version reference, weakening the quiz distractor.\"},{\"priority\":\"medium\",\"match\":\"- Bereits vorhandene Zeilen werden zunächst nicht geprüft.\",\"replacement\":\"- Bereits vorhandene Zeilen werden nicht geprüft\",\"reason\":\"Minor: the added 'zunächst' (initially) slightly changes the meaning of 'Don't validate existing rows' and the trailing period is inconsistent with the other bullet points.\"},{\"priority\":\"medium\",\"match\":\"Gut gemacht! Du hast inmehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\"replacement\":\"Gut gemacht! Du hast in mehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\"reason\":\"Missing space in 'inmehreren' is a visible typo in the closing prose.\"}],\"rationale\":\"The translation is largely accurate and natural, with good localization of headings, quiz groups, and explanations. However, it has a high-priority MDX defect: the component import paths were changed from ../../../ to ../../../../, which will break the build. It also omits a full prose section before the 'Dizzying Types' challenges, and one quiz answer option was altered in meaning. These issues prevent publish readiness.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 10148,
+    "inputTokenDetails": {
+      "noCacheTokens": 10148,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 713,
+    "outputTokenDetails": {
+      "textTokens": 713,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 10861
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 10148,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 713,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 10861,
+        "cost": 0.00270314,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00270314
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

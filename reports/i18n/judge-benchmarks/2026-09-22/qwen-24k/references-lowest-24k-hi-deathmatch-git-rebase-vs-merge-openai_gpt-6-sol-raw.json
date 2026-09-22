@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":59,\"technicalAccuracy\":75,\"coherence\":67,\"relevance\":92,\"translationQuality\":61,\"mdxPreservation\":42,\"culturalAdaptation\":66,\"languagePurity\":67},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\",\"replacement\":\"\",\"reason\":\"This processing marker is not in the source and would appear in the published article.\"},{\"priority\":\"high\",\"match\":\"{/* \",\"replacement\":\"<!-- \",\"reason\":\"The source uses HTML comments. JSX comment syntax outside a JSX expression can break MDX rendering or expose editorial notes; restore the comment syntax throughout, including comments without a space after the opening delimiter.\"},{\"priority\":\"high\",\"match\":\"*/}\",\"replacement\":\"-->\",\"reason\":\"Close every restored HTML comment correctly. The final comment currently ends before three source-commented bullet points, exposing unpublished bonus instructions to readers.\"},{\"priority\":\"high\",\"match\":\"- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"<!--\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहें।\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\\n-->\",\"reason\":\"These bonus bullets belong inside the source's unpublished comment. Keep them hidden; do not render the code-adjacent instruction as an article recommendation.\"},{\"priority\":\"high\",\"match\":\"`मेन`\",\"replacement\":\"`main`\",\"reason\":\"The source names the actual Git branch `main`; translating a code-formatted branch name changes the technical referent.\"},{\"priority\":\"medium\",\"match\":\"ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े\",\"replacement\":\"ध्यान से चुनी और तराशी हुई कलाकृतियाँ\",\"reason\":\"‘आकृति-विहीन’ means shapeless, reversing the source's image of carefully sculpted commits.\"},{\"priority\":\"medium\",\"match\":\"या फिर आपको \\\"बिगड़े हुए\\\" कमिट लॉग से बस नहीं रहता?\",\"replacement\":\"या फिर आप \\\"बेतरतीब\\\" कमिट लॉग बिल्कुल बर्दाश्त नहीं कर पाते?\",\"reason\":\"The current sentence is ungrammatical and obscures the question about disliking messy commit logs.\"},{\"priority\":\"medium\",\"match\":\"🦺 अपरिवर्तित।\",\"replacement\":\"🦺 बिना पुराने इतिहास को बदले।\",\"reason\":\"The source says the merge approach is non-destructive, not that it is unchangeable.\"},{\"priority\":\"medium\",\"match\":\"**एसक्वेश मर्ज**\",\"replacement\":\"**स्क्वैश मर्ज**\",\"reason\":\"The summary's main recommendation contains a misspelling of the Git operation, inconsistent with its spelling elsewhere.\"}],\"rationale\":\"The candidate covers most of the article and preserves the main commands and locale-relative assets, but a processing marker, broken comment structure, exposed unpublished bullets, a translated branch identifier, and several meaning or language defects prevent publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 5043,
+    "inputTokenDetails": {
+      "noCacheTokens": 5043,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5040
+    },
+    "outputTokens": 790,
+    "outputTokenDetails": {
+      "textTokens": 790,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5833
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5043,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 790,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5833,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.020506
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

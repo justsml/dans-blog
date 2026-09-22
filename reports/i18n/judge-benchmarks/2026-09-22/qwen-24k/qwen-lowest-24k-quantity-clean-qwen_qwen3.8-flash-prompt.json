@@ -1,0 +1,75 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a constrained translation judge. Return strict JSON only."
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "You are judging a es translation.\nCompare the candidate against the English source.\nScore these dimensions from 0 to 100:\n- technicalAccuracy/fidelity: preserves meaning, technical claims, correct quiz answers, and code-adjacent facts.\n- mdxPreservation: preserves MDX components, imports, props, fences, headings, links, asset path rules, and structure. Same-page heading links must target the localized heading IDs generated from translated heading text, not stale English heading IDs.\n- languagePurity/localeQuality: reader-facing prose is natural target-language prose without instruction leakage.\n- culturalAdaptation/tone: preserves Dan's direct technical style while localizing idioms and jokes naturally.\n- publishReadiness: high only when no medium/high fixes remain.\nReturn concrete medium/high-priority fixes in suggestions with exact match/replacement strings from the candidate.\nDo not require titles, subtitles, headings, or quiz title/group values to remain in English; they are reader-facing.\nDo preserve code, component names, prop names, imports, API names, external URLs, route URLs, and non-reader-facing metadata.\nWhen a same-page heading link changes from an English #fragment to the matching translated #fragment, treat that as correct localization rather than link drift.\nThe final translated prose must be roughly 70%-155% of the English prose length (Spanish range: 70%-155% of English). Do not summarize to satisfy the lower bound or pad to satisfy the upper bound.\n\nJUDGE PROMPT PROFILE STABLE TUNING:\nRepository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above.",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "<english-source>\n# Timeout\n\nWait at least 12 seconds before reconnecting.\n\n</english-source>",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "<candidate>\n# Tiempo de espera\n\nEspera al menos 12 segundos antes de volver a conectarte.\n\n</candidate>",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Judge this candidate.\nCandidate id: e2602297fc94\nTarget path: unknown\nUse this JSON shape:\n{\"selectedCommit\":\"e2602297fc94\",\"selectedModel\":\"model id if known\",\"scores\":{\"readability\":0,\"technicalAccuracy\":0,\"coherence\":0,\"relevance\":0,\"translationQuality\":0,\"mdxPreservation\":0,\"culturalAdaptation\":0,\"languagePurity\":0},\"suggestions\":[{\"priority\":\"high\",\"match\":\"exact translated text currently in the selected MDX\",\"replacement\":\"exact replacement text to write into the selected MDX\",\"reason\":\"English explanation of why this medium/high-priority change is needed\"}],\"rationale\":\"brief selection rationale\",\"publishReady\":false}\n\nJUDGE PROMPT PROFILE DYNAMIC TUNING:\nBefore assigning scores, compare source and target for omitted or untranslated prose (including tables and closing paragraphs), reversed claims, changed quantities, executable code and URL literals, and quiz answer flags. The locale-relative image rule does not permit changing absolute URLs inside executable code. Report concrete defects using short exact target snippets; do not invent defects or require stylistic rewrites of accurate natural translations. Reconcile publishReady with your findings: unresolved medium/high corrections mean false. Return one compact valid JSON object: numeric scores as digits, JSON booleans, escaped quotes/newlines in strings, no trailing commas. Do not print your audit checklist. Check the entire document, not just the first defect. Report each distinct serious defect category, including both untranslated paragraphs and changed code if both occur. Keep each match and replacement to the shortest useful exact span; do not rewrite whole paragraphs. Verify every suggestion object has priority, match, replacement and reason inside the same braces."
+        }
+      ]
+    }
+  ],
+  "providerOptions": {
+    "openrouter": {
+      "reasoning": {
+        "enabled": false,
+        "exclude": true
+      }
+    }
+  },
+  "temperature": 0,
+  "maxOutputTokens": 24000
+}

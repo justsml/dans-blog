@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"d9e2ed508e21\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 60,\n    \"technicalAccuracy\": 40,\n    \"coherence\": 70,\n    \"relevance\": 100,\n    \"translationQuality\": 50,\n    \"mdxPreservation\": 30,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 40\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"## Not another Vector DB article\\n\\nHere is the decision rule I wish I had used earlier:\",\n      \"replacement\": \"## वेक्टर डीबी पर एक और लेख नहीं\\n\\nयह वह निर्णय नियम है जिसका उपयोग मैं काश पहले कर पाता:\",\n      \"reason\": \"The first heading and introductory paragraph are left in English. Reader-facing prose must be translated.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"That is the useful line. Not \\\"serverless is the future.\\\" Not \\\"vector databases changed everything.\\\" Those sentences have already been printed on enough conference lanyards.\\n\\nAI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was \\\"run Postgres with pgvector\\\" or \\\"operate OpenSearch/Elasticsearch\\\" or \\\"buy a managed search service.\\\" Those are still good answers when the workload deserves them.\\n\\nBut many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.\",\n      \"replacement\": \"यही उपयोगी बात है। न कि \\\"सर्वरलेस ही भविष्य है।\\\" न कि \\\"वेक्टर डेटाबेस ने सब कुछ बदल दिया।\\\" ये वाक्य पहले ही पर्याप्त कॉन्फ्रेंस लैन्यार्ड्स पर छप चुके हैं।\\n\\nAI ने वास्तव में कई खोज समस्याओं के स्वरूप को बदल दिया। अचानक छोटी टीमों को सेमांटिक सर्च, हाइब्रिड रैंकिंग, डॉक्यूमेंट चैट, मल्टीमॉडल लुकअप, और ऑब्जेक्ट स्टोरेज में मौजूद फ़ाइलों पर एनालिटिक्स चाहिए थी। पुराना जवाब था \\\"pgvector के साथ Postgres चलाएँ\\\" या \\\"OpenSearch/Elasticsearch संचालित करें\\\" या \\\"प्रबंधित खोज सेवा खरीदें।\\\" जब वर्कलोड इसके लायक हो तो ये अभी भी अच्छे जवाब हैं।\\n\\nलेकिन कई वर्कलोड इसके लायक नहीं हैं। वे रीड-हेवी हैं, पुनःनिर्मित की जा सकती हैं, और सामग्री बदलने और खोज के अपडेट होने के बीच थोड़ी देरी को सहन कर सकती हैं। दस्तावेज़ीकरण। कैटलॉग स्नैपशॉट। स्थैतिक निर्यात। आंतरिक ज्ञान आधार। स्थानीय एनालिटिक्स। प्रोटोटाइप RAG सिस्टम। इनके लिए, उपकरणों की एक नई श्रेणी ने उबाऊ आर्किटेक्चर को असामान्य रूप से शक्तिशाली बना दिया है: एक इंडेक्स बनाएँ, उसे फ़ाइलों के रूप में स्टोर करें, और इसे HTTP के माध्यम से सर्व करें।\",\n      \"reason\": \"Large chunks of the introduction are untranslated English text.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"## A database by any other name\",\n      \"replacement\": \"## किसी और नाम से कोई फर्क नहीं पड़ता (एक डेटाबेस)\",\n      \"reason\": \"Heading is in English.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"### Battle of the Checkboxes\",\n      \"replacement\": \"### चेकबॉक्स की लड़ाई\",\n      \"reason\": \"Heading is in English.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |\\n|---------|----------|--------|---------|----------|----------|\\n| **Full-Text Search** | ✅ Advanced stemming | ✅ BM25, 30 languages | ✅ SQLite FTS | ✅ Tantivy | ✅ Full SQL |\\n| **Vector Search** | ❌ | ✅ Cosine similarity | ✅ HNSW | ✅ IVF_PQ, HNSW, GPU | ⚠️ Extensions |\\n| **AI/RAG Integrations** | None | ✅ Built-in pipeline | ✅ LangChain, LlamaIndex | ✅ Advanced reranking | ⚠️ Manual setup |\\n| **Storage** | Static JSON/WASM | Memory + S3 plugins | Server-based* | S3-compatible Lance | WASM + S3/HTTP |\\n| **Write Support** | Build-time only | Full CRUD | Full CRUD | Full CRUD | Full SQL CRUD |\\n| **Performance** | Sub-100ms | 0.0001ms - 100ms | Sub-100ms | 3-5ms vector, 50ms FTS | 10ms-1s (complex SQL) |\",\n      \"replacement\": \"| फीचर | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |\\n|---------|----------|--------|---------|----------|----------|\\n| **फुल-टेक्स्ट सर्च** | ✅ एडवांस्ड स्टेम्बिंग | ✅ BM25, 30 भाषाएं | ✅ SQLite FTS | ✅ Tantivy | ✅ पूर्ण SQL |\\n| **वेक्टर सर्च** | ❌ | ✅ कोसाइन समानता | ✅ HNSW | ✅ IVF_PQ, HNSW, GPU | ⚠️ एक्सटेंशन |\\n| **AI/RAG इंटीग्रेशन** | कोई नहीं | ✅ बिल्ट-इन पाइपलाइन | ✅ LangChain, LlamaIndex | ✅ एडवांस्ड री-रैंकिंग | ⚠️ मैनुअल सेटअप |\\n| **स्टोरेज** | स्थैतिक JSON/WASM | मेमोरी + S3 प्लगइन्स | सर्वर-आधारित* | S3-संगत Lance | WASM + S3/HTTP |\\n| **राइट सपोर्ट** | केवल बिल्ड-टाइम | पूर्ण CRUD | पूर्ण CRUD | पूर्ण CRUD | पूर्ण SQL CRUD |\\n| **प्रदर्शन** | <100ms | 0.0001ms - 100ms | <100ms | 3-5ms वेक्टर, 50ms FTS | 10ms-1s (जटिल SQL) |\",\n      \"reason\": \"Table headers and descriptive cells should be localized for reader-facing content, while keeping technical terms like BM25, HNSW, etc., intact.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"*September 2025 snapshot: Chroma requires a server runtime and does not support direct S3 object storage in the way the object-file tools do ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).\",\n      \"replacement\": \"*सितंबर 2025 स्नैपशॉट: Chroma को सर्वर रनटाइम की आवश्यकता होती है और यह ऑब्जेक्ट-फ़ाइल टूल्स की तरह सीधे S3 ऑब्जेक्ट स्टोरेज का समर्थन नहीं करता ([issue #1736](https://github.com/chroma-core/chroma/issues/1736))।\",\n      \"reason\": \"Footnote is in English.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"#### Static site search with Pagefind\",\n      \"replacement\": \"#### Pagefind के साथ स्थैतिक साइट खोज\",\n      \"reason\": \"Subheading is in English.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<link href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"../pagefind/pagefind-ui.js\\\"></script>\",\n      \"replacement\": \"<link href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"/pagefind/pagefind-ui.js\\\"></script>\",\n      \"reason\": \"Code paths were incorrectly modified to relative parent paths (`../`). These are absolute paths from the root in the source code example and must remain unchanged.\"\n    }\n  ],\n  \"rationale\": \"The candidate suffers from severe language purity issues, leaving large portions of the introduction, headings, table contents, and footnotes in English. Additionally, there is a critical technical error where code snippets inside HTML blocks were altered (changing absolute paths to relative), which breaks the executable nature of the example.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 8141,
+    "inputTokenDetails": {
+      "noCacheTokens": 8141,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 7762
+    },
+    "outputTokens": 2247,
+    "outputTokenDetails": {
+      "textTokens": 2247,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 10388
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 8141,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2247,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 10388,
+        "cost": 0.00266534,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00266534
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

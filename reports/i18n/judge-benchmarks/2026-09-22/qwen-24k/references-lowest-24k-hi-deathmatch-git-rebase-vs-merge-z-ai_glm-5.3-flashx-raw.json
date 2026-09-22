@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":80,\"coherence\":70,\"relevance\":95,\"translationQuality\":78,\"mdxPreservation\":55,\"culturalAdaptation\":80,\"languagePurity\":78},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\\n\\n\",\"replacement\":\"\",\"reason\":\"Internal chunking artifact 'CHUNK END' leaked into the published document; it is not part of the translation and will render to readers.\"},{\"priority\":\"high\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\",\"replacement\":\"{/*\\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना?\\n- आप `git checkout` के साथ विशेष \\\"--\\\" सेपरेटर का उपयोग कर सकते हैं...\\n*/}\",\"reason\":\"The JSX comment opened before the Bonus section is never closed; the closing '*/}' is missing, and the following bullet list remains outside the comment, causing the source's commented-out bonus content to render as live content and likely breaking MDX parsing.\"},{\"priority\":\"medium\",\"match\":\"जिसमें `मेन` पर कुछ हालिया कमिट्स को छोड़कर\",\"replacement\":\"जिसमें `main` पर कुछ हालिया कमिट्स को छोड़कर\",\"reason\":\"The branch name 'main' inside backticks is a code literal and must not be transliterated to `मेन`.\"},{\"priority\":\"medium\",\"match\":\"क्या यह `git push --force` या `git push --force-with-lease` होगा? इसे बिल्कुल क्यों उठाएं?\",\"replacement\":\"क्या यह `git push --force` था या `git push --force-with-lease`? इसे हैंडल करने के लिए क्यों झंझट मचाएं?\",\"reason\":\"Minor fidelity drift: 'was it' (past tense questioning) and the rhetorical 'Why deal with that at all?' are weakened; suggest a more natural rendering of the original rhetorical point.\"}],\"rationale\":\"Translation is largely faithful and natural with correct locale-relative asset paths, but a leaked 'CHUNK END' artifact and an unclosed JSX comment around the Bonus section (leaking commented-out content into the render) are high-priority MDX defects, and the code literal `मेन` changes a code identifier. Publish-ready only after these fixes.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 8278,
+    "inputTokenDetails": {
+      "noCacheTokens": 7830,
+      "cacheReadTokens": 448,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 912,
+    "outputTokenDetails": {
+      "textTokens": 726,
+      "reasoningTokens": 186
+    },
+    "totalTokens": 9190
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 8278,
+        "promptTokensDetails": {
+          "cachedTokens": 448
+        },
+        "completionTokens": 912,
+        "completionTokensDetails": {
+          "reasoningTokens": 186
+        },
+        "totalTokens": 9190,
+        "cost": 0.0040707,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0040707
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

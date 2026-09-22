@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":68,\"technicalAccuracy\":61,\"coherence\":62,\"relevance\":88,\"translationQuality\":58,\"mdxPreservation\":35,\"culturalAdaptation\":70,\"languagePurity\":55},\"suggestions\":[{\"priority\":\"high\",\"match\":\"{/* पोस्टग्रेस जैसे ओपन सोर्स प्रोजेक्ट के लिए जो बनता है, या लिनक्स कर्नल के लिए, आपके या आपकी टीम के लिए सबसे अच्छा चयन नहीं हो सकता। */}\",\"replacement\":\"<!-- What makes sense for an Open Source project like Postgres, or the Linux Kernel, may not be the best choice for you or your team. -->\",\"reason\":\"The source comment was translated into JSX comment syntax, which changes the MDX structure and may render or parse differently. Preserve the original HTML comment form while translating its reader-facing content only if needed.\"},{\"priority\":\"high\",\"match\":\"{/* - 🎭 अपने इंजीनियरिंग थिएटर कौशल का अभ्यास करें। */}\",\"replacement\":\"<!-- - 🎭 Practice your Engineering Theater skills. -->\",\"reason\":\"The source uses an HTML comment, but the candidate changes it to JSX comment syntax. This is an MDX preservation defect.\"},{\"priority\":\"high\",\"match\":\"{/* **स्क्वैश मर्ज** यहाँ स्पष्ट विजेता है। यह **सरल** और **कम त्रुटि-पूर्ण** है। यह अस्तित्व में वर्तमान कमिट इतिहास को अपरिवर्तित छोड़ देता है। यह **सहयोग** और **कोड रिव्यू** के लिए **बड़ी जीत** है। */}\",\"replacement\":\"<!-- **Squash merge** is the clear winner here. It's **simpler** and **less error-prone**. It also **leaves the existing commit history intact**. This is a **huge win** for **collaboration** and **code review**. -->\",\"reason\":\"The candidate changes a source HTML comment into JSX syntax, risking structural differences in MDX.\"},{\"priority\":\"high\",\"match\":\"{/* एक रीबेस फ्लो के डायग्राम को शामिल करें जिसमें 2 फीचर शाखाएँ हों */}\",\"replacement\":\"<!-- Include a diagram of a rebase flow with 2 feature branches -->\",\"reason\":\"The source HTML comment was converted to JSX comment syntax, which does not preserve the original MDX structure.\"},{\"priority\":\"high\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\",\"replacement\":\"<!--\\n#### Bonus: Releases Tip\\n\\nEver need just an individual file or a few folders from a branch? Without the commit history?\\n\\n- You can use the special \\\"--\\\" separator with `git checkout` to stay in the current branch while copying the specified files:\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- Make sure you've committed any changes you want to keep first, as this will overwrite any local changes.\\n-->\",\"reason\":\"The candidate closes the source comment and leaves the three bonus bullets outside the comment, causing omitted/incorrect rendered structure. The source keeps the entire bonus section commented out.\"},{\"priority\":\"high\",\"match\":\"- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं\",\"replacement\":\"<!-- - आप `git checkout` के साथ विशेष `--` विभाजक का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहें:\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा। -->\",\"reason\":\"These bullets were inside a source comment and should remain commented out; as written they become reader-visible content.\"},{\"priority\":\"medium\",\"match\":\"मृत्यु मुकाबला: Git Rebase vs. (Squash) Merge!\",\"replacement\":\"मुकाबला: Git Rebase vs. (Squash) Merge!\",\"reason\":\"“मृत्यु मुकाबला” is an unnatural literal rendering and adds a meaning not present in the title; “मुकाबला” preserves the intended direct title more naturally.\"},{\"priority\":\"medium\",\"match\":\"आकृति-विहीन कला के टुकड़े\",\"replacement\":\"तराशे हुए कला-कृत्य\",\"reason\":\"The source describes commits as carefully curated and sculpted; “आकृति-विहीन” reverses that meaning and is technically misleading.\"},{\"priority\":\"medium\",\"match\":\"असहमति को टालते हैं\",\"replacement\":\"संघर्षों से बचने में मदद करते हैं\",\"reason\":\"The Git merge discussion is about avoiding merge conflicts, not avoiding disagreement. This wording changes the technical meaning.\"},{\"priority\":\"medium\",\"match\":\"अवनत होगा\",\"replacement\":\"कमतर रहेगा\",\"reason\":\"“अवनत” is unnatural here and harms readability; the sentence should clearly state that rebasing is at a disadvantage.\"},{\"priority\":\"medium\",\"match\":\"एसक्वेश मर्ज\",\"replacement\":\"स्क्वैश मर्ज\",\"reason\":\"This is a spelling/transliteration error in a central Git term.\"}],\"rationale\":\"The translation conveys most of the article, but it has substantial MDX structure defects: several HTML comments were converted to JSX comments, and the commented bonus section was accidentally made visible. It also contains notable semantic and terminology problems, including the reversed “sculpted” description and inaccurate wording about merge conflicts.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 5043,
+    "inputTokenDetails": {
+      "noCacheTokens": 5043,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5040
+    },
+    "outputTokens": 1197,
+    "outputTokenDetails": {
+      "textTokens": 1197,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 6240
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5043,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1197,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 6240,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.002697
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

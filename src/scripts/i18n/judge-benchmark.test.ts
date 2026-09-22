@@ -48,7 +48,9 @@ test('lowest reasoning respects mandatory thinking and supported settings', () =
   expect(benchmarkReasoningEffort('lowest', {reasoning:{supported_efforts:['high','low','none']}})).toBe('none');
   expect(benchmarkReasoningEffort('lowest', {reasoning:{mandatory:true,supported_efforts:['high','low','none']}})).toBe('low');
   expect(benchmarkReasoningEffort('lowest', {reasoning:{supported_efforts:['low','minimal']}})).toBe('minimal');
-  expect(() => benchmarkReasoningEffort('lowest', {})).toThrow('Cannot determine');
+  expect(benchmarkReasoningEffort('lowest', {})).toBe('none');
+  expect(benchmarkReasoningEffort('lowest', {reasoning:{mandatory:false}})).toBe('none');
+  expect(() => benchmarkReasoningEffort('lowest', {reasoning:{mandatory:true}})).toThrow('Cannot determine');
   expect(benchmarkReasoningEffort('medium', {})).toBe('medium');
 });
 test('supplemental phases join their named comparison without overwriting evidence', () => {
@@ -61,7 +63,8 @@ test('Astra and Sol scoring omit temperature at minimum reasoning', async () => 
     let captured: any;
     await expect(scoreTranslation({model:`llm://openrouter/openai/gpt-6-${model}?reasoning_effort=${effort}`,locale:'es',sourceContents:'Hello',targetContents:'Hola',generateText:(async (options:any)=>{captured=options;throw new Error('offline capture');}) as any})).rejects.toThrow('offline capture');
     expect(captured.temperature).toBeUndefined();
-    expect(captured.providerOptions.openrouter.reasoning.effort).toBe(effort);
+    if (effort === 'none') expect(captured.providerOptions.openrouter.reasoning.enabled).toBe(false);
+    else expect(captured.providerOptions.openrouter.reasoning.effort).toBe(effort);
   }
 });
 test('catalog estimate applies cache-write premium to written input tokens', () => {
@@ -71,10 +74,10 @@ import { defaultBenchmarkEffort } from './judge-benchmark.ts';
 test('new Astra and Sol benchmark presets keep minimum reasoning by default', () => {
   expect(defaultBenchmarkEffort('openai/gpt-6-astra')).toBe('lowest');
   expect(defaultBenchmarkEffort('openai/gpt-6-sol')).toBe('lowest');
-  expect(defaultBenchmarkEffort('openai/gpt-6-luna')).toBe('low');
+  expect(defaultBenchmarkEffort('openai/gpt-6-luna')).toBe('lowest');
 });
-test('judge output budget defaults to 16k and respects an explicit smaller cap', async () => {
-  for (const [model, expected] of [['openrouter/openai/gpt-6-sol',16000],['llm://openrouter/openai/gpt-6-sol?max_tokens=8000',8000]] as const) {
+test('judge output budget defaults to 24k and respects an explicit smaller cap', async () => {
+  for (const [model, expected] of [['openrouter/openai/gpt-6-sol',24000],['llm://openrouter/openai/gpt-6-sol?max_tokens=8000',8000]] as const) {
     let captured: any;
     await expect(scoreTranslation({model,locale:'es',sourceContents:'Hello',targetContents:'Hola',generateText:(async (options:any)=>{captured=options;throw new Error('offline capture');}) as any})).rejects.toThrow('offline capture');
     expect(captured.maxOutputTokens).toBe(expected);
@@ -90,4 +93,33 @@ test('limit retries exclude parser failures, transport errors and successful cal
 });
 test('Gemini overlapping cache reads and writes add storage charges without negative input cost', () => {
   expect(catalogCost({inputTokens:7090,outputTokens:1291,cacheReadTokens:6930,cacheWriteTokens:6930},{prompt:'0.00000075',completion:'0.00000375',input_cache_read:'0.000000075',input_cache_write:'0.0000000416666666666667'},'google/gemini-3.8-flash')).toBeCloseTo(0.00576975,9);
+});
+
+import { resolveLlmConfig } from './core/model-config.ts';
+test('catalog defaults disable optional thinking and minimize mandatory thinking', () => {
+  for (const model of ['qwen/qwen3.8-flash', 'qwen/qwen3.8-27b', 'openai/gpt-6-luna', 'deepseek/deepseek-v4.1-flash']) {
+    for (const source of [`openrouter/${model}`, `llm://openrouter/${model}`]) {
+      const config=resolveLlmConfig(source);
+      expect(config.reasoningEffort).toBe('none');
+      expect(config.providerOptions.openrouter.reasoning.enabled).toBe(false);
+      expect(config.providerOptions.openrouter.reasoning.effort).toBeUndefined();
+    }
+  }
+  expect(resolveLlmConfig('openrouter/qwen/qwen3.8-max-0902').reasoningEffort).toBe('minimal');
+  expect(resolveLlmConfig('openrouter/google/gemini-3.5-flash-lite').reasoningEffort).toBe('minimal');
+  expect(resolveLlmConfig('openrouter/openai/gpt-6-astra').reasoningEffort).toBe('low');
+  expect(resolveLlmConfig('llm://openrouter/qwen/qwen3.8-flash?effort=high').reasoningEffort).toBe('high');
+  expect(() => resolveLlmConfig('openrouter/unknown/unlisted')).toThrow('No reasoning capabilities');
+});
+test('first-party OpenAI receives the same minimum default and honors overrides', () => {
+  for (const source of ['openai/gpt-6-sol','llm://openai/gpt-6-sol']) {
+    const config=resolveLlmConfig(source);
+    expect(config.reasoningEffort).toBe('none');
+    expect(config.providerOptions.openai?.reasoningEffort).toBe('none');
+  }
+  expect(resolveLlmConfig('llm://openai/gpt-6-astra').providerOptions.openai?.reasoningEffort).toBe('low');
+  expect(resolveLlmConfig('llm://openai/gpt-6-sol?effort=high').providerOptions.openai?.reasoningEffort).toBe('high');
+});
+test('virtual provider-routing suffixes retain base-model reasoning capabilities', () => {
+  expect(resolveLlmConfig('openrouter/deepseek/deepseek-v4-flash:nitro').reasoningEffort).toBe(resolveLlmConfig('openrouter/deepseek/deepseek-v4-flash').reasoningEffort);
 });

@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":40,\"technicalAccuracy\":60,\"coherence\":50,\"relevance\":100,\"translationQuality\":60,\"mdxPreservation\":30,\"culturalAdaptation\":80,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\",\"reason\":\"Duplicate code block for blocking China traffic. The second instance is redundant and breaks flow.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# Allow CloudFlare IPs\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Add IPv6 support\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"Broken Markdown fence structure in the CloudFlare whitelist script. Code lines are outside the code block, causing rendering errors and potential execution confusion if copied incorrectly.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# Note: Ensure `target_host` is the desired IP\\n\\n# Scan specific ports:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# Top 100 ports:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\",\"replacement\":\"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# Note: Ensure `target_host` is the desired IP\\n\\n# Scan specific ports:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# Top 100 ports:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\",\"reason\":\"Stray opening code fence ``` after the nmap scan block creates an empty or malformed code block before the next section.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"Broken Markdown fence structure in the lsof commands block. Most commands are rendered as plain text instead of code due to premature closing of the code block.\"},{\"priority\":\"medium\",\"match\":\"## 🔄 Танец `:latest`\\n...\\n- 🔄 [Танец `:latest`](#-the-latest-dance)\",\"replacement\":\"## 🔄 Танец `:latest`\\n...\\n- 🔄 [Танец `:latest`](#-танец-latest)\",\"reason\":\"Same-page anchor link mismatch. The TOC link points to the English ID `#-the-latest-dance`, but the heading is translated to Russian, generating a different slug. This breaks navigation.\"},{\"priority\":\"medium\",\"match\":\"## 🌐 Сетевая опасность\\n...\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\",\"replacement\":\"## 🌐 Сетевая опасность\\n...\\n- 🌐 [Сетевая опасность](#-сетевая-опасность)\",\"reason\":\"TOC link text 'Сетевой риск' does not match the actual heading 'Сетевая опасность'. While the anchor might work if generated correctly, the inconsistency confuses readers.\"},{\"priority\":\"medium\",\"match\":\"## 🛡️ Управление доступом\\n...\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\",\"replacement\":\"## 🛡️ Контроль доступа\\n...\\n- 🛡️ [Контроль доступа](#️-контроль-доступа)\",\"reason\":\"Heading was translated as 'Управление доступом' in H2 but linked as 'Контроль доступа' in TOC with a mismatched anchor. Standardize to 'Контроль доступа' for consistency with common terminology and ensure anchors match.\"},{\"priority\":\"medium\",\"match\":\"## 🔍 Мониторинг и проверка\\n...\\n- 🔍 [Мониторинг и проверка](#-monitoring--verification)\",\"replacement\":\"## 🔍 Мониторинг и проверка\\n...\\n- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\",\"reason\":\"Anchor link uses English slug `#-monitoring--verification` instead of the localized slug derived from the Russian heading.\"},{\"priority\":\"medium\",\"match\":\"## ⏰ Часто упускаемые советы\\n...\\n- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\",\"replacement\":\"## ⏰ Часто упускаемые советы\\n...\\n- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\",\"reason\":\"Anchor link uses English slug `#-often-overlooked-tips` instead of the localized slug.\"},{\"priority\":\"medium\",\"match\":\"## 🚀 Production Checklist\\n...\\n- 🚀 [Контрольный список для продакшна](#-production-checklist)\",\"replacement\":\"## 🚀 Контрольный список для продакшна\\n...\\n- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\",\"reason\":\"H2 heading remains in English ('Production Checklist') while TOC translates it. Headings should be localized for reader-facing content. Anchor also needs updating.\"},{\"priority\":\"medium\",\"match\":\"## 📚 Further Reading\\n...\\n- 📚 [Дополнительные материалы](#-further-reading)\",\"replacement\":\"## 📚 Дополнительные материалы\\n...\\n- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\"reason\":\"H2 heading remains in English ('Further Reading'). Should be localized. Anchor needs updating.\"}],\"rationale\":\"The candidate suffers from severe structural defects in MDX formatting, specifically broken code fences that render executable scripts as plain text or duplicate them. Additionally, same-page navigation links frequently point to stale English slugs despite translated headings, breaking usability. Several major section headings were left in English, violating localization requirements.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 18549,
+    "inputTokenDetails": {
+      "noCacheTokens": 18549,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2024,
+    "outputTokenDetails": {
+      "textTokens": 2024,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20573
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 18549,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2024,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20573,
+        "cost": 0.00373363,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00373363
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

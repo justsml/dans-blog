@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"1b7eea376e11\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 85,\n    \"technicalAccuracy\": 90,\n    \"coherence\": 40,\n    \"relevance\": 95,\n    \"translationQuality\": 85,\n    \"mdxPreservation\": 20,\n    \"culturalAdaptation\": 90,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\n      \"replacement\": \"- [概要](#overview)\\n- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>`の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [Handling HTTP Redirects](#handling-http-redirects)\\n  - [Canceling a fetch request](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\n      \"reason\": \"The Table of Contents links are completely scrambled and point to incorrect IDs (e.g., 'Feature Comparison' points to '#overview', 'Compatibility' points to '#recursive-retry-helper'). Additionally, the last two items in the TOC list were left in English while the headings themselves were translated; they should match the translated heading text or at least have correct anchors. The replacement fixes all anchor mismatches.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"<h2 id=\\\"overview\\\">概要</h2>\",\n      \"replacement\": \"### 概要\",\n      \"reason\": \"The source uses an H3 (`### Overview`) for this section, but the candidate changed it to an H2 (`<h2 ...>`) using raw HTML. This breaks the document hierarchy and consistency with other sections which use Markdown headers. It should be reverted to a Markdown H3.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"<h2 id=\\\"feature-comparison\\\">機能比較</h2>\",\n      \"replacement\": \"### 機能比較\",\n      \"reason\": \"Similar to above, the source uses an H3 (`### Feature Comparison`). The candidate incorrectly promoted this to an H2 using raw HTML, disrupting the outline structure.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"<h2 id=\\\"fetch-recipes\\\">Fetch レシピ</h2>\",\n      \"replacement\": \"## Fetch レシピ\",\n      \"reason\": \"The source uses an H2 (`## Fetch Recipes`). While the level is correct, the candidate used raw HTML instead of standard Markdown syntax, which is inconsistent with the rest of the document's style preference for Markdown headers where possible.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"<h2 id=\\\"compatibility\\\">互換性</h2>\",\n      \"replacement\": \"### 互換性\",\n      \"reason\": \"The source uses an H3 (`### Compatibility`). The candidate incorrectly promoted this to an H2 using raw HTML.\"\n    }\n  ],\n  \"rationale\": \"The translation quality is generally good, but there are critical structural errors. The Table of Contents links are entirely broken/scrambled, pointing to wrong sections. Furthermore, several headings were converted from Markdown syntax to raw HTML tags with incorrect heading levels (H3s became H2s), which violates MDX best practices and breaks the document outline.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 6078,
+    "inputTokenDetails": {
+      "noCacheTokens": 6078,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5700
+    },
+    "outputTokens": 1192,
+    "outputTokenDetails": {
+      "textTokens": 1192,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 7270
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 6078,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1192,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 7270,
+        "cost": 0.00175694,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00175694
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

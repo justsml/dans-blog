@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":78,\"coherence\":72,\"relevance\":95,\"translationQuality\":72,\"mdxPreservation\":60,\"culturalAdaptation\":75,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\",\"replacement\":\"\",\"reason\":\"Translation pipeline artifact leaked into the published document; must be removed.\"},{\"priority\":\"high\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\",\"replacement\":\"<!--\\n#### बोनस: रिलीज टिप्स\",\"reason\":\"The bonus section comment is closed early with */}, leaving the following list items (git checkout tip) visible when the English source keeps them commented out.\"},{\"priority\":\"high\",\"match\":\"{/* **स्क्वैश मर्ज** यहाँ स्पष्ट विजेता है।\",\"replacement\":\"<!-- **स्क्वैश मर्ज** यहाँ स्पष्ट विजेता है।\",\"reason\":\"HTML comments from the source were converted to JSX comments; restore HTML comment syntax to preserve MDX structure consistently.\"},{\"priority\":\"medium\",\"match\":\"**एसक्वेश मर्ज** करें अपने PR को `main` में।\",\"replacement\":\"**स्क्वैश मर्ज** करें अपने PR को `main` में।\",\"reason\":\"Misspelling of 'Squash' (एसक्वेश) in the key answer of the summary.\"},{\"priority\":\"medium\",\"match\":\"खोए हुए/अपनाहीन PR टिप्पणियाँ\",\"replacement\":\"खोए हुए/अनाथ PR टिप्पणियाँ\",\"reason\":\"'अपनाहीन' is not a valid Hindi word for 'orphaned'; use अनाथ.\"},{\"priority\":\"medium\",\"match\":\"जिसमें `मेन` पर कुछ हालिया कमिट्स को छोड़कर\",\"replacement\":\"जिसमें `main` पर कुछ हालिया कमिट्स को छोड़कर\",\"reason\":\"Branch name `main` is a code-adjacent literal and must not be translated to `मेन`.\"},{\"priority\":\"medium\",\"match\":\"हमेशा **`git merge ...`** की तुलना में अवनत होगा।\",\"replacement\":\"हमेशा **`git merge ...`** की तुलना में कमजोर रहेगा।\",\"reason\":\"'अवनत' is a non-standard/incorrect word; meaning 'at a disadvantage' needs a natural term.\"}],\"rationale\":\"Translation is largely faithful and complete, but contains a leaked CHUNK END artifact, a prematurely closed comment exposing hidden bonus content, JSX comments replacing HTML comments, and several spelling/word-choice errors including a translated branch name.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 8279,
+    "inputTokenDetails": {
+      "noCacheTokens": 8279,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1106,
+    "outputTokenDetails": {
+      "textTokens": 751,
+      "reasoningTokens": 355
+    },
+    "totalTokens": 9385
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "BaseTen",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 8279,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1106,
+        "completionTokensDetails": {
+          "reasoningTokens": 355
+        },
+        "totalTokens": 9385,
+        "cost": 0.00179485,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00179485
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

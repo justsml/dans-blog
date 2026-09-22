@@ -59,7 +59,8 @@ export interface LlmConfig {
   providerOptions: {
     openrouter: {
       reasoning: {
-        effort: string;
+        effort?: string;
+        enabled?: boolean;
       };
     };
   };

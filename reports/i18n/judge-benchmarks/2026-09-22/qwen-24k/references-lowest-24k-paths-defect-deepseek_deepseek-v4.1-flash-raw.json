@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"f61625d30150\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":95,\"technicalAccuracy\":60,\"coherence\":95,\"relevance\":95,\"translationQuality\":90,\"mdxPreservation\":55,\"culturalAdaptation\":90,\"languagePurity\":100},\"suggestions\":[{\"priority\":\"high\",\"match\":\"href=\\\"../search/ui.css\\\"\",\"replacement\":\"href=\\\"/search/ui.css\\\"\",\"reason\":\"The stylesheet URL is an absolute root-relative path in executable HTML code. It must not be rewritten as a parent-relative path; doing so changes the link target and breaks the intended asset reference.\"}],\"rationale\":\"The prose translation is natural and accurate, but the candidate incorrectly localizes an absolute URL inside executable code, changing /search/ui.css to ../search/ui.css. This is a high-priority technical defect. The cover image path ../cover.webp is correct under the locale-subdirectory rule, and frontmatter omission of date is allowed.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 943,
+    "inputTokenDetails": {
+      "noCacheTokens": 943,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 219,
+    "outputTokenDetails": {
+      "textTokens": 219,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1162
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 943,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 219,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1162,
+        "cost": 0.00033095,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00033095
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,40 @@
+{
+  "text": "\n\n```json\n{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":50,\"coherence\":60,\"relevance\":75,\"translationQuality\":55,\"mdxPreservation\":45,\"culturalAdaptation\":70,\"languagePurity\":50},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\",\"replacement\":\"\",\"reason\":\"Artifact string '--- CHUNK END ---' leaked into the document; it is not part of the source and will render as visible text or break the MDX structure.\"},{\"priority\":\"high\",\"match\":\"आकृति-विहीन कला के टुकड़े\",\"replacement\":\"ध्यानपूर्वक गढ़ी गई कला की कृति\",\"reason\":\"'sculpted work of art' means carefully shaped/crafted; 'आकृति-विहीन' means 'formless/shapeless', which is the opposite of the intended meaning.\"},{\"priority\":\"high\",\"match\":\"मैंने 16 मर्ज के बाद एक गलती की है\",\"replacement\":\"मैंने 16 मर्ज पहले एक गलती की है\",\"reason\":\"'16 merges ago' indicates past time; 'के बाद' means 'after', reversing the temporal direction. Should be 'पहले' (ago).\"},{\"priority\":\"high\",\"match\":\"*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\\n*/}\",\"reason\":\"In the English source, the entire 'Bonus: Releases Tip' section including the bullet points is inside an HTML comment. The candidate closes the JSX comment prematurely, exposing the three bullet points as visible rendered content.\"},{\"priority\":\"medium\",\"match\":\"क्य यह व्यकतित पसंद है?\",\"replacement\":\"क्या यह व्यक्तिगत पसंद है?\",\"reason\":\"'क्य' is missing the long vowel matra; standard Hindi spelling is 'क्या'. Also 'व्यकतित' should be 'व्यक्तिगत'.\"},{\"priority\":\"medium\",\"match\":\"क्यों यह विषय धार्मिक उत्साह को जगाता है?\",\"replacement\":\"यह विषय धार्मिक उत्साह क्यों जगाता है?\",\"reason\":\"Word order 'क्यों यह विषय...जगाता है' is unnatural in Hindi; the interrogative 'क्यों' typically follows the subject or comes at the end in natural Hindi prose.\"},{\"priority\":\"medium\",\"match\":\"कें\",\"replacement\":\"के\",\"reason\":\"'कें' with anusvara is non-standard; the correct postposition is 'के' throughout. This appears multiple times in the document.\"}],\"rationale\":\"The candidate has several high-priority defects: a leaked chunk marker, a meaning-reversal ('formless' instead of 'sculpted'), a temporal reversal ('after' instead of 'ago'), and a broken comment structure that exposes hidden content. Additionally, pervasive spelling errors (क्य/कें instead of क्या/के) reduce language quality. These issues collectively prevent publication.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 7091,
+    "inputTokenDetails": {
+      "noCacheTokens": 6579,
+      "cacheReadTokens": 512,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 2897,
+    "outputTokenDetails": {
+      "textTokens": 585,
+      "reasoningTokens": 2312
+    },
+    "totalTokens": 9988
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Modal",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 7091,
+        "promptTokensDetails": {
+          "cachedTokens": 512
+        },
+        "completionTokens": 2897,
+        "completionTokensDetails": {
+          "reasoningTokens": 2312
+        },
+        "totalTokens": 9988,
+        "cost": 0.030668,
+        "costDetails": {
+          "upstreamInferenceCost": 0.030668
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

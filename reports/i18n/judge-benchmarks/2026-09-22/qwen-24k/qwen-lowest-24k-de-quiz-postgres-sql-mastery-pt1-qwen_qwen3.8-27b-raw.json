@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":85,\"technicalAccuracy\":90,\"coherence\":90,\"relevance\":95,\"translationQuality\":85,\"mdxPreservation\":80,\"culturalAdaptation\":85,\"languagePurity\":85},\"suggestions\":[{\"priority\":\"high\",\"match\":\"import Challenge from '../../../../components/QuizUI/Challenge';\",\"replacement\":\"import Challenge from '../../../components/QuizUI/Challenge';\",\"reason\":\"Import path has an extra '../' level compared to the source, which will break the component resolution.\"},{\"priority\":\"high\",\"match\":\"import QuizUI from '../../../../components/QuizUI/QuizUI';\",\"replacement\":\"import QuizUI from '../../../components/QuizUI/QuizUI';\",\"reason\":\"Import path has an extra '../' level compared to the source, which will break the component resolution.\"},{\"priority\":\"medium\",\"match\":\"## Schwindelerregende Datentypen\\n\\n<Challenge\",\"replacement\":\"## Schwindelerregende Datentypen\\n\\nIch bin sicher, dass Sie *so viele* Typen in PostgreSQL verwendet haben, oder?\\n\\nDie nächsten Fragen handeln von den nativen Typen von Postgres v17. 🤯\\n\\nFür jede Frage identifizieren Sie den **einen ungültigen Typ**. 🕵️‍♂️\\n\\n<p class=\\\"inset\\\">Auf geht's!</p>\\n\\n<Challenge\",\"reason\":\"Missing introductory prose paragraph between the heading and the next Challenge component.\"},{\"priority\":\"medium\",\"match\":\"{text: 'Sie sind identisch.'}\",\"replacement\":\"{text: 'Sie sind seit Pg v10 austauschbar'}\",\"reason\":\"Option text is too brief and loses the specific version detail from the source ('since Pg v10').\"},{\"priority\":\"low\",\"match\":\"Gut gemacht! Du hast inmehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\"replacement\":\"Gut gemacht! Du hast in mehreren Bereichen von PostgreSQL tief gegraben! 🐘\",\"reason\":\"Missing space in 'inmehreren'.\"}],\"rationale\":\"The translation is generally good but has critical import path errors and missing prose content. The import paths are broken with extra '../' levels, and a significant introductory paragraph is missing after the 'Schwindelerregende Datentypen' heading. There are also minor issues with option text brevity and a typo.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 11106,
+    "inputTokenDetails": {
+      "noCacheTokens": 11106,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 523,
+    "outputTokenDetails": {
+      "textTokens": 523,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 11629
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Venice",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 11106,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 523,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 11629,
+        "cost": 0.0066713,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0066713
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

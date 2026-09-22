@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"1b7eea376e11\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 72,\n    \"technicalAccuracy\": 78,\n    \"coherence\": 70,\n    \"relevance\": 80,\n    \"translationQuality\": 74,\n    \"mdxPreservation\": 45,\n    \"culturalAdaptation\": 76,\n    \"languagePurity\": 88\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\n      \"replacement\": \"- [概要](#overview)\\n- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>`の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [Fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\n      \"reason\": \"The table of contents fragments are shifted by one item and point to the wrong localized headings. This breaks same-page navigation and must be corrected to match the translated heading IDs.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\n      \"replacement\": \"> ユースケースがリストにない？ [お知らせください ✉️](/contact/)\",\n      \"reason\": \"The blockquote callout is split into a blockquote and a separate paragraph, changing the rendered structure from the English source. It should remain a single blockquote line.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n\\n| リダイレクト                                        |✅        |✅         |✅       |\",\n      \"replacement\": \"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n| リダイレクト                                        |✅        |✅         |✅       |\",\n      \"reason\": \"Blank lines inside the Markdown table break the table into separate blocks and remove the alignment separator row. The table must remain a single valid Markdown table.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"Progress Handlerは、[以下に示す手法でラップを回避](#source-progress-helper)し、`fetch`呼び出しをクロージャで囲みません。\\n\\n👍\",\n      \"replacement\": \"Progress Handlerは、[以下に示す手法でラップを回避](#source-progress-helper)し、`fetch`呼び出しをクロージャで囲みません。👍\",\n      \"reason\": \"The thumbs-up emoji is separated from the sentence by a blank line, changing the intended inline emphasis and paragraph structure.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"そして、より複雑な例として、追跡フラグ `__timeout` を備え、**高コストな処理をインターセプトできるようにしています。**\\n<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />\",\n      \"replacement\": \"そして、より複雑な例として、追跡フラグ `__timeout` を備え、**高コストな処理をインターセプトできるようにしています。**\\n\\n<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />\",\n      \"reason\": \"A blank line is missing before the Gist component, which can cause MDX parsing/rendering issues and differs from the source structure.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"IE8まで遡ることも可能です - _結果は保証できません_.\",\n      \"replacement\": \"IE8まで遡ることも可能です - _結果は保証できません_。\",\n      \"reason\": \"The sentence ends with an ASCII period instead of the Japanese full stop, which is a minor locale-quality defect.\"\n    }\n  ],\n  \"rationale\": \"The translation is generally readable and preserves most technical meaning, but it has serious MDX/structure defects: the table of contents fragments are misaligned, the Markdown table is broken by blank lines and a missing separator row, and a blockquote callout is split. These are high-priority publish blockers. There are also minor spacing/paragraph issues and one punctuation issue.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 5724,
+    "inputTokenDetails": {
+      "noCacheTokens": 5724,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1829,
+    "outputTokenDetails": {
+      "textTokens": 1829,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 7553
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Fireworks",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5724,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1829,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 7553,
+        "cost": 0.00246642,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00246642
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

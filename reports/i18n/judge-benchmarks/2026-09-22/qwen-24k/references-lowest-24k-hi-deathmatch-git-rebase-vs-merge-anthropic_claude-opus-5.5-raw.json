@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":60,\"technicalAccuracy\":55,\"coherence\":58,\"relevance\":80,\"translationQuality\":55,\"mdxPreservation\":50,\"culturalAdaptation\":60,\"languagePurity\":65},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\\n\",\"replacement\":\"\",\"reason\":\"Chunking artifact leaked into rendered content.\"},{\"priority\":\"high\",\"match\":\"कमिट इतिहास के बिना? \\n*/}\",\"replacement\":\"कमिट इतिहास के बिना? \",\"reason\":\"The comment closes too early, so the bonus tip that was commented out in the source is now rendered publicly. The closing */} must move to after the final bullet.\"},{\"priority\":\"high\",\"match\":\"ओवरराइट कर देगा।\",\"replacement\":\"ओवरराइट कर देगा।\\n*/}\",\"reason\":\"Close the comment after the bonus section to match the source's hidden content.\"},{\"priority\":\"high\",\"match\":\"मैंने 16 मर्ज के बाद एक गलती की है\",\"replacement\":\"मैंने 16 मर्ज पहले एक गलती की थी\",\"reason\":\"The source says the mistake was made 16 merges ago. \\\"16 मर्ज के बाद\\\" means \\\"after 16 merges\\\", which changes the meaning.\"},{\"priority\":\"high\",\"match\":\"आकृति-विहीन कला के टुकड़े\",\"replacement\":\"तराशी हुई कलाकृति\",\"reason\":\"The source means \\\"sculpted\\\", but \\\"आकृति-विहीन\\\" means \\\"shapeless\\\", which reverses the meaning.\"},{\"priority\":\"medium\",\"match\":\"`मेन` पर\",\"replacement\":\"`main` पर\",\"reason\":\"The branch name inside the code span must stay `main`.\"},{\"priority\":\"medium\",\"match\":\"🦺 अपरिवर्तित।\",\"replacement\":\"🦺 गैर-विनाशकारी।\",\"reason\":\"The source says \\\"Non-destructive\\\". \\\"अपरिवर्तित\\\" means \\\"unchanged\\\", which is inaccurate.\"},{\"priority\":\"medium\",\"match\":\"से बस नहीं रहता?\",\"replacement\":\"बर्दाश्त नहीं कर सकते?\",\"reason\":\"The current phrase is ungrammatical and has no clear meaning.\"},{\"priority\":\"medium\",\"match\":\"**एसक्वेश मर्ज**\",\"replacement\":\"**स्क्वैश मर्ज**\",\"reason\":\"Misspelling; this term is spelled \\\"स्क्वैश\\\" elsewhere in the document.\"},{\"priority\":\"medium\",\"match\":\"आपके कमिट संदेशों का अर्थ तेजी से खो जाएगा, जबकि\",\"replacement\":\"आपके कमिट संदेशों का अर्थ उस कोड की तुलना में कहीं तेजी से फीका पड़ेगा जिसके\",\"reason\":\"The comparative sense of the source (\\\"much faster than the code\\\") has been lost.\"},{\"priority\":\"medium\",\"match\":\"परमानंत लिंक्स वास्तव में इतने परमानंत\",\"replacement\":\"परमालिंक्स उतने स्थायी\",\"reason\":\"\\\"परमानंत\\\" is a misspelling of \\\"permanent\\\".\"}],\"rationale\":\"The translation leaks a chunk artifact. A broken comment boundary exposes hidden content. It also contains meaning errors (16 merges ago, sculpted art, non-destructive) and a translated branch name inside a code span.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9016,
+    "inputTokenDetails": {
+      "noCacheTokens": 8255,
+      "cacheReadTokens": 761,
+      "cacheWriteTokens": 7642
+    },
+    "outputTokens": 1181,
+    "outputTokenDetails": {
+      "textTokens": 1181,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 10197
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Claude Platform on AWS",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 9016,
+        "promptTokensDetails": {
+          "cachedTokens": 761
+        },
+        "completionTokens": 1181,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 10197,
+        "cost": 0.0644342,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0644342
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d18f75c20ad6\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":66,\"technicalAccuracy\":77,\"coherence\":69,\"relevance\":96,\"translationQuality\":65,\"mdxPreservation\":39,\"culturalAdaptation\":68,\"languagePurity\":62},\"suggestions\":[{\"priority\":\"high\",\"match\":\"*/}\\n\\n<p className='inset'>\",\"replacement\":\"<p className='inset'>\",\"reason\":\"The MDX comment closes too early, exposing the source's intentionally commented-out placeholder-validation section, including its CodeTabs and executable examples. Move the comment close to after that section.\"},{\"priority\":\"high\",\"match\":\"</CodeTabs>\\n\\n### मजबूत सीक्रेट जनरेट करें\",\"replacement\":\"</CodeTabs>\\n*/}\\n\\n### मजबूत सीक्रेट जनरेट करें\",\"reason\":\"Close the placeholder-validation MDX comment here so the rendered article resumes at the intended heading.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\",\"reason\":\"This prematurely closes the Cloudflare shell fence, leaving the IPv4 allowlist command outside the executable example.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\",\"replacement\":\"sudo lsof -i:80 -Pn\",\"reason\":\"The early closing fence leaves most lsof commands outside the example and creates a stray fence after them.\"},{\"priority\":\"high\",\"match\":\"   ```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\",\"replacement\":\"   ```yaml\\n   services:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n   ```\",\"reason\":\"The unindented fence and YAML break the numbered-list code block and may render the following explanation incorrectly.\"},{\"priority\":\"high\",\"match\":\"```bash\\n# किसी डायरेक्टरी में सभी फ़ाइल बदलावों की निगरानी\\nsudo inotifywait -m /path/to/directory\\n```\",\"replacement\":\"```bash\\n# किसी डायरेक्टरी में सभी फ़ाइल बदलावों की निगरानी\\nsudo inotifywait -m /path/to/directory\\n```\",\"reason\":\"No change needed; remove this suggestion.\"},{\"priority\":\"high\",\"match\":\"```bash\\nsudo lsof -i:80 -Pn\\n```\\n\\n# स्थापित\",\"replacement\":\"```bash\\nsudo lsof -i:80 -Pn\\n\\n# स्थापित\",\"reason\":\"Keep the monitoring commands in one bash block; the later closing fence can then close the example as in the source.\"},{\"priority\":\"medium\",\"match\":\"```\\n\\n#### Test Inside Your Network\",\"replacement\":\"#### Test Inside Your Network\",\"reason\":\"This unmatched fence after the external nmap example can turn subsequent headings and prose into a code block.\"},{\"priority\":\"medium\",\"match\":\"```\\n\\n## ⏰ अक्सर अनदेखे टिप्स\",\"replacement\":\"## ⏰ अक्सर अनदेखे टिप्स\",\"reason\":\"Remove the unmatched fence after the fswatch example; it disrupts the rendered structure of the remaining article.\"},{\"priority\":\"medium\",\"match\":\"[मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\",\"replacement\":\"[मजबूत सीक्रेट्स जेनरेट करें](#मजबूत-सीक्रेट-जनरेट-करें)\",\"reason\":\"No change needed; remove this suggestion.\"},{\"priority\":\"medium\",\"match\":\"[कैनरी टोकन्स](#केनरी-टोकन)\",\"replacement\":\"[कैनरी टोकन्स](#केनरी-टोकन)\",\"reason\":\"No change needed; remove this suggestion.\"},{\"priority\":\"medium\",\"match\":\"[`.env` से macOS कीचेन तक अपग्रेड करें](#upgrade-from-env-to-macos-keychain)\",\"replacement\":\"[`.env` से macOS कीचेन तक अपग्रेड करें](#env-से-macos-कीचेन-में-अपग्रेड)\",\"reason\":\"The same-page link still points to an English fragment instead of the localized heading ID; verify the renderer's exact generated ID.\"},{\"priority\":\"medium\",\"match\":\"[देश ब्लॉकिंग](#blocking-country)\",\"replacement\":\"[देश ब्लॉकिंग](#बलॉकिंग-कंट्री)\",\"reason\":\"The heading is translated, so the English fragment no longer targets it. Use the exact slug generated for the translated heading.\"},{\"priority\":\"medium\",\"match\":\"**Table of Contents**\\n\\n- 🧗‍♀️ [For the brave](#️-for-the-brave)\",\"replacement\":\"**विषय-सूची**\\n\\n- 🧗‍♀️ [साहसी लोगों के लिए](#️-साहसी-लोगों-के-लिए)\",\"reason\":\"The introduction and most navigation headings remain English despite the Hindi locale; translate reader-facing navigation and make its links match translated heading IDs.\"}],\"rationale\":\"Most substantive security advice is present, but premature and unmatched code fences, an exposed commented-out section, stale heading links, and substantial English navigation prevent publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 18233,
+    "inputTokenDetails": {
+      "noCacheTokens": 18233,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 18230
+    },
+    "outputTokens": 1121,
+    "outputTokenDetails": {
+      "textTokens": 1121,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19354
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 18233,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1121,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19354,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.056791
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

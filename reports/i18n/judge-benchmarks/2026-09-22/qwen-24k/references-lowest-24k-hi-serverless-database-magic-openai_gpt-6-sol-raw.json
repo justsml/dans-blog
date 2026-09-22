@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d9e2ed508e21\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":64,\"technicalAccuracy\":89,\"coherence\":76,\"relevance\":100,\"translationQuality\":57,\"mdxPreservation\":77,\"culturalAdaptation\":65,\"languagePurity\":49},\"suggestions\":[{\"priority\":\"high\",\"match\":\"<link href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\",\"replacement\":\"<link href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\",\"reason\":\"This is an absolute URL in executable HTML, not a frontmatter image path. Making it parent-relative changes where the browser loads the stylesheet.\"},{\"priority\":\"high\",\"match\":\"<script src=\\\"../pagefind/pagefind-ui.js\\\"></script>\",\"replacement\":\"<script src=\\\"/pagefind/pagefind-ui.js\\\"></script>\",\"reason\":\"The changed executable URL can prevent Pagefind's script from loading; preserve the source's absolute route.\"},{\"priority\":\"high\",\"match\":\"## Not another Vector DB article\\n\\nHere is the decision rule I wish I had used earlier:\",\"replacement\":\"## वेक्टर DB पर एक और लेख नहीं\\n\\nकाश, यह निर्णय नियम मैंने पहले अपनाया होता:\",\"reason\":\"The opening heading and reader-facing introduction remain in English.\"},{\"priority\":\"high\",\"match\":\"That is the useful line. Not \\\"serverless is the future.\\\" Not \\\"vector databases changed everything.\\\" Those sentences have already been printed on enough conference lanyards.\",\"replacement\":\"यही काम की बात है। न कि “सर्वरलेस ही भविष्य है” या “वेक्टर डेटाबेस ने सब कुछ बदल दिया।” ये बातें कॉन्फ़्रेंस के पहचान-पट्टों पर पहले ही बहुत छप चुकी हैं।\",\"reason\":\"An entire reader-facing paragraph remains untranslated.\"},{\"priority\":\"high\",\"match\":\"AI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was \\\"run Postgres with pgvector\\\" or \\\"operate OpenSearch/Elasticsearch\\\" or \\\"buy a managed search service.\\\" Those are still good answers when the workload deserves them.\",\"replacement\":\"AI ने कई सर्च समस्याओं का स्वरूप ज़रूर बदला। अचानक छोटी टीमों को सिमैंटिक सर्च, हाइब्रिड रैंकिंग, दस्तावेज़ों से चैट, मल्टीमॉडल खोज और ऑब्जेक्ट स्टोरेज में रखी फ़ाइलों पर एनालिटिक्स चाहिए था। पुराने जवाब थे: “pgvector के साथ Postgres चलाओ”, “OpenSearch/Elasticsearch संचालित करो” या “मैनेज्ड सर्च सर्विस खरीदो।” जब वर्कलोड को उनकी ज़रूरत हो, तब ये अब भी अच्छे जवाब हैं।\",\"reason\":\"An entire technical paragraph remains in English, despite being reader-facing prose.\"},{\"priority\":\"high\",\"match\":\"But many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.\",\"replacement\":\"लेकिन कई वर्कलोड को उनकी ज़रूरत नहीं होती। उनमें पढ़ने का काम ज़्यादा होता है, उन्हें फिर से बनाया जा सकता है, और सामग्री बदलने के बाद सर्च के अपडेट होने में थोड़ी देरी स्वीकार्य होती है। दस्तावेज़। कैटलॉग स्नैपशॉट। स्टैटिक एक्सपोर्ट। आंतरिक नॉलेज बेस। लोकल एनालिटिक्स। प्रोटोटाइप RAG सिस्टम। इनके लिए टूल्स की एक नई श्रेणी ने साधारण आर्किटेक्चर को असाधारण रूप से उपयोगी बना दिया है: इंडेक्स बनाएँ, उसे फ़ाइलों के रूप में रखें और HTTP पर उपलब्ध कराएँ।\",\"reason\":\"This substantial reader-facing paragraph is untranslated.\"},{\"priority\":\"medium\",\"match\":\"## A database by any other name\",\"replacement\":\"## नाम चाहे जो हो, डेटाबेस तो डेटाबेस है\",\"reason\":\"This reader-facing heading remains in English.\"},{\"priority\":\"medium\",\"match\":\"### Battle of the Checkboxes\",\"replacement\":\"### सुविधाओं की तुलना\",\"reason\":\"This reader-facing section heading remains in English.\"},{\"priority\":\"medium\",\"match\":\"*September 2025 snapshot: Chroma requires a server runtime and does not support direct S3 object storage in the way the object-file tools do\",\"replacement\":\"*सितंबर 2025 का स्नैपशॉट: Chroma को सर्वर रनटाइम चाहिए और यह ऑब्जेक्ट-फ़ाइल टूल्स की तरह सीधे S3 ऑब्जेक्ट स्टोरेज का समर्थन नहीं करता\",\"reason\":\"The table's qualification about Chroma remains in English; preserve the following issue link.\"},{\"priority\":\"medium\",\"match\":\"सस्ता रास्ता ही खुशहाल है।\",\"replacement\":\"सामान्य स्थिति में सब सस्ता पड़ता है।\",\"reason\":\"The source says the happy path is cheap, not that the cheap path is happy; the current wording reverses the relationship.\"},{\"priority\":\"medium\",\"match\":\"पहला संस्करण अब प्रोडक्शन इन्फ्रास्ट्रक्चर को तब तक नहीं अपनाता जब तक उसके पास प्रोडक्शन साक्ष्य न हो।\",\"replacement\":\"पहले संस्करण को अब प्रोडक्शन में कारगर होने के सबूत मिलने से पहले ही प्रोडक्शन इन्फ्रास्ट्रक्चर अपनाने की ज़रूरत नहीं है।\",\"reason\":\"The source describes a choice that is no longer required, not a categorical claim that the first version never adopts the infrastructure.\"}],\"rationale\":\"Most later sections preserve the source's technical substance and structure, but several opening paragraphs and headings remain in English. The Pagefind example also changes two executable absolute URLs, so the document is not ready to publish.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 7148,
+    "inputTokenDetails": {
+      "noCacheTokens": 7148,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 7145
+    },
+    "outputTokens": 1278,
+    "outputTokenDetails": {
+      "textTokens": 1278,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 8426
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 7148,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1278,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 8426,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0306485
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

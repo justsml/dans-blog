@@ -1,0 +1,24 @@
+{
+  "phase": "deepseek-limit-recovery",
+  "cohort": "deepseek-limit-recovery",
+  "models": [
+    "deepseek/deepseek-v4.1-flash"
+  ],
+  "effort": "default",
+  "effortByModel": {
+    "deepseek/deepseek-v4.1-flash": "none"
+  },
+  "maxOutputTokens": 24000,
+  "catalogCheckedAt": "2026-09-22T23:20:00.512Z",
+  "tuning": {
+    "profileId": "site-conventions-v1",
+    "version": 1,
+    "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above."
+  },
+  "split": "lowest-scoring",
+  "fixturesPath": "reports/i18n/judge-benchmarks/2026-09-22/qwen-24k/deepseek-limit-fixtures.json",
+  "fixtureHash": "63d09310fb23f7b78d5ed53122990a12db3b2c90e94eb4d2e3d29e7db0f00cac",
+  "startedAt": "2026-09-22T23:22:55.181Z",
+  "maxRetries": 0,
+  "concurrency": 4
+}

@@ -6,12 +6,14 @@ import { normalize } from "llm-strings/normalize";
 import { validate } from "llm-strings/validate";
 import { createAiSdkProviderOptions } from "llm-strings/ai-sdk";
 import type { LanguageModel } from "ai";
+import { defaultReasoningEffort } from "./reasoning-defaults.ts";
 import { OPENROUTER_USAGE_ACCOUNTING } from "../llm-telemetry.ts";
 
 export type OpenRouterProviderOptions = ProviderOptions & {
   openrouter: {
     reasoning: {
-      effort: string;
+      effort?: string;
+      enabled?: boolean;
       max_tokens?: number;
       exclude?: boolean;
     };
@@ -31,7 +33,6 @@ export type ResolvedLlmConfig = {
   timeoutMs: number;
 };
 
-const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_TIMEOUT_MS = 200_000;
 
 export function resolveLlmConfig(
@@ -53,7 +54,7 @@ export function resolveLlmConfig(
       return resolveDirectOpenAiConfig(source, defaults);
     }
     const modelId = source.replace(/^openrouter\//, "");
-    const reasoningEffort = defaults.reasoningEffort ?? DEFAULT_REASONING_EFFORT;
+    const reasoningEffort = defaults.reasoningEffort ?? defaultReasoningEffort(modelId);
     return {
       source,
       provider: "openrouter",
@@ -63,14 +64,14 @@ export function resolveLlmConfig(
       providerOptions: {
         openrouter: {
           reasoning: {
-            effort: reasoningEffort,
+            ...(reasoningEffort === "none" ? { enabled: false } : { effort: reasoningEffort }),
             exclude: shouldExcludeReasoning(modelId),
           },
         },
       } as OpenRouterProviderOptions,
       reasoningEffort,
       temperature: defaults.temperature ?? defaultTemperatureForModel(modelId),
-      maxTokens: defaults.maxTokens ?? 16_000,
+      maxTokens: defaults.maxTokens ?? 24_000,
       timeoutMs: defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS,
     };
   }
@@ -95,7 +96,7 @@ export function resolveLlmConfig(
   const modelId = normalized.config.model.replace(/^openrouter\//, "");
   const reasoningEffort = stringParam(params, ["reasoning_effort", "reasoningEffort", "effort"])
     ?? defaults.reasoningEffort
-    ?? DEFAULT_REASONING_EFFORT;
+    ?? defaultReasoningEffort(provider === "openai" ? `openai/${modelId}` : modelId);
 
   const providerOptions = {
     ...aiSdkOptions.providerOptions,
@@ -103,11 +104,19 @@ export function resolveLlmConfig(
       ...(aiSdkOptions.providerOptions.openrouter ?? {}),
       reasoning: {
         ...((aiSdkOptions.providerOptions.openrouter?.reasoning as Record<string, unknown> | undefined) ?? {}),
-        effort: reasoningEffort,
+        ...(reasoningEffort === "none" ? { enabled: false } : { effort: reasoningEffort }),
         exclude: booleanParam(params, ["reasoning_exclude", "reasoningExclude"], shouldExcludeReasoning(modelId)),
       },
     },
   } as OpenRouterProviderOptions;
+
+  if (provider === "openai") {
+    providerOptions.openai = { ...providerOptions.openai, reasoningEffort };
+  }
+  if (reasoningEffort === "none") {
+    delete providerOptions.openrouter.reasoning.effort;
+    delete providerOptions.openrouter.reasoning.max_tokens;
+  }
 
   return {
     source,
@@ -128,7 +137,7 @@ export function resolveLlmConfig(
     maxTokens: numberParam(
       params,
       ["max_tokens", "maxOutputTokens", "maxTokens", "max_completion_tokens", "max"],
-      defaults.maxTokens ?? 16_000,
+      defaults.maxTokens ?? 24_000,
     ),
     timeoutMs: numberParam(params, ["timeout_ms", "timeoutMs", "timeout"], defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS),
   };
@@ -167,7 +176,7 @@ function resolveDirectOpenAiConfig(
   },
 ): ResolvedLlmConfig {
   const modelId = source.replace(/^openai\//, "");
-  const reasoningEffort = defaults.reasoningEffort ?? DEFAULT_REASONING_EFFORT;
+  const reasoningEffort = defaults.reasoningEffort ?? defaultReasoningEffort(`openai/${modelId}`);
   return {
     source,
     provider: "openai",
@@ -181,7 +190,7 @@ function resolveDirectOpenAiConfig(
     } as OpenRouterProviderOptions,
     reasoningEffort,
     temperature: defaults.temperature ?? defaultTemperatureForModel(modelId),
-    maxTokens: defaults.maxTokens ?? 16_000,
+    maxTokens: defaults.maxTokens ?? 24_000,
     timeoutMs: defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   };
 }

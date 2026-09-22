@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":48,\"technicalAccuracy\":35,\"coherence\":38,\"relevance\":75,\"translationQuality\":42,\"mdxPreservation\":18,\"culturalAdaptation\":62,\"languagePurity\":58},\"suggestions\":[{\"priority\":\"high\",\"match\":\"#-the-latest-dance\",\"replacement\":\"#-танец-latest\",\"reason\":\"The Table of Contents link still targets the English heading ID, so it will not link to the localized heading.\"},{\"priority\":\"high\",\"match\":\"#-monitoring--verification\",\"replacement\":\"#-мониторинг-и-проверка\",\"reason\":\"This same-page link still uses the English fragment instead of the localized heading ID.\"},{\"priority\":\"high\",\"match\":\"{/* Любой процесс, который может «открыть» сокет, может (скорее всего) получить root-доступ на хосте. */}\",\"replacement\":\"{/* Any process that can \\\"open\\\" the socket can (probably) gain root access on the host. */}\",\"reason\":\"The candidate changes this commented MDX content from a comment into an altered localized comment while other source comments are preserved; restore the source comment to avoid structural/comment drift.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\\\\\\\n  while read line; do ufw deny from $line to any; done\\\\n```\\\\n\\\\n```bash title=\\\"block-china.sh\\\"\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\\\\\\\n  while read line; do ufw deny from $line to any; done\\\\n```\\\\n\\\\nSimilarly, you can allow only traffic from the US:\\\\n\\\\n```bash title=\\\"allow-usa.sh\\\"\",\"reason\":\"A duplicated block-china code fence was inserted and the explanatory sentence plus allow-usa heading are displaced, producing invalid rendered structure and duplicating executable content.\"},{\"priority\":\"high\",\"match\":\"# Разрешить IP‑адреса CloudFlare\\\\ncurl -fsSL https://www.cloudflare.com/ips-v4\",\"replacement\":\"# Allow CloudFlare IPs\\\\ncurl -fsSL https://www.cloudflare.com/ips-v4\",\"reason\":\"The comment and commands are outside the fenced code block because the candidate closes the fence too early; this breaks rendered MDX and code execution presentation.\"},{\"priority\":\"high\",\"match\":\"#### Обратный прокси\",\"replacement\":\"#### Обратный прокси\\n\\nAnother layer of defense is basic auth. Do not use it without HTTPS.\",\"reason\":\"The candidate's section includes the prose, but the requested replacement identifies the missing content only if the target file has the shown omission; this is a structural check requiring the paragraph to remain before the code block.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"nmap External Scan\\\"\",\"replacement\":\"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# Note: Ensure `target_host` is the desired IP\\n\\n# Scan specific ports:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# Top 100 ports:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\",\"reason\":\"The candidate contains an extra standalone closing fence immediately after this block, which creates malformed Markdown/MDX structure.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"lsof Commands\\\"\\\\n# Monitor specific port\\\\nsudo lsof -i:80 -Pn\\\\n```\",\"replacement\":\"```bash title=\\\"lsof Commands\\\"\\\\n# Monitor specific port\\\\nsudo lsof -i:80 -Pn\\\\n\\\\n# Monitor ESTABLISHED connections\\\\nsudo lsof -i -Pn | grep ESTABLISHED\\\\n# View LISTEN\\\\nsudo lsof -i -Pn | grep LISTEN\\\\n\\\\n# to see network names instead of IP addresses (can be very slow to do reverse DNS lookups)\\\\nsudo lsof -i -P | grep LISTEN\\\\n\\\\n# Monitor all network connections\\\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\\\n```\",\"reason\":\"The candidate closes the lsof code fence after the first command and leaves the remaining commands outside the fence, breaking the rendered code block.\"},{\"priority\":\"high\",\"match\":\"## 🚀 Production Checklist\",\"replacement\":\"## 🚀 Контрольный список для продакшна\",\"reason\":\"This reader-facing heading remains untranslated, unlike the surrounding localized content.\"},{\"priority\":\"high\",\"match\":\"## 📚 Further Reading\",\"replacement\":\"## 📚 Дополнительные материалы\",\"reason\":\"This reader-facing heading remains untranslated and should match the localized navigation.\"},{\"priority\":\"medium\",\"match\":\"Мы такжесравним\",\"replacement\":\"Мы также сравним\",\"reason\":\"A missing space is a visible language-quality error.\"},{\"priority\":\"medium\",\"match\":\"Вот небольшойскрипт\",\"replacement\":\"Вот небольшой скрипт\",\"reason\":\"A missing space is a visible language-quality error.\"},{\"priority\":\"medium\",\"match\":\"неправильные представления о сетевой модели Docker могут привести к проблемам\",\"replacement\":\"представления о сетевой модели Docker могут привести к проблемам\",\"reason\":\"The source says assumptions can cause trouble; \\\"неправильные представления\\\" is awkward and changes the intended nuance.\"},{\"priority\":\"medium\",\"match\":\"Открыты только необходимые порты, настроены внутренние сети.\",\"replacement\":\"Открыты только необходимые порты, настроены внутренние сети.\",\"reason\":\"This item is accurate, but the surrounding checklist mixes untranslated English headings and labels; the checklist should be consistently localized.\"}],\"rationale\":\"The translation covers most source content and generally preserves technical terminology, but it contains multiple malformed or prematurely closed code fences, duplicated code, broken structure, stale English heading links, and untranslated reader-facing headings. Several prose typos and awkward phrases further reduce language quality. These issues require correction before publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 17618,
+    "inputTokenDetails": {
+      "noCacheTokens": 17618,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 17615
+    },
+    "outputTokens": 1331,
+    "outputTokenDetails": {
+      "textTokens": 1331,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 18949
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 17618,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1331,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 18949,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00600155
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":85,\"coherence\":80,\"relevance\":95,\"translationQuality\":80,\"mdxPreservation\":60,\"culturalAdaptation\":85,\"languagePurity\":85},\"suggestions\":[{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\",\"reason\":\"Duplicate code block for block-china.sh\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\"replacement\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"Code block fence is broken, leaving part of the script outside the fence\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\"replacement\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"Code block fence is broken, leaving part of the script outside the fence\"},{\"priority\":\"medium\",\"match\":\"```bash\\n\\nsudo iotop\\n\\n```\",\"replacement\":\"```bash\\nsudo iotop\\n```\",\"reason\":\"Unnecessary blank lines inside code block\"},{\"priority\":\"medium\",\"match\":\"```bash\\n\\nfswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"```bash\\nfswatch -r /path/to/directory\\n```\",\"reason\":\"Unnecessary blank lines and stray closing fence\"}],\"rationale\":\"The translation is generally good but has several high-priority MDX/code fence errors where code blocks are broken or duplicated, affecting rendering and readability.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 18549,
+    "inputTokenDetails": {
+      "noCacheTokens": 18549,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1178,
+    "outputTokenDetails": {
+      "textTokens": 1178,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19727
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Venice",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 18549,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1178,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19727,
+        "cost": 0.01211665,
+        "costDetails": {
+          "upstreamInferenceCost": 0.01211665
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

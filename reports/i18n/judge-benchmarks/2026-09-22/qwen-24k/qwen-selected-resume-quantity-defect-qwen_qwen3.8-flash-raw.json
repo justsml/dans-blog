@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"d1b6c0a69bd5\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 0,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 20,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 100,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"Espera como máximo 12 segundos antes de volver a conectarte.\",\n      \"replacement\": \"Espera al menos 12 segundos antes de volver a conectarte.\",\n      \"reason\": \"The source text says 'at least' (minimum duration), but the translation says 'como máximo' (maximum duration). This reverses the technical instruction regarding timeout behavior.\"\n    }\n  ],\n  \"rationale\": \"The candidate contains a critical semantic error by translating 'at least' as 'as maximum', which fundamentally changes the meaning of the technical instruction. The rest of the translation is linguistically sound and preserves structure.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 918,
+    "inputTokenDetails": {
+      "noCacheTokens": 918,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 291,
+    "outputTokenDetails": {
+      "textTokens": 291,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1209
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 918,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 291,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1209,
+        "cost": 0.00027447,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00027447
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

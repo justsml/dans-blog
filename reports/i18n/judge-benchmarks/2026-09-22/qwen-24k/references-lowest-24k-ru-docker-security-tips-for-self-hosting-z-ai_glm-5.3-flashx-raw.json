@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":65,\"coherence\":60,\"relevance\":95,\"translationQuality\":70,\"mdxPreservation\":35,\"culturalAdaptation\":75,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n}\\n\\n<p className='inset'>💡 Убедитесь\",\"replacement\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n\\n<p className='inset'>💡 Убедитесь\",\"reason\":\"The JSX comment block is closed early with a stray '}' instead of staying inside {/* ... */}, so the originally commented-out Placeholder Validation section, its code samples, and the closing '</CodeTabs>\\\\n*/}' now render as broken/broken-MDX content.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\\n\\n```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL\",\"replacement\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n```\",\"reason\":\"The block-china.sh code fence is duplicated; the source has it only once.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\",\"replacement\":\"# Разрешить IP‑адреса CloudFlare\",\"reason\":\"The cloudflare whitelist script's fence is closed prematurely; the curl lines and IPv6 comments sit outside the code fence, followed by a stray closing ```. The script must stay in one fence as in the source.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\",\"replacement\":\"# Мониторинг ESTABLISHED‑соединений\",\"reason\":\"The 'lsof Commands' fence is closed after the first command, leaving the remaining lsof lines outside the fence plus a stray closing ```. All commands must remain inside one fenced block.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"fswatch -r /path/to/directory\\n```\",\"reason\":\"A stray extra ``` fence after the fswatch command block breaks the MDX structure.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Тестирование внутри вашей сети\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Тестирование внутри вашей сети\",\"reason\":\"Stray extra closing ``` fence after the 'nmap External Scan' block.\"},{\"priority\":\"high\",\"match\":\"- 🔄 [Танец `:latest`](#-the-latest-dance)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-управление-доступом)\\n- 🔍 [Мониторинг и проверка](#-monitoring--verification)\\n- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\\n- 🚀 [Контрольный список для продакшна](#-production-checklist)\\n- 📚 [Дополнительные материалы](#-further-reading)\",\"replacement\":\"- 🔄 [Танец `:latest`](#-танец-latest)\\n- 🔐 [Управление секретами: правильный путь](#-управление-секретами-правильный-путь)\\n- 🌐 [Сетевой риск](#-сетевая-опасность)\\n- 🛡️ [Контроль доступа](#️-контроль-доступа)\\n- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\\n- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\\n- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\\n- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\"reason\":\"Same-page TOC fragments are stale English IDs while the actual headings are translated; fragments must target the localized heading IDs. Same applies to inline links like [Monitoring & Verification](#-monitoring--verification) and [проверили свою конфигурацию.](#-monitoring--verification).\"},{\"priority\":\"medium\",\"match\":\"Мы такжесравним\",\"replacement\":\"Мы также сравним\",\"reason\":\"Missing space, typography defect in reader-facing prose.\"},{\"priority\":\"medium\",\"match\":\"Вот небольшойскрипт\",\"replacement\":\"Вот небольшой скрипт\",\"reason\":\"Missing space between words.\"},{\"priority\":\"medium\",\"match\":\"### Canary Tokens\",\"replacement\":\"### Канарейковые токены\",\"reason\":\"Heading left in English while its TOC entry reads [Canary‑токены](#canary-tokens); heading is reader-facing and should be translated consistently with the fragment.\"},{\"priority\":\"medium\",\"match\":\"- [Check Your Ports](#check-your-ports)\\n- [View Open Ports](#view-open-ports)\\n- [File Monitoring](#file-monitoring)\",\"replacement\":\"- [Проверьте свои порты](#проверьте-свои-порты)\\n- [Просмотр открытых портов](#просмотр-открытых-портов)\\n- [Мониторинг файлов](#мониторинг-файлов)\",\"reason\":\"TOC entries left in English but headings are translated; fragments must match localized heading IDs.\"},{\"priority\":\"medium\",\"match\":\"хранится вне сайта\",\"replacement\":\"хранится на внешнем (off-site) носителе\",\"reason\":\"'вне сайта' mistranslates 'off-site backups' (off the machine/location), not 'off the website'.\"}],\"rationale\":\"Translation prose is largely faithful and natural, but the candidate has multiple broken MDX structures: an early-closed JSX comment exposing the commented-out code section, a duplicated code fence, three code fences closed prematurely with script lines rendered as page content, and stray fence markers. Same-page TOC fragments were not consistently localized to the translated heading IDs. These are medium/high structural defects, so publishReady is false.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 17754,
+    "inputTokenDetails": {
+      "noCacheTokens": 17754,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1958,
+    "outputTokenDetails": {
+      "textTokens": 1553,
+      "reasoningTokens": 405
+    },
+    "totalTokens": 19712
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 17754,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1958,
+        "completionTokensDetails": {
+          "reasoningTokens": 405
+        },
+        "totalTokens": 19712,
+        "cost": 0.00901648,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00901648
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

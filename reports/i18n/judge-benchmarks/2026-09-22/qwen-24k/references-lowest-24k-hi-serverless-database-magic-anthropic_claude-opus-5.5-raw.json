@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"d9e2ed508e21\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":65,\"coherence\":60,\"relevance\":80,\"translationQuality\":45,\"mdxPreservation\":70,\"culturalAdaptation\":55,\"languagePurity\":35},\"suggestions\":[{\"priority\":\"high\",\"match\":\"## Not another Vector DB article\\n\\nHere is the decision rule I wish I had used earlier:\",\"replacement\":\"## एक और Vector DB लेख नहीं\\n\\nयह वह निर्णय नियम है जिसे काश मैंने पहले इस्तेमाल किया होता:\",\"reason\":\"The heading and intro sentence are left in English.\"},{\"priority\":\"high\",\"match\":\"That is the useful line. Not \\\"serverless is the future.\\\"\",\"replacement\":\"यही उपयोगी पंक्ति है। \\\"serverless ही भविष्य है\\\" नहीं।\",\"reason\":\"The paragraph beginning 'That is the useful line' and the two following paragraphs ('AI did change...' and 'But many workloads do not...') are untranslated English prose. All three need full translation.\"},{\"priority\":\"high\",\"match\":\"<link href=\\\"../pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"../pagefind/pagefind-ui.js\\\"></script>\",\"replacement\":\"<link href=\\\"/pagefind/pagefind-ui.css\\\" rel=\\\"stylesheet\\\">\\n<script src=\\\"/pagefind/pagefind-ui.js\\\"></script>\",\"reason\":\"The executable code's absolute URLs were changed to relative paths. The image-path rule does not apply to code, so this breaks the example.\"},{\"priority\":\"medium\",\"match\":\"## A database by any other name\",\"replacement\":\"## किसी भी और नाम से एक डेटाबेस\",\"reason\":\"The heading is untranslated.\"},{\"priority\":\"medium\",\"match\":\"### Battle of the Checkboxes\",\"replacement\":\"### चेकबॉक्स की लड़ाई\",\"reason\":\"The heading is untranslated. The table prose cells and the footnote beginning '*September 2025 snapshot' are also still in English.\"},{\"priority\":\"medium\",\"match\":\"#### Static site search with Pagefind\",\"replacement\":\"#### Pagefind के साथ स्टैटिक साइट सर्च\",\"reason\":\"The heading is untranslated.\"},{\"priority\":\"medium\",\"match\":\"Snapshot note:\",\"replacement\":\"स्नैपशॉट नोट:\",\"reason\":\"The English label is left in Hindi prose.\"},{\"priority\":\"medium\",\"match\":\"सस्ता रास्ता ही खुशहाल है।\",\"replacement\":\"आसान रास्ता सस्ता होता है।\",\"reason\":\"The meaning is reversed or distorted. The source says the happy path is cheap.\"},{\"priority\":\"medium\",\"match\":\"S3‑साइडर\",\"replacement\":\"S3‑से जुड़े\",\"reason\":\"This is a mistranslation of 'S3-adjacent'.\"}],\"rationale\":\"Large portions of the prose, headings, table, and footnote are left in English. The Pagefind code URLs were altered. There is also a meaning distortion.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 12701,
+    "inputTokenDetails": {
+      "noCacheTokens": 12701,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 12084
+    },
+    "outputTokens": 1068,
+    "outputTokenDetails": {
+      "textTokens": 1068,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 13769
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Claude Platform on AWS",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 12701,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1068,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 13769,
+        "cost": 0.084248,
+        "costDetails": {
+          "upstreamInferenceCost": 0.084248
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

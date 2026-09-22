@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"1b7eea376e11\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 72,\n    \"technicalAccuracy\": 30,\n    \"coherence\": 55,\n    \"relevance\": 80,\n    \"translationQuality\": 75,\n    \"mdxPreservation\": 25,\n    \"culturalAdaptation\": 72,\n    \"languagePurity\": 80\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"- [概要](#overview)\\n- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\n      \"replacement\": \"- [概要](#overview)\\n- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>`の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [HTTP リダイレクトの処理](#handling-http-redirects)\\n  - [Fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\n      \"reason\": \"Nearly every TOC anchor is wrong—links are shifted by one or more positions, pointing to unrelated sections. The entry for 'HTTP リダイレクトの処理' is also missing entirely. All fragments must match the actual heading IDs defined in the document.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n\\n| リダイレクト                                        |✅        |✅         |✅       |\",\n      \"replacement\": \"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト                  |✅        |✅         |✅       |\\n| リクエストとレスポンスデータの変換                  |✅        |✅         |✅       |\\n| リクエストのキャンセル                              |✅        |✅         |❌       |\\n| JSONデータの自動変換 | 手動ヘルパー | ✅ | ✅ |\\n| XSRF対策のクライアントサイドサポート | ✅ | ✅ | ✅ |\\n| 進捗                                        |✅        |✅         |✅       |\\n| ストリーミング                                       |✅        |✅         |✅       |\\n| リダイレクト                                        |✅        |✅         |✅       |\",\n      \"reason\": \"The markdown table is missing the separator row (|---|:---:|...) and has blank lines between data rows, which breaks table rendering entirely. The separator row must be restored and blank lines removed.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<h2 id=\\\"overview\\\">概要</h2>\",\n      \"replacement\": \"<h3 id=\\\"overview\\\">概要</h3>\",\n      \"reason\": \"The English source uses ### Overview (h3). Promoting to h2 breaks the document outline hierarchy.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<h2 id=\\\"feature-comparison\\\">機能比較</h2>\",\n      \"replacement\": \"<h3 id=\\\"feature-comparison\\\">機能比較</h3>\",\n      \"reason\": \"The English source uses ### Feature Comparison (h3). Promoting to h2 breaks the document outline hierarchy.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"<h2 id=\\\"compatibility\\\">互換性</h2>\",\n      \"replacement\": \"<h3 id=\\\"compatibility\\\">互換性</h3>\",\n      \"reason\": \"The English source uses ### Compatibility (h3), nested under ## Fetch Recipes. Promoting to h2 breaks the document outline hierarchy.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\n      \"replacement\": \"> ユースケースがリストにない？ [お知らせください ✉️](/contact/)\",\n      \"reason\": \"The English keeps the link inside the blockquote. Separating it changes the rendered structure.\"\n    }\n  ],\n  \"rationale\": \"The Japanese prose quality is good and reads naturally, but the candidate has critical structural defects: nearly all TOC anchor links point to wrong sections (shifted by one or more positions), the comparison table is missing its separator row and has blank lines that break rendering, three headings are promoted from h3 to h2 altering document outline, and one TOC entry (HTTP リダイレクトの処理) is missing entirely. These issues make the document unpublishable.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 6102,
+    "inputTokenDetails": {
+      "noCacheTokens": 6102,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5726
+    },
+    "outputTokens": 7592,
+    "outputTokenDetails": {
+      "textTokens": 1582,
+      "reasoningTokens": 6010
+    },
+    "totalTokens": 13694
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 6102,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 7592,
+        "completionTokensDetails": {
+          "reasoningTokens": 6010
+        },
+        "totalTokens": 13694,
+        "cost": 0.060619,
+        "costDetails": {
+          "upstreamInferenceCost": 0.060619
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

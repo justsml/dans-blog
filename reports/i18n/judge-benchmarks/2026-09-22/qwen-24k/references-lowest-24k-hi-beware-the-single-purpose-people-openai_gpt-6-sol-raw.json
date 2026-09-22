@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"9e718f4fdf81\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":69,\"technicalAccuracy\":83,\"coherence\":80,\"relevance\":100,\"translationQuality\":73,\"mdxPreservation\":84,\"culturalAdaptation\":72,\"languagePurity\":77},\"suggestions\":[{\"priority\":\"high\",\"match\":\"language: English\",\"replacement\":\"language: Hindi\",\"reason\":\"The frontmatter incorrectly identifies this Hindi translation as English.\"},{\"priority\":\"medium\",\"match\":\"`SingleResponsibility Principle`\",\"replacement\":\"`Single Responsibility Principle`\",\"reason\":\"Preserve the exact technical term in inline code; removing the space changes its name.\"},{\"priority\":\"medium\",\"match\":\"##II. Over-Abstraction: When Simplicity Turns to Chaos\",\"replacement\":\"## II. अति-अमूर्तता: जब सरलता अव्यवस्था बन जाए\",\"reason\":\"The missing space prevents this from rendering as a Markdown heading, and the reader-facing heading remains untranslated.\"},{\"priority\":\"medium\",\"match\":\"> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\"replacement\":\"> हमारे आर्किटेक्ट का ज़ोर है कि पाँच पंक्तियों से लंबा हर फ़ंक्शन 'कोड स्मेल' है। अब हमारे कोडबेस से नासमझ हताशा की हल्की-सी गंध आती है।\",\"reason\":\"This prominent reader-facing quotation remains entirely in English.\"},{\"priority\":\"medium\",\"match\":\"इतना शुद्ध किदर्द देता है\",\"replacement\":\"इतना शुद्ध कि दर्द होने लगे\",\"reason\":\"The subtitle contains a conspicuous missing space and reads unnaturally.\"},{\"priority\":\"medium\",\"match\":\"शुद्धता के किसी अमूर्त आदर्श के³\",\"replacement\":\"शुद्धता के किसी अमूर्त आदर्श के\",\"reason\":\"The superscript points to note ³, but the document provides only notes ¹ and ²; retain no broken footnote reference.\"}],\"rationale\":\"Most of the article’s meaning and MDX structure are preserved, including the required locale-relative image paths. Incorrect language metadata, a non-rendering untranslated heading, an untranslated quotation, and other visible defects prevent publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 5806,
+    "inputTokenDetails": {
+      "noCacheTokens": 5806,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 5803
+    },
+    "outputTokens": 477,
+    "outputTokenDetails": {
+      "textTokens": 477,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 6283
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5806,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 477,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 6283,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0192835
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

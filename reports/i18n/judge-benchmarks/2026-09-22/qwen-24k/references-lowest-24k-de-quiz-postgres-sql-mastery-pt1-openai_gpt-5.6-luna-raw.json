@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":78,\"coherence\":84,\"relevance\":96,\"translationQuality\":78,\"mdxPreservation\":86,\"culturalAdaptation\":80,\"languagePurity\":88},\"suggestions\":[{\"priority\":\"high\",\"match\":\"-- Use BIGINT\",\"replacement\":\"-- BIGINT verwenden\",\"reason\":\"Reader-facing explanatory comments inside the SQL code remain in English, so the localized document contains avoidable untranslated prose.\"},{\"priority\":\"high\",\"match\":\"-- Or numeric for arbitrary precision\",\"replacement\":\"-- Oder numeric für beliebige Präzision\",\"reason\":\"This code comment is also untranslated and should be localized consistently with the surrounding German explanation.\"},{\"priority\":\"medium\",\"match\":\"Sie sind identisch.\",\"replacement\":\"Sie sind austauschbar, seit Pg v10.\",\"reason\":\"The source answer says that timestamptz and timestamp are interchangeable since PostgreSQL v10. The candidate changes this to the broader and technically different claim that they are identical.\"},{\"priority\":\"medium\",\"match\":\"PostgreSQL‑Zeitstempel haben eine Mikrosekunden‑Präzision (6 Dezimalstellen).\",\"replacement\":\"PostgreSQL-Zeitstempel haben eine Präzision von Mikrosekunden (6 Dezimalstellen).\",\"reason\":\"The current wording is understandable but awkward; this replacement is more natural German technical prose.\"},{\"priority\":\"medium\",\"match\":\"Du hast inmehreren Bereichen\",\"replacement\":\"Du hast in mehreren Bereichen\",\"reason\":\"There is a missing space, which is a visible proofreading defect in the closing paragraph.\"}],\"rationale\":\"The candidate preserves the MDX structure, imports, component props, quiz answer flags, SQL, URLs, and localized relative asset paths. Most technical content is accurately translated, but one distractor changes the source claim, two code comments remain untranslated, and there are minor language defects. The source's introductory type-section prose is also omitted, reducing fidelity and tone.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9818,
+    "inputTokenDetails": {
+      "noCacheTokens": 9818,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 9815
+    },
+    "outputTokens": 419,
+    "outputTokenDetails": {
+      "textTokens": 419,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 10237
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 9818,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 419,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 10237,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00295715
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

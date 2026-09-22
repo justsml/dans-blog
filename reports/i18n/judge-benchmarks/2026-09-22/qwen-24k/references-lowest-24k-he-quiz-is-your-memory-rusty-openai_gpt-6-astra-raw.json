@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"0893c477b5a7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":81,\"technicalAccuracy\":92,\"coherence\":85,\"relevance\":99,\"translationQuality\":83,\"mdxPreservation\":94,\"culturalAdaptation\":84,\"languagePurity\":88},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"group=\\\"הפחתת זמן חיים\\\"\",\"replacement\":\"group=\\\"השמטת ציוני זמן חיים\\\"\",\"reason\":\"Lifetime elision omits explicit annotations; it does not reduce lifetimes. The current group name misidentifies the concept.\"},{\"priority\":\"medium\",\"match\":\"השתמשו בתחומי זמן רצופים\",\"replacement\":\"השתמשו בתחומי פעולה עוקבים\",\"reason\":\"Scoping refers to lexical scopes, not consecutive time intervals. This distinction matters in the borrowing example.\"},{\"priority\":\"medium\",\"match\":\"לפעולות בתחומי זמן\",\"replacement\":\"לפעולות המוגבלות לתחום פעולה\",\"reason\":\"Scoped guard operations are bounded by program scope, not time intervals.\"},{\"priority\":\"medium\",\"match\":\"אובייקטים של traits כשצריך דינמיקה של dispatch\",\"replacement\":\"אובייקטים של traits כשצריך שיגור דינמי (dynamic dispatch)\",\"reason\":\"The existing wording does not correctly name dynamic dispatch and obscures this technical use case for Box.\"},{\"priority\":\"medium\",\"match\":\"תבניות מתצפית שבהן נושאים יכולים להיות מוסרים\",\"replacement\":\"תבניות צופה (Observer) שבהן האובייקטים הנצפים עשויים להשתחרר\",\"reason\":\"The current literal translation obscures both the Observer pattern and the meaning of subjects being dropped.\"},{\"priority\":\"medium\",\"match\":\"    1. Cell:\\n    - עובד הכי טוב עם טיפוסים Copy\\n    - אין API להשאלת ערכים\\n    - תמיד מעתיק או מזיז ערכים\\n\\n    2. RefCell:\\n    - עובד עם כל טיפוס\\n    - כולל API להשאלת ערכים\\n    - בדיקת השאלות בזמן ריצה\",\"replacement\":\"    1. Cell:\\n       - עובד הכי טוב עם טיפוסים Copy\\n       - אין API להשאלת ערכים\\n       - תמיד מעתיק או מזיז ערכים\\n\\n    2. RefCell:\\n       - עובד עם כל טיפוס\\n       - כולל API להשאלת ערכים\\n       - בדיקת השאלות בזמן ריצה\",\"reason\":\"The bullets lost their nesting beneath the numbered items. Restore the source hierarchy here and likewise in the Rc key points and memory-layout considerations, where the same indentation defect occurs.\"}],\"rationale\":\"The candidate retains all 18 challenges, answer flags, code content, links, and substantive explanations, with prose comfortably within the required length range. Locale-relative assets and adjusted imports are appropriate. Most technical meaning survives, but several terminology mistranslations obscure important concepts, and some nested lists have been flattened. Hebrew is generally understandable but uneven in terminology and idiomatic fluency; the identified medium-priority fixes prevent publication readiness.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 23514,
+    "inputTokenDetails": {
+      "noCacheTokens": 23514,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 23511
+    },
+    "outputTokens": 714,
+    "outputTokenDetails": {
+      "textTokens": 655,
+      "reasoningTokens": 59
+    },
+    "totalTokens": 24228
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Refining findings scope**\n\nI need to focus on concise findings regarding mistranslations and how nested lists might affect dynamic dispatch. I have to consider available tokens to ensure I have enough to complete the task. I can use imports and localization, but I shouldn’t flag any issues. My report should cover five key terms and avoid excessive nesting. A single category example could work better if I can replace some blocks with shorter snippets for clarity.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsw5iF26TNnm7YmY-vVOmbPFODRhbtVk6flHSpH8ak44qyA_ly4lhKy0aLiW7R4Cey9qkeGTK9KLl6W_wdrKadkICONsiCobterUorTAHSoOCh1RvKw4JJPCBUwgxjg-KfjmPKwNy4xH3kVISRDB3OOduNR5h_YRO2skOs8fAJ37etHLrqi9BTHzksWVZQ9eI7M730uVGQaW2pJWX4s7hOmqpp7tRDQiW6XURI65eg0o_1oPyB57Cx2IiEB8JHbQ2RhPlD1eRz_-HfAI-ah74BQ7EiprBdeNny3U9hp_nFgBjjrFIH-OKwZOnjoGPu9v7_VeRSrlobdZTVIlO3-EbKki7g-DACgK7GxbnEcNapYv7_h2tGrMT34rZfaGGikp7BK1RDBlaP_UUS_1Japcj_kNCmkH60l6UdOngP5pw8UsfWLPoDPOW5nSFIq43KH4qaF8mqSLulVwwgbYeDG5JGiNADjEWfyWFh8Nd74hhEeyrDwdQ2F6eD8Xy5mtTffuGnhrEBGPdEwa5ynC2IEF0G58fIdy0wGj_7dmZQ_m1xkRhqs679tZIfww3-eIg8q_hWvn14Fkn0Ghch_9hNehtnEeG8mowC9EVi9dzRq7LTTSleJO7AfOXfRPmVRDd5QzRV4DlVkdqOmlx6reAQDuJ_gJD5mEdFaOUIEbSmlQF06Ln0AcZpH4KxtMd5zKQ6S-39Sg-EVz8bWi6QRl_QP1EG94KT23sUDESSbRLeSH3vQtj2PDbGJGVrFfJkDQZj1ZZ9GOG4bwNWMqqF46LtzU6WE-rdAjX1EC7-6-SCCRiTk79z07Na4LRfd70lviy5JBQja-QZE-Nkf3TsyjJVmctZWBPgF1rXhp5H4lKXk3xC_on-AMGeVcKJ3P3fAkeYYGt3IXjBaB8feTV1icWOwlMTkvtzCur0c7mK1Gd5FfU57rGeu_T5XGVbrQZdcD78-DEcd_xLp58_5RzHXqInZtEKRqE3gpMOkZpQSjFqwnD_PQuWT8Kv7tuLQGXUA6BhOLwMMKn6CUCktei1nCf_wlalV8WZAHk5owY5KmAVVmXw9r1xrlujyfY_lERoVfMmXxHVDNZJ_2I9sUg2QhHTskJzs15InNXxRVJW6qe3GCK4J5q-YD4ofEfApB30SINznAkmYs_lEHuyI_eFlE6qjZxBXqli9D_ED2Rh9hj8ZMJziR25HI5bwTY2XdtIl6jsl94KrXaZ7s-v3RY6C8dwc8WKVBVyJK5lAanquqKqTKuzXcUDEqYA3b0rg-Z5a6SIKB4bSoLUX3CIvFNvSg0kVhM7h9e4rNAKD37v62NJerQEO9olnBso2vuRaXsqYQHq4CZHQWLc5e_DSiK3V_A62iNRlxS1YB6XvDA9Lt_5axyR35ID7Bi_WNIY1GZnd6neJgAaWI7pNIwMTg6oDLBXf9iUau3cGiWnqFYV7SnioxhcxI_gHK3BZbSPA5BIPTgzWGN1AMfFrajLcgBBoDyCO0hWFGSlNO2wg-gQiWkftR_b-ETDfdHQSHv0_0vIcEf5rmrzjM5o39c6lT1Gy6316kufVvKWXOwzzvgI51t9V7jt1mO-p6a6jQByzYgiUzDAKpu3_fy6otJT5dThkpk44-8Z-vu8bXJ5Zpnloz83nwHd-Y6ZWKIlajjzL7o9b2Ha-Q5gyW0FheirLoj-7XPgiS2RVO_eQUGddZLI0etEj8WtqzPCf7Jd-Tj8erja_gqVCZdIXtNbMjbSCCfdk9I-CkLOLUJOlAo9ltW9RTXcaZV8hrKUiuBVAkcEB38-b5OMwku6kRf.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWFzdHJhLTIwMjYwOTAzfG9wZW5haSJ9",
+          "id": "rs_007a9425f2ecdc16016ab30e5f6a5887d183fb2894a3ee0949",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 23514,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 714,
+        "completionTokensDetails": {
+          "reasoningTokens": 59
+        },
+        "totalTokens": 24228,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.3296175
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

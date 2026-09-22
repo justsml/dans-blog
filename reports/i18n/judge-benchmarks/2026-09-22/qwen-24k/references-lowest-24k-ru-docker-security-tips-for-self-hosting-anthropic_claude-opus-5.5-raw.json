@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":55,\"technicalAccuracy\":50,\"coherence\":50,\"relevance\":75,\"translationQuality\":60,\"mdxPreservation\":25,\"culturalAdaptation\":65,\"languagePurity\":70},\"suggestions\":[{\"priority\":\"high\",\"match\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n}\",\"replacement\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\",\"reason\":\"The stray '}' inside the MDX comment corrupts the comment block. The comment also now ends with '</CodeTabs>\\\\n\\\\n*/}', which should be verified against the source.\"},{\"priority\":\"high\",\"match\":\"ufw allow from 10.0.0.0/8 to any port 443\\n```\\n\\n# Разрешить IP‑адреса CloudFlare\",\"replacement\":\"ufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\",\"reason\":\"The code fence is closed too early. The CloudFlare commands render as prose and headings, and fence pairing breaks for the rest of the document.\"},{\"priority\":\"high\",\"match\":\"sudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\",\"replacement\":\"sudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\",\"reason\":\"The lsof code block is split by a premature fence, which breaks the rendered structure.\"},{\"priority\":\"high\",\"match\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\\n\\n#### Тестирование внутри\",\"replacement\":\"nmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n#### Тестирование внутри\",\"reason\":\"A stray extra fence opens an unintended code block.\"},{\"priority\":\"high\",\"match\":\"fswatch -r /path/to/directory\\n```\\n\\n```\",\"replacement\":\"fswatch -r /path/to/directory\\n```\",\"reason\":\"A stray extra fence breaks the following section.\"},{\"priority\":\"high\",\"match\":\"   ```yaml\\n\\nservices:\\n     webapp:\",\"replacement\":\"   ```yaml\\n   services:\\n     webapp:\",\"reason\":\"The YAML indentation is broken inside the list item, which changes the code and the rendering.\"},{\"priority\":\"medium\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\"replacement\":\"\",\"reason\":\"The code block is duplicated, and the intro sentence 'Check out this script to block all traffic from China' is missing.\"},{\"priority\":\"medium\",\"match\":\"(#-the-latest-dance)\",\"replacement\":\"(#-танец-latest)\",\"reason\":\"The TOC fragments are stale English IDs or do not match the headings; other examples include #-сетевая-опасность, #-monitoring--verification, #-often-overlooked-tips and #-further-reading.\"},{\"priority\":\"medium\",\"match\":\"## 🚀 Production Checklist\",\"replacement\":\"## 🚀 Контрольный список для продакшна\",\"reason\":\"This heading is left untranslated.\"},{\"priority\":\"medium\",\"match\":\"## 📚 Further Reading\",\"replacement\":\"## 📚 Дополнительные материалы\",\"reason\":\"This heading is left untranslated.\"},{\"priority\":\"medium\",\"match\":\"держать наружу нежелательных\",\"replacement\":\"не подпускать нежелательных гостей\",\"reason\":\"The phrasing is ungrammatical Russian.\"},{\"priority\":\"medium\",\"match\":\"Оставьте его пустым\",\"replacement\":\"Не указывайте его\",\"reason\":\"This is a mistranslation: 'omit' means leave the option out, not leave it empty.\"}],\"rationale\":\"The prose is mostly faithful, but multiple broken code fences, a corrupted MDX comment, a duplicated code block with a missing sentence, broken YAML, stale anchors and untranslated headings block publishing.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 28204,
+    "inputTokenDetails": {
+      "noCacheTokens": 28204,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 27586
+    },
+    "outputTokens": 1448,
+    "outputTokenDetails": {
+      "textTokens": 1448,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 29652
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Claude Platform on AWS",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 28204,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1448,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 29652,
+        "cost": 0.169362,
+        "costDetails": {
+          "upstreamInferenceCost": 0.169362
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

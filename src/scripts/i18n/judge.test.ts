@@ -66,11 +66,11 @@ describe("GPT-5.6 Luna configuration", () => {
     expect(resolveLlmConfig("openrouter/openai/gpt-6-luna").temperature).toBeUndefined();
     expect(resolveLlmConfig("llm://openrouter/openai/gpt-6-luna?reasoning_effort=medium").reasoningEffort).toBe("medium");
   });
-  test("uses low reasoning and omits unsupported temperature", () => {
+  test("disables optional reasoning and omits unsupported temperature", () => {
     const config = resolveLlmConfig("openrouter/openai/gpt-5.6-luna");
 
-    expect(config.reasoningEffort).toBe("low");
-    expect(config.providerOptions.openrouter.reasoning.effort).toBe("low");
+    expect(config.reasoningEffort).toBe("none");
+    expect(config.providerOptions.openrouter.reasoning.enabled).toBe(false);
     expect(config.temperature).toBeUndefined();
   });
 });

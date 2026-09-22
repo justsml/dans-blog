@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"1b7eea376e11\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":70,\"technicalAccuracy\":65,\"coherence\":55,\"relevance\":90,\"translationQuality\":75,\"mdxPreservation\":45,\"culturalAdaptation\":85,\"languagePurity\":85},\"suggestions\":[{\"priority\":\"high\",\"match\":\"|                                                 | fetch    | axios    | request |\\n\\n| リクエストとレスポンスのインターセプト\",\"replacement\":\"|                                                 | fetch    | axios    | request |\\n|-------------------------------------------------|:--------:|:--------:|:-------:|\\n| リクエストとレスポンスのインターセプト\",\"reason\":\"The table separator row was dropped and blank lines were inserted between rows, breaking the feature-comparison markdown table so it will not render as a table.\"},{\"priority\":\"high\",\"match\":\"- [機能比較](#overview)\\n- [Fetch レシピ](#目次)\\n  - [URL から JSON を取得する](#feature-comparison)\\n  - [カスタムヘッダー](#fetch-recipes)\\n  - [HTTP エラーハンドリング](#get-json-from-a-url)\\n  - [CORS の例](#custom-headers)\\n  - [JSON の送信](#http-error-handling)\\n  - [HTML `<form>`の送信](#cors-example)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#posting-an-html-form)\\n  - [複数ファイルのアップロード](#form-encoded-data)\\n  - [タイムアウト](#uploading-a-file)\\n  - [ダウンロード進捗ヘルパー](#uploading-multiple-files)\\n  - [再帰的リトライヘルパー](#timeouts)\\n  - [Fetch リクエストのキャンセル](#source-progress-helper) ✨new✨\\n- [互換性](#recursive-retry-helper)\",\"replacement\":\"- [機能比較](#feature-comparison)\\n- [Fetch レシピ](#fetch-recipes)\\n  - [URL から JSON を取得する](#get-json-from-a-url)\\n  - [カスタムヘッダー](#custom-headers)\\n  - [HTTP エラーハンドリング](#http-error-handling)\\n  - [CORS の例](#cors-example)\\n  - [JSON の送信](#posting-json)\\n  - [HTML `<form>`の送信](#posting-an-html-form)\\n  - [フォームエンコードデータ](#form-encoded-data)\\n  - [ファイルのアップロード](#uploading-a-file)\\n  - [複数ファイルのアップロード](#uploading-multiple-files)\\n  - [タイムアウト](#timeouts)\\n  - [ダウンロード進捗ヘルパー](#download-progress-helper)\\n  - [再帰的リトライヘルパー](#recursive-retry-helper)\\n  - [Fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨\\n- [互換性](#compatibility)\",\"reason\":\"The table of contents links are shifted by one entry each and point to the wrong section ids (e.g., 機能比較 links to #overview, 互換性 links to #recursive-retry-helper, and Fetch リクエストのキャンセル links to #source-progress-helper), breaking every in-page navigation link.\"},{\"priority\":\"medium\",\"match\":\"- [概要](#overview)\",\"replacement\":\"- [概要](#概要)\",\"reason\":\"Heading ids should match the localized headings generated from translated heading text; the raw HTML headings retain stale English ids while the TOC mixes both schemes, so ids should be localized consistently (or at minimum kept consistent with the rendered heading ids).\"},{\"priority\":\"medium\",\"match\":\"> ユースケースがリストにない？\\n\\n[お知らせください ✉️](/contact/)\",\"replacement\":\"> ユースケースがリストにない？ [お知らせください ✉️](/contact/)\",\"reason\":\"The blockquote call-to-action was split into two separate blocks, breaking the original single-quote structure and separating the question from its contact link.\"}],\"rationale\":\"Prose translation is accurate and natural, and Gist paths/URLs are preserved, but the feature-comparison table is structurally broken (missing separator row) and the entire table of contents has systematically misaligned anchors, both of which materially damage the rendered document.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 5906,
+    "inputTokenDetails": {
+      "noCacheTokens": 5906,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 1260,
+    "outputTokenDetails": {
+      "textTokens": 1022,
+      "reasoningTokens": 238
+    },
+    "totalTokens": 7166
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 5906,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1260,
+        "completionTokensDetails": {
+          "reasoningTokens": 238
+        },
+        "totalTokens": 7166,
+        "cost": 0.00376022,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00376022
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

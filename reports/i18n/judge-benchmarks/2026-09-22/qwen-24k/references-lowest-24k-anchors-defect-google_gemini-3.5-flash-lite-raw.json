@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d2feef49127c\",\n  \"selectedModel\": \"gpt-4o\",\n  \"scores\": {\n    \"readability\": 100,\n    \"technicalAccuracy\": 100,\n    \"coherence\": 100,\n    \"relevance\": 100,\n    \"translationQuality\": 100,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 100,\n    \"languagePurity\": 100\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"Consulta el [resumen](#summary).\",\n      \"replacement\": \"Consulta el [resumen](#resumen).\",\n      \"reason\": \"The same-page heading link must target the localized heading ID generated from the translated heading text ('resumen') rather than the stale English heading ID ('summary').\"\n    }\n  ],\n  \"rationale\": \"The translation is accurate, natural, and preserves structure correctly, except for the internal anchor link which needs to point to the translated heading ID '#resumen' instead of '#summary'.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 905,
+    "inputTokenDetails": {
+      "noCacheTokens": 905,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 282,
+    "outputTokenDetails": {
+      "textTokens": 282,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1187
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19tC6+nkMumRTLN0DAxdvDCvi/DEUPob2CzRTU5ihShMoqkN2anVNfFMPy5kXvdTf54VY/E6aW259YxdUefR4arIzFQcjLUWjKokZzkGYY=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 905,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 282,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1187,
+        "cost": 0.0009765,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009765
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

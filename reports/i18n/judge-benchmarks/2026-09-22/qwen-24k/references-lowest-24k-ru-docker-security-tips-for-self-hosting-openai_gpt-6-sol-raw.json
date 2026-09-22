@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"35299bd7a6f7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":62,\"technicalAccuracy\":68,\"coherence\":57,\"relevance\":96,\"translationQuality\":67,\"mdxPreservation\":38,\"culturalAdaptation\":69,\"languagePurity\":68},\"suggestions\":[{\"priority\":\"high\",\"match\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\\n}\",\"replacement\":\"<blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>\",\"reason\":\"The extra brace prematurely closes the MDX comment, exposing material that the source keeps commented out and potentially breaking compilation.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n```\",\"replacement\":\"```bash title=\\\"whitelist-ingress-from-cloudflare.sh\\\"\\nufw default deny incoming # Блокировать весь входящий трафик!!!\\nufw default allow outgoing # Разрешить весь исходящий\\nufw allow ssh # Разрешить SSH\\n\\n# Разрешить доступ для локальной подсети (желательно выделить отдельный DMZ/VLAN для размещаемых сервисов)\\nufw allow from 10.0.0.0/8 to any port 443\\n\\n# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\"reason\":\"The premature fence closure leaves the CloudFlare allowlist commands outside the executable example; remove their later duplicate outside the fence as well.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\",\"replacement\":\"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\"reason\":\"The other lsof commands have escaped their code fence; move them inside it and remove the orphan closing fence.\"},{\"priority\":\"high\",\"match\":\"2. **Используйте тома только для чтения** где это возможно:\\n   ```yaml\\n\\nservices:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n\\n```\",\"replacement\":\"2. **Используйте тома только для чтения** где это возможно:\\n   ```yaml\\n   services:\\n     webapp:\\n       volumes:\\n         - ./config:/config:ro\\n   ```\",\"reason\":\"Restore the indented fence and YAML example inside the numbered list so this read-only mount example renders correctly.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"block-china.sh\\\"\\ncurl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \\\\\\n  while read line; do ufw deny from $line to any; done\\n\\n```\",\"replacement\":\"\",\"reason\":\"This is a duplicate country-blocking command block absent from the source; retain the preceding copy.\"},{\"priority\":\"high\",\"match\":\"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# Note: Ensure `target_host` is the desired IP\\n\\n# Scan specific ports:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# Top 100 ports:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\\n\\n```\",\"replacement\":\"```bash title=\\\"nmap External Scan\\\"\\ntarget_host=\\\"$(curl -fsSL https://ifconfig.me)\\\"\\n\\n# Note: Ensure `target_host` is the desired IP\\n\\n# Scan specific ports:\\nnmap -A -p 80,443,8080 --open --reason $target_host\\n# Top 100 ports:\\nnmap -A --top-ports 100 --open --reason $target_host\\n# All ports\\nnmap -A -p1-65535 --open --reason $target_host\\n```\",\"reason\":\"The extra fence can turn subsequent headings and prose into a code block. Remove the other stray fences after the CloudFlare, lsof and fswatch examples too.\"},{\"priority\":\"high\",\"match\":\"#-the-latest-dance\",\"replacement\":\"#-танец-latest\",\"reason\":\"The table-of-contents link still uses an English fragment rather than the ID generated from the translated heading; update the other stale same-page fragments throughout the document too.\"},{\"priority\":\"medium\",\"match\":\"- [Check Your Ports](#check-your-ports)\\n- [View Open Ports](#view-open-ports)\\n- [File Monitoring](#file-monitoring)\",\"replacement\":\"- [Проверьте свои порты](#проверьте-свои-порты)\\n- [Просмотр открытых портов](#просмотр-открытых-портов)\\n- [Мониторинг файлов](#мониторинг-файлов)\",\"reason\":\"These reader-facing navigation labels remain untranslated, and their fragments no longer target the translated headings.\"},{\"priority\":\"medium\",\"match\":\"## 🚀 Production Checklist\",\"replacement\":\"## 🚀 Контрольный список для продакшна\",\"reason\":\"Translate the reader-facing heading and update its table-of-contents fragment to the resulting localized ID.\"},{\"priority\":\"medium\",\"match\":\"## 📚 Further Reading\",\"replacement\":\"## 📚 Дополнительные материалы\",\"reason\":\"Translate the reader-facing heading and update its table-of-contents fragment to the resulting localized ID.\"},{\"priority\":\"medium\",\"match\":\"Original credit: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/).\",\"replacement\":\"Авторы исходного решения: [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) и [Jan Schaumann](https://www.netmeister.org/).\",\"reason\":\"This visible attribution paragraph remains in English; leave the matching line inside the code fence unchanged.\"},{\"priority\":\"medium\",\"match\":\"Мы такжесравним домашние сети с публичными облачными развертываниями\",\"replacement\":\"Мы также сравним домашние сети с развёртыванием в публичном облаке\",\"reason\":\"Fix the joined words and unnatural phrasing in the opening paragraph.\"}],\"rationale\":\"Most of the article is translated and the locale-relative assets are correct, but broken MDX fences and a comment boundary, escaped executable commands, duplicate code, and widespread stale heading links prevent publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 17618,
+    "inputTokenDetails": {
+      "noCacheTokens": 17618,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 17615
+    },
+    "outputTokens": 1715,
+    "outputTokenDetails": {
+      "textTokens": 1715,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19333
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 17618,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1715,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19333,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0611935
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

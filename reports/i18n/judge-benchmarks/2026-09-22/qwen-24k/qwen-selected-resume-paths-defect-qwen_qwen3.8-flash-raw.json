@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"f61625d30150\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 40,\n    \"coherence\": 95,\n    \"relevance\": 100,\n    \"translationQuality\": 95,\n    \"mdxPreservation\": 80,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"../search/ui.css\",\n      \"replacement\": \"/search/ui.css\",\n      \"reason\": \"The source uses an absolute path `/search/ui.css` inside the HTML code block. The candidate incorrectly changed this to a relative path `../search/ui.css`. Code literals and URLs within executable blocks must be preserved exactly as they appear in the source.\"\n    }\n  ],\n  \"rationale\": \"The translation of prose and frontmatter is accurate and natural. However, the candidate modified the URL string inside the HTML code block from an absolute path to a relative path, which breaks technical fidelity.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 983,
+    "inputTokenDetails": {
+      "noCacheTokens": 983,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 280,
+    "outputTokenDetails": {
+      "textTokens": 280,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1263
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 983,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 280,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1263,
+        "cost": 0.00027905,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00027905
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

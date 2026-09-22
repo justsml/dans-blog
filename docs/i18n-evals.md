@@ -260,7 +260,7 @@ GPT-6 Terra was unavailable in both catalogs on September 22 and was not
 substituted with GPT-5.6 Terra.
 
 Judge benchmarking and the core `scoreTranslation` function now default to
-16,000 output tokens, including reasoning. Use `--max-output-tokens 8000` to
+24,000 output tokens, including reasoning. Use `--max-output-tokens 8000` to
 reproduce the original comparison budget. `--fixture <id>` selects a single
 frozen row for a targeted retry; give changed-budget retries their own phase
 and `--cohort output-limit-recovery` so the report keeps the original failures
@@ -289,6 +289,27 @@ section in the main summary; it keeps this larger-input 16k cohort separate.
 To retry only capped rows from that completed phase, use a unique phase name,
 `--cohort lowest10-limit-retry`, and
 `--retry-limits-of lowest10-calibrated`, with the same fixture file, split,
-tuning, and 16k cap. The runner rejects fixture, tuning, or reasoning drift and
+tuning, reasoning setting, and an explicit `--max-output-tokens 16000` to reproduce the old cap. The runner rejects fixture, tuning, or reasoning drift and
 selects only model/fixture pairs with an output-limit failure. Each retry is a
 new preserved attempt; it never replaces original comparison statistics.
+
+### September 22 Qwen expansion and reasoning defaults
+
+The default benchmark now includes Qwen 3.8 Flash and Qwen 3.8 27B. Every model defaults to `--effort lowest`: optional thinking is
+explicitly disabled with `reasoning.enabled=false`; mandatory thinking uses
+its lowest catalog-listed effort. `exclude=true` only hides reasoning and is
+not used as a substitute for disabling it. Explicit effort and token overrides
+still take precedence.
+
+Core model defaults use the dated `core/reasoning-capabilities.json` snapshot
+from OpenRouter's public model catalog. Unknown models require a catalog refresh
+or an explicit effort; they do not silently fall back to a provider's default.
+The benchmark resolves capabilities from its saved or supplied `--catalog`.
+Refresh the snapshot from `https://openrouter.ai/api/v1/models` when adding a
+model; retain the fetch date and per-model `reasoning` metadata (including null
+for non-reasoning models). First-party OpenAI defaults use the same model-name
+capabilities; recheck first-party availability separately.
+
+The full matched 24k comparison and prior-limit recovery attempts are retained
+under `reports/i18n/judge-benchmarks/2026-09-22/qwen-24k/`. Previous 8k/16k runs
+remain historical evidence and must not be pooled into the new comparison.

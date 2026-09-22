@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"d18f75c20ad6\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 85,\n    \"technicalAccuracy\": 90,\n    \"coherence\": 85,\n    \"relevance\": 95,\n    \"translationQuality\": 88,\n    \"mdxPreservation\": 82,\n    \"culturalAdaptation\": 85,\n    \"languagePurity\": 88\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"curl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# IPv6 समर्थन जोड़ें\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"curl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Add IPv6 support\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"Code block syntax was broken by placing a closing code fence prematurely and leaving raw comments outside the code block.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"# स्थापित (ESTABLISHED) कनेक्शन की निगरानी\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# LISTEN स्थिति देखें\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# IP पते के बजाय नेटवर्क नाम दिखाने के लिये (रिवर्स DNS लुकअप धीमा हो सकता है)\\nsudo lsof -i -P | grep LISTEN\\n\\n# सभी नेटवर्क कनेक्शन की निगरानी\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\n      \"replacement\": \"# Monitor specific port\\nsudo lsof -i:80 -Pn\\n\\n# Monitor ESTABLISHED connections\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# View LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# to see network names instead of IP addresses (can be very slow to do reverse DNS lookups)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Monitor all network connections\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\n      \"reason\": \"Duplicate lsof command blocks or mismatched code block formatting appeared near lsof commands.\"\n    }\n  ],\n  \"rationale\": \"The translation is generally of high quality with natural Hindi prose and correct preservation of technical terms and frontmatter. However, there are minor MDX fence breakages around code snippets (such as prematurely closing a code block and leaving commented code outside) that need fixing.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 18881,
+    "inputTokenDetails": {
+      "noCacheTokens": 367,
+      "cacheReadTokens": 18514,
+      "cacheWriteTokens": 18514
+    },
+    "outputTokens": 721,
+    "outputTokenDetails": {
+      "textTokens": 721,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 19602
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+g5Cv/Zq2l90OaX4XSf0eCoxTmJOqejwPE5qPZMORuoMzJBBlt3FsrDfJhiguLe6Kv8eIc5T/mGBcN2OSx76XK++8/eDagUvG8CaXadGU=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 18881,
+        "promptTokensDetails": {
+          "cachedTokens": 18514
+        },
+        "completionTokens": 721,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 19602,
+        "cost": 0.004010853333333333,
+        "costDetails": {
+          "upstreamInferenceCost": 0.004010853333333333
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

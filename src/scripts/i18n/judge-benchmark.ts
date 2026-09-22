@@ -1,4 +1,5 @@
 /** Matched-input judge comparison. Never promotes or edits translations. */
+import { lowestReasoningEffort, type ReasoningCapability } from "./core/reasoning-defaults.ts";
 import { mkdirSync, readFileSync, writeFileSync, appendFileSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
@@ -11,18 +12,12 @@ export const JUDGE_BENCHMARK_MODELS = [
   "google/gemini-3.5-flash-lite", "deepseek/deepseek-v4.1-flash",
   "z-ai/glm-5.3-flash", "z-ai/glm-5.3-flashx", "anthropic/claude-opus-5.5",
   "openai/gpt-6-astra", "openai/gpt-6-sol",
+  "qwen/qwen3.8-flash", "qwen/qwen3.8-27b",
 ];
-export function benchmarkReasoningEffort(requested: string, model: { reasoning?: { mandatory?: boolean; supported_efforts?: string[] } }) {
-  if (requested !== 'lowest') return requested;
-  const supported = model.reasoning?.supported_efforts;
-  const selected = ['none', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'].find(effort =>
-    supported?.includes(effort) && !(effort === 'none' && model.reasoning?.mandatory));
-  if (!selected) throw new Error('Cannot determine minimum reasoning effort from catalog metadata');
-  return selected;
+export function benchmarkReasoningEffort(requested: string, model: { reasoning?: ReasoningCapability | null }) {
+  return requested === 'lowest' ? lowestReasoningEffort(model) : requested;
 }
-export function defaultBenchmarkEffort(model: string) {
-  return ['openai/gpt-6-astra', 'openai/gpt-6-sol'].includes(model) ? 'lowest' : 'low';
-}
+export function defaultBenchmarkEffort(_model: string) { return 'lowest'; }
 export function isOutputLimitFailure(row: { ok: boolean; error?: string; captured?: { finishReason?: string } }) {
   return !row.ok && (/hit maxOutputTokens=/.test(row.error ?? '') || ['length', 'max_tokens'].includes(row.captured?.finishReason ?? ''));
 }
@@ -67,12 +62,14 @@ async function main() {
   const out = arg('out', `reports/i18n/judge-benchmarks/${new Date().toISOString().replaceAll(':', '-')}`);
   const phase = arg('phase', 'baseline');
   const cohort = arg('cohort', phase);
+  const resumeOf = arg('resume-of', '');
+  const completedRows = resumeOf ? readFileSync(join(out, 'results.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line)).filter(row => row.phase === resumeOf) : [];
   const retryLimitsOf = arg('retry-limits-of', '');
   const retryRows = retryLimitsOf ? readFileSync(join(out, 'results.jsonl'), 'utf8').trim().split('\n').map(line => JSON.parse(line)).filter(row => row.phase === retryLimitsOf && isOutputLimitFailure(row)) : undefined;
   if (retryRows && !retryRows.length) throw new Error(`No output-limit failures in ${retryLimitsOf}`);
   const models: string[] = retryRows ? [...new Set<string>(retryRows.map(row => row.model))] : arg('models', JUDGE_BENCHMARK_MODELS.join(',')).split(',');
   const effort = arg('effort', 'default');
-  const maxOutputTokens = Number(arg('max-output-tokens', '16000'));
+  const maxOutputTokens = Number(arg('max-output-tokens', '24000'));
   if (!Number.isSafeInteger(maxOutputTokens) || maxOutputTokens <= 0) throw new Error('max-output-tokens must be a positive integer');
   const tuningPath = arg('tuning', '');
   const tuning: JudgePromptTuning | undefined = tuningPath ? JSON.parse(readFileSync(tuningPath, 'utf8')) : undefined;
@@ -108,6 +105,10 @@ async function main() {
   for (const model of models) if (!catalog.models.some((m: any) => m.id === model)) throw new Error(`Model unavailable: ${model}`);
   const effortByModel = Object.fromEntries(models.map(model => [model, benchmarkReasoningEffort(effort === 'default' ? defaultBenchmarkEffort(model) : effort, catalog.models.find((m: any) => m.id === model))]));
   if (retryRows?.some(row => row.effort !== effortByModel[row.model])) throw new Error('Retry reasoning differs from original phase');
+  if (resumeOf) {
+    const previous = JSON.parse(readFileSync(join(out, `${resumeOf}-manifest.json`), 'utf8'));
+    if (previous.fixtureHash !== hash(readFileSync(fixturesPath, 'utf8')) || JSON.stringify(previous.tuning) !== JSON.stringify(tuning) || previous.maxOutputTokens !== maxOutputTokens || models.some(model => previous.effortByModel[model] !== effortByModel[model])) throw new Error('Resume settings differ from original phase');
+  }
   const manifestPath = join(out, `${phase}-manifest.json`);
   if (await Bun.file(manifestPath).exists()) throw new Error(`Phase already exists: ${phase}`);
   writeFileSync(join(out, `${phase}-catalog.json`), JSON.stringify(catalog, null, 2));
@@ -115,13 +116,14 @@ async function main() {
   // Preserve the original rates for existing rows when adding new models later.
   const mergedCatalog = { ...previousCatalog, models: [...previousCatalog.models, ...catalog.models.filter((m: any) => !previousCatalog.models.some((p: any) => p.id === m.id))] };
   writeFileSync(savedCatalogPath, JSON.stringify(mergedCatalog, null, 2));
-  writeFileSync(manifestPath, JSON.stringify({ phase, cohort, models, effort, effortByModel, maxOutputTokens, retryLimitsOf: retryLimitsOf || undefined, retryPairs: retryRows?.map(row => ({ model: row.model, fixture: row.fixture })), fixtureId: fixtureId || undefined, catalogCheckedAt: catalog.checkedAt, tuning, split, fixturesPath, fixtureHash: hash(readFileSync(fixturesPath, 'utf8')), startedAt: new Date().toISOString(), maxRetries: 0, concurrency: 4 }, null, 2));
+  writeFileSync(manifestPath, JSON.stringify({ phase, cohort, resumeOf: resumeOf || undefined, models, effort, effortByModel, maxOutputTokens, retryLimitsOf: retryLimitsOf || undefined, retryPairs: retryRows?.map(row => ({ model: row.model, fixture: row.fixture })), fixtureId: fixtureId || undefined, catalogCheckedAt: catalog.checkedAt, tuning, split, fixturesPath, fixtureHash: hash(readFileSync(fixturesPath, 'utf8')), startedAt: new Date().toISOString(), maxRetries: 0, concurrency: 4 }, null, 2));
   // Rotate model order across fixtures to reduce ordering/cache bias.
   const jobs = cases.flatMap((fixture, i) => [...models.slice(i % models.length), ...models.slice(0, i % models.length)].map(model => ({ fixture, model }))).filter(job => !retryRows || retryRows.some(row => row.fixture === job.fixture.id && row.model === job.model));
+  const pendingJobs = jobs.filter(job => !completedRows.some(row => row.model === job.model && row.fixture === job.fixture.id));
   let next = 0;
   await Promise.all(Array.from({ length: 4 }, async () => {
-    while (next < jobs.length) {
-      const { fixture, model } = jobs[next++]!;
+    while (next < pendingJobs.length) {
+      const { fixture, model } = pendingJobs[next++]!;
       const key = `${phase}-${fixture.id}-${model.replaceAll('/', '_')}`;
       const started = performance.now();
       let captured: any;

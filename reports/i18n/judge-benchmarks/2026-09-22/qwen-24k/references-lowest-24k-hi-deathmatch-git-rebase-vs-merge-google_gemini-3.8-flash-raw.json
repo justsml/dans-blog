@@ -1,0 +1,47 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":85,\"coherence\":84,\"relevance\":90,\"translationQuality\":82,\"mdxPreservation\":78,\"culturalAdaptation\":84,\"languagePurity\":85},\"suggestions\":[{\"priority\":\"high\",\"match\":\"--- CHUNK END ---\",\"replacement\":\"\",\"reason\":\"Translation chunk delimiter leaked into rendered document content.\"},{\"priority\":\"medium\",\"match\":\"{/* \\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ विशेष `--` अलगाव का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहे।  \\n- `git checkout feature/half-a-feature **--** <folder or file path>`  \\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"{/*\\n#### बोनस: रिलीज टिप्स\\n\\nकभी-कभी एक शाखा से केवल एक फ़ाइल या कुछ फ़ोल्डर की आवश्यकता होती है? कमिट इतिहास के बिना?\\n\\n- आप `git checkout` के साथ विशेष \\\"--\\\" विभाजक का उपयोग कर सकते हैं ताकि निर्दिष्ट फ़ाइलों की प्रतिलिपि बनाते हुए वर्तमान शाखा में रहें:\\n- `git checkout feature/half-a-feature **--** <folder or file path>`\\n- सुनिश्चित करें कि आपने पहले उन सभी परिवर्तनों को कमिट कर दिया है जिन्हें आप बरकरार रखना चाहते हैं, क्योंकि यह किसी भी स्थानीय परिवर्तन को ओवरराइट कर देगा।\\n*/}\",\"reason\":\"The bonus section in the source was entirely commented out; the candidate partially un-commented bullet items while leaving the heading commented, causing rendered drift from the source.\"}],\"rationale\":\"The translation contains an accidental chunk marker artifact ('--- CHUNK END ---') in rendered body prose and un-comments commented-out source material in the bonus section. Addressing these issues will make it publication-ready.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 5085,
+    "inputTokenDetails": {
+      "noCacheTokens": 371,
+      "cacheReadTokens": 4714,
+      "cacheWriteTokens": 4714
+    },
+    "outputTokens": 482,
+    "outputTokenDetails": {
+      "textTokens": 482,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5567
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google AI Studio",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "EmcKZQFpFH0TK3dK/dsXHxAconG/KMM7XNZwIzHf7ACmt8AIilKJDzq/6XvoTxD4JC8xB1k091TXzGBJE9WwsooMlt98WUoIJBrd8mOKI04WxIVsgxoY0YQIp9rRq/M6jvRR05yG5Td5",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 5085,
+        "promptTokensDetails": {
+          "cachedTokens": 4714
+        },
+        "completionTokens": 482,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5567,
+        "cost": 0.0026357166666666665,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0026357166666666665
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

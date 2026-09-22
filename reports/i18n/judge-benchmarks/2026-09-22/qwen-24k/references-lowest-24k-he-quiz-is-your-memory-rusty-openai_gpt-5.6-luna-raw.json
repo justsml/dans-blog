@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"0893c477b5a7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":84,\"technicalAccuracy\":82,\"coherence\":88,\"relevance\":96,\"translationQuality\":84,\"mdxPreservation\":78,\"culturalAdaptation\":82,\"languagePurity\":76},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../mobile.webp\",\"replacement\":\"social_image: mobile.webp\",\"reason\":\"The source uses a controlled asset filename, while the candidate changes this metadata path to a parent-relative path. The repository rule permits parent-relative image paths for localized content, but this specific social_image field should preserve the source asset reference unless the locale's asset layout explicitly requires otherwise.\"},{\"priority\":\"high\",\"match\":\"import Challenge from '../../../../components/QuizUI/Challenge';\",\"replacement\":\"import Challenge from '../../../components/QuizUI/Challenge';\",\"reason\":\"The source import path is ../../../components/... and component imports are non-reader-facing executable structure. Changing it to four parent traversals can break the MDX build unless the target file is actually one directory deeper.\"},{\"priority\":\"high\",\"match\":\"הפניות אינן יכולות לחיות יותר מהמקור שלהן\",\"replacement\":\"הפניות אינן יכולות לחיות יותר מהערך שאליו הן מפנות\",\"reason\":\"The current wording says references cannot live longer than their source, which is imprecise and can mislead readers about the referent/lifetime relationship.\"},{\"priority\":\"medium\",\"match\":\"הפחתת זמן חיים\",\"replacement\":\"השמטת זמני חיים\",\"reason\":\"This group label translates 'Lifetime Elision' as 'lifetime reduction', which is technically misleading. The Rust term refers to omission/elision of lifetime annotations.\"},{\"priority\":\"medium\",\"match\":\"ההיפ\",\"replacement\":\"הערימה\",\"reason\":\"The Hebrew transliteration is awkward and nonstandard in technical prose; 'heap' should be rendered consistently as 'הערימה' or 'heap'.\"},{\"priority\":\"medium\",\"match\":\"מזהה הקובץ\",\"replacement\":\"ידית הקובץ\",\"reason\":\"The source says file handle, but 'מזהה הקובץ' means file identifier. This changes the technical meaning.\"},{\"priority\":\"medium\",\"match\":\"שדה ה-`File` כולל מימוש Drop משלו.\",\"replacement\":\"לשדה ה-`File` יש מימוש `Drop` משלו.\",\"reason\":\"The current phrasing is understandable but technically and grammatically less precise; the field's type implements Drop, not the field itself.\"},{\"priority\":\"medium\",\"match\":\"עומס ריצה קל\",\"replacement\":\"תקורת זמן ריצה קטנה\",\"reason\":\"The phrase is understandable but unnatural technical Hebrew and obscures that the overhead is runtime overhead.\"},{\"priority\":\"medium\",\"match\":\"בין אם אתה Rustacean ותיק\",\"replacement\":\"בין אם אתם Rustacean ותיקים\",\"reason\":\"The surrounding document predominantly uses plural/formal address, while this sentence switches to singular masculine, reducing language consistency.\"},{\"priority\":\"medium\",\"match\":\"הקוויז הזה\",\"replacement\":\"החידון הזה\",\"reason\":\"The candidate repeatedly uses the English loanword 'קוויז' despite otherwise Hebrew reader-facing prose. This is a language-purity issue; 'חידון' is natural and already used in the title.\"}],\"rationale\":\"The candidate translates nearly all reader-facing prose and preserves the quiz structure, code fences, URLs, component names, props, and answer flags. However, the component import path is potentially build-breaking, several technical terms are imprecise or awkward, and the document contains inconsistent Hebrew register and untranslated code comments. The candidate is not publish-ready without verifying/fixing the import and correcting the technical-language defects.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 23514,
+    "inputTokenDetails": {
+      "noCacheTokens": 23514,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 23511
+    },
+    "outputTokens": 777,
+    "outputTokenDetails": {
+      "textTokens": 777,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 24291
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 23514,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 777,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 24291,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00681075
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

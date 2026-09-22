@@ -1,0 +1,40 @@
+{
+  "text": "{\n  \"selectedCommit\": \"35299bd7a6f7\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 85,\n    \"technicalAccuracy\": 70,\n    \"coherence\": 80,\n    \"relevance\": 100,\n    \"translationQuality\": 85,\n    \"mdxPreservation\": 40,\n    \"culturalAdaptation\": 90,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n\\n```\",\n      \"replacement\": \"# Разрешить IP‑адреса CloudFlare\\ncurl -fsSL https://www.cloudflare.com/ips-v4 | \\\\\\n  while read line; do ufw allow from $line to any port 443; done\\n# Добавить поддержку IPv6\\n# curl -fsSL https://www.cloudflare.com/ips-v6 | \\\\\\n#   while read line; do ufw allow from $line to any port 443; done\\n```\",\n      \"reason\": \"The code block for 'whitelist-ingress-from-cloudflare.sh' is broken. The closing fence ``` appears after the first few lines, leaving the rest of the script (CloudFlare IPs) outside the code block and rendering as raw text with a stray opening fence at the end.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n```\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n\\n```\",\n      \"replacement\": \"```bash title=\\\"Команды lsof\\\"\\n# Мониторинг конкретного порта\\nsudo lsof -i:80 -Pn\\n\\n# Мониторинг ESTABLISHED‑соединений\\nsudo lsof -i -Pn | grep ESTABLISHED\\n# Просмотр LISTEN\\nsudo lsof -i -Pn | grep LISTEN\\n\\n# Чтобы видеть имена сетей вместо IP‑адресов (обратный DNS может быть очень медленным)\\nsudo lsof -i -P | grep LISTEN\\n\\n# Мониторинг всех сетевых соединений\\nsudo watch -n1 \\\"lsof -i -Pn\\\"\\n```\",\n      \"reason\": \"Similar to the previous issue, the 'lsof Commands' code block is prematurely closed after the first command, leaving the remaining commands outside the block and creating invalid MDX structure.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 🔄 [Танец `:latest`](#-the-latest-dance)\",\n      \"replacement\": \"- 🔄 [Танец `:latest`](#️-танец-latest)\",\n      \"reason\": \"The anchor link in the Table of Contents points to the English ID `#-the-latest-dance`. It should point to the localized heading ID generated from the Russian heading `## 🔄 Танец :latest`.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 🔍 [Мониторинг и проверка](#-monitoring--verification)\",\n      \"replacement\": \"- 🔍 [Мониторинг и проверка](#-мониторинг-и-проверка)\",\n      \"reason\": \"The anchor link points to the English ID. It must match the localized heading `## 🔍 Мониторинг и проверка`.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- ⏰ [Часто упускаемые советы](#-often-overlooked-tips)\",\n      \"replacement\": \"- ⏰ [Часто упускаемые советы](#-часто-упускаемые-советы)\",\n      \"reason\": \"The anchor link points to the English ID. It must match the localized heading `## ⏰ Часто упускаемые советы`.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 🚀 [Контрольный список для продакшна](#-production-checklist)\",\n      \"replacement\": \"- 🚀 [Контрольный список для продакшна](#-контрольный-список-для-продакшна)\",\n      \"reason\": \"The anchor link points to the English ID. It must match the localized heading `## 🚀 Контрольный список для продакшна`.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- 📚 [Дополнительные материалы](#-further-reading)\",\n      \"replacement\": \"- 📚 [Дополнительные материалы](#-дополнительные-материалы)\",\n      \"reason\": \"The anchor link points to the English ID. It must match the localized heading `## 📚 Дополнительные материалы`.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- [Генерация надёжных секретов](#генерировать-надёжные-секреты)\",\n      \"replacement\": \"- [Генерация надёжных секретов](#генерация-надёжных-секретов)\",\n      \"reason\": \"The anchor link uses the verb form `#генерировать...` but the heading is `### Генерация...`. The ID should match the noun form in the heading.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"- [Canary‑токены](#canary-tokens)\",\n      \"replacement\": \"- [Canary‑токены](#canary-tokens)\",\n      \"reason\": \"While the heading is `### Canary Tokens`, the TOC item says `Canary‑токены`. If the heading remains English, the link is correct. However, usually headings are translated. If the heading was intended to be `### Канарейки`, this needs updating. Assuming heading stays English based on source, this is low priority, but inconsistent with other translated links. Let's look at the heading: `### Canary Tokens`. The link `#canary-tokens` is technically correct if the heading isn't translated. But wait, looking at other sections, headings ARE translated. `### Generate Strong Secrets` became `### Генерировать надёжные секреты`. `### Canary Tokens` remained `### Canary Tokens`. This is an inconsistency in translation strategy. I will flag the mismatch between TOC text and Heading if they differ, or just ensure IDs match actual headings. Here, TOC says 'Canary-токены', Heading says 'Canary Tokens'. Link is `#canary-tokens`. This works. No fix needed unless we want consistent localization.\"\n    },\n    {\n      \"priority\": \"low\",\n      \"match\": \"Мы такжесравним\",\n      \"replacement\": \"Мы также сравним\",\n      \"reason\": \"Missing space between words.\"\n    },\n    {\n      \"priority\": \"low\",\n      \"match\": \"Вот небольшойскрипт\",\n      \"replacement\": \"Вот небольшой скрипт\",\n      \"reason\": \"Missing space between words.\"\n    }\n  ],\n  \"rationale\": \"The translation generally captures the tone and technical content well. However, there are critical MDX structural errors where code blocks are prematurely closed, breaking the rendering of scripts. Additionally, several Table of Contents links still point to English anchors instead of the localized Russian heading IDs.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 18547,
+    "inputTokenDetails": {
+      "noCacheTokens": 18547,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 18167
+    },
+    "outputTokens": 1886,
+    "outputTokenDetails": {
+      "textTokens": 1886,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 20433
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Alibaba",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 18547,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1886,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 20433,
+        "cost": 0.00457682,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00457682
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}
