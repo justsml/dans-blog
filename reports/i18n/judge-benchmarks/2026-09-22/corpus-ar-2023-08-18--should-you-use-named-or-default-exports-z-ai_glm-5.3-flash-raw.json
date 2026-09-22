@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"95ea068929bd\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":88,\"technicalAccuracy\":85,\"coherence\":88,\"relevance\":95,\"translationQuality\":88,\"mdxPreservation\":68,\"culturalAdaptation\":85,\"languagePurity\":92},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"Asset paths must be preserved exactly; the candidate changed ./ to ../ for social_image, cover, cover_mobile, and cover_icon, which will break asset resolution.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"Cover asset paths were incorrectly rewritten with ../ prefixes; non-reader-facing metadata must keep original relative paths.\"},{\"priority\":\"high\",\"match\":\"modified: '2024-08-01'\",\"replacement\":\"date: 2023-08-10\\nmodified: '2024-08-01'\",\"reason\":\"The original `date: 2023-08-10` frontmatter field was dropped; it is non-reader-facing metadata and must be preserved.\"},{\"priority\":\"medium\",\"match\":\"- غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"replacement\":\"  - غير صحيح (لم يعد صحيحًا). قم بتكوين/تحديث أدواتك.\",\"reason\":\"This sub-bullet lost its two-space indentation and became a top-level bullet, breaking the nested list structure of Arg #3; also 'بعد الآن' is an awkward rendering of '(any more)'.\"},{\"priority\":\"medium\",\"match\":\"// لا يمكن تصدير const كافتراضي ....\",\"replacement\":\"// لا يمكن تصدير default const ....\",\"reason\":\"The code comment explains the exact unsupported syntax `export default const`; dropping 'default' loses the technical point of the comment.\"},{\"priority\":\"medium\",\"match\":\"// ^ ❌ غير مدعوم ❌ ^\",\"replacement\":\"// ^ ❌ Not Supported ❌ ^\",\"reason\":\"Code-block comments are code-adjacent and should be preserved in English to keep the snippet faithful to the source.\"}],\"rationale\":\"Translation is fluent and faithful in prose, with correct quiz-free technical content and a properly localized same-page anchor (#ملخص). However, frontmatter asset paths were wrongly rewritten (./ → ../), the date field was dropped, a nested list item lost indentation, and code-block comments were partially translated with one losing a key technical token. These MDX/fidelity issues block publish readiness.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 3458,
+    "inputTokenDetails": {
+      "noCacheTokens": 3458,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 860,
+    "outputTokenDetails": {
+      "textTokens": 681,
+      "reasoningTokens": 179
+    },
+    "totalTokens": 4318
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "CoreWeave",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3458,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 860,
+        "completionTokensDetails": {
+          "reasoningTokens": 179
+        },
+        "totalTokens": 4318,
+        "cost": 0.0009487,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0009487
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

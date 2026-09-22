@@ -136,7 +136,7 @@ export function resolveLlmConfig(
 
 function defaultTemperatureForModel(modelId: string) {
   const normalized = modelId.replace(/^openrouter\//, "");
-  if (normalized.includes("gpt-5.6")) return undefined;
+  if (normalized.includes("gpt-5.6") || normalized.includes("gpt-6")) return undefined;
   return normalized.includes("gpt-oss") ? 0.1 : 0.3;
 }
 

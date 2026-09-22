@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"119ffdf6cd81\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":90,\"technicalAccuracy\":25,\"coherence\":75,\"relevance\":95,\"translationQuality\":65,\"mdxPreservation\":100,\"culturalAdaptation\":90,\"languagePurity\":100},\"suggestions\":[{\"priority\":\"high\",\"match\":\"再試行は最大3回までにしてください。失敗した支払いは必ず自動的に再試行してください。\",\"replacement\":\"再試行は最大3回までにしてください。失敗した支払いは自動的に再試行しないでください。\",\"reason\":\"The English explicitly says never to automatically retry a failed payment, but the candidate says to always retry it automatically, reversing a critical technical and safety instruction.\"}],\"rationale\":\"The Japanese is natural and preserves the code, link, Markdown structure, and localized heading. However, it reverses the key payment-retry prohibition, requiring a high-priority correction.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 608,
+    "inputTokenDetails": {
+      "noCacheTokens": 608,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 301,
+    "outputTokenDetails": {
+      "textTokens": 219,
+      "reasoningTokens": 82
+    },
+    "totalTokens": 909
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Fixing JSON requirements**\n\nI’m focusing on the need for strict JSON. The score dimensions required include some extra details. I should identify any major reversals—like not retrying failed payments automatically, which I need to express clearly in the sentence. Other elements seem good, with headings localized and links preserved. For scores, I see readability at 90, technical at 40, coherence at 75, relevance at 90, translation quality at 70, mdx at 100, cultural at 90, and purity at 100. I’ll suggest specific improvements.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsuhESU-OQgs3ncTk49zBOLLyQIJx1-q__aEWBXYr6JUOxmyMbF61aclgzry2IH_vj8pNCRJJchBs3Bn7ZVDdddkL6w-XG74LtI1i3kdNNS0RWe-kcpQWvYfNCYdRie7emknP8XTxiyJ_84BqWlZzdTxer2CDA_Q_QigxvYmy7MN9koUkrQyeUr522PiHRkyQRDHzTOGI5iCc5paDUf4XKUlYCNtPtZ8VRL694ctMhdkOkp_-KTa4YcUdWdYamLVMINNRs9iS74GE7gx13QI8t6v95mIpCv4RI8Cb3a5vULYN89yMtq1mzoggAVWy4DLbHRRt-O828oTrmlNBMxrRLqJWHKtNPpMkoSIhWNIhUtMhhUhfEx6-CO4RjzPa8DrlFSs8TxxafSPqByLGJF0QKv8PtRfuVi_J9dK4qnbYa4-VixP7pVvygf_6X-Km4XWyzl0d5YjSnE6xL8piR49My-2Kd_i_3SBhxs6L0oUStXzXDunntUUAT4hQzAuhWdsr36DL7k0c02HjYh8TDYwR1G_WUSFzmPu3KlcCV-ST52SS34rhuIS9REMTay_91TPswOgUukhdDVertXZ5HOUwi862hjT34jJLZKoVhKl_zeIho6Yi2NYOPrj3XJ-nYpItkkBSvcP8PHE5V29F4n8FOz62_EyrAiGmjfFO6g606fSBnAnCaS-lvvfNiqr10I1ubMZNdNE9D4nnVeQOreN34C8ohMbnu-6F2MyB7vH8CAiZ5tKsSi392LHAcHY8VUgS9KVQblZJgYI7kwXenIQkopXY7yG7_tI_3fsIaWioLQ_PxVBxvVP1kZc7RTdcXT7VWS11sQwm-ATMhJfhTsOAaEAqecMHpB2jLDAQO6Fr7eZqjVtF3rqqSua8DeYDl6jNlLSXdXuIT5Ff-QY_uKk5J40Z9nsmSdLGT_rTspb_xD60hQVDBV5Y7kIGIvHMMamLVvB_Jn5CltDbCokaBhRHAWq1p1aF3q8YM1GoetWs1I2yDQRhYL_bv61pCFfQKUZEhfZvGglhBCmr2nh7VFmhRcAYZCSvekpG8bkmWsSDXa_0hTM8u0yZtnL_QS0C8crrgdzU8HIgvJAqgzM8VYHq7LZ3gENE0zk_1TdLm8m3XO_PVy4N3ljaQjZ6ZnG6E3NZ6yYHFgc8fBo_qRFAy-vlpa79e6afn2ulym0lRzOBM_l8m_8DMO5A3OAjKIjG6YIyeIVFUVNxYOHe17_JNdVoMJOu6U8J8Gg_rqlQJ0QYm7zsDbqFFaYStOUHTftiS4d_dU0dEY7FyKYNcTWAwe1klSp6cR56QggTazvaN5_FohMHZLQ-kCHGSKVSJuwW2RMOCdoL_D_FTdyBd5uAjUoKVZj7msKQfz0uXo8iRBILO57YRqUwxRTSNe6kQsM2sIRCwOJH_VnhZd_T0HiY8h2az78ehB6JzvDY8QGvNyQed8oDB1kng6Q6PiMUwX-pxYmdURGgi-RV8KulSiVzu5fBxRvPvnt8H15ghqx2aKKq7NNrIM4PBacOKiGIWdOBOMFnVxuK5qdKkLubxWp3TpXEOhi7wMwARUtlSbtHi2DhQdXwCkkhpdNZgMYSHB82l5nBEAdz30-hUwARR4fi-453QdJ77x8L__7tFL6kMvk1P0rphfxwkAcEgp9lcOqUFLGMZwDW_cjrA_Aldhh8unlm44TUUZJZ5OPbAb_JDOMWCJ5pb8H4s5-T32jBc0jJm-eMvW58xM6In3AuzC15LbvNya5LX8NzY9tZ1BunmpOAy2kSeBVn2D0fvC_QsIMrt8SIrYMNX83pz7ncvI_Al4fZMZBlyjgdLSjf0gFUHBvcyqF4rLqttLtpK6y5jtvzZF-gNTUi_a63XGLYD3xgSZ_T25eArA==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+          "id": "rs_0f606da7a27c394b016ab2e841c1b887d1b8d6ff7830162cdb",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 608,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 301,
+        "completionTokensDetails": {
+          "reasoningTokens": 82
+        },
+        "totalTokens": 909,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0004828
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

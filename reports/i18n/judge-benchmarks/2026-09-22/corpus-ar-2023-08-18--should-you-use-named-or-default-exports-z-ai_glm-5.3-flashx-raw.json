@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"95ea068929bd\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":88,\"technicalAccuracy\":85,\"coherence\":88,\"relevance\":95,\"translationQuality\":88,\"mdxPreservation\":70,\"culturalAdaptation\":85,\"languagePurity\":92},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"Asset path changed from ./ to ../ — relative asset paths must be preserved exactly.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"Cover asset paths were rewritten with ../ prefixes; non-localized frontmatter values must remain unchanged so assets resolve.\"},{\"priority\":\"medium\",\"match\":\"subCategory: JavaScript\\ncover_icon:\",\"replacement\":\"date: 2023-08-10\\nmodified: '2024-08-01'\",\"reason\":\"The date frontmatter field was dropped during reformatting; restore it in its original position.\"},{\"priority\":\"medium\",\"match\":\"- غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"replacement\":\"  - غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"reason\":\"This list item lost its two-space nesting under Arg #3, breaking the MDX list structure compared to the source.\"},{\"priority\":\"medium\",\"match\":\"فمن فضلك `export` وكأنك تعني ذلك بكل جدية. 💞\",\"replacement\":\"فمن فضلك `export` وكأنك تعني ذلك بجدية تامة. 💞\",\"reason\":\"Minor: the euphemistic softening is fine, but keep punchy tone; alternatively acceptable — flagged only for tone polish. (Low risk.)\"}],\"rationale\":\"Translation is faithful, natural Arabic preserving code, links, table, and section component, with a correctly localized #ملخص heading link. However, frontmatter asset paths were altered (./ to ../), the date field was dropped, and one nested list item lost indentation — medium/high MDX fixes remain.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3458,
+    "inputTokenDetails": {
+      "noCacheTokens": 3458,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 646,
+    "outputTokenDetails": {
+      "textTokens": 581,
+      "reasoningTokens": 65
+    },
+    "totalTokens": 4104
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3458,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 646,
+        "completionTokensDetails": {
+          "reasoningTokens": 65
+        },
+        "totalTokens": 4104,
+        "cost": 0.00208696,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00208696
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

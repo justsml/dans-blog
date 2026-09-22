@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"1b1beb59a544\",\"selectedModel\":\"\",\"scores\":{\"readability\":90,\"technicalAccuracy\":96,\"coherence\":92,\"relevance\":95,\"translationQuality\":90,\"mdxPreservation\":65,\"culturalAdaptation\":90,\"languagePurity\":92},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"Asset path was changed from ./ to ../; relative asset path rules must be preserved.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"Cover asset paths must match the source exactly (no ../ prefix); changing them will break asset resolution.\"},{\"priority\":\"high\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The `date: 2023-08-10` frontmatter field was dropped; publish metadata must be preserved.\"},{\"priority\":\"medium\",\"match\":\"> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._\",replacement:\"> Le estamos enviando una señal a quienes usan `import` _sobre cómo usar algo._\",\"reason\":\"Inline code fragment `import`ers mixes code styling with a Spanish suffix, producing odd reader-facing typography; reword so the code term stays intact.\"}],\"rationale\":\"Translation is fluent, accurate, and natural with correct heading-link localization (#resumen) and preserved code/components. However, frontmatter fidelity issues (missing date field, altered asset paths) require fixes before publishing.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 3183,
+    "inputTokenDetails": {
+      "noCacheTokens": 3183,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 572,
+    "outputTokenDetails": {
+      "textTokens": 489,
+      "reasoningTokens": 83
+    },
+    "totalTokens": 3755
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3183,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 572,
+        "completionTokensDetails": {
+          "reasoningTokens": 83
+        },
+        "totalTokens": 3755,
+        "cost": 0.00189271,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00189271
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

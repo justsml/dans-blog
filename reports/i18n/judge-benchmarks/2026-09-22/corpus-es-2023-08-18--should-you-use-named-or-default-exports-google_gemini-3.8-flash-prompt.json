@@ -1,0 +1,76 @@
+{
+  "provenance": "Reconstructed after run from frozen fixtures, manifests and unchanged prompt builders; no inference performed.",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a constrained translation judge. Return strict JSON only."
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "You are judging a es translation.\nCompare the candidate against the English source.\nScore these dimensions from 0 to 100:\n- technicalAccuracy/fidelity: preserves meaning, technical claims, correct quiz answers, and code-adjacent facts.\n- mdxPreservation: preserves MDX components, imports, props, fences, headings, links, asset path rules, and structure. Same-page heading links must target the localized heading IDs generated from translated heading text, not stale English heading IDs.\n- languagePurity/localeQuality: reader-facing prose is natural target-language prose without instruction leakage.\n- culturalAdaptation/tone: preserves Dan's direct technical style while localizing idioms and jokes naturally.\n- publishReadiness: high only when no medium/high fixes remain.\nReturn concrete medium/high-priority fixes in suggestions with exact match/replacement strings from the candidate.\nDo not require titles, subtitles, headings, or quiz title/group values to remain in English; they are reader-facing.\nDo preserve code, component names, prop names, imports, API names, external URLs, route URLs, and non-reader-facing metadata.\nWhen a same-page heading link changes from an English #fragment to the matching translated #fragment, treat that as correct localization rather than link drift.\nThe final translated prose must be roughly 70%-155% of the English prose length (Spanish range: 70%-155% of English). Do not summarize to satisfy the lower bound or pad to satisfy the upper bound.",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "<english-source>\n---\nsocial_image: ./desktop-social.webp\ntitle: \"ESM exports: named vs. default?\"\nsubTitle: To name, or not to name?\ndate: 2023-08-10\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\n---\n\n## Should you use `named` or `default` exports in JavaScript?\n\nThere’s no shortage of strongly worded articles on this topic.\n\nThe majority judge `default export` as “terrible.” Others maintain `default` should win (e.g. AirBnb style guide.)\n\nThey often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.\n\nHave we missed the point of `export`ing in the first place?\n\n**Code is Communication. ✨**\n\n> We are sending a signal to `import`ers _how to use a thing._\n\n### So, what are we saying?\n\nBroadly speaking, there are 2 ways to export things in modern JavaScript:\n\n- An `export default` boldly declares “This is **_THE SINGLE MOST IMPORTANT_** thing.” Also, “any named exports only play a supporting role.”\n- A `named export` says it’s “definitely **_A THING!_**” Also raises some questions, “got any other buddies there?“ Follow up, “Are they invited or required?”\n\nOf course you can combine both, or use different approaches for different parts of your codebase. [See more examples at the end of the article.](#summary)\n\n### Weak Args, Man\n\nLet’s address some of the common “temporary issues” folks run into.\n\n- Arg #1: Named exports ensure name consistency. [source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - No, they don’t. You’re maybe looking for a lint rule?\n  - (I hate to break it to you, but wait until you learn what variables can do!)\n\n```tsx\n// You can alias using both!\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- Arg #2: Use `import * as soManyKnives from './kinves.js'` to combine named exports. (Not linked, author retracted.)\n  - Neat feature. Not the point.\n  - Now tell me, how do I hold your contraption again? No author intent.\n- Arg #3: Named exports have better IDE import or renaming support. [source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - Incorrect (any more). Configure/update your tools.\n  - Support has existed for 3+ years in [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.\n  - Still, there are some “best practices” to use with `default exports` to get the best IDE & refactor experience.\n  - ✅ `export default function UserService() {}` - always prefer named functions.\n  - ❌ `export default function() { }` - anonymous functions are not implicitly tied to their filename. If you don’t name the thing, it’s hard to ask the computer to change it.\n  - **Note:** For historical reasons you cannot combine `export default` with a `const` expression.\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ Not Supported ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // However, once declared you can export a const var as the default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Valid\n\n    // For completeness:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ Also valid to export a class as default\n    ```\n\n<section className=\"scroll-x\">\n## Summary\n\nThere are actually many combinations of ways we could export things, each tells a different story:\n\n| Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Meaning                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | One default export.                                       | “Presenting ONE function w/ Single Purpose!”                  |\n| ❌                | ✅              | ❌          | One named export.                                         | “Please don’t rename me.”                                     |\n| ✅                | ✅              | ✅          | Default export + multiple 'private' un-exported functions | “Here’s some related logic. Also, expect class-ish behavior.“ |\n| ❌                | ❌              | ✅          | Multiple named exports, generic file name.                | “A grab-bag of loosely related things, no hierarchy implied.” |\n| ✅                | ✅              | ❌          | Single named export ALSO exported as default.             | “You can’t mess up importing me.”                             |\n</section>\n\n**Something to think about:** What are we saying when the file name does or doesn’t match one of its exports? (For example, a `utils.js` with many functions.)\n\n### Conclusion\n\nIf Code is Communication, please `export` like you fucking mean it. 💞\n\n</english-source>",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "<candidate>\n---\nsocial_image: ../desktop-social.webp\ntitle: \"Exportaciones ESM: ¿nombradas o por defecto?\"\nsubTitle: ¿Nombrar o no nombrar?\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\nsourceHash: \"438740274604\"\n---\n\n## ¿Deberías usar exportaciones `named` o `default` en JavaScript?\n\nNo faltan artículos con opiniones tajantes sobre este tema.\n\nLa mayoría juzga `default export` como \"terrible\". Otros sostienen que `default` debería ganar (por ejemplo, la guía de estilo de AirBnb).\n\nA menudo culpan a cosas **enteramente temporales**: errores de auto-importación del IDE, capacidades de tree-shaking de un bundler en particular, o la mera posibilidad de errores tipográficos al nombrar una importación.\n\n¿Acaso hemos perdido el punto de `export`ar en primer lugar?\n\n**El código es comunicación. ✨**\n\n> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._\n\n### Entonces, ¿qué estamos diciendo?\n\nEn términos generales, hay 2 formas de exportar cosas en JavaScript moderno:\n\n- Un `export default` declara audazmente \"Esta es **_LA COSA MÁS IMPORTANTE_**.\" Además, \"cualquier exportación nombrada solo juega un rol secundario.\"\n- Una `exportación nombrada` dice que es \"definitivamente **_UNA COSA_**.\" También plantea algunas preguntas, \"¿tienes otros compañeros por ahí?\" Seguimiento: \"¿Están invitados o son obligatorios?\"\n\nPor supuesto, puedes combinar ambos o usar diferentes enfoques para distintas partes de tu base de código. [Ver más ejemplos al final del artículo.](#resumen)\n\n### Argumentos débiles, amigo\n\nAbordemos algunos de los \"problemas temporales\" comunes con los que la gente se encuentra.\n\n- Argumento #1: Las exportaciones nombradas aseguran consistencia en los nombres. [fuente](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - No, no lo hacen. ¿Quizás estás buscando una regla de lint?\n  - (Odio ser quien te lo diga, ¡pero espera a ver lo que pueden hacer las variables!)\n\n```tsx\n// ¡Puedes usar alias con ambas!\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- Argumento #2: Usa `import * as soManyKnives from './kinves.js'` para combinar exportaciones nombradas. (Sin enlace, el autor se retractó.)\n  - Función interesante. No es el punto.\n  - Ahora dime, ¿cómo sostengo tu invento otra vez? Sin intención del autor.\n- Argumento #3: Las exportaciones nombradas tienen mejor soporte de importación o renombrado en el IDE. [fuente](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - Incorrecto (ya no más). Configura/actualiza tus herramientas.\n  - El soporte existe desde hace más de 3 años en [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.\n  - Aun así, hay algunas \"buenas prácticas\" para usar con `default exports` y obtener la mejor experiencia de IDE y refactorización.\n  - ✅ `export default function UserService() {}` - siempre prefiere funciones nombradas.\n  - ❌ `export default function() { }` - las funciones anónimas no están implícitamente ligadas a su nombre de archivo. Si no nombras la cosa, es difícil pedirle a la computadora que la cambie.\n  - **Nota:** Por razones históricas, no puedes combinar `export default` con una expresión `const`.\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ No soportado ❌ ^\n    // No se puede exportar default const ....\n    // ==========================\n\n    // Sin embargo, una vez declarada, puedes exportar una variable const como default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Válido\n\n    // Para completar:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ También es válido exportar una clase como default\n    ```\n\n<section className=\"scroll-x\">\n## Resumen\n\nEn realidad hay muchas combinaciones de formas en que podríamos exportar cosas, cada una cuenta una historia diferente:\n\n| Default (Exports) | Named (Exports) | Private Fns | Patrón                                                   | Significado                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ----------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | Una exportación por defecto.                              | \"¡Presentando UNA función con un solo propósito!\"                 |\n| ❌                | ✅              | ❌          | Una exportación nombrada.                                 | \"Por favor, no me renombres.\"                                     |\n| ✅                | ✅              | ✅          | Exportación por defecto + múltiples funciones 'privadas' no exportadas | \"Aquí hay algo de lógica relacionada. Además, espera comportamiento tipo clase.\" |\n| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. | \"Un conjunto de cosas vagamente relacionadas, sin jerarquía implícita.\" |\n| ✅                | ✅              | ❌          | Una única exportación nombrada TAMBIÉN exportada como default. | \"No puedes equivocarte al importarme.\"                            |\n</section>\n\n**Algo en lo que pensar:** ¿Qué estamos diciendo cuando el nombre del archivo coincide o no con una de sus exportaciones? (Por ejemplo, un `utils.js` con muchas funciones.)\n\n### Conclusión\n\nSi el código es comunicación, por favor `export`a como si en verdad te importara. 💞\n</candidate>",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Judge this candidate.\nCandidate id: 1b1beb59a544\nTarget path: unknown\nUse this JSON shape:\n{\"selectedCommit\":\"1b1beb59a544\",\"selectedModel\":\"model id if known\",\"scores\":{\"readability\":0,\"technicalAccuracy\":0,\"coherence\":0,\"relevance\":0,\"translationQuality\":0,\"mdxPreservation\":0,\"culturalAdaptation\":0,\"languagePurity\":0},\"suggestions\":[{\"priority\":\"high\",\"match\":\"exact translated text currently in the selected MDX\",\"replacement\":\"exact replacement text to write into the selected MDX\",\"reason\":\"English explanation of why this medium/high-priority change is needed\"}],\"rationale\":\"brief selection rationale\",\"publishReady\":false}"
+        }
+      ]
+    }
+  ],
+  "providerOptions": {
+    "openrouter": {
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  },
+  "temperature": 0,
+  "maxOutputTokens": 8000
+}

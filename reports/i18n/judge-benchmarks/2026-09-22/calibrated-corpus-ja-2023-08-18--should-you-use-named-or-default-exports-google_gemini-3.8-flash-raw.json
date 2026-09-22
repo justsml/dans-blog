@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"43c6018932c1\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":84,\"technicalAccuracy\":78,\"coherence\":88,\"relevance\":90,\"translationQuality\":82,\"mdxPreservation\":96,\"culturalAdaptation\":84,\"languagePurity\":90},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### 弱い引数だな、おい\\n\\nよくある「一時的な問題」を片付けていこう。\\n\\n- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"replacement\":\"### 筋の悪い主張たち\\n\\nよくある「一時的な問題」を片付けていこう。\\n\\n- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"reason\":\"In this context, 'Weak Args, Man' and 'Arg #1' refer to 'arguments' (debating points / claims), not function arguments (引数). Translating 'args' as '引数' in an article about arguments for/against default exports is a glaring technical mistranslation.\"},{\"priority\":\"medium\",\"match\":\"- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。\",\"replacement\":\"- 主張 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。\",\"reason\":\"Consistency with correcting 'Arg' from '引数' (function parameter) to '主張' (argument/claim).\"},{\"priority\":\"medium\",\"match\":\"- 引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。\",\"replacement\":\"- 主張 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。\",\"reason\":\"Consistency with correcting 'Arg' from '引数' (function parameter) to '主張' (argument/claim).\"},{\"priority\":\"medium\",\"match\":\"| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。                | 「緩く関連したものたちの詰め合わせ。階層関係は暗示しない。」 |\",\"replacement\":\"| ❌                | ✅              | ❌          | 複数の名前付きエクスポート、一般的なファイル名。                | 「緩く関連したものたちの詰め合わせ。階層関係は暗示しない。」 |\",\"reason\":\"Note: although the source table had `❌ | ❌ | ✅` for row 4, this was an upstream typo; however, reproducing or fixing it, look at the Japanese: the candidate kept the table cells. But in '「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「', the closing quote is an opening quote '「'.\"},{\"priority\":\"medium\",\"match\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\"replacement\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\"reason\":\"Typo with inverted quotation mark: the closing quote was written as an opening quote '「'.\"}],\"rationale\":\"The translation is largely natural and preserves MDX structure well (including matching localized fragment link `#まとめ`). However, translating 'Args' (arguments in a debate) as '引数' (programming function arguments) repeatedly throughout the article ('弱い引数だな、おい', '引数 #1', etc.) is a high-priority semantic error in technical Japanese prose.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 3477,
+    "inputTokenDetails": {
+      "noCacheTokens": 3477,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 766,
+    "outputTokenDetails": {
+      "textTokens": 766,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 4243
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1/iFXpFRC/Z0/ZMqZmRgl1Wny7kPOkYdFaqER+Oh+zggnoFcnJheFtnnTq166jPDRPQlt8mmCzdRuDt8oJpPdiufSf8QDSAK9+j",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 3477,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 766,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 4243,
+        "cost": 0.00548025,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00548025
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -199,7 +199,7 @@ export type TranslationScoreMap = {
 
 export async function scoreTranslation(input: ScoreTranslationInput): Promise<ScoreTranslationOutput> {
   const llmConfig = resolveLlmConfig(input.model, {
-    temperature: 0,
+    temperature: /gpt-(?:5\.6|6)-luna/.test(input.model) ? undefined : 0,
     maxTokens: 8_000,
   });
   const generateText = input.generateText ?? defaultGenerateText;
@@ -246,7 +246,7 @@ export async function scoreTranslation(input: ScoreTranslationInput): Promise<Sc
   const cost = estimateTokenCost(
     llmConfig.modelId,
     telemetry.inputTokens,
-    telemetry.outputTokens + telemetry.reasoningTokens,
+    telemetry.outputTokens, // Completion usage already includes reasoning tokens.
     telemetry.cacheReadTokens,
     { providerCostUsd: telemetry.providerCostUsd },
   );
@@ -939,7 +939,7 @@ function costForTelemetry(modelId: string, telemetry: TranslationTelemetry) {
   return estimateTokenCost(
     modelId,
     telemetry.inputTokens,
-    telemetry.outputTokens + telemetry.reasoningTokens,
+    telemetry.outputTokens, // Completion usage already includes reasoning tokens.
     telemetry.cacheReadTokens,
     { providerCostUsd: telemetry.providerCostUsd },
   );

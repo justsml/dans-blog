@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"1b1beb59a544\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":82,\"technicalAccuracy\":88,\"coherence\":88,\"relevance\":96,\"translationQuality\":84,\"mdxPreservation\":72,\"culturalAdaptation\":78,\"languagePurity\":82},\"suggestions\":[{\"priority\":\"high\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The source front matter includes the publication date, which is missing from the candidate.\"},{\"priority\":\"medium\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"The asset path differs from the source without an apparent localization need; preserve the original path rule.\"},{\"priority\":\"medium\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"These asset paths were changed from the source; retain them unless the target page's asset layout specifically requires different relative paths.\"},{\"priority\":\"medium\",\"match\":\"sourceHash: \\\"438740274604\\\"\",\"replacement\":\"\",\"reason\":\"This field is absent from the source metadata and should not be added unless required by the publishing system.\"},{\"priority\":\"medium\",\"match\":\"- Incorrecto (ya no más). Configura/actualiza tus herramientas.\",\"replacement\":\"- Ya no es cierto. Configura o actualiza tus herramientas.\",\"reason\":\"“Incorrecto (ya no más)” is an awkward calque; the replacement is more natural Spanish while preserving the meaning.\"}],\"rationale\":\"The translation preserves the article’s main technical claims, code, links, and MDX structure, and its same-page summary link correctly follows the translated heading. The missing publication date and unexplained front-matter changes need correction; a few phrases also read unnaturally in Spanish.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3100,
+    "inputTokenDetails": {
+      "noCacheTokens": 3100,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3097
+    },
+    "outputTokens": 884,
+    "outputTokenDetails": {
+      "textTokens": 511,
+      "reasoningTokens": 373
+    },
+    "totalTokens": 3984
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsuhjVrXamU3hnMKEkVlQJLsXKbiJTuGHmiC328ieMR5gPASv88jYsEE9dAqFDEEUo9-ZIBdWvTSmYbBqsjadMQOV6cWTcsIdm522rpGvpb281gneTgRjpvdNbQlI2iuxTuPt35kS-lH27wKfqA1Yf1xdhcu19ESREo4YYRi_QeMffZCMujzbIcgmtctPumbR2AkFUjAftoDSnXJTIvIGn5r7QXgHIbF_Wl6P42yNaHhnwhJfq52yCfCW7iJkIkYkYup9dEUyLvM0tlgkinwKIu3sFZm37pzFisnWGtVnQ6CLZ4q_O-c3dN4NjEAt8N4JAJPK2s_5SU85wrLms4Z1BQ6lNoT1pOsVvbl2ChVwAFyfCu-RopuWw8W6QRM27l3toWPb3sFiL7P04wfwx60Mi4a-2-G-FHH026XYLDyrbCcSRmsNohpG1YG7WJbLGDeJyWlao4L49EX_LS1Hs4tFfUp8eoo0fXencIptiuxwm2F3l34DEaJLe2rPY6QrdKXKA6MqHvCCGjmrpYBeQx0EulXxrtUoJ3yqYtMZ4rmE_VeAYZPURGvsTrYG8SNA03aGzUxfyF388thxfHRnQqpuCZihZ6qYxXeVQ886SBGOCoM4QEhDRbaj08OLZDw-_Bkw8UbMBiEhFKg-nUFa7JZXxp6bssoibo8n2496k5ZtPVxSYD-vtqG-lS89Qzb5xwoj5-zlpW1G5D__Zs4S464wrUCcTAhHgC-frJEIxROha9LSUUgv2uJlaUw3nLP_0_1sDtsn340p4zdtZypGXLI2DQn-oFGtahrh00SuAIOMyMVJVmJ6-2umWAPDBan0QqD4wX6tnA5Nm0VyOzWrgcFSKwrk3bT9ke5wg_yxujbAgYiHMw6TXr226G0zaCkXxsryuHVVq77WPbQFxAAg6Xhc3yaEghPcvuLxuRlaY6VRXqww5yzZrMHIsKtE88ei9imcPwK66BEYEJ9N-pEAFJuKQIo46wqpTpweLalsV2aboy7Ayn0T3LTmFQG41MbTuGULtSV40p5p93F5_eL8bZWFmFkqqzMK1mWdzAiX7aJnA-xXahuIxEX90PCkkqYChFGh25u7E1FESFxMqoZVd0zyDpYoMCW2i_3GhL07zJk2803JB9SMwEB35Wgo6QCprwr67qICYAt2rlaUuiaJZVgG9KQkRnb9jf09ILv-pPKlr_tP4TDq9ZNsLF3lV5kKPetJwyu0th0Bt6esmnOc3JzjDKjGVnVtKEpq7wXe8scgsdnAmO5Ngq61HMRER_6ULd1zevATCFb-qywc2EV7nNzpRYJuuJz5W8fr5E5QiX9Pl_QpBz3LPuBN4ETLtrxdDL96LHW8myVwpdRG7tPPeV2TVaRt6qkRWh7pBDKI1IFsWLCCRGauVbrXwLbGgCMVT8mhcfTS9FPDB2eT3EsEFhuUL-DUyZQOxPex-lfp7sHMBVrhggMEjfiONGXWRcXyeOpZ6q0_fT5F43setnVwPn82SSW9L-313CC_Xy6rqnibUbvNUnEXxFGoIxRd5bifuQw7qI_8ualqy4gz-MaDMZ2wnmL3N485-hYWFxLKf2fXCCNQhpdMD0JzPPTzbFG-muqmDAoh4zooJd2aW5m4anxY39zVYKbxH7SNKcedWJyfddneq26TaOUgx0PMZcWpFMOs1wfG3GFQ5giywH0fuW8sytGJwJlovNBhnP55UUEAWR7HcheDabcXMyM_nahZ39ND9eCb8CE5JvuPZxVIaw0nRfdNTn2wdFdd3R_xpiE2Oaklj_RcQbM7rxNyzq7EDihX1jlzhQxir03bU86-VFshYf2jFnX2yagGULrvtA7zuKEewy5dEHP5xh6D7juEvY8r5RqJ0VeKTPJ8rPuwazWUKCUMU4J_C4ORYE3nXfgYV3NQ5g0FFsiqUCgIMVh9dm418KWBI8ZGnR6fd28L64kA5IMpuVygZWttBcJvq5RwYkB8ohWFmsW9aU309Nu-TSiczy32GSCNZRSDESRtoHcqTLjf7Ew0qG3WSEHCn42MLFzfIt3y4K-Jwj96ISnb5JiJFrdjap73RZwXTNJLTC5XAGBWLEOLJ-suw_aIdRmjNgPMbpOFk3q7NGgUTD_cdQlt0mvzg6PPe6ErMd4fwhqhtVVz8VFvCA-S6sl-2RARe-NtKQ5U4lpLQO76zgJz3T_tlePJ1ZELuQmiZoID2WqinK6or3LTVpfqz_MpBYvbhHsafFuPIKYDMNFJQz-ZSFtvilc5kI1CuHJc5uAKIK3f5d875tYlrDXtyKAu_s8O7BvZ8NrdSsFSk4zE05FgjAyfobCcD2M-Of5d-Vbvi4RKz-lUkZ5ZcgtfsLUXBaHwXeifGCBYssK6bkViKdGdOwYbaLUwp9hNwHDUJ0Kzu81xhqIv2JtoNsWYTW4s0LN_4WrLxWIonPpb9QwsfPAFO8Akrr0VLyjm3XTEj08v8e1yXgv0YEGIV8MVGuWG0u22aw1v1TPQLT07DBGhHb6AuyRZx4_8UvZU1b6P1BxTpMz2UOJCx9vmy2mTYPnIFtfokX0ED5KKARVzMUD4UT8tbIRswOP8a6-9-ZmUCfye8rg8aapCW4EsXA66PESV8TYyPZRrfTwr4OF6jO-2xQV9-glMxP2sFLQfHQkk4gN_IC2DYA20K6M605Gt_sI3Whc3P6ynmSlK6h1iCw1Ot52w-UvNKIXUBqXQVwQaYWvY_oa9frCkof2qlSpLLC2xKDnccjb_2Ss-_YDPlsZGgqWkb_u2MSPFc1jf5TNqz--nNU0MOOz6rqp5zKozZ3dpU3Ic0c0-iZW3wMZcAv6oJp_8iISm_RsdxSA3aFIWxUBa2cfQfTzu7bilBDaIjfMJDNcVUkxlYN3jZDKJOMaUWviqaLc2OmCXEpJwqFxpHqqWBsRJMsA-PxjjbqsvroAyirueGbdERdYc9fXLRjmXA36Dv89khMigN1OQ0DtenmlOeuWCw6_DyBYl4um3RkpYhRzdhgFqA8r2pkAeA5MqRmDKjUTsxY72uBg27oYNOJ0-7BK2E9MLgXi-ekcCBenNGyUiVvg8VetldR6i2bBdd208mULZE8R5upag4QQEA5oPu3Zt-sZUsUzjkbc3FtnkNZVZnOylJRXY7dhp1YXL3Y2Ipr8DCtAwlXkoJjANz3M0PjE12EVxTlxrD7r4ol02_MrjmIXKthMG1BcUyMifoNGXETRjub-sxP5v_n1Yt6duuHqMM1LXYFtlbvCYQO-I21Wl0T706YvRdImAt-FhefhPTclRfkdB_NJ-NfctJbTkHpmeR62k6A2ZyZiVSM_L-aBVlgLqWroJcSrh4XAC6DA2SCjn_UmD-5pY-jOpuRjK4NLrm5RdXbHhq9rAjQbkrDcx9Gxsx2YoJqj5oZu4s-zV9yb3H_axSyL15NejyY09wswIzoYJt0c7AYmAPsgRVep9drDRoQqDtCByuTUBxWPqvFU2-aErdfvWEGYyPJA8LGdjOqEKk14tDVldvaQ83chVwu9FW7tnNNnDDqqVU46dJ5NPMqM69uYk6eEFLA6UHENg2o58rdppxOGaoYSXtWd2ztQTRKbsW_VzSstPz9kyhrhhOEKiQZPIRL8A0Om-LWkfHqHroZBSAT-Eu0kJ4k80SU7nfO9we851DY8bnuURJizwOrZoJTlzGQ9kuVfhnBVB6t952Y-fJJoZRpD-CD4a0crOXneMTxHKZp9GSPh57yBDkWOskhchY2i4ND-Q4WMtV3tfE3Cz91f3t9r0JI6wKOeiuA8f7Q4YLTJSLbJ7Bk_xvJNaCLqF8-l8wsIAbucdndEghdH-tv7aMLuLQnczenbPb_stHFNR0q5EjSlzUiTuNMeVIWhDkaa_o9-6-w---UrUkpTVwtMlglwODQn4IPeuvVxoIh2vYLtGPC51jqD73jILdS1E88PaAdfxan-MALKSxBDM_IN_bjGJd-bi-ffQ-OBP8wMzMrH7UQFs5mGDz_vzVf9Hlb7wWvoKEagn8NaQsA==.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_0fb86483d77962aa016ab2e85fe6a487d1af62ef0fc7e20e17",
+          "format": "openai-responses-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 3100,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 884,
+        "completionTokensDetails": {
+          "reasoningTokens": 373
+        },
+        "totalTokens": 3984,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.000829425
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

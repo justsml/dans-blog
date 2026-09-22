@@ -1,0 +1,75 @@
+{
+  "provenance": "Reconstructed after run from frozen fixtures, manifests and unchanged prompt builders; no inference performed.",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a constrained translation judge. Return strict JSON only."
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "You are judging a es translation.\nCompare the candidate against the English source.\nScore these dimensions from 0 to 100:\n- technicalAccuracy/fidelity: preserves meaning, technical claims, correct quiz answers, and code-adjacent facts.\n- mdxPreservation: preserves MDX components, imports, props, fences, headings, links, asset path rules, and structure. Same-page heading links must target the localized heading IDs generated from translated heading text, not stale English heading IDs.\n- languagePurity/localeQuality: reader-facing prose is natural target-language prose without instruction leakage.\n- culturalAdaptation/tone: preserves Dan's direct technical style while localizing idioms and jokes naturally.\n- publishReadiness: high only when no medium/high fixes remain.\nReturn concrete medium/high-priority fixes in suggestions with exact match/replacement strings from the candidate.\nDo not require titles, subtitles, headings, or quiz title/group values to remain in English; they are reader-facing.\nDo preserve code, component names, prop names, imports, API names, external URLs, route URLs, and non-reader-facing metadata.\nWhen a same-page heading link changes from an English #fragment to the matching translated #fragment, treat that as correct localization rather than link drift.\nThe final translated prose must be roughly 70%-155% of the English prose length (Spanish range: 70%-155% of English). Do not summarize to satisfy the lower bound or pad to satisfy the upper bound.",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "<english-source>\n# Retry requests\n\nRetry at most three times. Never retry a failed payment automatically.\n\n```js\nconst retries = 3;\n```\n\nRead the [guide](https://example.com/guide).\n\n</english-source>",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "<candidate>\n# Reintentar solicitudes\n\nReintenta como máximo tres veces. Nunca reintentes automáticamente un pago fallido.\n\n```js\nconst retries = 3;\n```\n\nLee la [guía](https://example.com/guide).\n\n</candidate>",
+          "providerOptions": {
+            "openrouter": {
+              "cacheControl": {
+                "type": "ephemeral"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Judge this candidate.\nCandidate id: 4977a97569ab\nTarget path: unknown\nUse this JSON shape:\n{\"selectedCommit\":\"4977a97569ab\",\"selectedModel\":\"model id if known\",\"scores\":{\"readability\":0,\"technicalAccuracy\":0,\"coherence\":0,\"relevance\":0,\"translationQuality\":0,\"mdxPreservation\":0,\"culturalAdaptation\":0,\"languagePurity\":0},\"suggestions\":[{\"priority\":\"high\",\"match\":\"exact translated text currently in the selected MDX\",\"replacement\":\"exact replacement text to write into the selected MDX\",\"reason\":\"English explanation of why this medium/high-priority change is needed\"}],\"rationale\":\"brief selection rationale\",\"publishReady\":false}"
+        }
+      ]
+    }
+  ],
+  "providerOptions": {
+    "openrouter": {
+      "reasoning": {
+        "effort": "low",
+        "exclude": false
+      }
+    }
+  },
+  "maxOutputTokens": 8000
+}

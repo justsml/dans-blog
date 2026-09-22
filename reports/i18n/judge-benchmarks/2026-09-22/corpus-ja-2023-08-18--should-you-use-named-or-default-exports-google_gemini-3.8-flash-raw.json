@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"43c6018932c1\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":90,\"technicalAccuracy\":82,\"coherence\":92,\"relevance\":95,\"translationQuality\":84,\"mdxPreservation\":98,\"culturalAdaptation\":88,\"languagePurity\":92},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### 弱い引数だな、おい\\n\\nよくある「一時的な問題」を片付けていこう。\\n\\n- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"replacement\":\"### 筋の悪い主張だな、おい\\n\\nよくある「一時的な問題」を片付けていこう。\\n\\n- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"reason\":\"'Args' in 'Weak Args, Man' and 'Arg #1 / Arg #2 / Arg #3' refers to 'arguments' (debating points / claims), not function arguments (引数). Translating it as 引数 is a severe technical mistranslation.\"},{\"priority\":\"medium\",\"match\":\"- 引数 #2：\",\"replacement\":\"- 主張 #2：\",\"reason\":\"Matches the correction of 'Arg' from function argument to debate argument/claim.\"},{\"priority\":\"medium\",\"match\":\"- 引数 #3：\",\"replacement\":\"- 主張 #3：\",\"reason\":\"Matches the correction of 'Arg' from function argument to debate argument/claim.\"}],\"rationale\":\"The translation is overall well-written and preserves MDX structure and heading links properly. However, it commits a high-priority translation error: it mistranslated 'Args' / 'Arg #1, #2, #3' (arguments in a debate/discussion) as '引数' (function arguments in programming) instead of '主張' or '論拠'.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 3337,
+    "inputTokenDetails": {
+      "noCacheTokens": 3337,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 416,
+    "outputTokenDetails": {
+      "textTokens": 416,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 3753
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a18BRD0xhrz80Syg0JPcPS3RLBFIzAzymUtKRWiqTlpryHoBu0Sxgz0z5j7AVogsw/XLfLbq7dST2RYp5a7uOtP+OXlGhGC1luFo",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 3337,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 416,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 3753,
+        "cost": 0.00406275,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00406275
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

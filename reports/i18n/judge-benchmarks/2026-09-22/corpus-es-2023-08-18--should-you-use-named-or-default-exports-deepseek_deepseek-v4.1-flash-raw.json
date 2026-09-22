@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"1b1beb59a544\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":90,\"technicalAccuracy\":92,\"coherence\":92,\"relevance\":95,\"translationQuality\":88,\"mdxPreservation\":55,\"culturalAdaptation\":82,\"languagePurity\":90},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"The source uses a ./ relative path for social_image. Changing it to ../ likely breaks asset resolution unless the target file is intentionally nested, which is not indicated.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover path has no ../ prefix. Preserve the original asset path rule.\"},{\"priority\":\"high\",\"match\":\"cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover_mobile path has no ../ prefix. Preserve the original asset path rule.\"},{\"priority\":\"high\",\"match\":\"cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover_icon path has no ../ prefix. Preserve the original asset path rule.\"},{\"priority\":\"high\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The source frontmatter includes date: 2023-08-10, but the candidate omits it. Non-reader-facing metadata should be preserved.\"},{\"priority\":\"medium\",\"match\":\"| Default (Exports) | Named (Exports) | Private Fns | Patrón | Significado |\",\"replacement\":\"| Default (Exports) | Named (Exports) | Funciones privadas | Patrón | Significado |\",\"reason\":\"Private Fns is an English abbreviation in a reader-facing table header. Localize it to Spanish while keeping code-related column labels.\"},{\"priority\":\"medium\",\"match\":\"- Incorrecto (ya no más). Configura/actualiza tus herramientas.\",\"replacement\":\"- Incorrecto (ya no). Configura/actualiza tus herramientas.\",\"reason\":\"ya no más is unidiomatic here; ya no is the natural Spanish phrasing.\"}],\"rationale\":\"The Spanish translation is generally accurate, coherent, and preserves the MDX structure, including the localized same-page #resumen link. However, frontmatter metadata and asset paths are altered or missing, which blocks publish readiness. Minor language and table-header localization issues also remain.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3282,
+    "inputTokenDetails": {
+      "noCacheTokens": 3026,
+      "cacheReadTokens": 256,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 7523,
+    "outputTokenDetails": {
+      "textTokens": 675,
+      "reasoningTokens": 6848
+    },
+    "totalTokens": 10805
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Together",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3282,
+        "promptTokensDetails": {
+          "cachedTokens": 256
+        },
+        "completionTokens": 7523,
+        "completionTokensDetails": {
+          "reasoningTokens": 6848
+        },
+        "totalTokens": 10805,
+        "cost": 0.009936936,
+        "costDetails": {
+          "upstreamInferenceCost": 0.009936936
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

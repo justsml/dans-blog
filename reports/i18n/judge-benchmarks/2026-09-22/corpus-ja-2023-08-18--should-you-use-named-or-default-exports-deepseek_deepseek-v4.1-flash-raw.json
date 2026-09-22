@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"43c6018932c1\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":85,\"technicalAccuracy\":82,\"coherence\":88,\"relevance\":95,\"translationQuality\":82,\"mdxPreservation\":65,\"culturalAdaptation\":75,\"languagePurity\":80},\"suggestions\":[{\"priority\":\"high\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The source frontmatter includes date: 2023-08-10, but the candidate omits it. Preserve non-reader-facing metadata.\"},{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"The source asset path is ./desktop-social.webp. Changing it to ../ may break the asset path rule.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover paths are relative without ../. Preserve the original asset path rules.\"},{\"priority\":\"medium\",\"match\":\"引数\",\"replacement\":\"主張\",\"reason\":\"In this context 'Args' means arguments/claims in a debate, not function parameters. Replace all occurrences, including the heading and #1–#3.\"},{\"priority\":\"medium\",\"match\":\"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\"replacement\":\"（残念なお知らせだが、変数が何をしでかせるか、そのうち思い知ることになるぞ！）\",\"reason\":\"The source means 'wait until you learn what variables can do,' not 'it is not even worth knowing.'\"},{\"priority\":\"medium\",\"match\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\"replacement\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\"reason\":\"The closing Japanese quote is wrong; it uses an opening quote 「 instead of the closing quote 」.\"},{\"priority\":\"medium\",\"match\":\"コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞\",\"replacement\":\"コードがコミュニケーションであるなら、`export`はマジで本気でやってくれ。💞\",\"reason\":\"The source uses strong, direct profanity. The candidate is too polite and loses Dan's tone.\"}],\"rationale\":\"The translation is generally accurate and preserves the MDX structure, but it has high-priority frontmatter issues: the date is missing and asset paths were changed. There are also medium mistranslations and tone/punctuation fixes needed before publish.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3391,
+    "inputTokenDetails": {
+      "noCacheTokens": 3135,
+      "cacheReadTokens": 256,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 6538,
+    "outputTokenDetails": {
+      "textTokens": 750,
+      "reasoningTokens": 5788
+    },
+    "totalTokens": 9929
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Together",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3391,
+        "promptTokensDetails": {
+          "cachedTokens": 256
+        },
+        "completionTokens": 6538,
+        "completionTokensDetails": {
+          "reasoningTokens": 5788
+        },
+        "totalTokens": 9929,
+        "cost": 0.008787636,
+        "costDetails": {
+          "upstreamInferenceCost": 0.008787636
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"95ea068929bd\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":84,\"technicalAccuracy\":86,\"coherence\":78,\"relevance\":94,\"translationQuality\":83,\"mdxPreservation\":68,\"culturalAdaptation\":76,\"languagePurity\":88},\"suggestions\":[{\"priority\":\"high\",\"match\":\"modified: '2024-08-01'\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The source date is missing from the front matter, so publication metadata is incomplete.\"},{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"The asset path differs from the source path. Unless the target document is intentionally moved to a different directory, this breaks the required asset-path preservation.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"All cover asset paths were changed from the source paths, potentially causing broken assets and violating metadata preservation.\"},{\"priority\":\"high\",\"match\":\"- الحجة رقم 3: التصديرات المُسماة لها دعم أفضل لاستيراد IDE أو إعادة التسمية. [المصدر](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\\n\\n- غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"replacement\":\"- الحجة رقم 3: التصديرات المُسماة لها دعم أفضل لاستيراد IDE أو إعادة التسمية. [المصدر](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\\n  - غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"reason\":\"The source places the rebuttal and following points inside the third argument's nested list. The candidate changes the MDX list structure, which harms readability and document fidelity.\"},{\"priority\":\"medium\",\"match\":\"فمن فضلك `export` وكأنك تعني ذلك بكل جدية.\",\"replacement\":\"فمن فضلك `export` وكأنك تعني ذلك بحق. 💞\",\"reason\":\"The source uses emphatic profanity for a deliberately forceful closing. The current wording substantially softens the tone and loses part of the author's direct style.\"},{\"priority\":\"medium\",\"match\":\"الآن أخبرني، كيف أمسك بجهازك مرة أخرى؟ لا نية للمؤلف.\",\"replacement\":\"والآن أخبرني، كيف أمسك بهذه الآلة أصلًا؟ لا توجد نية من المؤلف لتوضيح ذلك.\",\"reason\":\"The current Arabic is awkward and mistranslates the rhetorical joke, especially “again” and “No author intent.”\"}],\"rationale\":\"The candidate is generally accurate and readable Arabic, and it correctly localizes the summary fragment to #ملخص. However, it omits the publication date, changes all asset paths, and breaks the nested MDX list under argument 3. Several idiomatic jokes and the deliberately emphatic conclusion are also weakened.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3208,
+    "inputTokenDetails": {
+      "noCacheTokens": 3208,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3205
+    },
+    "outputTokens": 1004,
+    "outputTokenDetails": {
+      "textTokens": 756,
+      "reasoningTokens": 248
+    },
+    "totalTokens": 4212
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsuiRrnVPuy8MOUOc_HNMwiolE-uXh9pRV8CbK9GF_xJyXkyrebzGuzMFQ7Ii7Er6dhi-9I_w4lgFGa2Rr5M10B2nlqLG6Cgcb_T8fRM7xWXk2KXJ5U_Q2eOxdu5vgfwjimzxsZZL3lRG_t1eW-wI5GkOZnWCuDniZLKEytQXhLAbBlhagKnljy4eafBw93eFBcS31UwaEbFOW5zDMdesbhauIicpAsh6Am51EWoZQMceboYpuch6scj_LrjjfDfIyNPX6YBhl0QnQtNNyxyrYfW0TeF9h9ynaWN9HlZ7SdXG7FjsOlF5M_UDkrV6-neoKY-J1jyoJuoiHgdHfU8az8TTlYW-3INP0WR-slUy6NNWETlkgdOGFHsuIVF8lzmdfXaYLXpPBoH0ShAzNbW1mIOwJ-cNr20brNjaeg42B6jUWKaeWSR_k5hDxS3_cDJU7Muq2MgfSjobrzVuaKgPB8N8wZ9wPJpGy6qgsV5zvnjCPUL4F-0MHRiezOEqnlyQDbpPRxiCHtQPWeqR-0ShqSLCNFQewmdrTrH0iu-bNe80OpXqVzE80WeGcTASNMb27jdAr9xCjU2jKr6jNuagS13a__hXROf8U7BgQ_RFh05roO2pwIq873Son0_A9ENwMfJJap90qkTgyMtXI4f-MTiJ7ViyuiqTpPw2Lb3Cpbd8KkpW-GBal0mQxGtSUF8eDVzUb1YrqGMuOVMvxuCMiT_JenpE1nzN0EtXkgYmdM0OZXZIPhTRnAoWy_vMXWRPVMF6VFVYeHCbavO3SKiReHVmeCjd9ort2J-hvD1unzBm9bDLNxIu1-lim0eXo_yxb6UfuZpEO-cWUub0zFZJpVgRCMMqAnODT2NZKig3lbXjUmwtD1eYXvKUwdsVSyzxyuo6IS6ZgGJTao_-3yEgLqmMxqBcQpoOft0qEvaezDMuf3YBByKGHEVm5_s0lzr6yLBFCNXifCAG5vv2GUWTIfHHUM7eH7dhWRiTtJrFd0N5bO9WgpkmuNdIj9mSJH3Tbwoyk6WWlojivr4dALNycXD6T9smTnGex1Q4UywEeskkOqLFQAQnW3B2lMRIBo3JGIzUjHXGMdvasYQpzymngN8r3jyRfHyejjH4mCXGSYgzeI1bNkkeeJqnsaJPAWL0SkPIlW-MRAL1fJAgYL87grqHKPrpDImnP6TSCyI71tC1-475gj4DigtqDm5ey-P7JQgelgaVz2-G0WXttVYBcoXC0obUIDHx0wX2LMVfoZFebaRCsPNC2Mh_MNv7zX4YmeoTFdnhTq0U_CKan1Pqm3452E3xp7F_4ItFwWZD0dAjw3qKDqKmuskJagbvuZkHwerfS1oHnFGVb-zXsdNgWx8OMJohK2xV5NJIv_Wc2MQi96qDYX1LQ1LSi0sGXp6swTU9olRYprMyrwKG6IZ6NmWsA2GtnVJA5B733EFvd1b7vJObTwBy_KtU2AgFx735qMT2PrmQsIACncEmwqI_40O6suvFd5tiGghBgzC6OaWOgYHUFbrf1u4agcSd88wnUzq3mPJqxk9VMl__yd3VVJz4zNZf3wMbx57YczVEZqeGJoLMrgz6LBEAP506tPDTpzNdDqTNr4JxCnYZj4ff1YNlzhxXD3c7k6kRdJ9T-FQZVcUBgXcjeZME3TryCq_7TBUDbSFFu9v_4rCHLDyT18uJMME8n6CDATIlFyg4l5xB81rrsKExsVB2if7HGv0pqBxjFyWsimRsRpFTUo8EohfFghFaFv71mxoJMQl1JxFSKI1iOGiPn8OGflfjq0iVUVAC0dcYilCwP18UqS0zlnaGW9Z71wGPlB0a_v3_ubTqkPbPZFrhSJC5kKT1zuw1V2YTJQxD_zkRSQHLQZgA1kDEPowoPoxIu5e_jyxHr7vHAOwavV4BpCibx7yNHbYSUSZJJwSrdi-aXS0MOIBJynkpCzBzr99tIvD8cRmiIZliRwQzGUGOlDImej3lMHF_kArRToQXzOpcOMcr8XG8cURYnuMJHc3PHdunpzic1IZ7zPshyXscE6opV_Atr03SGaVuU2OY1jG27A1SisY8SW8amNFDdnPenMHGIA53CkV74X2mMWedF-T1hU8kLPJRVegHbC1q1zxMMnonF3P4O-78oqrfqE4Aixx2ceANBRgUdiVO0KL9XCgX8xp-IO84k7_ffy810NX7Nxy0IXBazid26je9f5D_16k07U2lm-FFtNYgaL3JXvmxCMo7_GrCxMl9642YFOWyou7WMFvE58HqBm_-jy7IKUcRfpClHIBsmC9zcpQW9XiInpuZTIljTBNRE6mehHDAzDILj9Uk5OcYOJwCcQg1uUZmxMEWIStvf0GXAE-xSB2G1x06DHRSlI0Q2oNTw9bRWyZpmspQy6HOYxqBX-2r6vqiQ5cxyp1Mx9xGlvxzQdFnLPFm1qDPcBpSmgpUdAL40a4Ty5KIZ3n2A5JUEZoPJuveP6EwhAqlPUkWD6HTXUh6sqBPDd4uZjr4j-WNVPnPSnzlpy0uccN8doa0dyvyywq82zUxXDmL8--qGtCvYG5QSq95DSy1fNOQ8cvXEuB0lip0uI-fb1MIuI_QZknysRvVLHBmwLfWRUmlDu24HGlgbj98uqOFuqJWrM9FdlDsmHcGgghrjyL-Y8N5IbsVOznwhNtXY2NkLeODgyC-adHRr23E1FbGlpsL5GF0TQ28KV_cuNNnq3goJxyM1VMJgsiVg5vh78kG0hd7zl7EpbPbsXlqnzRoPvSNkdgIDc0ekrVPClNp8AW688wTUhmTr6QgeUn5hw8TgdeCyLlzhW0gWu-ctVjZ94dB8ampaCRhiEeUtDly5gfBVHQzsos3MKAczdue0EdgOLh7iTlotc7jZ_EJd33dr-yofOqz5KEF0WfdM3wcszklKbM52c93jE2isVL96FBi3HkJVlvO5HEo328xvZ8BrU1IwhLl2K3dsmMkxghYY7hqdxTqP1nh5guRQO1NPIRy9olJjHQfrvNNLIKiAJFwyDwo5vVhiRaFQ102ieEGkID0By_wPNaxUFSxgEvkTWpAcHU=.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC01LjYtbHVuYS0yMDI2MDcwOXxvcGVuYWkifQ",
+          "id": "rs_0aa91be91fa8789a016ab2e88e8b5487d187a89e3020305d41",
+          "format": "openai-responses-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 3208,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1004,
+        "completionTokensDetails": {
+          "reasoningTokens": 248
+        },
+        "totalTokens": 4212,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00200665
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

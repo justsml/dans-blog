@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"95ea068929bd\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":95,\"technicalAccuracy\":95,\"coherence\":95,\"relevance\":100,\"translationQuality\":92,\"mdxPreservation\":70,\"culturalAdaptation\":90,\"languagePurity\":95},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"The source uses ./desktop-social.webp; changing it to ../ alters the asset path rule.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover path has no ../ prefix; preserve the original asset path.\"},{\"priority\":\"high\",\"match\":\"cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover_mobile path has no ../ prefix; preserve the original asset path.\"},{\"priority\":\"high\",\"match\":\"cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"The source cover_icon path has no ../ prefix; preserve the original asset path.\"},{\"priority\":\"high\",\"match\":\"modified: '2024-08-01'\",\"replacement\":\"date: 2023-08-10\\nmodified: '2024-08-01'\",\"reason\":\"The source frontmatter includes date: 2023-08-10, which is missing from the candidate.\"},{\"priority\":\"medium\",\"match\":\"- غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"replacement\":\"  - غير صحيح (بعد الآن). قم بتكوين/تحديث أدواتك.\",\"reason\":\"This item is a sub-bullet under Arg #3 in the source; without indentation it becomes a top-level list item and changes the MDX list structure.\"}],\"rationale\":\"The Arabic translation is technically accurate and natural overall, but frontmatter asset paths were changed, the source date field is missing, and one list item lost its intended indentation. These are medium/high MDX-preservation issues, so the candidate is not publish-ready.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3431,
+    "inputTokenDetails": {
+      "noCacheTokens": 3175,
+      "cacheReadTokens": 256,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 6191,
+    "outputTokenDetails": {
+      "textTokens": 589,
+      "reasoningTokens": 5602
+    },
+    "totalTokens": 9622
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Together",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3431,
+        "promptTokensDetails": {
+          "cachedTokens": 256
+        },
+        "completionTokens": 6191,
+        "completionTokensDetails": {
+          "reasoningTokens": 5602
+        },
+        "totalTokens": 9622,
+        "cost": 0.008383236,
+        "costDetails": {
+          "upstreamInferenceCost": 0.008383236
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,40 @@
+{
+  "text": "```json\n{\"selectedCommit\":\"43c6018932c1\",\"selectedModel\":\"\",\"scores\":{\"readability\":88,\"technicalAccuracy\":95,\"coherence\":90,\"relevance\":95,\"translationQuality\":90,\"mdxPreservation\":65,\"culturalAdaptation\":88,\"languagePurity\":93},\"suggestions\":[{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"Asset path was changed from ./ to ../; frontmatter asset paths must be preserved exactly.\"},{\"priority\":\"high\",\"match\":\"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"replacement\":\"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\"reason\":\"Cover asset paths were prefixed with ../ breaking asset path rules; they must match the source.\"},{\"priority\":\"high\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The date: 2023-08-10 field was dropped; non-reader-facing frontmatter metadata must be preserved.\"},{\"priority\":\"medium\",\"match\":\"// ^ ❌ サポートされていない ❌ ^\\n// Cannot export default const ....\",\"replacement\":\"// ^ ❌ サポートされていない ❌ ^\\n// Cannot export default const .... //\",\"reason\":\"Code fence content should remain byte-identical to source; translating code comments inside fences risks breaking code-adjacent facts and should be left as-is.\"},{\"priority\":\"medium\",\"match\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\"replacement\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\"reason\":\"Mismatched closing quote 「 should be 」 at the end of the table cell.\"}],\"rationale\":\"Translation is faithful, natural, and keeps Dan's blunt tone; the same-page #まとめ anchor is correctly localized. However, frontmatter was damaged: relative asset paths were rewritten with ../ and the date field was removed, which are mandatory preservation violations. Minor code-fence comment edits and one quote typo remain.\",\"publishReady\":false}\n```",
+  "usage": {
+    "inputTokens": 3391,
+    "inputTokenDetails": {
+      "noCacheTokens": 3391,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 724,
+    "outputTokenDetails": {
+      "textTokens": 587,
+      "reasoningTokens": 137
+    },
+    "totalTokens": 4115
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Z.AI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 3391,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 724,
+        "completionTokensDetails": {
+          "reasoningTokens": 137
+        },
+        "totalTokens": 4115,
+        "cost": 0.00215967,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00215967
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"119ffdf6cd81\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 85,\n    \"technicalAccuracy\": 20,\n    \"coherence\": 80,\n    \"relevance\": 75,\n    \"translationQuality\": 40,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"失敗した支払いは必ず自動的に再試行してください。\",\n      \"replacement\": \"失敗した支払いは決して自動的に再試行しないでください。\",\n      \"reason\": \"The candidate translated 'Never retry a failed payment automatically' into the exact opposite meaning ('必ず自動的に再試行してください' means 'always retry automatically').\"\n    }\n  ],\n  \"rationale\": \"The candidate introduces a severe critical technical inaccuracy by translating 'Never retry a failed payment automatically' as '失敗した支払いは必ず自動的に再試行してください' (Always retry a failed payment automatically), reversing the safety instruction completely.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 622,
+    "inputTokenDetails": {
+      "noCacheTokens": 622,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 285,
+    "outputTokenDetails": {
+      "textTokens": 285,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 907
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a18qE9PmiKFiTH4bUwJRVeV2g5WJSIkP3p61cAT6leP+3JuwoK/l8Ct9TNLX5vWSmWwVlfwzVMXm7f0spTR3Vw5FfXgiVdQmK9zw",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 622,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 285,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 907,
+        "cost": 0.00153525,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00153525
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

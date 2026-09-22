@@ -1,0 +1,54 @@
+{
+  "text": "{\"selectedCommit\":\"43c6018932c1\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":88,\"technicalAccuracy\":83,\"coherence\":88,\"relevance\":95,\"translationQuality\":84,\"mdxPreservation\":86,\"culturalAdaptation\":86,\"languagePurity\":94},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"modified: 2024-08-01\",\"replacement\":\"date: 2023-08-10\\nmodified: 2024-08-01\",\"reason\":\"The source includes a publication date, but it is missing from the candidate metadata.\"},{\"priority\":\"medium\",\"match\":\"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\"replacement\":\"（残念なお知らせだが、変数に何ができるかを知るのはこれからだ！）\",\"reason\":\"The current translation reverses the joke: the source says to wait until you learn what variables can do, not that there is no need to learn.\"},{\"priority\":\"medium\",\"match\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\"replacement\":\"「関連するロジックはこちら。ついでに、クラスっぽい動作も期待して。」\",\"reason\":\"The closing Japanese quotation mark is malformed, and the sentence is slightly unnatural.\"}],\"rationale\":\"The translation generally preserves the article’s technical points, examples, tone, and localized same-page heading link. The missing publication date, reversed joke, and malformed table quotation mark should be fixed before publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 3406,
+    "inputTokenDetails": {
+      "noCacheTokens": 3406,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3403
+    },
+    "outputTokens": 769,
+    "outputTokenDetails": {
+      "textTokens": 350,
+      "reasoningTokens": 419
+    },
+    "totalTokens": 4175
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Assessing metadata deviations**\n\nI need to assess the metadata deviations. There's something off since the source date is omitted, and it seems the social path has changed. This likely relates to localization path rules that we need to consider. Also, there's uncertainty about the target, and it looks like the relative assets need a closer look. It might be worth verifying if the preservation rules for asset paths are being upheld as we expected.**Reviewing metadata and coding structure**\n\nI’m noticing some issues with the nested locale path which might be valid as a candidate target. There's an added source hash in the metadata that seems to pertain to non-reader metadata preservation. Also, the date is missing. It looks like there’s a table error with private functions mentioned. I see some malformed Japanese quotes and typos in variable translations that alter the meaning significantly. Finally, I should check if the metadata for MDX allowed the source hash addition.**Reviewing metadata suggestions**\n\nI need to provide exact suggestions for medium or high priority. The date should be restored to its original form, but I’m unsure if the source hash needs to be included since it might relate to non-reader metadata. The candidate target also seems to modify the source hash, which is expected. There are some issues with a malformed quote and a joke. Fixing the date replacement might be tricky, but I’ll have to ensure it matches exactly with the neighboring metadata and potentially include the date after the modified line replacement.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqsuh_XMzI4uDgdB82nAyjU7nst5e1_SJHwLrTi9KblKrovdAzWzmRwTwyENDErYtU3VrGsaEpoqSm6FjGAYWM6sA8tL1PvANiSd15z_nTCE0-1X0wOFgtyqwP8cMB02VJUxjXNCK-aY42Zq7Y0rZJ6XaYRMYZ_Nf0nlcePz7CxqP4NcpByXm5h6a3wIYJgrO2n67sUJcPpOWxND-Hh-bsM01iQ_Lz0cAXl8gBSs8Hj0vRjkpCYQw3ncJZb5xEPMmw__qtmPvuEv3LE08tjTRdK7hdhqiBQKgGzfLVcDaHzsikfrWOyZHfVJ5v07RiTDLmvlYC_q8QJZNtguH1BJW7aaM3XLn8ptbBVKxdUfrVX715w1dPgkBp5l2Pq6MEdlrIfKEw1OpPZKwPh_MabcHXeOLHph4IxXj6GuHZNcpngQBo6steIHXOFKMVFFuH36Lm5KaDZN1EykU8QuoQ3eV1C5VOdNh55Ujs7KnQmiyiCVO13H8CJtDlZfEgvQ3q59n9Du-L4PJpgSehOUosRcDh_9nz7Fq_uolN2FWWPjMYmrewyEksacLnbs4e0jRo_xXCOij8-RjSyTfmb-AcBX_GbPmOywgstuhulE9ID5_DLcPDWIDE0q-TDJEJS1GDeRpWCJVKf4C1_pfvb4k8ilPgsTyjojGvF_xMepyBuuahBaid3ZjqVmCQiNw9Yc0rupLJDkWgcL3y2W2S9kboMmtuw-1EcnMQdnYV2Zj22qkGZPyV3d1DmJUthm3UjpgUxiM8mk0xMI69geXt-OCJyarSu94eNfRcYxQqkG8j9Hca4G8spFJYJUJ9YKI_WHBOrCNk328fv-Rcj6tciNboPkCpfgDvSeemYVZImfcR7jPdciN0ondR2GUnm525qoMsu_ctPsh7IzKjhv_Qs_PYltOlsDZ0RCFBGtWTwHTgT5XJ_yvIukYT8YdDg9wptulyOKxu5Qudg_JM9fANJA8Pt6FtT-IYt5eWG-j9acQV9xwExgMc2vlRwCMV8TGEP616pahpsxjJcsts0kRAFXVrvTWZBdVp_uAbyTh_dRfHeiwEBlCD79hNUuc1murC5yHAPAnu76nclbrOvk-4FMrH-msqArj27UlexQ01G25e8QfDKXgi7UFYqih8K6jJaGCUA-yrNSahO-TL8Nsw6RBrjgYiyEpvMxQ1a95lzugdB8qP1tPtHg-Yc6HNvqRmCH8q-4J0SkyaVIP0r5kANvhoNEAFNYLmDTetpD3T7bcfFEvAZauYFPZIOppxvfII96chqYZ_pNpfF-ed36aP3BfaQfXjazcacpA527n2vz_asP52xeevsJ6QBCQmITMy-J8xWAB5F4t38pXJqqOrL70MRvWdQqlMsFXqlJZVmCRvcpuL99eal0Ynxw8arl4WTNxDbTYbCzgIIz2_DxjX_y0WkZAL_JqjJLyxidudlLnMya9lzS6UIgdmjC86DCk7WxzZsRokOyl0292IbZig3OGDt2axJgPmy9XB5lojKRqD8I_XdLJRSnyQwlQ8wLQpfmmvQoKp2uBvuN9WR3Djx_BxQLscwB1hu0-bUU1QxqtvgAMuOajTeR9-6jpxTAFOlQv4NSIrMzF3Fz9hmM_u8kXW9wYmvU_7ATlGJ3vCDM_2DO4GWcFB_dbhs1xL1Im6OLce_1g-74nzQ_tfEWfhv8Qv_mueU2Kq8TVbwDxWcGE0XApRNm_yrY-FwhQ9Do7M2kG6aRk8CSyDNARRFTPZyU6Tcrh1WKwBW2ersEo4dMMa-fInVHCoE5Wwm3wFrmS_pg7bJ2i_PRoW6aZLWpBa8A0_1MAKTDTfxyn2b4Oy-veRJ5RQ4Vyty3P7p7GDBHdNP6wtOUGN0Q_grIGXM9fjY3kcFKrxRBBYT-Oe_xU2ieSQfqS5AdmXE-N5_o9DuM9NSvqgkFuJy9dH3bkRACAAyeGQ--xdry9g5wze5fcB04SHCbj61BO4W-36-d7zR0ATBssg5sFx6QXKILqLcQG83LhtSRLTq1mWXdgHSKER0Lty706o8gfx-ltCWaMLcwzpm8wXmplynrTauxKGQx-OyFKUkCyYwr5jKqlohU61Uw2s1BhjMf5ATr8nas8OKnMnaq4GlFEnK9H5b7AK4Bh9zyKwZ-AUfdF_UfV1lHuy5kjKidAAKI8-UI69s6-75IrX1I_bzb4NRrpOik3u0WmbOIRRXOv77Pajq-mFiBn6t42Wx0Hp6_EDn7u57J68lz4NOkYp3rCZHHRyQX8iCtQqC-FqOz_qowTvGNJgvsh4jXA7ggn-izQPzYxI8JZwtSVp0LOkpRFggdUC9Bw2RMMmSu4cCN0q-uUmoHS4bm4XyKRpu8ArwDYqJ98KBGUwOYxYcAJLbkSmz_Enx85bFK8Lv06aTuRi_UPOYCW2mrPfwRLkKw-GP3gaG1YvQU4MPowEhdshj6d-ZpuR0kXdIqtjnGXuW8_xkSgQfl8nN8Rcbw91z8ggDBo_k1QhOhhG92BoXXYdr_LJV2v7C9NHF7OHEfM34h7DHCisAbE3OKSUKBlTQzQ6GE9UNxhxhA6XLobLxiK6qrlDwa8M5hv-CaOu8w9XZ290Llv6t_DUzGr86XAgvcgNWtLop1SHF1IWDpQIJHXZ_IdVYiGoPNDpWZ2Q83JTW52srQm6t5TcFcvX2e2IkUAZuemrwliRO79fQ1aQxk6NNSMaQCvyvEbHAYJ48-k9Mef4jSKIL8NvYdNCsMI8Q9QPXuHkFxixmHPY_mz3NwC6PPWwqa5LmYzROXu-gXkFrEaZZ9o9JWOV2gD_EGX7gRDQwR0kkr1wxD3eLw7FIZWToQBr6h6Z6MYzSOZaiHv1zZ9GDkT_yM60xOk-GDO_N_c5jxAkKo-RUAAMHiZG_z5Wcxk0uCfbWH0JL8Q8uVe8BPLXfjgopOIkuPqwzq_pC32Z6PhRhGvq8q6T-aGGz6th2RJhA0HrunkzQ3USLMuUAfAhV1BDfPFRG3eCd8kd9t-jBzPF7z0fld-gyKRgA83mMdhIyZCT9OKnYxX_p8OnIrbQl95UMcPQvsbu3g7Mv5g-qsmyWislp_-t7C4Kdad4so_7qtHeN3eMycFIyKRjP2fyHBV_9tD_m6-W2dVOff1gn-Yu4ydgAAKFLDuQOwYHTCU_kGKRO4p7WM-WtM4NMT7AhFPamEAjsT2FiXXtqMQ2PuVPO3-lWkeP2H16Njr3dZWVtf0FjFfsddohG719AX17iz4Z4k-Qc7n6yHFe5AYxFpN_MRai0WZnAsmLmDjE8HPWVfVsYAxQa43LvsOza-HanYmZ2DL7xOAh61H_GCQyPMY8rQcYOhdzbjhKznjnuBENXQ8MtHC-5PZINEJXzaZmKrRc16OkQhkOI4ruEl-iAO10K-2BdrVx62n_K2OdmrJKK-g_5svpiv6Y2R5xHzW6lLPNo8e8dat2sKadBEqn4Hlz6fUuCCSHKP62naPe7jhx1W1jvnlMzSdOCHNEacLRN6E446PiCXSSEB-eLxVFueT_FrotEEBNo6dQ87d86UkQ-qff7eyOluRMJWFwPpQbZBeYnF99ZYV4KqMgyrhIyA5PJ-eUv0TrxDkXDzUNe4pFMW-8QpyVaxpnh6k5Sw5gNh00iico_61d8LHGCbSIfNUVbudLFXTbixxN-auUJeC_yrB7cUzqtMYZ8LCc6-mLSL70dPvyIk-81A9s2IqSYROwE6MV14Od3U2-t5SsWBFq58WIQd1jVq-2Z7UHOJXG61YrojuZO_JFQkgGbH46RjlaKAJdmLRanCnrjXHxCfPMleDSKQXxJjtBm3UjjcHrqBQD-Ooss0kAOENDul1jVYleJWsjwG-Ng_deEjO53e6nit8MK_rsM05VDYUGjRr7lq2zOIIdJ9pC8IJt-9-ctkn5CL4MyVHeM4Q5jvfl3r5WcSOL5DVesYabZT7nw5QY-R1kEwnzRWdggvESQW7xuQPBxRG1ES7PoLx9-208vU-d5fruMk-nf-m-MRhzlnNAD3mTDw9IMKLFDLE0Vn_qdnNaisL3dwVkDqJINXyK4C-DU1Ci3kJVGX5tdbE4-al6mbsybqXJ3NHTzcxrs3u-NOrMnngPAtHdchcOLYDJRmdGAn53g8qXhWVG2BStLwQTSZwjihwHyH4dsdCYNFk9QJXaIcQRNcdccukJMu31NmycxsoQD1ffxRwi2gVEqf603gSvnykzoF8VaaKFLfy7QvpgwumqczY5oIyyRWTkJYQiHpwaYCtY4UqHAyFfO3zh1krxBxP4K8K0Ui1_ubGLUJTitObgtTVo-isLdgK_btIaSDhM.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LWx1bmEtMjAyNjA5MjJ8b3BlbmFpIn0",
+          "id": "rs_0e90674859915d1c016ab2e8786d3487d1a6511328374a6aad",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 3406,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 769,
+        "completionTokensDetails": {
+          "reasoningTokens": 419
+        },
+        "totalTokens": 4175,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.000810175
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

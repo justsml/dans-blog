@@ -35,6 +35,20 @@
       "appendSummary": "Summarize only the quiz concepts, difficulty, audience, and recurring terminology. Return valid JSON only.",
       "createdAt": "2026-05-21T00:00:00.000Z",
       "updatedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "id": "judge-article-gpt-6-luna-site-conventions",
+      "kind": "judge",
+      "locale": "*",
+      "modelPattern": "openai/gpt-6-luna",
+      "contentKind": "article",
+      "version": 1,
+      "status": "active",
+      "basedOn": "legacy-i18n-prompts",
+      "notes": "Calibrated 2026-09-22: removes false alarms about inherited dates, locale asset paths, and provenance. Three languages, one public article; six held-out synthetic checks. See reports/i18n/judge-benchmarks/2026-09-22/findings.md. Does not establish human-rated translation recall.",
+      "appendCachedContext": "Repository rules: localized MDX is stored in a locale subdirectory beside the English post. Parent-relative image paths such as ../image.webp are correct and required; do not restore English-relative paths. Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance, not an unauthorized addition. Translate reader-facing titles/headings; same-page fragments should match localized headings. Base medium/high findings on actual meaning, executable code, rendered structure, or language defects, not differences explicitly allowed above.",
+      "createdAt": "2026-09-22T00:00:00.000Z",
+      "updatedAt": "2026-09-22T00:00:00.000Z"
     }
   ]
 }

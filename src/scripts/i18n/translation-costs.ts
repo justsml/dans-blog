@@ -14,11 +14,35 @@ interface ModelPricing {
 }
 
 const MODEL_PRICING: Record<string, ModelPricing> = {
+  "anthropic/claude-opus-5.5": {
+    inputPerMillionUsd: 4,
+    cachedInputPerMillionUsd: 0.2,
+    outputPerMillionUsd: 20,
+    source: "openrouter-2026-09-22",
+  },
+  "z-ai/glm-5.3-flashx": {
+    inputPerMillionUsd: 0.37,
+    cachedInputPerMillionUsd: 0.075,
+    outputPerMillionUsd: 1.25,
+    source: "openrouter-2026-09-22",
+  },
+  "deepseek/deepseek-v4.1-flash": {
+    inputPerMillionUsd: 0.1,
+    cachedInputPerMillionUsd: 0.1,
+    outputPerMillionUsd: 0.8,
+    source: "openrouter-2026-09-22",
+  },
+  "openai/gpt-6-luna": {
+    inputPerMillionUsd: 0.1,
+    cachedInputPerMillionUsd: 0.01,
+    outputPerMillionUsd: 0.5,
+    source: "openrouter-2026-09-22",
+  },
   "openai/gpt-5.6-luna": {
     inputPerMillionUsd: 0.2,
     cachedInputPerMillionUsd: 0.02,
     outputPerMillionUsd: 1.2,
-    source: "openrouter-2026-09-13",
+    source: "openrouter-2026-09-22",
   },
   "openai/gpt-5.6-terra": {
     inputPerMillionUsd: 2,
@@ -101,19 +125,19 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     inputPerMillionUsd: 0.75,
     cachedInputPerMillionUsd: 0.075,
     outputPerMillionUsd: 3.75,
-    source: "openrouter-2026-09-13",
+    source: "openrouter-2026-09-22",
   },
   "google/gemini-3.5-flash-lite": {
     inputPerMillionUsd: 0.3,
     cachedInputPerMillionUsd: 0.03,
     outputPerMillionUsd: 2.5,
-    source: "openrouter-2026-09-13",
+    source: "openrouter-2026-09-22",
   },
   "z-ai/glm-5.3-flash": {
     inputPerMillionUsd: 0.15,
-    cachedInputPerMillionUsd: 0.03,
+    cachedInputPerMillionUsd: 0.05,
     outputPerMillionUsd: 0.5,
-    source: "openrouter-2026-09-13",
+    source: "openrouter-2026-09-22",
   },
   "minimax/minimax-m2.5": {
     inputPerMillionUsd: 0.27,

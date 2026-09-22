@@ -213,3 +213,38 @@ Covered areas:
 | `src/scripts/i18n/prompts.ts` | Translation prompt builders (`buildSystemPrompt`, `buildUserPrompt`) |
 | `src/scripts/i18n/judge.test.ts` | Offline unit tests for judge scoring loop |
 | `reports/i18n/evals/` | Eval run folders with `summary.md` and `run.jsonl` |
+
+## Matched translation-judge comparison
+
+`bun run i18n:judge:benchmark` compares judges on frozen inputs without generating
+or promoting translations. The default set includes GPT-6 Luna, GPT-5.6 Luna,
+Gemini 3.8 Flash, Gemini 3.5 Flash Lite, DeepSeek v4.1 Flash, GLM 5.3 Flash/FlashX,
+and Opus 5.5. The catalog is fetched once and saved; `--catalog <path>` supplies
+an existing snapshot. These are explicitly requested benchmark judges, separate
+from the inexpensive translation-generation allowlist.
+
+```bash
+bun run i18n:judge:benchmark -- --out reports/i18n/judge-benchmarks/my-run \
+  --phase baseline --split calibration
+bun run i18n:judge:benchmark -- --out reports/i18n/judge-benchmarks/my-run \
+  --phase medium --split calibration --models openai/gpt-6-luna --effort medium
+bun run i18n:judge:benchmark -- --out reports/i18n/judge-benchmarks/my-run \
+  --phase heldout --split heldout --models openai/gpt-6-luna
+bun run i18n:judge:benchmark:report -- reports/i18n/judge-benchmarks/my-run
+```
+
+`--split corpus` sends three saved repository translations and their English
+source to OpenRouter; use public or otherwise authorized content. Fixtures are
+saved on the first run and reused unchanged. `--tuning <json>` accepts a
+`JudgePromptTuning` overlay. Phase names cannot be reused, preventing accidental
+overwrites. Each call saves its prompt, raw response, usage, latency, and result;
+failures remain in the denominator. Four concurrent calls use no automatic
+retries. All model names in this command route through OpenRouter.
+
+The report recognizes `baseline`, `corpus`, `calibrated-corpus`,
+`calibration-medium`, and `calibration-site-rules` phase names. Use those names
+for a complete comparison report. Catalog estimates, provider credits, and
+upstream costs are separate; completion tokens already include reasoning.
+A small synthetic accuracy check and agreement with Opus are not substitutes
+for independently reviewed translation quality. The September 22 pilot and its
+limitations are recorded under `reports/i18n/judge-benchmarks/2026-09-22/`.

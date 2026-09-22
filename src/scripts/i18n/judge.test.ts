@@ -62,6 +62,10 @@ describe("resolveCheapFastTranslationModel", () => {
 });
 
 describe("GPT-5.6 Luna configuration", () => {
+  test("GPT-6 Luna also omits unsupported temperature", () => {
+    expect(resolveLlmConfig("openrouter/openai/gpt-6-luna").temperature).toBeUndefined();
+    expect(resolveLlmConfig("llm://openrouter/openai/gpt-6-luna?reasoning_effort=medium").reasoningEffort).toBe("medium");
+  });
   test("uses low reasoning and omits unsupported temperature", () => {
     const config = resolveLlmConfig("openrouter/openai/gpt-5.6-luna");
 
