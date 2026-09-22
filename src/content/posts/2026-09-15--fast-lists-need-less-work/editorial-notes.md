@@ -52,6 +52,30 @@ If producing artwork later: wide 1600×900, square 800×800, social 1200×630; k
 - Build updated the tracked `.data/github-repo-cache.db`; left in place rather than reverting shared cache data.
 - `git diff --check`: passed. Article and companion evidence remain uncommitted.
 
+## Agentic rewrite (2026-09-20)
+
+Restructured from "remove unnecessary work" into an agent-tuning guidebook matching the subtitle
+"How To: Use Agents to Tune Performance." New spine: an agent hill-climbs whatever metric you give it,
+so the deliverable is the harness, not the prompt. Sections now follow the loop — build hands, define a
+scroll vocabulary (slow wheel / rapid reversals / instant jumps / parked pointer), assert the motion
+happened, measure frame gaps + CDP CPU counters together, gate experiments behind env flags, keep the
+aesthetic vote, point it at unsolicited work first, verify renderer and host load, ratchet budgets one way.
+
+Code excerpts are quoted from the live emoji-brain harness, not invented:
+`tests/performance/scroll.performance.spec.ts` (phase loop, endpoint assertions, `SCROLL_*_EXPERIMENT`
+style flags, ScrollJankV4 counting, GPU identity), `tests/performance/metrics.ts` (`installMetrics`,
+`cpuMetrics`), `TESTING.md` (profiles, regression budgets, "do not raise the threshold", 650 ms stall
+control, `performance-latest.json` not being a passing baseline).
+
+All prior measurements retained with original scopes; none rerun. Dropped from the previous draft to
+keep length: the bundle-size table, Astro islands/hydration section, font self-hosting, and the
+Pagefind/popover/srcset dependency list. `bundle-measurements.json` is now unreferenced by the article
+but kept as evidence. Forbidden claims from the evidence ledger still honored.
+
+Validation: focused `@mdx-js/mdx` compile passed (frontmatter stripped); `bun run content:check`
+reported 0 errors and the same 64 pre-existing warnings, none for this draft. Budget-table comparisons
+are wrapped in backticks because bare `<15s` parses as JSX in MDX.
+
 ## Editorial rewrite
 
 Rewritten around the rejected containment experiment, with the recurring question of why work happens during a particular interaction. Updated title to “Your Fast List Is Doing Too Much.” Preserved measured scopes and supporting links; consolidated experiment chronology into measurement notes. Focused MDX compilation passed; content check again reported 0 errors and 64 existing warnings. No benchmark or bundle measurements were rerun for this prose revision.
