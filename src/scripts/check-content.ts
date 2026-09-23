@@ -47,6 +47,7 @@ type PostFile = {
   isTranslation: boolean;
   directoryDate?: string;
   body: string;
+  bodyLineOffset: number;
   frontmatter: Record<string, FrontmatterValue>;
 };
 
@@ -60,6 +61,8 @@ const findings: Finding[] = [];
 const strict = process.argv.includes("--strict");
 // These MDX components intentionally render Markdown children (quiz slots and code tabs).
 const markdownChildComponents = new Set(["Challenge", "CodeTabs"]);
+// Code blocks wrap to the rendered article column, not the repo's printWidth.
+const CODE_BLOCK_MAX_WIDTH = 53;
 const posts = readPosts();
 const routeBySlug = new Map(posts.map((post) => [post.slug, `/${post.slug}/`]));
 const knownPostRoutes = new Set(routeBySlug.values());
@@ -73,6 +76,7 @@ for (const post of posts) {
   checkRelated(post);
   checkAbsoluteInternalLinks(post);
   checkMarkdownInsideJsx(post);
+  checkCodeBlockWidth(post);
 }
 
 for (const finding of findings) {
@@ -117,7 +121,7 @@ function readPostFile(postDir: string): PostFile | null {
   if (!path) return null;
 
   const source = readFileSync(path, "utf8");
-  const { frontmatter, body } = parseFrontmatter(source);
+  const { frontmatter, body, bodyLineOffset } = parseFrontmatter(source);
   const parsed = parsePostId(`${postDir}/index`);
   const dateMatch = parsed.baseDir.match(/^(\d{4}-\d{2}-\d{2})--(.+)$/);
 
@@ -131,18 +135,23 @@ function readPostFile(postDir: string): PostFile | null {
     isTranslation: parsed.isTranslation,
     directoryDate: dateMatch?.[1],
     body,
+    bodyLineOffset,
     frontmatter,
   };
 }
 
 function parseFrontmatter(source: string) {
-  if (!source.startsWith("---")) return { frontmatter: {}, body: source };
+  if (!source.startsWith("---"))
+    return { frontmatter: {}, body: source, bodyLineOffset: 0 };
 
   const endIndex = source.indexOf("\n---", 3);
-  if (endIndex === -1) return { frontmatter: {}, body: source };
+  if (endIndex === -1)
+    return { frontmatter: {}, body: source, bodyLineOffset: 0 };
 
   const raw = source.slice(3, endIndex).trim();
   const body = source.slice(endIndex + 4);
+  // Lines consumed by the frontmatter, so checks can report file line numbers.
+  const bodyLineOffset = source.slice(0, endIndex + 4).split(/\r?\n/).length - 1;
   const frontmatter: Record<string, FrontmatterValue> = {};
 
   for (const line of raw.split(/\r?\n/)) {
@@ -166,7 +175,7 @@ function parseFrontmatter(source: string) {
     }
   }
 
-  return { frontmatter, body };
+  return { frontmatter, body, bodyLineOffset };
 }
 
 function stripQuotes(value: string) {
@@ -354,6 +363,63 @@ function checkMarkdownInsideJsx(post: PostFile) {
       `markdown syntax appears inside JSX children ${matches.length} time(s); first near line ${matches[0]} (component starts near line ${firstComponentStartLine})`,
     );
   }
+}
+
+// Fenced code in posts wraps narrower than source files do: the constraint is
+// the rendered article column, not .prettierrc. Some lines genuinely cannot be
+// wrapped (compound CSS selectors, long URLs), so this warns rather than errors.
+function checkCodeBlockWidth(post: PostFile) {
+  // Translations copy code blocks verbatim from their source post, so the fix
+  // always belongs upstream. Reporting both would be ~10x noise for one edit.
+  if (post.isTranslation) return;
+
+  const lines = post.body.split(/\r?\n/);
+  const overflows: number[] = [];
+  let fence = "";
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const fenceMatch = line.match(/^\s*(```+|~~~+)/);
+
+    if (fenceMatch != null) {
+      const marker = fenceMatch[1];
+      if (fence === "") fence = marker;
+      else if (marker.startsWith(fence[0]) && marker.length >= fence.length)
+        fence = "";
+      continue;
+    }
+
+    if (
+      fence !== "" &&
+      line.length > CODE_BLOCK_MAX_WIDTH &&
+      isWrappable(line)
+    ) {
+      overflows.push(index + 1 + post.bodyLineOffset);
+    }
+  }
+
+  if (overflows.length > 0) {
+    const shown = overflows.slice(0, 5).join(", ");
+    const rest =
+      overflows.length > 5 ? ` and ${overflows.length - 5} more` : "";
+    add(
+      "warning",
+      post,
+      `code block line(s) exceed ${CODE_BLOCK_MAX_WIDTH} columns at line ${shown}${rest}; wrap them unless the line cannot be broken`,
+    );
+  }
+}
+
+// A line can only be wrapped if breaking at whitespace would actually help.
+// URLs, compound CSS selectors, base64 and long identifiers are single tokens
+// wider than the budget, so flagging them would demand an impossible edit.
+function isWrappable(line: string) {
+  const indent = line.length - line.trimStart().length;
+  const longestToken = line
+    .trim()
+    .split(/\s+/)
+    .reduce((widest, token) => Math.max(widest, token.length), 0);
+  return indent + longestToken <= CODE_BLOCK_MAX_WIDTH;
 }
 
 function normalizeRoute(route: string) {

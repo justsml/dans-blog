@@ -119,9 +119,10 @@ Correctness fixes made to the article's code (bugs in the prose version, not in 
 
 **Column width: article code blocks wrap at 53 columns** (Dan, 2026-09-22) — narrower than either
 repo's `.prettierrc` `printWidth: 80`, because the constraint is the rendered blog column, not the
-formatter. One unavoidable exception at line ~257: a compound CSS selector cannot be wrapped, since a
-newline inside it becomes a descendant combinator and silently changes what it matches. Left long with
-an inline comment saying why.
+formatter. One unavoidable exception: the compound CSS selector in the containment experiment cannot be
+wrapped, since a newline inside it becomes a descendant combinator and silently changes what it matches.
+Left long, with no inline comment — code comments explain the technique to the reader, never the
+article's own formatting constraints.
 
 Validation: MDX compile OK; `bun run content:check` 0 errors / same 64 pre-existing warnings;
 `bun run check` 0 errors.

@@ -26,9 +26,13 @@ That's the whole job. An agent tuning frontend performance is a very fast hill-c
 
 > Agents are good at performance tuning exactly to the degree your harness can prove them wrong.
 
-It was worth doing. Watching the frame counter by hand in DevTools, the worst of the scrolling went from **about 12 fps at the 99th percentile to a steady 60+**. That number is a manual observation, not a harness output — which is the whole reason the rest of this article is so pedantic about what the automated numbers do and don't prove.
+It was worth doing. Watching the frame counter by hand in DevTools, the worst of the scrolling went from **about 12 fps at the 99th percentile to a steady 60+**.
 
-What follows is the loop we ended up with while tuning [Emoji Brain](https://github.com/justsml/emoji-brain): a wall of a few hundred selectable cards, every one of them a transparent image, a fraction of them animated. If your app renders a media gallery, an asset picker, a photo grid or a search results page made of thumbnails, it has the same shape and the same failure modes. Here's how to teach an agent to scroll like a person, what to measure, how to let it run CSS experiments without touching product code, and which decisions you have to keep for yourself.
+Here's the thing we were tuning — [Emoji Brain](https://github.com/justsml/emoji-brain), a wall of a few hundred selectable cards, every one of them a transparent image, a fraction of them animated:
+
+![The Emoji Explorer grid in dark mode: 351 stickers laid out in a dense selectable wall, with a frosted tray pinned to the bottom.](./emoji-brain-grid-dark.webp)
+
+A media gallery, an asset picker, a photo grid, a search results page made of thumbnails — same shape, same failure modes.
 
 ## Give the Agent Hands Before You Give It Opinions
 
@@ -38,9 +42,9 @@ So the first thing to build is not a prompt. It's a script the agent can run tha
 
 Ours is a Playwright spec that boots a production preview, throttles the CPU, drives the grid, and prints a JSON blob. The agent's entire job becomes: change something, run it, read the blob, keep or revert. That's a loop it's genuinely good at — it's mechanical, it's fast, and the feedback is not a matter of opinion.
 
-Use Chromium, and talk to it over CDP. This is the one place where the browser choice isn't a preference: the Chrome DevTools Protocol is the only connection that hands an agent CPU throttling, network emulation, Chrome's own CPU counters, tracing, and the GPU identity of the machine it's running on — all from the same session that's driving the page. WebDriver gives you none of that. Every number in this article that an agent couldn't have fabricated came through a `newCDPSession`.
+Use Chromium, and talk to it over CDP. This is the one place where the browser choice isn't a preference: the Chrome DevTools Protocol is the only connection that hands an agent CPU throttling, network emulation, Chrome's own CPU counters, tracing, and the GPU identity of the machine it's running on — all from the same session that's driving the page. WebDriver gives you none of that. Every throttle, counter, jank verdict and GPU fingerprint below came through a `newCDPSession`; the few numbers that didn't are exactly the ones that need caveats.
 
-Two setup details do most of the work:
+Three setup calls do most of the work:
 
 ```ts
 const cdp = await page.context().newCDPSession(page);
@@ -48,9 +52,19 @@ await cdp.send('Performance.enable');
 await cdp.send('Emulation.setCPUThrottlingRate', {
   rate: 2,
 });
+
+await cdp.send('Network.enable');
+await cdp.send('Network.emulateNetworkConditions', {
+  offline: false,
+  latency: 150,
+  downloadThroughput: (1.6 * 1024 * 1024) / 8,
+  uploadThroughput: (750 * 1024) / 8,
+});
 ```
 
-CPU throttling matters because your laptop hides the bug. [CDP's throttling rate](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setCPUThrottlingRate) is a slowdown factor, not a phone: `2` approximates half-speed execution relative to the host, and simulates nothing about the GPU. It's enough to make the difference between two candidate fixes visible, which is all the agent needs to choose between them.
+CPU throttling matters because your laptop hides the bug. [CDP's throttling rate](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setCPUThrottlingRate) is a slowdown factor, not a phone: `2` approximates half-speed execution relative to the host, and simulates nothing about the GPU. It's enough to make the difference between two candidate fixes visible, which is all the agent needs.
+
+The network profile is the 4G row of every budget further down. Playwright has no API for it — those 3G and 4G numbers exist because of `Network.emulateNetworkConditions`.
 
 The performance tests also run in their own config — isolated preview port, one worker, caches off, no retries, no video. Trace recording and a second test worker are themselves a measurable load. An agent running benchmarks next to your dev server and a video encoder is generating fiction.
 
@@ -58,9 +72,9 @@ The performance tests also run in their own config — isolated preview port, on
 
 A neat downward scroll is a generous benchmark. It's also the only one an agent will invent on its own, because it's the one that's easy to write.
 
-People are worse than that. They reverse direction mid-flick. They slam End, then Home, then End again. They creep down a row at a time reading labels. They park the pointer in the middle of the grid and then scroll cards underneath it. Every one of those motions stresses a different part of the pipeline, and an optimization that helps one can wreck another — which is exactly what happened to us.
+People are worse than that. They reverse direction mid-flick. They slam End, then Home, then End again. They creep down a row at a time reading labels. They park the pointer mid-grid and scroll cards underneath it. Each motion stresses a different part of the pipeline, and an optimization that helps one can wreck another — which is exactly what happened to us.
 
-So the harness defines the vocabulary explicitly, and the agent runs all of it every time:
+So the harness defines the vocabulary, and the agent runs all of it every time:
 
 ```ts
 // Per phase: pixels, gap between wheel ticks, and
@@ -70,8 +84,6 @@ const WHEEL = {
   rapid: {delta: 1200, waitMs: 16, flipEvery: 3},
 };
 
-// `as const` narrows phase to a union, so the
-// else branch below indexes WHEEL safely.
 const phases = ['slow', 'rapid', 'jumps'] as const;
 
 for (const phase of phases) {
@@ -125,13 +137,13 @@ for (const phase of phases) {
 
 Three things in there are worth stealing.
 
-**Use `page.mouse.wheel`, not `window.scrollTo`.** Wheel input goes through the real compositor path, with real inertia and real smooth-scroll behavior. `scrollTo` with `behavior: 'smooth'` is a different code path and a different animation; `behavior: 'instant'` is a third. Test the ones your users actually produce — and keep them in separate phases, because they have separate costs.
+**Use `page.mouse.wheel`, not `window.scrollTo`.** Wheel input goes through the real compositor path, with real inertia. `scrollTo` with `behavior: 'smooth'` is a different code path and a different animation; `behavior: 'instant'` is a third. Test the ones your users actually produce, in separate phases, because they have separate costs.
 
 **Reverse direction on a short period.** The `rapid` phase flips every three steps. Reversals are where containment and lazy-rendering strategies send you the bill, because the browser keeps re-crossing the same boundary it just discarded work at. A monotonic scroll never crosses the same boundary twice.
 
-**Wait out the inertia between phases.** That `waitForTimeout(500)` is there because native wheel animation leaks across phase boundaries and contaminates the next measurement. This is the kind of detail an agent will not add on its own and will not notice is missing.
+**Wait out the inertia between phases.** That `waitForTimeout(500)` is there because native wheel animation leaks across phase boundaries and contaminates the next measurement. An agent will not add this on its own and will not notice it's missing.
 
-The pointer placement is one line and easy to skip: `page.mouse.move(width / 2, 500)` before the loop. It parks the cursor in the grid so cards scroll under a stationary pointer, which is how you discover that hover-to-play is firing network requests during scroll.
+One more line, easy to skip: `page.mouse.move(width / 2, 500)` before the loop. It parks the cursor in the grid so cards scroll under a stationary pointer, which is how you discover that hover-to-play is firing network requests during scroll.
 
 ## Assert the Motion Happened
 
@@ -162,7 +174,7 @@ This is the rule that generalizes: **every benchmark phase must prove it did the
 
 ## Measure Frame Gaps, Long Tasks, and CPU Counters Together
 
-"Crank the FPS" is a goal, not a metric. The sampler we give the agent installs before page scripts and collects four independent signals:
+"Crank the FPS" is a goal, not a metric. The sampler we give the agent is the one piece here that isn't CDP — it's ordinary page JavaScript, installed before page scripts, collecting four signals from inside the renderer:
 
 ```ts
 await page.addInitScript(() => {
@@ -198,7 +210,7 @@ await page.addInitScript(() => {
 
 The snapshot reduces that to `p95FrameGapMs`, `maxFrameGapMs`, `longTaskCount`, `maxLongTaskMs`, and blocking time above 50 ms, plus FCP, LCP and a layout-shift sum. Alongside it, `Performance.getMetrics` pulls Chrome's own `TaskDuration`, `ScriptDuration`, `LayoutDuration`, `RecalcStyleDuration`, heap size and DOM node count, sampled before and after each phase.
 
-Give the agent both. The frame gaps say *whether* an interaction felt bad; the CPU counters say *which subsystem* to go look at. An agent with only p95 will thrash between plausible fixes. An agent that can see `RecalcStyleDuration` triple will go read your selectors.
+That split is the point. Page JavaScript only sees what the main thread saw; CDP gets you the other side of it. Give the agent both. The frame gaps say *whether* an interaction felt bad; the CPU counters say *which subsystem* to go look at. An agent with only p95 will thrash between plausible fixes. An agent that can see `RecalcStyleDuration` triple will go read your selectors.
 
 Two honesty constraints belong in the harness docs, where the agent will read them and repeat them in its summary:
 
@@ -210,6 +222,26 @@ If you skip this, the agent will write "we achieved 60 FPS" in the PR descriptio
 When you need ground truth for scrolling specifically, Chromium will hand it to you. We record a trace during the `rapid` phase and count the compositor's own jank verdicts:
 
 ```ts
+await cdp.send('Tracing.start', {
+  traceConfig: {
+    includedCategories: [
+      'input',
+      'input.scrolling',
+    ],
+  },
+});
+
+// … drive the rapid phase …
+
+const events: any[] = [];
+cdp.on('Tracing.dataCollected', ({value}) =>
+  events.push(...value),
+);
+await cdp.send('Tracing.end');
+await new Promise((done) =>
+  cdp.once('Tracing.tracingComplete', done),
+);
+
 const scrollFrames = [];
 
 for (const event of events) {
@@ -238,7 +270,7 @@ That's the compositor grading itself, independent of anything our main-thread sa
 
 ## Let the Agent Run Experiments Without Editing the Product
 
-This is the trick that made the loop actually productive.
+This is the trick that made the loop productive.
 
 Every rendering idea the agent wants to try — containment, layer hints, dropping shadows — goes in as an environment-gated stylesheet injected at test time, not as an edit to the CSS you ship:
 
@@ -251,8 +283,6 @@ const {
 
 if (SCROLL_CONTAINMENT_EXPERIMENT) {
   await page.addStyleTag({
-    // Cannot wrap: a newline inside a compound
-    // selector becomes a descendant combinator.
     content: `
 .emoji-cell:has(.emoji-card-selected):not(:hover):not(:focus-within) {
   content-visibility: auto;
@@ -276,9 +306,9 @@ if (SCROLL_PAINT_EXPERIMENT === 'shadows') {
 }
 ```
 
-Now an A/B is two runs of the same binary with one variable flipped, and the branch stays clean between them. The agent can propose five ideas, test all five, and land zero. Rejected experiments stay in the repo as named flags, which is genuinely useful: the next agent that suggests `will-change` can be told to go run `SCROLL_LAYER_EXPERIMENT=1` and read the result itself.
+Now an A/B is two runs of the same binary with one variable flipped, and the branch stays clean between them. The agent can propose five ideas, test all five, and land zero. Rejected experiments stay in the repo as named flags: the next agent that suggests `will-change` can be told to run `SCROLL_LAYER_EXPERIMENT=1` and read the result itself.
 
-Compare that to the default behavior, where the agent edits the stylesheet, runs a test, likes the number, and moves on with the edit still in place. Three of those in a row and you have no idea which one did what.
+The default behavior is worse — the agent edits the stylesheet, runs a test, likes the number, and moves on with the edit still in place. Three of those in a row and you have no idea which one did what.
 
 ## What the Loop Actually Rejected
 
@@ -337,11 +367,11 @@ Make that the agent's first pass, and the rendering hints usually become unneces
 
 **Stills instead of autoplay.** Pre-generated first-frame stills in the grid, with playback on hover, focus, or tap. Across three traced 30-step scroll runs, [the recorded comparison](https://github.com/justsml/emoji-brain/commit/9ab1f627a36e8d132b5227f12952e29973e6fe9c) shows raster time falling 1,859 → 844 ms, image decoding 440 → 149 ms, and raster tasks 1,228 → 458. The payload for those 92 items went from **5.45 MB to 0.20 MB**, with the animation still one hover away.
 
-**Hover intent.** With the pointer parked mid-grid, each card crossing under it started an animation download. We added 120 ms of intent; click and keyboard focus stay immediate. The browser test crosses a card for 20 ms and asserts zero animation requests. The measured win is avoided requests, not FPS — which is a distinction the harness enforces by not claiming otherwise.
+**Hover intent.** With the pointer parked mid-grid, each card crossing under it started an animation download. We added 120 ms of intent; click and keyboard focus stay immediate. The browser test crosses a card for 20 ms and asserts zero animation requests. The measured win is avoided requests, not FPS, and the harness doesn't claim otherwise.
 
 **One source of layout.** Switching the Astro island from `client:only="react"` to `client:load` meant the server guessed a container width, then the browser measured the real one and rearranged 350+ cells. We were running two layout engines and they disagreed. CSS Grid with `repeat(auto-fill, minmax(...))` already knew the answer; keyboard navigation reads cell positions only when an arrow key needs the column count. [That work](https://github.com/justsml/emoji-brain/commit/e881fc68011e2d917d394b14b5d60466d6c225cf) recorded grid readiness going from **1,022 → 540 ms** on 4G/half-CPU and **2,328 → 936 ms** on 3G/half-CPU.
 
-**Stable props over more memoization.** Cards were memoized; selecting one still re-rendered the others, because the keyboard callback captured the whole selection and changed identity on every selection change. Each cell already knew whether it was selected; passing that flag into a stable handler fixed it. In the three-card regression fixture, toggling one card went from rendering three to rendering one. Render counts aren't milliseconds, but they're falsifiable evidence that an action stopped recruiting unrelated work — and they're a cheap, fast signal for an agent to iterate against.
+**Stable props over more memoization.** Cards were memoized; selecting one still re-rendered the others, because the keyboard callback captured the whole selection and changed identity on every selection change. Each cell already knew whether it was selected; passing that flag into a stable handler fixed it. In the three-card regression fixture, toggling one card went from rendering three to rendering one. Render counts aren't milliseconds, but they're cheap, fast, and falsifiable — good evidence that an action stopped recruiting unrelated work.
 
 **Persistence after paint.** Selection state updates immediately; `JSON.stringify` and `localStorage.setItem` are deferred via [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) with a one-second timeout and a 250 ms fallback, flushed on `pagehide`, hidden visibility, and unmount. Our first version had a race — change a selection, reload immediately, lose it — fixed by capturing the committed value in a layout effect. The test that caught it does exactly that: change, reload, assert. Idle scheduling doesn't make a synchronous write interruptible; it just stops it from landing mid-gesture.
 
@@ -381,7 +411,7 @@ Now every result carries the renderer it was produced on, and a comparison acros
 
 **Host load.** Our own latest retained run failed its export-responsiveness budget because of concurrent load on the machine, and it's labeled in the repo as *not a passing baseline*. Agents run benchmarks whenever they feel like it, including while a build is going. Label runs, don't average across contaminated ones.
 
-There's also a control test that deliberately stalls the main thread for 650 ms and asserts the sampler notices. It's excluded from application measurements and exists purely so a silently broken instrument can't report clean numbers forever.
+There's also a control test that stalls the main thread for 650 ms and asserts the sampler notices. It's excluded from application measurements and exists so a silently broken instrument can't report clean numbers forever.
 
 ## Budgets Are the Guardrail, and They Ratchet One Way
 
@@ -408,7 +438,7 @@ The final matrix ran three repetitions each across desktop and phone widths, sma
 
 And the unfinished business, which belongs in the same paragraph: initial rendering still has an ~80–100 ms task under slowdown, and dense desktop rapid scrolling had a median worst frame gap of 116.6 ms. Main-thread frame sampling isn't physical display FPS, and a narrow window on an M2 is not a low-end phone.
 
-The hand-checked version of that, from the DevTools frame counter rather than the harness: worst-case scrolling sat near 12 fps at the 99th percentile before any of this and holds 60+ after. Those two instruments agree, which is reassuring and not proof — the harness samples `requestAnimationFrame` callbacks and the frame counter watches presented frames, and only the second one is physical display FPS. The harness never claims that number, and neither should the agent.
+The hand-checked version, from the DevTools frame counter rather than the harness: worst-case scrolling sat near 12 fps at the 99th percentile before any of this and holds 60+ after. The two instruments agree, which is reassuring and not proof — the harness samples `requestAnimationFrame` callbacks, the frame counter watches presented frames, and only the second is physical display FPS. The harness never claims that number, and neither should the agent.
 
 Keep all of it in the report. A good percentile doesn't erase an ugly outlier, and an agent writing the summary will drop the outlier unless the harness hands it over attached to the same JSON.
 

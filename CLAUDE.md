@@ -240,6 +240,10 @@ playwright.config.ts         # E2E tests
 - **Frontmatter redirects** - Never edit `public/_redirects` manually
 - **React hydration** - Use `client:load`, `client:idle`, or `client:only` directives
 - **Store images with posts** - Keep images in same directory as `index.mdx`
+- **Wrap post code blocks at 53 columns** - Fenced code in `src/content` wraps to the rendered
+  article column, not the repo's `printWidth: 80`. `bun run content:check` warns on violations;
+  lines whose longest single token already exceeds the budget (URLs, compound CSS selectors) are
+  exempt automatically. Never add a comment inside a code block explaining a wrap decision.
 
 ## Debugging
 
