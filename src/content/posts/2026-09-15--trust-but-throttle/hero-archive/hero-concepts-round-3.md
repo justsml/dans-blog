@@ -1,0 +1,22 @@
+# Human and automated tuning
+
+Built-in image generator; candidate 06 used as a visual reference.
+Thesis: automated performance tuning depends on human-defined measurements and product judgment.
+
+## 07-human-robot-duet
+
+Create a new wide 16:9 editorial hero image for 'Trust, but Throttle', about humans defining reliable measurements while automated agents tune frontend performance. Use the reference as a material and visual metaphor guide: tactile miniature black highways as instrument strings, tiny mustard and teal cars, maple wood, brass guitar tuning machines, handcrafted landscape, warm natural workshop light. Intelligent surreal miniature photography, clear physical cause and effect, no words, logos, watermark, holograms or neon. Strong central subject suitable for later square recomposition. A human craftsperson's bare hand and a clearly recognizable articulated teal industrial robot arm work side by side at adjacent oversized brass tuning pegs on the same wooden highway instrument. Human turns foreground peg, robot gripper turns the next peg. Four flexible road ribbons extend into miniature mountain tunnels, two slightly wavy and two smooth, carrying tiny cars. Robot arm has visible joints and bolted base, is substantial and unmistakable automation, not a floating metal hand. Close three-quarter composition, pegs and two hands are the focal point. Warm workshop, precise believable contact between grippers and pegs.
+
+Square composition: focus on the tuning peg and human/robot interaction, simplifying the distant landscape.
+
+## 08-automated-road-test-bench
+
+Create a new wide 16:9 editorial hero image for 'Trust, but Throttle', about humans defining reliable measurements while automated agents tune frontend performance. Use the reference as a material and visual metaphor guide: tactile miniature black highways as instrument strings, tiny mustard and teal cars, maple wood, brass guitar tuning machines, handcrafted landscape, warm natural workshop light. Intelligent surreal miniature photography, clear physical cause and effect, no words, logos, watermark, holograms or neon. Strong central subject suitable for later square recomposition. Reimagine the highway instrument as a compact automated calibration bench. Two substantial cream and teal industrial robot arms adjust brass tuning pegs at the end of three black miniature highway ribbons on a maple platform. One ribbon has an obvious S bend and another has a gentle hump, tiny cars travel across both. A human hand in the near foreground adjusts a separate large brass mechanical calibration wheel connected to the test fixture. A simple physical measuring probe touches the road surface. Show automation doing repetitive tuning with human control over the measuring fixture. Wider overhead three-quarter miniature product photograph, sparse workshop, readable silhouettes, no screens or text.
+
+Square composition: focus on the tuning peg and human/robot interaction, simplifying the distant landscape.
+
+## 09-human-tuner-robot-inspector
+
+Create a new wide 16:9 editorial hero image for 'Trust, but Throttle', about humans defining reliable measurements while automated agents tune frontend performance. Use the reference as a material and visual metaphor guide: tactile miniature black highways as instrument strings, tiny mustard and teal cars, maple wood, brass guitar tuning machines, handcrafted landscape, warm natural workshop light. Intelligent surreal miniature photography, clear physical cause and effect, no words, logos, watermark, holograms or neon. Strong central subject suitable for later square recomposition. Intimate macro editorial photograph of two human craftsperson hands tuning one broad miniature highway ribbon using a beautiful oversized brass guitar tuning peg on a maple instrument. One hand gently rotates the peg while the other supports the wooden instrument edge. Beside them a small teal articulated inspection robot with a single camera lens on its wrist measures the ripple in the road without touching the person. The road recedes across a handmade landscape into a distant tunnel, mustard and teal toy cars on it, a small visible ripple near the tuning mechanism. Human skill is dominant, automation observes. Few large shapes, warm sidelight, brass patina, wood grain and natural skin texture; no humanoid face.
+
+Square composition: focus on the tuning peg and human/robot interaction, simplifying the distant landscape.
