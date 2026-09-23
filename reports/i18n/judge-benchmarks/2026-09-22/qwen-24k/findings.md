@@ -1,6 +1,6 @@
 # Findings and chunking decision
 
-The selected Qwen comparison is **Qwen 3.8 Flash and Qwen 3.8 27B**, per the user's clarification. Both request thinking disabled and 24,000 output tokens. All 216 selected-model/input pairs are completed once; unrelated Qwen calls made before the clarification remain supplemental. Four in-flight requests were interrupted and their charges are unknown.
+The selected Qwen comparison is **Qwen 3.8 Flash and Qwen 3.8 27B**, per the user's clarification. Both request thinking disabled and 24,000 output tokens. The initial comparison completed all 216 selected-model/input pairs once; unrelated Qwen calls made before the clarification remain supplemental. Four in-flight requests were interrupted and their charges are unknown.
 
 - **Flash:** 8/8 synthetic controls, 10/10 full translations parsed; approximately $0.0029 per parsed real verdict and 23.14 seconds mean successful latency. One real result says ready while suggesting medium/high fixes. It correctly identified untranslated paragraphs and modified Pagefind executable paths in the Hindi serverless article.
 - **27B:** 8/8 controls, 6/10 real translations parsed. Four long responses have malformed JSON despite finish reason `stop`, so these are not output-limit failures. Failure-inclusive cost is approximately $0.0327 per parsed real verdict, about 11 times Flash's. Increasing the cap alone does not repair invalid JSON.
@@ -26,3 +26,16 @@ The narrowed resume verifies the original fixture hash, tuning, token cap and pe
 ## Limit retry outcome
 
 All five capped rows in the matched 24k run returned parseable results on one identical-prompt, same-cap retry (three DeepSeek and two GLM). First-attempt reliability remains 7/10 for DeepSeek and 8/10 for GLM; retries add cost and do not erase the failures. This variability further supports measuring a bounded chunking strategy instead of increasing the output cap again.
+
+## Fable 5.1 and Opus 5.5 — September 23 extension
+
+Fable 5.1 was run on the same 18 frozen inputs with byte-identical tuning, 24k output and low thinking (mandatory for both models). Opus's matching September 22 run is reused. September 23 catalog checks confirmed both models are available and their prices are unchanged.
+
+| Model | Controls correct | Full documents parsed | Ready with medium/high fixes | Mean catalog USD/full document | Mean seconds/full document |
+|---|---:|---:|---:|---:|---:|
+| Fable 5.1 | 8/8 | 10/10 | 0 | $0.3414 | 36.34 |
+| Opus 5.5 | 8/8 | 10/10 | 0 | $0.1088 | 11.19 |
+
+Fable's 18 calls cost $3.5836 in recorded provider credits, versus $1.1565 for the saved Opus cohort. Neither cohort had a failed call. Fable's raw suggestions all survived normalization. Opus was approximately 3.1 times cheaper and 3.2 times faster on full documents in these runs. Cache state, routing and date differ; this is observed performance, not a controlled throughput guarantee. Passing the same eight synthetic checks does not establish equal natural-language judgment quality.
+
+The expanded comparison contains 234 unique selected model/input pairs. Fable is now included in the default benchmark model list. See fable-verification.json for the extension audit; verification.json retains the earlier 216-pair audit unchanged.

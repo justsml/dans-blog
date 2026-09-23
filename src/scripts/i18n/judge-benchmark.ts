@@ -11,6 +11,7 @@ export const JUDGE_BENCHMARK_MODELS = [
   "openai/gpt-6-luna", "openai/gpt-5.6-luna", "google/gemini-3.8-flash",
   "google/gemini-3.5-flash-lite", "deepseek/deepseek-v4.1-flash",
   "z-ai/glm-5.3-flash", "z-ai/glm-5.3-flashx", "anthropic/claude-opus-5.5",
+  "anthropic/claude-fable-5.1",
   "openai/gpt-6-astra", "openai/gpt-6-sol",
   "qwen/qwen3.8-flash", "qwen/qwen3.8-27b",
 ];

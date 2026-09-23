@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"04df4e77477c\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":62,\"technicalAccuracy\":82,\"coherence\":72,\"relevance\":90,\"translationQuality\":58,\"mdxPreservation\":95,\"culturalAdaptation\":65,\"languagePurity\":40},\"suggestions\":[{\"priority\":\"high\",\"match\":\"आपकी टीम somehow `P00` टिकटों में डूब रही है!\",\"replacement\":\"आपकी टीम किसी तरह `P00` टिकटों में डूब रही है!\",\"reason\":\"Untranslated English word 'somehow' leaked into Hindi reader-facing prose.\"},{\"priority\":\"medium\",\"match\":\"जिसमें अरबों `z-index: 1000000000` था!\",\"replacement\":\"जिसमें एक अरब का `z-index: 1000000000` था!\",\"reason\":\"Source says 'a billion'; 'अरबों' (billions) changes the quantity.\"},{\"priority\":\"high\",\"match\":\"अक्सर urgency, importance, resource availability, और cost/risk analysis के बीच एक जटिल अंतर्संबंध होता है\",\"replacement\":\"अक्सर तात्कालिकता, महत्व, संसाधनों की उपलब्धता और लागत/जोखिम विश्लेषण के बीच एक जटिल अंतर्संबंध होता है\",\"reason\":\"Excessive untranslated English terms in Latin script make the prose Hinglish rather than natural Hindi; this pattern recurs throughout the second half.\"},{\"priority\":\"medium\",\"match\":\"Inflation को `z-index` पर hard hit लग रहा होगा।\",\"replacement\":\"लगता है मुद्रास्फीति की मार `z-index` पर भी ज़ोर से पड़ रही है।\",\"reason\":\"Literal Hinglish rendering is ungrammatical and loses the joke.\"},{\"priority\":\"medium\",\"match\":\"ever-increasing Priority का idea horrifying है? anxiety inducing है?\",\"replacement\":\"क्या लगातार बढ़ती प्राथमिकता का विचार डरावना है? चिंता पैदा करने वाला है?\",\"reason\":\"Sentence is mostly English words with Hindi glue; not natural Hindi and missing the interrogative 'क्या'.\"},{\"priority\":\"medium\",\"match\":\"<b>इस सिली इंजीनियरिंग थिएटर के खेल से हम कैसे बच सकते हैं?</b>\",\"replacement\":\"<b>इंजीनियरिंग थिएटर के इस बेतुके खेल से हम कैसे बच सकते हैं?</b>\",\"reason\":\"Transliterated 'सिली' is an English word leak; a Hindi equivalent reads naturally.\"}],\"rationale\":\"MDX structure, frontmatter rules, links and code literals are preserved and meaning is largely intact, but the second half of the document is heavily code-switched Hinglish with many untranslated English terms, one leaked English word ('somehow'), and a minor quantity change ('अरबों' for 'a billion'). Not publish-ready until language purity issues are addressed.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 7413,
+    "inputTokenDetails": {
+      "noCacheTokens": 6652,
+      "cacheReadTokens": 761,
+      "cacheWriteTokens": 6038
+    },
+    "outputTokens": 1471,
+    "outputTokenDetails": {
+      "textTokens": 1049,
+      "reasoningTokens": 422
+    },
+    "totalTokens": 8884
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "Checking the frontmatter and paths look fine, but I'm noticing heavy Hinglish throughout — many English words like \"urgency,\" \"stakeholders,\" \"one-size-fits-all approach,\" and \"maintenance\" appear untranslated in Latin script within the Hindi prose, which is a real language purity concern for this translation.\n\nI also spot leaked words like \"somehow\" and \"सिली,\" plus a quantity distortion where \"a billion\" becomes \"अरबों\" (billions), and some awkward phrasing like \"Inflation को z-index पर hard hit लग रहा होगा\" that reads unnaturally. Given these issues, I'd put languagePurity around 40, technicalAccuracy near 82, mdxPreservation around 95, and mark this as not publish-ready.\n\n",
+          "signature": "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",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 7413,
+        "promptTokensDetails": {
+          "cachedTokens": 761
+        },
+        "completionTokens": 1471,
+        "completionTokensDetails": {
+          "reasoningTokens": 422
+        },
+        "totalTokens": 8884,
+        "cost": 0.15535525,
+        "costDetails": {
+          "upstreamInferenceCost": 0.15535525
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"0893c477b5a7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":84,\"technicalAccuracy\":92,\"coherence\":86,\"relevance\":95,\"translationQuality\":85,\"mdxPreservation\":97,\"culturalAdaptation\":84,\"languagePurity\":88},\"suggestions\":[{\"priority\":\"medium\",\"match\":\"group=\\\"הפחתת זמן חיים\\\"\",\"replacement\":\"group=\\\"השמטת זמני חיים\\\"\",\"reason\":\"'הפחתה' means reduction, not elision; the rest of the challenge correctly uses 'השמטת', so the group label is inconsistent and misleading.\"},{\"priority\":\"medium\",\"match\":\"group=\\\"שינוייות\\\"\",\"replacement\":\"group=\\\"יכולת שינוי\\\"\",\"reason\":\"'שינוייות' is a misspelled/non-standard word; the reader-facing group label should be natural Hebrew.\"},{\"priority\":\"medium\",\"match\":\"אובייקטים של traits כשצריך דינמיקה של dispatch\",\"replacement\":\"אובייקטי trait כשצריך dynamic dispatch\",\"reason\":\"'דינמיקה של dispatch' garbles the technical term 'dynamic dispatch'.\"},{\"priority\":\"medium\",\"match\":\"מה קורה עם הפונקציה שמחזירה את המקטע המחרוזת הארוך יותר משניים?\",\"replacement\":\"מה קורה עם הפונקציה הזו שמחזירה את הארוך מבין שני מקטעי מחרוזת?\",\"reason\":\"Ungrammatical Hebrew ('המקטע המחרוזת הארוך יותר משניים') obscures the question.\"}],\"rationale\":\"Code, components, imports, answer flags, links, and frontmatter rules are all preserved; explanations are faithful. A few reader-facing terminology errors (elision group label, a misspelled group, garbled 'dynamic dispatch') and one ungrammatical question sentence remain, blocking publish until fixed.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 38187,
+    "inputTokenDetails": {
+      "noCacheTokens": 38187,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 37571
+    },
+    "outputTokens": 1764,
+    "outputTokenDetails": {
+      "textTokens": 679,
+      "reasoningTokens": 1085
+    },
+    "totalTokens": 39951
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I'm checking the frontmatter details—title translation, the emoji escape in subTitle, date inheritance, and the relative import paths, which all look correctly adjusted for the locale subdirectory. Now I'm moving on to verify the code blocks.\n\nGoing through the answer options and translations for accuracy: most flags and hints check out, but I'm flagging a couple of translation issues—\"reduction of lifetime\" should probably be \"elision of lifetimes\" to match terminology used elsewhere, and there's a typo in one group name that should read \"changeability\" instead. A few other phrasings feel slightly awkward grammatically but are minor issues overall, while most other answers and hints seem acceptable as-is.\n\nI'm also spotting minor formal/informal inconsistency and small terminology mismatches like \"רב-חוטית\" vs \"תהליכון\". Overall the quality is solid, but with a few medium fixes needed—the grouping issue, a typo, and the dynamic dispatch phrasing—I'd call it not quite publish-ready yet, though scoring high.\n\n",
+          "signature": "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",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 38187,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1764,
+        "completionTokensDetails": {
+          "reasoningTokens": 1085
+        },
+        "totalTokens": 39951,
+        "cost": 0.5639975,
+        "costDetails": {
+          "upstreamInferenceCost": 0.5639975
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

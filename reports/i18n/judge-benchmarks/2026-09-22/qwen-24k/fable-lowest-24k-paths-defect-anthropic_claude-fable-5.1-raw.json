@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"f61625d30150\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":95,\"technicalAccuracy\":40,\"coherence\":90,\"relevance\":90,\"translationQuality\":90,\"mdxPreservation\":55,\"culturalAdaptation\":90,\"languagePurity\":95},\"suggestions\":[{\"priority\":\"high\",\"match\":\"href=\\\"../search/ui.css\\\"\",\"replacement\":\"href=\\\"/search/ui.css\\\"\",\"reason\":\"The absolute URL inside the executable HTML code block was changed to a relative path; the locale-relative image rule applies only to frontmatter/asset paths, not code literals, so this alters the technical content.\"}],\"rationale\":\"Prose and frontmatter are correctly localized (title translated, cover path parent-relative, inherited date omitted), but the stylesheet URL inside the code fence was incorrectly rewritten from /search/ui.css to ../search/ui.css, breaking code fidelity.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 1535,
+    "inputTokenDetails": {
+      "noCacheTokens": 693,
+      "cacheReadTokens": 842,
+      "cacheWriteTokens": 82
+    },
+    "outputTokens": 330,
+    "outputTokenDetails": {
+      "textTokens": 330,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1865
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 1535,
+        "promptTokensDetails": {
+          "cachedTokens": 842
+        },
+        "completionTokens": 330,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1865,
+        "cost": 0.0238455,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0238455
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"8455713b3333\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":60,\"technicalAccuracy\":55,\"coherence\":55,\"relevance\":75,\"translationQuality\":55,\"mdxPreservation\":30,\"culturalAdaptation\":68,\"languagePurity\":62},\"suggestions\":[{\"priority\":\"high\",\"match\":\"- [फ़ीचर तुलना](#overview)\\n- [Fetch रेसिपी](#feature-comparison)\\n  - [URL से JSON प्राप्त करें](#fetch-recipes)\\n  - [कस्टम हेडर्स](#get-json-from-a-url)\\n  - [HTTP त्रुटि संभालना](#custom-headers)\\n  - [CORS उदाहरण](#http-error-handling)\\n  - [JSON भेजना](#cors-example)\\n  - [HTML `<form>` पोस्ट करना](#posting-json)\\n  - [फ़ॉर्म‑एन्कोडेड डेटा](#form-encoded-data)\\n  - [फ़ाइल अपलोड करना](#form-encoded-data)\\n  - [कई फ़ाइलें अपलोड करना](#uploading-a-file)\\n  - [टाइमआउट्स](#uploading-multiple-files)\\n  - [डाउनलोड प्रोग्रेस हेल्पर](#timeouts)\\n  - [रिकर्सिव रीट्राई हेल्पर](#download-progress-helper)\\n  - [fetch अनुरोध को रद्द करना](#recursive-retry-helper) ✨new✨\\n- [अनुकूलता](#handling-http-redirects)\",\"replacement\":\"- [फ़ीचर तुलना](#feature-comparison)\\n- [Fetch रेसिपी](#fetch-recipes)\\n  - [URL से JSON प्राप्त करें](#get-json-from-a-url)\\n  - [कस्टम हेडर्स](#custom-headers)\\n  - [HTTP त्रुटि संभालना](#http-error-handling)\\n  - [CORS उदाहरण](#cors-example)\\n  - [JSON भेजना](#posting-json)\\n  - [HTML `<form>` पोस्ट करना](#posting-an-html-form)\\n  - [फ़ॉर्म‑एन्कोडेड डेटा](#form-encoded-data)\\n  - [फ़ाइल अपलोड करना](#uploading-a-file)\\n  - [कई फ़ाइलें अपलोड करना](#uploading-multiple-files)\\n  - [टाइमआउट्स](#timeouts)\\n  - [डाउनलोड प्रोग्रेस हेल्पर](#download-progress-helper)\\n  - [रिकर्सिव रीट्राई हेल्पर](#recursive-retry-helper)\\n  - [HTTP रीडायरेक्ट्स को संभालना](#handling-http-redirects)\\n  - [fetch अनुरोध को रद्द करना](#canceling-a-fetch-request) ✨new✨\\n- [अनुकूलता](#compatibility)\",\"reason\":\"Every TOC link after Overview is shifted by one and points to the wrong section; the 'Handling HTTP Redirects' entry is missing entirely.\"},{\"priority\":\"high\",\"match\":\"यह **Axios** (https://www.npmjs.com/package/axios) पर कोई हमला नहीं है।\",\"replacement\":\"यह [Axios](https://www.npmjs.com/package/axios) पर **कोई हमला नहीं** है।\",\"reason\":\"The markdown link was broken into bold text plus a bare URL in parentheses; the hyperlink no longer renders.\"},{\"priority\":\"medium\",\"match\":\"<h2 id=\\\"fetch-recipes\\\">Fetch Recipes</h2>\",\"replacement\":\"## Fetch रेसिपी\",\"reason\":\"Heading left untranslated; also markdown headings were converted to raw HTML tags, changing rendered structure (source ### headings became h2).\"},{\"priority\":\"medium\",\"match\":\"जिसे मैं आसान से नहीं मिलता हूँ।\",\"replacement\":\"जिन्हें मैं चाहता था कि आसानी से मिल जाएँ।\",\"reason\":\"Ungrammatical and mistranslates 'I wish were easier to find'.\"},{\"priority\":\"medium\",\"match\":\"(अंतिम बार 2018, 2024 में अपडेट)\",\"replacement\":\"(2018 के अंत में, 2024 में अपडेट)\",\"reason\":\"'late 2018' was mistranslated as 'last time 2018'.\"},{\"priority\":\"medium\",\"match\":\"कुछ धारणाएँ रखता था\",\"replacement\":\"कुछ ग़लतफ़हमियाँ रखता था\",\"reason\":\"'misconceptions' rendered as neutral 'assumptions', losing the meaning.\"},{\"priority\":\"medium\",\"match\":\"थोड़ा बगgy है\",\"replacement\":\"थोड़ा बग्गी है\",\"reason\":\"Mixed-script word 'बगgy' is a language defect.\"},{\"priority\":\"medium\",\"match\":\"| Intercept request and response                  |\",\"replacement\":\"| अनुरोध और प्रतिक्रिया को इंटरसेप्ट करना                  |\",\"reason\":\"Feature comparison table rows are left entirely in English (all eight rows should be translated).\"}],\"rationale\":\"The prose is mostly faithful and readable, but the TOC links are misaligned throughout, the Axios link is broken, headings were converted to HTML with one left in English, the comparison table is untranslated, and several phrases are mistranslated or ungrammatical.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9393,
+    "inputTokenDetails": {
+      "noCacheTokens": 9393,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 8781
+    },
+    "outputTokens": 2794,
+    "outputTokenDetails": {
+      "textTokens": 1919,
+      "reasoningTokens": 875
+    },
+    "totalTokens": 12187
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I'm auditing the candidate's table of contents and finding the links are misaligned—each entry after Overview points to the wrong anchor, and there's a missing entry for Handling HTTP Redirects.\n\nBeyond that, the Axios markdown link is broken, several headings were converted from markdown to raw HTML with different heading levels than the source, and there's a grammatically broken Hindi phrase along with mistranslations like \"late 2018\" and \"misconceptions\" losing nuance. I'm also noting the feature comparison table was left untranslated, plus mixed-script errors like \"बगgy\" and an incomplete \"credit:\" attribution.\n\nOverall I'd put technical accuracy around 55, MDX preservation around 30, language purity around 65, cultural fit around 70, and this isn't ready to publish.\n\n",
+          "signature": "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",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 9393,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 2794,
+        "completionTokensDetails": {
+          "reasoningTokens": 875
+        },
+        "totalTokens": 12187,
+        "cost": 0.2555825,
+        "costDetails": {
+          "upstreamInferenceCost": 0.2555825
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"9e718f4fdf81\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":60,\"technicalAccuracy\":66,\"coherence\":65,\"relevance\":80,\"translationQuality\":58,\"mdxPreservation\":55,\"culturalAdaptation\":62,\"languagePurity\":58},\"suggestions\":[{\"priority\":\"high\",\"match\":\"##II. Over-Abstraction: When Simplicity Turns to Chaos\",\"replacement\":\"## II. अति‑अमूर्तन: जब सरलता अराजकता में बदल जाती है\",\"reason\":\"Missing space after ## breaks heading rendering in MDX, and the heading was left untranslated.\"},{\"priority\":\"high\",\"match\":\"> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.\",\"replacement\":\"> हमारे आर्किटेक्ट का आग्रह है कि 5 लाइनों से लंबी हर फ़ंक्शन एक 'कोड स्मेल' है। अब हमारे कोडबेस से बेख़बर हताशा की हल्की बू आती है।\",\"reason\":\"Reader-facing blockquote left entirely in English.\"},{\"priority\":\"high\",\"match\":\"`SingleResponsibility Principle`\",\"replacement\":\"`Single Responsibility Principle`\",\"reason\":\"Inline code literal altered (space removed); code must be preserved exactly.\"},{\"priority\":\"medium\",\"match\":\"language: English\",\"replacement\":\"language: Hindi\",\"reason\":\"Controlled metadata incorrectly claims the document language is English.\"},{\"priority\":\"medium\",\"match\":\"इतना शुद्ध किदर्द देता है\",\"replacement\":\"इतना शुद्ध कि दर्द देता है\",\"reason\":\"Missing space produces a nonsensical word in the reader-facing subtitle.\"},{\"priority\":\"medium\",\"match\":\"अबstraction की परतों\",\"replacement\":\"एब्स्ट्रैक्शन की परतों\",\"reason\":\"Mixed Devanagari/Latin garble in prose.\"},{\"priority\":\"medium\",\"match\":\"एक बार आयात की गई फ़ाइलें वहाँ रह‑जाहिर पुन: उपयोग योग्य दिखती हैं।\",\"replacement\":\"केवल एक बार आयात की गई फ़ाइलें वहाँ पड़ी रहकर पुन: उपयोग योग्य होने का नाटक करती हैं।\",\"reason\":\"Garbled, unreadable sentence that loses the meaning of 'imported exactly once ... pretending to be reusable'.\"},{\"priority\":\"medium\",\"match\":\"एक पुनरुज्जीवित शुद्धतावादी पाठक\",\"replacement\":\"एक सुधर रहा शुद्धतावादी पाठक\",\"reason\":\"'recovering purist' mistranslated as 'resurrected purist'.\"},{\"priority\":\"medium\",\"match\":\"अच्छा सलाह।\",\"replacement\":\"अच्छी सलाह।\",\"reason\":\"Gender agreement error.\"},{\"priority\":\"medium\",\"match\":\"इसकी मूल्यांकन उपयोगकर्ता के निर्णय पर निर्भर करती है\",\"replacement\":\"इसका मूल्य उपयोग करने वाले के निर्णय पर निर्भर करता है\",\"reason\":\"'its value' mistranslated as 'its evaluation' with agreement error.\"},{\"priority\":\"medium\",\"match\":\"**फ़ाइल‑सिस्टम शरापें:**\",\"replacement\":\"**फ़ाइल‑सिस्टम के छर्रे:**\",\"reason\":\"'शरापें' is not a Hindi word; 'shrapnel' should be rendered meaningfully.\"}],\"rationale\":\"Translation is largely complete and faithful, but a heading is malformed and left in English along with its blockquote, an inline code literal was altered, metadata language is wrong, and several garbled or mistranslated phrases remain.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 10811,
+    "inputTokenDetails": {
+      "noCacheTokens": 10050,
+      "cacheReadTokens": 761,
+      "cacheWriteTokens": 9432
+    },
+    "outputTokens": 2003,
+    "outputTokenDetails": {
+      "textTokens": 1324,
+      "reasoningTokens": 679
+    },
+    "totalTokens": 12814
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I'm auditing the candidate for issues: the frontmatter language tag is wrongly set to English instead of Hindi, there's a typo in the subtitle missing a space between \"कि\" and \"दर्द\", and the code literal for \"Single Responsibility Principle\" has been altered by removing a space.\n\nI'm also noticing the heading missing a space after \"##\" breaks rendering and leaves parts untranslated, plus several grammar and word-choice slips in the Hindi translation — mismatched gender agreement, a mixed-script garble for \"abstraction,\" a garbled phrase around reusable code, an odd word choice for \"shrapnel,\" shifted bold emphasis, a mistranslation of \"recovering purist\" as \"resurrected,\" and a mistranslation of \"value\" as \"evaluation.\" Weighing these, I'd put technical accuracy around 65 and MDX preservation around 55 given the broken heading and code literal change.\n\n",
+          "signature": "CAQSvxMKEAgSGAI4AUIIdGhpbmtpbmcSDH6Jj+vpsPy0hmRmNRoM1ilUF8ECbPV4GsiZIjA9t/F4bIE0YmQxhW8deooNo19y37UyWSK2bPVGCFiBmx7CRC8Af+UKDQnVOd0iDjAq3BLy4ESrnAT1ybu4lmz5rTE1c3axBCH3516WI0yOSS7oL6udGsZ4PYCxPaQbK2g6fZF/W40Q/ZFAtCjoeOYm26Tp7bVRIVxV5znRa5X+gjUxKdw1wRgePAK+U2cL2eEKlDOfSYWTspqJWm7l6IIKXJvCU99C9e6QWPxd4cMXwAHFSQA8UYNkNePZfYRmLUowmBnxfkW4+/DYorT1hqNpXD0rsuRJXCXsdyp/nt2fprOWXh4/kNnwadZy96bJlGvkSAKd/8WFwmiLK+lBXaA7zUQNBbbN+SAUa2CnwSMQr8M519niQvAxyVY2C8pfLtUQXrdH64+fs2W13MCA8yBDbPINlpDITnH66fXunHhm+cZYUb3Khu8LvUjlIVxsP1IGIMHu11o9tf+f9/wJ2o1uc/cOSPEbIpo/fMgMV28l8jTOgQRVhaRUpAoLqCAyx8I34jJHhsj2HEpAIt6G0xh0Hn7Ol+kPKIg04Dxj0pglYrhwi8POq9zdBthGYWhPTfYeETeBbuO4XjQHZO+yUUP7ooGlPF7Ekx288itvZoUp3waWeKiyOQv8/guRA20VvnK4/lZnnDqpaR/ny15cLtHpmGPXdnkdhYo6cctToAUwPU1ydcBvUeHnldHaWxCYyXCHs7iKARmKlQ0SfzVcfIZ+jyduzcgoWSgZGMpwNUhplFpUtzys3v8sa2k2fcgeOUQMVB01G1o8eW3NNKtmWFrJh6x7ci90O09DrzKh/KxADWWrXE9Lb8t9iVYgdfPVYCuJcfBEqROnOpRfwXX7dF5Fg1hRzktzIng34MbxA5TLpOptXulOti/6lHTJSQ8kyF+wLDqUc54pW3VcFISQmMiHxadie+HjftH2ZSEw2w68bwuJtDqpoSDk+m8YzU0M7LmIPIt0hhDgwQzjJu/m9fPoksuZn4mtjB4mOT73nRnapxOih4vQKhtPO1H654pN6zfQyFByeJBr27WYudiPc9cuCpPp0kEJY6i6n/DL77moEQV3qz+VVe0AquxKlMWltpsm1ZvCWZJYrQ/LG9ME/0jz5kTrNFH55f7iEjGxdV8TtccBKZe/Sadls/7hf7W8Op34BJY0GDXLKy1QGofGXsR+pDs1Mhje3JbxQYwaoIRVeNhPFeMuJLKcF7GiB5K00/Ls3RWn5V2QvjB5L8p873UmrrkHKb0Rl4ASXNtfNXso5fZFU6VFYTeLoGOHKUHP1Tpk1sOlfQEhWXl9Ip2jrdDX9krSfa6eLfkAgRJhJ+qBGhXI4dG+qUH9AOo+0DCsbtXlkEUrk+WZlKOouSAwr8depsni/yQoxNJX73etGlHrK1CEuqLxUzcsd+eSvMq2BXrC7O8/qts26WnAix/m3LqaApOxpG7Sr8+ujZcaS1WX8ePQ2UWHku/mv6vBY/2csnxHbGqLg7y2WQFMZvVvnWjjKqhsx9cdGxw/VTqCbcW0rK2EeT8xlWDXfkUOFmpn8N79bqM+XGNXS7veKllRxiWglGrKUa8/cy4gPd1AsvCsdTwIF9wuGG2izqiwe/UEWrzJ+hf8z/OpkZhk2vuciAFXzLWWZFrwtzzob+1UjX0K1dCQfIhfvYCtT+yhfbtNV+7mOZlKqiIFkxnHKac7A5UeMaVUDl+jnkCHjYDxXaV8raScljWLYnOawjNtC3fP7yGtxUc2RRe1NmZkmmvOBQpyQBl48pZL/hHRYtsyG7Uox5DIeurHKF98vis3vuZZ2k6yZTg36MR246rNoqmQE9TNXFeWp+tWu18NtLz3gytAjkleHS20QLTDrUmjCPIGWdcI8GNUrkGy+kWpikE2+0QWPmDyMClJmWldN+HZcqaYF5ZuwDXaUKup9SiwW3K3jusyVvB1wDYVg/hezw1dMNIAA4NEHILUT/s9XDAYYQRcaCSJDI89TLsgT7jBlfuPZvFFYcmNe9CX+CxrkeRmkJglThL9WTkutC/RhLwr2E/Kg8q/bRzDYap0YFD+bGufKqiwL6bpHnR+dY4Sfprpu/C0qFrnyJRGO/86b4aLeOtjseRGCGi+lvtF3LukLZaxNSkwpPuEs9ZBwzX4GQN6CfvAKvEOgLTyA1khg652TwSaI3ttwWwGhU/aWDWhZGIqySZ0ubMFEURuV5YjSWWfS47CsoBAfzKt/DFxPKFxpWf+9+DXzv8VKfxd+aggA7g3ZkKbpvzK/qNZOSQTSn2x3ieDWAdpHsA+4DcqfvreVf3rR4knJE8wBCXs7qOBoGyj2xhRmojS9w8vXDgCopuFlJplYe2hgSE9mdL40QzsshGT7IEoYC8EY99+v3dsIo0K4keLC9tMn74F2oigSsywOGT5N9FPg8FK6DxrioQGOaYGRzIYA1sLC3RIvHsYoiiay+toVd6XbdNCwlVOsDurgU+z9kbgdqxZo7eRy9+M3dCJMvtGRNM9FrhE9+DlOusPJv6llydKVZ57W5Os27rej0amI8tcfJgnztxQMQXxA3Wmyq8vxXewLsCv2I6pqRuM84vKkCZGuMmtPMcgJKAauywPatIWOGtHwiwTgmy9HeiQeEGIGi9t+R8+N3V1E6Rrcf9+kor27CR8F4Dh4uJ/HXl1uzw7q8kfPmz6wQv2tPpMESFlsmLtCoiQ1R4GhyGD0PW1Bmm3DhLJyKj6Y1zhCicDN3KuK2EYB65GBhgH9HsiT/W6J29AdtSebiynQVw//eG2W27Jxf0PZcmuOQupwCCqbb3cYEgYD1IrMdnu6lueg2lqZbhvgY/3ON+XM+Mo0Ga2sS6Vzj75U91ergEz0twoObFuvKXcWYJ68BUabEO/tHocl+BMh7iHUlRYGmRT8PHK0sJTdFtBe6+OywDkBp10KvTfJNPDgQ3BBrEnTfw8sxxsHubgmH5WL9PzrGqegu26aOEetxqlbti3C9k8sPiwDJJM1WobPmmXWqDDTjhB1NpWojFNyXfOWc6681sPUgWlDprjNtXVTAm9NNwRjb8s7IL5/dEkgSAH3eal6nuYvUtF46WPwDqpu4Hyf8esMjc6CmHPzZ1Q7qO6cJUMlrkPcbPeUmgehvQuqJCu3Lo/eP/8CrEO1FXIZuR5wHKQp4p0q/kNyCdp+MYyOBhI1/FZeDJew5L7Pv08soblBH2f+cl4i44wqh/uujlIjSj/3Q2PMcFsDJwZYMvLnO73SMsDHzLEVYprD4c3QTCxIXNHIKYAGUEdV1RHCmNPUqn3txgB",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 10811,
+        "promptTokensDetails": {
+          "cachedTokens": 761
+        },
+        "completionTokens": 2003,
+        "completionTokensDetails": {
+          "reasoningTokens": 679
+        },
+        "totalTokens": 12814,
+        "cost": 0.22442025,
+        "costDetails": {
+          "upstreamInferenceCost": 0.22442025
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

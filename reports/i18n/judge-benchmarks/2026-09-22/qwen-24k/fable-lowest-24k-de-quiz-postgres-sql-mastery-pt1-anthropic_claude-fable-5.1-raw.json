@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"6a827cdac93a\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":84,\"technicalAccuracy\":80,\"coherence\":82,\"relevance\":85,\"translationQuality\":80,\"mdxPreservation\":78,\"culturalAdaptation\":82,\"languagePurity\":90},\"suggestions\":[{\"priority\":\"high\",\"match\":\"## Schwindelerregende Datentypen\\n\\n<Challenge\",\"replacement\":\"## Schwindelerregende Datentypen\\n\\nDu hast sicher schon *so viele* Typen in PostgreSQL verwendet, oder?\\n\\nDie nächsten Fragen drehen sich um die nativen Typen von Postgres v17. 🤯\\n\\nIdentifiziere bei jeder Frage den **einen ungültigen Typ**. 🕵️‍♂️\\n\\n<p class=\\\"inset\\\">Weiter geht's!</p>\\n\\n<Challenge\",\"reason\":\"The entire intro section under the heading (three paragraphs and the inset element) was omitted from the translation.\"},{\"priority\":\"medium\",\"match\":\"{text: 'Sie sind identisch.'},\",\"replacement\":\"{text: 'Sie sind seit Pg v10 austauschbar'},\",\"reason\":\"Option text changed meaning; source says they are interchangeable since Pg v10, not simply identical.\"},{\"priority\":\"medium\",\"match\":\"Teile meine Punktzahl nicht, haha.\",\"replacement\":\"Meine Punktzahl teile ich nicht, haha.\",\"reason\":\"Mistranslation: reads as an imperative telling Dan not to share the score, rather than the speaker refusing to share their own score.\"},{\"priority\":\"medium\",\"match\":\"Du hast inmehreren Bereichen\",\"replacement\":\"Du hast in mehreren Bereichen\",\"reason\":\"Typo: missing space produces a non-word.\"}],\"rationale\":\"MDX structure, quiz answer flags, code blocks and links are preserved and import/asset paths follow locale rules, but the whole intro section under 'Schwindelerregende Datentypen' is missing, one option text changes meaning, a quote is mistranslated, and there is a typo in the closing paragraph.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 16016,
+    "inputTokenDetails": {
+      "noCacheTokens": 16016,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 15400
+    },
+    "outputTokens": 1425,
+    "outputTokenDetails": {
+      "textTokens": 741,
+      "reasoningTokens": 684
+    },
+    "totalTokens": 17441
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I'm checking the frontmatter fields and confirming the import path depth matches the locale subdirectory convention, then looking at what prose was omitted after the \"Schwindelerregende Datentypen\" heading.\n\nThe candidate drops the intro paragraph about PostgreSQL types and the challenge instructions entirely — that's a high-priority omission. There's also a meaning-changing option translation (\"They're interchangeable since Pg v10\" vs. \"Sie sind identisch\"), an awkward phrasing that reads as an imperative when it should be declarative, a typo (\"inmehreren\"), and some minor whitespace/indentation differences that don't matter much.\n\n",
+          "signature": "CAQSlxIKEAgSGAI4AUIIdGhpbmtpbmcSDJt9SIqX176FerqqyhoMt3uHw7BxKmUVHh/iIjAShKE0LAydQtCM4lHrOoQGFlMJc3d5hrzMXKp8Z41a4amXeuzCVdKYkg41zi+Rj9QqtBGf65vPFjXjUrFgCRDmUgFK+SO26/Dy5MhaEnAJY3Bd0r4eFdf4vsRxcYYt1DTz2gMXK+Siq2YZsf3KADgwfD4ehPd1djRNy0H5Bd56/guiUUfxTGlLfNVmmVhBs/BGKf0ABR5BViSpVyl1sppvkmUh/kYaF2pHjAFca+Tz46ypPtxYA+hTJgVCLpkK3a47rhsh+529HwrUtfjSVZNzWNhYU1Peq/h6wrUQyJwo9bIafuGQyI6JEAl0KS5dZiOdpTvUftlZ33EIQB39mgjfCDnmp/AN4ZcwvQGlU9j6boxg5PSXRck0T8liQBhHC7XFRu+aGtPMz2BIKjCUzwJUFWAgrXI37jxIdpv42K8P0CabKPB7wKJ7bDI6fh6009L+1l0H4YtyxZAGaSUSFKu7SXkiXvRSBM6KC9tC/Mn9lc8CO9RiWALg9BGdlv/9w4rVeGWbh8B6CEuojeTZQRoKDbfn652On/l3YhbZBbb1nzp+O6FvMdenq3Uq4DqAaDOJXwgqSgYgLb0r/SUgJpQbDlT/Nh9+uKHZXOm7NJNDQ8y7NB4LNt9ADkm/RJatJpv5FCQwcO1aat7UjJ5tKLCDLGplXRxkoirIwjPG00350zIuz1NmhW277ky6/UYn8kRip2S/1Zj1T2L0jDT+E5nzfhMdRX98nWllFIV7A/7c95bPXnZUcSn28YqJpdjK0PJtpKQJrBygQGrTnQ3nZkdHRbxuz/V0XMeXJHPo1QMSU6jp8b/7HxV2Sc5S6qVaTuag1CSDsnbyj3NyK6LDQyPC/0XSmdCDMeIWMm7ncjnT+WIkppJj3xdIzKCy8ygC2Vx6JupI6QfCt2r5Btp+HlH1UD51prmGe0n1S9gLt3cvX22QnuwB9YhcJ0g00lX2XC6jWgFWoX+S+L+4TfQdOtUK2DjO4TSCB3cFyKPE8HImGjcyTnPd29Kik6WRvdhVPj4e1XR2d5noEGdmXaZBZzmAJyl0bDPT9+DflhD27kSY2Yup1eJPTSHEdIf1tS9LjrgtklAxOqu6yjEIA1EMg0HmJX7sLlpR52pkdzr0SJ/2eM0TAefw0NlVjr3RkDjMuXG6GYrq6R7vWf46rgr04nXfbNywjEG2wIzmtQvmVluA/Qck9XijDMxV6ifRK0+lHML3N0cd4ADPVhlw8P7b5tubk/Dl82r4JSqtu8Z5fZoiycXb573NJo0edk+kmMrHo4fwJFSNqaic9P3dulbVSdFZn+JYY3Anu2mwc3NKmjNGbz26hakWeVqvOjC5Jw3R8P0VEZmt/hjnlNjbjzgziOnfYc3a1BwiRU2AjOUs2CsVKDPDvcrqGU7k0rZXcpPzhz6UwNdBScQPCY4pqJmEXo6W3bjtcXgO22Llmcn1Bq3NYARfsQmgulrjqPOBE2Yh7oumsMLURAWhVYvYyB/XWCLilm4L4MUqDdG6bjs6gr0hm+1BDnd2TRRpkRlLmAEapxW1VDSkdo3iMMbIrrdNvzGUbCk2Wc1SwGXQJ5x92IlphDQ2161ef5CnNdS6jMqG4ztSWD0er6wqQk3/1HSVmmEUjvkvoq+QcRMdqSkgbxLRx0rpzRAWG8ljNFK/mpAD8BJ1auZKKEz1GHXr75m7dvEkL9Bk+r9IoD7eJ5W69H5huQyp5R+23nSatSt8iJu1C350gP4ej7LdLB0E5GNHlaAhPSqh1UqVK72SSkyhre+KyHt6gBrpQYrP5GYplABx5/qPLGn8dsF4FRNTLuFsiw9tVKUGT6F+2CNAjO1Yr9GtNijYI3f8JrZexkp93aicD/TppTcv2VbVgWTEXvllI8nfWbNMp8nsZfT9VB7QU+2QluNnj7H9BPALKCsHsxMwJI2fmzeoRYOlLeIbHCiz5Y4HL6Jz6DnbDeA+i3QMR3HXlOLHSufs16etkNVMN4TmWywwc2sELcVSrCgzfUMyS69mxpNfI9VVfAWD2KC2sQf0aZ0kCnAQjGmXeqs5IcFYzY+9um0VkJfaNxfJQKL9HiHbJS+E/wxy2BHWTgG6c5KvsRgkwFF47WbEErcwuuuLXnv9fnzHYirxLHNnFbR/WvOT0iB2erA6KiJWviPjvV0tlhv8U77XHCe1fTqsNrSKBNFPq6TVroVvNuR0EwkJ141fGDKJq7QxFM9KwfzqIqjjIldK/2AU5Bi9Kxl0cY8zWV5O99n5K5NLln6MEz8bNzAvB7NdRuP/+IvixrdhatRtqijVzsZQHOZahSmePXFYeO6vzr38L1gOrBhMLzQYohTj/KQv9faK8GWzyFQ7emYeEa1Udb5t/11JRYWcEn43BygpZ1NTAs7TB4m/tr05jiIyIK3Zh2W9V6PIZdbZA5+joc82UPTXPshB2go9ScDsJs1rC0FbLrCgGZR0QuzBt2QeGUcVhA/3MnX5G5reZCZtqn0I5/oJ7qhmJEQ8px9Azk41+EYSUx3UqjlTwRGOZY9ljTtHbNmlFSAH/lfX7AFQraOXp9iETAPMwwiGPGEtixSDqvP6YCg1SiF1cDE0UPbsDsyraowzYnDMznEMc4kUpE8H+BKE+3THOr480vUubCS5efU5nmLs3zK0ybqr4oiKQHxl2XGQlmzMU50jNpG4mcw0tl8xw8ORIHDvr2tzqeeAzk2k3KFzFLv56m8ND+ERhMvibyhrHW91vAUsqJhxMiNpcPpBoBBEAmkSRbK1Hi3etv7e6o0H/i+6YLRTd7fVF5Lc6SDt59Af21u6Yy/bLpzPN/ioLhUrheNYW5sqiH4pOfqzK87FmFQ6b1KPbkpFOiYJB0IyRjLmfN00TKfJ8ZJQyqaUkHA4yZf6+dn4afnGocNY/64Hl/oxhKhfKe/Rgoloi+b6cNO8E1jJVi/WBcJa71McPe+u1jykwypablMg3mY9gw7Z4zRFahYKh06sZ4gwnwM2BNGN0zGWlRac8sqqCfM3oaq7Tvc6SzNazihzL0x+juSYzbC7BeZxdN6u/P+ShJr+2hgB",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 16016,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 1425,
+        "completionTokensDetails": {
+          "reasoningTokens": 684
+        },
+        "totalTokens": 17441,
+        "cost": 0.26991,
+        "costDetails": {
+          "upstreamInferenceCost": 0.26991
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,48 @@
+{
+  "text": "{\"selectedCommit\":\"e46961b699c2\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":58,\"technicalAccuracy\":62,\"coherence\":55,\"relevance\":75,\"translationQuality\":55,\"mdxPreservation\":40,\"culturalAdaptation\":60,\"languagePurity\":52},\"suggestions\":[{\"priority\":\"high\",\"match\":\"### (स्क्वैश) मर्ज तरीका  \\n--- CHUNK END ---\\n\",\"replacement\":\"### (स्क्वैश) मर्ज तरीका\\n\",\"reason\":\"Pipeline marker '--- CHUNK END ---' leaked into reader-facing content.\"},{\"priority\":\"high\",\"match\":\"कमिट इतिहास के बिना? \\n*/}\\n\\n- आप `git checkout` के साथ\",\"replacement\":\"कमिट इतिहास के बिना?\\n\\n- आप `git checkout` के साथ\",\"reason\":\"The bonus section was entirely commented out in the source; the comment closes early, exposing three bullets that should remain hidden. Closing delimiter must move to after the last bullet.\"},{\"priority\":\"high\",\"match\":\"क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\",\"replacement\":\"क्योंकि यह कोई भी स्थानीय परिवर्तन ओवरराइट कर देगा।\\n*/}\",\"reason\":\"Pairs with the previous fix: the comment must close after the bonus bullets so the section stays hidden as in the source.\"},{\"priority\":\"medium\",\"match\":\"जिसमें `मेन` पर कुछ हालिया कमिट्स\",\"replacement\":\"जिसमें `main` पर कुछ हालिया कमिट्स\",\"reason\":\"Branch name inside a code span was transliterated; code literals must stay unchanged.\"},{\"priority\":\"medium\",\"match\":\"ध्यानपूर्वक चयनित, आकृति-विहीन कला के टुकड़े हैं?\",\"replacement\":\"ध्यानपूर्वक चयनित, तराशी हुई कला के टुकड़े हैं?\",\"reason\":\"'sculpted' was rendered as 'shapeless' (आकृति-विहीन), reversing the meaning.\"},{\"priority\":\"medium\",\"match\":\"निष्पक्ष रूप से विश्लेषित करने के लिए असंभव हो सकती है, न कि बदलने के लिए।\",\"replacement\":\"निष्पक्ष रूप से विश्लेषित करना असंभव हो सकता है, बदलना तो दूर की बात है।\",\"reason\":\"'never mind change' was mistranslated into an illogical clause.\"},{\"priority\":\"medium\",\"match\":\"या फिर आपको \\\"बिगड़े हुए\\\" कमिट लॉग से बस नहीं रहता?\",\"replacement\":\"या फिर आप \\\"गंदे\\\" कमिट लॉग बर्दाश्त ही नहीं कर सकते?\",\"reason\":\"Sentence is ungrammatical and incoherent in Hindi.\"},{\"priority\":\"medium\",\"match\":\"खोए हुए/अपनाहीन PR टिप्पणियाँ\",\"replacement\":\"खोई हुई/अनाथ PR टिप्पणियाँ\",\"reason\":\"'अपनाहीन' is not a Hindi word; 'orphan' should be अनाथ.\"},{\"priority\":\"medium\",\"match\":\"मैंने 16 मर्ज के बाद एक गलती की है\",\"replacement\":\"मैंने 16 मर्ज पहले एक गलती की थी\",\"reason\":\"'16 merges ago' was translated as 'after 16 merges', changing the timeline.\"}],\"rationale\":\"Content is mostly complete and code commands preserved, but a leaked '--- CHUNK END ---' marker, a broken comment that exposes hidden bonus content, a transliterated code literal, and several meaning inversions/incoherent sentences (shapeless vs sculpted, 'never mind change', 'अपनाहीन') block publication.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 9016,
+    "inputTokenDetails": {
+      "noCacheTokens": 8255,
+      "cacheReadTokens": 761,
+      "cacheWriteTokens": 7642
+    },
+    "outputTokens": 2138,
+    "outputTokenDetails": {
+      "textTokens": 1341,
+      "reasoningTokens": 797
+    },
+    "totalTokens": 11154
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Anthropic",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "text": "I'm auditing the candidate document for defects: a leaked chunk marker left in the text, and a comment block that closes too early, leaving bullet points about git checkout tips exposed as visible prose instead of staying hidden inside the comment.\n\nI'm also noting several translation issues — a code literal for \"main\" incorrectly translated, \"never mind change\" as an awkward mistranslation, \"sculpted\" rendered as its opposite \"shapeless,\" and various stylistic oddities like \"conflict\" and \"disagreement\" being used inconsistently, plus minor spelling inconsistencies for \"squash merge.\"\n\nGiven the MDX comment breakage and the chunk-end issue, this isn't ready to publish yet.\n\n",
+          "signature": "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",
+          "format": "anthropic-claude-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 9016,
+        "promptTokensDetails": {
+          "cachedTokens": 761
+        },
+        "completionTokens": 2138,
+        "completionTokensDetails": {
+          "reasoningTokens": 797
+        },
+        "totalTokens": 11154,
+        "cost": 0.20874525,
+        "costDetails": {
+          "upstreamInferenceCost": 0.20874525
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,6 +1,6 @@
-# Matched 24k translation judge comparison — 2026-09-22
+# Matched 24k translation judge comparison — 2026-09-22–23
 
-Twelve selected models, the same ten frozen public translations and eight Spanish synthetic controls, identical v2 audit prompts, 24,000 output tokens, and minimum supported thinking. Qwen and reference phases each run four concurrent calls without automatic retries. Prompts, raw responses, fixture hashes, catalogs, and all failures are retained. GPT-6 Terra remains unavailable as requested.
+13 selected models, the same ten frozen public translations and eight Spanish synthetic controls, identical v2 audit prompts, 24,000 output tokens, and minimum supported thinking. Each phase runs four concurrent calls without automatic retries. Prompts, raw responses, fixture hashes, catalogs, and all failures are retained. GPT-6 Terra remains unavailable as requested.
 
 Optional reasoning is disabled with `reasoning.enabled=false`; mandatory reasoning uses its lowest advertised effort. These are requested settings, not proof of internal model behavior. Capability metadata comes from the saved [OpenRouter model catalog](https://openrouter.ai/api/v1/models); [reasoning controls](https://openrouter.ai/docs/guides/best-practices/reasoning-tokens) distinguish disabling from merely hiding reasoning.
 
@@ -24,6 +24,7 @@ Cost per parsed real verdict includes captured failed-call catalog costs in its 
 | anthropic/claude-opus-5.5 | low | 8/8 | 10/10 | 0 | 0.1088 | 11.19 |
 | openai/gpt-6-astra | low | 8/8 | 7/10 | 0 | 0.2545 | 26.03 |
 | openai/gpt-6-sol | none | 8/8 | 10/10 | 0 | 0.0355 | 8.72 |
+| anthropic/claude-fable-5.1 | low | 8/8 | 10/10 | 0 | 0.3414 | 36.34 |
 
 A parsed result is not necessarily schema-complete: DeepSeek returned 81 suggestions without required fields on hi/deathmatch-git-rebase-vs-merge; production normalization discarded all 81. Thus only 6/10 of its first-attempt real results retain complete suggestion arrays. See suggestion-schema-audit.json. The superseded Omni variant also omitted suggestion reasons. These are model contract failures, not clean verdicts.
 
@@ -48,6 +49,7 @@ Catalog estimates include input/cache-read/cache-write/output rates and count re
 | anthropic/claude-opus-5.5 | 18 | 1.1565 | 1.1565 | 1.1565 | 0 |
 | openai/gpt-6-sol | 18 | 0.3800 | 0.0000 | 0.3800 | 0 |
 | openai/gpt-6-astra | 18 | 1.9129 | 0.0000 | 1.9129 | 214 |
+| anthropic/claude-fable-5.1 | 18 | 3.5836 | 3.5836 | 3.5836 | 9279 |
 
 ## Prior output-limit recovery
 
@@ -87,4 +89,4 @@ The new matched run revisits all five previously limited real cases. Four DeepSe
 - references-lowest-24k / openai/gpt-6-luna / hi-deathmatch-git-rebase-vs-merge: Missing judge scores
 - references-lowest-24k / z-ai/glm-5.3-flash / hi-beware-the-single-purpose-people: Translation judge z-ai/glm-5.3-flash stopped because it hit maxOutputTokens=24000. The output may be truncated; raise the model max= value or reduce the translation chunk size before trusting this candidate. Provider finish reason: length
 
-Matched completion: 216/216 attempts; 203 parsed. Supplemental completed attempts: 40. Interrupted requests are listed in interruption.json; their outcome and cost are unknown and excluded from recorded totals.
+Matched completion: 234/234 attempts; 221 parsed. Supplemental completed attempts: 40. Interrupted requests are listed in interruption.json; their outcome and cost are unknown and excluded from recorded totals.
