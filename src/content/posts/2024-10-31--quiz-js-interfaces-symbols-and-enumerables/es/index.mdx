@@ -1,7 +1,7 @@
 ---
-title: 'Cuestionario: Símbolos y Enumerables'
-subTitle: ¿Dominaslos rincones menos conocidos de ES2015?
-label: "Símbolos y propiedades"
+title: 'Quiz: símbolos y propiedades enumerables'
+subTitle: ¿Conoces los rincones menos famosos de ES2015?
+label: "Símbolos"
 social_image: ../desktop-social.webp
 category: Quiz
 subCategory: JavaScript
@@ -17,11 +17,11 @@ cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
 sourceHash: "2f893bc4aee3"
 ---
-## Quiz: Interfaces de JavaScript, Symbols y Enumerables
+## Quiz: interfaces, símbolos y propiedades enumerables de JavaScript
 
-> * **¡Demuestra tu dominio de JavaScript!** 🚀  
-> * No se requiere iniciar sesión ni registrarse. ✨  
-> * Opción múltiple. 🤖 … _¿Qué tan difícil puede ser, no?_
+> * **¡Demuestra lo que sabes de JavaScript!** 🚀  
+> * No hace falta que inicies sesión ni te registres. ✨  
+> * Opción múltiple. 🤖 … _¿Qué tan difícil puede ser, eh?_
 
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
@@ -31,8 +31,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Interfaces Avanzadas"
-  title="Getter vs Acceso Directo a la Propiedad"
+  group="Interfaces avanzadas"
+  title="Getter vs. acceso directo a la propiedad"
   options={[
     {text: 'Usar un bucle'},
     {text: 'Llamar a un método para acceder al valor'},
@@ -55,7 +55,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    En JavaScript, un getter se puede acceder como una propiedad normal. No es necesario llamarlo como una función.
+    En JavaScript, puedes leer una propiedad con getter como cualquier otra. No hace falta llamar al getter como si fuera una función.
     En este ejemplo, acceder a `obj.val` invoca directamente el método getter y muestra `got it!`.
   </div>
   </slot>
@@ -89,7 +89,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Los Symbols son un tipo primitivo único e inmutable que pueden usarse como claves para propiedades de objetos. Esto ayuda a evitar colisiones de nombres, especialmente en bases de código grandes o al escribir bibliotecas reutilizables.
+    Los valores de tipo Symbol son primitivos únicos e inmutables que pueden usarse como claves de propiedades de objetos. Esto ayuda a evitar colisiones de nombres, especialmente en bases de código grandes o al escribir bibliotecas reutilizables.
   </div>
   </slot>
 <slot name="hints">
@@ -99,13 +99,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Interfaces Avanzadas"
-  title="Propiedades Enumerables"
+  group="Interfaces avanzadas"
+  title="Propiedades enumerables"
   options={[
     {text: 'Lanza un error'},
-    {text: 'No, no lo hará'},
+    {text: 'No, no se listará'},
     {text: 'Depende del tipo de valor'},
-    {text: 'Sí, será listado', isAnswer: true},
+    {text: 'Sí, se listará', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -135,23 +135,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="Trabajando con Objetos"
+  group="Trabajo con objetos"
   title="Enumerabilidad predeterminada con Object.defineProperty()"
   options={[
-  {
-    "text": "true"
-  },
-  {
-    "text": "false",
-    "isAnswer": true
-  },
-  {
-    "text": "undefined"
-  },
-  {
-    "text": "Depende del contexto"
-  }
-]}
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Depende del contexto'},
+  ]}
 >
   <slot name="question">
   <div className="question">
@@ -177,8 +168,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="Interfaces Avanzadas"
-  title="Símbolos Únicos"
+  group="Interfaces avanzadas"
+  title="Símbolos únicos"
   options={[
     {text: 'Depende de sus descripciones'},
     {text: 'true'},
@@ -211,8 +202,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Interfaces avanzadas"
   title="Símbolos como claves no enumerables"
   options={[
-    {text: 'No, no lo hará', isAnswer: true},
-    {text: 'Sí, aparecerá en la lista'},
+    {text: 'No, no se listará', isAnswer: true},
+    {text: 'Sí, se listará'},
     {text: 'Depende del método de iteración'},
     {text: 'Lanza un error'},
   ]}
@@ -234,7 +225,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Las propiedades con clave Symbol pueden tener su propia bandera `enumerable`, pero `for...in` y `Object.keys()` solo recorren propiedades enumerables con clave de tipo string. En este ejemplo, solo se listará `regularKey`, no la propiedad con clave Symbol.
+    Las propiedades con clave Symbol pueden tener su propio atributo `enumerable`, pero `for...in` y `Object.keys()` solo recorren propiedades enumerables con clave de tipo cadena. En este ejemplo, solo se listará `regularKey`, no la propiedad con clave Symbol.
   </div>
   </slot>
 <slot name="hints">
