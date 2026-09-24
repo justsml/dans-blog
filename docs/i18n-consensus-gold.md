@@ -169,3 +169,28 @@ JSONL. Configuration, manifests and frozen input snapshots remain JSON; native
 CLI stdout/stderr remain verbatim evidence. Readers accept legacy JSON results
 so prior runs remain resumable without rewriting their evidence or hashes.
 The benchmark fixture reader accepts `.jsonl`, `.ndjson` and legacy `.json`.
+
+## Expanded batch and golden export
+
+```bash
+bun src/scripts/i18n/negotiation/refine-batch.ts
+bun src/scripts/i18n/negotiation/export-batch.ts \
+  reports/i18n/consensus-batches/2026-09-23-expanded \
+  datasets/i18n/consensus-gold/v1 v1
+```
+
+The expanded sample contains three additional source documents plus the
+original Spanish/Japanese article cases. `selection.jsonl` records the
+sampling rationale. Frozen snapshots include exact current source/target text,
+paths, SHA-256 hashes and translation history. Refinement alternates the editor
+that proposes a complete revision; both editors then vote on each listed
+change's wording and severity and independently score the whole candidate.
+Separate blind reviewers see only source and candidate. Failed validation or
+review goes back into the next round, bounded at four rounds. All revisions,
+rejections and source concerns remain in JSONL receipts and the ledger.
+
+The exporter requires every selected case to pass and verifies final candidate
+hashes against both results and the negotiation ledger. It combines multiple
+runs into one immutable dataset version, with the full frozen inputs embedded
+in each `cases.jsonl` record. It refuses duplicate cases and existing output
+directories. Published source translations are not overwritten by this export.

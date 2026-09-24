@@ -27,15 +27,25 @@ export function goldenBenchmarkFixtures(cases:GoldenCase[]) {
 export function assertCurrentSourceMatches(c:GoldenCase,currentContents:string) {
  if(hash(currentContents)!==c.source.sha256)throw Error('Source changed: use a new dataset case/version, not this reference');
 }
-export function exportGoldenDataset(runDir:string,datasetDir:string,version:string) {
+export function exportGoldenDataset(runInput:string|string[],datasetDir:string,version:string) {
  if(existsSync(datasetDir))throw Error('Dataset versions are immutable; choose a new directory');
- const manifestText=readFileSync(join(runDir,'manifest.json'),'utf8'),manifest=JSON.parse(manifestText);
+ const runDirs=typeof runInput==='string'?[runInput]:runInput;
+ if(!runDirs.length)throw Error('At least one admitted run is required');
  const cases:GoldenCase[]=[];
+ const rubricHashes=new Set<string>();
+ for(const runDir of runDirs){
+ const manifestText=readFileSync(join(runDir,'manifest.json'),'utf8'),manifest=JSON.parse(manifestText);
+ rubricHashes.add(manifest.identity.rubricHash);
  for(const locale of manifest.identity.locales){
   const snapshot=JSON.parse(readFileSync(join(runDir,locale+'-snapshot.json'),'utf8'));
   const resultText=readRecordText(join(runDir,locale+'-result.json')),result=readRecord(join(runDir,locale+'-result.json'));
   const ledgerText=readRecordText(join(runDir,locale+'-ledger.json'));
   const candidate=readFileSync(join(runDir,locale+'-candidate.mdx'),'utf8');
+  if(manifest.identity.protocol==='refinement-v1'){
+   const ledger=JSON.parse(ledgerText),round=ledger.rounds.at(-1);
+   if(!round?.gold||round.candidateHash!==hash(candidate)||round.proposal.translation!==candidate)throw Error('Negotiation ledger does not attest final candidate');
+   if(round.approvals.length<2||!round.approvals.every((a:any)=>a.changeVotes.length===round.proposal.changes.length&&new Set(a.changeVotes.map((v:any)=>v.index)).size===round.proposal.changes.length&&a.changeVotes.every((v:any)=>v.agreeWording&&v.agreeSeverity&&v.severity===round.proposal.changes[v.index]?.severity)))throw Error('Missing wording/severity consensus');
+  }
   const assessments=result.assessments.map((a:unknown)=>assessmentSchema.parse(a));
   const blind=result.audits.map((a:any)=>assessmentSchema.parse(a.blind.candidates.find((c:any)=>c.label===a.mapping.candidate).assessment));
   const unresolvedEvidence=assessments.some((a:z.infer<typeof assessmentSchema>)=>a.unresolved.some(i=>i.requiresReference&&i.severity>=2));
@@ -51,10 +61,12 @@ export function exportGoldenDataset(runDir:string,datasetDir:string,version:stri
    confidence:result.confidence,
   }));
  }
+ }
+ if(new Set(cases.map(c=>c.id)).size!==cases.length)throw Error('Duplicate golden case IDs');
  mkdirSync(datasetDir,{recursive:true});
  const contents=cases.map(c=>JSON.stringify(c)).join('\n')+'\n';
  writeFileSync(join(datasetDir,'cases.jsonl'),contents);
- writeFileSync(join(datasetDir,'manifest.json'),JSON.stringify({schemaVersion:1,datasetVersion:version,referenceType:'synthetic-consensus-gold',caseCount:cases.length,casesSha256:hash(contents),createdAt:new Date().toISOString(),rubricHash:manifest.identity.rubricHash,usage:'Canonical golden references for translation/harness evals. Keep fixed per benchmark version; create a new version when inputs or references change.'},null,2)+'\n');
+ writeFileSync(join(datasetDir,'manifest.json'),JSON.stringify({schemaVersion:1,datasetVersion:version,referenceType:'synthetic-consensus-gold',caseCount:cases.length,casesSha256:hash(contents),createdAt:new Date().toISOString(),rubricHashes:[...rubricHashes],usage:'Canonical golden references for translation/harness evals. Keep fixed per benchmark version; create a new version when inputs or references change.'},null,2)+'\n');
  writeRecords(join(datasetDir,'benchmark-fixtures.jsonl'),goldenBenchmarkFixtures(cases));
  return loadGoldenDataset(datasetDir);
 }

@@ -28,6 +28,9 @@ export function cliAnswer(backend:CliBackend,stdout:string,answer?:string):strin
 }
 /** A fresh subprocess per role/round; only the coordinator can apply changes. */
 export async function runCli(backend:CliBackend,actor:CliActor,prompt:string,schema:unknown,receiptPrefix:string,timeoutMs=240000){
+ // CLI validators lag Zod's draft identifier; schema keywords remain unchanged.
+ const {$schema: _dialect,...cliSchema}=schema as Record<string,unknown>;
+ schema=cliSchema;
  const dir=mkdtempSync(join(tmpdir(),'translation-negotiation-'));
  writeFileSync(join(dir,'schema.json'),JSON.stringify(schema));
  const command=cliCommand(backend,actor,dir,schema);

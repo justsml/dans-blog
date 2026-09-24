@@ -1,0 +1,14 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {resolve,join} from 'node:path';
+import {exportGoldenDataset} from './dataset.ts';
+import {writeRecords,readRecord} from './records.ts';
+const [input,output,version]=process.argv.slice(2);
+if(!input||!output||!version)throw Error('Usage: bun export-batch.ts BATCH_DIR NEW_DATASET_DIR VERSION');
+const batch=resolve(input);
+const selection=readFileSync(join(batch,'selection.jsonl'),'utf8').trim().split('\n').filter(Boolean).map(line=>JSON.parse(line));
+const rows=selection.map(s=>{const dir=join(batch,s.post+'-'+s.locale);return {dir,...readRecord(join(dir,s.locale+'-result.json'))};});
+if(rows.some(r=>!r.gold))throw Error('Batch incomplete or not admitted; resolve failed cases before publishing the complete dataset');
+const cases=exportGoldenDataset(rows.map(r=>r.dir),resolve(output),version);
+writeRecords(join(output,'selection.jsonl'),readFileSync(join(batch,'selection.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line)));
+writeFileSync(join(output,'README.md'),'# Translation consensus gold '+version+'\n\n'+cases.length+' frozen reference cases across '+new Set(cases.map(c=>c.source.path)).size+' source documents.\n\n`cases.jsonl` contains exact source, starting translation and negotiated reference text with SHA-256 hashes, paths, consensus/audit lineage and confidence. `benchmark-fixtures.jsonl` exposes only frozen source and canonical target to the eval harness. `selection.jsonl` records sampling rationale.\n\nEach admitted translation passed two-editor wording/severity approval, structural/MDX checks, and separate blind frontier reviews. Authorial edge is preserved; inherited English defects are recorded in the run ledger. Change source bytes only by creating a new case/version.\n');
+console.log(JSON.stringify(cases.map(c=>({id:c.id,sourceHash:c.source.sha256,referenceHash:c.reference.sha256}))));
