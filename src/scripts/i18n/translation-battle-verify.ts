@@ -1,0 +1,21 @@
+import {readFileSync,readdirSync,writeFileSync} from 'node:fs';
+import {join} from 'node:path';
+import matter from 'gray-matter';
+import {compile} from '@mdx-js/mdx';
+import {parseQuiz} from './quiz-parser.ts';
+const dir=process.argv[2]??'reports/i18n/translation-battles/2026-09-24-gold-v1';
+const read=(p:string)=>JSON.parse(readFileSync(p,'utf8'));
+const cases=readFileSync(join(dir,'inputs.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line)) as any[];
+const results=readdirSync(dir).filter(f=>f.startsWith('gen-')&&f.endsWith('-result.jsonl')).map(f=>read(join(dir,f)));
+const signature=(s:string)=>parseQuiz(matter(s).content).challenges.map(c=>({index:c.index,answers:c.options.map(o=>!!o.isAnswer),clientVisible:c.clientVisible}));
+const quiz=results.filter(r=>cases.find(c=>c.id===r.caseId).source.text.includes('<Challenge')).map(r=>{try{return {id:r.id,model:r.model,passed:JSON.stringify(signature(cases.find(c=>c.id===r.caseId).source.text))===JSON.stringify(signature(r.target))};}catch(e){return {id:r.id,model:r.model,passed:false,error:String(e)};}});
+writeFileSync(join(dir,'quiz-checks.jsonl'),quiz.map(r=>JSON.stringify(r)).join('\n')+'\n');
+const mdx=[];for(const r of results){const raw=read(join(dir,'calls',r.id+'.jsonl'));let rawError=null,normalizedError=null;try{await compile(matter(raw.text??'').content);}catch(e){rawError=String(e);}try{await compile(matter(r.target).content);}catch(e){normalizedError=String(e);}mdx.push({id:r.id,model:r.model,rawError,normalizedError});}
+writeFileSync(join(dir,'mdx-checks.jsonl'),mdx.map(r=>JSON.stringify(r)).join('\n')+'\n');
+const calls=readdirSync(join(dir,'calls')).map(f=>read(join(dir,'calls',f)));
+const base=process.env.LANGFUSE_BASE_URL??process.env.LANGFUSE_HOST??'http://dev03.local:3344';
+const headers={Authorization:'Basic '+Buffer.from(process.env.LANGFUSE_PUBLIC_KEY+':'+process.env.LANGFUSE_SECRET_KEY).toString('base64')};
+const rows:any[]=[];let index=0;
+await Promise.all(Array.from({length:4},async()=>{while(index<calls.length){const c=calls[index++];const response=await fetch(base+'/api/public/traces/'+c.traceId,{headers});const trace=await response.json();const generations=trace.observations?.filter((o:any)=>o.type==='GENERATION')??[];rows.push({callId:c.id,traceId:c.traceId,httpStatus:response.status,generationCount:generations.length,observations:generations.map((o:any)=>({id:o.id,model:o.model,costDetails:o.costDetails,usageDetails:o.usageDetails,metadata:o.metadata})),localCost:c.telemetry?.providerCostUsd,costMatches:generations.length===1&&generations[0].costDetails?.total===c.telemetry?.providerCostUsd,traceUrl:base+'/project/cmud8ag3e0001si073dk7vrvu/traces/'+c.traceId});}}));
+writeFileSync(join(dir,'langfuse-verification.jsonl'),rows.map(r=>JSON.stringify(r)).join('\n')+'\n');
+console.log(JSON.stringify({calls:calls.length,tracesFound:rows.filter(r=>r.httpStatus===200).length,singleGeneration:rows.filter(r=>r.generationCount===1).length,costMatches:rows.filter(r=>r.costMatches).length,quiz}));
