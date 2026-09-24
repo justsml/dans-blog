@@ -1,3 +1,4 @@
+import {normalizeSeverity} from './severity.ts';
 import {readRecordText,readRecord,writeRecords} from './records.ts';
 import {existsSync,mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {join,resolve} from 'node:path';
@@ -8,6 +9,7 @@ export const goldenCaseSchema=z.object({
  schemaVersion:z.literal(1),id:z.string(),datasetVersion:z.string(),status:z.literal('gold'),
  locale:z.enum(['es','ja']),source:artifact,baseline:artifact,reference:artifact,
  dimensions:z.array(z.string()),lineage:z.object({runPath:z.string(),manifestSha256:z.string(),ledgerSha256:z.string(),resultSha256:z.string(),method:z.literal('adversarial-consensus'),createdAt:z.string()}),
+ quality:z.object({severityScale:z.literal('1-5'),editorAssessments:z.array(assessmentSchema),blindAssessments:z.array(assessmentSchema)}).optional(),
  confidence:z.object({count:z.number(),mean:z.number().nullable(),median:z.number().nullable(),meaning:z.string()}),
 });
 export type GoldenCase=z.infer<typeof goldenCaseSchema>;
@@ -44,11 +46,13 @@ export function exportGoldenDataset(runInput:string|string[],datasetDir:string,v
   if(manifest.identity.protocol==='refinement-v1'){
    const ledger=JSON.parse(ledgerText),round=ledger.rounds.at(-1);
    if(!round?.gold||round.candidateHash!==hash(candidate)||round.proposal.translation!==candidate)throw Error('Negotiation ledger does not attest final candidate');
-   if(round.approvals.length<2||!round.approvals.every((a:any)=>a.changeVotes.length===round.proposal.changes.length&&new Set(a.changeVotes.map((v:any)=>v.index)).size===round.proposal.changes.length&&a.changeVotes.every((v:any)=>v.agreeWording&&v.agreeSeverity&&v.severity===round.proposal.changes[v.index]?.severity)))throw Error('Missing wording/severity consensus');
+   if(round.stage==='frozen-text-endorsement'){
+    if(round.endorsements.length<2||!round.endorsements.every((e:any)=>e.approveExactText&&e.candidateHash===hash(candidate))||!meetsQualityGate(round.endorsements.map((e:any)=>assessmentSchema.parse(normalizeSeverity(e.assessment,round.severityScale??'0-4'))),round.validation.passed,false))throw Error('Missing exact-text endorsement');
+   }else if(round.approvals.length<2||!round.approvals.every((a:any)=>a.changeVotes.length===round.proposal.changes.length&&new Set(a.changeVotes.map((v:any)=>v.index)).size===round.proposal.changes.length&&a.changeVotes.every((v:any)=>v.agreeWording&&v.agreeSeverity&&v.severity===round.proposal.changes[v.index]?.severity)))throw Error('Missing wording/severity consensus');
   }
-  const assessments=result.assessments.map((a:unknown)=>assessmentSchema.parse(a));
-  const blind=result.audits.map((a:any)=>assessmentSchema.parse(a.blind.candidates.find((c:any)=>c.label===a.mapping.candidate).assessment));
-  const unresolvedEvidence=assessments.some((a:z.infer<typeof assessmentSchema>)=>a.unresolved.some(i=>i.requiresReference&&i.severity>=2));
+  const assessments=result.assessments.map((a:unknown)=>assessmentSchema.parse(normalizeSeverity(a,result.severityScale??'0-4')));
+  const blind=result.audits.map((a:any)=>assessmentSchema.parse(normalizeSeverity(a.blind.candidates.find((c:any)=>c.label===a.mapping.candidate).assessment,result.severityScale??'0-4')));
+  const unresolvedEvidence=assessments.some((a:z.infer<typeof assessmentSchema>)=>a.unresolved.some(i=>i.requiresReference&&i.severity>=3));
   if(!result.gold||!meetsQualityGate(assessments,result.validation.passed,unresolvedEvidence)||!meetsQualityGate(blind,result.validation.passed,false))throw Error('Case has not passed consensus and blind audit gates: '+locale);
   if(hash(snapshot.source)!==snapshot.sourceHash||hash(snapshot.target)!==snapshot.targetHash||hash(candidate)!==result.candidateHash)throw Error('Pilot artifact drift');
   if(result.sourceHash!==snapshot.sourceHash||result.baselineHash!==snapshot.targetHash)throw Error('Pilot identity mismatch');
@@ -58,6 +62,7 @@ export function exportGoldenDataset(runInput:string|string[],datasetDir:string,v
    reference:{path:join(runDir,locale+'-candidate.mdx'),sha256:hash(candidate),text:candidate},
    dimensions:assessments[0].ratings.map((r:any)=>r.dimension),
    lineage:{runPath:runDir,manifestSha256:hash(manifestText),ledgerSha256:hash(ledgerText),resultSha256:hash(resultText),method:'adversarial-consensus',createdAt:new Date().toISOString()},
+   quality:{severityScale:'1-5',editorAssessments:assessments,blindAssessments:blind},
    confidence:result.confidence,
   }));
  }
@@ -66,7 +71,7 @@ export function exportGoldenDataset(runInput:string|string[],datasetDir:string,v
  mkdirSync(datasetDir,{recursive:true});
  const contents=cases.map(c=>JSON.stringify(c)).join('\n')+'\n';
  writeFileSync(join(datasetDir,'cases.jsonl'),contents);
- writeFileSync(join(datasetDir,'manifest.json'),JSON.stringify({schemaVersion:1,datasetVersion:version,referenceType:'synthetic-consensus-gold',caseCount:cases.length,casesSha256:hash(contents),createdAt:new Date().toISOString(),rubricHashes:[...rubricHashes],usage:'Canonical golden references for translation/harness evals. Keep fixed per benchmark version; create a new version when inputs or references change.'},null,2)+'\n');
+ writeFileSync(join(datasetDir,'manifest.json'),JSON.stringify({schemaVersion:1,datasetVersion:version,referenceType:'synthetic-consensus-gold',severityScale:'1-5',blockingSeverityMinimum:3,legacySeverityMapping:'0-4 values map to 1-5 by adding one; raw lineage is preserved',caseCount:cases.length,casesSha256:hash(contents),createdAt:new Date().toISOString(),rubricHashes:[...rubricHashes],usage:'Canonical golden references for translation/harness evals. Keep fixed per benchmark version; create a new version when inputs or references change.'},null,2)+'\n');
  writeRecords(join(datasetDir,'benchmark-fixtures.jsonl'),goldenBenchmarkFixtures(cases));
  return loadGoldenDataset(datasetDir);
 }

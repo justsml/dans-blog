@@ -1,0 +1,127 @@
+---
+social_image: ../desktop-social.webp
+title: 数字と通貨の国際的な表記を理解する
+subTitle: 通貨表示のローカライズを解説！
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+sourceHash: "35a9fa8c75e4"
+---
+- [お金：ローカライゼーション（L10n）とインターナショナリゼーション（i18n）](#お金ローカライゼーションl10nとインターナショナリゼーションi18n)
+- [重要な概念](#重要な概念)
+  - [数字はローカル 🏘️](#数字はローカル-️)
+  - [通貨はグローバル 🌎](#通貨はグローバル-)
+  - [ロケールが重要になる場面](#ロケールが重要になる場面)
+- [解決策](#解決策)
+- [次のステップ](#次のステップ)
+
+## お金：ローカライゼーション（L10n）とインターナショナリゼーション（i18n）
+
+*ローカライゼーション*と*インターナショナリゼーション*は、スクラブルで相手を圧倒するためだけの長い単語じゃない。製品を**別の国でも違和感なく使えるようにする**プロセスのことだ。
+
+<p class="breakout quote">通貨を現地と違う形式で表示すれば、手抜きがバレバレだ。<br/>価格のフォーマットすらできないのに、配送をどう扱うつもりだ？</p>
+
+インターナショナリゼーションは大きなテーマで、テキストの翻訳から日付のフォーマットまで幅広い。この記事では、その中でも**数字と通貨のフォーマット**に絞る。
+
+ユーロ圏の3カ国、アメリカ、インドでの表記の違いを見てみよう：
+
+- `€1,234,567.89` アイルランド 🇮🇪
+- `1.234.567,89 €` ドイツ 🇩🇪
+- `1 234 567,89 €` フランス 🇫🇷
+- `$1,234,567.89` アメリカ 🇺🇸
+- `₹12,34,567.89` インド 🇮🇳
+
+カオスでしょ？ 通貨記号もスペースも区切り記号もバラバラ！ EUが何かで合意できるなんて驚きだ！ 😅
+
+## 重要な概念
+
+解決策を見る前に、「数字はローカル」とはどういう意味かを考えてみよう。
+
+### 数字はローカル 🏘️
+
+すべてのロケール（[ISO 3166 による国コード](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)）は、数字の表記ルールを定めている。
+
+数字の表記ルールには、次のようなものがある：
+
+- 小数点：カンマ、ピリオド。
+- 桁区切り：カンマ、ピリオド、スペース。
+- 通貨記号の位置と前後の空白。
+
+### 通貨はグローバル 🌎
+
+`currency`（通貨）は特定の貨幣単位を指す。（一覧は[ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one))を参照。）
+
+- 記号を持つ：`$`、`€`、`£`、`¥`。（同じ記号が複数の通貨で使われることも多い。）
+- 必ず3文字のコードを持つ：`USD`、`EUR`、`GBP`、`JPY`。
+- 「どの」国でも使えるし、交換もできる。理論上は。
+- 通貨間の換算には為替レートのデータが必要。
+- 通貨の価値はロケールによって変わらない。
+
+### ロケールが重要になる場面
+
+ほとんどのEC・決済系REST APIは `price` + `currencyCode` を扱う。なぜロケールは含まれないのか？
+
+ロケールは通常OSやデバイスで設定され、ブラウザでは `navigator.language` から取得できる。ユーザーごとにロケールが違いうる以上、数字や通貨のフォーマットはクライアント側で行うのが筋だ。
+
+## 解決策
+
+さて、朗報だ！ 現代のプログラミング言語には、このための組み込み機能がある。JavaScript では [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) クラスと `Intl.NumberFormat` が使える！
+
+コードを見てみよう：
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+税金の計算、割引の適用、通貨間の換算など、もっと凝った処理が必要なら、[dinero.js](https://v2.dinerojs.com/) のようなライブラリを使うといい。
+
+## 次のステップ
+
+必要に応じて、次の関連トピックも見てみよう：
+
+- ユーザーのロケールのベストプラクティス。検出し、変更もできるようにする（例：国を選ぶドロップダウン）。
+- 整数での保存（ドルではなくセント単位で保存する）。
+- 金額の計算（例：`20% off` クーポンの適用、`subTotal + taxes` の計算など）。
+- リアルタイムの為替レート（小売での購入や、外国為替取引・両替向け）。
+
+<p class="breakout quote">今後これらのトピックを扱う記事を読みたければ、教えてほしい！</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks: 
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) supports money math, exchange rates, formatting, and parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) is my preferred Rust library.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) is my current Golang choice.
+ */}

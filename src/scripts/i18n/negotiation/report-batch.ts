@@ -1,0 +1,20 @@
+import {readFileSync,writeFileSync,existsSync} from 'node:fs';
+import {join,resolve} from 'node:path';
+import {readRecord,recordPath,writeRecords} from './records.ts';
+const base=resolve(process.argv[2]??'reports/i18n/consensus-batches/2026-09-23-expanded');
+const selected=readFileSync(join(base,'selection.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line));
+const rows=selected.map(s=>{
+ const dir=s.runPath??join(base,s.post+'-'+s.locale),file=join(dir,s.locale+'-result.json');
+ if(!existsSync(recordPath(file)))return {...s,status:'pending',round:null,editorMean:null,blindMean:null,sourceConcerns:[]};
+ const result=readRecord(file),ledger=readRecord(join(dir,s.locale+'-ledger.json'));
+ const mean=(assessments:any[])=>{const scores=assessments.flatMap(a=>a.ratings.map((r:any)=>r.score));return scores.length?scores.reduce((a:number,b:number)=>a+b,0)/scores.length:null;};
+ return {...s,status:result.status,round:ledger.rounds.at(-1).round,sourceHash:result.sourceHash,referenceHash:result.candidateHash,editorMean:mean(result.assessments),blindMean:mean(result.audits.map((a:any)=>a.blind.candidates.find((c:any)=>c.label===a.mapping.candidate).assessment)),confidence:result.confidence,sourceConcerns:ledger.rounds.at(-1).approvals.flatMap((a:any)=>a.sourceConcerns),validationPassed:result.validation.passed};
+});
+writeRecords(join(base,'summary.jsonl'),rows);
+writeRecords(join(base,'results.jsonl'),rows.map(r=>({...r,gold:r.status==='synthetic-consensus-gold'})));
+const number=(v:number|null)=>v===null?'—':v.toFixed(2);
+let report='# Expanded translation negotiation\n\nThree added source documents plus the original Spanish/Japanese pilot: five frozen cases across four source documents.\n\n| Sample | Locale | Status | Round | Editor mean / 5 | Blind mean / 5 |\n|---|---|---|---:|---:|---:|\n';
+for(const r of rows)report+='| '+r.post.replace(/^\d{4}-\d{2}-\d{2}--/,'')+' | '+r.locale+' | '+r.status+' | '+(r.round??'—')+' | '+number(r.editorMean)+' | '+number(r.blindMean)+' |\n';
+report+='\nMeans summarize ten ordinal rubric dimensions across two reviewers; admission requires every dimension ≥4, no unresolved severity ≥3 translation defects, explicit approval of the final text, and structural validation. Confidence is self-reported, not calibrated. Source concerns remain in each ledger and are not silently corrected.\n\nAll source/target snapshots are immutable inputs; final candidate hashes bind the golden references. JSONL call records preserve claims, disagreements, revisions, approvals and blind audits. Native CLI receipts retain any usage and cost metadata supplied by the tools; absent billing data is unknown. Published translations were not overwritten.\n';
+writeFileSync(join(base,'summary.md'),report);
+console.log(report);

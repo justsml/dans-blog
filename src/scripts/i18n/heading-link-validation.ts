@@ -45,6 +45,13 @@ export function analyzeHeadingAnchorLinks({
   const targetHeadings = extractHeadingAnchors(targetContents);
   const sourceHeadingByFragment = new Map(sourceHeadings.map((heading, index) => [heading.fragment, { heading, index }]));
   const targetHeadingByFragment = new Map(targetHeadings.map((heading, index) => [heading.fragment, { heading, index }]));
+  const sourceHeadingFor = (fragment: string) => {
+    const exact = sourceHeadingByFragment.get(fragment);
+    if (exact != null) return exact;
+    const plain = (value: string) => value.replace(/[\uFE0E\uFE0F]/g, "");
+    const matches = [...sourceHeadingByFragment].filter(([key]) => plain(key) === plain(fragment));
+    return matches.length === 1 ? matches[0][1] : undefined;
+  };
   const sourceLinks = extractLinks(sourceContents);
   const targetLinks = extractLinks(targetContents);
   const failures: HeadingAnchorLinkFailure[] = [];
@@ -57,7 +64,7 @@ export function analyzeHeadingAnchorLinks({
     const pairedSourceFragment = pairedSourceLink?.fragment;
     const pairedSourceHeading = pairedSourceFragment == null
       ? undefined
-      : sourceHeadingByFragment.get(pairedSourceFragment);
+      : sourceHeadingFor(pairedSourceFragment);
     const existingTargetHeading = targetHeadingByFragment.get(targetFragment);
     if (existingTargetHeading != null) {
       checkedLinks += 1;

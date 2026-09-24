@@ -798,6 +798,13 @@ function normalizeLinkTarget(value: string, headingAnchorIndexes = new Map<strin
   if (samePageFragment != null) {
     const headingIndex = headingAnchorIndexes.get(samePageFragment);
     if (headingIndex != null) return `#heading:${headingIndex}`;
+    // Compare heading intent when an inherited fragment contains a stray emoji
+    // variation selector. Actual target-link validity is checked independently
+    // by analyzeHeadingAnchorLinks; this is not a URL rewrite or validity check.
+    const withoutPresentation = (fragment: string) => fragment.replace(/[\uFE0E\uFE0F]/g, "");
+    const matches = [...headingAnchorIndexes].filter(([fragment]) =>
+      withoutPresentation(fragment) === withoutPresentation(samePageFragment));
+    if (matches.length === 1) return `#heading:${matches[0][1]}`;
   }
   return decoded;
 }

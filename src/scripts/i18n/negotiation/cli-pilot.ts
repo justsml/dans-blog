@@ -5,7 +5,7 @@ import {resolve,join} from 'node:path';
 const args=process.argv.slice(2);
 const value=(key:string,fallback:string)=>{const i=args.indexOf(key);return i<0?fallback:args[i+1]!;};
 const seed=resolve(value('--seed','reports/i18n/consensus-pilots/2026-09-23-named-exports'));
-const out=resolve(value('--out','reports/i18n/consensus-pilots/2026-09-23-named-exports-cli'));
+const out=resolve(value('--out','reports/i18n/consensus-pilots/2026-09-23-named-exports-cli-severity-1-5'));
 if(seed===out)throw Error('CLI output must differ from seed');
 mkdirSync(out,{recursive:true});
 for(const name of ['catalog.json','references.json'])if(!existsSync(join(out,name)))copyFileSync(join(seed,name),join(out,name));

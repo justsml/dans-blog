@@ -1,18 +1,18 @@
+import {validateNegotiatedTranslation} from './batch-validation.ts';
 import {readFileSync,writeFileSync,mkdirSync,existsSync,appendFileSync,readdirSync,renameSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {z} from 'zod';
-import matter from 'gray-matter';
-import {compile} from '@mdx-js/mdx';
 import {runCli,type CliBackend} from './cli-transport.ts';
-import {hash,rubric,assessmentSchema,meetsQualityGate,protectedDiff} from './protocol.ts';
+import {hash,rubric,assessmentSchema,meetsQualityGate} from './protocol.ts';
 import {writeRecords,readRecord} from './records.ts';
 import {snapshotHistory} from './history.ts';
-import {validateTranslation} from '../core/validate.ts';
-import {parseQuiz} from '../quiz-parser.ts';
 import {extractJsonObject} from '../judge-utils.ts';
 
 const root=process.cwd();
 const base=resolve(process.argv[2]??'reports/i18n/consensus-batches/2026-09-23-expanded');
+const revisionIndex=process.argv.indexOf('--revision');
+const revision=revisionIndex<0?'':process.argv[revisionIndex+1]!;
+if(revision&&!/^[a-z0-9-]+$/.test(revision))throw Error('Invalid revision name');
 const seed=resolve('reports/i18n/consensus-pilots/2026-09-23-named-exports');
 const samples=[
  {post:'2023-08-18--should-you-use-named-or-default-exports',locale:'es',reason:'Complete original negotiated pilot; fix remaining idiom and code preservation defects.'},
@@ -25,11 +25,11 @@ const editors=[{id:'editor-A',model:'openai/gpt-6-sol',effort:'high',backend:'co
 const auditors=[{id:'auditor-A',model:'openai/gpt-6-astra',effort:'high',backend:'codex'},{id:'auditor-B',model:'anthropic/claude-fable-5.1',effort:'high',backend:'claude'}] as const;
 type Actor={id:string;model:string;effort:string;backend:CliBackend};
 const reviewSchema=z.object({assessment:assessmentSchema,sourceConcerns:z.array(z.string())});
-const proposalSchema=z.object({translation:z.string().min(100),changes:z.array(z.object({before:z.string(),after:z.string(),severity:z.number().int().min(0).max(4),confidence:z.number().min(0).max(1),rationale:z.string(),evidenceIds:z.array(z.string())})),responseToPeer:z.string(),sourceConcerns:z.array(z.string())});
-const approvalSchema=z.object({assessment:assessmentSchema,changeVotes:z.array(z.object({index:z.number().int(),agreeWording:z.boolean(),agreeSeverity:z.boolean(),severity:z.number().int().min(0).max(4),rationale:z.string()})),sourceConcerns:z.array(z.string())});
+const proposalSchema=z.object({translation:z.string().min(100),changes:z.array(z.object({before:z.string(),after:z.string(),severity:z.number().int().min(1).max(5),confidence:z.number().min(0).max(1),rationale:z.string(),evidenceIds:z.array(z.string())})),responseToPeer:z.string(),sourceConcerns:z.array(z.string())});
+const approvalSchema=z.object({assessment:assessmentSchema,changeVotes:z.array(z.object({index:z.number().int(),agreeWording:z.boolean(),agreeSeverity:z.boolean(),severity:z.number().int().min(1).max(5),rationale:z.string()})),sourceConcerns:z.array(z.string())});
 const system=rubric+'\nAssess translation defects only in unresolved. Put inherited English factual/code defects in sourceConcerns, never in translation unresolved or readiness scores. Protect the source even where it is wrong. The task is a native-quality adaptation retaining the author’s edge. Inline frozen evidence replaces tool access; do not access other files or run tools. Do not invent references. English code comments must be preserved verbatim, including nested fences. Preserve all original target frontmatter metadata. Return only the requested JSON.';
 mkdirSync(base,{recursive:true});
-writeRecords(join(base,'selection.jsonl'),samples.map(s=>({...s,selectedAt:'2026-09-23',sourcePath:'src/content/posts/'+s.post+'/index.mdx'})));
+if(!existsSync(join(base,'selection.jsonl')))writeRecords(join(base,'selection.jsonl'),samples.map(s=>({...s,selectedAt:'2026-09-23',sourcePath:'src/content/posts/'+s.post+'/index.mdx'})));
 async function all<T>(jobs:Promise<T>[]){const results=await Promise.allSettled(jobs);const errors=results.filter(r=>r.status==='rejected');if(errors.length)throw new AggregateError(errors.map(r=>(r as PromiseRejectedResult).reason));return results.map(r=>(r as PromiseFulfilledResult<T>).value);}
 async function call<T>(dir:string,key:string,actor:Actor,task:string,schema:z.ZodType<T>){
  const outputSchema=z.toJSONSchema(schema),request={actor,system,task,outputSchema},fingerprint=hash(JSON.stringify(request));
@@ -48,19 +48,9 @@ async function call<T>(dir:string,key:string,actor:Actor,task:string,schema:z.Zo
  console.log(dir.split('/').pop()+' '+key+' complete');return value;
  }catch(error){writeRecords(path+'-error.jsonl',[{fingerprint,error:String(error)}]);throw error;}
 }
-async function validate(source:string,target:string,baseline:string,path:string,locale:'es'|'ja'){
- const structural=validateTranslation({sourceContents:source,targetContents:target,targetPath:path,locale});
- let mdxError:string|null=null;try{await compile(matter(target).content);}catch(error){mdxError=String(error);}
- const protectedChanges=protectedDiff(baseline,target,source);
- let quizError:string|null=null;
- if(source.includes('<Challenge'))try{
-  const signature=(text:string)=>parseQuiz(matter(text).content).challenges.map(c=>({index:c.index,answers:c.options.map(o=>!!o.isAnswer),clientVisible:c.clientVisible}));
-  if(JSON.stringify(signature(source))!==JSON.stringify(signature(target)))throw Error('Quiz answer positions/index/hydration changed');
- }catch(error){quizError=String(error);}
- return {structural,mdxError,protectedChanges,quizError,passed:structural.passed&&!mdxError&&!protectedChanges.length&&!quizError};
-}
+
 async function run(sample:typeof samples[number]){
- const {post,locale}=sample,dir=join(base,post+'-'+locale);mkdirSync(dir,{recursive:true});
+ const {post,locale}=sample,originalDir=join(base,post+'-'+locale),dir=revision?originalDir+'-'+revision:originalDir;mkdirSync(dir,{recursive:true});
  const sourcePath='src/content/posts/'+post+'/index.mdx',targetPath='src/content/posts/'+post+'/'+locale+'/index.mdx';
  const snapshotPath=join(dir,locale+'-snapshot.json');
  const source=readFileSync(sourcePath,'utf8'),target=readFileSync(targetPath,'utf8');
@@ -68,7 +58,9 @@ async function run(sample:typeof samples[number]){
  if(snapshot.sourceHash!==hash(source)||snapshot.targetHash!==hash(target)||hash(snapshot.source)!==snapshot.sourceHash||hash(snapshot.target)!==snapshot.targetHash)throw Error('Frozen input drift: '+post);
  if(!existsSync(snapshotPath))writeFileSync(snapshotPath,JSON.stringify(snapshot,null,2)+'\n');
  const references=JSON.parse(readFileSync(join(seed,'references.json'),'utf8'));
- const identity={protocol:'refinement-v1',post,locales:[locale],editors,auditors,rubricHash:hash(system),snapshotHash:hash(JSON.stringify(snapshot)),referencesHash:hash(JSON.stringify(references)),maxRounds:4};
+ const continuation=revision?{from:originalDir,candidate:readFileSync(join(originalDir,locale+'-candidate.mdx'),'utf8'),result:readRecord(join(originalDir,locale+'-result.json'))}:null;
+ if(continuation)writeRecords(join(dir,'continuation.jsonl'),[continuation]);
+ const identity={...(continuation?{continuationHash:hash(JSON.stringify(continuation))}:{}),protocol:'refinement-v1',severityScale:'1-5',post,locales:[locale],editors,auditors,rubricHash:hash(system),snapshotHash:hash(JSON.stringify(snapshot)),referencesHash:hash(JSON.stringify(references)),maxRounds:4};
  const manifestPath=join(dir,'manifest.json');
  if(existsSync(manifestPath)&&JSON.stringify(JSON.parse(readFileSync(manifestPath,'utf8')).identity)!==JSON.stringify(identity))throw Error('Manifest changed');
  if(!existsSync(manifestPath))writeFileSync(manifestPath,JSON.stringify({identity,createdAt:new Date().toISOString()},null,2)+'\n');
@@ -76,6 +68,7 @@ async function run(sample:typeof samples[number]){
  const evidence={history:snapshot.history,references};
  let current=target,feedback:unknown=null;
  if(post===samples[0].post){current=readFileSync(join(seed,locale+'-candidate.mdx'),'utf8');feedback=JSON.parse(readFileSync(join(seed,locale+'-result.json'),'utf8'));}
+ if(continuation){current=continuation.candidate;feedback=continuation.result;}
  const initial=await all(editors.map(actor=>call(dir,'initial-'+actor.id,actor,'Independently assess the full current translation, before seeing a peer. Identify every actionable error and optional polish. Distinguish source concerns.\n'+JSON.stringify({...ctx,currentTranslation:current,evidence,priorPilotFindings:feedback}),reviewSchema)));
  feedback=initial;
  const rounds:unknown[]=[];
@@ -83,7 +76,7 @@ async function run(sample:typeof samples[number]){
   const author=editors[(round-1)%2]!,peer=editors[round%2]!;
   const proposal=await call(dir,'round-'+round+'-proposal',author,'Produce a complete refined translation from the CURRENT version, responding to all competing critiques. Make only defensible improvements; do not rewrite for novelty. Include full MDX frontmatter and body. Enumerate changes with exact before/after excerpts, severity, confidence and evidence IDs (source/target or checked reference). Preserve code, factual numbers, URLs, quiz answers and author voice. No new unsupported cultural claims. A prose code comment already translated must be restored to the source. Fix all substantive translation issues so the next review can pass.\n'+JSON.stringify({...ctx,currentTranslation:current,peerFeedback:feedback,evidence}),proposalSchema);
   const candidate=proposal.translation;
-  const validation=await validate(source,candidate,target,targetPath,locale);
+  const validation=await validateNegotiatedTranslation(source,candidate,target,targetPath,locale);
   writeFileSync(join(dir,locale+'-round-'+round+'.mdx'),candidate);
   const approvals=await all([author,peer].map(actor=>call(dir,'round-'+round+'-approval-'+actor.id,actor,'Critically review the proposed full translation. Vote on EVERY numbered change (zero-based index), agreeing only if both wording and severity are defensible. Reject/counter weak claims, including your own. Recheck the whole document independently against English, not just listed edits. You may approve an excellent unchanged passage. Report exact remaining translation issues; inherited source defects go ONLY in sourceConcerns.\n'+JSON.stringify({...ctx,baselineTranslation:current,candidate,proposal,validation,evidence}),approvalSchema)));
   const votesComplete=approvals.every(a=>a.changeVotes.length===proposal.changes.length&&new Set(a.changeVotes.map(v=>v.index)).size===proposal.changes.length&&a.changeVotes.every(v=>v.index>=0&&v.index<proposal.changes.length&&v.agreeWording&&v.agreeSeverity&&v.severity===proposal.changes[v.index]!.severity));
@@ -97,13 +90,13 @@ async function run(sample:typeof samples[number]){
    }));
   }
   const gold=consensus&&meetsQualityGate(audits.map(a=>a.blind.candidates[0].assessment),validation.passed,false);
-  rounds.push({round,startingHash:hash(current),candidateHash:hash(candidate),proposal,approvals,validation,consensus,gold,audits});
+  rounds.push({severityScale:'1-5',round,startingHash:hash(current),candidateHash:hash(candidate),proposal,approvals,validation,consensus,gold,audits});
   const confidences=proposal.changes.map(c=>c.confidence).sort((a,b)=>a-b);
   const confidence={count:confidences.length,mean:confidences.length?confidences.reduce((a,b)=>a+b,0)/confidences.length:null,median:confidences.length?(confidences[Math.floor((confidences.length-1)/2)]!+confidences[Math.floor(confidences.length/2)]!)/2:null,meaning:'Self-reported negotiated change confidence, not calibrated probability'};
-  const result={locale,sourceHash:snapshot.sourceHash,baselineHash:snapshot.targetHash,candidateHash:hash(candidate),consensus,gold,status:gold?'synthetic-consensus-gold':'needs-negotiation',confidence,assessments,audits,validation,round};
+  const result={severityScale:'1-5',locale,sourceHash:snapshot.sourceHash,baselineHash:snapshot.targetHash,candidateHash:hash(candidate),consensus,gold,status:gold?'synthetic-consensus-gold':'needs-negotiation',confidence,assessments,audits,validation,round};
   writeRecords(join(dir,locale+'-ledger.jsonl'),[{sourcePath,targetPath,sourceHash:snapshot.sourceHash,baselineHash:snapshot.targetHash,initial,rounds}]);
   writeRecords(join(dir,locale+'-result.jsonl'),[result]);writeFileSync(join(dir,locale+'-candidate.mdx'),candidate);
-  if(gold){console.log(post+' '+locale+' GOLD');return {dir,...result};}
+  if(gold){if(revision){const selection=readFileSync(join(base,'selection.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line));const entry=selection.find(s=>s.post===post&&s.locale===locale);entry.runPath=dir;writeRecords(join(base,'selection.jsonl'),selection);}console.log(post+' '+locale+' GOLD');return {dir,...result};}
   current=candidate;feedback={approvals,audits,validation,instruction:'Resolve remaining objections; give reasoned responses to disagreements. Do not classify source issues as translation defects.'};
  }
  return {dir,status:'needs-negotiation',gold:false};

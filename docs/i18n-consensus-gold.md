@@ -50,7 +50,7 @@ agreement between two agents does not manufacture a citation.
    rejected and disputed proposals in the ledger.
 5. Recheck the complete edited article independently, including remaining
    issues and structural/MDX validation. Both editors must find no unresolved
-   severity 2–4 translation issues and score every dimension at least 4/5.
+   severity 3–5 translation issues and score every dimension at least 4/5.
 6. Separate frontier auditors score baseline and candidate in counterbalanced
    order, without debate, authorship or confidence metadata. A sealed second
    pass reveals aggregated change confidence to measure anchoring; it does not
@@ -61,8 +61,9 @@ agreement between two agents does not manufacture a citation.
 The ten dimensions are faithfulness, technical accuracy, completeness,
 readability, grammar/spelling, idiom/metaphor adaptation, authorial voice,
 locale appropriateness, structure/flow and MDX integrity. Scores range from
-1 (unusable) to 5 (exceptional). Severity ranges from 0 (valid alternative) to
-4 (major semantic/structural damage); 1 is optional polish. Per-change
+1 (unusable) to 5 (exceptional). Severity uses 1–5: 1 is a valid alternative/no defect, 2 is optional polish,
+3 is a noticeable issue, 4 is a serious meaning/technical error, and 5 is
+critical semantic/structural damage. Severity 3–5 blocks admission. Per-change
 confidence is self-reported and retained alongside mean/median summaries.
 "Viral-worthy" is interpreted as compelling writing, not a prediction of reach.
 
@@ -194,3 +195,20 @@ hashes against both results and the negotiation ledger. It combines multiple
 runs into one immutable dataset version, with the full frozen inputs embedded
 in each `cases.jsonl` record. It refuses duplicate cases and existing output
 directories. Published source translations are not overwritten by this export.
+
+Legacy 0–4 severity values are retained in raw receipts and explicitly mapped
+to 1–5 by adding one in normalized dataset views. Rubric quality scores remain
+1–5 and confidence remains 0–1; neither is shifted. New runs declare their
+severity scale, preventing accidental double conversion.
+
+After bounded revision, `finalize-batch.ts` obtains explicit endorsements of
+the exact frozen candidate from both editors, then independent blind auditors.
+Optional stylistic alternatives remain visible; final approval is not a claim
+that every reviewer assigns the same optional-polish number. Every substantive
+issue still blocks admission. New endorsements are bound to the exact candidate
+hash. Mechanical restoration of invisible source-code spaces also requires
+fresh endorsements.
+
+A changed rubric/scale requires a new run directory; do not mix 0–4 and 1–5
+responses in one cached call identity. Legacy completed runs remain readable
+and exportable through the explicit severity conversion.

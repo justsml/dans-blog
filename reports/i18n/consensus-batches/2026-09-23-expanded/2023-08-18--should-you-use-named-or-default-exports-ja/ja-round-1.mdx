@@ -1,0 +1,99 @@
+---
+social_image: ../desktop-social.webp
+title: "ESMエクスポート：名前付き vs デフォルト？"
+subTitle: 名付けるべきか、名付けざるべきか？
+modified: 2024-08-01
+tags: [typescript,javascript,modules]
+category: Guides
+subCategory: JavaScript
+cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+sourceHash: "438740274604"
+---
+
+## JavaScriptで`named`エクスポートと`default`エクスポート、どちらを使うべきか？
+
+このトピックについて、強い言葉で書かれた記事に事欠くことはない。
+
+大多数は`default export`を「ひどい」と断じる。一方、`default`が勝つべきだと主張する人もいる（AirBnbスタイルガイドなど）。
+
+彼らがしばしば槍玉に挙げるのは、**完全に一時的な**問題だ。IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、果てはインポート名を付けるときにタイプミスするかもしれないというだけの話までだ。
+
+そもそも`export`することの本質を見落としていないか？
+
+**コードはコミュニケーションである。✨**
+
+> `import`する側に、*それをどう使うか*というシグナルを送っているのだ。
+
+### じゃあ、何を伝えているのか？
+
+大まかに言えば、モダンJavaScriptでものをエクスポートする方法は2つある：
+
+- `export default`は「***これが唯一の主役だ***」と堂々と宣言する。ついでに「名前付きエクスポートはあくまで脇役」とも伝える。
+- `named export`は「間違いなく、***ちゃんとしたモノだ！***」と言う。いくつかの疑問も浮かぶ。「他に仲間いる？」さらに、「そいつらは招待されてるの？　それとも必須？」
+
+もちろん両方を組み合わせたり、コードベースの部分ごとに異なるアプローチを使ったりすることもできる。[記事の最後でさらに例を紹介。](#まとめ)
+
+### 弱い主張だな、おい
+
+よくある「一時的な問題」を片付けていこう。
+
+- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。[source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - いや、保証しない。lintルールを探してるんじゃないのか？
+  - （言いづらいけど、変数で何ができるか知ったら驚くぞ！）
+
+```tsx
+// You can alias using both!
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
+```
+
+- 主張 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。（リンクなし、著者撤回済み。）
+  - いい機能だ。でも本質じゃない。
+  - で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。
+- 主張 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。[source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
+
+  - 今はもう間違いだ。ツールを設定・更新しよう。
+  - サポートは[VS Code](https://github.com/microsoft/vscode/pull/94480)、IntelliJなどで3年以上前から存在している。
+  - それでも、`default exports`で最高のIDE＆リファクタリング体験を得るには、いくつかの「ベストプラクティス」がある。
+  - ✅ `export default function UserService() {}` - 常に名前付き関数を優先する。
+  - ❌ `export default function() { }` - 無名関数はファイル名に暗黙的に紐づかない。ものに名前をつけないと、コンピューターに変更を依頼するのが難しくなる。
+  - **注**：歴史的な理由により、`export default`と`const`式を組み合わせることはできない。
+
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ Not Supported ❌ ^
+    // Cannot export default const ....
+    // ==========================
+
+    // However, once declared you can export a const var as the default.
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ Valid
+
+    // For completeness:
+    export default class anyoneStillUseThese {}
+    // ^ ✅ Also valid to export a class as default
+    ```
+
+<section className="scroll-x">
+## まとめ
+
+ものをエクスポートする方法には実はたくさんの組み合わせがあり、それぞれが異なる物語を語る：
+
+| デフォルト（エクスポート） | 名前付き（エクスポート） | プライベート関数 | パターン | 意味 |
+| ----------------- | --------------- | ----------- | ------- | ---- |
+| ✅ | ❌ | ❌ | デフォルトエクスポート1つ。 | 「単一の目的を持つ関数を、ただ一つお届け！」 |
+| ❌ | ✅ | ❌ | 名前付きエクスポート1つ。 | 「リネームしないでください。」 |
+| ✅ | ✅ | ✅ | デフォルトエクスポート + 複数のエクスポートされていない「プライベート」関数 | 「関連ロジックはこちら。ついでに、クラスっぽい振る舞いを期待して。」 |
+| ❌ | ❌ | ✅ | 複数の名前付きエクスポート、汎用的なファイル名。 | 「緩く関連したものたちの詰め合わせ。階層関係は暗示しない。」 |
+| ✅ | ✅ | ❌ | 単一の名前付きエクスポートをデフォルトとしてもエクスポート。 | 「こいつのインポートならしくじりようがない。」 |
+</section>
+
+**考えてみてほしい**：ファイル名がエクスポートの一つと一致するかどうかで、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）
+
+### 結論
+
+コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞

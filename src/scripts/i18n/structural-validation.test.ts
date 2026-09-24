@@ -231,3 +231,15 @@ test("an unmatched code delimiter cannot hide later questions", () => {
   const contents = "A literal unmatched ` delimiter.\n\n<Challenge title=\"Question\">\nUse `x` here.\n</Challenge>";
   expect(extractMdxStructure(contents).componentSequence).toEqual(["Challenge"]);
 });
+
+test('heading parity tolerates inherited emoji presentation typo without making a broken target valid',async()=>{
+ const {analyzeHeadingAnchorLinks}=await import('./heading-link-validation.ts');
+ const source='[Currency](#currency-is-global-\uFE0F)\n\n### Currency is Global 🌎\n';
+ const target='[通貨](#通貨は世界共通-)\n\n### 通貨は世界共通 🌎\n';
+ expect(compareMdxStructure({sourceContents:source,targetContents:target,targetPath:'ja/index.mdx'}).valid).toBe(true);
+ expect(analyzeHeadingAnchorLinks({sourceContents:source,targetContents:target}).failedLinks).toBe(0);
+ const broken=target.replace('(#通貨は世界共通-)','(#通貨は世界共通-\uFE0F)');
+ expect(analyzeHeadingAnchorLinks({sourceContents:source,targetContents:broken}).failedLinks).toBe(1);
+ const unrelated=target.replace('(#通貨は世界共通-)','(#unrelated)');
+ expect(compareMdxStructure({sourceContents:source,targetContents:unrelated,targetPath:'ja/index.mdx'}).valid).toBe(false);
+});

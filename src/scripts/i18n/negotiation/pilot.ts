@@ -59,7 +59,7 @@ const snapshots:Snapshot[]=locales.map(locale=>{
  const s={locale,sourcePath,targetPath,source,target,sourceHash:hash(source),targetHash:hash(target),history:snapshotHistory(root,sourcePath,targetPath)};
  write(file,s);return s;
 });
-const identity={...(transport==='api'?{}:{transport,cliProtocolVersion:1}),schemaVersion:1,post,locales,rounds,tier,core,auditors,advisors,rubricHash:hash(rubric),referencesHash:hash(JSON.stringify(references)),sourceHashes:snapshots.map(s=>({locale:s.locale,sourceHash:s.sourceHash,targetHash:s.targetHash})),maxOutputTokens:24000};
+const identity={...(transport==='api'?{}:{transport,cliProtocolVersion:1}),schemaVersion:1,severityScale:'1-5',post,locales,rounds,tier,core,auditors,advisors,rubricHash:hash(rubric),referencesHash:hash(JSON.stringify(references)),sourceHashes:snapshots.map(s=>({locale:s.locale,sourceHash:s.sourceHash,targetHash:s.targetHash})),maxOutputTokens:24000};
 if(existsSync(join(out,'manifest.json'))){if(JSON.stringify(read('manifest.json').identity)!==JSON.stringify(identity))throw Error('Run identity changed; use a new output directory');}
 else write('manifest.json',{createdAt:new Date().toISOString(),gitHead:execFileSync('git',['rev-parse','HEAD'],{encoding:'utf8'}).trim(),identity});
 writeFileSync(join(out,'rubric.txt'),rubric+'\n');
@@ -137,7 +137,7 @@ async function negotiate(s:Snapshot) {
  const negotiationRounds:unknown[]=[];
  for(let round=1;round<=rounds;round++){
   const responses=await allCompleted(core.map(actor=>call(s.locale+'-vote-'+round+'-'+actor.id,actor,s,s.target,
-   'Negotiate every issue in the slate, including your own. Confront the competing explanations; do not assume agreement is good. Return exactly one vote for each issue ID. accept requires the exact proposed replacement AND listed severity; otherwise counter with a concrete replacement/severity or reject with evidence. A prior rejection does not bind you if the peer gives stronger reasons. Do not use confidence as proof. The goal is defensible consensus, never automatic deference. JSON shape '+JSON.stringify({votes:[{issueId:'ID',decision:'accept',severity:2,confidence:0.8,rationale:'Evidence, response to peer, tradeoff',replacement:'exact proposed or counter wording',evidence:[{referenceId:'source',explanation:'...'}]}]})+'\nSLATE\n'+JSON.stringify(slate)+'\nPREVIOUS ARGUMENTS\n'+JSON.stringify(peerArguments)+'\nINPUT\n'+context(s,s.target),voteSchema,true)));
+   'Negotiate every issue in the slate, including your own. Confront the competing explanations; do not assume agreement is good. Return exactly one vote for each issue ID. accept requires the exact proposed replacement AND listed severity; otherwise counter with a concrete replacement/severity or reject with evidence. A prior rejection does not bind you if the peer gives stronger reasons. Do not use confidence as proof. The goal is defensible consensus, never automatic deference. JSON shape '+JSON.stringify({votes:[{issueId:'ID',decision:'accept',severity:3,confidence:0.8,rationale:'Evidence, response to peer, tradeoff',replacement:'exact proposed or counter wording',evidence:[{referenceId:'source',explanation:'...'}]}]})+'\nSLATE\n'+JSON.stringify(slate)+'\nPREVIOUS ARGUMENTS\n'+JSON.stringify(peerArguments)+'\nINPUT\n'+context(s,s.target),voteSchema,true)));
   ballots=responses.map(r=>r.votes);ballots.forEach(b=>validateVotes(slate,b));
   negotiationRounds.push({round,slate,ballots});peerArguments={round,ballots};
   if(round===rounds)break;
@@ -176,10 +176,10 @@ async function negotiate(s:Snapshot) {
   return {actor,mapping,blind,confidenceAware:aware};
  }));
  const candidateAudits=audits.map(a=>a.blind.candidates.find(c=>c.label===a.mapping.candidate)!.assessment);
- const pendingEvidence=assessments.some(a=>a.unresolved.some(i=>i.requiresReference&&i.severity>=2));
+ const pendingEvidence=assessments.some(a=>a.unresolved.some(i=>i.requiresReference&&i.severity>=3));
  const consensus=meetsQualityGate(assessments,validation.passed,pendingEvidence);
  const gold=consensus&&meetsQualityGate(candidateAudits,validation.passed,false);
- const result={locale:s.locale,sourceHash:s.sourceHash,baselineHash:s.targetHash,candidateHash:hash(candidate),consensus,gold,status:gold?'synthetic-consensus-gold':'needs-negotiation',confidence,assessments,audits,validation,acceptedCount:accepted.length};
+ const result={severityScale:'1-5',locale:s.locale,sourceHash:s.sourceHash,baselineHash:s.targetHash,candidateHash:hash(candidate),consensus,gold,status:gold?'synthetic-consensus-gold':'needs-negotiation',confidence,assessments,audits,validation,acceptedCount:accepted.length};
  write(s.locale+'-result.json',result);return result;
 }
 if(process.argv.includes('--prepare-only'))console.log('Frozen pilot inputs: '+out);
