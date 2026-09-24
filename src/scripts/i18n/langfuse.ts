@@ -1,3 +1,5 @@
+import { registerTelemetry } from "ai";
+import { CostAwareLangfuseIntegration } from "./langfuse-ai-sdk.ts";
 import { NodeSDK } from "@opentelemetry/sdk-node";
 import { LangfuseSpanProcessor } from "@langfuse/otel";
 
@@ -20,6 +22,10 @@ if (langfuseEnabled) {
   });
   const sdk = new NodeSDK({ spanProcessors: [spanProcessor] });
   sdk.start();
+  registerTelemetry(new CostAwareLangfuseIntegration());
+  process.once("beforeExit", () => {
+    void flushLangfuse();
+  });
 }
 
 /**
@@ -35,8 +41,12 @@ export function withLangfuseTelemetry<
   return {
     ...options,
     experimental_telemetry: {
+      ...((options.experimental_telemetry as Record<string, unknown>) ?? {}),
       isEnabled: true,
-      metadata,
+      metadata: {
+        ...((options.experimental_telemetry as any)?.metadata ?? {}),
+        ...metadata,
+      },
     },
   };
 }

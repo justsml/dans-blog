@@ -18,6 +18,7 @@
         "@hookform/resolvers": "^5.9.1",
         "@langfuse/otel": "^5.11.1",
         "@langfuse/tracing": "^5.11.1",
+        "@langfuse/vercel-ai-sdk": "5.11.1",
         "@mastra/core": "^1.68.0",
         "@mastra/libsql": "^1.23.1",
         "@mastra/memory": "^1.31.0",
@@ -132,6 +133,8 @@
     "@ai-sdk/gateway": ["@ai-sdk/gateway@4.0.88", "", { "dependencies": { "@ai-sdk/provider": "4.0.17", "@ai-sdk/provider-utils": "5.0.45", "@vercel/oidc": "3.2.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-hpEdOAqrp3FOShSytk6n8BZVZ/xrCV7L9hqYA6Q55h7sQknvh99QfC0uQAIbQWjh+66tmo1Fo6ndQla8uCJGyA=="],
 
     "@ai-sdk/openai": ["@ai-sdk/openai@4.0.72", "", { "dependencies": { "@ai-sdk/provider": "4.0.17", "@ai-sdk/provider-utils": "5.0.45" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-X5dowqxAXPhu72FpspKX7P5nDycvl/Nt0Qi9A5VjdotV1SrJdhH4vOeWVdBootwEC6uY2hYN0SHAuL1fd4cV8Q=="],
+
+    "@ai-sdk/otel": ["@ai-sdk/otel@1.0.113", "", { "dependencies": { "@ai-sdk/provider": "4.0.18", "@opentelemetry/api": "1.9.1", "ai": "7.0.113" } }, "sha512-AkgNbK+8S2J/0gGTY7BjzBHWvGFh+LSAJPEUNbA2DGNWRFKScvq+v8RAb/+fZH72z6kqZR6IoDu40sCT4K1L6w=="],
 
     "@ai-sdk/provider": ["@ai-sdk/provider@4.0.17", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-VYMBxIQdcHqbIf1j+YZlI9Ati6LZ4wJe0GGd4z4a5H/KxTggjeOiyaVYTnfF7LHZK5jMQ+rofmzz4QPqf++NUw=="],
 
@@ -586,6 +589,8 @@
     "@langfuse/otel": ["@langfuse/otel@5.11.1", "", { "dependencies": { "@langfuse/core": "^5.11.1" }, "peerDependencies": { "@opentelemetry/api": "^1.9.0", "@opentelemetry/core": "^2.0.1", "@opentelemetry/exporter-trace-otlp-http": ">=0.202.0 <1.0.0", "@opentelemetry/sdk-trace-base": "^2.0.1" } }, "sha512-Urn2WMvOINh7tNCTrq7qvDvNuA1VkxnJstLAHZghDeo1TFGQE7Ok9GoWmyBEwl6uX3D04TL2vkX9Vr7XDORvxQ=="],
 
     "@langfuse/tracing": ["@langfuse/tracing@5.11.1", "", { "dependencies": { "@langfuse/core": "^5.11.1" }, "peerDependencies": { "@opentelemetry/api": "^1.9.0" } }, "sha512-5lT0VhKSI3P5z3jylAE7Qf+V6GJ6IT0TZhvAQdU5bP0oUx2kRoXcnpdxwqEr7NdKIzaAPiN9E08ehO9wk/8xTA=="],
+
+    "@langfuse/vercel-ai-sdk": ["@langfuse/vercel-ai-sdk@5.11.1", "", { "dependencies": { "@ai-sdk/otel": "^1.0.44", "@langfuse/core": "^5.11.1" }, "peerDependencies": { "@opentelemetry/api": "^1.9.0", "ai": ">=7.0.0 <8" } }, "sha512-1FyKHtj40whNtSwxSSYEXRrK/vynjVr0tWCRmf94K6jfyoTsN/fagqErbVbVpAnYVmWCIMfXEBAmgBVDfMWHsg=="],
 
     "@libsql/client": ["@libsql/client@0.18.0", "", { "dependencies": { "@libsql/core": "^0.18.0", "@libsql/hrana-client": "^0.10.0", "js-base64": "^3.7.5", "libsql": "^0.5.28", "promise-limit": "^2.7.0" } }, "sha512-zMCCo58vv7w27j7+cnt/GW+X6/Rih6cHZ86PKi0AxCMOqMfrVgG9OZ5lW2bDMJhSeOjsv2szH2nJF3A9l36UmA=="],
 
@@ -3235,6 +3240,12 @@
 
     "zwitch": ["zwitch@2.0.4", "", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
 
+    "@ai-sdk/otel/@ai-sdk/provider": ["@ai-sdk/provider@4.0.18", "", { "dependencies": { "json-schema": "^0.4.0" } }, "sha512-+GZJIgz1jk86pwEbb3f1BD2bdoSKyWE4Jg4YUc7NMnMozbWemSKYZcw2F4nMaO5qwsL5A8RmioAKW81YktRpIQ=="],
+
+    "@ai-sdk/otel/@opentelemetry/api": ["@opentelemetry/api@1.9.1", "", {}, "sha512-gLyJlPHPZYdAk1JENA9LeHejZe1Ti77/pTeFm/nMXmQH/HFZlcS/O2XJB+L8fkbrNSqhdtlvjBVjxwUYanNH5Q=="],
+
+    "@ai-sdk/otel/ai": ["ai@7.0.113", "", { "dependencies": { "@ai-sdk/gateway": "4.0.91", "@ai-sdk/provider": "4.0.18", "@ai-sdk/provider-utils": "5.0.47" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-hOowAtiIUXwRqcdVRXll6ToNHYDdfXg+sFF1kYPlNDlgZ63rjR4mp1O29n5lSWZUNcHM1TlSzs30+6/XDUVcAA=="],
+
     "@ai-sdk/provider-utils/eventsource-parser": ["eventsource-parser@3.0.8", "", {}, "sha512-70QWGkr4snxr0OXLRWsFLeRBIRPuQOvt4s8QYjmUlmlkyTZkRqS7EDVRZtzU3TiyDbXSzaOeF0XUKy8PchzukQ=="],
 
     "@ai-sdk/provider-utils/undici": ["undici@7.29.1", "", {}, "sha512-RYONW2MeafgYlkVOKYKkA/Ag7BmXqgIWCa8t1m0JcxrQg9pI9lEqRhAOruOBCbAohOa/gkCF+iPi9hrgvTzu6Q=="],
@@ -3718,6 +3729,10 @@
     "yaml-language-server/yaml": ["yaml@2.7.1", "", { "bin": { "yaml": "bin.mjs" } }, "sha512-10ULxpnOCQXxJvBgxsn9ptjq6uviG/htZKk9veJGhlqn3w/DxQ631zFF+nlQXLwmImeS5amR2dl2U8sg6U9jsQ=="],
 
     "zod-from-json-schema/zod": ["zod@4.3.6", "", {}, "sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg=="],
+
+    "@ai-sdk/otel/ai/@ai-sdk/gateway": ["@ai-sdk/gateway@4.0.91", "", { "dependencies": { "@ai-sdk/provider": "4.0.18", "@ai-sdk/provider-utils": "5.0.47", "@vercel/oidc": "3.2.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-bUjtlAh1wV8aiYIOuPK4mBA3oAd7cETU4A1oTXNCkjGagZJvFfj+hx4b1ZaF5gHL0IPa6KfmIvZ0VVKhAlapVg=="],
+
+    "@ai-sdk/otel/ai/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@5.0.47", "", { "dependencies": { "@ai-sdk/provider": "4.0.18", "@standard-schema/spec": "^1.1.0", "@workflow/serde": "4.1.0", "eventsource-parser": "^3.0.8", "undici": "^7.29.0" }, "peerDependencies": { "zod": "^3.25.76 || ^4.1.8" } }, "sha512-NZQ1hMxY6Hd4ZiinjpU5HUOsyCHiTFkHw7AiM1EVN+Cd3kNTi47flZWNvFwGqnBojntB1+2eBRTeHRuVLtPhEg=="],
 
     "@astro-community/astro-embed-link-preview/parse5/entities": ["entities@6.0.1", "", {}, "sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g=="],
 
@@ -4216,6 +4231,10 @@
     "wrap-ansi/string-width/emoji-regex": ["emoji-regex@10.6.0", "", {}, "sha512-toUI84YS5YmxW219erniWD0CIVOo46xGKColeNQRgOzDorgBi1v4D71/OFzgD9GO2UGKIv1C3Sp8DAn0+j5w7A=="],
 
     "wrap-ansi/string-width/get-east-asian-width": ["get-east-asian-width@1.4.0", "", {}, "sha512-QZjmEOC+IT1uk6Rx0sX22V6uHWVwbdbxf1faPqJ1QhLdGgsRGCZoyaQBm/piRdJy/D2um6hM1UP7ZEeQ4EkP+Q=="],
+
+    "@ai-sdk/otel/ai/@ai-sdk/provider-utils/eventsource-parser": ["eventsource-parser@3.0.8", "", {}, "sha512-70QWGkr4snxr0OXLRWsFLeRBIRPuQOvt4s8QYjmUlmlkyTZkRqS7EDVRZtzU3TiyDbXSzaOeF0XUKy8PchzukQ=="],
+
+    "@ai-sdk/otel/ai/@ai-sdk/provider-utils/undici": ["undici@7.29.1", "", {}, "sha512-RYONW2MeafgYlkVOKYKkA/Ag7BmXqgIWCa8t1m0JcxrQg9pI9lEqRhAOruOBCbAohOa/gkCF+iPi9hrgvTzu6Q=="],
 
     "@babel/helper-module-imports/@babel/traverse/@babel/code-frame/@babel/helper-validator-identifier": ["@babel/helper-validator-identifier@7.28.5", "", {}, "sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q=="],
 

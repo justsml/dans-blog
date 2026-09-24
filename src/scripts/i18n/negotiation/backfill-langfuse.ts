@@ -65,20 +65,26 @@ await traceNegotiation(
       const stdout = existsSync(prefix + "-cli-stdout.txt")
         ? readFileSync(prefix + "-cli-stdout.txt", "utf8")
         : "";
+      const accounting = nativeUsage(
+        invocation.backend,
+        stdout,
+        request.actor.model,
+      );
       startObservation(
         request.key,
         {
           model: request.actor.model,
           input: request,
           output,
+          ...accounting,
           metadata: {
+            ...accounting.metadata,
             backfill: true,
             receiptPrefix: prefix,
             originalTimingUnavailable: true,
             invocation,
             exit,
           },
-          ...nativeUsage(invocation.backend, stdout),
           ...(exit.code !== 0 || exit.timedOut
             ? {
                 level: "ERROR" as const,

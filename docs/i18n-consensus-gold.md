@@ -285,3 +285,50 @@ runs explicitly flush the exporter; JSONL receipts retain trace/observation IDs.
 existing receipts without model calls. Backfilled traces are marked as imports;
 their trace duration is not inference latency. Repeating an identical completed
 receipt snapshot is skipped. Local receipts remain the immutable audit source.
+
+### Cost accounting coverage
+
+AI SDK 7 uses the registered `CostAwareLangfuseIntegration`, extending the official
+`LangfuseVercelAiSdkIntegration` constructor. All translation, judge, benchmark,
+eval, and API negotiation calls route through the shared instrumentation module.
+The integration enriches the existing model-call generation; it does not create
+an additional cost-bearing span. Native Claude/Codex/OpenCode subprocesses use
+the shared CLI transport and aggregate their native usage receipts.
+
+Costs carry `costBasis` and `costKnown` metadata:
+
+- `openrouter-reported`: exact gateway charge from the response, including a
+  legitimate zero. `upstreamInferenceCostUsd` is retained separately: it is not
+  silently added to the gateway charge without confirmed BYOK billing semantics.
+- `cli-reported-estimate`: the CLI's reported API-equivalent amount, not an
+  allocation of the user's subscription invoice.
+- `api-equivalent-estimate`: token-price estimate from the dated pricing table.
+  The Sol/Astra 272k prompt tier is accounted for and was checked against the
+  provider catalog on 2026-09-24. Unsupported pricing/cache-write cases stay unknown.
+- `unknown`: missing usage/cost evidence, including interrupted calls. Never zero.
+
+Cached input, fresh input, cache writes, visible output and reasoning output are
+non-overlapping Langfuse buckets. OpenCode reports visible output separately;
+Codex/AI SDK total output includes reasoning. Malformed log lines do not discard
+valid usage events; multiple OpenCode steps are aggregated. A partial set of step
+costs is not treated as a complete reported total.
+
+Verification commands:
+
+```bash
+LANGFUSE_PUBLIC_KEY='' LANGFUSE_SECRET_KEY='' bun test src/scripts/i18n/langfuse-ai-sdk.test.ts
+bun test src/scripts/i18n/negotiation/langfuse.test.ts
+bun src/scripts/i18n/verify-langfuse-cost.ts # two minimal real provider calls
+bun src/scripts/i18n/reconcile-langfuse-costs.ts TRACE_ID # updates existing generations in place
+```
+
+The live canary verifies both generation and streaming against provider receipts;
+results and reconciliation receipts are under `reports/i18n/cost-observability/`.
+Historical reconciliation covers the three recorded v2 negotiation traces. Older
+benchmark runs that never emitted traces have not been retroactively imported.
+Billing invoices, fixed subscription fees and provider-side charges absent from
+responses are not reconstructed from token counts.
+
+References: [official AI SDK 7 integration](https://langfuse.com/changelog/2026-06-26-vercel-ai-sdk-7),
+[Langfuse token/cost semantics](https://langfuse.com/docs/observability/features/token-and-cost-tracking),
+[OpenRouter usage accounting](https://openrouter.ai/docs/cookbook/administration/usage-accounting).
