@@ -212,3 +212,54 @@ fresh endorsements.
 A changed rubric/scale requires a new run directory; do not mix 0–4 and 1–5
 responses in one cached call identity. Legacy completed runs remain readable
 and exportable through the explicit severity conversion.
+
+## Issue-driven negotiation v2
+
+V2 automatically loops through independent reviews, issue-level rebuttals,
+adjudication and revisions. It finishes only when no unresolved high/critical
+issues remain, readability and other rubric dimensions have quorum support,
+and deterministic validation passes. Severity 3 can also be made blocking
+with `blockingSeverity: 3`; the default 4 matches high/critical priority.
+
+An originating model can retract an issue with another model's support and a
+majority. Otherwise an override requires at least two **other distinct models**
+(configurable to three), a majority, a current-candidate hash and specific
+rebuttal/evidence for that issue. A 2–2 split does not resolve. Fresh findings
+reopen issues; low rubric scores create tracked issues as well. Omitting an
+old issue from a subsequent review cannot close it. Dissent and medium/optional
+issues remain visible in the final result. A budget limit yields
+`needs-attention`, never automatic acceptance.
+
+`events-*.jsonl` is append-only per execution attempt. It records policy,
+source/baseline hashes, every review, fragment/source quote, issue ID, model,
+ballot, rebuttal, severity, override, reopening, change instruction, rationale,
+tradeoff and before/after revision hash. Full prompts/raw responses remain in
+`calls/`. Revisions use exact nonoverlapping patches; every text change is
+therefore represented in the ledger, including changes to annotations or
+headings. References must be in the frozen checked packet. Model argument
+quality is still assessed by the panel; a reference ID alone is not a proof.
+
+The [adaptive policy](i18n-policies/adaptive.json) exposes audience, length,
+structure, introduction, rhetorical arc, idioms, voice, quorum and run limits.
+Default length is **free**: ratios are measured, not optimized for similarity.
+The intro may be rewritten and the argument reorganized when the source's
+purpose, claims and voice survive. Local metaphors may be recreated; awkward
+literal approximations are not a goal. A strict structure/intro/arc policy
+constrains the models via the prompt; structural counts are additionally
+validated. Semantic fidelity and rhetorical purpose are model-assessed, not
+claimed as deterministic guarantees. Quiz answers, factual numeric literals,
+code, imports, links, assets and hydration remain protected.
+
+```bash
+bun src/scripts/i18n/negotiation/consensus-run.ts \
+  reports/i18n/consensus-batches/2026-09-23-expanded/2025-05-31--the-last-to-think-es/es-snapshot.json \
+  reports/i18n/consensus-v2/last-to-think-es \
+  docs/i18n-policies/adaptive.json \
+  reports/i18n/consensus-pilots/2026-09-23-named-exports/references.json
+```
+
+Add `--prepare-only` to freeze and inspect the inputs without model calls.
+Use a new output directory for changed policy or source; cached calls are
+identity-bound. V1 gold stays immutable. V2 final results distinguish unanimous
+`consensus` from `consensus-backed` decisions with recorded dissent/overrides;
+they are separate artifacts and do not silently replace an existing gold set.
