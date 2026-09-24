@@ -1,0 +1,1 @@
+Network preflight failed before a provider response: sandbox could not connect to OpenRouter, and Langfuse export could not connect either. No usage or charge was returned; cost remains unknown, not zero. These receipts are excluded from the measured network-enabled battle. The corrected JSON parser was applied before the actual battle's manifest was frozen.

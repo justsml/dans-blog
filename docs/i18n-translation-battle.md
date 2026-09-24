@@ -7,6 +7,7 @@ The September run uses all five `consensus-gold/v1` cases and the 13 exact model
 ```sh
 bun src/scripts/i18n/translation-battle.ts reports/i18n/translation-battles/2026-09-24-gold-v1 canary
 bun src/scripts/i18n/translation-battle.ts reports/i18n/translation-battles/2026-09-24-gold-v1 full
+bun src/scripts/i18n/translation-battle-repair.ts reports/i18n/translation-battles/2026-09-24-gold-v1
 bun src/scripts/i18n/translation-battle-report.ts reports/i18n/translation-battles/2026-09-24-gold-v1
 bun src/scripts/i18n/translation-battle-verify.ts reports/i18n/translation-battles/2026-09-24-gold-v1
 ```
@@ -18,3 +19,5 @@ Each source fits a single request. This isolates model translation quality and a
 Reports provide complete request latency, token totals, reasoning/cache counters, catalog-equivalent cost, gateway and upstream receipts separately, paired reference-relative scores, preferences, ten dimension scores, readiness, serious issues, per-case results and reviewer agreement. Never add gateway and upstream costs without understanding the billing route. Effective output tokens per request-second is not streaming decoding speed. Missing costs remain unknown.
 
 The reference is the requested synthetic consensus gold. It is still scored independently in each blinded pair. Two reviewers reduce reliance on one evaluator but do not establish human-calibrated accuracy or eliminate self-preference. Five Spanish/Japanese cases support a pilot comparison, not claims about other languages or universal superiority. Raw lineage remains available with the frozen dataset.
+
+The optional repair command removes only trailing JSON commas outside quoted strings. It preserves original parse failures in `parse-recovery.jsonl` and leaves provider responses untouched. It cannot repair or invent assessments. Run it before reporting after a resumed battle reprocesses receipts.
