@@ -1,0 +1,2576 @@
+[
+  {
+    "locale": "es",
+    "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+    "baselineHash": "1b1beb59a54429caceb9815ffeeecf35dc764f4493d008edad106e189293fbc4",
+    "candidateHash": "2378e6479ea6d33ca9c0128e089f44f6ceab55ed24851815c24077e424b436a4",
+    "consensus": false,
+    "gold": false,
+    "status": "needs-negotiation",
+    "confidence": {
+      "count": 24,
+      "mean": 0.8441666666666664,
+      "median": 0.86,
+      "meaning": "Self-reported change confidence; not a calibrated probability"
+    },
+    "assessments": [
+      {
+        "ready": false,
+        "ratings": [
+          {
+            "dimension": "faithfulness",
+            "score": 4,
+            "confidence": 0.92,
+            "rationale": "The central claim about communicating intent is preserved, but the named-export joke loses the source’s exclamation mark.",
+            "quote": "Una exportación nombrada (`named export`) dice que es \"definitivamente **_UNA COSA_**.\""
+          },
+          {
+            "dimension": "technicalAccuracy",
+            "score": 4,
+            "confidence": 0.9,
+            "rationale": "The JavaScript literals and export distinctions are retained. The contradictory table row is inherited from English and needs author review, not an independent translation correction.",
+            "quote": "| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico."
+          },
+          {
+            "dimension": "completeness",
+            "score": 4,
+            "confidence": 0.94,
+            "rationale": "All sections, arguments and table rows are present; the missing emphasis in «A THING!» is a small but identifiable omission.",
+            "quote": "definitivamente **_UNA COSA_**"
+          },
+          {
+            "dimension": "readability",
+            "score": 4,
+            "confidence": 0.87,
+            "rationale": "Short asides generally read cleanly, although the question about holding the invention retains an awkward placement of «otra vez».",
+            "quote": "Buen recurso. No viene al caso."
+          },
+          {
+            "dimension": "grammarSpelling",
+            "score": 4,
+            "confidence": 0.85,
+            "rationale": "Grammar is generally sound. The comma joining two independent clauses in the summary is optional polish rather than an impediment to comprehension.",
+            "quote": "En realidad hay muchas combinaciones de formas en que podríamos exportar cosas, cada una cuenta una historia diferente:"
+          },
+          {
+            "dimension": "idiomMetaphor",
+            "score": 4,
+            "confidence": 0.89,
+            "rationale": "The export-purpose question is idiomatic now; «¿cómo sostengo tu invento otra vez?» still sounds translated and misses some of the knife-and-handle joke.",
+            "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?"
+          },
+          {
+            "dimension": "authorVoice",
+            "score": 4,
+            "confidence": 0.85,
+            "rationale": "The conclusion restores the source’s deliberate profanity and emphasis on intent without adding a claim about how every region receives it. The missing «¡UNA COSA!» weakens an earlier joke.",
+            "quote": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞"
+          },
+          {
+            "dimension": "localeAppropriateness",
+            "score": 4,
+            "confidence": 0.84,
+            "rationale": "The register suits a broad Spanish-speaking developer audience; terms such as «lint» remain in a recognizable technical context. This is an audience judgment, not a claim that the wording is universally preferred.",
+            "quote": "¿Quizás estás buscando una regla de lint?"
+          },
+          {
+            "dimension": "structureFlow",
+            "score": 5,
+            "confidence": 0.95,
+            "rationale": "The argument, numbered objections, summary table and conclusion follow the source, and the in-page link targets the localized heading.",
+            "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+          },
+          {
+            "dimension": "mdxIntegrity",
+            "score": 4,
+            "confidence": 0.96,
+            "rationale": "The MDX component, link targets, localized image paths and code literals remain intact. Comments inside the second code block, however, were translated despite the requirement to preserve code comments.",
+            "quote": "// Sin embargo, una vez declarada, puedes exportar una variable const como default."
+          }
+        ],
+        "unresolved": [
+          {
+            "severity": 2,
+            "claim": "Translation defect: restore every comment in the nested `tsx` block exactly as in the frozen English, including the original spacing. The first code block’s comment has already been restored.",
+            "quote": "// ^ ❌ No soportado ❌ ^\n    // No se puede exportar default const ....\n    // ==========================\n\n    // Sin embargo, una vez declarada, puedes exportar una variable const como default.",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "Translation defect: the accepted named-export edit was only partly applied. Restore the exclamation in the emphasized «A THING!» joke; the translated term and preserved `named export` are sound.",
+            "quote": "Una exportación nombrada (`named export`) dice que es \"definitivamente **_UNA COSA_**.\"",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "Optional idiom improvement left unapplied: «A ver, dime otra vez: ¿por dónde se agarra tu invento?» makes «again» a request for a reminder and better recalls the knife handle. The current wording does not reverse the meaning.",
+            "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "For exact numerical scope, «3 años o más» preserves English «3+ years» more explicitly than «más de 3 años», which excludes exactly three.",
+            "quote": "El soporte existe desde hace más de 3 años en [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.",
+            "requiresReference": false
+          },
+          {
+            "severity": 3,
+            "claim": "Inherited English source defect, for author review only: the «Multiple named exports» row marks named exports ❌. The Spanish faithfully retains that contradiction; do not change its checks independently.",
+            "quote": "| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico.",
+            "requiresReference": false
+          },
+          {
+            "severity": 4,
+            "claim": "Inherited English source concern, for author review only: the three imports declare the same local binding `Handle` in one fenced example, so they cannot execute together as one module. They are preserved correctly in translation.",
+            "quote": "import { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪",
+            "requiresReference": false
+          }
+        ],
+        "summary": "Strong Spanish translation, but not ready under the code-comment preservation rule; the named-export punchline also remains incomplete. Rechecking the ledger found the idiom change to the knife question unapplied but optional. «Ambos» is defensible, and the differing sourceHash format alone establishes no defect. The contradictory table row and duplicate-binding example originate in English and require author review, not silent translation fixes."
+      },
+      {
+        "ready": false,
+        "ratings": [
+          {
+            "dimension": "faithfulness",
+            "score": 4,
+            "confidence": 0.8,
+            "rationale": "The argument and all the claims survive, and the accepted edits fixed the misleading 'Sin intención del autor' and the backwards '(ya no más)'. One meaning slip remains: 'otra vez' at the end of the question means 'hold it again'. In the English, 'again' means 'remind me'. The exclamation in 'A THING!' was also dropped (withheld B-4).",
+            "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?"
+          },
+          {
+            "dimension": "technicalAccuracy",
+            "score": 4,
+            "confidence": 0.82,
+            "rationale": "The code, identifiers, URLs, the `kinves.js` literal and the check/cross marks are all unchanged. 'Exportación nombrada (`named export`)' now keeps Spanish words out of code formatting. The nested code block still has translated comments, which is a preservation problem rather than a behaviour problem. 'No soportado' is also an anglicism.",
+            "quote": "// ^ ❌ No soportado ❌ ^"
+          },
+          {
+            "dimension": "completeness",
+            "score": 5,
+            "confidence": 0.8,
+            "rationale": "All headings, bullets, links, all five table rows, the 'Something to think about' note and the conclusion are present. No content is missing. The lost '!' is covered under faithfulness and voice, not counted again here.",
+            "quote": "| ✅                | ✅              | ❌          | Una única exportación nombrada TAMBIÉN exportada como default. | \"No puedes equivocarte al importarme.\"                            |"
+          },
+          {
+            "dimension": "readability",
+            "score": 4,
+            "confidence": 0.78,
+            "rationale": "It reads well overall after the fixes to the hybrid 'import'ers' and the table headers. A few phrases are still stiff or ambiguous. 'Espera' can mean 'wait', and the phrase has no article. 'Juega un rol' is an anglicism.",
+            "quote": "Además, espera comportamiento tipo clase."
+          },
+          {
+            "dimension": "grammarSpelling",
+            "score": 4,
+            "confidence": 0.75,
+            "rationale": "There are no real grammar errors, and 'ambos' is correct for mixed-gender referents. Punctuation around quotes is inconsistent: some edits put the period outside the closing quote, while other lines still put it inside. 'Auto-importación' would normally be written as one word, 'autoimportación'.",
+            "quote": "\"cualquier exportación nombrada solo juega un rol secundario.\""
+          },
+          {
+            "dimension": "idiomMetaphor",
+            "score": 4,
+            "confidence": 0.75,
+            "rationale": "'No viene al caso' and '¿No estaremos perdiendo de vista...?' removed the worst calques. A few remain. 'No, no lo hacen' copies 'No, they don't'. 'Odio ser quien te lo diga' is a loose calque. 'Conjunto' flattens the playful 'grab-bag'.",
+            "quote": "No, no lo hacen. ¿Quizás estás buscando una regla de lint?"
+          },
+          {
+            "dimension": "authorVoice",
+            "score": 4,
+            "confidence": 0.78,
+            "rationale": "The profane closing line is back with the intensifier on intent, matching 'fucking mean it' without escalating it. 'Les presento' also has the showman tone. Two jokes are still flatter than in the source: 'UNA COSA' has no exclamation, and 'grab-bag' became a neutral 'conjunto'.",
+            "quote": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞"
+          },
+          {
+            "dimension": "localeAppropriateness",
+            "score": 4,
+            "confidence": 0.65,
+            "rationale": "The terminology is broadly pan-Hispanic, and the tú/ustedes choices are consistent within their contexts. 'Computadora' leans Latin American but is understood everywhere, so it's optional polish. I make no claim about how 'puta' lands regionally: that was unverified, and I'm treating it as a voice choice.",
+            "quote": "es difícil pedirle a la computadora que la cambie"
+          },
+          {
+            "dimension": "structureFlow",
+            "score": 5,
+            "confidence": 0.75,
+            "rationale": "The order of sections, bullets and the table matches the source. All table headers are now Spanish and each row still has five cells. The internal link points to the localized heading. There is a small terminology wobble ('como default' vs. 'por defecto'), listed as polish.",
+            "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+          },
+          {
+            "dimension": "mdxIntegrity",
+            "score": 3,
+            "confidence": 0.85,
+            "rationale": "The frontmatter is correct: images use ../, inherited 'date' is omitted, sourceHash is kept, and the <section> and table are intact. But the comment preservation was applied only halfway. The first code block's comment was restored to English (A-8), while the nested tsx block still has translated comments (A-9: accepted by both voters, never applied). That breaks the rule to preserve code comments and is inconsistent.",
+            "quote": "// Sin embargo, una vez declarada, puedes exportar una variable const como default."
+          }
+        ],
+        "unresolved": [
+          {
+            "severity": 2,
+            "claim": "A-9 was accepted by both editors but never applied. The comments in the nested tsx block are still translated, which breaks the rule to preserve code comments and contradicts the already-applied A-8. Restore them exactly: '// ^ ❌ Not Supported ❌ ^', '// Cannot export default const ....', '// However, once declared you can export a const var as the default.', '// ^ ✅ Valid', '// For completeness:', '// ^ ✅ Also valid to export a class as default'. The code lines themselves don't change.",
+            "quote": "// No se puede exportar default const ....",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "B-4 was withheld only because it overlapped with A-1, and only A-1's term fix was applied. The '!' from 'A THING!' is still missing, which flattens the punchline. Apply the rest of B-4: 'dice que es \"definitivamente **_¡UNA COSA!_**\".'",
+            "quote": "dice que es \"definitivamente **_UNA COSA_**.\"",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "B-6 was withheld because it overlapped with A-3, and only A-3's last sentence was applied. The question still misreads 'again' ('remind me') as 'hold it again' and misses the Knife/Handle joke. Apply B-6's question: 'A ver, dime otra vez: ¿por dónde se agarra tu invento?'",
+            "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "'Juega un rol' is an anglicism, and the period sits inside the quote here but outside elsewhere. Suggest 'solo desempeña un papel secundario\".' and consistent quote punctuation throughout.",
+            "quote": "\"cualquier exportación nombrada solo juega un rol secundario.\"",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "'Espera' can be read as 'wait', and the phrase has no article. Suggest 'Además, cuenta con un comportamiento tipo clase.'",
+            "quote": "Además, espera comportamiento tipo clase.",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "'No, no lo hacen' copies 'No, they don't'. Suggest 'No, no la garantizan.' This is optional polish.",
+            "quote": "No, no lo hacen.",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "'Conjunto' loses the playful 'grab-bag'. An optional alternative is 'Un batiburrillo de cosas vagamente relacionadas...' or similar. This is a preference, not a defect.",
+            "quote": "\"Un conjunto de cosas vagamente relacionadas, sin jerarquía implícita.\"",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "The table's prose mixes 'como default' with 'por defecto', which the rest of the table uses. Suggest 'exportada también por defecto', keeping 'TAMBIÉN' in capitals.",
+            "quote": "Una única exportación nombrada TAMBIÉN exportada como default.",
+            "requiresReference": false
+          },
+          {
+            "severity": 0,
+            "claim": "Source concerns carried over faithfully, for the author to review; the translation should not change them. (1) The 'Multiple named exports' table row has ❌ in the Named column. (2) './kinves.js' is a typo inside a code literal.",
+            "quote": "| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. |",
+            "requiresReference": false
+          }
+        ],
+        "summary": "Not ready. The accepted edits worked: the closing profanity is back with the intensifier on intent, the calques and the hybrid 'import'ers' are gone, and the table headers are consistent. Also, 'Ya no es cierto' now says what the source means. Three actionable items remain. They come from the overlap-withheld and unapplied items. First, the nested tsx block still has translated comments (A-9): both editors accepted restoring them, and A-8 already restored the comment in the first block. Second, the '!' in 'A THING!' is still missing (B-4). Third, the 'otra vez' question still misreads 'again' (B-6). I confirmed that the withheld B-0, B-1, B-2, B-3 and B-7 are the same as the applied A-0, A-7, A-4, A-2 and A-5, so nothing is lost from those. I agree with rejecting B-10 ('ambos' is correct for mixed-gender referents) and B-11 (sourceHash is legitimate provenance, and the history links it to the current source). The remaining items are optional polish. The source defects (the table row, the kinves.js typo) were carried over faithfully and are for the author, not the translation."
+      }
+    ],
+    "audits": [
+      {
+        "actor": {
+          "id": "auditor-A",
+          "model": "openai/gpt-6-astra",
+          "effort": "high"
+        },
+        "mapping": {
+          "baseline": "X",
+          "candidate": "Y"
+        },
+        "blind": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The argument is retained, but the conclusion changes deliberate intent into caring and removes the source's deliberately profane emphasis.",
+                    "quote": "Si el código es comunicación, por favor `export`a como si en verdad te importara. 💞"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "Executable statements and technical advice remain source-equivalent, but the protected backtick term `named export` is replaced with Spanish. The source's contradictory table markers and malformed arrow-function example are not new translation errors.",
+                    "quote": "Una `exportación nombrada` dice que es"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "All sections, examples and links are present, but three ordinary table headings remain untranslated. These headings are not protected code or controlled metadata.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 3,
+                    "confidence": 0.96,
+                    "rationale": "Several English-shaped expressions require readers to reconstruct the intended Spanish, particularly this central question about the purpose of exporting.",
+                    "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The singular indirect-object pronoun does not agree with the plural recipient. There are also smaller orthographic issues, including 'auto-importación' and English-style placement of sentence-final periods inside quotations.",
+                    "quote": "Le estamos enviando una señal a los `import`ers"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.95,
+                    "rationale": "The companion and knife imagery survives, but literal connective language makes the conversational jokes sound like translated notes. 'Seguimiento' is not a natural way to introduce this follow-up question.",
+                    "quote": "Seguimiento: \"¿Están invitados o son obligatorios?\""
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 3,
+                    "confidence": 0.98,
+                    "rationale": "Sarcastic rebuttals remain, but the closing punchline is softened into earnest encouragement. That loses both the profanity and the forceful insistence on communicating intent.",
+                    "quote": "por favor `export`a como si en verdad te importara"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.94,
+                    "rationale": "For an informal, broadly international Spanish-speaking developer audience, the technical loanwords are generally workable. However, the English plural suffix attached to `import` is insufficiently adapted to the surrounding Spanish.",
+                    "quote": "a los `import`ers"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The argument order and localized summary link are retained. Within paragraphs, note-like transitions interrupt the intended conversational progression.",
+                    "quote": "También plantea algunas preguntas, \"¿tienes otros compañeros por ahí?\" Seguimiento:"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "Image paths, metadata handling, fences, JSX wrapper and localized anchor follow the supplied rules. However, comments in both fenced code blocks have been translated despite the verbatim-preservation requirement; executable statements are unchanged.",
+                    "quote": "// ¡Puedes usar alias con ambas!"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Protected-code preservation defect: restore the original comments in both fenced blocks, beginning with '// You can alias using both!'. This violates the explicit preservation requirement but does not introduce a runtime failure.",
+                    "quote": "// ¡Puedes usar alias con ambas!",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore the protected technical backtick term `named export`. A suitable construction is 'Una exportación nombrada (`named export`)'. The Spanish explanation may be localized without replacing the protected term.",
+                    "quote": "Una `exportación nombrada`",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore the conclusion's deliberate intent and profanity. 'Te importara' means caring rather than meaning it, and the softened wording loses the author's punchline. 'Haz `export` con toda la puta intención' preserves the intended register without adding a new insult.",
+                    "quote": "Si el código es comunicación, por favor `export`a como si en verdad te importara. 💞",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Replace the calque 'perder el punto' with a natural question about purpose, such as '¿No habremos perdido de vista para qué sirve `export`?'. Likewise, replace the note-like 'Seguimiento' with a conversational continuation.",
+                    "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Repair plural agreement and adapt the English suffix: 'Les estamos enviando una señal a quienes hacen `import`' retains the technical wordplay in grammatical Spanish.",
+                    "quote": "Le estamos enviando una señal a los `import`ers",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Finish localizing the table headings: 'Exportaciones por defecto', 'Exportaciones nombradas' and 'Funciones privadas'. Preserve all table markers and row order.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Use 'autoimportación' or 'importación automática' rather than the hyphenated form, and apply Spanish placement of sentence-final periods outside closing quotation marks in prose.",
+                    "quote": "errores de auto-importación del IDE",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Not ready. The main repairs are protected-text restoration, recovery of the forceful closing, and removal of several English calques; the table also needs complete localization. Scope: informal, broadly international Spanish for developers. Source-only concerns, excluded from scoring: contradictory table markers and the malformed arrow-function body presented as valid."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 5,
+                    "confidence": 0.97,
+                    "rationale": "The central purpose-of-exporting question, hierarchy distinction and forceful closing preserve the source's meaning without adding new claims.",
+                    "quote": "¿No estaremos perdiendo de vista para qué sirve `export`?"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The named-export term, aliasing syntax and named-versus-anonymous function distinction are retained. The contradictory table markers and malformed arrow-function example originate in the source and are excluded from this rating.",
+                    "quote": "Una exportación nombrada (`named export`)"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.99,
+                    "rationale": "All substantive sections, examples, links and table content are retained, and the explanatory table headings are localized. Omitting the inherited date follows the repository rules.",
+                    "quote": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas |"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.94,
+                    "rationale": "The central questions and rebuttals are readily understandable. A few shared formulations remain stiff or compressed, particularly the description of the IDE and refactoring experience.",
+                    "quote": "obtener la mejor experiencia de IDE y refactorización"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "Sentence construction and recipient agreement are sound. Minor orthographic defects remain, including the hyphen in 'auto-importación' and some sentence-final periods placed inside quotations.",
+                    "quote": "errores de auto-importación del IDE"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 4,
+                    "confidence": 0.94,
+                    "rationale": "The companion metaphor and dismissive rebuttals work in Spanish. In the knife question, however, 'otra vez' sounds more like repeating the physical action than the source's conversational request for a reminder.",
+                    "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 5,
+                    "confidence": 0.96,
+                    "rationale": "The dry dismissals and profane closing retain the author's confrontational humor. The profanity emphasizes intent rather than introducing a new target or escalating into an insult.",
+                    "quote": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 5,
+                    "confidence": 0.93,
+                    "rationale": "For an informal, broadly international Spanish-speaking developer audience, the direct address and concise rebuttals fit the register. Retaining the source's profanity is appropriate to that stated editorial scope; no nationality-based softening is warranted.",
+                    "quote": "Buen recurso. No viene al caso."
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.97,
+                    "rationale": "The progression from communication principle to objections, examples and summary is preserved. The summary link targets the localized heading, and the follow-up questions now have an explicit conversational connection.",
+                    "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "Frontmatter paths, metadata handling, JSX, fences and the localized anchor are intact. The first code block preserves its comment, but comments in the second block are still translated contrary to the preservation requirement.",
+                    "quote": "// No se puede exportar default const ...."
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Protected-code preservation defect: restore every original English comment in the second fenced block, including '// Cannot export default const ....'. The first block is already preserved. This is a mandatory preservation repair, not a new runtime error.",
+                    "quote": "// No se puede exportar default const ....",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Use 'autoimportación' or 'importación automática', and normalize sentence-final periods outside closing quotation marks in prose. These are small orthographic repairs.",
+                    "quote": "errores de auto-importación del IDE",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Optionally make the reminder function of 'again' clearer: 'Ahora, recuérdame: ¿cómo se supone que agarro tu invento?'. This preserves the physical metaphor while avoiding the suggestion of holding it a second time.",
+                    "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Close to ready, but the protected comments in the second code block must be restored. Remaining language changes are limited polish. Scope: informal, broadly international Spanish for developers, retaining the author's profanity. Source-only concerns, excluded from scoring: contradictory table markers and the malformed arrow-function body presented as valid."
+              }
+            }
+          ],
+          "preferredLabel": "Y",
+          "reason": "Y expresses the central purpose question naturally, repairs the importer phrasing, retains `named export`, localizes the table headings and preserves the profane closing's emphasis on intent. X introduces more translationese and softens that closing. Neither is ready under the strict code-preservation rule: both translate protected comments in the second code block, and X also changes the first block's comment."
+        },
+        "confidenceAware": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The argument is retained, but the conclusion changes deliberate intent into caring and removes the source's profane emphasis.",
+                    "quote": "Si el código es comunicación, por favor `export`a como si en verdad te importara. 💞"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "Executable statements and technical advice remain source-equivalent, but the protected backtick term `named export` is replaced with Spanish. The source's contradictory table markers and malformed arrow-function example are not new translation errors.",
+                    "quote": "Una `exportación nombrada` dice que es"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "All sections, examples and links are present, but three ordinary table headings remain untranslated. These are neither protected code nor controlled metadata.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 3,
+                    "confidence": 0.96,
+                    "rationale": "Several English-shaped expressions require readers to reconstruct the intended Spanish, notably this central question about the purpose of exporting.",
+                    "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The singular indirect-object pronoun does not agree with the plural recipient. Smaller orthographic issues include 'auto-importación' and sentence-final periods placed inside closing quotation marks.",
+                    "quote": "Le estamos enviando una señal a los `import`ers"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.95,
+                    "rationale": "The companion and knife imagery survives, but literal connective language makes the conversational jokes sound like translated notes. 'Seguimiento' is unnatural as an introduction to this follow-up question.",
+                    "quote": "Seguimiento: \"¿Están invitados o son obligatorios?\""
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 3,
+                    "confidence": 0.98,
+                    "rationale": "Sarcastic rebuttals remain, but the closing punchline becomes earnest encouragement, losing both the profanity and the forceful insistence on communicating intent.",
+                    "quote": "por favor `export`a como si en verdad te importara"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.94,
+                    "rationale": "For an informal, broadly international Spanish-speaking developer audience, the technical loanwords are generally workable. The English plural suffix attached to `import`, however, is insufficiently adapted to the surrounding Spanish.",
+                    "quote": "a los `import`ers"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The argument order and localized summary link are retained. Note-like transitions within paragraphs interrupt the conversational progression.",
+                    "quote": "También plantea algunas preguntas, \"¿tienes otros compañeros por ahí?\" Seguimiento:"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "Image paths, metadata handling, fences, JSX wrapper and localized anchor follow the supplied rules. Comments in both fenced blocks have nevertheless been translated despite the verbatim-preservation requirement; executable statements are unchanged.",
+                    "quote": "// ¡Puedes usar alias con ambas!"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Restore the original comments in both fenced blocks, beginning with '// You can alias using both!'. Their translation violates the explicit preservation requirement but does not introduce a runtime failure.",
+                    "quote": "// ¡Puedes usar alias con ambas!",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore the protected technical backtick term `named export`, for example with 'Una exportación nombrada (`named export`)'.",
+                    "quote": "Una `exportación nombrada`",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore the conclusion's deliberate intent and profanity. 'Te importara' means caring rather than meaning it. 'Haz `export` con toda la puta intención' preserves the intended force without adding a new insult.",
+                    "quote": "Si el código es comunicación, por favor `export`a como si en verdad te importara. 💞",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Replace 'perder el punto' with a natural question about purpose, such as '¿No habremos perdido de vista para qué sirve `export`?'. Replace the note-like 'Seguimiento' with a conversational continuation.",
+                    "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Repair plural agreement and adapt the English suffix: 'Les estamos enviando una señal a quienes hacen `import`' retains the technical wordplay in grammatical Spanish.",
+                    "quote": "Le estamos enviando una señal a los `import`ers",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Localize the table headings as 'Exportaciones por defecto', 'Exportaciones nombradas' and 'Funciones privadas'. Preserve all table markers and row order.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Use 'autoimportación' or 'importación automática' and normalize sentence-final periods outside closing quotation marks in prose.",
+                    "quote": "errores de auto-importación del IDE",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "All ten scores remain unchanged. Not ready: protected text needs restoration, the forceful closing needs recovery, and several calques and untranslated headings need editing. Scope: informal, broadly international Spanish for developers. Source-only concerns, excluded from scoring: contradictory table markers and the malformed arrow-function body presented as valid."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 5,
+                    "confidence": 0.97,
+                    "rationale": "The central purpose-of-exporting question, hierarchy distinction and forceful closing preserve the source's meaning without adding new claims.",
+                    "quote": "¿No estaremos perdiendo de vista para qué sirve `export`?"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The named-export term, aliasing syntax and named-versus-anonymous function distinction are retained. The contradictory table markers and malformed arrow-function example originate in the source and are excluded from this rating.",
+                    "quote": "Una exportación nombrada (`named export`)"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.99,
+                    "rationale": "All substantive sections, examples, links and table content are retained, and explanatory table headings are localized. Omitting the inherited date follows the repository rules.",
+                    "quote": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas |"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.94,
+                    "rationale": "The central questions and rebuttals are readily understandable. A few formulations remain stiff or compressed, particularly the description of the IDE and refactoring experience.",
+                    "quote": "obtener la mejor experiencia de IDE y refactorización"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "Sentence construction and recipient agreement are sound. Minor orthographic defects remain, including the hyphen in 'auto-importación' and some sentence-final periods placed inside quotations.",
+                    "quote": "errores de auto-importación del IDE"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 4,
+                    "confidence": 0.94,
+                    "rationale": "The companion metaphor and dismissive rebuttals work in Spanish. In the knife question, 'otra vez' sounds more like repeating the physical action than the source's conversational request for a reminder.",
+                    "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 5,
+                    "confidence": 0.96,
+                    "rationale": "The dry dismissals and profane closing retain the author's confrontational humor. The profanity emphasizes intent rather than introducing a new target or escalating into an insult.",
+                    "quote": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 5,
+                    "confidence": 0.93,
+                    "rationale": "For an informal, broadly international Spanish-speaking developer audience, the direct address and concise rebuttals fit the register. Retaining the source's profanity fits that editorial scope; no nationality-based softening is warranted.",
+                    "quote": "Buen recurso. No viene al caso."
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.97,
+                    "rationale": "The progression from communication principle to objections, examples and summary is preserved. The summary link targets the localized heading, and the follow-up questions have an explicit conversational connection.",
+                    "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "Frontmatter paths, metadata handling, JSX, fences and the localized anchor are intact. The first code block preserves its comment, but comments in the second block remain translated contrary to the preservation requirement.",
+                    "quote": "// No se puede exportar default const ...."
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Restore every original English comment in the second fenced block, including '// Cannot export default const ....'. The first block is already preserved. This is a mandatory preservation repair, not a new runtime error.",
+                    "quote": "// No se puede exportar default const ....",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Use 'autoimportación' or 'importación automática', and normalize sentence-final periods outside closing quotation marks in prose.",
+                    "quote": "errores de auto-importación del IDE",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Optionally clarify the reminder function of 'again': 'Ahora, recuérdame: ¿cómo se supone que agarro tu invento?'. This preserves the physical metaphor without suggesting holding it a second time.",
+                    "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "All ten scores remain unchanged. Close to ready, but protected comments in the second code block must be restored. Remaining language changes are limited polish. Scope: informal, broadly international Spanish for developers, retaining the author's profanity. Source-only concerns, excluded from scoring: contradictory table markers and the malformed arrow-function body presented as valid."
+              }
+            }
+          ],
+          "preferredLabel": "Y",
+          "reason": "No score or severity changes: the added self-reported confidence metadata supplies no textual evidence. Y remains preferred because it expresses the central purpose question naturally, repairs the importer phrasing, preserves `named export`, localizes the table headings and retains the profane closing's emphasis on intent. Neither candidate is ready under the strict comment-preservation requirement."
+        }
+      },
+      {
+        "actor": {
+          "id": "auditor-B",
+          "model": "anthropic/claude-fable-5.1",
+          "effort": "high"
+        },
+        "mapping": {
+          "baseline": "Y",
+          "candidate": "X"
+        },
+        "blind": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": true,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "Meaning preserved throughout, including the profane closing line. Minor expansions ('No transmite ninguna intención del autor' for terse 'No author intent.'; 'DE TODAS' added to render 'SINGLE MOST') are legitimate but slightly loosen the source's clipped style.",
+                    "quote": "No transmite ninguna intención del autor."
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "All code, identifiers, URLs, and the const/default export constraint rendered correctly; the 'kinves.js' source typo is preserved rather than silently fixed.",
+                    "quote": "Por razones históricas, no puedes combinar `export default` con una expresión `const`."
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "All prose, table cells and headers localized. The only gap is the first code block comment left in English while the second block's comments are translated, an inconsistency rather than a loss.",
+                    "quote": "// You can alias using both!"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Rhetorical question and importer reference are restructured into natural Spanish rather than calqued.",
+                    "quote": "¿No estaremos perdiendo de vista para qué sirve `export`?"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "No grammar or spelling defects found; punctuation with inverted marks is consistent.",
+                    "quote": "Y la siguiente: \"¿Están invitados o son obligatorios?\""
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "'Not the point' rendered with the native idiom 'No viene al caso'; 'Neat feature' as 'Buen recurso' avoids the 'función' ambiguity with JS functions.",
+                    "quote": "Buen recurso. No viene al caso."
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Keeps the deliberate profanity of the closing line with a natural Spanish intensifier construction that also carries the 'deliberately/with intent' sense.",
+                    "quote": "haz `export` con toda la puta intención. 💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Neutral Spanish usable across regions; 'computadora' leans Latin American but is widely understood. Table headers localized.",
+                    "quote": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas |"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Headings, lists, nested code block indentation, and table structure mirror the source; anchor #resumen targets the localized heading.",
+                    "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Frontmatter uses ../ image paths, inherited date omitted, sourceHash present, <section className> preserved intact.",
+                    "quote": "<section className=\"scroll-x\">"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 1,
+                    "claim": "First code block comment left in English while second block comments are translated; pick one policy for consistency.",
+                    "quote": "// You can alias using both!",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 0,
+                    "claim": "Source backticks around `named export` replaced with a gloss; acceptable since the term is not real code, but differs from how `export default` is treated in the same list.",
+                    "quote": "Una exportación nombrada (`named export`)",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Faithful, natural, and voice-preserving; only a minor comment-translation inconsistency remains."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Closing line shifts meaning from 'like you mean it' (with intent) to 'as if you really cared' and drops the profanity; 'perdido el punto' is a calque that blurs 'missed the point'.",
+                    "quote": "`export`a como si en verdad te importara."
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Code, URLs and technical claims are intact; source typo 'kinves.js' preserved.",
+                    "quote": "import { default as Handle } from \"./knife.js\"; // 🔪"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 3,
+                    "confidence": 0.85,
+                    "rationale": "Table header row left entirely in English while all cells are Spanish, leaving the summary table half-localized.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Several translationese constructions interrupt reading: 'los `import`ers', 'Seguimiento:', 'Presentando UNA función'.",
+                    "quote": "Le estamos enviando una señal a los `import`ers"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Grammar is correct, but 'Incorrecto (ya no más)' is awkward and 'Presentando...' uses an English-style announcing gerund.",
+                    "quote": "Incorrecto (ya no más)."
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "'No es el punto' and 'perdido el punto' are calques; 'Función interesante' for 'Neat feature' collides with the JS meaning of función in an article about exporting functions.",
+                    "quote": "Función interesante. No es el punto."
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 2,
+                    "confidence": 0.85,
+                    "rationale": "The deliberate profanity in the punchline is sanitized with no stated benefit, flattening the author's signature edge at the most important sentence.",
+                    "quote": "por favor `export`a como si en verdad te importara."
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Untranslated table headers and anglicisms ('`import`ers', 'Seguimiento') read as unlocalized to a Spanish audience.",
+                    "quote": "Seguimiento: \"¿Están invitados o son obligatorios?\""
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Structure mirrors the source; anchor #resumen matches the localized heading; nested code indentation preserved.",
+                    "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Frontmatter paths use ../, date omitted, sourceHash present, section component intact; code comments consistently translated.",
+                    "quote": "// ¡Puedes usar alias con ambas!"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Closing line drops the author's intentional profanity and shifts meaning ('as if you cared' vs 'like you mean it'); restore intent and register, e.g. 'con toda la puta intención'.",
+                    "quote": "`export`a como si en verdad te importara.",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Table headers untranslated while cells are Spanish.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Calques and anglicisms reduce naturalness: 'perdido el punto', 'los `import`ers', 'Seguimiento:', 'No es el punto', 'Presentando UNA función'.",
+                    "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Technically sound but sanitizes the punchline, leaves table headers in English, and carries several calques."
+              }
+            }
+          ],
+          "preferredLabel": "X",
+          "reason": "Both are technically accurate and structurally identical, but X localizes the table headers, avoids the calques ('perdido el punto', '`import`ers', 'Seguimiento', 'No es el punto') present in Y, and preserves the author's deliberate profanity and meaning in the conclusion, which Y both softens and shifts. X's only defect is one untranslated code comment."
+        },
+        "confidenceAware": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": true,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. Meaning preserved throughout, including the profane closing line. Minor expansions ('No transmite ninguna intención del autor' for terse 'No author intent.'; 'DE TODAS' added to render 'SINGLE MOST') are legitimate but slightly loosen the source's clipped style.",
+                    "quote": "No transmite ninguna intención del autor."
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. All code, identifiers, URLs, and the const/default export constraint rendered correctly; the 'kinves.js' source typo is preserved rather than silently fixed.",
+                    "quote": "Por razones históricas, no puedes combinar `export default` con una expresión `const`."
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. All prose, table cells and headers localized. The only gap is the first code block comment left in English while the second block's comments are translated, an inconsistency rather than a loss.",
+                    "quote": "// You can alias using both!"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. Rhetorical question and importer reference are restructured into natural Spanish rather than calqued.",
+                    "quote": "¿No estaremos perdiendo de vista para qué sirve `export`?"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. No grammar or spelling defects found; inverted punctuation marks are consistent.",
+                    "quote": "Y la siguiente: \"¿Están invitados o son obligatorios?\""
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Lowered from 5 to 4 for a newly noticed textual reason, not because of the metadata: 'otra vez' calques the English 'how do I ... again?' (a 'remind me' idiom) — Spanish would use '¿cómo era que se agarraba tu invento?' or similar. 'No viene al caso' and 'Buen recurso' remain strong native choices.",
+                    "quote": "¿cómo sostengo tu invento otra vez?"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. Keeps the deliberate profanity of the closing line with a natural Spanish intensifier construction that also carries the 'deliberately/with intent' sense.",
+                    "quote": "haz `export` con toda la puta intención. 💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Neutral Spanish usable across regions; 'computadora' leans Latin American but is widely understood. Table headers localized.",
+                    "quote": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas |"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Headings, lists, nested code block indentation, and table structure mirror the source; anchor #resumen targets the localized heading.",
+                    "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Frontmatter uses ../ image paths, inherited date omitted, sourceHash present, <section className> preserved intact.",
+                    "quote": "<section className=\"scroll-x\">"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 1,
+                    "claim": "First code block comment left in English while second block comments are translated; pick one policy for consistency.",
+                    "quote": "// You can alias using both!",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "'otra vez' calques the English 'how do I ... again?' idiom; consider '¿cómo era que se agarraba tu invento?'.",
+                    "quote": "¿cómo sostengo tu invento otra vez?",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 0,
+                    "claim": "Source backticks around `named export` replaced with a gloss; acceptable since the term is not real code, but differs from how `export default` is treated in the same list.",
+                    "quote": "Una exportación nombrada (`named export`)",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Faithful, natural, and voice-preserving; only a minor comment-translation inconsistency and one 'again' calque remain. The changeConfidence metadata was not used as evidence; the single score change is tied to a specific newly noticed phrase."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Closing line shifts meaning from 'like you mean it' (with intent) to 'as if you really cared' and drops the profanity; 'perdido el punto' is a calque that blurs 'missed the point'.",
+                    "quote": "`export`a como si en verdad te importara."
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Code, URLs and technical claims are intact; source typo 'kinves.js' preserved.",
+                    "quote": "import { default as Handle } from \"./knife.js\"; // 🔪"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 3,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. Table header row left entirely in English while all cells are Spanish, leaving the summary table half-localized.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Several translationese constructions interrupt reading: 'los `import`ers', 'Seguimiento:', 'Presentando UNA función'.",
+                    "quote": "Le estamos enviando una señal a los `import`ers"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Grammar is correct, but 'Incorrecto (ya no más)' is awkward and 'Presentando...' uses an English-style announcing gerund.",
+                    "quote": "Incorrecto (ya no más)."
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged at 3; the newly noticed 'otra vez' calque (same as in X) adds to an already listed set of calques ('No es el punto', 'perdido el punto') and does not move the score further. 'Función interesante' for 'Neat feature' collides with the JS meaning of función.",
+                    "quote": "Función interesante. No es el punto."
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 2,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. The deliberate profanity in the punchline is sanitized with no stated benefit, flattening the author's signature edge at the most important sentence.",
+                    "quote": "por favor `export`a como si en verdad te importara."
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Untranslated table headers and anglicisms ('`import`ers', 'Seguimiento') read as unlocalized to a Spanish audience.",
+                    "quote": "Seguimiento: \"¿Están invitados o son obligatorios?\""
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Structure mirrors the source; anchor #resumen matches the localized heading; nested code indentation preserved.",
+                    "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Frontmatter paths use ../, date omitted, sourceHash present, section component intact; code comments consistently translated.",
+                    "quote": "// ¡Puedes usar alias con ambas!"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Closing line drops the author's intentional profanity and shifts meaning ('as if you cared' vs 'like you mean it'); restore intent and register, e.g. 'con toda la puta intención'.",
+                    "quote": "`export`a como si en verdad te importara.",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Table headers untranslated while cells are Spanish.",
+                    "quote": "| Default (Exports) | Named (Exports) | Private Fns |",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Calques and anglicisms reduce naturalness: 'perdido el punto', 'los `import`ers', 'Seguimiento:', 'No es el punto', 'Presentando UNA función'.",
+                    "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "'otra vez' calques the English 'how do I ... again?' idiom (shared with X).",
+                    "quote": "¿cómo sostengo tu invento otra vez?",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Technically sound but sanitizes the punchline, leaves table headers in English, and carries several calques. Scores unchanged from the sealed audit; the metadata concerned only X and was not treated as evidence."
+              }
+            }
+          ],
+          "preferredLabel": "X",
+          "reason": "Preference unchanged. Both are technically accurate and structurally identical, but X localizes the table headers, avoids most of Y's calques ('perdido el punto', '`import`ers', 'Seguimiento', 'No es el punto'), and preserves the author's deliberate profanity and meaning in the conclusion, which Y both softens and shifts. The only revision this pass is a one-point drop in X's idiomMetaphor for the shared 'otra vez' calque, a specific textual observation independent of the changeConfidence metadata."
+        }
+      }
+    ],
+    "validation": {
+      "structural": {
+        "passed": true,
+        "issues": [],
+        "structure": {
+          "score": 1,
+          "valid": true,
+          "minimumScore": 0.98,
+          "differences": {},
+          "summary": "Structure is near-identical: headings, links, blockquotes, code fences, tables, images, alt text slots, and MDX component order match.",
+          "issues": [],
+          "source": {
+            "counts": {
+              "h1": 0,
+              "h2": 2,
+              "h3": 3,
+              "h4": 0,
+              "h5": 0,
+              "h6": 0,
+              "links": 4,
+              "blockquotes": 1,
+              "codeFences": 2,
+              "tables": 1,
+              "tableRows": 6,
+              "tableColumns": 5,
+              "images": 0,
+              "altTexts": 0,
+              "emptyAltTexts": 0,
+              "components": 0
+            },
+            "headingSequence": [
+              "h2",
+              "h3",
+              "h3",
+              "h2",
+              "h3"
+            ],
+            "codeFenceLanguages": [
+              "tsx",
+              "tsx"
+            ],
+            "linkTargets": [
+              "#heading:3",
+              "https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad",
+              "https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript",
+              "https://github.com/microsoft/vscode/pull/94480"
+            ],
+            "imageTargets": [],
+            "tableShapes": [
+              {
+                "kind": "markdown",
+                "rows": 6,
+                "columns": 5
+              }
+            ],
+            "altTextLengths": [],
+            "componentSequence": []
+          },
+          "target": {
+            "counts": {
+              "h1": 0,
+              "h2": 2,
+              "h3": 3,
+              "h4": 0,
+              "h5": 0,
+              "h6": 0,
+              "links": 4,
+              "blockquotes": 1,
+              "codeFences": 2,
+              "tables": 1,
+              "tableRows": 6,
+              "tableColumns": 5,
+              "images": 0,
+              "altTexts": 0,
+              "emptyAltTexts": 0,
+              "components": 0
+            },
+            "headingSequence": [
+              "h2",
+              "h3",
+              "h3",
+              "h2",
+              "h3"
+            ],
+            "codeFenceLanguages": [
+              "tsx",
+              "tsx"
+            ],
+            "linkTargets": [
+              "#heading:3",
+              "https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad",
+              "https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript",
+              "https://github.com/microsoft/vscode/pull/94480"
+            ],
+            "imageTargets": [],
+            "tableShapes": [
+              {
+                "kind": "markdown",
+                "rows": 6,
+                "columns": 5
+              }
+            ],
+            "altTextLengths": [],
+            "componentSequence": []
+          }
+        }
+      },
+      "mdxError": null,
+      "protectedChanges": [],
+      "passed": true
+    },
+    "acceptedCount": 12
+  },
+  {
+    "locale": "ja",
+    "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+    "baselineHash": "43c6018932c1c8259a652f107532bb535294ac8750704b58b74fe3ac2835688e",
+    "candidateHash": "71e2f5067fcabf05172f858e90195a2e235599ad2d35f98e95f7ac5e9f5b8c27",
+    "consensus": false,
+    "gold": false,
+    "status": "needs-negotiation",
+    "confidence": {
+      "count": 16,
+      "mean": 0.8368749999999998,
+      "median": 0.87,
+      "meaning": "Self-reported change confidence; not a calibrated probability"
+    },
+    "assessments": [
+      {
+        "ready": false,
+        "ratings": [
+          {
+            "dimension": "faithfulness",
+            "score": 3,
+            "confidence": 0.94,
+            "rationale": "The main argument survives, but Arg #2 and #3 still call rhetorical claims function arguments, and the opening drops the source’s “often” and “mere.”",
+            "quote": "- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。"
+          },
+          {
+            "dimension": "technicalAccuracy",
+            "score": 3,
+            "confidence": 0.96,
+            "rationale": "「引数」 has a different technical meaning from the claims being rebutted. The table and code also contain technical problems inherited from English; those are source concerns, not translation errors.",
+            "quote": "- 引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。"
+          },
+          {
+            "dimension": "completeness",
+            "score": 4,
+            "confidence": 0.94,
+            "rationale": "Sections, examples, links, numbers and the conclusion are present. Two meaningful qualifications in the opening paragraph are missing.",
+            "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。"
+          },
+          {
+            "dimension": "readability",
+            "score": 3,
+            "confidence": 0.87,
+            "rationale": "The conversational rebuttals read clearly, but 「最も重要な単一のもの」 is conspicuously literal Japanese. Its replacement remains a wording choice, not an established technical correction.",
+            "quote": "`export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。"
+          },
+          {
+            "dimension": "grammarSpelling",
+            "score": 3,
+            "confidence": 0.98,
+            "rationale": "A summary-table quotation ends with an opening Japanese bracket. English has a corresponding quotation-mark error, but the unclosed Japanese bracket is still an actionable target-text typo.",
+            "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「"
+          },
+          {
+            "dimension": "idiomMetaphor",
+            "score": 3,
+            "confidence": 0.83,
+            "rationale": "The knife/handle joke now survives through 「握れば」, whereas the default-export declaration still sounds translated rather than spoken.",
+            "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。"
+          },
+          {
+            "dimension": "authorVoice",
+            "score": 4,
+            "confidence": 0.86,
+            "rationale": "The ending retains the deliberate profane emphasis, the exasperated request and the heart. 「クソ本気」 is a forceful register choice for this conversational developer essay, not a claim about universal Japanese usage.",
+            "quote": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞"
+          },
+          {
+            "dimension": "localeAppropriateness",
+            "score": 4,
+            "confidence": 0.88,
+            "rationale": "For Japanese software developers, 「名前付きエクスポート」 and 「デフォルトエクスポート」 match the checked Japanese MDN terminology. The remaining 「引数」 labels undermine that otherwise appropriate technical register.",
+            "quote": "ついでに「名前付きエクスポートはあくまで脇役」とも伝える。"
+          },
+          {
+            "dimension": "structureFlow",
+            "score": 4,
+            "confidence": 0.95,
+            "rationale": "The heading sequence, numbered rebuttals, table and conclusion follow the source. The in-page link targets the localized summary heading.",
+            "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+          },
+          {
+            "dimension": "mdxIntegrity",
+            "score": 4,
+            "confidence": 0.92,
+            "rationale": "The section component, fenced-code structure, URLs, table shape and locale-relative image paths remain intact. Translated comments inside code fences breach the separate code-comment preservation constraint, though they do not themselves break MDX.",
+            "quote": "<section className=\"scroll-x\">\n## まとめ"
+          }
+        ],
+        "unresolved": [
+          {
+            "severity": 3,
+            "claim": "Translation defect: change 「引数」 to 「主張」 in both #2 and #3. The accepted heading and #1 edits did not reach these labels.",
+            "quote": "- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "Translation defect: restore “often” and the dismissive “mere possibility”; without them the criticism becomes categorical and loses part of its bite.",
+            "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "Translation defect: close the table-cell quotation with 」, not 「. Record the English punctuation error separately rather than reproducing it.",
+            "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+            "requiresReference": false
+          },
+          {
+            "severity": 3,
+            "claim": "Repository-constraint defect: restore the original code-fence comments verbatim throughout both examples. Several comments were translated although executable code, comments and literals must be preserved.",
+            "quote": "// どちらもエイリアス可能！",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "Optional, disputed wording: 「最も重要な単一のもの」 is stiff. A smoother emphasis would help, but an edit must decide explicitly whether and how to retain the possible single-default-export wordplay; this is not a blocker.",
+            "quote": "「これが**_最も重要な単一のもの_**だ」",
+            "requiresReference": false
+          },
+          {
+            "severity": 4,
+            "claim": "Source concern, faithfully carried over—not a translation defect: the example presents `const Knife = () => {...blade, ...handle}` as valid, but the spread syntax does not form a valid arrow-function block. Ask the author to review the source before changing its code.",
+            "quote": "const Knife = () => {...blade, ...handle}",
+            "requiresReference": false
+          },
+          {
+            "severity": 4,
+            "claim": "Source concern, faithfully carried over: the three imports declare the same `Handle` binding in one code block and cannot run together. Ask the author whether they are intended as separate alternatives; do not silently rewrite them in Japanese.",
+            "quote": "import { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪",
+            "requiresReference": false
+          },
+          {
+            "severity": 3,
+            "claim": "Source concern, faithfully carried over: the summary row says there are multiple named exports while its Named column is ❌. Another row marks Named ✅ without mentioning named exports in its pattern. The table needs author review, not unilateral translation-side checkbox changes.",
+            "quote": "| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。",
+            "requiresReference": false
+          }
+        ],
+        "summary": "Not ready: two 「引数」 labels, omitted qualifications, an unclosed quotation and altered code comments remain after the accepted edits. The localized anchor and MDX structure are sound. The broken code examples and inconsistent table indicators originate in English and require separate author review; they should not be silently repaired in translation."
+      },
+      {
+        "ready": false,
+        "ratings": [
+          {
+            "dimension": "faithfulness",
+            "score": 4,
+            "confidence": 0.78,
+            "rationale": "Most content matches the English, and the accepted edits fixed the reversed 'wait until you learn' line. One problem remains from the withheld ja-editor-B-6: 'often' is missing, so a hedged claim about some critics becomes a claim about all of them. 'Mere' is also missing, which removes the sneer at the typo argument.",
+            "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。"
+          },
+          {
+            "dimension": "technicalAccuracy",
+            "score": 3,
+            "confidence": 0.9,
+            "rationale": "The accepted patches changed only the heading and Arg #1. Arg #2 and Arg #3 still use 引数. In a JavaScript article, 引数 means a function argument, and here it sits right next to real import code. All three ledger reviewers asked for this change. Code, identifiers, the 'kinves.js' source typo, URLs and the number 3 are intact.",
+            "quote": "引数 #2："
+          },
+          {
+            "dimension": "completeness",
+            "score": 4,
+            "confidence": 0.8,
+            "rationale": "Every section, list item, code block, table row and link is present. Small losses: 'often', 'mere', 'Follow up' in the buddies line, and the capitalised stress on ONE and ALSO in the table.",
+            "quote": "「他に仲間いる？」「そいつらは招待されてるの？それとも必須？」"
+          },
+          {
+            "dimension": "readability",
+            "score": 4,
+            "confidence": 0.75,
+            "rationale": "The text is mostly natural and the '(any more)' fix reads cleanly. Two spots still read like direct translation: the stiff 'single thing' line, and 一般的なファイル名, which means a common or typical file name rather than a generic one like utils.js.",
+            "quote": "「これが**_最も重要な単一のもの_**だ」"
+          },
+          {
+            "dimension": "grammarSpelling",
+            "score": 4,
+            "confidence": 0.8,
+            "rationale": "One visible typo remains: a table cell ends with an opening bracket 「 instead of a closing 」. The fix was agreed but withheld. The English cell also has a wrong closing quote, but that source error is not a reason to leave the Japanese quote unclosed.",
+            "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「"
+          },
+          {
+            "dimension": "idiomMetaphor",
+            "score": 4,
+            "confidence": 0.72,
+            "rationale": "The knife 'hold' joke is back (握る), and the Hamlet echo in the subtitle works. 'A THING!' now reads as colloquial. The remaining weak spot is 一般的な for 'generic'.",
+            "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。"
+          },
+          {
+            "dimension": "authorVoice",
+            "score": 4,
+            "confidence": 0.78,
+            "rationale": "The closing profanity, the 'please' (頼むから) and the ironic 💞 are back without going further than the English. おい keeps the taunt in the heading. Some table lines are flatter than the source; for example, 'me' disappears from 'Please don't rename me.'",
+            "quote": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞"
+          },
+          {
+            "dimension": "localeAppropriateness",
+            "score": 4,
+            "confidence": 0.7,
+            "rationale": "The register suits a Japanese developer editorial, and English technical terms stay in backticks as in the source. Two small points: 'AirBnb' was silently changed to the standard spelling Airbnb, and 'generic' was mistranslated.",
+            "quote": "（Airbnbスタイルガイドなど）"
+          },
+          {
+            "dimension": "structureFlow",
+            "score": 4,
+            "confidence": 0.75,
+            "rationale": "Section order and list nesting match the source. The one list now switches labels from 主張 #1 to 引数 #2 and #3, which breaks its parallel structure.",
+            "quote": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。"
+          },
+          {
+            "dimension": "mdxIntegrity",
+            "score": 3,
+            "confidence": 0.68,
+            "rationale": "Frontmatter image paths use ../, inherited keys are omitted, sourceHash is kept, the #まとめ anchor matches its heading, and the section, table and code fences are intact. But several emphasis markers sit directly against Japanese text with no space. Under CommonMark delimiter rules, which micromark/MDX follows, these probably fail and show literal * or _. This happens at が**_, く**_, _を, and wherever ：** is followed by text. The English avoids this because spaces surround its markers. The build pipeline may use a CJK-friendly plugin, which I can't verify, so confidence is moderate.",
+            "quote": "**注：**歴史的な理由により"
+          }
+        ],
+        "unresolved": [
+          {
+            "severity": 3,
+            "claim": "The labels for Arg #2 and Arg #3 still say 引数 (function argument). They should say 主張, like the heading and #1. All reviewers agreed, but only #1 was patched.",
+            "quote": "引数 #3：",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "This table cell's quote is not closed: it ends with 「 instead of 」. The fix was agreed but withheld because of overlapping patches. The English has its own wrong quote mark here; list that separately as a source issue.",
+            "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "'often' and 'mere' are missing, so the hedge and the sarcasm are lost. The withheld ja-editor-B-6 fix both reviewers accepted is still pending: 彼らが問題視するのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポート名をタイポするかもしれないというだけの話。",
+            "quote": "IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。",
+            "requiresReference": false
+          },
+          {
+            "severity": 2,
+            "claim": "Emphasis will probably not render under CommonMark/micromark in several places: が**_…_**だ, く**_…_**」, the underscore-only _ものの使い方_を, **注：**歴 and **考えてみてほしい：**ファイル名. Readers would see literal asterisks or underscores. Possible fixes: ***…*** instead of **_…_**, *ものの使い方*を instead of _…_, and 注：/考えてみてほしい： with the closing ** before the colon (**注**：) or a space after it (**注：** 歴…). Verify in the actual build.",
+            "quote": "「これが**_最も重要な単一のもの_**だ」",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "The stiff 'single thing' rendering is still in place, and the reviewers disagree. One side prefers いちばん重要な (severity 2); the other prefers 唯一にして最も重要な (severity 1). My view: severity 1. The meaning is intact, and either rewrite is an acceptable fix for the stiffness. This can be done together with the emphasis-marker fix above.",
+            "quote": "最も重要な単一のもの",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "一般的なファイル名 means a common or typical file name. The source means a generic, non-specific name such as utils.js. 汎用的なファイル名 is more accurate.",
+            "quote": "複数の名前付きエクスポート、一般的なファイル名。",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "The source spelling 'AirBnb' was silently changed to Airbnb. That is probably the right brand spelling, but it should be logged as a source issue rather than corrected without a note.",
+            "quote": "（Airbnbスタイルガイドなど）",
+            "requiresReference": false
+          },
+          {
+            "severity": 1,
+            "claim": "Comments inside code blocks were translated. The translations are accurate, and the error-like 'Cannot export default const' stays in English. The hard constraints say to preserve code comments, so repository policy should confirm whether translating them is allowed.",
+            "quote": "// どちらもエイリアス可能！",
+            "requiresReference": false
+          },
+          {
+            "severity": 0,
+            "claim": "Source issue, carried over faithfully and not a translation defect: the table's ✅/❌ columns contradict some Pattern cells (e.g. Named ❌ next to 'Multiple named exports'). Refer to the author and don't change it in the translation.",
+            "quote": "| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。",
+            "requiresReference": false
+          }
+        ],
+        "summary": "Not ready. The accepted edits fixed the real problems: the reversed 'wait until you learn' line, the heading and Arg #1 labels, the '(any more)' line, the knife 'hold' joke and the closing profanity. But four withheld fixes never landed. Arg #2 and #3 still say 引数 (severity 3), the table quote is unclosed (2), and 'often' and 'mere' are missing (2). The disputed 'single thing' wording is still unsettled (1). I also found an issue the ledger didn't raise: several bold and italic markers sit directly against Japanese text and will probably show as literal * or _ under CommonMark/MDX (2, depending on the renderer). Minor items: 一般的な for 'generic', the silent Airbnb correction, and the policy question about translated code comments. The table's contradictory checkmarks are the author's issue, carried over faithfully."
+      }
+    ],
+    "audits": [
+      {
+        "actor": {
+          "id": "auditor-A",
+          "model": "openai/gpt-6-astra",
+          "effort": "high"
+        },
+        "mapping": {
+          "baseline": "X",
+          "candidate": "Y"
+        },
+        "blind": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 3,
+                    "confidence": 0.99,
+                    "rationale": "“Wait until you learn” becomes “there is no need even to learn,” changing the meaning and defeating the sarcastic punchline. The central communication thesis otherwise survives.",
+                    "quote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "“Arg” means an argument supporting a position here, not a function argument. Translating the heading and all three labels with 引数 introduces misleading programming terminology. The executable examples otherwise match the source, including its defects.",
+                    "quote": "引数 #1：名前付きエクスポートは名前の一貫性を保証する。"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "All substantive sections, three objections, examples, five table rows, links and the closing reflection are present. Omitting the inherited date follows the repository rules.",
+                    "quote": "**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The explanation remains followable, but abstract literal constructions such as 最も重要な単一のもの make an emphatic, conversational point sound mechanical.",
+                    "quote": "`export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The isolated parenthetical もう does not naturally express “no longer correct” in Japanese. The surrounding prose is mostly grammatically sound.",
+                    "quote": "間違い（もう）。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.97,
+                    "rationale": "The debate idiom in “Weak Args” is mistranslated, the “wait until” joke is mishandled, and replacing “hold your contraption” with generic usage language loses the knife/handle metaphor established by the imports.",
+                    "quote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 3,
+                    "confidence": 0.96,
+                    "rationale": "Some confrontational banter remains, but the ending converts an affectionately profane demand into a restrained wish. No contextual benefit justifies losing that emphasis.",
+                    "quote": "コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.92,
+                    "rationale": "For Japanese-speaking JavaScript developers, the technical loanwords are appropriate. Dense noun stacking and imported punctuation patterns occasionally sound translated rather than like an informal local essay; this is not a cultural-sensitivity objection.",
+                    "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The progression from thesis to objections, practical guidance, summary table and conclusion is preserved. The forward reference correctly targets the localized summary heading.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "The section component, fences, links and locale image paths are retained correctly. However, protected code comments were translated, and punctuation-adjacent closing emphasis delimiters in two labels do not close under standard CommonMark rules.",
+                    "quote": "**注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Translate “Args” as argumentative claims, not programming arguments. Use 主張 or 言い分 consistently in the heading and all three numbered labels; for example, 「その言い分、弱いぞ」.",
+                    "quote": "### 弱い引数だな、おい",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore the anticipatory sarcasm of “wait until you learn what variables can do.” For example: 「残念だけど、変数で何ができるか知ったら驚くぞ！」. 知るまでもない currently says learning is unnecessary.",
+                    "quote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore every fenced-code comment verbatim from English. Translating comments violates the explicit preservation requirement, even though it does not itself break execution. Preserve the source's existing code defects rather than repairing them incidentally.",
+                    "quote": "// どちらもエイリアス可能！",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Replace the stranded temporal parenthesis with natural Japanese, such as 「今はもう違う。ツールを設定・更新しよう。」.",
+                    "quote": "間違い（もう）。ツールを設定・更新しよう。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Recover the knife/handle joke by retaining the physical action of holding the contraption, for example 「で、その妙な道具、どう握ればいいんだっけ？」. The present wording communicates usability but removes the concrete metaphor.",
+                    "quote": "で、この仕掛けをどう使えばいいんだ？",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Restore the conclusion's force and irreverence rather than leaving a polite wish. A word-for-word profanity match is unnecessary, but an equally emphatic Japanese demand is needed to preserve the author's voice.",
+                    "quote": "どうか`export`は本気でやってほしい。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Repair both **注：**歴史的 and **考えてみてほしい：**ファイル名. Their closing delimiters follow punctuation and immediately precede Japanese letters, preventing closure under standard CommonMark. Move the colon outside the emphasis or add a separating space.",
+                    "quote": "**考えてみてほしい：**ファイル名",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Not ready: the argument/parameter confusion and reversed sarcasm need correction, alongside protected-comment restoration and emphasis fixes. Source-only concerns, excluded from deductions: inconsistent table checkmarks, malformed source quotation punctuation, and the invalid arrow-function example presented as valid."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The sarcastic variable remark, temporal qualification and central thesis are conveyed accurately. A remaining meaning error labels objections 2 and 3 as function arguments rather than argumentative claims.",
+                    "quote": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "The heading and first objection correctly use 主張, but objections 2 and 3 still use the programming term 引数. The ESM examples and technical identifiers otherwise remain faithful; the source's invalid example is not a new translation error.",
+                    "quote": "引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The complete argument, examples, links, five-row table and final reflection are retained. The absent inherited date and added sourceHash comply with the repository rules.",
+                    "quote": "**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The conversational rebuttals are easy to follow. Some shared literal phrasing, especially 最も重要な単一のもの, still makes the core explanation heavier than necessary.",
+                    "quote": "`export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 5,
+                    "confidence": 0.94,
+                    "rationale": "The temporal qualification is expressed as a complete, natural Japanese sentence, and no clear new grammatical or spelling error stands out. The table's mismatched quotation direction originates in English and is not charged here.",
+                    "quote": "今はもう間違いだ。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The rhetorical question preserves the knife/handle motif, and the subtitle sustains the source's theatrical allusion. A few expressions, particularly 単一のもの and クソ本気, remain mechanically literal or stylistically marked.",
+                    "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The conclusion retains the source's direct, profane urgency and affectionate emoji rather than sanitizing it. クソ本気 is a slightly forced collocation, but the strength of the language is supported by the source.",
+                    "quote": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.92,
+                    "rationale": "The register suits an informal essay for Japanese-speaking JavaScript developers, including the playful subtitle. Some noun-heavy phrasing still reads as translated Japanese. There is no evidenced audience-based reason to remove the profanity.",
+                    "quote": "subTitle: 名付けるべきか、名付けざるべきか？"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The source's argumentative sequence, nested examples, summary and conclusion remain intact. The summary link has been localized consistently with its destination heading.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "The component, fences, URLs and locale image paths are preserved correctly. Translated code comments violate the preservation contract, and the two bold labels have closing-delimiter problems under standard CommonMark.",
+                    "quote": "**注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Change 引数 #2 and 引数 #3 to 主張 #2 and 主張 #3, matching the meaning of “Arg” and the already-correct heading and first label. These are objections, not function parameters.",
+                    "quote": "引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore every fenced-code comment verbatim from English. The comments are protected by the explicit preservation requirement; their translation is a compliance defect, not a newly introduced executable-code failure.",
+                    "quote": "// どちらもエイリアス可能！",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Repair both **注：**歴史的 and **考えてみてほしい：**ファイル名. Under standard CommonMark, punctuation before the closing delimiter and Japanese letters immediately after it prevent closure. Move the colon outside the emphasis or add a separating space.",
+                    "quote": "**考えてみてほしい：**ファイル名",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Optional polish: replace the mechanical 最も重要な単一のもの with a more spoken formulation such as 「いちばん重要なのは、これ一つだ！」 while retaining the exclusivity and emphasis.",
+                    "quote": "最も重要な単一のもの",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Optional voice polish: reconsider the collocation クソ本気 while preserving the emphatic, irreverent demand. This is a rhythm and idiom preference, not an objection to profanity or a claim about Japanese audience sensitivities.",
+                    "quote": "頼むから`export`はクソ本気でやってくれ。",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Not ready, but the remaining translation repairs are localized: two incorrect objection labels, protected comments and emphasis delimiters. Source-only concerns, excluded from deductions: inconsistent table checkmarks, malformed source quotation punctuation, and the invalid arrow-function example presented as valid."
+              }
+            }
+          ],
+          "preferredLabel": "Y",
+          "reason": "Y accurately conveys the variable joke and “no longer correct,” preserves the knife/handle metaphor, and retains the conclusion's deliberate edge. X mistranslates the joke and flattens those rhetorical effects. Y still mislabels objections 2 and 3 as 引数, and both candidates share protected-comment and emphasis defects, so neither is ready unchanged."
+        },
+        "confidenceAware": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 3,
+                    "confidence": 0.99,
+                    "rationale": "“Wait until you learn” becomes “there is no need even to learn,” changing the meaning and defeating the sarcastic punchline. The central communication thesis survives.",
+                    "quote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "“Arg” means an argumentative claim here, not a function argument. 引数 introduces misleading programming terminology in the heading and all three labels. Executable examples otherwise retain the source, including its defects.",
+                    "quote": "引数 #1：名前付きエクスポートは名前の一貫性を保証する。"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "All substantive sections, three objections, examples, five table rows, links and the closing reflection are present. Omitting the inherited date follows repository rules.",
+                    "quote": "**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The explanation is followable, but literal constructions such as 最も重要な単一のもの make an emphatic conversational point sound mechanical.",
+                    "quote": "`export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The isolated parenthetical もう does not naturally express “no longer correct.” The surrounding prose is mostly grammatically sound.",
+                    "quote": "間違い（もう）。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.97,
+                    "rationale": "The debate idiom in “Weak Args” and the “wait until” joke are mishandled. Generic usage language also loses the knife/handle metaphor in “hold your contraption.”",
+                    "quote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 3,
+                    "confidence": 0.96,
+                    "rationale": "Some confrontational banter remains, but the ending turns an affectionately profane demand into a restrained wish. No contextual benefit justifies losing that emphasis.",
+                    "quote": "コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.92,
+                    "rationale": "For Japanese-speaking JavaScript developers, the technical loanwords fit. Dense noun stacking and imported punctuation patterns occasionally sound translated rather than like a local informal essay.",
+                    "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The progression from thesis through objections and practical guidance to the summary and conclusion is retained. The forward reference targets the localized summary heading.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "Components, fences, links and locale image paths are retained. However, protected code comments were translated, and two bold labels have closing delimiters that do not close under standard CommonMark flanking rules.",
+                    "quote": "**注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Translate “Args” as argumentative claims, not function arguments. Use 主張 or 言い分 consistently in the heading and all three numbered labels; for example, 「その言い分、弱いぞ」.",
+                    "quote": "### 弱い引数だな、おい",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore the anticipatory sarcasm of “wait until you learn,” for example 「残念だけど、変数で何ができるか知ったら驚くぞ！」. 知るまでもない instead says learning is unnecessary.",
+                    "quote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore every fenced-code comment verbatim from English. Translating comments violates the explicit preservation requirement, although it does not itself break execution. Do not incidentally repair the source's code defects.",
+                    "quote": "// どちらもエイリアス可能！",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Replace the stranded temporal parenthesis with natural Japanese, such as 「今はもう違う。ツールを設定・更新しよう。」.",
+                    "quote": "間違い（もう）。ツールを設定・更新しよう。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Recover the knife/handle joke by retaining the physical action of holding the contraption, for example 「で、その妙な道具、どう握ればいいんだっけ？」.",
+                    "quote": "で、この仕掛けをどう使えばいいんだ？",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Restore the conclusion's force and irreverence. A literal profanity match is unnecessary, but the restrained wish loses the original's emphatic demand without a compensating benefit.",
+                    "quote": "どうか`export`は本気でやってほしい。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Repair both **注：**歴史的 and **考えてみてほしい：**ファイル名. Punctuation before the closing delimiter and Japanese letters immediately after it prevent closure under standard CommonMark. Move the colon outside the emphasis or add a separating space.",
+                    "quote": "**考えてみてほしい：**ファイル名",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "All ten scores remain unchanged. Not ready: the argument/parameter confusion, reversed sarcasm, protected-comment changes and emphasis defects need repair. The inconsistent table checkmarks, malformed quotation punctuation and invalid arrow-function example presented as valid originate in the source and are excluded from deductions."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.98,
+                    "rationale": "The variable joke, temporal qualification and central thesis are conveyed accurately. Objections 2 and 3 still incorrectly use the term for function arguments rather than argumentative claims.",
+                    "quote": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "The heading and first objection correctly use 主張, but objections 2 and 3 retain 引数. The ESM examples and identifiers otherwise remain faithful; the source's invalid example is not a new translation error.",
+                    "quote": "引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The complete argument, examples, links, five-row table and final reflection are retained. Omitting the inherited date and including sourceHash comply with repository rules.",
+                    "quote": "**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The conversational rebuttals are easy to follow. Literal phrasing such as 最も重要な単一のもの still makes the central explanation heavier than necessary.",
+                    "quote": "`export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 5,
+                    "confidence": 0.94,
+                    "rationale": "The temporal qualification is a complete, natural Japanese sentence, and no clear new grammatical or spelling error stands out. The table's mismatched quotation direction originates in English.",
+                    "quote": "今はもう間違いだ。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The rhetorical question preserves the knife/handle motif, and the subtitle sustains the theatrical allusion. 単一のもの and クソ本気 remain somewhat mechanical or stylistically marked.",
+                    "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 4,
+                    "confidence": 0.96,
+                    "rationale": "The ending retains the source's direct, profane urgency and affectionate emoji. クソ本気 is a slightly forced collocation, but the strength of language is supported by the source.",
+                    "quote": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.92,
+                    "rationale": "The register suits an informal essay for Japanese-speaking JavaScript developers, including the playful subtitle. Some noun-heavy phrasing still reads as translated Japanese; there is no evidenced audience-based reason to remove the profanity.",
+                    "quote": "subTitle: 名付けるべきか、名付けざるべきか？"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.98,
+                    "rationale": "The argumentative sequence, nested examples, summary and conclusion remain intact. The summary link is localized consistently with its destination heading.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 4,
+                    "confidence": 0.99,
+                    "rationale": "Components, fences, URLs and locale image paths are preserved. Translated code comments violate the preservation contract, and two bold labels have closing-delimiter problems under standard CommonMark.",
+                    "quote": "**注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "Change 引数 #2 and 引数 #3 to 主張 #2 and 主張 #3, matching the meaning of “Arg” and the already-correct heading and first label. These are objections, not function parameters.",
+                    "quote": "引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "Restore every fenced-code comment verbatim from English. Their translation violates the explicit preservation requirement; it is not a newly introduced executable-code failure.",
+                    "quote": "// どちらもエイリアス可能！",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Repair both **注：**歴史的 and **考えてみてほしい：**ファイル名. Punctuation before the closing delimiter and Japanese letters immediately after it prevent closure under standard CommonMark. Move the colon outside the emphasis or add a separating space.",
+                    "quote": "**考えてみてほしい：**ファイル名",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Optional polish: replace the mechanical 最も重要な単一のもの with a more spoken formulation such as 「いちばん重要なのは、これ一つだ！」 while retaining exclusivity and emphasis.",
+                    "quote": "最も重要な単一のもの",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Optional voice polish: reconsider the collocation クソ本気 while preserving the emphatic, irreverent demand. This is an idiom and rhythm preference, not an objection to profanity.",
+                    "quote": "頼むから`export`はクソ本気でやってくれ。",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "All ten scores remain unchanged. Not ready: two incorrect objection labels, protected-comment changes and emphasis defects remain. The inconsistent table checkmarks, malformed quotation punctuation and invalid arrow-function example presented as valid originate in the source and are excluded from deductions."
+              }
+            }
+          ],
+          "preferredLabel": "Y",
+          "reason": "Scores and preference are unchanged; the added confidence metadata provides no textual evidence. Y accurately conveys the variable joke and temporal qualification, preserves the knife/handle metaphor, and retains the conclusion's deliberate edge. X reverses the joke's meaning and weakens those rhetorical effects. Y still mislabels objections 2 and 3, and both candidates share protected-comment and emphasis defects, so neither is ready unchanged."
+        }
+      },
+      {
+        "actor": {
+          "id": "auditor-B",
+          "model": "anthropic/claude-fable-5.1",
+          "effort": "high"
+        },
+        "mapping": {
+          "baseline": "Y",
+          "candidate": "X"
+        },
+        "blind": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "Meaning preserved throughout, including the knife 'hold your contraption' metaphor and the 'wait until you learn what variables can do' jab. Only defect: 'Arg' is rendered as 主張 in the heading and #1 but as 引数 (function parameter) in #2 and #3, an inconsistent partial mistranslation.",
+                    "quote": "引数 #2：`import * as soManyKnives from './kinves.js'`を使って"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Code blocks, comments, error messages and API names intact. 引数 in a JS article reads as 'function argument', which misleads on two of three bullets, but the technical content itself is correct.",
+                    "quote": "今はもう間違いだ。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "All paragraphs, bullets, table rows, links, emoji and the profane closer are present; source typo 'kinves.js' and retraction note preserved.",
+                    "quote": "（リンクなし、著者撤回済み。）"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Natural casual Japanese; 'Incorrect (any more)' is well idiomatized. Minor: 引数/主張 switch causes a moment of confusion.",
+                    "quote": "いや、保証しない。lintルールを探してるんじゃないのか？"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.75,
+                    "rationale": "Grammatical throughout. Table row 3 closes with 「 instead of 」, mirroring a source defect (curly-quote mismatch) but more visible in Japanese bracket quotes.",
+                    "quote": "クラスっぽい動作を期待して。「"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 5,
+                    "confidence": 0.8,
+                    "rationale": "Hamlet allusion in subtitle rendered with the canonical Japanese cadence; knife-handle metaphor and 'I hate to break it to you' both localized idiomatically.",
+                    "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 5,
+                    "confidence": 0.8,
+                    "rationale": "Blunt, funny register kept; the deliberate profanity in the conclusion survives as クソ本気 without escalation.",
+                    "quote": "頼むから`export`はクソ本気でやってくれ。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.7,
+                    "rationale": "Standard JP dev vocabulary (ツリーシェーキング, リファクタリング, lintルール) used; 引数 misuse is the one term a JP developer would stumble on.",
+                    "quote": "特定のバンドラーのツリーシェーキング能力"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Heading hierarchy, nested bullets, indented code block and table structure match source; anchor updated to localized heading.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Frontmatter uses ../ image paths, inherited date omitted, sourceHash present, <section className> and table intact, code fences unchanged.",
+                    "quote": "<section className=\"scroll-x\">\n## まとめ"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 2,
+                    "claim": "'Arg' inconsistently rendered: 主張 in heading/#1 but 引数 (function parameter) in #2/#3; should be 主張 or 論点 throughout.",
+                    "quote": "引数 #3：名前付きエクスポートの方が",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Table row 3 closing bracket is 「 rather than 」 (inherited from source's mismatched curly quote; fix would be a source-defect correction to flag, not silent).",
+                    "quote": "クラスっぽい動作を期待して。「",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Faithful, voice-preserving translation with idiomatic handling of the Hamlet subtitle, knife metaphor and profane closer. One real defect: 引数 mistranslation on bullets #2/#3, inconsistent with 主張 elsewhere. Otherwise publishable after that fix."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 3,
+                    "confidence": 0.85,
+                    "rationale": "'wait until you learn what variables can do' is rendered as 知るまでもない ('no need to even know'), inverting the sense; 'A THING!' becomes 一つのもの ('one thing'), shifting emphasis from legitimacy to count; 'Weak Args' heading and all bullets use 引数 (function parameter).",
+                    "quote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Code intact, but 引数 in the section heading and every bullet of a JS export article will be read as 'function argument', which is a technical misdirection.",
+                    "quote": "### 弱い引数だな、おい"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "All structural content present, but the Hamlet allusion and the deliberate profanity are dropped rather than adapted.",
+                    "quote": "subTitle: 名前をつけるか、つけないか？"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "'Incorrect (any more)' is transliterated as 間違い（もう） which is not idiomatic Japanese; 知るまでもない sentence is confusing.",
+                    "quote": "間違い（もう）。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 3,
+                    "confidence": 0.75,
+                    "rationale": "しでかせる is an awkward potential form of しでかす (to commit a blunder), odd for 'what variables can do'; same 「 closing bracket in table row 3 as source defect.",
+                    "quote": "変数が何をしでかせるか"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Knife-handle metaphor flattened to generic どう使えばいいんだ; 作者の意図がない is literal; Hamlet cadence lost in subtitle.",
+                    "quote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Conclusion sanitized: 'fucking mean it' becomes polite どうか…本気でやってほしい, removing the intended punchline without stated benefit.",
+                    "quote": "どうか`export`は本気でやってほしい。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.7,
+                    "rationale": "Standard JP dev terminology elsewhere is fine; 引数 misuse is the locale-relevant stumble.",
+                    "quote": "IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Identical structure to source; headings, nested lists, table and localized anchor correct.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Frontmatter paths use ../, sourceHash present, date omitted, section/table/code fences preserved.",
+                    "quote": "<section className=\"scroll-x\">\n## まとめ"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "知るまでもない reverses the source's 'wait until you learn what variables can do'; should express anticipation (e.g. 変数で何ができるか知ったら驚くぞ).",
+                    "quote": "変数が何をしでかせるか知るまでもない！",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "引数 means function parameter; 'Arg' here is a debate argument and should be 主張/論点 in heading and all three bullets.",
+                    "quote": "### 弱い引数だな、おい",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "間違い（もう） is a word-for-word calque of 'Incorrect (any more)' and is not natural Japanese.",
+                    "quote": "間違い（もう）。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Profanity removed from conclusion with no offsetting benefit; author's intended punch is lost.",
+                    "quote": "どうか`export`は本気でやってほしい。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Table row 3 closing bracket 「 mirrors source curly-quote mismatch.",
+                    "quote": "クラスっぽい動作を期待して。「",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Structurally identical to X but with a reversed-meaning sentence, systematic 引数 mistranslation, a calqued parenthetical, and a sanitized conclusion that drops the author's deliberate profanity. Needs substantial editing on the divergent passages."
+              }
+            }
+          ],
+          "preferredLabel": "X",
+          "reason": "The candidates share ~90% of text; where they diverge, X is correct or better in every instance: it keeps the 'variables' line's meaning (Y inverts it with 知るまでもない), idiomatizes 'Incorrect (any more)' (Y calques it as 間違い（もう）), preserves the knife-handle metaphor, the Hamlet subtitle cadence, and the profane closer, and uses 引数 only inconsistently on two bullets versus Y's systematic use in the heading and all bullets. X's sole real defect (引数 on #2/#3) is a subset of Y's problems."
+        },
+        "confidenceAware": {
+          "candidates": [
+            {
+              "label": "X",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged from first pass. Meaning preserved throughout, including the knife 'hold your contraption' metaphor and the 'wait until you learn what variables can do' jab. Only defect: 'Arg' is 主張 in the heading and #1 but 引数 (function parameter) in #2 and #3. Re-read of the text surfaced no new issue; the supplied changeConfidence metadata is not textual evidence and was not used.",
+                    "quote": "引数 #2：`import * as soManyKnives from './kinves.js'`を使って"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Code blocks, comments, error messages and API names intact. 引数 in a JS article reads as 'function argument', misleading on two of three bullets, but the technical content itself is correct.",
+                    "quote": "今はもう間違いだ。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. All paragraphs, bullets, table rows, links, emoji and the profane closer are present; source typo 'kinves.js' and retraction note preserved.",
+                    "quote": "（リンクなし、著者撤回済み。）"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 4,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Natural casual Japanese; 'Incorrect (any more)' well idiomatized. Minor: 引数/主張 switch causes a moment of confusion.",
+                    "quote": "いや、保証しない。lintルールを探してるんじゃないのか？"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 4,
+                    "confidence": 0.75,
+                    "rationale": "Unchanged. Grammatical throughout. Table row 3 closes with 「 instead of 」, mirroring a source curly-quote defect but more visible with Japanese bracket quotes.",
+                    "quote": "クラスっぽい動作を期待して。「"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 5,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Hamlet allusion in subtitle rendered with the canonical Japanese 〜べきか cadence; knife-handle metaphor and 'I hate to break it to you' both localized idiomatically.",
+                    "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 5,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Blunt, funny register kept; the deliberate profanity in the conclusion survives as クソ本気 without escalation.",
+                    "quote": "頼むから`export`はクソ本気でやってくれ。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.7,
+                    "rationale": "Unchanged. Standard JP dev vocabulary (ツリーシェーキング, リファクタリング, lintルール); 引数 misuse is the one term a JP developer would stumble on.",
+                    "quote": "特定のバンドラーのツリーシェーキング能力"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. Heading hierarchy, nested bullets, indented code block and table structure match source; anchor targets the localized heading.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Frontmatter uses ../ image paths, inherited date omitted, sourceHash present, <section className> and table intact, code fences unchanged.",
+                    "quote": "<section className=\"scroll-x\">\n## まとめ"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 2,
+                    "claim": "'Arg' inconsistently rendered: 主張 in heading/#1 but 引数 (function parameter) in #2/#3; should be 主張 or 論点 throughout.",
+                    "quote": "引数 #3：名前付きエクスポートの方が",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Table row 3 closing bracket is 「 rather than 」 (inherited from source's mismatched curly quote; flag as source defect rather than silently correct).",
+                    "quote": "クラスっぽい動作を期待して。「",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Second pass: no score changed. A fresh re-read found no new textual defect beyond the 引数 inconsistency on bullets #2/#3 and the inherited 「 bracket. The changeConfidence metadata (mean 0.84) was disregarded as non-evidence. Faithful, voice-preserving translation; publishable after the 引数→主張 fix."
+              }
+            },
+            {
+              "label": "Y",
+              "assessment": {
+                "ready": false,
+                "ratings": [
+                  {
+                    "dimension": "faithfulness",
+                    "score": 3,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. 'wait until you learn what variables can do' becomes 知るまでもない ('no need to even know'), inverting the sense; 'A THING!' becomes 一つのもの ('one thing'), shifting emphasis from legitimacy to count; heading and all bullets use 引数.",
+                    "quote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）"
+                  },
+                  {
+                    "dimension": "technicalAccuracy",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Code intact, but 引数 in the section heading and every bullet of a JS export article reads as 'function argument', a technical misdirection.",
+                    "quote": "### 弱い引数だな、おい"
+                  },
+                  {
+                    "dimension": "completeness",
+                    "score": 4,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. All structural content present, but the Hamlet allusion and the deliberate profanity are dropped rather than adapted.",
+                    "quote": "subTitle: 名前をつけるか、つけないか？"
+                  },
+                  {
+                    "dimension": "readability",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. 間違い（もう） is a word-order calque of 'Incorrect (any more)' and not idiomatic; the 知るまでもない sentence is confusing.",
+                    "quote": "間違い（もう）。ツールを設定・更新しよう。"
+                  },
+                  {
+                    "dimension": "grammarSpelling",
+                    "score": 3,
+                    "confidence": 0.75,
+                    "rationale": "Unchanged. しでかせる is an awkward potential of しでかす (to commit a blunder), odd for 'what variables can do'; same inherited 「 bracket in table row 3.",
+                    "quote": "変数が何をしでかせるか"
+                  },
+                  {
+                    "dimension": "idiomMetaphor",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Knife-handle metaphor flattened to generic どう使えばいいんだ; 作者の意図がない is literal; Hamlet cadence lost in subtitle.",
+                    "quote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。"
+                  },
+                  {
+                    "dimension": "authorVoice",
+                    "score": 3,
+                    "confidence": 0.8,
+                    "rationale": "Unchanged. Conclusion sanitized: 'fucking mean it' becomes polite どうか…本気でやってほしい, removing the intended punchline with no stated benefit.",
+                    "quote": "どうか`export`は本気でやってほしい。💞"
+                  },
+                  {
+                    "dimension": "localeAppropriateness",
+                    "score": 4,
+                    "confidence": 0.7,
+                    "rationale": "Unchanged. Standard JP dev terminology elsewhere is fine; 引数 misuse is the locale-relevant stumble.",
+                    "quote": "IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力"
+                  },
+                  {
+                    "dimension": "structureFlow",
+                    "score": 5,
+                    "confidence": 0.85,
+                    "rationale": "Unchanged. Identical structure to source; headings, nested lists, table and localized anchor correct.",
+                    "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+                  },
+                  {
+                    "dimension": "mdxIntegrity",
+                    "score": 5,
+                    "confidence": 0.9,
+                    "rationale": "Unchanged. Frontmatter paths use ../, sourceHash present, date omitted, section/table/code fences preserved.",
+                    "quote": "<section className=\"scroll-x\">\n## まとめ"
+                  }
+                ],
+                "unresolved": [
+                  {
+                    "severity": 3,
+                    "claim": "知るまでもない reverses the source's 'wait until you learn what variables can do'; should express anticipation (e.g. 変数で何ができるか知ったら驚くぞ).",
+                    "quote": "変数が何をしでかせるか知るまでもない！",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 3,
+                    "claim": "引数 means function parameter; 'Arg' here is a debate argument and should be 主張/論点 in heading and all three bullets.",
+                    "quote": "### 弱い引数だな、おい",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "間違い（もう） is a word-for-word calque of 'Incorrect (any more)' and is not natural Japanese.",
+                    "quote": "間違い（もう）。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 2,
+                    "claim": "Profanity removed from conclusion with no offsetting benefit; author's intended punch is lost.",
+                    "quote": "どうか`export`は本気でやってほしい。",
+                    "requiresReference": false
+                  },
+                  {
+                    "severity": 1,
+                    "claim": "Table row 3 closing bracket 「 mirrors source curly-quote mismatch.",
+                    "quote": "クラスっぽい動作を期待して。「",
+                    "requiresReference": false
+                  }
+                ],
+                "summary": "Second pass: no score changed; re-reading confirmed the same divergences (reversed 知るまでもない line, systematic 引数, calqued 間違い（もう）, sanitized closer) and nothing new. Needs substantial editing on the divergent passages."
+              }
+            }
+          ],
+          "preferredLabel": "X",
+          "reason": "Scores repeated without change: the additional changeConfidence metadata is self-reported and not textual evidence, and a fresh re-read of both candidates found no new defect in either. The candidates share ~90% of text; at every divergence X is correct or better: it preserves the 'variables' line (Y inverts it), idiomatizes 'Incorrect (any more)' (Y calques it), keeps the knife-handle metaphor, Hamlet cadence and profane closer, and uses 引数 only on two bullets versus Y's heading plus all bullets. X's one real defect is a strict subset of Y's."
+        }
+      }
+    ],
+    "validation": {
+      "structural": {
+        "passed": true,
+        "issues": [],
+        "structure": {
+          "score": 1,
+          "valid": true,
+          "minimumScore": 0.98,
+          "differences": {},
+          "summary": "Structure is near-identical: headings, links, blockquotes, code fences, tables, images, alt text slots, and MDX component order match.",
+          "issues": [],
+          "source": {
+            "counts": {
+              "h1": 0,
+              "h2": 2,
+              "h3": 3,
+              "h4": 0,
+              "h5": 0,
+              "h6": 0,
+              "links": 4,
+              "blockquotes": 1,
+              "codeFences": 2,
+              "tables": 1,
+              "tableRows": 6,
+              "tableColumns": 5,
+              "images": 0,
+              "altTexts": 0,
+              "emptyAltTexts": 0,
+              "components": 0
+            },
+            "headingSequence": [
+              "h2",
+              "h3",
+              "h3",
+              "h2",
+              "h3"
+            ],
+            "codeFenceLanguages": [
+              "tsx",
+              "tsx"
+            ],
+            "linkTargets": [
+              "#heading:3",
+              "https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad",
+              "https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript",
+              "https://github.com/microsoft/vscode/pull/94480"
+            ],
+            "imageTargets": [],
+            "tableShapes": [
+              {
+                "kind": "markdown",
+                "rows": 6,
+                "columns": 5
+              }
+            ],
+            "altTextLengths": [],
+            "componentSequence": []
+          },
+          "target": {
+            "counts": {
+              "h1": 0,
+              "h2": 2,
+              "h3": 3,
+              "h4": 0,
+              "h5": 0,
+              "h6": 0,
+              "links": 4,
+              "blockquotes": 1,
+              "codeFences": 2,
+              "tables": 1,
+              "tableRows": 6,
+              "tableColumns": 5,
+              "images": 0,
+              "altTexts": 0,
+              "emptyAltTexts": 0,
+              "components": 0
+            },
+            "headingSequence": [
+              "h2",
+              "h3",
+              "h3",
+              "h2",
+              "h3"
+            ],
+            "codeFenceLanguages": [
+              "tsx",
+              "tsx"
+            ],
+            "linkTargets": [
+              "#heading:3",
+              "https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad",
+              "https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript",
+              "https://github.com/microsoft/vscode/pull/94480"
+            ],
+            "imageTargets": [],
+            "tableShapes": [
+              {
+                "kind": "markdown",
+                "rows": 6,
+                "columns": 5
+              }
+            ],
+            "altTextLengths": [],
+            "componentSequence": []
+          }
+        }
+      },
+      "mdxError": null,
+      "protectedChanges": [],
+      "passed": true
+    },
+    "acceptedCount": 8
+  }
+]

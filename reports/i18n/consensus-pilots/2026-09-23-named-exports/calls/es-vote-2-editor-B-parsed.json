@@ -1,0 +1,339 @@
+{
+  "fingerprint": "cf69655439b9ddf228fe29c7ec4a13afc8c6e806ac320be61ec6a72bbde21aa8",
+  "value": {
+    "votes": [
+      {
+        "issueId": "es-editor-A-0",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.72,
+        "rationale": "I'm switching from «¡carajo!» to the peer's wording. «Fucking» works as an intensifier inside the phrase «mean it». «Con toda la puta intención» keeps it in that spot and puts it on intent, which is the article's central idea, so the swear word and the meaning land together. «¡Carajo!» tacked on at the end is an interjection bolted onto the sentence, and it's weaker. It isn't a gratuitous escalation because the force is comparable to the source. I asked for a check on how strong or regional «puta» and «carajo» are, and it came back unverified. So I'm making a voice judgment here, not claiming anything about offense. Severity stays at 2: this is voice plus a small meaning shift, not a meaning error.",
+        "replacement": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«like you fucking mean it»: the swear word intensifies the intent itself."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "«como si en verdad te importara» drops the swear word and changes intent into caring."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-1",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.86,
+        "rationale": "I accept «nombrada». The translation already uses «exportación/exportaciones nombrada(s)» in the title, Arg #1, Arg #2 and the table, so consistency within the article beats my earlier «con nombre». MDN makes the distinction but doesn't require one wording. The English term stays in backticks.",
+        "replacement": "Una exportación nombrada (`named export`)",
+        "evidence": [
+          {
+            "referenceId": "mdn-export-es",
+            "explanation": "It separates named and default exports without mandating a Spanish phrase."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The article uses «nombrada(s)» everywhere else."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-2",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "The peer changed my mind. «Señal» is the passage's core metaphor, and «a thing» is deliberately vague: the article picks it up again in «A THING!». «Lo exportado» made it narrower than the source. This wording removes the hybrid «`import`ers» and keeps the metaphor, «algo» and the italics.",
+        "replacement": "> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«sending a signal to `import`ers _how to use a thing._», with «A THING!» repeated in the next section."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-3",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.85,
+        "rationale": "We agree on this. «Sin intención del autor» can be read as «the author did it by accident». The replacement makes it clear that the pattern conveys nothing about what the author intended, and it matches B-6.",
+        "replacement": "No transmite ninguna intención del autor.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«No author intent» sits inside the argument that exports communicate intent."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-4",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.84,
+        "rationale": "I accept dropping «Pero». The source is two clipped fragments, and the conjunction softens the dismissal. «Recurso» avoids confusion with a JavaScript function, and «no viene al caso» removes the calque.",
+        "replacement": "Buen recurso. No viene al caso.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«Neat feature. Not the point.» is two short fragments."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The same article uses «función» for code functions."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.88,
+        "rationale": "We agree. This removes the backwards reading of «Incorrecto (ya no más)» without changing the technical claim.",
+        "replacement": "Ya no es cierto. Configura o actualiza tus herramientas.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«Incorrect (any more)» means the objection is no longer valid, and the next bullet backs that up."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.85,
+        "rationale": "I accept «nombradas» for consistency with the rest of the article. Only the prose headers change. The cells and the ✅/❌ combinations are untouched. The ❌ in the «Multiple named exports» row is an issue in the source, for the author to review.",
+        "replacement": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas | Patrón                                                   | Significado                                                       |",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "These are descriptive headers, not code."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The cells already use «exportación nombrada» and «por defecto»."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.88,
+        "rationale": "This removes both calques and keeps the challenge in the present tense, without implying the purpose has changed.",
+        "replacement": "¿No estaremos perdiendo de vista para qué sirve `export`?",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The question is about what exporting is fundamentally for."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-8",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.95,
+        "rationale": "This comment is inside the tsx block. The rules require code comments to be preserved. The cost is one English line in the example. The prose around it stays in Spanish.",
+        "replacement": "// You can alias using both!",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "This is the literal comment from the original block."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-9",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.94,
+        "rationale": "This restores the original comments exactly and leaves the code lines as they are. Severity isn't 3 because nothing about execution changes. The Spanish «Nota» already explains the point.",
+        "replacement": "// ^ ❌ Not Supported ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // However, once declared you can export a const var as the default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Valid\n\n    // For completeness:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ Also valid to export a class as default",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "These are the original comments in the nested tsx block."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-0",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.72,
+        "rationale": "Same wording as A-0, so the two issues converge. «Con toda la puta intención» keeps the intensifier on intent, where the source puts it. «¡Carajo!» at the end is weaker and sits outside the phrase. Whether it reads as regional or offensive is unverified, so I'm not claiming anything about that. This is a severity 2 voice issue, not 3.",
+        "replacement": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«fucking mean it» intensifies intent."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The current line has no swear word and talks about caring."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-1",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.88,
+        "rationale": "The proposed wording is now identical to A-7. It removes the calques and keeps the present tense.",
+        "replacement": "¿No estaremos perdiendo de vista para qué sirve `export`?",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«in the first place» means «fundamentally» here."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-2",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.84,
+        "rationale": "I'm using the same wording as A-4, without «Pero», to keep the two dry fragments of the source.",
+        "replacement": "Buen recurso. No viene al caso.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«Neat feature. Not the point.»"
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "I've dropped my earlier support for «pista… lo exportado». It weakens the «señal» metaphor and narrows the vague «a thing», which the source echoes later. I'm backing the same wording as A-2.",
+        "replacement": "> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«sending a signal… how to use a thing»."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.84,
+        "rationale": "I agree with the fixes: take the Spanish words out of the backticks and bring back the «!». I'm replacing «con nombre» with «nombrada» to match A-1 and the rest of the article.",
+        "replacement": "Una exportación nombrada (`named export`) dice que es \"definitivamente **_¡UNA COSA!_**\".",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "`named export` is in backticks, and «A THING!» has an exclamation mark."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The article uses «nombrada» everywhere else."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.82,
+        "rationale": "«Seguimiento:» reads like an administrative label. «Y la siguiente:» brings back the follow-up question, and the punctuation is correct.",
+        "replacement": "También plantea algunas preguntas: \"¿Tienes más compañeros por ahí?\". Y la siguiente: \"¿Están invitados o son obligatorios?\"",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«Follow up» introduces a second, related question."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.84,
+        "rationale": "This fixes the «sin intención» ambiguity, removes the calque of «again» and keeps the knife-handle joke with «por dónde se agarra».",
+        "replacement": "A ver, dime otra vez: ¿por dónde se agarra tu invento? No transmite ninguna intención del autor.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«how do I hold your contraption again? No author intent.» comes right after the Knife/Handle example."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.88,
+        "rationale": "Same as A-5: the meaning is clear and the technical claim is unchanged.",
+        "replacement": "Ya no es cierto. Configura o actualiza tus herramientas.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The next bullet about 3+ years of support confirms the reading."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-8",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.75,
+        "rationale": "This is optional polish. «Les presento» gives a more natural showman's voice than the bare gerund, and «único» keeps the sense of singleness.",
+        "replacement": "\"¡Les presento UNA función con un único propósito!\"",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«Presenting ONE function w/ Single Purpose!»"
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-9",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.74,
+        "rationale": "«DE TODAS» brings back some of the emphasis of «SINGLE», and the period moves outside the closing quote. This is minor polish.",
+        "replacement": "\"Esta es **_LA COSA MÁS IMPORTANTE DE TODAS_**\".",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "«THE SINGLE MOST IMPORTANT» in capitals."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-10",
+        "decision": "reject",
+        "severity": 0,
+        "confidence": 0.86,
+        "rationale": "We agree this isn't a defect. «Ambos» is grammatical: the two referents have mixed genders, or the implied referent is «tipos». The code comment it was compared with is being restored to English, so it doesn't count as a precedent. The sourceQuote also points to the wrong passage.",
+        "replacement": "Por supuesto, puedes combinar ambos o usar diferentes enfoques",
+        "evidence": [
+          {
+            "referenceId": "target",
+            "explanation": "The referents are «un `export default`» (masculine) and «una exportación nombrada» (feminine)."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-11",
+        "decision": "reject",
+        "severity": 0,
+        "confidence": 0.82,
+        "rationale": "sourceHash is legitimate provenance. The history shows this revision matches the current source (matchesCurrentSource: true) with declaredSourceHash 438740274604. The value may use a different scheme, and nothing in the translation needs to change.",
+        "replacement": "sourceHash: \"438740274604\"",
+        "evidence": [
+          {
+            "referenceId": "target",
+            "explanation": "The frontmatter declares that value, and the proposal leaves it unchanged."
+          }
+        ]
+      }
+    ]
+  }
+}

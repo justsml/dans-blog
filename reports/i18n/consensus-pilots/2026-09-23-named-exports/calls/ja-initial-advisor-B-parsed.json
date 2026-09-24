@@ -1,0 +1,178 @@
+{
+  "fingerprint": "02d450b6ea114611c72b5d563e21d193727371b6e35a09f66bf3188ed4d5e888",
+  "value": {
+    "issues": [
+      {
+        "id": "local-1",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 3,
+        "sourceQuote": "### Weak Args, Man",
+        "targetQuote": "### 弱い引数だな、おい",
+        "replacement": "### しょぼい主張だな、おい",
+        "rationale": "\"Args\" here means debate arguments, not function arguments. 「引数」 is the programming term and misleads developers reading a section about rhetorical claims. Same fix applies to the three 「引数 #N」 bullets below.",
+        "alternative": "### 弱い議論だな、おい",
+        "confidence": 0.95,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The section refutes rhetorical claims (Arg #1–#3) made in articles, not function parameters; 「引数」 reverses the meaning in this domain."
+          }
+        ]
+      },
+      {
+        "id": "local-2",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 3,
+        "sourceQuote": "- Arg #1: Named exports ensure name consistency.",
+        "targetQuote": "- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "rationale": "Same mistranslation as the heading: these are debate arguments, not function arguments. 「主張 #1」 keeps the numbered-list rhythm.",
+        "alternative": "- 言い分 #1：…",
+        "confidence": 0.95,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #2 and #3 are likewise cited blog claims, confirming the rhetorical sense."
+          }
+        ]
+      },
+      {
+        "id": "local-3",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 3,
+        "sourceQuote": "(I hate to break it to you, but wait until you learn what variables can do!)",
+        "targetQuote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）",
+        "replacement": "（残念なお知らせだが、変数が何をしでかすか、そのうち知ることになるぞ！）",
+        "rationale": "「知るまでもない」 means 'no need to know' — the opposite of the source's taunt 'wait until you learn what variables can do'. Negation/meaning reversed; the fix keeps the snark.",
+        "alternative": "（残念だが、変数のしでかすことを知ってから出直してこい！）",
+        "confidence": 0.9,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The English is a teasing 'you'll find out' idiom; the current Japanese asserts the reader need not learn it."
+          }
+        ]
+      },
+      {
+        "id": "local-4",
+        "kind": "translation",
+        "category": "authorVoice",
+        "severity": 2,
+        "sourceQuote": "please `export` like you fucking mean it. 💞",
+        "targetQuote": "どうか`export`は本気でやってほしい。💞",
+        "replacement": "どうか`export`は本気でやってくれ。マジで。💞",
+        "rationale": "The deliberate profanity ('fucking') carries the punchline of the whole piece; the current rendering is sanitized politeness. 「マジで。」 as a punchy tag restores the edge without crude vulgarity that would feel forced in Japanese tech editorial.",
+        "alternative": "心を込めて`export`しやがれ。💞",
+        "confidence": 0.8,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The profanity is the author's intentional comedic escalation paired with the 💞 emoji; dropping it loses the article's signature line."
+          }
+        ]
+      },
+      {
+        "id": "local-5",
+        "kind": "translation",
+        "category": "idiomMetaphor",
+        "severity": 2,
+        "sourceQuote": "Now tell me, how do I hold your contraption again? No author intent.",
+        "targetQuote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。",
+        "replacement": "で、この仕掛け、どこを持てばいいんだ？作者の意図がない。",
+        "rationale": "\"How do I hold\" continues the knife/handle metaphor from the code block; 「どう使えば」 flattens it into generic 'how do I use'. 「どこを持てば」 preserves the physical-comedy image.",
+        "alternative": "で、この代物、どうやって持てばいいんだ？",
+        "confidence": 0.85,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The surrounding code aliases Knife as Handle; 'hold' is the deliberate callback."
+          }
+        ]
+      },
+      {
+        "id": "local-6",
+        "kind": "translation",
+        "category": "readability",
+        "severity": 2,
+        "sourceQuote": "Incorrect (any more). Configure/update your tools.",
+        "targetQuote": "間違い（もう）。ツールを設定・更新しよう。",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "rationale": "「間違い（もう）」 is parenthetical translationese that reads as broken Japanese. The parenthetical '(any more)' is simply 'no longer true' and belongs in the sentence flow.",
+        "alternative": "（今はもう）間違いだ。ツールを設定・更新しよう。",
+        "confidence": 0.9,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'(any more)' is an inline temporal qualifier, not a separate aside worth bracketing in Japanese."
+          }
+        ]
+      },
+      {
+        "id": "local-7",
+        "kind": "translation",
+        "category": "grammarSpelling",
+        "severity": 2,
+        "sourceQuote": "“Here’s some related logic. Also, expect class-ish behavior.“",
+        "targetQuote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "rationale": "The closing bracket is the wrong character (「 instead of 」) — a visible typo in the summary table.",
+        "alternative": "",
+        "confidence": 0.99,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Japanese quotation marks must close with 」; the opening 「 is duplicated."
+          }
+        ]
+      },
+      {
+        "id": "local-8",
+        "kind": "translation",
+        "category": "idiomMetaphor",
+        "severity": 1,
+        "sourceQuote": "A `named export` says it’s “definitely **_A THING!_**”",
+        "targetQuote": "`named export`は「間違いなく**_一つのものだ！_**」と言う。",
+        "replacement": "`named export`は「間違いなく**_ちゃんとした何かだ！_**」と言う。",
+        "rationale": "\"A THING\" in English idiom means 'a real, legitimate thing', not merely 'one item'. 「一つのものだ」 reads flatly literal; 「ちゃんとした何か」 conveys the 'this is a real thing' nuance while keeping the caps emphasis.",
+        "alternative": "「間違いなく**_立派な一モノだ！_**」",
+        "confidence": 0.6,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; stylistic preference",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The capitalized 'A THING!' is idiomatic emphasis on legitimacy, not count."
+          }
+        ]
+      }
+    ],
+    "strengths": [
+      "Frontmatter correctly uses ../ image paths, omits inherited date, and preserves controlled metadata including sourceHash provenance.",
+      "All code blocks, URLs, and technical backtick terms are preserved verbatim, including the intentionally broken `export default const` example and the source's 'kinves.js' typo.",
+      "The heading anchor (#まとめ) correctly targets the localized 「まとめ」 heading.",
+      "The summary table keeps structure, emoji markers, and the playful per-row 'meanings' with good register (「詰め合わせ」, 「インポートでしくじることはない」).",
+      "The author's direct, snarky tone survives well in most bullets (「lintルールを探してるんじゃないのか？」, 「いい機能だ。でも本質じゃない。」)."
+    ],
+    "sourceConcerns": [
+      "Source typo './kinves.js' (should be knives.js) is preserved in the translation — correct behavior; flagging for author awareness only.",
+      "Source comment '// Cannot export default const ....' remains in English inside the code block; acceptable as code comment, but could be localized if the author permits code-comment translation."
+    ]
+  }
+}

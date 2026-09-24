@@ -1,0 +1,441 @@
+{
+  "fingerprint": "003f78c0ba8b7ad76d1a24ae1aef76ab5144833f6040ddf9154c65d5be1d1c4f",
+  "text": "```json\n{\"issues\":[{\"id\":\"local-1\",\"kind\":\"translation\",\"category\":\"technicalAccuracy\",\"severity\":3,\"sourceQuote\":\"### Weak Args, Man\",\"targetQuote\":\"### 弱い引数だな、おい\",\"replacement\":\"### 弱い主張だな、おい\",\"rationale\":\"Here \\\"Args\\\" means debate arguments. In Japanese programming, 引数 only means function parameters or arguments, so this heading tells developers the section is about weak function arguments. The English dev pun can't be kept in Japanese, but the casual tone can.\",\"alternative\":\"### その論拠、ヌルくない？\",\"confidence\":0.9,\"requiresExternalEvidence\":false,\"audienceScope\":\"Japanese software developers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The items under this heading are claims from other articles (\\\"Named exports ensure name consistency\\\"), each followed by a rebuttal. They are debate arguments, not function arguments.\"}]},{\"id\":\"local-2\",\"kind\":\"translation\",\"category\":\"technicalAccuracy\",\"severity\":3,\"sourceQuote\":\"- Arg #1: Named exports ensure name consistency.\",\"targetQuote\":\"- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"replacement\":\"- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"rationale\":\"Same problem as the heading, in the item labels. Change 引数 #2 and 引数 #3 to 主張 #2 and 主張 #3 as well. Reading 引数 #1 next to real code would make developers think of function parameters.\",\"alternative\":\"論拠その1：\",\"confidence\":0.88,\"requiresExternalEvidence\":false,\"audienceScope\":\"Japanese software developers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"Arg #1/#2/#3 each state a position and link to its source article.\"}]},{\"id\":\"local-3\",\"kind\":\"translation\",\"category\":\"faithfulness\",\"severity\":3,\"sourceQuote\":\"(I hate to break it to you, but wait until you learn what variables can do!)\",\"targetQuote\":\"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\"replacement\":\"（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）\",\"rationale\":\"知るまでもない means \\\"no need to even know,\\\" which reverses the joke. \\\"Wait until you learn\\\" sets up a surprise: variables can rename anything too, so named exports don't really enforce consistency.\",\"alternative\":\"（残念なお知らせだが、変数にできることを知ったら泣くぞ！）\",\"confidence\":0.88,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"\\\"wait until you learn what variables can do\\\" predicts a future realization. It does not dismiss the need to know.\"}]},{\"id\":\"local-4\",\"kind\":\"translation\",\"category\":\"idiomMetaphor\",\"severity\":2,\"sourceQuote\":\"Now tell me, how do I hold your contraption again? No author intent.\",\"targetQuote\":\"で、この仕掛けをどう使えばいいんだ？作者の意図がない。\",\"replacement\":\"で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。\",\"rationale\":\"\\\"Hold\\\" continues the knife/handle metaphor (soManyKnives, Knife as Handle): with a namespace import, which part is the handle? 使えばいい loses that image. 作者の意図がない also reads flatly, as if the author had no intent at all. The point is that the intent isn't communicated.\",\"alternative\":\"で、このヘンテコな道具、どこを持てばいいんだっけ？作者の意図が伝わってこない。\",\"confidence\":0.7,\"requiresExternalEvidence\":false,\"audienceScope\":\"Conversational Japanese technical blog\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"Knife, Handle and soManyKnives run through the section. \\\"hold\\\" plays on that metaphor.\"}]},{\"id\":\"local-5\",\"kind\":\"translation\",\"category\":\"readability\",\"severity\":2,\"sourceQuote\":\"Incorrect (any more). Configure/update your tools.\",\"targetQuote\":\"間違い（もう）。ツールを設定・更新しよう。\",\"replacement\":\"（今となっては）間違い。ツールを設定するか、アップデートしよう。\",\"rationale\":\"A bare （もう） after 間違い is a word-for-word carry-over that sounds unnatural in Japanese. Putting the time qualifier first keeps the meaning (\\\"no longer true\\\") and the curt tone.\",\"alternative\":\"もう正しくない。ツールを設定・更新しよう。\",\"confidence\":0.8,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"\\\"(any more)\\\" limits \\\"Incorrect\\\" to the present, which the next bullet backs up with \\\"Support has existed for 3+ years\\\".\"}]},{\"id\":\"local-6\",\"kind\":\"translation\",\"category\":\"grammarSpelling\",\"severity\":2,\"sourceQuote\":\"“Here’s some related logic. Also, expect class-ish behavior.“\",\"targetQuote\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\"replacement\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\"rationale\":\"The quote closes with an opening bracket 「, a visible punctuation error in the table. The translation copied the source's wrong closing quote mark (logged under sourceConcerns). Fixing the punctuation doesn't change any content, and markdown doesn't require matching cell padding.\",\"alternative\":\"\",\"confidence\":0.95,\"requiresExternalEvidence\":false,\"audienceScope\":\"All readers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The English cell ends with “ where ” was intended. Every other cell uses a normal closing quote.\"}]},{\"id\":\"local-7\",\"kind\":\"translation\",\"category\":\"faithfulness\",\"severity\":2,\"sourceQuote\":\"They often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.\",\"targetQuote\":\"彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。\",\"replacement\":\"彼らが槍玉に挙げるのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポートに名前をつけるときにタイポする「かもしれない」という程度の可能性。\",\"rationale\":\"Dropping \\\"often\\\" turns the author's hedge into a claim about every critic. Dropping \\\"mere\\\" loses the dismissive sarcasm. The replacement restores both and reads more naturally.\",\"alternative\":\"彼らが問題視するのは、たいてい**完全に一時的な**ことばかりだ：IDEの自動インポートのバグ、特定バンドラーのツリーシェーキング性能、インポート名をタイポするかもしれないという可能性くらいのもの。\",\"confidence\":0.75,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The English says \\\"often\\\" and \\\"the mere possibility\\\".\"}]},{\"id\":\"local-8\",\"kind\":\"translation\",\"category\":\"authorVoice\",\"severity\":2,\"sourceQuote\":\"If Code is Communication, please `export` like you fucking mean it. 💞\",\"targetQuote\":\"コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞\",\"replacement\":\"コードがコミュニケーションだというなら、頼むから`export`はクソ真剣にやってくれ。💞\",\"rationale\":\"The profane intensifier is the deliberate punchline. The current polite どうか…ほしい removes it and turns the jab into a request. クソ is the closest casual Japanese intensifier and keeps the edge without going further than the source. It is also less crude than the English, which is a real tradeoff. This is my preference based on the voice standard, not a documented-usage claim.\",\"alternative\":\"コードがコミュニケーションだというなら、頼むから`export`はマジで本気でやってくれ。💞\",\"confidence\":0.6,\"requiresExternalEvidence\":false,\"audienceScope\":\"Casual Japanese developer blog readers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The source uses \\\"fucking\\\" on purpose as the last punchline, with an ironic 💞.\"}]},{\"id\":\"local-9\",\"kind\":\"translation\",\"category\":\"idiomMetaphor\",\"severity\":1,\"sourceQuote\":\"A `named export` says it’s “definitely **_A THING!_**”\",\"targetQuote\":\"`named export`は「間違いなく**_一つのものだ！_**」と言う。\",\"replacement\":\"`named export`は「間違いなく**_モノのひとつだ！_**」と言う。\",\"rationale\":\"The joke contrasts \\\"A THING\\\" with \\\"THE SINGLE MOST IMPORTANT thing.\\\" \\\"One of the things\\\" is what sets up the next line, \\\"got any other buddies?\\\" 一つのものだ reads as translationese and loses that contrast. Tradeoff: the replacement loses the \\\"it definitely exists\\\" sense of \\\"a thing\\\".\",\"alternative\":\"「間違いなく**_ひとつのモノ！_**」\",\"confidence\":0.55,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The next sentence asks about \\\"other buddies\\\", which depends on the A/THE contrast.\"}]},{\"id\":\"local-10\",\"kind\":\"translation\",\"category\":\"readability\",\"severity\":1,\"sourceQuote\":\"“This is **_THE SINGLE MOST IMPORTANT_** thing.”\",\"targetQuote\":\"「これが**_最も重要な単一のもの_**だ」\",\"replacement\":\"「これこそが**_唯一にして最も重要な_**モノだ」\",\"rationale\":\"最も重要な単一のもの is a stiff, literal rendering. 唯一にして最も重要な carries the bold announcement better. It also puts the emphasis on the modifier, as in the source, rather than on the noun.\",\"alternative\":\"「これが**_ただ一つの最重要_**なモノだ」\",\"confidence\":0.65,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"Only \\\"THE SINGLE MOST IMPORTANT\\\" is emphasized. \\\"thing\\\" is outside the emphasis.\"}]},{\"id\":\"local-11\",\"kind\":\"preference\",\"category\":\"idiomMetaphor\",\"severity\":1,\"sourceQuote\":\"subTitle: To name, or not to name?\",\"targetQuote\":\"subTitle: 名前をつけるか、つけないか？\",\"replacement\":\"subTitle: 名付けるべきか、名付けざるべきか？\",\"rationale\":\"The English subtitle alludes to Hamlet's \\\"To be, or not to be.\\\" Japanese readers know it as 生きるべきか、死ぬべきか. Echoing that べきか…ざるべきか pattern brings back the allusion. The current line is correct, just flat.\",\"alternative\":\"名付けるべきか、名付けぬべきか、それが問題だ\",\"confidence\":0.6,\"requiresExternalEvidence\":false,\"audienceScope\":\"General Japanese readers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The subtitle's structure directly echoes the Hamlet line.\"}]}],\"strengths\":[\"All code, literals, URLs, emoji and the typo in the './kinves.js' literal are preserved. Only the human-readable comments are translated, and the English error text 'Cannot export default const' stays as-is.\",\"The heading anchor was localized correctly: [..](#まとめ) points to ## まとめ.\",\"The frontmatter follows repository rules: images use ../, inherited date is omitted, and the sourceHash provenance is kept. History shows the only difference from the previous revision is the added sourceHash.\",\"The terms 名前付きエクスポート and デフォルトエクスポート match MDN's Japanese usage (mdn-export-ja).\",\"Several casual lines land well: 'いい機能だ。でも本質じゃない。', 'lintルールを探してるんじゃないのか？', 'インポートでしくじることはない。'\",\"The table keeps its structure, checkmarks and row order.\"],\"sourceConcerns\":[\"Summary table row 4: Named (Exports) is ❌, but the Pattern cell says 'Multiple named exports'. The checkmarks and the description contradict each other. The translation copies this faithfully; the author should confirm.\",\"Summary table row 3: Named is ✅, but the Pattern cell only mentions a default export plus private functions. This may be inconsistent.\",\"Wrong closing quote marks “ instead of ” in the source ('buddies there?“' and 'class-ish behavior.“').\",\"'AirBnb' is the source's casing of Airbnb. The translation normalizes it to 'Airbnb'. This is harmless, but the author should know about the difference.\",\"'For historical reasons' is the author's framing. The restriction actually comes from the grammar: export default takes an expression or a function/class declaration, not a const declaration. The translation keeps the author's wording, and the claim itself doesn't need to change.\",\"The snippets' '() => {...blade, ...handle}' is illustrative pseudo-code: it isn't valid as a block body. It's left unchanged as the author wrote it.\"]}\n```",
+  "steps": [
+    {
+      "text": "",
+      "toolCalls": [
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01V4FsFbtTzNZH3zNTiffYtz",
+          "toolName": "read_article",
+          "input": {
+            "version": "candidate"
+          },
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I should read through the article and history thoroughly but efficiently, so I'll pull up the source and candidate articles along with the history list.",
+                  "signature": "CAQSmwUKEAgSGAI4AUIIdGhpbmtpbmcSDB4d9e81ICG2kiSo2BoMjpopfIvOopxXhnNJIjD+9uyknoxAdNsG3S5qOEygwpFujHqbk+vSRbFQcNntDsUeT2qELal8NTToNGfmwQYquAQRWKdL//fyvYohyKrCQmxsrDSByoeIcKXgV099iDZynJHWT5wNeAmlfr3SUVMEeesMntxdWqMAHVS0G9MEEzQ00R1T2MpzSP2OkUN91/ECixrFlCJmM6nDsbGoo7h5A7eOqwM7p+xS+ZEmnOwRF84jN+nvkySQ1aaEEzeLmNWPcwASXL4SQeBMXZm3WxoHiam045hLxepM7DLGtnlOlfC6njBd99lljmS6JE65HieXOowGdCIDCaaKSASiYRSwxcEKSsOB9ff/YUv9PZ7IzcPVfCPImMOwV+nsOEW3jXqI0dBeoPnUfAsOIMr6vz92HCBs9ai70meIH/LTNgmc/BZmaWUfcAk+MHZaS5RXO66AzbXSbCJwrBGGKYSV0/icb175sj6zuWH/2Mgujho22C+ppytqFkKQiTLucEy5TQJ7px6bEI3MYypd5xIGbGAeRZBNnKt9f2iKz0UIY341UxNDHJteYgY5mb/OU82FXHwDPhgTJFJrGS8m3qYkTyM/HAv5NQcWbrLjwYD2OsAiobVEenqxbYBx8kCdRhLSdNuEc8+k5K7mzL6nafNjTc974aSAUSaHRmcvxq94OOOhBhU8qIUH9l/hH+L6WWwJc4kOheH03HGmyyZgz2tS6e3/2W+RdVKyOSDKocf1Mc9QIG9A3BiELHXnUBVsGTE3Tg5N3DLu3OYmhr2FhseDHVyTJjzpvWmNRO0zaEsNRyGVhi8oQM2wJ5Dqzyo8CKn7sJXQKVCROMVeQqMhGAE=",
+                  "format": "anthropic-claude-v1",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01WyXJuRsf6XoBTKUMANVV7K",
+          "toolName": "list_translation_history",
+          "input": {}
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_019RKvF7CEeLhPKAVgoSmV5W",
+          "toolName": "read_reference",
+          "input": {
+            "referenceId": "mdn-export-ja"
+          }
+        }
+      ],
+      "toolResults": [
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01V4FsFbtTzNZH3zNTiffYtz",
+          "toolName": "read_article",
+          "input": {
+            "version": "candidate"
+          },
+          "output": {
+            "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contentHash": "43c6018932c1c8259a652f107532bb535294ac8750704b58b74fe3ac2835688e",
+            "contents": "---\nsocial_image: ../desktop-social.webp\ntitle: \"ESMエクスポート：名前付き vs デフォルト？\"\nsubTitle: 名前をつけるか、つけないか？\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\nsourceHash: \"438740274604\"\n---\n\n## JavaScriptで`named`エクスポートと`default`エクスポート、どちらを使うべきか？\n\nこのトピックについて、強い言葉で書かれた記事に事欠くことはない。\n\n大多数は`default export`を「ひどい」と断じる。一方、`default`が勝つべきだと主張する人もいる（Airbnbスタイルガイドなど）。\n\n彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。\n\nそもそも`export`することの本質を見落としていないか？\n\n**コードはコミュニケーションである。✨**\n\n> `import`する側に対して、_ものの使い方_を示すシグナルを送っているのだ。\n\n### じゃあ、何を伝えているのか？\n\n大まかに言えば、モダンJavaScriptでものをエクスポートする方法は2つある：\n\n- `export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。ついでに「名前付きエクスポートはあくまで脇役」とも伝える。\n- `named export`は「間違いなく**_一つのものだ！_**」と言う。いくつかの疑問も浮かぶ。「他に仲間いる？」「そいつらは招待されてるの？それとも必須？」\n\nもちろん両方を組み合わせたり、コードベースの異なる部分で異なるアプローチを使うこともできる。[記事の最後でさらに例を紹介。](#まとめ)\n\n### 弱い引数だな、おい\n\nよくある「一時的な問題」を片付けていこう。\n\n- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。[source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - いや、保証しない。lintルールを探してるんじゃないのか？\n  - （残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\n\n```tsx\n// どちらもエイリアス可能！\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。（リンクなし、著者撤回済み。）\n  - いい機能だ。でも本質じゃない。\n  - で、この仕掛けをどう使えばいいんだ？作者の意図がない。\n- 引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。[source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - 間違い（もう）。ツールを設定・更新しよう。\n  - サポートは[VS Code](https://github.com/microsoft/vscode/pull/94480)、IntelliJなどで3年以上前から存在している。\n  - それでも、`default exports`で最高のIDE＆リファクタリング体験を得るには、いくつかの「ベストプラクティス」がある。\n  - ✅ `export default function UserService() {}` - 常に名前付き関数を優先する。\n  - ❌ `export default function() { }` - 無名関数はファイル名に暗黙的に紐づかない。ものに名前をつけないと、コンピューターに変更を依頼するのが難しくなる。\n  - **注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ サポートされていない ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // ただし、一度宣言すればconst変数をデフォルトとしてエクスポートできる。\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ 有効\n\n    // 完全を期すために：\n    export default class anyoneStillUseThese {}\n    // ^ ✅ クラスをデフォルトとしてエクスポートするのも有効\n    ```\n\n<section className=\"scroll-x\">\n## まとめ\n\nものをエクスポートする方法には実はたくさんの組み合わせがあり、それぞれが異なる物語を語る：\n\n| デフォルト（エクスポート） | 名前付き（エクスポート） | プライベート関数 | パターン                                                   | 意味                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | デフォルトエクスポート1つ。                                       | 「単一の目的を持つ関数1つをお届け！」                  |\n| ❌                | ✅              | ❌          | 名前付きエクスポート1つ。                                         | 「リネームしないでください。」                                     |\n| ✅                | ✅              | ✅          | デフォルトエクスポート + 複数のエクスポートされていない「プライベート」関数 | 「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「 |\n| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。                | 「緩く関連したものたちの詰め合わせ。階層関係は暗示しない。」 |\n| ✅                | ✅              | ❌          | 単一の名前付きエクスポートをデフォルトとしてもエクスポート。             | 「インポートでしくじることはない。」                             |\n</section>\n\n**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）\n\n### 結論\n\nコードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞"
+          },
+          "dynamic": false,
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I should read through the article and history thoroughly but efficiently, so I'll pull up the source and candidate articles along with the history list.",
+                  "signature": "CAQSmwUKEAgSGAI4AUIIdGhpbmtpbmcSDB4d9e81ICG2kiSo2BoMjpopfIvOopxXhnNJIjD+9uyknoxAdNsG3S5qOEygwpFujHqbk+vSRbFQcNntDsUeT2qELal8NTToNGfmwQYquAQRWKdL//fyvYohyKrCQmxsrDSByoeIcKXgV099iDZynJHWT5wNeAmlfr3SUVMEeesMntxdWqMAHVS0G9MEEzQ00R1T2MpzSP2OkUN91/ECixrFlCJmM6nDsbGoo7h5A7eOqwM7p+xS+ZEmnOwRF84jN+nvkySQ1aaEEzeLmNWPcwASXL4SQeBMXZm3WxoHiam045hLxepM7DLGtnlOlfC6njBd99lljmS6JE65HieXOowGdCIDCaaKSASiYRSwxcEKSsOB9ff/YUv9PZ7IzcPVfCPImMOwV+nsOEW3jXqI0dBeoPnUfAsOIMr6vz92HCBs9ai70meIH/LTNgmc/BZmaWUfcAk+MHZaS5RXO66AzbXSbCJwrBGGKYSV0/icb175sj6zuWH/2Mgujho22C+ppytqFkKQiTLucEy5TQJ7px6bEI3MYypd5xIGbGAeRZBNnKt9f2iKz0UIY341UxNDHJteYgY5mb/OU82FXHwDPhgTJFJrGS8m3qYkTyM/HAv5NQcWbrLjwYD2OsAiobVEenqxbYBx8kCdRhLSdNuEc8+k5K7mzL6nafNjTc974aSAUSaHRmcvxq94OOOhBhU8qIUH9l/hH+L6WWwJc4kOheH03HGmyyZgz2tS6e3/2W+RdVKyOSDKocf1Mc9QIG9A3BiELHXnUBVsGTE3Tg5N3DLu3OYmhr2FhseDHVyTJjzpvWmNRO0zaEsNRyGVhi8oQM2wJ5Dqzyo8CKn7sJXQKVCROMVeQqMhGAE=",
+                  "format": "anthropic-claude-v1",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01WyXJuRsf6XoBTKUMANVV7K",
+          "toolName": "list_translation_history",
+          "input": {},
+          "output": [
+            {
+              "id": "f3411d66a4c2239120397af995051a7675d5eec8",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "43c6018932c1c8259a652f107532bb535294ac8750704b58b74fe3ac2835688e",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": "438740274604"
+            },
+            {
+              "id": "b3a76a2de916e41eb59498b285ed63e371b95600",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "848882dab0ff45851d8fc9ed9ad7cac4e22b84dad690158f10aba93f7f852860",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "b39d13060b663ceaae1323c8c819aa61bcdbf272",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "ef90f3f3ab7693e148d6bd8a8f790e5a44f5579b28684389fd68f4f303d4ac3c",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "7854902254d2e7de0a81917f5a220cae6d8bfccc",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "cfd6f9050e14448161acce99dd5b925112371b8dec97bea0b81e1434527b424d",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "3c2de41a5fccda3df1681116b674a2b85b915df7",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "8918237505b41c43cd907d2f48d0062d26bd33992fb17edabf25b8ea782aafa6",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "0977ea86a3377a85e9a7ac430b1f9c99c1c52a02",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "9b783517205c5dbda7c5d48d7be5b406d708e96eefe22bc5f0bf9dfeaee2522b",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            }
+          ],
+          "dynamic": false
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_019RKvF7CEeLhPKAVgoSmV5W",
+          "toolName": "read_reference",
+          "input": {
+            "referenceId": "mdn-export-ja"
+          },
+          "output": {
+            "id": "mdn-export-ja",
+            "url": "https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/export",
+            "scope": "Japanese technical terminology and JavaScript export semantics; not evidence about offense or slang",
+            "summary": "The Japanese documentation uses 名前付きエクスポート and デフォルトエクスポート for named and default exports, and explains aliases and export declarations.",
+            "verified": true,
+            "checkedAt": "2026-09-23",
+            "verificationMethod": "Coordinator inspected the linked page via web tool; summary is a bounded paraphrase, not a quotation."
+          },
+          "dynamic": false
+        }
+      ],
+      "usage": {
+        "inputTokens": 8380,
+        "inputTokenDetails": {
+          "noCacheTokens": 8380,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 170,
+        "outputTokenDetails": {
+          "textTokens": 131,
+          "reasoningTokens": 39
+        },
+        "totalTokens": 8550,
+        "raw": {
+          "prompt_tokens": 8380,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 170,
+          "completion_tokens_details": {
+            "reasoning_tokens": 39,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 8550,
+          "cost": 0.03692,
+          "cost_details": {
+            "upstream_inference_cost": 0.03692,
+            "upstream_inference_prompt_cost": 0.03352,
+            "upstream_inference_completions_cost": 0.0034
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Claude Platform on AWS",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "I should read through the article and history thoroughly but efficiently, so I'll pull up the source and candidate articles along with the history list.",
+              "signature": "CAQSmwUKEAgSGAI4AUIIdGhpbmtpbmcSDB4d9e81ICG2kiSo2BoMjpopfIvOopxXhnNJIjD+9uyknoxAdNsG3S5qOEygwpFujHqbk+vSRbFQcNntDsUeT2qELal8NTToNGfmwQYquAQRWKdL//fyvYohyKrCQmxsrDSByoeIcKXgV099iDZynJHWT5wNeAmlfr3SUVMEeesMntxdWqMAHVS0G9MEEzQ00R1T2MpzSP2OkUN91/ECixrFlCJmM6nDsbGoo7h5A7eOqwM7p+xS+ZEmnOwRF84jN+nvkySQ1aaEEzeLmNWPcwASXL4SQeBMXZm3WxoHiam045hLxepM7DLGtnlOlfC6njBd99lljmS6JE65HieXOowGdCIDCaaKSASiYRSwxcEKSsOB9ff/YUv9PZ7IzcPVfCPImMOwV+nsOEW3jXqI0dBeoPnUfAsOIMr6vz92HCBs9ai70meIH/LTNgmc/BZmaWUfcAk+MHZaS5RXO66AzbXSbCJwrBGGKYSV0/icb175sj6zuWH/2Mgujho22C+ppytqFkKQiTLucEy5TQJ7px6bEI3MYypd5xIGbGAeRZBNnKt9f2iKz0UIY341UxNDHJteYgY5mb/OU82FXHwDPhgTJFJrGS8m3qYkTyM/HAv5NQcWbrLjwYD2OsAiobVEenqxbYBx8kCdRhLSdNuEc8+k5K7mzL6nafNjTc974aSAUSaHRmcvxq94OOOhBhU8qIUH9l/hH+L6WWwJc4kOheH03HGmyyZgz2tS6e3/2W+RdVKyOSDKocf1Mc9QIG9A3BiELHXnUBVsGTE3Tg5N3DLu3OYmhr2FhseDHVyTJjzpvWmNRO0zaEsNRyGVhi8oQM2wJ5Dqzyo8CKn7sJXQKVCROMVeQqMhGAE=",
+              "format": "anthropic-claude-v1",
+              "index": 0
+            }
+          ],
+          "usage": {
+            "promptTokens": 8380,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 170,
+            "completionTokensDetails": {
+              "reasoningTokens": 39
+            },
+            "totalTokens": 8550,
+            "cost": 0.03692,
+            "costDetails": {
+              "upstreamInferenceCost": 0.03692
+            }
+          }
+        }
+      },
+      "finishReason": "tool-calls"
+    },
+    {
+      "text": "",
+      "toolCalls": [
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01JWyM4ACsNyZDN2mSDHpn1s",
+          "toolName": "read_translation_revision",
+          "input": {
+            "revisionId": "b3a76a2de916e41eb59498b285ed63e371b95600",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed"
+          },
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I want to check an earlier revision, maybe commit b3a76a, to see how the profanity in the conclusion was handled previously.",
+                  "signature": "CAQSmAYKEAgSGAI4AUIIdGhpbmtpbmcSDBZ5TLzmRV1QGAZzZRoMURPAeo5WSZTN/GMxIjBWVWpdDmWwO0kD4HlXKsHS8pNeaC6rGOJUogFgPe4akXsDgrLXE4xjWs3EE+AdMjoqtQUdIMhOELhj9+/R8fv1CxASsXuM/aIr4RHx7pb5XnWhXPkzokqbYWShdGCN1CPkYk2ERWMM3LraWWY7AQOSlLgmmAaXaR06rrOp6bLUf83bVnNiNlaztRywD6+5BbMKyzmKxYLoQfjYTWmTsn0qDUB3/i9bJod6wdABQ9JpQkVnAW+3N+68sqQc5h5VWVVeoPR042oFrPAnktrWX53ZBrLH0SxizhLAC6gZnhRdm4yjVJMXOJAXOqqKSPgmG15gfQf4ZtsU03zqk9eXV3VOd6i5fHd9LDfXjAJZ30mn66iXckrbY/p/Ma7Vnq3zKeC8v0VPThIB0AdhPNqCaehSTL3IqSsR+aDm3b9r/u16n77FMlo4jEag/nGleAvuaGK+S1nGZQN2cx5pJ3iHrK5II/k2afR6gUndvTlDnA3XM6LcDVEkF1uy4UNdiBFx+uTI63mH3ppaEi+eVTJYi97ik+uwHBNSJMFHxfFSBaNLQo3FprhLcfDPq8+JFd8vAeEFP8rq0lyaU/ebPnsQ4EcP2P4dI7WPzXOLV69qjSHijWWHhFt6a3U8LXEugpVj528qg/TgrAI/ltmi2vrWeCLrQLHD3Kfiy2ADGwSVtf8+CG22FAvkpiFWIKkAuvI4+3MvpB2IqRYn3jsdQHzQFbrJCpf0ijFmCjUClco/PYuByGezbwUS/LmVz0FDH+V24cOqZ2he9SgylOS0iojfjB6XDOfTFJjUW6f+oe+YhGFKi+Cy+oWYF+9Ruot+J7PPv2DeE0CnFtUHyTIB98zFQzdHUF5XQTqIwYrfs56pKajj1QQnlK/7zwPK2ThXweGjr4DMTBdc1yxviUf9DthUqEVnNqb4+WV3oEgUc4FkUmBV/bJSgfKKUM3pfZMneOw7JtP8GRcoOShbRGwvuMhhlffqu+jdsBYWJjQYAQ==",
+                  "format": "anthropic-claude-v1",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "toolResults": [
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01JWyM4ACsNyZDN2mSDHpn1s",
+          "toolName": "read_translation_revision",
+          "input": {
+            "revisionId": "b3a76a2de916e41eb59498b285ed63e371b95600",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed"
+          },
+          "output": {
+            "id": "b3a76a2de916e41eb59498b285ed63e371b95600",
+            "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+            "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "translationHash": "848882dab0ff45851d8fc9ed9ad7cac4e22b84dad690158f10aba93f7f852860",
+            "matchesCurrentSource": true,
+            "declaredSourceHash": null,
+            "contents": "---\nsocial_image: ../desktop-social.webp\ntitle: \"ESMエクスポート：名前付き vs デフォルト？\"\nsubTitle: 名前をつけるか、つけないか？\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\n---\n\n## JavaScriptで`named`エクスポートと`default`エクスポート、どちらを使うべきか？\n\nこのトピックについて、強い言葉で書かれた記事に事欠くことはない。\n\n大多数は`default export`を「ひどい」と断じる。一方、`default`が勝つべきだと主張する人もいる（Airbnbスタイルガイドなど）。\n\n彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。\n\nそもそも`export`することの本質を見落としていないか？\n\n**コードはコミュニケーションである。✨**\n\n> `import`する側に対して、_ものの使い方_を示すシグナルを送っているのだ。\n\n### じゃあ、何を伝えているのか？\n\n大まかに言えば、モダンJavaScriptでものをエクスポートする方法は2つある：\n\n- `export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。ついでに「名前付きエクスポートはあくまで脇役」とも伝える。\n- `named export`は「間違いなく**_一つのものだ！_**」と言う。いくつかの疑問も浮かぶ。「他に仲間いる？」「そいつらは招待されてるの？それとも必須？」\n\nもちろん両方を組み合わせたり、コードベースの異なる部分で異なるアプローチを使うこともできる。[記事の最後でさらに例を紹介。](#まとめ)\n\n### 弱い引数だな、おい\n\nよくある「一時的な問題」を片付けていこう。\n\n- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。[source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - いや、保証しない。lintルールを探してるんじゃないのか？\n  - （残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\n\n```tsx\n// どちらもエイリアス可能！\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。（リンクなし、著者撤回済み。）\n  - いい機能だ。でも本質じゃない。\n  - で、この仕掛けをどう使えばいいんだ？作者の意図がない。\n- 引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。[source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - 間違い（もう）。ツールを設定・更新しよう。\n  - サポートは[VS Code](https://github.com/microsoft/vscode/pull/94480)、IntelliJなどで3年以上前から存在している。\n  - それでも、`default exports`で最高のIDE＆リファクタリング体験を得るには、いくつかの「ベストプラクティス」がある。\n  - ✅ `export default function UserService() {}` - 常に名前付き関数を優先する。\n  - ❌ `export default function() { }` - 無名関数はファイル名に暗黙的に紐づかない。ものに名前をつけないと、コンピューターに変更を依頼するのが難しくなる。\n  - **注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ サポートされていない ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // ただし、一度宣言すればconst変数をデフォルトとしてエクスポートできる。\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ 有効\n\n    // 完全を期すために：\n    export default class anyoneStillUseThese {}\n    // ^ ✅ クラスをデフォルトとしてエクスポートするのも有効\n    ```\n\n<section className=\"scroll-x\">\n## まとめ\n\nものをエクスポートする方法には実はたくさんの組み合わせがあり、それぞれが異なる物語を語る：\n\n| デフォルト（エクスポート） | 名前付き（エクスポート） | プライベート関数 | パターン                                                   | 意味                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | デフォルトエクスポート1つ。                                       | 「単一の目的を持つ関数1つをお届け！」                  |\n| ❌                | ✅              | ❌          | 名前付きエクスポート1つ。                                         | 「リネームしないでください。」                                     |\n| ✅                | ✅              | ✅          | デフォルトエクスポート + 複数のエクスポートされていない「プライベート」関数 | 「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「 |\n| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。                | 「緩く関連したものたちの詰め合わせ。階層関係は暗示しない。」 |\n| ✅                | ✅              | ❌          | 単一の名前付きエクスポートをデフォルトとしてもエクスポート。             | 「インポートでしくじることはない。」                             |\n</section>\n\n**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）\n\n### 結論\n\nコードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞"
+          },
+          "dynamic": false,
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I want to check an earlier revision, maybe commit b3a76a, to see how the profanity in the conclusion was handled previously.",
+                  "signature": "CAQSmAYKEAgSGAI4AUIIdGhpbmtpbmcSDBZ5TLzmRV1QGAZzZRoMURPAeo5WSZTN/GMxIjBWVWpdDmWwO0kD4HlXKsHS8pNeaC6rGOJUogFgPe4akXsDgrLXE4xjWs3EE+AdMjoqtQUdIMhOELhj9+/R8fv1CxASsXuM/aIr4RHx7pb5XnWhXPkzokqbYWShdGCN1CPkYk2ERWMM3LraWWY7AQOSlLgmmAaXaR06rrOp6bLUf83bVnNiNlaztRywD6+5BbMKyzmKxYLoQfjYTWmTsn0qDUB3/i9bJod6wdABQ9JpQkVnAW+3N+68sqQc5h5VWVVeoPR042oFrPAnktrWX53ZBrLH0SxizhLAC6gZnhRdm4yjVJMXOJAXOqqKSPgmG15gfQf4ZtsU03zqk9eXV3VOd6i5fHd9LDfXjAJZ30mn66iXckrbY/p/Ma7Vnq3zKeC8v0VPThIB0AdhPNqCaehSTL3IqSsR+aDm3b9r/u16n77FMlo4jEag/nGleAvuaGK+S1nGZQN2cx5pJ3iHrK5II/k2afR6gUndvTlDnA3XM6LcDVEkF1uy4UNdiBFx+uTI63mH3ppaEi+eVTJYi97ik+uwHBNSJMFHxfFSBaNLQo3FprhLcfDPq8+JFd8vAeEFP8rq0lyaU/ebPnsQ4EcP2P4dI7WPzXOLV69qjSHijWWHhFt6a3U8LXEugpVj528qg/TgrAI/ltmi2vrWeCLrQLHD3Kfiy2ADGwSVtf8+CG22FAvkpiFWIKkAuvI4+3MvpB2IqRYn3jsdQHzQFbrJCpf0ijFmCjUClco/PYuByGezbwUS/LmVz0FDH+V24cOqZ2he9SgylOS0iojfjB6XDOfTFJjUW6f+oe+YhGFKi+Cy+oWYF+9Ruot+J7PPv2DeE0CnFtUHyTIB98zFQzdHUF5XQTqIwYrfs56pKajj1QQnlK/7zwPK2ThXweGjr4DMTBdc1yxviUf9DthUqEVnNqb4+WV3oEgUc4FkUmBV/bJSgfKKUM3pfZMneOw7JtP8GRcoOShbRGwvuMhhlffqu+jdsBYWJjQYAQ==",
+                  "format": "anthropic-claude-v1",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "usage": {
+        "inputTokens": 12893,
+        "inputTokenDetails": {
+          "noCacheTokens": 12893,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 208,
+        "outputTokenDetails": {
+          "textTokens": 146,
+          "reasoningTokens": 62
+        },
+        "totalTokens": 13101,
+        "raw": {
+          "prompt_tokens": 12893,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 208,
+          "completion_tokens_details": {
+            "reasoning_tokens": 62,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 13101,
+          "cost": 0.055732,
+          "cost_details": {
+            "upstream_inference_cost": 0.055732,
+            "upstream_inference_prompt_cost": 0.051572,
+            "upstream_inference_completions_cost": 0.00416
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Claude Platform on AWS",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "I want to check an earlier revision, maybe commit b3a76a, to see how the profanity in the conclusion was handled previously.",
+              "signature": "CAQSmAYKEAgSGAI4AUIIdGhpbmtpbmcSDBZ5TLzmRV1QGAZzZRoMURPAeo5WSZTN/GMxIjBWVWpdDmWwO0kD4HlXKsHS8pNeaC6rGOJUogFgPe4akXsDgrLXE4xjWs3EE+AdMjoqtQUdIMhOELhj9+/R8fv1CxASsXuM/aIr4RHx7pb5XnWhXPkzokqbYWShdGCN1CPkYk2ERWMM3LraWWY7AQOSlLgmmAaXaR06rrOp6bLUf83bVnNiNlaztRywD6+5BbMKyzmKxYLoQfjYTWmTsn0qDUB3/i9bJod6wdABQ9JpQkVnAW+3N+68sqQc5h5VWVVeoPR042oFrPAnktrWX53ZBrLH0SxizhLAC6gZnhRdm4yjVJMXOJAXOqqKSPgmG15gfQf4ZtsU03zqk9eXV3VOd6i5fHd9LDfXjAJZ30mn66iXckrbY/p/Ma7Vnq3zKeC8v0VPThIB0AdhPNqCaehSTL3IqSsR+aDm3b9r/u16n77FMlo4jEag/nGleAvuaGK+S1nGZQN2cx5pJ3iHrK5II/k2afR6gUndvTlDnA3XM6LcDVEkF1uy4UNdiBFx+uTI63mH3ppaEi+eVTJYi97ik+uwHBNSJMFHxfFSBaNLQo3FprhLcfDPq8+JFd8vAeEFP8rq0lyaU/ebPnsQ4EcP2P4dI7WPzXOLV69qjSHijWWHhFt6a3U8LXEugpVj528qg/TgrAI/ltmi2vrWeCLrQLHD3Kfiy2ADGwSVtf8+CG22FAvkpiFWIKkAuvI4+3MvpB2IqRYn3jsdQHzQFbrJCpf0ijFmCjUClco/PYuByGezbwUS/LmVz0FDH+V24cOqZ2he9SgylOS0iojfjB6XDOfTFJjUW6f+oe+YhGFKi+Cy+oWYF+9Ruot+J7PPv2DeE0CnFtUHyTIB98zFQzdHUF5XQTqIwYrfs56pKajj1QQnlK/7zwPK2ThXweGjr4DMTBdc1yxviUf9DthUqEVnNqb4+WV3oEgUc4FkUmBV/bJSgfKKUM3pfZMneOw7JtP8GRcoOShbRGwvuMhhlffqu+jdsBYWJjQYAQ==",
+              "format": "anthropic-claude-v1",
+              "index": 0
+            }
+          ],
+          "usage": {
+            "promptTokens": 12893,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 208,
+            "completionTokensDetails": {
+              "reasoningTokens": 62
+            },
+            "totalTokens": 13101,
+            "cost": 0.055732,
+            "costDetails": {
+              "upstreamInferenceCost": 0.055732
+            }
+          }
+        }
+      },
+      "finishReason": "tool-calls"
+    },
+    {
+      "text": "```json\n{\"issues\":[{\"id\":\"local-1\",\"kind\":\"translation\",\"category\":\"technicalAccuracy\",\"severity\":3,\"sourceQuote\":\"### Weak Args, Man\",\"targetQuote\":\"### 弱い引数だな、おい\",\"replacement\":\"### 弱い主張だな、おい\",\"rationale\":\"Here \\\"Args\\\" means debate arguments. In Japanese programming, 引数 only means function parameters or arguments, so this heading tells developers the section is about weak function arguments. The English dev pun can't be kept in Japanese, but the casual tone can.\",\"alternative\":\"### その論拠、ヌルくない？\",\"confidence\":0.9,\"requiresExternalEvidence\":false,\"audienceScope\":\"Japanese software developers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The items under this heading are claims from other articles (\\\"Named exports ensure name consistency\\\"), each followed by a rebuttal. They are debate arguments, not function arguments.\"}]},{\"id\":\"local-2\",\"kind\":\"translation\",\"category\":\"technicalAccuracy\",\"severity\":3,\"sourceQuote\":\"- Arg #1: Named exports ensure name consistency.\",\"targetQuote\":\"- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"replacement\":\"- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。\",\"rationale\":\"Same problem as the heading, in the item labels. Change 引数 #2 and 引数 #3 to 主張 #2 and 主張 #3 as well. Reading 引数 #1 next to real code would make developers think of function parameters.\",\"alternative\":\"論拠その1：\",\"confidence\":0.88,\"requiresExternalEvidence\":false,\"audienceScope\":\"Japanese software developers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"Arg #1/#2/#3 each state a position and link to its source article.\"}]},{\"id\":\"local-3\",\"kind\":\"translation\",\"category\":\"faithfulness\",\"severity\":3,\"sourceQuote\":\"(I hate to break it to you, but wait until you learn what variables can do!)\",\"targetQuote\":\"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\"replacement\":\"（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）\",\"rationale\":\"知るまでもない means \\\"no need to even know,\\\" which reverses the joke. \\\"Wait until you learn\\\" sets up a surprise: variables can rename anything too, so named exports don't really enforce consistency.\",\"alternative\":\"（残念なお知らせだが、変数にできることを知ったら泣くぞ！）\",\"confidence\":0.88,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"\\\"wait until you learn what variables can do\\\" predicts a future realization. It does not dismiss the need to know.\"}]},{\"id\":\"local-4\",\"kind\":\"translation\",\"category\":\"idiomMetaphor\",\"severity\":2,\"sourceQuote\":\"Now tell me, how do I hold your contraption again? No author intent.\",\"targetQuote\":\"で、この仕掛けをどう使えばいいんだ？作者の意図がない。\",\"replacement\":\"で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。\",\"rationale\":\"\\\"Hold\\\" continues the knife/handle metaphor (soManyKnives, Knife as Handle): with a namespace import, which part is the handle? 使えばいい loses that image. 作者の意図がない also reads flatly, as if the author had no intent at all. The point is that the intent isn't communicated.\",\"alternative\":\"で、このヘンテコな道具、どこを持てばいいんだっけ？作者の意図が伝わってこない。\",\"confidence\":0.7,\"requiresExternalEvidence\":false,\"audienceScope\":\"Conversational Japanese technical blog\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"Knife, Handle and soManyKnives run through the section. \\\"hold\\\" plays on that metaphor.\"}]},{\"id\":\"local-5\",\"kind\":\"translation\",\"category\":\"readability\",\"severity\":2,\"sourceQuote\":\"Incorrect (any more). Configure/update your tools.\",\"targetQuote\":\"間違い（もう）。ツールを設定・更新しよう。\",\"replacement\":\"（今となっては）間違い。ツールを設定するか、アップデートしよう。\",\"rationale\":\"A bare （もう） after 間違い is a word-for-word carry-over that sounds unnatural in Japanese. Putting the time qualifier first keeps the meaning (\\\"no longer true\\\") and the curt tone.\",\"alternative\":\"もう正しくない。ツールを設定・更新しよう。\",\"confidence\":0.8,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"\\\"(any more)\\\" limits \\\"Incorrect\\\" to the present, which the next bullet backs up with \\\"Support has existed for 3+ years\\\".\"}]},{\"id\":\"local-6\",\"kind\":\"translation\",\"category\":\"grammarSpelling\",\"severity\":2,\"sourceQuote\":\"“Here’s some related logic. Also, expect class-ish behavior.“\",\"targetQuote\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\"replacement\":\"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\"rationale\":\"The quote closes with an opening bracket 「, a visible punctuation error in the table. The translation copied the source's wrong closing quote mark (logged under sourceConcerns). Fixing the punctuation doesn't change any content, and markdown doesn't require matching cell padding.\",\"alternative\":\"\",\"confidence\":0.95,\"requiresExternalEvidence\":false,\"audienceScope\":\"All readers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The English cell ends with “ where ” was intended. Every other cell uses a normal closing quote.\"}]},{\"id\":\"local-7\",\"kind\":\"translation\",\"category\":\"faithfulness\",\"severity\":2,\"sourceQuote\":\"They often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.\",\"targetQuote\":\"彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。\",\"replacement\":\"彼らが槍玉に挙げるのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポートに名前をつけるときにタイポする「かもしれない」という程度の可能性。\",\"rationale\":\"Dropping \\\"often\\\" turns the author's hedge into a claim about every critic. Dropping \\\"mere\\\" loses the dismissive sarcasm. The replacement restores both and reads more naturally.\",\"alternative\":\"彼らが問題視するのは、たいてい**完全に一時的な**ことばかりだ：IDEの自動インポートのバグ、特定バンドラーのツリーシェーキング性能、インポート名をタイポするかもしれないという可能性くらいのもの。\",\"confidence\":0.75,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The English says \\\"often\\\" and \\\"the mere possibility\\\".\"}]},{\"id\":\"local-8\",\"kind\":\"translation\",\"category\":\"authorVoice\",\"severity\":2,\"sourceQuote\":\"If Code is Communication, please `export` like you fucking mean it. 💞\",\"targetQuote\":\"コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞\",\"replacement\":\"コードがコミュニケーションだというなら、頼むから`export`はクソ真剣にやってくれ。💞\",\"rationale\":\"The profane intensifier is the deliberate punchline. The current polite どうか…ほしい removes it and turns the jab into a request. クソ is the closest casual Japanese intensifier and keeps the edge without going further than the source. It is also less crude than the English, which is a real tradeoff. This is my preference based on the voice standard, not a documented-usage claim.\",\"alternative\":\"コードがコミュニケーションだというなら、頼むから`export`はマジで本気でやってくれ。💞\",\"confidence\":0.6,\"requiresExternalEvidence\":false,\"audienceScope\":\"Casual Japanese developer blog readers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The source uses \\\"fucking\\\" on purpose as the last punchline, with an ironic 💞.\"}]},{\"id\":\"local-9\",\"kind\":\"translation\",\"category\":\"idiomMetaphor\",\"severity\":1,\"sourceQuote\":\"A `named export` says it’s “definitely **_A THING!_**”\",\"targetQuote\":\"`named export`は「間違いなく**_一つのものだ！_**」と言う。\",\"replacement\":\"`named export`は「間違いなく**_モノのひとつだ！_**」と言う。\",\"rationale\":\"The joke contrasts \\\"A THING\\\" with \\\"THE SINGLE MOST IMPORTANT thing.\\\" \\\"One of the things\\\" is what sets up the next line, \\\"got any other buddies?\\\" 一つのものだ reads as translationese and loses that contrast. Tradeoff: the replacement loses the \\\"it definitely exists\\\" sense of \\\"a thing\\\".\",\"alternative\":\"「間違いなく**_ひとつのモノ！_**」\",\"confidence\":0.55,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The next sentence asks about \\\"other buddies\\\", which depends on the A/THE contrast.\"}]},{\"id\":\"local-10\",\"kind\":\"translation\",\"category\":\"readability\",\"severity\":1,\"sourceQuote\":\"“This is **_THE SINGLE MOST IMPORTANT_** thing.”\",\"targetQuote\":\"「これが**_最も重要な単一のもの_**だ」\",\"replacement\":\"「これこそが**_唯一にして最も重要な_**モノだ」\",\"rationale\":\"最も重要な単一のもの is a stiff, literal rendering. 唯一にして最も重要な carries the bold announcement better. It also puts the emphasis on the modifier, as in the source, rather than on the noun.\",\"alternative\":\"「これが**_ただ一つの最重要_**なモノだ」\",\"confidence\":0.65,\"requiresExternalEvidence\":false,\"audienceScope\":\"General\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"Only \\\"THE SINGLE MOST IMPORTANT\\\" is emphasized. \\\"thing\\\" is outside the emphasis.\"}]},{\"id\":\"local-11\",\"kind\":\"preference\",\"category\":\"idiomMetaphor\",\"severity\":1,\"sourceQuote\":\"subTitle: To name, or not to name?\",\"targetQuote\":\"subTitle: 名前をつけるか、つけないか？\",\"replacement\":\"subTitle: 名付けるべきか、名付けざるべきか？\",\"rationale\":\"The English subtitle alludes to Hamlet's \\\"To be, or not to be.\\\" Japanese readers know it as 生きるべきか、死ぬべきか. Echoing that べきか…ざるべきか pattern brings back the allusion. The current line is correct, just flat.\",\"alternative\":\"名付けるべきか、名付けぬべきか、それが問題だ\",\"confidence\":0.6,\"requiresExternalEvidence\":false,\"audienceScope\":\"General Japanese readers\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The subtitle's structure directly echoes the Hamlet line.\"}]}],\"strengths\":[\"All code, literals, URLs, emoji and the typo in the './kinves.js' literal are preserved. Only the human-readable comments are translated, and the English error text 'Cannot export default const' stays as-is.\",\"The heading anchor was localized correctly: [..](#まとめ) points to ## まとめ.\",\"The frontmatter follows repository rules: images use ../, inherited date is omitted, and the sourceHash provenance is kept. History shows the only difference from the previous revision is the added sourceHash.\",\"The terms 名前付きエクスポート and デフォルトエクスポート match MDN's Japanese usage (mdn-export-ja).\",\"Several casual lines land well: 'いい機能だ。でも本質じゃない。', 'lintルールを探してるんじゃないのか？', 'インポートでしくじることはない。'\",\"The table keeps its structure, checkmarks and row order.\"],\"sourceConcerns\":[\"Summary table row 4: Named (Exports) is ❌, but the Pattern cell says 'Multiple named exports'. The checkmarks and the description contradict each other. The translation copies this faithfully; the author should confirm.\",\"Summary table row 3: Named is ✅, but the Pattern cell only mentions a default export plus private functions. This may be inconsistent.\",\"Wrong closing quote marks “ instead of ” in the source ('buddies there?“' and 'class-ish behavior.“').\",\"'AirBnb' is the source's casing of Airbnb. The translation normalizes it to 'Airbnb'. This is harmless, but the author should know about the difference.\",\"'For historical reasons' is the author's framing. The restriction actually comes from the grammar: export default takes an expression or a function/class declaration, not a const declaration. The translation keeps the author's wording, and the claim itself doesn't need to change.\",\"The snippets' '() => {...blade, ...handle}' is illustrative pseudo-code: it isn't valid as a block body. It's left unchanged as the author wrote it.\"]}\n```",
+      "toolCalls": [],
+      "toolResults": [],
+      "usage": {
+        "inputTokens": 15799,
+        "inputTokenDetails": {
+          "noCacheTokens": 15799,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 10626,
+        "outputTokenDetails": {
+          "textTokens": 4666,
+          "reasoningTokens": 5960
+        },
+        "totalTokens": 26425,
+        "raw": {
+          "prompt_tokens": 15799,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 10626,
+          "completion_tokens_details": {
+            "reasoning_tokens": 5960,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 26425,
+          "cost": 0.275716,
+          "cost_details": {
+            "upstream_inference_cost": 0.275716,
+            "upstream_inference_prompt_cost": 0.063196,
+            "upstream_inference_completions_cost": 0.21252
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Claude Platform on AWS",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "I'm spotting a mistranslation issue: \"Args\" in \"Weak Args, Man\" refers to arguments in a debate sense, but it was translated as 引数 (function arguments), which is a meaning error. I should flag this for correction to something like 主張 or 反論 instead.\n\nChecking the next line, the meaning got reversed—\"知るまでもない\" reads as \"no need to know\" when the original implies \"wait until you find out.\" Severity 3, with a fix like \"変数に何ができるか知ったら腰を抜かすぞ！\"\n\nThen the knife-handle metaphor in \"how do I hold your contraption\" gets flattened into generic usage language, losing the physical pun about grip and primary/handle. Severity 2, and I'm also noting inconsistent author terminology (著者 vs 作者) being used interchangeably where they should distinguish article author from module author.\n\nMoving through the remaining items: \"Incorrect (any more)\" translates awkwardly and should read more naturally as \"もう正しくない,\" a broken closing quote in the table needs fixing, and the translation of \"a thing\" versus \"THE thing\" for named/default exports loses the definite/indefinite contrast that's central to the argument—named exports being \"one of possibly many\" versus default being \"the one most important thing.\"\n\nA better rendering might be \"「これこそが唯一にして最重要のモノだ」\" — sev 1-2, since the source only emphasizes \"THE SINGLE MOST IMPORTANT\" while the translation extends emphasis to include \"もの\" too, but that's minor. I'll log these as separate findings at sev 1, then move on to checking the conclusion section.\n\nThe last line, \"please export like you fucking mean it,\" loses its profanity in translation, sanitizing the author's voice — that's a sev 2 authorVoice issue. I'm weighing replacements like \"頼むから`export`はクソ本気でやってくれ\" or \"マジで本気で\" to preserve the intensity, trying to find a Japanese colloquial equivalent that captures \"mean it\" as intentional commitment rather than just \"本気で\" alone.\n\nChecking other spots too: the polite \"どうか…ほしい\" phrasing softens the imperative force of the original, so that's another moderate fidelity issue. Then for point 9, \"彼らが問題視するのは\" drops the \"often\" nuance (多くの場合), a minor sev 1-2 issue, so I'd suggest \"彼らが槍玉に挙げるのは、たいてい完全に一時的なことだ\" instead. For point 10, \"インポート命名時のタイポの可能性\" similarly loses the \"mere\" (単なる) nuance from the original.\n\nI'm also noticing the target quotes need to be exact excerpts, so combining 9 and 10 into a single issue covering the whole sentence makes sense. For 11, \"見落としていないか？\" reads fine, though the \"we\" nuance could be rendered more explicitly as \"私たちは…見落としていないだろうか\" — still acceptable as is.\n\nFor 12, the phrases about not renaming and not messing up importing translate fine. But I'm noticing a contradiction in the source table itself: row 4 marks Named as ❌ while its pattern description says \"Multiple named exports,\" which is inconsistent. Similarly, row 3 marks Named ✅ despite its pattern suggesting no named exports — these look like inherent inconsistencies in the source material rather than translation errors.\n\nI'm also checking the \"kinves.js\" typo, which should stay as-is since it's in the code, and confirming the export default explanation is really about grammar (expressions vs declarations) rather than \"historical reasons\" — a minor source-level concern rather than a translation issue. The frontmatter's declared sourceHash value doesn't match the actual computed hash prefix, which is odd; since sourceHash is supposed to represent legitimate provenance, I'm weighing whether this mismatch deserves a low-severity note or should simply be left alone since I shouldn't alter it myself.\n\nNow I'm reviewing several other spots: the \"まとめ\" anchor link checks out fine, the retracted author note is fine as-is, the point about anonymous functions being hard to rename works well, and \"Private Fns\" → プライベート関数 with \"grab-bag\" → 詰め合わせ both read naturally without implying hierarchy. I'm also considering whether \"To name, or not to name?\" deserves a Hamlet-style Japanese rendering (生きるべきか、死ぬべきか echo) as a minor voice improvement, and thinking through options for translating \"Weak Args, huh\" into something punchier like 論拠が弱いぜ、おい.\n\nI'm tallying up the total issue count — heading, labels, a few phrasing quirks, the table quote, and the subtitle — landing around eleven distinct items. I'm also flagging some source-level concerns to note separately rather than silently fix: a checkmark contradiction in row four, closing-quote typos, the intentional \"kinves.js\" typo, the \"for historical reasons\" framing, an illustrative invalid syntax snippet, and the AirBnb/Airbnb casing discrepancy, which I'll log as a source concern rather than treat as a translation issue since it's a proper name.\n\nNow I'm drafting the actual JSON output with exact target quotes for each issue: the weak-argument heading, the argument-label replacements, the awkward \"knowing what a variable can do\" line, the \"how do I use this contraption\" rewrite, the \"already wrong/update your tools\" line, fixing the mismatched closing quote in the table cell, and rephrasing \"definitely a thing\" for the named export line — making sure each quote matches the source text precisely.\n\n挙げるのは、たいてい完全に一時的なことばかりだ：IDEの自動インポートのバグ、特定バンドラーのツリーシェーキング性能、あるいはインポート命名時にタイポするかもしれないという程度の可能性。「しかも」は削って簡潔に。軽微な問題として処理する。\n\n他の指摘点も見ておく。「often」を落とすとヘッジが絶対的な主張に変わってしまうので、これも軽い忠実性の問題として記録。全体としては、コードの保存、アンカーのローカライズ、フロントマターの相対パス、MDN用語、カジュアルな文体の再現、表構造の維持など、強みは多い。",
+              "signature": "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",
+              "format": "anthropic-claude-v1",
+              "index": 0
+            }
+          ],
+          "usage": {
+            "promptTokens": 15799,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 10626,
+            "completionTokensDetails": {
+              "reasoningTokens": 5960
+            },
+            "totalTokens": 26425,
+            "cost": 0.275716,
+            "costDetails": {
+              "upstreamInferenceCost": 0.275716
+            }
+          }
+        }
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "totalUsage": {
+    "inputTokens": 37072,
+    "inputTokenDetails": {
+      "noCacheTokens": 37072,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 11004,
+    "outputTokenDetails": {
+      "textTokens": 4943,
+      "reasoningTokens": 6061
+    },
+    "totalTokens": 48076
+  },
+  "durationMs": 113640.42324999999,
+  "finishReason": "stop"
+}

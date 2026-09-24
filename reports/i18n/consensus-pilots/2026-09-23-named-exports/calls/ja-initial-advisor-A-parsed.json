@@ -1,0 +1,137 @@
+{
+  "fingerprint": "22ef01d95a76f72cf35e18611ace6118ff45e46912f22194aeb0a5bdb4abddee",
+  "value": {
+    "issues": [
+      {
+        "id": "local-1",
+        "kind": "translation",
+        "category": "technicalAccuracy",
+        "severity": 2,
+        "sourceQuote": "### Weak Args, Man",
+        "targetQuote": "### 弱い引数だな、おい",
+        "replacement": "### 弱い主張だな、おい",
+        "rationale": "English \"Args\" here is rhetorical (arguments/claims), not function parameters. In a JavaScript article, 引数 is read unambiguously as \"function argument,\" so the heading and the three \"引数 #N\" bullets create a false technical reading. 主張/論点 is the natural Japanese term for a debated claim. Voice (\"Man\" → おい) is preserved.",
+        "alternative": "### 反論が弱いな、おい",
+        "confidence": 0.88,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial voice",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The heading introduces three numbered rhetorical counter-arguments (\"Arg #1: Named exports ensure name consistency\"), not function parameters, confirming the debate sense of \"Args\"."
+          }
+        ]
+      },
+      {
+        "id": "local-2",
+        "kind": "translation",
+        "category": "technicalAccuracy",
+        "severity": 2,
+        "sourceQuote": "- Arg #1: Named exports ensure name consistency.",
+        "targetQuote": "- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "rationale": "Same false-friend as the heading: 引数 means a function parameter. Apply the same fix to \"引数 #2\" and \"引数 #3\" so the list reads as claims being rebutted. No other wording in these lines needs changing.",
+        "alternative": "- 論点 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "confidence": 0.88,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial voice",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The bullet is a claim about named exports followed by a rebuttal (\"No, they don't\"), i.e. a rhetorical argument, not a parameter."
+          }
+        ]
+      },
+      {
+        "id": "local-3",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 3,
+        "sourceQuote": "(I hate to break it to you, but wait until you learn what variables can do!)",
+        "targetQuote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）",
+        "replacement": "（残念なお知らせだが、変数が何をできるか、そのうち思い知ることになるよ！）",
+        "rationale": "\"wait until you learn\" is a teasing \"just you wait, you'll be surprised\" — the current 知るまでもない (\"not even worth knowing\") reverses the point into \"you don't need to know.\" The replacement keeps the parenthetical aside's mocking tone and the actual meaning.",
+        "alternative": "（残念なお知らせだが、変数が何をできるか知ったら腰を抜かすよ！）",
+        "confidence": 0.85,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial voice",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The clause \"wait until you learn what variables can do!\" presupposes the reader will eventually learn something surprising, which 知るまでもない negates."
+          }
+        ]
+      },
+      {
+        "id": "local-4",
+        "kind": "translation",
+        "category": "readability",
+        "severity": 2,
+        "sourceQuote": "- Incorrect (any more). Configure/update your tools.",
+        "targetQuote": "- 間違い（もう）。ツールを設定・更新しよう。",
+        "replacement": "- もはや間違いではない。ツールを設定・更新しよう。",
+        "rationale": "\"Incorrect (any more)\" means the claim is no longer true, not \"wrong (already).\" The literal calque 間違い（もう） is ambiguous and can be misread as \"it's wrong now.\" もはや間違いではない states the intended rebuttal cleanly.",
+        "alternative": "- 今はもう間違い。ツールを設定・更新しよう。",
+        "confidence": 0.8,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial voice",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The following lines (\"Support has existed for 3+ years\") show the author means the old complaint is outdated, i.e. no longer incorrect."
+          }
+        ]
+      },
+      {
+        "id": "local-5",
+        "kind": "translation",
+        "category": "grammarSpelling",
+        "severity": 1,
+        "sourceQuote": "“Here’s some related logic. Also, expect class-ish behavior.“",
+        "targetQuote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "rationale": "The closing bracket is a second opening 「 instead of 」, leaving the table cell's quotation unclosed. Purely a punctuation typo; meaning is unaffected.",
+        "alternative": "",
+        "confidence": 0.95,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial voice",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The English cell is a single quoted sentence with matched opening and closing quotation marks."
+          }
+        ]
+      },
+      {
+        "id": "local-6",
+        "kind": "translation",
+        "category": "authorVoice",
+        "severity": 2,
+        "sourceQuote": "If Code is Communication, please `export` like you fucking mean it. 💞",
+        "targetQuote": "コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞",
+        "replacement": "コードがコミュニケーションであるなら、どうか`export`はマジで本気でやってほしい。💞",
+        "rationale": "The punchline's intensifier (\"fucking\") is dropped, flattening the author's deliberate profane edge into neutral 本気で. Doubling the colloquial intensifier (マジで本気で) restores the emphasis without inventing a harsher word than the source. Tradeoff: slightly less raw than the English; クソ本気で is closer in force but reads as a stronger escalation.",
+        "alternative": "コードがコミュニケーションであるなら、どうか`export`はクソ本気でやってほしい。💞",
+        "confidence": 0.7,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers; conversational technical editorial voice",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source's final line uses \"fucking\" as an intentional intensifier, and the article's voice elsewhere is deliberately blunt (\"Weak Args, Man\")."
+          }
+        ]
+      }
+    ],
+    "strengths": [
+      "Code blocks, import/export examples, emoji markers, and the ✅/❌ annotations are preserved exactly, including the source's own typo './kinves.js'.",
+      "The in-article anchor (#まとめ) correctly targets the localized '## まとめ' heading.",
+      "Frontmatter follows locale rules: ../ image paths, inherited date/draft fields omitted, tags/category/subCategory preserved.",
+      "Conversational register and rhetorical questions (「そもそも…見落としていないか？」「じゃあ、何を伝えているのか？」) read naturally for Japanese developers.",
+      "The summary table's structure, row order, and checkmark pattern are intact."
+    ],
+    "sourceConcerns": [
+      "The source contains a typo in the code sample path './kinves.js' (likely './knives.js'); the translation correctly preserves it rather than silently correcting it. No action needed unless the author wants the source fixed."
+    ]
+  }
+}

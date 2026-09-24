@@ -1,0 +1,198 @@
+{
+  "fingerprint": "8152eb8ac0d59f558e52b73b9e8a162cb65c2940a604086229f477b46bef7bd2",
+  "value": {
+    "issues": [
+      {
+        "id": "local-1",
+        "kind": "translation",
+        "category": "technicalAccuracy",
+        "severity": 2,
+        "sourceQuote": "### Weak Args, Man",
+        "targetQuote": "### 弱い引数だな、おい",
+        "replacement": "### 弱い言い分だな、おい",
+        "rationale": "ここでの「Args」は関数の引数ではなく、これから反論する主張のこと。くだけた挑発は残す。",
+        "alternative": "### その主張、弱いぞ、おい",
+        "confidence": 0.98,
+        "requiresExternalEvidence": false,
+        "audienceScope": "日本語のJavaScript技術記事",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "見出しに続く各項目はコードの引数ではなく、エクスポートをめぐる主張を列挙している。"
+          }
+        ]
+      },
+      {
+        "id": "local-2",
+        "kind": "translation",
+        "category": "technicalAccuracy",
+        "severity": 2,
+        "sourceQuote": "- Arg #1: Named exports ensure name consistency.",
+        "targetQuote": "- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "rationale": "「引数」はプログラミング上の別概念を指してしまう。同じ誤訳がある #2、#3 の項目名も「主張」に揃えたい。",
+        "alternative": "- 論点 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "confidence": 0.98,
+        "requiresExternalEvidence": false,
+        "audienceScope": "日本語のJavaScript技術記事",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "「Arg #1」は直後に著者が反論する意見の番号である。"
+          }
+        ]
+      },
+      {
+        "id": "local-3",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 2,
+        "sourceQuote": "(I hate to break it to you, but wait until you learn what variables can do!)",
+        "targetQuote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら、もっと驚くぞ！）",
+        "rationale": "原文は「変数の機能を知ればさらに驚く」という追い打ち。「知るまでもない」は知る必要がないという逆方向の意味になる。軽口も維持できる。",
+        "alternative": "（悪い知らせだけど、変数で何ができるか知るまで待ってみな！）",
+        "confidence": 0.96,
+        "requiresExternalEvidence": false,
+        "audienceScope": "くだけた日本語の技術記事",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "「wait until you learn」は、これから知ることへの予告であり、知る必要がないという意味ではない。"
+          }
+        ]
+      },
+      {
+        "id": "local-4",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 2,
+        "sourceQuote": "“This is **_THE SINGLE MOST IMPORTANT_** thing.”",
+        "targetQuote": "「これが**_最も重要な単一のもの_**だ」",
+        "replacement": "「これこそが**_いちばん重要なやつ_**だ」",
+        "rationale": "「single most important」は重要度で一位という強調であり、「ものが単一」とは限らない。後続の「名前付きエクスポートは脇役」との対比も明瞭になる。",
+        "alternative": "「これが**_何よりも重要なもの_**だ」",
+        "confidence": 0.92,
+        "requiresExternalEvidence": false,
+        "audienceScope": "会話調の日本語技術記事",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文は直後に、名前付きエクスポートも存在し得るが補助的だと述べる。"
+          }
+        ]
+      },
+      {
+        "id": "local-5",
+        "kind": "translation",
+        "category": "idiomMetaphor",
+        "severity": 1,
+        "sourceQuote": "“definitely **_A THING!_**”",
+        "targetQuote": "「間違いなく**_一つのものだ！_**」",
+        "replacement": "「こいつだって**_れっきとした一品だ！_**」",
+        "rationale": "原文のくだけた「A THING!」に対し、「一つのもの」は直訳調で、直前の default の「単一」とも紛らわしい。「一品」は記事のナイフの冗談にも馴染むが、比喩を強めたくなければ代案が無難。",
+        "alternative": "「これも**_れっきとした存在だ！_**」",
+        "confidence": 0.8,
+        "requiresExternalEvidence": false,
+        "audienceScope": "冗談を交えた日本語の開発者向け記事。語感には選択の余地がある",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文は「THE SINGLE MOST IMPORTANT」と「A THING!」を対比し、後者を口語的に強調している。"
+          }
+        ]
+      },
+      {
+        "id": "local-6",
+        "kind": "translation",
+        "category": "idiomMetaphor",
+        "severity": 2,
+        "sourceQuote": "Now tell me, how do I hold your contraption again? No author intent.",
+        "targetQuote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。",
+        "replacement": "で、この仕掛け、どこを持てばいいんだ？　作者の意図が見えない。",
+        "rationale": "「どう持つ」は前後の Knife の冗談につながる問い。「どう使う」ではその具体的な笑いが消える。「意図が見えない」も日本語として自然。",
+        "alternative": "で、その仕掛け、どこを握ればいいんだ？　作者の意図が伝わらない。",
+        "confidence": 0.9,
+        "requiresExternalEvidence": false,
+        "audienceScope": "本文のナイフの例を読んでいる日本語読者",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文は「how do I hold」と問い、前後でも Knife や soManyKnives を例に使っている。"
+          }
+        ]
+      },
+      {
+        "id": "local-7",
+        "kind": "translation",
+        "category": "readability",
+        "severity": 2,
+        "sourceQuote": "Incorrect (any more). Configure/update your tools.",
+        "targetQuote": "間違い（もう）。ツールを設定・更新しよう。",
+        "replacement": "いや、今は違う。ツールの設定を見直すか、更新しよう。",
+        "rationale": "「間違い（もう）」では、昔は当てはまったかもしれないが今は違う、という時間的な含みが伝わりにくい。断定的な調子は残す。",
+        "alternative": "今となっては違う。ツールを設定し直すか、更新しよう。",
+        "confidence": 0.96,
+        "requiresExternalEvidence": false,
+        "audienceScope": "日本語の技術記事全般",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "括弧内の「any more」と次の「3+ years」は、現在ではサポート状況が変わったという文脈を作っている。"
+          }
+        ]
+      },
+      {
+        "id": "local-8",
+        "kind": "translation",
+        "category": "grammarSpelling",
+        "severity": 2,
+        "sourceQuote": "“Here’s some related logic. Also, expect class-ish behavior.“",
+        "targetQuote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "rationale": "表のセル末尾が開き鉤括弧になっている。閉じ鉤括弧に直すだけでよい。",
+        "alternative": "",
+        "confidence": 0.99,
+        "requiresExternalEvidence": false,
+        "audienceScope": "日本語版の表を読む全読者",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文のセルは引用文として閉じられている。"
+          }
+        ]
+      },
+      {
+        "id": "local-9",
+        "kind": "translation",
+        "category": "authorVoice",
+        "severity": 2,
+        "sourceQuote": "If Code is Communication, please `export` like you fucking mean it. 💞",
+        "targetQuote": "コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞",
+        "replacement": "コードがコミュニケーションなら、`export`するときはクソ本気でやってくれ。💞",
+        "rationale": "現訳は主張を保つ一方、結びの意図的な罵りを落としている。「クソ本気」は強い語を復元し、ハートとの落差も残す。現訳より荒い調子にはなるが、原文の結語の調子に対応する。",
+        "alternative": "コードがコミュニケーションなら、`export`はマジで本気を見せてくれ。💞",
+        "confidence": 0.85,
+        "requiresExternalEvidence": false,
+        "audienceScope": "著者の強い口語を許容する、日本語の開発者向け技術エッセイ",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文は結語で「fucking mean it」と意図的に語気を強め、そのままハートの絵文字で締めている。"
+          }
+        ]
+      }
+    ],
+    "strengths": [
+      "主張の流れ、箇条書き、表、コード例、リンクは概ね保たれている。",
+      "「そもそも本質を見落としていないか」「脇役」など、読者に直接語りかける調子が機能している。",
+      "画像の相対パスはロケール用になっており、本文の「まとめ」へのリンクも翻訳後の見出しに対応している。"
+    ],
+    "sourceConcerns": [
+      "英語原文の表では「Multiple named exports」の行が Named (Exports) ❌ になっており、説明とフラグが矛盾する。翻訳側で数値・記号を独断修正せず、原文の確認が必要。",
+      "英語原文の表で「Default export + multiple 'private' un-exported functions」の行は Named (Exports) ✅ だが、パターン欄には名前付きエクスポートの説明がない。意図の確認が必要。",
+      "英語原文のインラインコードは './kinves.js' と綴られている。ナイフを意図した誤字の可能性があるが、翻訳でコードを黙って変更しない。",
+      "英語原文の三つの import 文は、独立した書き方の例なら理解できるが、連続した一つのモジュールとして実行すると同じローカル名 Handle を繰り返し宣言する。例の提示方法は原文側で確認したい。"
+    ]
+  }
+}

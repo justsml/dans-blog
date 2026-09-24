@@ -1,0 +1,117 @@
+{
+  "fingerprint": "456a65cc2621d5450d0ea8d874b583b0b69565938d6f249664ef6d0aa0063e81",
+  "value": {
+    "ready": false,
+    "ratings": [
+      {
+        "dimension": "faithfulness",
+        "score": 4,
+        "confidence": 0.92,
+        "rationale": "The central claim about communicating intent is preserved, but the named-export joke loses the source’s exclamation mark.",
+        "quote": "Una exportación nombrada (`named export`) dice que es \"definitivamente **_UNA COSA_**.\""
+      },
+      {
+        "dimension": "technicalAccuracy",
+        "score": 4,
+        "confidence": 0.9,
+        "rationale": "The JavaScript literals and export distinctions are retained. The contradictory table row is inherited from English and needs author review, not an independent translation correction.",
+        "quote": "| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico."
+      },
+      {
+        "dimension": "completeness",
+        "score": 4,
+        "confidence": 0.94,
+        "rationale": "All sections, arguments and table rows are present; the missing emphasis in «A THING!» is a small but identifiable omission.",
+        "quote": "definitivamente **_UNA COSA_**"
+      },
+      {
+        "dimension": "readability",
+        "score": 4,
+        "confidence": 0.87,
+        "rationale": "Short asides generally read cleanly, although the question about holding the invention retains an awkward placement of «otra vez».",
+        "quote": "Buen recurso. No viene al caso."
+      },
+      {
+        "dimension": "grammarSpelling",
+        "score": 4,
+        "confidence": 0.85,
+        "rationale": "Grammar is generally sound. The comma joining two independent clauses in the summary is optional polish rather than an impediment to comprehension.",
+        "quote": "En realidad hay muchas combinaciones de formas en que podríamos exportar cosas, cada una cuenta una historia diferente:"
+      },
+      {
+        "dimension": "idiomMetaphor",
+        "score": 4,
+        "confidence": 0.89,
+        "rationale": "The export-purpose question is idiomatic now; «¿cómo sostengo tu invento otra vez?» still sounds translated and misses some of the knife-and-handle joke.",
+        "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?"
+      },
+      {
+        "dimension": "authorVoice",
+        "score": 4,
+        "confidence": 0.85,
+        "rationale": "The conclusion restores the source’s deliberate profanity and emphasis on intent without adding a claim about how every region receives it. The missing «¡UNA COSA!» weakens an earlier joke.",
+        "quote": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞"
+      },
+      {
+        "dimension": "localeAppropriateness",
+        "score": 4,
+        "confidence": 0.84,
+        "rationale": "The register suits a broad Spanish-speaking developer audience; terms such as «lint» remain in a recognizable technical context. This is an audience judgment, not a claim that the wording is universally preferred.",
+        "quote": "¿Quizás estás buscando una regla de lint?"
+      },
+      {
+        "dimension": "structureFlow",
+        "score": 5,
+        "confidence": 0.95,
+        "rationale": "The argument, numbered objections, summary table and conclusion follow the source, and the in-page link targets the localized heading.",
+        "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+      },
+      {
+        "dimension": "mdxIntegrity",
+        "score": 4,
+        "confidence": 0.96,
+        "rationale": "The MDX component, link targets, localized image paths and code literals remain intact. Comments inside the second code block, however, were translated despite the requirement to preserve code comments.",
+        "quote": "// Sin embargo, una vez declarada, puedes exportar una variable const como default."
+      }
+    ],
+    "unresolved": [
+      {
+        "severity": 2,
+        "claim": "Translation defect: restore every comment in the nested `tsx` block exactly as in the frozen English, including the original spacing. The first code block’s comment has already been restored.",
+        "quote": "// ^ ❌ No soportado ❌ ^\n    // No se puede exportar default const ....\n    // ==========================\n\n    // Sin embargo, una vez declarada, puedes exportar una variable const como default.",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "Translation defect: the accepted named-export edit was only partly applied. Restore the exclamation in the emphasized «A THING!» joke; the translated term and preserved `named export` are sound.",
+        "quote": "Una exportación nombrada (`named export`) dice que es \"definitivamente **_UNA COSA_**.\"",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "Optional idiom improvement left unapplied: «A ver, dime otra vez: ¿por dónde se agarra tu invento?» makes «again» a request for a reminder and better recalls the knife handle. The current wording does not reverse the meaning.",
+        "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "For exact numerical scope, «3 años o más» preserves English «3+ years» more explicitly than «más de 3 años», which excludes exactly three.",
+        "quote": "El soporte existe desde hace más de 3 años en [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.",
+        "requiresReference": false
+      },
+      {
+        "severity": 3,
+        "claim": "Inherited English source defect, for author review only: the «Multiple named exports» row marks named exports ❌. The Spanish faithfully retains that contradiction; do not change its checks independently.",
+        "quote": "| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico.",
+        "requiresReference": false
+      },
+      {
+        "severity": 4,
+        "claim": "Inherited English source concern, for author review only: the three imports declare the same local binding `Handle` in one fenced example, so they cannot execute together as one module. They are preserved correctly in translation.",
+        "quote": "import { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪",
+        "requiresReference": false
+      }
+    ],
+    "summary": "Strong Spanish translation, but not ready under the code-comment preservation rule; the named-export punchline also remains incomplete. Rechecking the ledger found the idiom change to the knife question unapplied but optional. «Ambos» is defensible, and the differing sourceHash format alone establishes no defect. The contradictory table row and duplicate-binding example originate in English and require author review, not silent translation fixes."
+  }
+}

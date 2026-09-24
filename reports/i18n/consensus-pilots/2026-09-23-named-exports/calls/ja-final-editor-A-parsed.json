@@ -1,0 +1,129 @@
+{
+  "fingerprint": "89534304a0d7e498b5697857e22805615a319d7c58f930979a21ad43910468ee",
+  "value": {
+    "ready": false,
+    "ratings": [
+      {
+        "dimension": "faithfulness",
+        "score": 3,
+        "confidence": 0.94,
+        "rationale": "The main argument survives, but Arg #2 and #3 still call rhetorical claims function arguments, and the opening drops the source’s “often” and “mere.”",
+        "quote": "- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。"
+      },
+      {
+        "dimension": "technicalAccuracy",
+        "score": 3,
+        "confidence": 0.96,
+        "rationale": "「引数」 has a different technical meaning from the claims being rebutted. The table and code also contain technical problems inherited from English; those are source concerns, not translation errors.",
+        "quote": "- 引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。"
+      },
+      {
+        "dimension": "completeness",
+        "score": 4,
+        "confidence": 0.94,
+        "rationale": "Sections, examples, links, numbers and the conclusion are present. Two meaningful qualifications in the opening paragraph are missing.",
+        "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。"
+      },
+      {
+        "dimension": "readability",
+        "score": 3,
+        "confidence": 0.87,
+        "rationale": "The conversational rebuttals read clearly, but 「最も重要な単一のもの」 is conspicuously literal Japanese. Its replacement remains a wording choice, not an established technical correction.",
+        "quote": "`export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。"
+      },
+      {
+        "dimension": "grammarSpelling",
+        "score": 3,
+        "confidence": 0.98,
+        "rationale": "A summary-table quotation ends with an opening Japanese bracket. English has a corresponding quotation-mark error, but the unclosed Japanese bracket is still an actionable target-text typo.",
+        "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「"
+      },
+      {
+        "dimension": "idiomMetaphor",
+        "score": 3,
+        "confidence": 0.83,
+        "rationale": "The knife/handle joke now survives through 「握れば」, whereas the default-export declaration still sounds translated rather than spoken.",
+        "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。"
+      },
+      {
+        "dimension": "authorVoice",
+        "score": 4,
+        "confidence": 0.86,
+        "rationale": "The ending retains the deliberate profane emphasis, the exasperated request and the heart. 「クソ本気」 is a forceful register choice for this conversational developer essay, not a claim about universal Japanese usage.",
+        "quote": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞"
+      },
+      {
+        "dimension": "localeAppropriateness",
+        "score": 4,
+        "confidence": 0.88,
+        "rationale": "For Japanese software developers, 「名前付きエクスポート」 and 「デフォルトエクスポート」 match the checked Japanese MDN terminology. The remaining 「引数」 labels undermine that otherwise appropriate technical register.",
+        "quote": "ついでに「名前付きエクスポートはあくまで脇役」とも伝える。"
+      },
+      {
+        "dimension": "structureFlow",
+        "score": 4,
+        "confidence": 0.95,
+        "rationale": "The heading sequence, numbered rebuttals, table and conclusion follow the source. The in-page link targets the localized summary heading.",
+        "quote": "[記事の最後でさらに例を紹介。](#まとめ)"
+      },
+      {
+        "dimension": "mdxIntegrity",
+        "score": 4,
+        "confidence": 0.92,
+        "rationale": "The section component, fenced-code structure, URLs, table shape and locale-relative image paths remain intact. Translated comments inside code fences breach the separate code-comment preservation constraint, though they do not themselves break MDX.",
+        "quote": "<section className=\"scroll-x\">\n## まとめ"
+      }
+    ],
+    "unresolved": [
+      {
+        "severity": 3,
+        "claim": "Translation defect: change 「引数」 to 「主張」 in both #2 and #3. The accepted heading and #1 edits did not reach these labels.",
+        "quote": "- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "Translation defect: restore “often” and the dismissive “mere possibility”; without them the criticism becomes categorical and loses part of its bite.",
+        "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "Translation defect: close the table-cell quotation with 」, not 「. Record the English punctuation error separately rather than reproducing it.",
+        "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+        "requiresReference": false
+      },
+      {
+        "severity": 3,
+        "claim": "Repository-constraint defect: restore the original code-fence comments verbatim throughout both examples. Several comments were translated although executable code, comments and literals must be preserved.",
+        "quote": "// どちらもエイリアス可能！",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "Optional, disputed wording: 「最も重要な単一のもの」 is stiff. A smoother emphasis would help, but an edit must decide explicitly whether and how to retain the possible single-default-export wordplay; this is not a blocker.",
+        "quote": "「これが**_最も重要な単一のもの_**だ」",
+        "requiresReference": false
+      },
+      {
+        "severity": 4,
+        "claim": "Source concern, faithfully carried over—not a translation defect: the example presents `const Knife = () => {...blade, ...handle}` as valid, but the spread syntax does not form a valid arrow-function block. Ask the author to review the source before changing its code.",
+        "quote": "const Knife = () => {...blade, ...handle}",
+        "requiresReference": false
+      },
+      {
+        "severity": 4,
+        "claim": "Source concern, faithfully carried over: the three imports declare the same `Handle` binding in one code block and cannot run together. Ask the author whether they are intended as separate alternatives; do not silently rewrite them in Japanese.",
+        "quote": "import { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪",
+        "requiresReference": false
+      },
+      {
+        "severity": 3,
+        "claim": "Source concern, faithfully carried over: the summary row says there are multiple named exports while its Named column is ❌. Another row marks Named ✅ without mentioning named exports in its pattern. The table needs author review, not unilateral translation-side checkbox changes.",
+        "quote": "| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。",
+        "requiresReference": false
+      }
+    ],
+    "summary": "Not ready: two 「引数」 labels, omitted qualifications, an unclosed quotation and altered code comments remain after the accepted edits. The localized anchor and MDX structure are sound. The broken code examples and inconsistent table indicators originate in English and require separate author review; they should not be silently repaired in translation."
+  }
+}

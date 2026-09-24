@@ -1,0 +1,507 @@
+{
+  "fingerprint": "923a75a157101715d60e7eac2fb0b4e7d8cdb5579ea1611efabe3b9a44b1ed18",
+  "value": {
+    "votes": [
+      {
+        "issueId": "ja-editor-A-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.95,
+        "rationale": "日本語のJavaScript記事で「引数」はコード上の概念を指すが、この節は反論対象の主張を扱う。「主張」は番号付き項目とも揃い、「おい」で砕けた調子も残る。",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "見出しの下には Arg #1〜#3 と、それぞれへの反論が並ぶ。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.95,
+        "rationale": "関数の引数ではなく議論上の主張なので、技術文脈では意味の誤り。#2、#3 のラベルも同様に直す必要がある。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1 の直後には、その主張を否定する反論が続く。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.94,
+        "rationale": "「知るまでもない」は、これから知ったときの驚きを予告する原文と逆。提案は予告と軽いからかいを戻し、反応を過度に具体化しない。",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“wait until you learn what variables can do!” は将来知ることを予告している。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.82,
+        "rationale": "「最も重要な単一のもの」は目立つ直訳調。唯一のデフォルトエクスポートという技術的背景は認めるが、「唯一にして」は名前付きエクスポートまで存在しないように読める。最重要の一つを示し、原文どおり強調を修飾語だけにかける。",
+        "replacement": "「これこそが**_いちばん重要な_**モノだ」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "強調されているのは “THE SINGLE MOST IMPORTANT” だけで、直後には名前付きエクスポートも脇役として認める。"
+          },
+          {
+            "referenceId": "mdn-export-en",
+            "explanation": "一つのデフォルトエクスポートと複数の名前付きエクスポートは共存できる。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-4",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.77,
+        "rationale": "「一つのものだ」は口語的な “A THING!” に比べて直訳調。「ちゃんとしたモノ」は存在感を出す任意の文体改善で、「間違いなく」も残る。ただし原文より正当性の響きは少し強い。",
+        "replacement": "「間違いなく**_ちゃんとしたモノだ！_**」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“definitely A THING!” と勢いよく述べた後、ほかにも仲間がいるかを尋ねる。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.81,
+        "rationale": "簡潔な案でも持ち方の冗談は戻る、という反論はもっとも。ただ、提案は “your” と “again” も拾い、“contraption” のふざけた響きを出せる。「妙ちくりんな」はやや芝居がかるが、この掛け合いの範囲内。",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“how do I hold your contraption again?” は Knife／Handle の例に続き、持ち方を問う。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.93,
+        "rationale": "「間違い（もう）」は時間的限定を自然に伝えない。相手の IDE 対応に関する主張が今では誤りだという反論の向きを保つ。",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“Incorrect (any more)” の後に、IDE サポートが3年以上前からあると述べる。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.98,
+        "rationale": "表中で引用符が閉じない、目につく誤記。英語原文の末尾も開き引用符になっている懸念は別扱いとし、日本語の句読点だけを直す。",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "該当セルは「で始まり、末尾も「になっている。"
+          },
+          {
+            "referenceId": "source",
+            "explanation": "対応する英語セルの末尾も閉じ引用符ではなく開き引用符になっている。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-8",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.81,
+        "rationale": "現訳は結びの意図的な罵りを落としている。「頼むから」が “please” を拾い、「クソ本気」が強調と💞との落差を戻す。現訳より荒くなるが、くだけた開発者向けエッセイでは原文の語気に対応する。",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "結語は “please” と “fucking mean it” を組み合わせ、💞で締める。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.95,
+        "rationale": "“Args” はここでは議論上の主張で、「引数」では誤った技術的意味になる。英語の掛詞は失うが、見出しの挑発は残せる。",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "見出しに続く三項目は、それぞれ反論される主張である。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.95,
+        "rationale": "「主張」は反論対象を正確に指す。#1 だけでなく #2、#3 にも同じラベルの修正が必要。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1〜#3 は関数の引数ではなく、議論上の立場を掲げる。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "「知るまでもない」による意味の逆転を直す。「腰を抜かす」では反応を強く限定しすぎるため、提案の「驚く」が原文の軽口に適する。",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“wait until you learn” は知る必要がないという意味ではなく、後で知ることを示す。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "簡潔な「この仕掛け」でも持つという比喩は戻る。しかし “your” と “again”、さらに “contraption” の茶化しが抜ける。少し芝居がかった口語を許し、A-5 の案でその三点も残す。",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文には “hold your contraption again?” とあり、前段の Knife／Handle に掛けている。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-4",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.92,
+        "rationale": "括弧内の直訳を解消し、主張が今では誤りだという時間的な限定と短い断定を保つ。",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“(any more)” に続く箇条書きは、サポートが以前から存在することを根拠に挙げる。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.98,
+        "rationale": "閉じ鉤括弧への修正で足りる。英語側の引用符にも同種の誤記があるが、原文の修正とは切り分ける。",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "表のセルは開き鉤括弧で終わり、引用が閉じていない。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.87,
+        "rationale": "“often” の脱落は批判対象についての主張を広げ、“mere” の脱落は皮肉を弱める。提案は両方戻し、重複した「可能性」の言い回しも避ける。",
+        "replacement": "彼らが問題視するのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポート名をタイポするかもしれないというだけの話。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文には “They often blame” と “the mere possibility of typos” がある。"
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "現訳には頻度を表す語と、単なる可能性だと退ける表現がない。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-7",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "「クソ本気」で意図的な荒さを戻す点には賛成。ただし “please” を丸ごと落とすより「頼むから」で懇願と苛立ちを併せて残したい。いずれも現訳より口語的だが、原文の結語に見合う。",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "結語では “please” と罵りの強調語が同居する。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-8",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.77,
+        "rationale": "「ちゃんとしたモノ」は “A THING!” の口語的な存在感を出せる。ただし提示された置換は対象行の主語と「と言う」を省くため、行全体として使える形にする。「モノのひとつ」は後の問いより先に複数を示唆する。",
+        "replacement": "`named export`は「間違いなく**_ちゃんとしたモノだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "named export がそう語る、という文の後で、ほかにも仲間がいるかを問う。"
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "現行の対象行には主語の `named export` と末尾の「と言う」がある。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-9",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.83,
+        "rationale": "硬い直訳を直す深刻度2には賛成。「唯一にして」は他のエクスポートの存在まで否定しかねず、「いちばん」なら最重要という意味を保てる。ただし原文では名詞を強調していないため、強調は修飾語だけに置く。",
+        "replacement": "「これこそが**_いちばん重要な_**モノだ」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“THE SINGLE MOST IMPORTANT” のみ強調され、次には named exports を脇役として認める。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-10",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.69,
+        "rationale": "現訳も意味は正しい。提案は “To …, or not to …?” の芝居がかった対句を日本語にも作れるが、「べき」は判断の響きを少し増すため、任意の文体選択にとどまる。",
+        "replacement": "subTitle: 名付けるべきか、名付けざるべきか？",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "副題は “To name, or not to name?” という反復的な対句である。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.94,
+        "rationale": "「引数」は技術文脈で別概念になるという指摘を採る。深刻度3の意味上の誤りであり、「主張」なら後続の番号付き項目とも揃う。",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "この見出しは関数の引数ではなく、反論される三つの主張を導く。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.95,
+        "rationale": "「主張」が正しい語義。#2、#3 にも同じ誤訳があるが、この提案の置換文自体は #1 に限る。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1 は直後に著者が否定する主張である。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "「知るまでもない」は予告を否定へ逆転させる。「変数で何ができるか」は自然で、「驚くぞ」は原文がほのめかす反応を過度に強めない。",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文の “wait until you learn” はこれから知ることを前提にした軽口。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-3",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.95,
+        "rationale": "以前の「もはや間違いではない」なら反論を逆転させたが、今回の置換はその問題を解消している。今では相手の主張が誤り、という原文の向きを保つ。",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“Incorrect (any more)” は Arg #3 への反論で、続いて既存の IDE サポートを示す。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-4",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.97,
+        "rationale": "表中の閉じない引用符は目につく誤記。英語原文にも逆向きの末尾引用符があるため、原文側の懸念とは別に日本語を閉じる。",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "日本語セルの末尾が閉じ鉤括弧ではなく開き鉤括弧になっている。"
+          },
+          {
+            "referenceId": "source",
+            "explanation": "英語セルも末尾に開き引用符を使っている。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-5",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.79,
+        "rationale": "「マジで本気で」は重複感があり、原文の罵りと💞との落差も弱いという再考を採る。今回の提案も荒さは戻すが “please” を省くため、「頼むから」を加える。",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文の結語には “please” と “fucking mean it” の両方がある。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.94,
+        "rationale": "「引数」では節の対象を誤認させる。「弱い主張」は原文の語義に近く、「おい」も残して過剰に挑発を増やさない。",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1〜#3 はエクスポートをめぐる主張である。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.95,
+        "rationale": "番号付きの反論対象なので「主張」が適切。「引数」は関数に関する別の技術用語になる。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1 の主張の直後には “No, they don’t” と反論が続く。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.92,
+        "rationale": "「知るまでもない」の逆転を解消する。「そのうち知ることになるぞ」でも未来は表せるが、提案は知った際の驚きを軽いからかいとして残す。",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“wait until you learn what variables can do!” は将来の発見を予告する。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.79,
+        "rationale": "「マジで。」だけでは、意図的な罵りをなお省くという反論を採る。くだけた日本語の開発者向けエッセイでは、荒さと💞の対照を残しつつ “please” も訳す。",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "原文は “please … fucking mean it. 💞” と締める。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.81,
+        "rationale": "持ち方だけでなく、伝わらない作者の意図も直す点には賛成。ただ、簡潔な提案では “your” と “again” が落ちるため、茶化した問いの全体を残す案を選ぶ。",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“how do I hold your contraption again? No author intent.” は Knife／Handle の冗談に続く。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.93,
+        "rationale": "不自然な「間違い（もう）」を直し、IDE 対応に関する相手の主張は今では誤りだ、という短い反論を保つ。",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "“Incorrect (any more)” の根拠として、次の項目が3年以上のサポートを挙げる。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.98,
+        "rationale": "引用符の明瞭な誤記であり、内容を変えずに修正できる。英語原文の引用符の誤記は別の原文上の懸念として残る。",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "表中の該当セルは二つ目の「で終わっている。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-7",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.74,
+        "rationale": "“A THING!” の実在感を口語的に出す点は賛成。ただし引用部分だけの置換では対象行の主語と述語を落とすため、行全体を残す。「ちゃんとしたモノ」は多少正当性を足すが、任意の語感改善として許容できる。",
+        "replacement": "`named export`は「間違いなく**_ちゃんとしたモノだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "named export が “definitely A THING!” と言い、その後でほかの仲間の有無を問う。"
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "対象行には引用部分の前後に `named export` と「と言う」がある。"
+          }
+        ]
+      }
+    ]
+  }
+}

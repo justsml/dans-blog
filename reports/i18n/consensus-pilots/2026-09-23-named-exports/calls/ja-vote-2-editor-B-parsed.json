@@ -1,0 +1,503 @@
+{
+  "fingerprint": "211cd3d2d07a1a1c3bfbf584905ea1bea770e37acba7d53c4ef65f4bd71567a9",
+  "value": {
+    "votes": [
+      {
+        "issueId": "ja-editor-A-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "We agree on both wording and severity. In a JS article, 引数 means function arguments, but these are claims the author rebuts. That is a meaning error, not style. 主張 matches the 主張 #1–#3 labels, and おい keeps the author's edge.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The heading introduces Arg #1–#3, which are claims from other articles, each followed by a rebuttal."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "Same false technical reading as the heading. Relabel 引数 #2 and #3 as 主張 #2 and #3 too. The replacement keeps the list dash, so the Markdown structure is intact.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1 is a position that is immediately rebutted with 'No, they don’t.'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.9,
+        "rationale": "知るまでもない says there is no need to know, which reverses the source's warning of a coming realization. 驚く restores that warning without making the reaction stronger than the source. The peer's 腰を抜かす was acceptable, but the slate now proposes 驚く and I accept it as the less embellished choice.",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'wait until you learn what variables can do' predicts a surprise and is followed by alias examples."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-3",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.72,
+        "rationale": "I've changed my view. A module has exactly one default export, so 'SINGLE' carries meaning, and dropping it as いちばん重要なやつ loses something. My worry that 唯一 would imply there are no other exports is answered by the very next sentence, which says named exports play a supporting role. 唯一にして最も重要な is a natural Japanese construction, and it keeps the emphasis on the modifier as the source does. The current text is stiff but not wrong, so this is severity 1 polish.",
+        "replacement": "「これこそが**_唯一にして最も重要な_**モノだ」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Only 'THE SINGLE MOST IMPORTANT' is emphasized, and the next clause is 'any named exports only play a supporting role.'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-4",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.62,
+        "rationale": "This is optional polish. The replacement keeps 間違いなく and conveys the colloquial sense that it is a legitimate thing. The peer's モノのひとつ would imply other exports before 'got any other buddies?' asks the question, which makes that question redundant. The replacement matches this issue's quoted span.",
+        "replacement": "「間違いなく**_ちゃんとしたモノだ！_**」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'definitely A THING!' is followed by the still-open question 'got any other buddies there?'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "I've changed my view. The peer showed that the shorter version drops 'your' and 'again' and adds a full-width space that the candidate doesn't use after ？. This wording restores the knife-handle 'hold' joke, あんたの, っけ and the mildly derisive 'contraption', and it fixes 意図がない. 妙ちくりん is a little old-fashioned but matches how derisive 'contraption' is.",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'how do I hold your contraption again? No author intent.' follows the Knife/Handle/soManyKnives examples."
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "Elsewhere the candidate writes ？それとも with no space after ？."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.92,
+        "rationale": "This fixes the calque 間違い（もう）. It keeps the direction of the rebuttal (the IDE-support claim is wrong now) and the curt tone. The span excludes the dash, so the list structure survives.",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Incorrect (any more)' is followed by support that has existed for '3+ years'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.97,
+        "rationale": "There is an unclosed quotation in a table cell. Closing it changes no content. The English source's wrong-way closing quote mark is a separate source concern, not a reason to copy the error.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The cell ends with 「 instead of 」."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-8",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "I've changed my view from the version without 頼むから. The peer is right that the exasperated 'please' sets up the punchline. This keeps please, restores the deliberate profanity at a force no stronger than 'fucking', and keeps the contrast with the 💞. Voice-restoring choice for a casual developer-essay audience. It is not a claim about documented usage. This is the canonical wording for the closing line.",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'please `export` like you fucking mean it. 💞' combines please, deliberate profanity and an ironic heart."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "Same agreed fix as ja-editor-A-0.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The heading's items are rebutted claims, not function parameters."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "Same agreed fix as ja-editor-A-1. Relabel #2 and #3 as well.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1–#3 are cited positions from other articles."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.9,
+        "rationale": "Same agreed wording as ja-editor-A-2. It fixes the reversed meaning and keeps the teasing tone.",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'wait until you learn' is a prediction, not a dismissal."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "I'm reversing my earlier position. The fuller wording in ja-editor-A-5 also restores 'your' and 'again' and avoids the full-width space the candidate doesn't use. The same span needs one final wording.",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'how do I hold your contraption again?'"
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "The candidate puts no space after ？ mid-line."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-4",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.92,
+        "rationale": "Same agreed wording as ja-editor-A-6.",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'(any more)' limits 'Incorrect' to the present."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.97,
+        "rationale": "Same fix as ja-editor-A-7. The source typo is logged separately.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The quotation is left unclosed in the table."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "This restores 'often' (たいてい), which limits the claim's scope, and the dismissive 'mere' (というだけの話). Leaving out 'often' changes the scope of the claim, so this is more than polish. It's a hedge, though, not a reversal, so severity 2 rather than 3. I prefer this wording over the peer's earlier 「かもしれない」という程度の可能性. The scare quotes plus 程度 add emphasis twice, and 槍玉に挙げる is only a preference. The peer called that version 'fair' but didn't argue it was necessary.",
+        "replacement": "彼らが問題視するのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポート名をタイポするかもしれないというだけの話。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'They often blame ... or the mere possibility of typos when naming an import.'"
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "The candidate leaves out both 'often' and 'mere'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-7",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "I agree with restoring クソ本気. I adopt the peer's 頼むから, since 'please' carries the exasperation. This makes the wording match ja-editor-A-8.",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The closing line includes 'please' and deliberate profanity."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-8",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.7,
+        "rationale": "I agree with the wording ちゃんとしたモノだ. But this issue's quoted span includes `named export`は…と言う。 and the replacement leaves both out. Applied as written, it would delete the subject and the verb. The counter keeps the full span.",
+        "replacement": "`named export`は「間違いなく**_ちゃんとしたモノだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The quoted span is `named export`は「間違いなく**_一つのものだ！_**」と言う。"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-9",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.7,
+        "rationale": "I'm switching to the peer's earlier position, as explained in ja-editor-A-3. 'SINGLE' matters because a module can have only one default export, and the next sentence rules out reading it as 'there are no other exports'. The current text is stiff but correct, so severity 1.",
+        "replacement": "「これこそが**_唯一にして最も重要な_**モノだ」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The emphasis covers only the modifier, and named exports are called a 'supporting role'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-10",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.65,
+        "rationale": "This is an optional stylistic echo of the source's Hamlet structure (To … or not to …?). The current line is correct. The tradeoff is a slightly more theatrical tone, which the source invites. subTitle is localizable text, not controlled metadata.",
+        "replacement": "subTitle: 名付けるべきか、名付けざるべきか？",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'To name, or not to name?' echoes 'To be, or not to be.'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "The listed severity is now 3 and the wording matches. It is the same fix as ja-editor-A-0.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The items under the heading are rebutted claims."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "The wording and severity 3 match. Apply the same change to #2 and #3.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Each bullet is a claim followed by a rebuttal."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.9,
+        "rationale": "The slate now uses the natural 何ができるか and 驚く, which addresses my earlier objection to 何をできるか.",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'wait until you learn' is a prediction of surprise."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.85,
+        "rationale": "The wording is right, but this issue's quoted span begins with the list marker '- '. The replacement leaves the marker out, so applying it would remove the bullet. The counter restores the dash. The original rationale's gloss 'no longer incorrect' reverses the meaning and should not be used.",
+        "replacement": "- 今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The quoted span is '- 間違い（もう）。ツールを設定・更新しよう。', which includes the bullet."
+          },
+          {
+            "referenceId": "source",
+            "explanation": "'Incorrect (any more)' rejects Arg #3 as outdated."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-4",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.95,
+        "rationale": "The wording is correct and the listed severity is now 2. An unclosed quote in a table is a visible orthography error.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The cell ends with 「."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-5",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "I agree with restoring クソ本気, but this wording drops 'please'. I counter with the canonical ja-editor-A-8 wording, which keeps 頼むから.",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'please `export` like you fucking mean it. 💞'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "The slate now uses 弱い主張, which matches 'Weak' and the labels. Severity 3 agreed.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1–#3 are rhetorical claims."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.93,
+        "rationale": "Agreed. Apply the same change to #2 and #3.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #2 and #3 are also cited claims."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.9,
+        "rationale": "The slate replacement now matches the agreed wording. It avoids しでかす, which wrongly suggests that variables misbehave.",
+        "replacement": "（言いづらいけど、変数で何ができるか知ったら驚くぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'what variables can do' refers to free aliasing, as the code block shows."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "This issue's quoted span begins at どうか. The replacement repeats 'コードがコミュニケーションなら、', so applying it would duplicate the clause (…であるなら、コードがコミュニケーションなら、…). The counter covers only the quoted span. If ja-editor-A-8 is applied to the whole line, that takes precedence.",
+        "replacement": "頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The quoted span is 'どうか`export`は本気でやってほしい。💞', and the conditional clause comes before it."
+          },
+          {
+            "referenceId": "source",
+            "explanation": "The profanity paired with 💞 is the intended punchline."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "I agree with the 'hold' fix and with 意図が見えない. As in ja-editor-B-3, the fuller wording also restores 'your' and 'again' and avoids the full-width space the candidate doesn't use.",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'how do I hold your contraption again? No author intent.'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.92,
+        "rationale": "The rebuttal points the right way, the phrasing is natural, and the span excludes the dash.",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'(any more)' together with '3+ years' marks the claim as outdated."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.97,
+        "rationale": "There is a visible bracket typo in the table, and the fix is correct.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The cell ends with 「 instead of 」."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-7",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.7,
+        "rationale": "I agree with ちゃんとしたモノだ. But the quoted span includes `named export`は…と言う。 and the replacement leaves both out, which would delete the subject and the verb. The counter keeps the full span.",
+        "replacement": "`named export`は「間違いなく**_ちゃんとしたモノだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The quoted span is the full clause `named export`は「間違いなく**_一つのものだ！_**」と言う。"
+          }
+        ]
+      }
+    ]
+  }
+}

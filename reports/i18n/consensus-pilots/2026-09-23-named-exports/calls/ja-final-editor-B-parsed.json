@@ -1,0 +1,135 @@
+{
+  "fingerprint": "9d0e725b477a239506a6e3004a27fdddf3f6d372fc275fdb938cb5d12236d49e",
+  "value": {
+    "ready": false,
+    "ratings": [
+      {
+        "dimension": "faithfulness",
+        "score": 4,
+        "confidence": 0.78,
+        "rationale": "Most content matches the English, and the accepted edits fixed the reversed 'wait until you learn' line. One problem remains from the withheld ja-editor-B-6: 'often' is missing, so a hedged claim about some critics becomes a claim about all of them. 'Mere' is also missing, which removes the sneer at the typo argument.",
+        "quote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。"
+      },
+      {
+        "dimension": "technicalAccuracy",
+        "score": 3,
+        "confidence": 0.9,
+        "rationale": "The accepted patches changed only the heading and Arg #1. Arg #2 and Arg #3 still use 引数. In a JavaScript article, 引数 means a function argument, and here it sits right next to real import code. All three ledger reviewers asked for this change. Code, identifiers, the 'kinves.js' source typo, URLs and the number 3 are intact.",
+        "quote": "引数 #2："
+      },
+      {
+        "dimension": "completeness",
+        "score": 4,
+        "confidence": 0.8,
+        "rationale": "Every section, list item, code block, table row and link is present. Small losses: 'often', 'mere', 'Follow up' in the buddies line, and the capitalised stress on ONE and ALSO in the table.",
+        "quote": "「他に仲間いる？」「そいつらは招待されてるの？それとも必須？」"
+      },
+      {
+        "dimension": "readability",
+        "score": 4,
+        "confidence": 0.75,
+        "rationale": "The text is mostly natural and the '(any more)' fix reads cleanly. Two spots still read like direct translation: the stiff 'single thing' line, and 一般的なファイル名, which means a common or typical file name rather than a generic one like utils.js.",
+        "quote": "「これが**_最も重要な単一のもの_**だ」"
+      },
+      {
+        "dimension": "grammarSpelling",
+        "score": 4,
+        "confidence": 0.8,
+        "rationale": "One visible typo remains: a table cell ends with an opening bracket 「 instead of a closing 」. The fix was agreed but withheld. The English cell also has a wrong closing quote, but that source error is not a reason to leave the Japanese quote unclosed.",
+        "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「"
+      },
+      {
+        "dimension": "idiomMetaphor",
+        "score": 4,
+        "confidence": 0.72,
+        "rationale": "The knife 'hold' joke is back (握る), and the Hamlet echo in the subtitle works. 'A THING!' now reads as colloquial. The remaining weak spot is 一般的な for 'generic'.",
+        "quote": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。"
+      },
+      {
+        "dimension": "authorVoice",
+        "score": 4,
+        "confidence": 0.78,
+        "rationale": "The closing profanity, the 'please' (頼むから) and the ironic 💞 are back without going further than the English. おい keeps the taunt in the heading. Some table lines are flatter than the source; for example, 'me' disappears from 'Please don't rename me.'",
+        "quote": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞"
+      },
+      {
+        "dimension": "localeAppropriateness",
+        "score": 4,
+        "confidence": 0.7,
+        "rationale": "The register suits a Japanese developer editorial, and English technical terms stay in backticks as in the source. Two small points: 'AirBnb' was silently changed to the standard spelling Airbnb, and 'generic' was mistranslated.",
+        "quote": "（Airbnbスタイルガイドなど）"
+      },
+      {
+        "dimension": "structureFlow",
+        "score": 4,
+        "confidence": 0.75,
+        "rationale": "Section order and list nesting match the source. The one list now switches labels from 主張 #1 to 引数 #2 and #3, which breaks its parallel structure.",
+        "quote": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。"
+      },
+      {
+        "dimension": "mdxIntegrity",
+        "score": 3,
+        "confidence": 0.68,
+        "rationale": "Frontmatter image paths use ../, inherited keys are omitted, sourceHash is kept, the #まとめ anchor matches its heading, and the section, table and code fences are intact. But several emphasis markers sit directly against Japanese text with no space. Under CommonMark delimiter rules, which micromark/MDX follows, these probably fail and show literal * or _. This happens at が**_, く**_, _を, and wherever ：** is followed by text. The English avoids this because spaces surround its markers. The build pipeline may use a CJK-friendly plugin, which I can't verify, so confidence is moderate.",
+        "quote": "**注：**歴史的な理由により"
+      }
+    ],
+    "unresolved": [
+      {
+        "severity": 3,
+        "claim": "The labels for Arg #2 and Arg #3 still say 引数 (function argument). They should say 主張, like the heading and #1. All reviewers agreed, but only #1 was patched.",
+        "quote": "引数 #3：",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "This table cell's quote is not closed: it ends with 「 instead of 」. The fix was agreed but withheld because of overlapping patches. The English has its own wrong quote mark here; list that separately as a source issue.",
+        "quote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "'often' and 'mere' are missing, so the hedge and the sarcasm are lost. The withheld ja-editor-B-6 fix both reviewers accepted is still pending: 彼らが問題視するのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポート名をタイポするかもしれないというだけの話。",
+        "quote": "IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "Emphasis will probably not render under CommonMark/micromark in several places: が**_…_**だ, く**_…_**」, the underscore-only _ものの使い方_を, **注：**歴 and **考えてみてほしい：**ファイル名. Readers would see literal asterisks or underscores. Possible fixes: ***…*** instead of **_…_**, *ものの使い方*を instead of _…_, and 注：/考えてみてほしい： with the closing ** before the colon (**注**：) or a space after it (**注：** 歴…). Verify in the actual build.",
+        "quote": "「これが**_最も重要な単一のもの_**だ」",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "The stiff 'single thing' rendering is still in place, and the reviewers disagree. One side prefers いちばん重要な (severity 2); the other prefers 唯一にして最も重要な (severity 1). My view: severity 1. The meaning is intact, and either rewrite is an acceptable fix for the stiffness. This can be done together with the emphasis-marker fix above.",
+        "quote": "最も重要な単一のもの",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "一般的なファイル名 means a common or typical file name. The source means a generic, non-specific name such as utils.js. 汎用的なファイル名 is more accurate.",
+        "quote": "複数の名前付きエクスポート、一般的なファイル名。",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "The source spelling 'AirBnb' was silently changed to Airbnb. That is probably the right brand spelling, but it should be logged as a source issue rather than corrected without a note.",
+        "quote": "（Airbnbスタイルガイドなど）",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "Comments inside code blocks were translated. The translations are accurate, and the error-like 'Cannot export default const' stays in English. The hard constraints say to preserve code comments, so repository policy should confirm whether translating them is allowed.",
+        "quote": "// どちらもエイリアス可能！",
+        "requiresReference": false
+      },
+      {
+        "severity": 0,
+        "claim": "Source issue, carried over faithfully and not a translation defect: the table's ✅/❌ columns contradict some Pattern cells (e.g. Named ❌ next to 'Multiple named exports'). Refer to the author and don't change it in the translation.",
+        "quote": "| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。",
+        "requiresReference": false
+      }
+    ],
+    "summary": "Not ready. The accepted edits fixed the real problems: the reversed 'wait until you learn' line, the heading and Arg #1 labels, the '(any more)' line, the knife 'hold' joke and the closing profanity. But four withheld fixes never landed. Arg #2 and #3 still say 引数 (severity 3), the table quote is unclosed (2), and 'often' and 'mere' are missing (2). The disputed 'single thing' wording is still unsettled (1). I also found an issue the ledger didn't raise: several bold and italic markers sit directly against Japanese text and will probably show as literal * or _ under CommonMark/MDX (2, depending on the renderer). Minor items: 一般的な for 'generic', the silent Airbnb correction, and the policy question about translated code comments. The table's contradictory checkmarks are the author's issue, carried over faithfully."
+  }
+}

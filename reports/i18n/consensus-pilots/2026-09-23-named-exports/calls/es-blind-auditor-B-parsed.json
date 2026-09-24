@@ -1,0 +1,201 @@
+{
+  "fingerprint": "fddd3ff8070ee7196fc9172df011027883ab7a2cf77b286929dd051e2ec2ae51",
+  "value": {
+    "candidates": [
+      {
+        "label": "X",
+        "assessment": {
+          "ready": true,
+          "ratings": [
+            {
+              "dimension": "faithfulness",
+              "score": 4,
+              "confidence": 0.85,
+              "rationale": "Meaning preserved throughout, including the profane closing line. Minor expansions ('No transmite ninguna intención del autor' for terse 'No author intent.'; 'DE TODAS' added to render 'SINGLE MOST') are legitimate but slightly loosen the source's clipped style.",
+              "quote": "No transmite ninguna intención del autor."
+            },
+            {
+              "dimension": "technicalAccuracy",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "All code, identifiers, URLs, and the const/default export constraint rendered correctly; the 'kinves.js' source typo is preserved rather than silently fixed.",
+              "quote": "Por razones históricas, no puedes combinar `export default` con una expresión `const`."
+            },
+            {
+              "dimension": "completeness",
+              "score": 4,
+              "confidence": 0.85,
+              "rationale": "All prose, table cells and headers localized. The only gap is the first code block comment left in English while the second block's comments are translated, an inconsistency rather than a loss.",
+              "quote": "// You can alias using both!"
+            },
+            {
+              "dimension": "readability",
+              "score": 5,
+              "confidence": 0.85,
+              "rationale": "Rhetorical question and importer reference are restructured into natural Spanish rather than calqued.",
+              "quote": "¿No estaremos perdiendo de vista para qué sirve `export`?"
+            },
+            {
+              "dimension": "grammarSpelling",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "No grammar or spelling defects found; punctuation with inverted marks is consistent.",
+              "quote": "Y la siguiente: \"¿Están invitados o son obligatorios?\""
+            },
+            {
+              "dimension": "idiomMetaphor",
+              "score": 5,
+              "confidence": 0.85,
+              "rationale": "'Not the point' rendered with the native idiom 'No viene al caso'; 'Neat feature' as 'Buen recurso' avoids the 'función' ambiguity with JS functions.",
+              "quote": "Buen recurso. No viene al caso."
+            },
+            {
+              "dimension": "authorVoice",
+              "score": 5,
+              "confidence": 0.85,
+              "rationale": "Keeps the deliberate profanity of the closing line with a natural Spanish intensifier construction that also carries the 'deliberately/with intent' sense.",
+              "quote": "haz `export` con toda la puta intención. 💞"
+            },
+            {
+              "dimension": "localeAppropriateness",
+              "score": 4,
+              "confidence": 0.8,
+              "rationale": "Neutral Spanish usable across regions; 'computadora' leans Latin American but is widely understood. Table headers localized.",
+              "quote": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas |"
+            },
+            {
+              "dimension": "structureFlow",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "Headings, lists, nested code block indentation, and table structure mirror the source; anchor #resumen targets the localized heading.",
+              "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+            },
+            {
+              "dimension": "mdxIntegrity",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "Frontmatter uses ../ image paths, inherited date omitted, sourceHash present, <section className> preserved intact.",
+              "quote": "<section className=\"scroll-x\">"
+            }
+          ],
+          "unresolved": [
+            {
+              "severity": 1,
+              "claim": "First code block comment left in English while second block comments are translated; pick one policy for consistency.",
+              "quote": "// You can alias using both!",
+              "requiresReference": false
+            },
+            {
+              "severity": 0,
+              "claim": "Source backticks around `named export` replaced with a gloss; acceptable since the term is not real code, but differs from how `export default` is treated in the same list.",
+              "quote": "Una exportación nombrada (`named export`)",
+              "requiresReference": false
+            }
+          ],
+          "summary": "Faithful, natural, and voice-preserving; only a minor comment-translation inconsistency remains."
+        }
+      },
+      {
+        "label": "Y",
+        "assessment": {
+          "ready": false,
+          "ratings": [
+            {
+              "dimension": "faithfulness",
+              "score": 3,
+              "confidence": 0.8,
+              "rationale": "Closing line shifts meaning from 'like you mean it' (with intent) to 'as if you really cared' and drops the profanity; 'perdido el punto' is a calque that blurs 'missed the point'.",
+              "quote": "`export`a como si en verdad te importara."
+            },
+            {
+              "dimension": "technicalAccuracy",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "Code, URLs and technical claims are intact; source typo 'kinves.js' preserved.",
+              "quote": "import { default as Handle } from \"./knife.js\"; // 🔪"
+            },
+            {
+              "dimension": "completeness",
+              "score": 3,
+              "confidence": 0.85,
+              "rationale": "Table header row left entirely in English while all cells are Spanish, leaving the summary table half-localized.",
+              "quote": "| Default (Exports) | Named (Exports) | Private Fns |"
+            },
+            {
+              "dimension": "readability",
+              "score": 3,
+              "confidence": 0.8,
+              "rationale": "Several translationese constructions interrupt reading: 'los `import`ers', 'Seguimiento:', 'Presentando UNA función'.",
+              "quote": "Le estamos enviando una señal a los `import`ers"
+            },
+            {
+              "dimension": "grammarSpelling",
+              "score": 4,
+              "confidence": 0.8,
+              "rationale": "Grammar is correct, but 'Incorrecto (ya no más)' is awkward and 'Presentando...' uses an English-style announcing gerund.",
+              "quote": "Incorrecto (ya no más)."
+            },
+            {
+              "dimension": "idiomMetaphor",
+              "score": 3,
+              "confidence": 0.8,
+              "rationale": "'No es el punto' and 'perdido el punto' are calques; 'Función interesante' for 'Neat feature' collides with the JS meaning of función in an article about exporting functions.",
+              "quote": "Función interesante. No es el punto."
+            },
+            {
+              "dimension": "authorVoice",
+              "score": 2,
+              "confidence": 0.85,
+              "rationale": "The deliberate profanity in the punchline is sanitized with no stated benefit, flattening the author's signature edge at the most important sentence.",
+              "quote": "por favor `export`a como si en verdad te importara."
+            },
+            {
+              "dimension": "localeAppropriateness",
+              "score": 3,
+              "confidence": 0.8,
+              "rationale": "Untranslated table headers and anglicisms ('`import`ers', 'Seguimiento') read as unlocalized to a Spanish audience.",
+              "quote": "Seguimiento: \"¿Están invitados o son obligatorios?\""
+            },
+            {
+              "dimension": "structureFlow",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "Structure mirrors the source; anchor #resumen matches the localized heading; nested code indentation preserved.",
+              "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+            },
+            {
+              "dimension": "mdxIntegrity",
+              "score": 5,
+              "confidence": 0.9,
+              "rationale": "Frontmatter paths use ../, date omitted, sourceHash present, section component intact; code comments consistently translated.",
+              "quote": "// ¡Puedes usar alias con ambas!"
+            }
+          ],
+          "unresolved": [
+            {
+              "severity": 3,
+              "claim": "Closing line drops the author's intentional profanity and shifts meaning ('as if you cared' vs 'like you mean it'); restore intent and register, e.g. 'con toda la puta intención'.",
+              "quote": "`export`a como si en verdad te importara.",
+              "requiresReference": false
+            },
+            {
+              "severity": 2,
+              "claim": "Table headers untranslated while cells are Spanish.",
+              "quote": "| Default (Exports) | Named (Exports) | Private Fns |",
+              "requiresReference": false
+            },
+            {
+              "severity": 2,
+              "claim": "Calques and anglicisms reduce naturalness: 'perdido el punto', 'los `import`ers', 'Seguimiento:', 'No es el punto', 'Presentando UNA función'.",
+              "quote": "¿Acaso hemos perdido el punto de `export`ar en primer lugar?",
+              "requiresReference": false
+            }
+          ],
+          "summary": "Technically sound but sanitizes the punchline, leaves table headers in English, and carries several calques."
+        }
+      }
+    ],
+    "preferredLabel": "X",
+    "reason": "Both are technically accurate and structurally identical, but X localizes the table headers, avoids the calques ('perdido el punto', '`import`ers', 'Seguimiento', 'No es el punto') present in Y, and preserves the author's deliberate profanity and meaning in the conclusion, which Y both softens and shifts. X's only defect is one untranslated code comment."
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "fingerprint": "4af0a277fea9bc9b3e36575f3b798c7c92eeff38701f588667ace6eaad8c8ae9",
+  "value": {
+    "ready": false,
+    "ratings": [
+      {
+        "dimension": "faithfulness",
+        "score": 4,
+        "confidence": 0.8,
+        "rationale": "The argument and all the claims survive, and the accepted edits fixed the misleading 'Sin intención del autor' and the backwards '(ya no más)'. One meaning slip remains: 'otra vez' at the end of the question means 'hold it again'. In the English, 'again' means 'remind me'. The exclamation in 'A THING!' was also dropped (withheld B-4).",
+        "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?"
+      },
+      {
+        "dimension": "technicalAccuracy",
+        "score": 4,
+        "confidence": 0.82,
+        "rationale": "The code, identifiers, URLs, the `kinves.js` literal and the check/cross marks are all unchanged. 'Exportación nombrada (`named export`)' now keeps Spanish words out of code formatting. The nested code block still has translated comments, which is a preservation problem rather than a behaviour problem. 'No soportado' is also an anglicism.",
+        "quote": "// ^ ❌ No soportado ❌ ^"
+      },
+      {
+        "dimension": "completeness",
+        "score": 5,
+        "confidence": 0.8,
+        "rationale": "All headings, bullets, links, all five table rows, the 'Something to think about' note and the conclusion are present. No content is missing. The lost '!' is covered under faithfulness and voice, not counted again here.",
+        "quote": "| ✅                | ✅              | ❌          | Una única exportación nombrada TAMBIÉN exportada como default. | \"No puedes equivocarte al importarme.\"                            |"
+      },
+      {
+        "dimension": "readability",
+        "score": 4,
+        "confidence": 0.78,
+        "rationale": "It reads well overall after the fixes to the hybrid 'import'ers' and the table headers. A few phrases are still stiff or ambiguous. 'Espera' can mean 'wait', and the phrase has no article. 'Juega un rol' is an anglicism.",
+        "quote": "Además, espera comportamiento tipo clase."
+      },
+      {
+        "dimension": "grammarSpelling",
+        "score": 4,
+        "confidence": 0.75,
+        "rationale": "There are no real grammar errors, and 'ambos' is correct for mixed-gender referents. Punctuation around quotes is inconsistent: some edits put the period outside the closing quote, while other lines still put it inside. 'Auto-importación' would normally be written as one word, 'autoimportación'.",
+        "quote": "\"cualquier exportación nombrada solo juega un rol secundario.\""
+      },
+      {
+        "dimension": "idiomMetaphor",
+        "score": 4,
+        "confidence": 0.75,
+        "rationale": "'No viene al caso' and '¿No estaremos perdiendo de vista...?' removed the worst calques. A few remain. 'No, no lo hacen' copies 'No, they don't'. 'Odio ser quien te lo diga' is a loose calque. 'Conjunto' flattens the playful 'grab-bag'.",
+        "quote": "No, no lo hacen. ¿Quizás estás buscando una regla de lint?"
+      },
+      {
+        "dimension": "authorVoice",
+        "score": 4,
+        "confidence": 0.78,
+        "rationale": "The profane closing line is back with the intensifier on intent, matching 'fucking mean it' without escalating it. 'Les presento' also has the showman tone. Two jokes are still flatter than in the source: 'UNA COSA' has no exclamation, and 'grab-bag' became a neutral 'conjunto'.",
+        "quote": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞"
+      },
+      {
+        "dimension": "localeAppropriateness",
+        "score": 4,
+        "confidence": 0.65,
+        "rationale": "The terminology is broadly pan-Hispanic, and the tú/ustedes choices are consistent within their contexts. 'Computadora' leans Latin American but is understood everywhere, so it's optional polish. I make no claim about how 'puta' lands regionally: that was unverified, and I'm treating it as a voice choice.",
+        "quote": "es difícil pedirle a la computadora que la cambie"
+      },
+      {
+        "dimension": "structureFlow",
+        "score": 5,
+        "confidence": 0.75,
+        "rationale": "The order of sections, bullets and the table matches the source. All table headers are now Spanish and each row still has five cells. The internal link points to the localized heading. There is a small terminology wobble ('como default' vs. 'por defecto'), listed as polish.",
+        "quote": "[Ver más ejemplos al final del artículo.](#resumen)"
+      },
+      {
+        "dimension": "mdxIntegrity",
+        "score": 3,
+        "confidence": 0.85,
+        "rationale": "The frontmatter is correct: images use ../, inherited 'date' is omitted, sourceHash is kept, and the <section> and table are intact. But the comment preservation was applied only halfway. The first code block's comment was restored to English (A-8), while the nested tsx block still has translated comments (A-9: accepted by both voters, never applied). That breaks the rule to preserve code comments and is inconsistent.",
+        "quote": "// Sin embargo, una vez declarada, puedes exportar una variable const como default."
+      }
+    ],
+    "unresolved": [
+      {
+        "severity": 2,
+        "claim": "A-9 was accepted by both editors but never applied. The comments in the nested tsx block are still translated, which breaks the rule to preserve code comments and contradicts the already-applied A-8. Restore them exactly: '// ^ ❌ Not Supported ❌ ^', '// Cannot export default const ....', '// However, once declared you can export a const var as the default.', '// ^ ✅ Valid', '// For completeness:', '// ^ ✅ Also valid to export a class as default'. The code lines themselves don't change.",
+        "quote": "// No se puede exportar default const ....",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "B-4 was withheld only because it overlapped with A-1, and only A-1's term fix was applied. The '!' from 'A THING!' is still missing, which flattens the punchline. Apply the rest of B-4: 'dice que es \"definitivamente **_¡UNA COSA!_**\".'",
+        "quote": "dice que es \"definitivamente **_UNA COSA_**.\"",
+        "requiresReference": false
+      },
+      {
+        "severity": 2,
+        "claim": "B-6 was withheld because it overlapped with A-3, and only A-3's last sentence was applied. The question still misreads 'again' ('remind me') as 'hold it again' and misses the Knife/Handle joke. Apply B-6's question: 'A ver, dime otra vez: ¿por dónde se agarra tu invento?'",
+        "quote": "Ahora dime, ¿cómo sostengo tu invento otra vez?",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "'Juega un rol' is an anglicism, and the period sits inside the quote here but outside elsewhere. Suggest 'solo desempeña un papel secundario\".' and consistent quote punctuation throughout.",
+        "quote": "\"cualquier exportación nombrada solo juega un rol secundario.\"",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "'Espera' can be read as 'wait', and the phrase has no article. Suggest 'Además, cuenta con un comportamiento tipo clase.'",
+        "quote": "Además, espera comportamiento tipo clase.",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "'No, no lo hacen' copies 'No, they don't'. Suggest 'No, no la garantizan.' This is optional polish.",
+        "quote": "No, no lo hacen.",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "'Conjunto' loses the playful 'grab-bag'. An optional alternative is 'Un batiburrillo de cosas vagamente relacionadas...' or similar. This is a preference, not a defect.",
+        "quote": "\"Un conjunto de cosas vagamente relacionadas, sin jerarquía implícita.\"",
+        "requiresReference": false
+      },
+      {
+        "severity": 1,
+        "claim": "The table's prose mixes 'como default' with 'por defecto', which the rest of the table uses. Suggest 'exportada también por defecto', keeping 'TAMBIÉN' in capitals.",
+        "quote": "Una única exportación nombrada TAMBIÉN exportada como default.",
+        "requiresReference": false
+      },
+      {
+        "severity": 0,
+        "claim": "Source concerns carried over faithfully, for the author to review; the translation should not change them. (1) The 'Multiple named exports' table row has ❌ in the Named column. (2) './kinves.js' is a typo inside a code literal.",
+        "quote": "| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. |",
+        "requiresReference": false
+      }
+    ],
+    "summary": "Not ready. The accepted edits worked: the closing profanity is back with the intensifier on intent, the calques and the hybrid 'import'ers' are gone, and the table headers are consistent. Also, 'Ya no es cierto' now says what the source means. Three actionable items remain. They come from the overlap-withheld and unapplied items. First, the nested tsx block still has translated comments (A-9): both editors accepted restoring them, and A-8 already restored the comment in the first block. Second, the '!' in 'A THING!' is still missing (B-4). Third, the 'otra vez' question still misreads 'again' (B-6). I confirmed that the withheld B-0, B-1, B-2, B-3 and B-7 are the same as the applied A-0, A-7, A-4, A-2 and A-5, so nothing is lost from those. I agree with rejecting B-10 ('ambos' is correct for mixed-gender referents) and B-11 (sourceHash is legitimate provenance, and the history links it to the current source). The remaining items are optional polish. The source defects (the table row, the kinves.js typo) were carried over faithfully and are for the author, not the translation."
+  }
+}

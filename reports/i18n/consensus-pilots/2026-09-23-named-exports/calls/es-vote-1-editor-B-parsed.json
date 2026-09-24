@@ -1,0 +1,347 @@
+{
+  "fingerprint": "c22f05866e67219db3eebd1fc96e8d125b036d4451965db562a519b3392998ce",
+  "value": {
+    "votes": [
+      {
+        "issueId": "es-editor-A-0",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.62,
+        "rationale": "I agree that the punchline lost its profanity. The current line also moves the meaning from intent ('mean it') to caring ('te importara'), and intent is what the whole article is about. A's version still uses the hybrid '`export`a', and «carajo» is weaker than 'fucking'. B's wording solves all three problems. «Con toda la intención» is the established Spanish idiom for doing something deliberately. It also links back to 'No author intent'. «Puta» is about as strong as the source word, so this doesn't escalate. Tradeoff: A's «como si hablaras en serio» fits the 'code is communication' metaphor nicely, but it swears more weakly. I'm offering the same wording as on B-0 so the two issues converge.",
+        "replacement": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The conclusion says 'export like you fucking mean it', right after the article's claim that exports signal intent."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The current line «como si en verdad te importara» drops the profanity and talks about caring, not intent."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-0",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.6,
+        "rationale": "I'm accepting this wording exactly. I dispute severity 3. The shift from intent to caring is real, but it's small: readers still get 'export deliberately'. The main damage is the lost profanity in the final punchline, which is a voice problem. In this rubric that's a noticeable problem (2), not a meaning or coverage error. Like the peer, I have no checked reference on how «puta» works as an intensifier across regions. I'm not claiming it offends or doesn't offend anyone.",
+        "replacement": "Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Fucking mean it' is a deliberate intensifier on 'mean it'."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The current line keeps the gist ('export carefully') but loses both the swear word and the exact sense of intent."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-1",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "I agree: Spanish words shouldn't sit inside code formatting. But «con nombre» doesn't match the rest of the translation, which uses «nombrada(s)» everywhere: the title, Arg #1, Arg #2 and the table. My counter keeps the article's own term and adds the English term in backticks. It matches B-4's alternative so the two issues can converge.",
+        "replacement": "Una exportación nombrada (`named export`)",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source puts `named export` in backticks."
+          },
+          {
+            "referenceId": "mdn-export-es",
+            "explanation": "Spanish MDN distinguishes named and default exports. It doesn't require one specific Spanish wording."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "Elsewhere the translation consistently uses «exportación/exportaciones nombrada(s)»."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "I accept the two main points: Spanish words shouldn't be in backticks, and the lost «!» in 'A THING!' flattens the joke. Putting the period after the closing quote is also correct. I prefer B's own alternative, the glossed form, to the bare «Un `named export`». Spanish readers get the article's usual term, and the English one is kept. It also matches my counter on A-1.",
+        "replacement": "Una exportación nombrada (`named export`) dice que es \"definitivamente **_¡UNA COSA!_**\".",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source has 'A THING!' with an exclamation mark and the term in backticks."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The current translation drops the exclamation mark and puts Spanish words in code formatting."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-2",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.75,
+        "rationale": "I agree the hybrid '`import`ers' should go. But A's rationale says the signal metaphor is kept, and it isn't: «pista» replaces «señal». 'Sending a signal' is the core idea of this passage. «Lo exportado» also narrows the source's deliberately casual 'a thing', which the next section echoes ('A THING!'). B-3 fixes the hybrid, keeps «señal», keeps «algo» and keeps the italics, so I'm backing that wording.",
+        "replacement": "> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source reads 'sending a signal to `import`ers _how to use a thing._'"
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-3",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "This removes the English suffix hybrid and keeps the keyword in backticks, the signal metaphor and the italic span. A's version loses «señal» and makes 'a thing' more specific than the source, so it's the weaker option. The singular generic «a quien» is idiomatic for the source's plural 'importers'.",
+        "replacement": "> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Importers' just means whoever consumes the module."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.75,
+        "rationale": "I agree the current wording is ambiguous. «Sin intención» is a common Spanish phrase for 'unintentionally', so the line can read as 'done by the author by accident'. «De quien lo escribió» is a longer paraphrase of the plain 'author' and gains nothing. I'm backing B-6's second sentence so the two issues match.",
+        "replacement": "No transmite ninguna intención del autor.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'No author intent' means the pattern tells the reader nothing about what the author meant."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.72,
+        "rationale": "This fixes the «sin intención» ambiguity and also improves the first sentence. The current «¿cómo sostengo tu invento otra vez?» copies the English 'again' construction word for word. «Dime otra vez: ¿por dónde se agarra…?» keeps the knife-handle joke, and «agarrar» works across regions. «Ninguna» adds a little emphasis, but it's consistent with the source's blunt 'No'.",
+        "replacement": "A ver, dime otra vez: ¿por dónde se agarra tu invento? No transmite ninguna intención del autor.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The line continues the knife/handle imagery and makes the point about author intent."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "A is right that «función» could be confused with JavaScript functions: the same article's table uses «función» for code. So B's «Función interesante» keeps that risk. But A's added «Pero» weakens the source's two clipped fragments. My counter keeps «recurso» and the curt rhythm, and I'm offering the same wording on B-2.",
+        "replacement": "Buen recurso. No viene al caso.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Neat feature. Not the point.' is two short fragments, and 'feature' refers to a language capability."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The table uses «función» for JavaScript functions, so here the word could mislead."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-2",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "I accept «No viene al caso» as the fix for the calque «No es el punto». But «Función interesante» keeps the possible confusion with JavaScript functions, which the article discusses in the same section. «Buen recurso» avoids that and stays just as short.",
+        "replacement": "Buen recurso. No viene al caso.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Feature' here means the `import * as` capability, not a function."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-5",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "I agree on the problem. «Incorrecto (ya no más)» reads awkwardly and can even be taken as 'no longer incorrect'. B's wording is shorter and just as blunt, and «o» reads better in Spanish prose than a slash. Either version is fine. I'm backing B-7 so the two issues match.",
+        "replacement": "Ya no es cierto. Configura o actualiza tus herramientas.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Incorrect (any more)' means the claim is no longer true. The next bullet about 3+ years of support confirms it."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "This fixes the confusing time qualifier and doesn't change the technical claim. «O» instead of the slash is a minor, acceptable change for readability.",
+        "replacement": "Ya no es cierto. Configura o actualiza tus herramientas.",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The next bullet ('Support has existed for 3+ years') supports the 'no longer true' reading."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-6",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.72,
+        "rationale": "I agree that three headers left in English (including the cryptic 'Fns'), next to two translated ones, make the table read as half-finished. The headers are prose, not code, so translating them is fine. My only change is «nombradas» instead of «con nombre», to match the rest of the translation. The cells and the check/cross combinations stay untouched. I noticed that the source's 'Multiple named exports' row has ❌ in the Named column. That's the author's concern to review, and I'm not changing it.",
+        "replacement": "| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas | Patrón                                                   | Significado                                                       |",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The column headers are descriptive labels, not executable code."
+          },
+          {
+            "referenceId": "target",
+            "explanation": "The translation's table cells already use «exportación nombrada» and «exportación por defecto»."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.78,
+        "rationale": "This removes both calques and keeps the direct challenge. B-1 replaces 'in the first place' with «desde el principio», which reads it as 'from the start' rather than 'to begin with'. B-1's past tense «servía» also shifts the meaning. A's wording is the more accurate of the two.",
+        "replacement": "¿No estaremos perdiendo de vista para qué sirve `export`?",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Have we missed the point of `export`ing in the first place?' asks about the basic purpose of exporting, not about its history."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-1",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.72,
+        "rationale": "I agree the current line is a double calque. But «desde el principio» is itself a literal rendering of 'in the first place' taken in the wrong, time-related sense, and «servía» suggests the purpose has changed. A-7 conveys 'to begin with' correctly and is shorter.",
+        "replacement": "¿No estaremos perdiendo de vista para qué sirve `export`?",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Here 'in the first place' means 'fundamentally', not 'originally'."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-8",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.85,
+        "rationale": "The hard constraints explicitly require preserving comments in code. This comment is inside the tsx block. Restoring it breaks nothing, and the prose around the block is still in Spanish. Tradeoff: one English line inside the example.",
+        "replacement": "// You can alias using both!",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "This comment is inside the ```tsx block."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-A-9",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.85,
+        "rationale": "Same reasoning as A-8. The replacement restores only the original comments, and every code line is byte-identical to the source. The Spanish «Nota» in the prose already explains the point to readers. I'm not treating this as severity 3, because execution isn't affected.",
+        "replacement": "// ^ ❌ Not Supported ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // However, once declared you can export a const var as the default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Valid\n\n    // For completeness:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ Also valid to export a class as default",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "These are the original comments inside the nested tsx block."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.72,
+        "rationale": "«Seguimiento:» reads like a meeting agenda item. «Y la siguiente:» turns it back into a follow-up question. The colon, the capital after «¿» and the period after the closing quote are all correct Spanish punctuation. «Compañeros» is kept, which avoids a regional word like «colegas».",
+        "replacement": "También plantea algunas preguntas: \"¿Tienes más compañeros por ahí?\". Y la siguiente: \"¿Están invitados o son obligatorios?\"",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Follow up' introduces a second, related question."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-8",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.62,
+        "rationale": "Using a bare gerund as an announcement is an anglicism, though it's common in marketing, so this is optional polish. «Les presento» fits the showman tone and is widely used by presenters across regions. The table cell's content and the capitalized 'UNA' are preserved.",
+        "replacement": "\"¡Les presento UNA función con un único propósito!\"",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Presenting ONE function w/ Single Purpose!' is a showman-style announcement."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-9",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.58,
+        "rationale": "«DE TODAS» brings back the emphasis on uniqueness from 'SINGLE' without adding anything new. The period moves outside the closing quote, which is standard Spanish punctuation. This is optional polish.",
+        "replacement": "\"Esta es **_LA COSA MÁS IMPORTANTE DE TODAS_**\".",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The emphasized text is 'THE SINGLE MOST IMPORTANT'."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-10",
+        "decision": "reject",
+        "severity": 0,
+        "confidence": 0.65,
+        "rationale": "This isn't a defect. «Ambos» is grammatical: the two items it refers to are «un `export default`» (masculine) and «una exportación nombrada» (feminine), and mixed genders take the masculine in Spanish. «Ambas» would also work if the referent is «2 formas». Either is a valid choice, and the code comment is a separate context. The issue's sourceQuote also points to the wrong passage.",
+        "replacement": "Por supuesto, puedes combinar ambos o usar diferentes enfoques",
+        "evidence": [
+          {
+            "referenceId": "target",
+            "explanation": "The preceding bullets have a masculine item (un `export default`) and a feminine one (una exportación nombrada)."
+          },
+          {
+            "referenceId": "source",
+            "explanation": "'Combine both' refers to those two bullet items."
+          }
+        ]
+      },
+      {
+        "issueId": "es-editor-B-11",
+        "decision": "reject",
+        "severity": 0,
+        "confidence": 0.7,
+        "rationale": "The repository rules explicitly say sourceHash is legitimate provenance. History shows this is the declared value for the current revision, which matches the current source, so it may just use a different format. The proposed replacement is identical to the current text, so there's nothing to change in the translation. Checking the tooling is up to the coordinator and isn't a translation defect.",
+        "replacement": "sourceHash: \"438740274604\"",
+        "evidence": [
+          {
+            "referenceId": "target",
+            "explanation": "The frontmatter declares sourceHash \"438740274604\". The translation history shows the same value as declaredSourceHash on a revision that matches the current source."
+          }
+        ]
+      }
+    ]
+  }
+}

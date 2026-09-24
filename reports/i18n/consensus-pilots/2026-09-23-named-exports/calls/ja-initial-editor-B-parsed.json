@@ -1,0 +1,243 @@
+{
+  "fingerprint": "003f78c0ba8b7ad76d1a24ae1aef76ab5144833f6040ddf9154c65d5be1d1c4f",
+  "value": {
+    "issues": [
+      {
+        "id": "local-1",
+        "kind": "translation",
+        "category": "technicalAccuracy",
+        "severity": 3,
+        "sourceQuote": "### Weak Args, Man",
+        "targetQuote": "### 弱い引数だな、おい",
+        "replacement": "### 弱い主張だな、おい",
+        "rationale": "Here \"Args\" means debate arguments. In Japanese programming, 引数 only means function parameters or arguments, so this heading tells developers the section is about weak function arguments. The English dev pun can't be kept in Japanese, but the casual tone can.",
+        "alternative": "### その論拠、ヌルくない？",
+        "confidence": 0.9,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The items under this heading are claims from other articles (\"Named exports ensure name consistency\"), each followed by a rebuttal. They are debate arguments, not function arguments."
+          }
+        ]
+      },
+      {
+        "id": "local-2",
+        "kind": "translation",
+        "category": "technicalAccuracy",
+        "severity": 3,
+        "sourceQuote": "- Arg #1: Named exports ensure name consistency.",
+        "targetQuote": "- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "rationale": "Same problem as the heading, in the item labels. Change 引数 #2 and 引数 #3 to 主張 #2 and 主張 #3 as well. Reading 引数 #1 next to real code would make developers think of function parameters.",
+        "alternative": "論拠その1：",
+        "confidence": 0.88,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Japanese software developers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1/#2/#3 each state a position and link to its source article."
+          }
+        ]
+      },
+      {
+        "id": "local-3",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 3,
+        "sourceQuote": "(I hate to break it to you, but wait until you learn what variables can do!)",
+        "targetQuote": "（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）",
+        "replacement": "（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）",
+        "rationale": "知るまでもない means \"no need to even know,\" which reverses the joke. \"Wait until you learn\" sets up a surprise: variables can rename anything too, so named exports don't really enforce consistency.",
+        "alternative": "（残念なお知らせだが、変数にできることを知ったら泣くぞ！）",
+        "confidence": 0.88,
+        "requiresExternalEvidence": false,
+        "audienceScope": "General",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "\"wait until you learn what variables can do\" predicts a future realization. It does not dismiss the need to know."
+          }
+        ]
+      },
+      {
+        "id": "local-4",
+        "kind": "translation",
+        "category": "idiomMetaphor",
+        "severity": 2,
+        "sourceQuote": "Now tell me, how do I hold your contraption again? No author intent.",
+        "targetQuote": "で、この仕掛けをどう使えばいいんだ？作者の意図がない。",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "rationale": "\"Hold\" continues the knife/handle metaphor (soManyKnives, Knife as Handle): with a namespace import, which part is the handle? 使えばいい loses that image. 作者の意図がない also reads flatly, as if the author had no intent at all. The point is that the intent isn't communicated.",
+        "alternative": "で、このヘンテコな道具、どこを持てばいいんだっけ？作者の意図が伝わってこない。",
+        "confidence": 0.7,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Conversational Japanese technical blog",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Knife, Handle and soManyKnives run through the section. \"hold\" plays on that metaphor."
+          }
+        ]
+      },
+      {
+        "id": "local-5",
+        "kind": "translation",
+        "category": "readability",
+        "severity": 2,
+        "sourceQuote": "Incorrect (any more). Configure/update your tools.",
+        "targetQuote": "間違い（もう）。ツールを設定・更新しよう。",
+        "replacement": "（今となっては）間違い。ツールを設定するか、アップデートしよう。",
+        "rationale": "A bare （もう） after 間違い is a word-for-word carry-over that sounds unnatural in Japanese. Putting the time qualifier first keeps the meaning (\"no longer true\") and the curt tone.",
+        "alternative": "もう正しくない。ツールを設定・更新しよう。",
+        "confidence": 0.8,
+        "requiresExternalEvidence": false,
+        "audienceScope": "General",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "\"(any more)\" limits \"Incorrect\" to the present, which the next bullet backs up with \"Support has existed for 3+ years\"."
+          }
+        ]
+      },
+      {
+        "id": "local-6",
+        "kind": "translation",
+        "category": "grammarSpelling",
+        "severity": 2,
+        "sourceQuote": "“Here’s some related logic. Also, expect class-ish behavior.“",
+        "targetQuote": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "rationale": "The quote closes with an opening bracket 「, a visible punctuation error in the table. The translation copied the source's wrong closing quote mark (logged under sourceConcerns). Fixing the punctuation doesn't change any content, and markdown doesn't require matching cell padding.",
+        "alternative": "",
+        "confidence": 0.95,
+        "requiresExternalEvidence": false,
+        "audienceScope": "All readers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The English cell ends with “ where ” was intended. Every other cell uses a normal closing quote."
+          }
+        ]
+      },
+      {
+        "id": "local-7",
+        "kind": "translation",
+        "category": "faithfulness",
+        "severity": 2,
+        "sourceQuote": "They often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.",
+        "targetQuote": "彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。",
+        "replacement": "彼らが槍玉に挙げるのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポートに名前をつけるときにタイポする「かもしれない」という程度の可能性。",
+        "rationale": "Dropping \"often\" turns the author's hedge into a claim about every critic. Dropping \"mere\" loses the dismissive sarcasm. The replacement restores both and reads more naturally.",
+        "alternative": "彼らが問題視するのは、たいてい**完全に一時的な**ことばかりだ：IDEの自動インポートのバグ、特定バンドラーのツリーシェーキング性能、インポート名をタイポするかもしれないという可能性くらいのもの。",
+        "confidence": 0.75,
+        "requiresExternalEvidence": false,
+        "audienceScope": "General",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The English says \"often\" and \"the mere possibility\"."
+          }
+        ]
+      },
+      {
+        "id": "local-8",
+        "kind": "translation",
+        "category": "authorVoice",
+        "severity": 2,
+        "sourceQuote": "If Code is Communication, please `export` like you fucking mean it. 💞",
+        "targetQuote": "コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ真剣にやってくれ。💞",
+        "rationale": "The profane intensifier is the deliberate punchline. The current polite どうか…ほしい removes it and turns the jab into a request. クソ is the closest casual Japanese intensifier and keeps the edge without going further than the source. It is also less crude than the English, which is a real tradeoff. This is my preference based on the voice standard, not a documented-usage claim.",
+        "alternative": "コードがコミュニケーションだというなら、頼むから`export`はマジで本気でやってくれ。💞",
+        "confidence": 0.6,
+        "requiresExternalEvidence": false,
+        "audienceScope": "Casual Japanese developer blog readers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source uses \"fucking\" on purpose as the last punchline, with an ironic 💞."
+          }
+        ]
+      },
+      {
+        "id": "local-9",
+        "kind": "translation",
+        "category": "idiomMetaphor",
+        "severity": 1,
+        "sourceQuote": "A `named export` says it’s “definitely **_A THING!_**”",
+        "targetQuote": "`named export`は「間違いなく**_一つのものだ！_**」と言う。",
+        "replacement": "`named export`は「間違いなく**_モノのひとつだ！_**」と言う。",
+        "rationale": "The joke contrasts \"A THING\" with \"THE SINGLE MOST IMPORTANT thing.\" \"One of the things\" is what sets up the next line, \"got any other buddies?\" 一つのものだ reads as translationese and loses that contrast. Tradeoff: the replacement loses the \"it definitely exists\" sense of \"a thing\".",
+        "alternative": "「間違いなく**_ひとつのモノ！_**」",
+        "confidence": 0.55,
+        "requiresExternalEvidence": false,
+        "audienceScope": "General",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The next sentence asks about \"other buddies\", which depends on the A/THE contrast."
+          }
+        ]
+      },
+      {
+        "id": "local-10",
+        "kind": "translation",
+        "category": "readability",
+        "severity": 1,
+        "sourceQuote": "“This is **_THE SINGLE MOST IMPORTANT_** thing.”",
+        "targetQuote": "「これが**_最も重要な単一のもの_**だ」",
+        "replacement": "「これこそが**_唯一にして最も重要な_**モノだ」",
+        "rationale": "最も重要な単一のもの is a stiff, literal rendering. 唯一にして最も重要な carries the bold announcement better. It also puts the emphasis on the modifier, as in the source, rather than on the noun.",
+        "alternative": "「これが**_ただ一つの最重要_**なモノだ」",
+        "confidence": 0.65,
+        "requiresExternalEvidence": false,
+        "audienceScope": "General",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Only \"THE SINGLE MOST IMPORTANT\" is emphasized. \"thing\" is outside the emphasis."
+          }
+        ]
+      },
+      {
+        "id": "local-11",
+        "kind": "preference",
+        "category": "idiomMetaphor",
+        "severity": 1,
+        "sourceQuote": "subTitle: To name, or not to name?",
+        "targetQuote": "subTitle: 名前をつけるか、つけないか？",
+        "replacement": "subTitle: 名付けるべきか、名付けざるべきか？",
+        "rationale": "The English subtitle alludes to Hamlet's \"To be, or not to be.\" Japanese readers know it as 生きるべきか、死ぬべきか. Echoing that べきか…ざるべきか pattern brings back the allusion. The current line is correct, just flat.",
+        "alternative": "名付けるべきか、名付けぬべきか、それが問題だ",
+        "confidence": 0.6,
+        "requiresExternalEvidence": false,
+        "audienceScope": "General Japanese readers",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The subtitle's structure directly echoes the Hamlet line."
+          }
+        ]
+      }
+    ],
+    "strengths": [
+      "All code, literals, URLs, emoji and the typo in the './kinves.js' literal are preserved. Only the human-readable comments are translated, and the English error text 'Cannot export default const' stays as-is.",
+      "The heading anchor was localized correctly: [..](#まとめ) points to ## まとめ.",
+      "The frontmatter follows repository rules: images use ../, inherited date is omitted, and the sourceHash provenance is kept. History shows the only difference from the previous revision is the added sourceHash.",
+      "The terms 名前付きエクスポート and デフォルトエクスポート match MDN's Japanese usage (mdn-export-ja).",
+      "Several casual lines land well: 'いい機能だ。でも本質じゃない。', 'lintルールを探してるんじゃないのか？', 'インポートでしくじることはない。'",
+      "The table keeps its structure, checkmarks and row order."
+    ],
+    "sourceConcerns": [
+      "Summary table row 4: Named (Exports) is ❌, but the Pattern cell says 'Multiple named exports'. The checkmarks and the description contradict each other. The translation copies this faithfully; the author should confirm.",
+      "Summary table row 3: Named is ✅, but the Pattern cell only mentions a default export plus private functions. This may be inconsistent.",
+      "Wrong closing quote marks “ instead of ” in the source ('buddies there?“' and 'class-ish behavior.“').",
+      "'AirBnb' is the source's casing of Airbnb. The translation normalizes it to 'Airbnb'. This is harmless, but the author should know about the difference.",
+      "'For historical reasons' is the author's framing. The restriction actually comes from the grammar: export default takes an expression or a function/class declaration, not a const declaration. The translation keeps the author's wording, and the claim itself doesn't need to change.",
+      "The snippets' '() => {...blade, ...handle}' is illustrative pseudo-code: it isn't valid as a block body. It's left unchanged as the author wrote it."
+    ]
+  }
+}

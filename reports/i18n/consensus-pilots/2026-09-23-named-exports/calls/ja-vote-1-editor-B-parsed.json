@@ -1,0 +1,495 @@
+{
+  "fingerprint": "3c21f39a8624e9d7d0466a0d3985c8e1df54a5a730f1b144dd56a9e5c6927b00",
+  "value": {
+    "votes": [
+      {
+        "issueId": "ja-editor-A-0",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "I agree with the diagnosis. In a JS article, 引数 means function arguments, which gives the wrong meaning. The English pun only works because 'args' has two meanings, and 引数 doesn't carry the debate sense. So this is a meaning error at severity 3, not just a style issue. I prefer 主張 over 言い分 because it matches the labels agreed below (主張 #1–#3). 言い分 would also be acceptable.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The heading introduces Arg #1–#3, which are claims taken from other blog posts and then rebutted."
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "The candidate renders the same word as 引数 in both the heading and the labels, so the wrong technical reading appears throughout the section."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-1",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "Same wording as the proposal, but I rate it severity 3. Calling rebutted claims 引数 #1 in a code article gives a false technical meaning. Apply the same change to #2 and #3.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Each Arg states a position, links to its source article, and is followed by a rebuttal."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-2",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.85,
+        "rationale": "知るまでもない says 'no need to know', which reverses what the source says. That makes it severity 3, not 2. I use B-2's wording: 言いにくいんだが matches 'hate to break it to you', and 腰を抜かす says outright the surprise that 'wait until you learn' implies. 'もっと驚くぞ' is left without anything to be more surprised than.",
+        "replacement": "（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'wait until you learn what variables can do' predicts that the reader will find out something later."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-3",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.7,
+        "rationale": "I disagree that 単一 is a faithfulness error. A module can have only one default export, so 'SINGLE' is meaningful here. いちばん重要なやつ drops that meaning. The real problem is stiff phrasing, so this is severity 1 polish. B-9's 唯一にして最も重要な keeps 'single', reads more naturally, and keeps the emphasis on the modifier as the source does.",
+        "replacement": "「これこそが**_唯一にして最も重要な_**モノだ」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Only 'THE SINGLE MOST IMPORTANT' is emphasized, and the next line calls named exports 'a supporting role'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-4",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.6,
+        "rationale": "I agree 一つのものだ reads like a literal translation. However, the replacement drops 'definitely' (間違いなく), and 一品 suggests a dish of food. B-8's モノのひとつ keeps the contrast between A and THE, which the next line ('got any other buddies?') depends on. This is a preference-level change at severity 1.",
+        "replacement": "`named export`は「間違いなく**_モノのひとつだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'definitely A THING!' is immediately followed by 'got any other buddies there?'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-5",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "I agree the knife 'hold' image should come back (severity 2) and that 意図が見えない is more natural. B-3 also restores 'your' (あんたの), 'again' (っけ) and the jokey sense of 'contraption'. It also avoids the full-width space, which appears nowhere else in the candidate's punctuation.",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'how do I hold your contraption again?' continues the Knife/Handle/soManyKnives joke."
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "Elsewhere the candidate puts ？ directly before the next clause with no space."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-6",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.75,
+        "rationale": "I agree on the problem and severity. I prefer advisor-B's shorter wording: 今はもう間違いだ keeps the curt tone and the time qualifier, and it leaves the second sentence as it is in the candidate. Opening with いや adds a conversational beat the source doesn't have.",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Incorrect (any more)' and then '3+ years' of support mean the claim is no longer true."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-7",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.9,
+        "rationale": "The unclosed Japanese quote is a visible mistake in the table. The English ends with a wrong-way quote mark (“ instead of ”), but that is a separate source concern. Fixing the target's punctuation changes no content.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The cell is one quoted sentence. Its closing mark is a source typo."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-A-8",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.65,
+        "rationale": "I agree the profanity should come back (severity 2). The ending is deliberate, and the voice standard is against sanitizing it. But the replacement drops 'please', and the exasperated please sets up the punchline. My counter keeps クソ本気, adds 頼むから, and keeps だというなら. I avoid B's クソ真剣, because it can be heard as クソ真面目 ('stiffly humorless').",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'please `export` like you fucking mean it. 💞' combines please, profanity and an ironic heart."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-0",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "The debate sense of 'Args' is lost, and 引数 gives a false technical reading. That is a meaning error, severity 3. 主張 is plain and consistent with the labels, and おい keeps the voice.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The items under the heading are claims that get rebutted."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "I agree. Apply the same change to #2 and #3.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #1–#3 are cited positions from other articles."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-2",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.85,
+        "rationale": "The current text reverses the meaning. The replacement restores the prediction of a coming surprise and keeps the snark.",
+        "replacement": "（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'wait until you learn' is a prediction, not a dismissal."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-3",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "This restores the hold/handle image, 'your', 'again', and the derisive sense of 'contraption'. 意図が見えない fixes the flat 意図がない. 妙ちくりん is a little old-fashioned but fits the jokey tone.",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The Knife/Handle joke runs through this passage."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "I agree on the problem. But putting the qualifier in parentheses still reads a little like translationese. Advisor-B's 今はもう間違いだ works the qualifier into the sentence and keeps the terse second sentence.",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'(any more)' limits 'Incorrect' to the present."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.9,
+        "rationale": "This is a visible punctuation error, and B handles the source-typo concern correctly. Severity 2 is justified because it leaves a quote unclosed in the table.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Source typo “ is logged separately. The target fix changes no content."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "Dropping 'often' turns the author's hedge into a claim about every critic. That changes the claim's scope, so it is more than polish. Restoring たいてい fixes it. The scare-quoted かもしれない adds some emphasis, but it is a fair way to carry 'mere', and 槍玉に挙げる fits 'blame'. Tradeoff: the sentence gets longer.",
+        "replacement": "彼らが槍玉に挙げるのは、たいてい**完全に一時的な**ことだ：IDEの自動インポートのバグ、特定のバンドラーのツリーシェーキング性能、あるいはインポートに名前をつけるときにタイポする「かもしれない」という程度の可能性。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source says 'They often blame' and 'the mere possibility of typos'."
+          },
+          {
+            "referenceId": "candidate",
+            "explanation": "The candidate leaves out both 'often' and 'mere'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-7",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.65,
+        "rationale": "I agree with the diagnosis, 頼むから, and the tradeoff analysis. My only change is クソ本気 instead of クソ真剣, to avoid a possible echo of クソ真面目 ('stiffly humorless'). That is a preference about sound, not documented usage.",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The deliberate profanity is the final punchline."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-8",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.6,
+        "rationale": "This keeps 間違いなく and the contrast between A and THE that the 'buddies' line needs. The tradeoff B notes ('it exists' nuance lost) is minor. The katakana モノ matches B-9. This is optional polish.",
+        "replacement": "`named export`は「間違いなく**_モノのひとつだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'A THING!' is contrasted with 'THE SINGLE MOST IMPORTANT' and followed by 'other buddies'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-9",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.7,
+        "rationale": "This is a readability fix, not a meaning fix. The current text isn't wrong, and 'single' carries real meaning because a module has only one default export. The replacement keeps that and places the emphasis as the source does.",
+        "replacement": "「これこそが**_唯一にして最も重要な_**モノだ」",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Only the modifier is emphasized. 'thing' is outside the emphasis."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-editor-B-10",
+        "decision": "accept",
+        "severity": 1,
+        "confidence": 0.6,
+        "rationale": "The Hamlet allusion is in the source's structure. The べきか／ざるべきか pattern brings it back, is grammatical, and changes no facts. This is an optional preference, and the current line is also correct.",
+        "replacement": "subTitle: 名付けるべきか、名付けざるべきか？",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'To name, or not to name?' echoes 'To be, or not to be'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-0",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "Same wording as mine. I rate it severity 3, because by the advisor's own account 引数 gives developers a false technical reading, which is a meaning error.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The heading introduces rebutted claims, not parameters."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-1",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "Same wording, but severity 3 for the reason given in A-0. Apply to #2 and #3.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Each bullet is a claim followed by 'No, they don't' or a similar rebuttal."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-2",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "I agree on severity 3. However, 何をできるか is awkward Japanese (the natural form is 何ができるか), and そのうち思い知る loses the punch of the surprise. I use B-2's wording.",
+        "replacement": "（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'wait until you learn' predicts a surprising discovery."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.9,
+        "rationale": "The proposed もはや間違いではない means 'no longer incorrect', which is the opposite of the source. The source says the claim that named exports have better IDE support is now incorrect, since tools have supported default exports for 3+ years. Adopting it would add a negation reversal. The underlying readability problem is real (severity 2), so I counter with the correct wording.",
+        "replacement": "- 今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'Incorrect (any more)' is the rebuttal to Arg #3, and the next bullet supports it with '3+ years' of support."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.75,
+        "rationale": "The wording is correct. I rate it severity 2 rather than 1: an unclosed quote in a table cell is a noticeable orthography error even though the meaning survives.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The cell ends with a second 「 and never closes the quote."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-A-5",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.65,
+        "rationale": "マジで本気で still removes the profanity and keeps the polite どうか…ほしい, so the ending still reads as a request rather than the author's jab. The voice standard says to keep intentional profanity. クソ本気 is not stronger than 'fucking', and the advisor's own alternative accepts it. I also add 頼むから for 'please'.",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'fucking' is the deliberate intensifier in the final line."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-0",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.75,
+        "rationale": "I agree on the diagnosis and severity. しょぼい is harsher and more slangy than 'Weak', and the heading already gets its edge from おい. I keep 弱い for a closer match.",
+        "replacement": "### 弱い主張だな、おい",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source word is 'Weak'."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-1",
+        "decision": "accept",
+        "severity": 3,
+        "confidence": 0.8,
+        "rationale": "I agree. Apply the same change to #2 and #3.",
+        "replacement": "- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "Arg #2 and #3 are also cited blog claims."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-2",
+        "decision": "counter",
+        "severity": 3,
+        "confidence": 0.75,
+        "rationale": "I agree on severity. 何をしでかすか suggests variables misbehave. The source's point is what variables can do, namely be renamed or aliased freely. B-2's 何ができるか…腰を抜かす is more accurate.",
+        "replacement": "（言いにくいんだが、変数に何ができるか知ったら腰を抜かすぞ！）",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source says 'what variables can do' and follows it with alias examples."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-3",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.65,
+        "rationale": "Adding マジで。 as a tag still sanitizes the line. The claim that crude words 'feel forced in Japanese tech editorial' generalizes about the audience without evidence, and the voice standard says not to soften by default. I counter with a restored intensifier that is not stronger than the source.",
+        "replacement": "コードがコミュニケーションだというなら、頼むから`export`はクソ本気でやってくれ。💞",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The profanity paired with 💞 is the intended punchline."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-4",
+        "decision": "counter",
+        "severity": 2,
+        "confidence": 0.7,
+        "rationale": "I agree that どこを持てば is the key fix. But the replacement keeps the flat 作者の意図がない and leaves out 'your' and 'again'. I use B-3's wording, which covers all of these.",
+        "replacement": "で、あんたのこの妙ちくりんな道具、どこを握ればいいんだっけ？作者の意図が見えない。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The source says 'how do I hold your contraption again? No author intent.'"
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-5",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.8,
+        "rationale": "The meaning is correct: the claim is no longer true. The phrasing is natural and curt, and the rest of the line is unchanged.",
+        "replacement": "今はもう間違いだ。ツールを設定・更新しよう。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "'(any more)' plus '3+ years' mean the claim is outdated."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-6",
+        "decision": "accept",
+        "severity": 2,
+        "confidence": 0.9,
+        "rationale": "This is a visible typo in the table, and the fix is correct.",
+        "replacement": "「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」",
+        "evidence": [
+          {
+            "referenceId": "candidate",
+            "explanation": "The cell ends with 「 instead of 」."
+          }
+        ]
+      },
+      {
+        "issueId": "ja-advisor-B-7",
+        "decision": "counter",
+        "severity": 1,
+        "confidence": 0.55,
+        "rationale": "The 'it's legit' reading of 'a thing' is plausible. But ちゃんとした何か loses the contrast between A and THE, and that contrast sets up 'got any other buddies?'. I keep B-8's モノのひとつ. This is preference-level.",
+        "replacement": "`named export`は「間違いなく**_モノのひとつだ！_**」と言う。",
+        "evidence": [
+          {
+            "referenceId": "source",
+            "explanation": "The next sentence asks about other buddies, which relies on the indefinite 'A'."
+          }
+        ]
+      }
+    ]
+  }
+}

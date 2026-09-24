@@ -1,0 +1,277 @@
+{
+  "fingerprint": "22ef01d95a76f72cf35e18611ace6118ff45e46912f22194aeb0a5bdb4abddee",
+  "text": "{\n  \"issues\": [\n    {\n      \"id\": \"local-1\",\n      \"kind\": \"translation\",\n      \"category\": \"technicalAccuracy\",\n      \"severity\": 2,\n      \"sourceQuote\": \"### Weak Args, Man\",\n      \"targetQuote\": \"### 弱い引数だな、おい\",\n      \"replacement\": \"### 弱い主張だな、おい\",\n      \"rationale\": \"English \\\"Args\\\" here is rhetorical (arguments/claims), not function parameters. In a JavaScript article, 引数 is read unambiguously as \\\"function argument,\\\" so the heading and the three \\\"引数 #N\\\" bullets create a false technical reading. 主張/論点 is the natural Japanese term for a debated claim. Voice (\\\"Man\\\" → おい) is preserved.\",\n      \"alternative\": \"### 反論が弱いな、おい\",\n      \"confidence\": 0.88,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The heading introduces three numbered rhetorical counter-arguments (\\\"Arg #1: Named exports ensure name consistency\\\"), not function parameters, confirming the debate sense of \\\"Args\\\".\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-2\",\n      \"kind\": \"translation\",\n      \"category\": \"technicalAccuracy\",\n      \"severity\": 2,\n      \"sourceQuote\": \"- Arg #1: Named exports ensure name consistency.\",\n      \"targetQuote\": \"- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。\",\n      \"replacement\": \"- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。\",\n      \"rationale\": \"Same false-friend as the heading: 引数 means a function parameter. Apply the same fix to \\\"引数 #2\\\" and \\\"引数 #3\\\" so the list reads as claims being rebutted. No other wording in these lines needs changing.\",\n      \"alternative\": \"- 論点 #1：名前付きエクスポートは名前の一貫性を保証する。\",\n      \"confidence\": 0.88,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The bullet is a claim about named exports followed by a rebuttal (\\\"No, they don't\\\"), i.e. a rhetorical argument, not a parameter.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-3\",\n      \"kind\": \"translation\",\n      \"category\": \"faithfulness\",\n      \"severity\": 3,\n      \"sourceQuote\": \"(I hate to break it to you, but wait until you learn what variables can do!)\",\n      \"targetQuote\": \"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\n      \"replacement\": \"（残念なお知らせだが、変数が何をできるか、そのうち思い知ることになるよ！）\",\n      \"rationale\": \"\\\"wait until you learn\\\" is a teasing \\\"just you wait, you'll be surprised\\\" — the current 知るまでもない (\\\"not even worth knowing\\\") reverses the point into \\\"you don't need to know.\\\" The replacement keeps the parenthetical aside's mocking tone and the actual meaning.\",\n      \"alternative\": \"（残念なお知らせだが、変数が何をできるか知ったら腰を抜かすよ！）\",\n      \"confidence\": 0.85,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The clause \\\"wait until you learn what variables can do!\\\" presupposes the reader will eventually learn something surprising, which 知るまでもない negates.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-4\",\n      \"kind\": \"translation\",\n      \"category\": \"readability\",\n      \"severity\": 2,\n      \"sourceQuote\": \"- Incorrect (any more). Configure/update your tools.\",\n      \"targetQuote\": \"- 間違い（もう）。ツールを設定・更新しよう。\",\n      \"replacement\": \"- もはや間違いではない。ツールを設定・更新しよう。\",\n      \"rationale\": \"\\\"Incorrect (any more)\\\" means the claim is no longer true, not \\\"wrong (already).\\\" The literal calque 間違い（もう） is ambiguous and can be misread as \\\"it's wrong now.\\\" もはや間違いではない states the intended rebuttal cleanly.\",\n      \"alternative\": \"- 今はもう間違い。ツールを設定・更新しよう。\",\n      \"confidence\": 0.8,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The following lines (\\\"Support has existed for 3+ years\\\") show the author means the old complaint is outdated, i.e. no longer incorrect.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-5\",\n      \"kind\": \"translation\",\n      \"category\": \"grammarSpelling\",\n      \"severity\": 1,\n      \"sourceQuote\": \"“Here’s some related logic. Also, expect class-ish behavior.“\",\n      \"targetQuote\": \"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\n      \"replacement\": \"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\n      \"rationale\": \"The closing bracket is a second opening 「 instead of 」, leaving the table cell's quotation unclosed. Purely a punctuation typo; meaning is unaffected.\",\n      \"alternative\": \"\",\n      \"confidence\": 0.95,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The English cell is a single quoted sentence with matched opening and closing quotation marks.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-6\",\n      \"kind\": \"translation\",\n      \"category\": \"authorVoice\",\n      \"severity\": 2,\n      \"sourceQuote\": \"If Code is Communication, please `export` like you fucking mean it. 💞\",\n      \"targetQuote\": \"コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞\",\n      \"replacement\": \"コードがコミュニケーションであるなら、どうか`export`はマジで本気でやってほしい。💞\",\n      \"rationale\": \"The punchline's intensifier (\\\"fucking\\\") is dropped, flattening the author's deliberate profane edge into neutral 本気で. Doubling the colloquial intensifier (マジで本気で) restores the emphasis without inventing a harsher word than the source. Tradeoff: slightly less raw than the English; クソ本気で is closer in force but reads as a stronger escalation.\",\n      \"alternative\": \"コードがコミュニケーションであるなら、どうか`export`はクソ本気でやってほしい。💞\",\n      \"confidence\": 0.7,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The source's final line uses \\\"fucking\\\" as an intentional intensifier, and the article's voice elsewhere is deliberately blunt (\\\"Weak Args, Man\\\").\"\n        }\n      ]\n    }\n  ],\n  \"strengths\": [\n    \"Code blocks, import/export examples, emoji markers, and the ✅/❌ annotations are preserved exactly, including the source's own typo './kinves.js'.\",\n    \"The in-article anchor (#まとめ) correctly targets the localized '## まとめ' heading.\",\n    \"Frontmatter follows locale rules: ../ image paths, inherited date/draft fields omitted, tags/category/subCategory preserved.\",\n    \"Conversational register and rhetorical questions (「そもそも…見落としていないか？」「じゃあ、何を伝えているのか？」) read naturally for Japanese developers.\",\n    \"The summary table's structure, row order, and checkmark pattern are intact.\"\n  ],\n  \"sourceConcerns\": [\n    \"The source contains a typo in the code sample path './kinves.js' (likely './knives.js'); the translation correctly preserves it rather than silently correcting it. No action needed unless the author wants the source fixed.\"\n  ]\n}",
+  "steps": [
+    {
+      "text": "",
+      "toolCalls": [
+        {
+          "type": "tool-call",
+          "toolCallId": "call_01a0d084855272ef883ac519",
+          "toolName": "read_article",
+          "input": {
+            "version": "source"
+          },
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          }
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "call_01a0d084858a73d2b9420dff",
+          "toolName": "read_article",
+          "input": {
+            "version": "candidate"
+          }
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "call_01a0d08485cc722aaf077576",
+          "toolName": "list_translation_history",
+          "input": {}
+        }
+      ],
+      "toolResults": [
+        {
+          "type": "tool-result",
+          "toolCallId": "call_01a0d084855272ef883ac519",
+          "toolName": "read_article",
+          "input": {
+            "version": "source"
+          },
+          "output": {
+            "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contentHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contents": "---\nsocial_image: ./desktop-social.webp\ntitle: \"ESM exports: named vs. default?\"\nsubTitle: To name, or not to name?\ndate: 2023-08-10\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\n---\n\n## Should you use `named` or `default` exports in JavaScript?\n\nThere’s no shortage of strongly worded articles on this topic.\n\nThe majority judge `default export` as “terrible.” Others maintain `default` should win (e.g. AirBnb style guide.)\n\nThey often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.\n\nHave we missed the point of `export`ing in the first place?\n\n**Code is Communication. ✨**\n\n> We are sending a signal to `import`ers _how to use a thing._\n\n### So, what are we saying?\n\nBroadly speaking, there are 2 ways to export things in modern JavaScript:\n\n- An `export default` boldly declares “This is **_THE SINGLE MOST IMPORTANT_** thing.” Also, “any named exports only play a supporting role.”\n- A `named export` says it’s “definitely **_A THING!_**” Also raises some questions, “got any other buddies there?“ Follow up, “Are they invited or required?”\n\nOf course you can combine both, or use different approaches for different parts of your codebase. [See more examples at the end of the article.](#summary)\n\n### Weak Args, Man\n\nLet’s address some of the common “temporary issues” folks run into.\n\n- Arg #1: Named exports ensure name consistency. [source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - No, they don’t. You’re maybe looking for a lint rule?\n  - (I hate to break it to you, but wait until you learn what variables can do!)\n\n```tsx\n// You can alias using both!\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- Arg #2: Use `import * as soManyKnives from './kinves.js'` to combine named exports. (Not linked, author retracted.)\n  - Neat feature. Not the point.\n  - Now tell me, how do I hold your contraption again? No author intent.\n- Arg #3: Named exports have better IDE import or renaming support. [source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - Incorrect (any more). Configure/update your tools.\n  - Support has existed for 3+ years in [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.\n  - Still, there are some “best practices” to use with `default exports` to get the best IDE & refactor experience.\n  - ✅ `export default function UserService() {}` - always prefer named functions.\n  - ❌ `export default function() { }` - anonymous functions are not implicitly tied to their filename. If you don’t name the thing, it’s hard to ask the computer to change it.\n  - **Note:** For historical reasons you cannot combine `export default` with a `const` expression.\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ Not Supported ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // However, once declared you can export a const var as the default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Valid\n\n    // For completeness:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ Also valid to export a class as default\n    ```\n\n<section className=\"scroll-x\">\n## Summary\n\nThere are actually many combinations of ways we could export things, each tells a different story:\n\n| Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Meaning                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | One default export.                                       | “Presenting ONE function w/ Single Purpose!”                  |\n| ❌                | ✅              | ❌          | One named export.                                         | “Please don’t rename me.”                                     |\n| ✅                | ✅              | ✅          | Default export + multiple 'private' un-exported functions | “Here’s some related logic. Also, expect class-ish behavior.“ |\n| ❌                | ❌              | ✅          | Multiple named exports, generic file name.                | “A grab-bag of loosely related things, no hierarchy implied.” |\n| ✅                | ✅              | ❌          | Single named export ALSO exported as default.             | “You can’t mess up importing me.”                             |\n</section>\n\n**Something to think about:** What are we saying when the file name does or doesn’t match one of its exports? (For example, a `utils.js` with many functions.)\n\n### Conclusion\n\nIf Code is Communication, please `export` like you fucking mean it. 💞\n"
+          },
+          "dynamic": false,
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": []
+            }
+          }
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "call_01a0d084858a73d2b9420dff",
+          "toolName": "read_article",
+          "input": {
+            "version": "candidate"
+          },
+          "output": {
+            "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contentHash": "43c6018932c1c8259a652f107532bb535294ac8750704b58b74fe3ac2835688e",
+            "contents": "---\nsocial_image: ../desktop-social.webp\ntitle: \"ESMエクスポート：名前付き vs デフォルト？\"\nsubTitle: 名前をつけるか、つけないか？\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\nsourceHash: \"438740274604\"\n---\n\n## JavaScriptで`named`エクスポートと`default`エクスポート、どちらを使うべきか？\n\nこのトピックについて、強い言葉で書かれた記事に事欠くことはない。\n\n大多数は`default export`を「ひどい」と断じる。一方、`default`が勝つべきだと主張する人もいる（Airbnbスタイルガイドなど）。\n\n彼らが問題視するのは、**完全に一時的な**ことだ：IDEの自動インポートバグ、特定のバンドラーのツリーシェーキング能力、あるいはインポート命名時のタイポの可能性。\n\nそもそも`export`することの本質を見落としていないか？\n\n**コードはコミュニケーションである。✨**\n\n> `import`する側に対して、_ものの使い方_を示すシグナルを送っているのだ。\n\n### じゃあ、何を伝えているのか？\n\n大まかに言えば、モダンJavaScriptでものをエクスポートする方法は2つある：\n\n- `export default`は「これが**_最も重要な単一のもの_**だ」と堂々と宣言する。ついでに「名前付きエクスポートはあくまで脇役」とも伝える。\n- `named export`は「間違いなく**_一つのものだ！_**」と言う。いくつかの疑問も浮かぶ。「他に仲間いる？」「そいつらは招待されてるの？それとも必須？」\n\nもちろん両方を組み合わせたり、コードベースの異なる部分で異なるアプローチを使うこともできる。[記事の最後でさらに例を紹介。](#まとめ)\n\n### 弱い引数だな、おい\n\nよくある「一時的な問題」を片付けていこう。\n\n- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。[source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - いや、保証しない。lintルールを探してるんじゃないのか？\n  - （残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\n\n```tsx\n// どちらもエイリアス可能！\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- 引数 #2：`import * as soManyKnives from './kinves.js'`を使って名前付きエクスポートをまとめられる。（リンクなし、著者撤回済み。）\n  - いい機能だ。でも本質じゃない。\n  - で、この仕掛けをどう使えばいいんだ？作者の意図がない。\n- 引数 #3：名前付きエクスポートの方がIDEのインポートやリネームサポートが優れている。[source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - 間違い（もう）。ツールを設定・更新しよう。\n  - サポートは[VS Code](https://github.com/microsoft/vscode/pull/94480)、IntelliJなどで3年以上前から存在している。\n  - それでも、`default exports`で最高のIDE＆リファクタリング体験を得るには、いくつかの「ベストプラクティス」がある。\n  - ✅ `export default function UserService() {}` - 常に名前付き関数を優先する。\n  - ❌ `export default function() { }` - 無名関数はファイル名に暗黙的に紐づかない。ものに名前をつけないと、コンピューターに変更を依頼するのが難しくなる。\n  - **注：**歴史的な理由により、`export default`と`const`式を組み合わせることはできない。\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ サポートされていない ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // ただし、一度宣言すればconst変数をデフォルトとしてエクスポートできる。\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ 有効\n\n    // 完全を期すために：\n    export default class anyoneStillUseThese {}\n    // ^ ✅ クラスをデフォルトとしてエクスポートするのも有効\n    ```\n\n<section className=\"scroll-x\">\n## まとめ\n\nものをエクスポートする方法には実はたくさんの組み合わせがあり、それぞれが異なる物語を語る：\n\n| デフォルト（エクスポート） | 名前付き（エクスポート） | プライベート関数 | パターン                                                   | 意味                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | デフォルトエクスポート1つ。                                       | 「単一の目的を持つ関数1つをお届け！」                  |\n| ❌                | ✅              | ❌          | 名前付きエクスポート1つ。                                         | 「リネームしないでください。」                                     |\n| ✅                | ✅              | ✅          | デフォルトエクスポート + 複数のエクスポートされていない「プライベート」関数 | 「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「 |\n| ❌                | ❌              | ✅          | 複数の名前付きエクスポート、一般的なファイル名。                | 「緩く関連したものたちの詰め合わせ。階層関係は暗示しない。」 |\n| ✅                | ✅              | ❌          | 単一の名前付きエクスポートをデフォルトとしてもエクスポート。             | 「インポートでしくじることはない。」                             |\n</section>\n\n**考えてみてほしい：**ファイル名がそのエクスポートの一つと一致する場合、一致しない場合、何を伝えているのだろうか？（例えば、多くの関数を持つ`utils.js`など。）\n\n### 結論\n\nコードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞"
+          },
+          "dynamic": false
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "call_01a0d08485cc722aaf077576",
+          "toolName": "list_translation_history",
+          "input": {},
+          "output": [
+            {
+              "id": "f3411d66a4c2239120397af995051a7675d5eec8",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "43c6018932c1c8259a652f107532bb535294ac8750704b58b74fe3ac2835688e",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": "438740274604"
+            },
+            {
+              "id": "b3a76a2de916e41eb59498b285ed63e371b95600",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "848882dab0ff45851d8fc9ed9ad7cac4e22b84dad690158f10aba93f7f852860",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "b39d13060b663ceaae1323c8c819aa61bcdbf272",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "ef90f3f3ab7693e148d6bd8a8f790e5a44f5579b28684389fd68f4f303d4ac3c",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "7854902254d2e7de0a81917f5a220cae6d8bfccc",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "cfd6f9050e14448161acce99dd5b925112371b8dec97bea0b81e1434527b424d",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "3c2de41a5fccda3df1681116b674a2b85b915df7",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "8918237505b41c43cd907d2f48d0062d26bd33992fb17edabf25b8ea782aafa6",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "0977ea86a3377a85e9a7ac430b1f9c99c1c52a02",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/ja/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "9b783517205c5dbda7c5d48d7be5b406d708e96eefe22bc5f0bf9dfeaee2522b",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            }
+          ],
+          "dynamic": false
+        }
+      ],
+      "usage": {
+        "inputTokens": 5549,
+        "inputTokenDetails": {
+          "noCacheTokens": 5549,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 5484,
+        "outputTokenDetails": {
+          "textTokens": 84,
+          "reasoningTokens": 5400
+        },
+        "totalTokens": 11033,
+        "raw": {
+          "prompt_tokens": 5549,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 5484,
+          "completion_tokens_details": {
+            "reasoning_tokens": 5400,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 11033,
+          "cost": 0.0082455,
+          "cost_details": {
+            "upstream_inference_cost": 0.0082455,
+            "upstream_inference_prompt_cost": 0.0016647,
+            "upstream_inference_completions_cost": 0.0065808
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Together",
+          "reasoning_details": [],
+          "usage": {
+            "promptTokens": 5549,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 5484,
+            "completionTokensDetails": {
+              "reasoningTokens": 5400
+            },
+            "totalTokens": 11033,
+            "cost": 0.0082455,
+            "costDetails": {
+              "upstreamInferenceCost": 0.0082455
+            }
+          }
+        }
+      },
+      "finishReason": "tool-calls"
+    },
+    {
+      "text": "{\n  \"issues\": [\n    {\n      \"id\": \"local-1\",\n      \"kind\": \"translation\",\n      \"category\": \"technicalAccuracy\",\n      \"severity\": 2,\n      \"sourceQuote\": \"### Weak Args, Man\",\n      \"targetQuote\": \"### 弱い引数だな、おい\",\n      \"replacement\": \"### 弱い主張だな、おい\",\n      \"rationale\": \"English \\\"Args\\\" here is rhetorical (arguments/claims), not function parameters. In a JavaScript article, 引数 is read unambiguously as \\\"function argument,\\\" so the heading and the three \\\"引数 #N\\\" bullets create a false technical reading. 主張/論点 is the natural Japanese term for a debated claim. Voice (\\\"Man\\\" → おい) is preserved.\",\n      \"alternative\": \"### 反論が弱いな、おい\",\n      \"confidence\": 0.88,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The heading introduces three numbered rhetorical counter-arguments (\\\"Arg #1: Named exports ensure name consistency\\\"), not function parameters, confirming the debate sense of \\\"Args\\\".\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-2\",\n      \"kind\": \"translation\",\n      \"category\": \"technicalAccuracy\",\n      \"severity\": 2,\n      \"sourceQuote\": \"- Arg #1: Named exports ensure name consistency.\",\n      \"targetQuote\": \"- 引数 #1：名前付きエクスポートは名前の一貫性を保証する。\",\n      \"replacement\": \"- 主張 #1：名前付きエクスポートは名前の一貫性を保証する。\",\n      \"rationale\": \"Same false-friend as the heading: 引数 means a function parameter. Apply the same fix to \\\"引数 #2\\\" and \\\"引数 #3\\\" so the list reads as claims being rebutted. No other wording in these lines needs changing.\",\n      \"alternative\": \"- 論点 #1：名前付きエクスポートは名前の一貫性を保証する。\",\n      \"confidence\": 0.88,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The bullet is a claim about named exports followed by a rebuttal (\\\"No, they don't\\\"), i.e. a rhetorical argument, not a parameter.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-3\",\n      \"kind\": \"translation\",\n      \"category\": \"faithfulness\",\n      \"severity\": 3,\n      \"sourceQuote\": \"(I hate to break it to you, but wait until you learn what variables can do!)\",\n      \"targetQuote\": \"（残念なお知らせだが、変数が何をしでかせるか知るまでもない！）\",\n      \"replacement\": \"（残念なお知らせだが、変数が何をできるか、そのうち思い知ることになるよ！）\",\n      \"rationale\": \"\\\"wait until you learn\\\" is a teasing \\\"just you wait, you'll be surprised\\\" — the current 知るまでもない (\\\"not even worth knowing\\\") reverses the point into \\\"you don't need to know.\\\" The replacement keeps the parenthetical aside's mocking tone and the actual meaning.\",\n      \"alternative\": \"（残念なお知らせだが、変数が何をできるか知ったら腰を抜かすよ！）\",\n      \"confidence\": 0.85,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The clause \\\"wait until you learn what variables can do!\\\" presupposes the reader will eventually learn something surprising, which 知るまでもない negates.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-4\",\n      \"kind\": \"translation\",\n      \"category\": \"readability\",\n      \"severity\": 2,\n      \"sourceQuote\": \"- Incorrect (any more). Configure/update your tools.\",\n      \"targetQuote\": \"- 間違い（もう）。ツールを設定・更新しよう。\",\n      \"replacement\": \"- もはや間違いではない。ツールを設定・更新しよう。\",\n      \"rationale\": \"\\\"Incorrect (any more)\\\" means the claim is no longer true, not \\\"wrong (already).\\\" The literal calque 間違い（もう） is ambiguous and can be misread as \\\"it's wrong now.\\\" もはや間違いではない states the intended rebuttal cleanly.\",\n      \"alternative\": \"- 今はもう間違い。ツールを設定・更新しよう。\",\n      \"confidence\": 0.8,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The following lines (\\\"Support has existed for 3+ years\\\") show the author means the old complaint is outdated, i.e. no longer incorrect.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-5\",\n      \"kind\": \"translation\",\n      \"category\": \"grammarSpelling\",\n      \"severity\": 1,\n      \"sourceQuote\": \"“Here’s some related logic. Also, expect class-ish behavior.“\",\n      \"targetQuote\": \"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。「\",\n      \"replacement\": \"「関連ロジックはこちら。ついでに、クラスっぽい動作を期待して。」\",\n      \"rationale\": \"The closing bracket is a second opening 「 instead of 」, leaving the table cell's quotation unclosed. Purely a punctuation typo; meaning is unaffected.\",\n      \"alternative\": \"\",\n      \"confidence\": 0.95,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The English cell is a single quoted sentence with matched opening and closing quotation marks.\"\n        }\n      ]\n    },\n    {\n      \"id\": \"local-6\",\n      \"kind\": \"translation\",\n      \"category\": \"authorVoice\",\n      \"severity\": 2,\n      \"sourceQuote\": \"If Code is Communication, please `export` like you fucking mean it. 💞\",\n      \"targetQuote\": \"コードがコミュニケーションであるなら、どうか`export`は本気でやってほしい。💞\",\n      \"replacement\": \"コードがコミュニケーションであるなら、どうか`export`はマジで本気でやってほしい。💞\",\n      \"rationale\": \"The punchline's intensifier (\\\"fucking\\\") is dropped, flattening the author's deliberate profane edge into neutral 本気で. Doubling the colloquial intensifier (マジで本気で) restores the emphasis without inventing a harsher word than the source. Tradeoff: slightly less raw than the English; クソ本気で is closer in force but reads as a stronger escalation.\",\n      \"alternative\": \"コードがコミュニケーションであるなら、どうか`export`はクソ本気でやってほしい。💞\",\n      \"confidence\": 0.7,\n      \"requiresExternalEvidence\": false,\n      \"audienceScope\": \"Japanese software developers; conversational technical editorial voice\",\n      \"evidence\": [\n        {\n          \"referenceId\": \"source\",\n          \"explanation\": \"The source's final line uses \\\"fucking\\\" as an intentional intensifier, and the article's voice elsewhere is deliberately blunt (\\\"Weak Args, Man\\\").\"\n        }\n      ]\n    }\n  ],\n  \"strengths\": [\n    \"Code blocks, import/export examples, emoji markers, and the ✅/❌ annotations are preserved exactly, including the source's own typo './kinves.js'.\",\n    \"The in-article anchor (#まとめ) correctly targets the localized '## まとめ' heading.\",\n    \"Frontmatter follows locale rules: ../ image paths, inherited date/draft fields omitted, tags/category/subCategory preserved.\",\n    \"Conversational register and rhetorical questions (「そもそも…見落としていないか？」「じゃあ、何を伝えているのか？」) read naturally for Japanese developers.\",\n    \"The summary table's structure, row order, and checkmark pattern are intact.\"\n  ],\n  \"sourceConcerns\": [\n    \"The source contains a typo in the code sample path './kinves.js' (likely './knives.js'); the translation correctly preserves it rather than silently correcting it. No action needed unless the author wants the source fixed.\"\n  ]\n}",
+      "toolCalls": [],
+      "toolResults": [],
+      "usage": {
+        "inputTokens": 10075,
+        "inputTokenDetails": {
+          "noCacheTokens": 4571,
+          "cacheReadTokens": 5504,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 9073,
+        "outputTokenDetails": {
+          "textTokens": 1980,
+          "reasoningTokens": 7093
+        },
+        "totalTokens": 19148,
+        "raw": {
+          "prompt_tokens": 10075,
+          "prompt_tokens_details": {
+            "cached_tokens": 5504,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 9073,
+          "completion_tokens_details": {
+            "reasoning_tokens": 7093,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 19148,
+          "cost": 0.012291924,
+          "cost_details": {
+            "upstream_inference_cost": 0.012291924,
+            "upstream_inference_prompt_cost": 0.001404324,
+            "upstream_inference_completions_cost": 0.0108876
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Together",
+          "reasoning_details": [],
+          "usage": {
+            "promptTokens": 10075,
+            "promptTokensDetails": {
+              "cachedTokens": 5504
+            },
+            "completionTokens": 9073,
+            "completionTokensDetails": {
+              "reasoningTokens": 7093
+            },
+            "totalTokens": 19148,
+            "cost": 0.012291924,
+            "costDetails": {
+              "upstreamInferenceCost": 0.012291924
+            }
+          }
+        }
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "totalUsage": {
+    "inputTokens": 15624,
+    "inputTokenDetails": {
+      "noCacheTokens": 10120,
+      "cacheReadTokens": 5504,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 14557,
+    "outputTokenDetails": {
+      "textTokens": 2064,
+      "reasoningTokens": 12493
+    },
+    "totalTokens": 30181
+  },
+  "durationMs": 54492.973916999996,
+  "finishReason": "stop"
+}

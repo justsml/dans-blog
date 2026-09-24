@@ -1,0 +1,335 @@
+{
+  "fingerprint": "181edf1120345f3009c51b37b3ab81cd2b9f44421c98af29502aa35cac87814c",
+  "text": "```json\n{\"votes\":[\n{\"issueId\":\"es-editor-A-0\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.8,\"rationale\":\"I'm switching from my earlier «¡carajo!» wording. I checked both options against the frozen source. «Fucking» sits inside «mean it» and makes the intent stronger. «Con toda la puta intención» keeps it there. It builds on the set phrase «con toda la intención», so the swear word and the article's main idea arrive together. «¡Carajo!» at the end was a separate exclamation added on, which I now think is weaker. My view that this pattern reads naturally, like «toda la puta razón», is my own judgment about usage. I have no checked source for it. I make no claim about offense or regional strength. The force is similar to the source, so this is not an escalation. The current «te importara» is about caring, not intent, and drops the swear word. That is a voice issue plus a small meaning shift, so severity stays at 2, not 3.\",\"replacement\":\"Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«please `export` like you fucking mean it»: the swear word strengthens the intent itself.\"},{\"referenceId\":\"target\",\"explanation\":\"«como si en verdad te importara» drops the swear word, changes intent into caring and adds a Spanish ending to the keyword.\"}]},\n{\"issueId\":\"es-editor-A-1\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.87,\"rationale\":\"We agree. Spanish words shouldn't sit inside code formatting. «Nombrada» matches the title, Arg #1, Arg #2 and the table. MDN separates the two kinds of export but doesn't require one Spanish wording. This fix covers only part of the span that B-4 changes. B-4's wording includes this change, so the two need to be merged when applied.\",\"replacement\":\"Una exportación nombrada (`named export`)\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The term appears as `named export` in backticks.\"},{\"referenceId\":\"mdn-export-es\",\"explanation\":\"Separates named and default exports without requiring one Spanish term.\"},{\"referenceId\":\"target\",\"explanation\":\"«nombrada(s)» is used consistently everywhere else.\"}]},\n{\"issueId\":\"es-editor-A-2\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.87,\"rationale\":\"We agree. This removes the mixed English-Spanish word «`import`ers». It keeps «señal», the passage's main image. It keeps the vague «algo», which the article picks up again later in «A THING!». The italics stay.\",\"replacement\":\"> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«sending a signal to `import`ers _how to use a thing._»\"},{\"referenceId\":\"target\",\"explanation\":\"«los `import`ers» puts an English suffix into Spanish prose.\"}]},\n{\"issueId\":\"es-editor-A-3\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.86,\"rationale\":\"«Sin intención del autor» can be read as the author acting by accident. The source means the pattern tells the reader nothing about what the author intended. B-6 covers this same span and more, so the fix should be applied once, through B-6.\",\"replacement\":\"No transmite ninguna intención del autor.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«No author intent» sits inside the argument that exports communicate intent.\"}]},\n{\"issueId\":\"es-editor-A-4\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.85,\"rationale\":\"We agree. «Recurso» avoids confusion with «función», which the table uses for JavaScript functions. «No viene al caso» replaces a calque of «not the point». Two short phrases keep the source's clipped rhythm.\",\"replacement\":\"Buen recurso. No viene al caso.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Neat feature. Not the point.» is two short fragments about a language feature.\"},{\"referenceId\":\"target\",\"explanation\":\"The table uses «función» for code functions.\"}]},\n{\"issueId\":\"es-editor-A-5\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.9,\"rationale\":\"«Incorrecto (ya no más)» can be read the wrong way round. «Ya no es cierto» keeps the author's point that the objection no longer holds, without updating the technical claim. Replacing the slash with «o» reads more naturally.\",\"replacement\":\"Ya no es cierto. Configura o actualiza tus herramientas.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Incorrect (any more)» is followed by the note that support has existed for 3+ years.\"}]},\n{\"issueId\":\"es-editor-A-6\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.86,\"rationale\":\"These are descriptive headers, not code. The unexplained «Fns» and the half-translated row both get fixed. The cells and the ✅/❌ combinations stay unchanged. The ❌ in the Named column of the «Multiple named exports» row looks like a possible inconsistency in the source. That is for the author to review, not ours to fix.\",\"replacement\":\"| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas | Patrón                                                   | Significado                                                       |\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The five headers are prose labels. The row in question is in the source itself.\"},{\"referenceId\":\"target\",\"explanation\":\"The cells already use «nombrada» and «por defecto».\"}]},\n{\"issueId\":\"es-editor-A-7\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.88,\"rationale\":\"This removes the calques «perdido el punto» and «en primer lugar». The present-tense «sirve» asks what exporting is fundamentally for. It keeps `export` intact without adding a Spanish verb ending.\",\"replacement\":\"¿No estaremos perdiendo de vista para qué sirve `export`?\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«in the first place» asks about the basic purpose here.\"}]},\n{\"issueId\":\"es-editor-A-8\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.95,\"rationale\":\"This comment is inside the tsx block, and the rules require code comments to be preserved. The cost is one English line inside the example. The prose around it stays in Spanish. Execution is unaffected, so severity is 2.\",\"replacement\":\"// You can alias using both!\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"This is the literal comment in the original block.\"},{\"referenceId\":\"target\",\"explanation\":\"The comment is currently translated.\"}]},\n{\"issueId\":\"es-editor-A-9\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.94,\"rationale\":\"This restores the original comments exactly and leaves the code lines as they are. The Spanish «Nota» before the block already explains the point. The code's behaviour doesn't change, so this stays at 2.\",\"replacement\":\"// ^ ❌ Not Supported ❌ ^\\n    // Cannot export default const ....\\n    // ==========================\\n\\n    // However, once declared you can export a const var as the default.\\n    const Knife = () => {...blade, ...handle}\\n    export default Knife;\\n    // ^ ✅ Valid\\n\\n    // For completeness:\\n    export default class anyoneStillUseThese {}\\n    // ^ ✅ Also valid to export a class as default\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"These are the original comments in the nested tsx block.\"},{\"referenceId\":\"target\",\"explanation\":\"The comments are currently translated.\"}]},\n{\"issueId\":\"es-editor-B-0\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.8,\"rationale\":\"Same wording and reasoning as A-0. What changed my mind is where the swear word sits: on the intent, as in the source. Whether it lands differently by region is unverified, so I make no claim about offense. Severity is 2, not 3, because caring and intent are close in this line and the argument is not reversed.\",\"replacement\":\"Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«fucking mean it» strengthens the intent.\"},{\"referenceId\":\"target\",\"explanation\":\"The current line has no swear word and talks about caring.\"}]},\n{\"issueId\":\"es-editor-B-1\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.88,\"rationale\":\"Identical to A-7. It removes both calques and keeps the present tense.\",\"replacement\":\"¿No estaremos perdiendo de vista para qué sirve `export`?\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The question is about the basic purpose of exporting.\"}]},\n{\"issueId\":\"es-editor-B-2\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.85,\"rationale\":\"The slate wording now matches A-4: «recurso» with no «Pero». It removes the calque, avoids confusion with JavaScript functions and keeps the two dry fragments.\",\"replacement\":\"Buen recurso. No viene al caso.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Neat feature. Not the point.»\"}]},\n{\"issueId\":\"es-editor-B-3\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.87,\"rationale\":\"Identical to A-2. It removes the mixed word and keeps «señal», «algo» and the italics.\",\"replacement\":\"> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«sending a signal… how to use a thing».\"}]},\n{\"issueId\":\"es-editor-B-4\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.86,\"rationale\":\"This takes the Spanish out of code formatting. It restores the «!» in «A THING!» that the joke depends on, and puts the period after the closing quote. «Nombrada» matches A-1 and the rest of the article. This change includes A-1, so the two should be applied together as one edit.\",\"replacement\":\"Una exportación nombrada (`named export`) dice que es \\\"definitivamente **_¡UNA COSA!_**\\\".\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"`named export` is in backticks, and «A THING!» has an exclamation mark.\"},{\"referenceId\":\"target\",\"explanation\":\"The current line has «**_UNA COSA_**» without «!» and the Spanish words inside backticks.\"},{\"referenceId\":\"mdn-export-es\",\"explanation\":\"The Spanish terminology for named exports is understood. MDN sets no required wording.\"}]},\n{\"issueId\":\"es-editor-B-5\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.82,\"rationale\":\"«Seguimiento:» reads like a meeting-agenda label, not a playful second question. «Y la siguiente:» brings back the follow-up question. The colon, the capital after «¿» and the period after the closing quote follow standard Spanish punctuation.\",\"replacement\":\"También plantea algunas preguntas: \\\"¿Tienes más compañeros por ahí?\\\". Y la siguiente: \\\"¿Están invitados o son obligatorios?\\\"\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Follow up» introduces a second, related question.\"}]},\n{\"issueId\":\"es-editor-B-6\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.84,\"rationale\":\"This fixes the ambiguity from A-3, removes the calque of «again» at the end of the question and ties «por dónde se agarra» to the Knife/Handle joke. It covers A-3's span, so it should be applied once.\",\"replacement\":\"A ver, dime otra vez: ¿por dónde se agarra tu invento? No transmite ninguna intención del autor.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«how do I hold your contraption again? No author intent.» comes right after the Knife/Handle example.\"},{\"referenceId\":\"target\",\"explanation\":\"«Sin intención del autor» can suggest the author acted by accident.\"}]},\n{\"issueId\":\"es-editor-B-7\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.89,\"rationale\":\"Identical to A-5. The meaning is clear and the technical claim is unchanged.\",\"replacement\":\"Ya no es cierto. Configura o actualiza tus herramientas.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The next bullet about 3+ years of support confirms this reading.\"}]},\n{\"issueId\":\"es-editor-B-8\",\"decision\":\"accept\",\"severity\":1,\"confidence\":0.74,\"rationale\":\"This is optional polish. «Presentando» is understandable. «Les presento» sounds more like a presenter talking to an audience, and «único» keeps «Single Purpose».\",\"replacement\":\"\\\"¡Les presento UNA función con un único propósito!\\\"\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Presenting ONE function w/ Single Purpose!»\"}]},\n{\"issueId\":\"es-editor-B-9\",\"decision\":\"accept\",\"severity\":1,\"confidence\":0.73,\"rationale\":\"«DE TODAS» brings back some of the extra emphasis of «SINGLE», and the period moves outside the closing quote. The superlative is already there, so this is polish, not a missing piece.\",\"replacement\":\"\\\"Esta es **_LA COSA MÁS IMPORTANTE DE TODAS_**\\\".\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«THE SINGLE MOST IMPORTANT» in capitals.\"},{\"referenceId\":\"target\",\"explanation\":\"The current line drops the emphasis of «SINGLE».\"}]},\n{\"issueId\":\"es-editor-B-10\",\"decision\":\"reject\",\"severity\":0,\"confidence\":0.86,\"rationale\":\"We agree this isn't a defect. «Ambos» is grammatical: the two referents are «un `export default`» (masculine) and «una exportación nombrada» (feminine), or the implied noun is «tipos». The code comment it was compared with is being restored to English, so it sets no precedent. The sourceQuote also points to the wrong passage.\",\"replacement\":\"Por supuesto, puedes combinar ambos o usar diferentes enfoques\",\"evidence\":[{\"referenceId\":\"target\",\"explanation\":\"The two referents have different grammatical genders.\"}]},\n{\"issueId\":\"es-editor-B-11\",\"decision\":\"reject\",\"severity\":0,\"confidence\":0.83,\"rationale\":\"sourceHash is legitimate provenance. The history lists this revision as matching the current source, with declaredSourceHash 438740274604. A different format doesn't prove an error, and the proposal changes nothing. Checking the hashing scheme is repository work, not a translation defect.\",\"replacement\":\"sourceHash: \\\"438740274604\\\"\",\"evidence\":[{\"referenceId\":\"target\",\"explanation\":\"The frontmatter declares this value, and the proposal leaves it unchanged.\"}]}\n]}\n```",
+  "steps": [
+    {
+      "text": "",
+      "toolCalls": [
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01EYxZgcbZPtwVK9HAptyQjL",
+          "toolName": "read_article",
+          "input": {
+            "version": "source"
+          },
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I should read the full context rather than rely on what's in the input alone -- I'll pull the source article, candidate, and history together, and check the mdn-export-es reference too, running these lookups in parallel.",
+                  "signature": "CAQSlAYKEAgSGAI4AUIIdGhpbmtpbmcSDLnQ3ZtkOK5dFNOpHBoMGAsf0Zee52X4nje8IjAeidalqwYhwPybv0UZnBAWm+o75xMB65PmUGFd5yaPQnqKbuMqYq6AVNscM9+l6TYqsQXZuR7LC+KT2WN2KGZD9E58ivl8XQjMxjkWYyX/FmxLv36PoPVjyDdI5lBZ9nNnp7s+gW22fyOSQxJ3n7nA/Uf/3j+fKWvgMpDeHpWhnjLYZMswF389LZ4KL6oAElHt1xNxPYjA2R9xT5+THub/0o90eXBE8xZH20bwKK/6kL2BnJ0ZPg2XmsVLWENvS4PE/rsIA4qVkHBRMVFmW/vqPKeaE6Y+GQEqi3CvPvS/dIQQgugiBAWdMlV5LUv0Pgb2CG/UWwEy8qBwUjdL/vpqfDJKIfHY+I9i4KfQib6pvx9Wx66gvC3ZujxaMVWPSQkzlSDxfMRpLgX1mDwwJw6CqVaV/vGyFrWnUWbfMJ1N4xx/6KlcYM89SjUrE0AZH3Nn/u2miprvYj8T+8bnuezkvRKgfq7k5sdR/t+yNZ4d6iT+xDlm/6hhfUlzthY5Jx5yeuaImIjzfQ2WsQMdekdSYLbrGItScMrW5eSqVYbS6A1hLEF5uikAFP6pxz55CnLLm6Cg7AXFV9q2Od4HdSDwK4fY9DSbKAUK0pK1IFcGufjwfJMcyDP00/kCd/bczQ/Rm5MlEfefK7O+sZ9nNUsE7JXo+Gf7hKfqw9yQ40xUHcfIOg4dlolb5cO1Oiw+HPIQXp/aDCY7NsDDUSY2nXPm1VKrWuUJLu1/VO9IJE+FYvF4bCWOfHVmZFOjeh+9DSyMWekdetwVe5RtXn0ezZGQjfqJwDMFc5ZHaxw/QGFK4AN8d4VUMR8mCRZnOE2ZMIHQK2Pi+EFqs2BJM0WZIGENSyWme8IL/TSAdb1fP+xcZgRLnDVal7cSx6LlRJJnsmqjHaXeXHwWjTfjU5OCn2cXdNUImZB2onvDt1Xa0RamWy6SyTrGHGL7m0RqWYZK6zlBBZunlAIbxwbDVL3jFcAU8xEB9hgB",
+                  "format": "anthropic-claude-v1",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01VpLizBk3i4bM7uX4vmChmG",
+          "toolName": "read_article",
+          "input": {
+            "version": "candidate"
+          }
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01LXATAMwp5XR5Aa7RqoGJ1x",
+          "toolName": "list_translation_history",
+          "input": {}
+        },
+        {
+          "type": "tool-call",
+          "toolCallId": "toolu_01LqYuV3USbQZGNAV1YNFKtP",
+          "toolName": "read_reference",
+          "input": {
+            "referenceId": "mdn-export-es"
+          }
+        }
+      ],
+      "toolResults": [
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01EYxZgcbZPtwVK9HAptyQjL",
+          "toolName": "read_article",
+          "input": {
+            "version": "source"
+          },
+          "output": {
+            "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contentHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contents": "---\nsocial_image: ./desktop-social.webp\ntitle: \"ESM exports: named vs. default?\"\nsubTitle: To name, or not to name?\ndate: 2023-08-10\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\n---\n\n## Should you use `named` or `default` exports in JavaScript?\n\nThere’s no shortage of strongly worded articles on this topic.\n\nThe majority judge `default export` as “terrible.” Others maintain `default` should win (e.g. AirBnb style guide.)\n\nThey often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.\n\nHave we missed the point of `export`ing in the first place?\n\n**Code is Communication. ✨**\n\n> We are sending a signal to `import`ers _how to use a thing._\n\n### So, what are we saying?\n\nBroadly speaking, there are 2 ways to export things in modern JavaScript:\n\n- An `export default` boldly declares “This is **_THE SINGLE MOST IMPORTANT_** thing.” Also, “any named exports only play a supporting role.”\n- A `named export` says it’s “definitely **_A THING!_**” Also raises some questions, “got any other buddies there?“ Follow up, “Are they invited or required?”\n\nOf course you can combine both, or use different approaches for different parts of your codebase. [See more examples at the end of the article.](#summary)\n\n### Weak Args, Man\n\nLet’s address some of the common “temporary issues” folks run into.\n\n- Arg #1: Named exports ensure name consistency. [source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - No, they don’t. You’re maybe looking for a lint rule?\n  - (I hate to break it to you, but wait until you learn what variables can do!)\n\n```tsx\n// You can alias using both!\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- Arg #2: Use `import * as soManyKnives from './kinves.js'` to combine named exports. (Not linked, author retracted.)\n  - Neat feature. Not the point.\n  - Now tell me, how do I hold your contraption again? No author intent.\n- Arg #3: Named exports have better IDE import or renaming support. [source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - Incorrect (any more). Configure/update your tools.\n  - Support has existed for 3+ years in [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.\n  - Still, there are some “best practices” to use with `default exports` to get the best IDE & refactor experience.\n  - ✅ `export default function UserService() {}` - always prefer named functions.\n  - ❌ `export default function() { }` - anonymous functions are not implicitly tied to their filename. If you don’t name the thing, it’s hard to ask the computer to change it.\n  - **Note:** For historical reasons you cannot combine `export default` with a `const` expression.\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ Not Supported ❌ ^\n    // Cannot export default const ....\n    // ==========================\n\n    // However, once declared you can export a const var as the default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Valid\n\n    // For completeness:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ Also valid to export a class as default\n    ```\n\n<section className=\"scroll-x\">\n## Summary\n\nThere are actually many combinations of ways we could export things, each tells a different story:\n\n| Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Meaning                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | One default export.                                       | “Presenting ONE function w/ Single Purpose!”                  |\n| ❌                | ✅              | ❌          | One named export.                                         | “Please don’t rename me.”                                     |\n| ✅                | ✅              | ✅          | Default export + multiple 'private' un-exported functions | “Here’s some related logic. Also, expect class-ish behavior.“ |\n| ❌                | ❌              | ✅          | Multiple named exports, generic file name.                | “A grab-bag of loosely related things, no hierarchy implied.” |\n| ✅                | ✅              | ❌          | Single named export ALSO exported as default.             | “You can’t mess up importing me.”                             |\n</section>\n\n**Something to think about:** What are we saying when the file name does or doesn’t match one of its exports? (For example, a `utils.js` with many functions.)\n\n### Conclusion\n\nIf Code is Communication, please `export` like you fucking mean it. 💞\n"
+          },
+          "dynamic": false,
+          "providerMetadata": {
+            "openrouter": {
+              "reasoning_details": [
+                {
+                  "type": "reasoning.text",
+                  "text": "I should read the full context rather than rely on what's in the input alone -- I'll pull the source article, candidate, and history together, and check the mdn-export-es reference too, running these lookups in parallel.",
+                  "signature": "CAQSlAYKEAgSGAI4AUIIdGhpbmtpbmcSDLnQ3ZtkOK5dFNOpHBoMGAsf0Zee52X4nje8IjAeidalqwYhwPybv0UZnBAWm+o75xMB65PmUGFd5yaPQnqKbuMqYq6AVNscM9+l6TYqsQXZuR7LC+KT2WN2KGZD9E58ivl8XQjMxjkWYyX/FmxLv36PoPVjyDdI5lBZ9nNnp7s+gW22fyOSQxJ3n7nA/Uf/3j+fKWvgMpDeHpWhnjLYZMswF389LZ4KL6oAElHt1xNxPYjA2R9xT5+THub/0o90eXBE8xZH20bwKK/6kL2BnJ0ZPg2XmsVLWENvS4PE/rsIA4qVkHBRMVFmW/vqPKeaE6Y+GQEqi3CvPvS/dIQQgugiBAWdMlV5LUv0Pgb2CG/UWwEy8qBwUjdL/vpqfDJKIfHY+I9i4KfQib6pvx9Wx66gvC3ZujxaMVWPSQkzlSDxfMRpLgX1mDwwJw6CqVaV/vGyFrWnUWbfMJ1N4xx/6KlcYM89SjUrE0AZH3Nn/u2miprvYj8T+8bnuezkvRKgfq7k5sdR/t+yNZ4d6iT+xDlm/6hhfUlzthY5Jx5yeuaImIjzfQ2WsQMdekdSYLbrGItScMrW5eSqVYbS6A1hLEF5uikAFP6pxz55CnLLm6Cg7AXFV9q2Od4HdSDwK4fY9DSbKAUK0pK1IFcGufjwfJMcyDP00/kCd/bczQ/Rm5MlEfefK7O+sZ9nNUsE7JXo+Gf7hKfqw9yQ40xUHcfIOg4dlolb5cO1Oiw+HPIQXp/aDCY7NsDDUSY2nXPm1VKrWuUJLu1/VO9IJE+FYvF4bCWOfHVmZFOjeh+9DSyMWekdetwVe5RtXn0ezZGQjfqJwDMFc5ZHaxw/QGFK4AN8d4VUMR8mCRZnOE2ZMIHQK2Pi+EFqs2BJM0WZIGENSyWme8IL/TSAdb1fP+xcZgRLnDVal7cSx6LlRJJnsmqjHaXeXHwWjTfjU5OCn2cXdNUImZB2onvDt1Xa0RamWy6SyTrGHGL7m0RqWYZK6zlBBZunlAIbxwbDVL3jFcAU8xEB9hgB",
+                  "format": "anthropic-claude-v1",
+                  "index": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01VpLizBk3i4bM7uX4vmChmG",
+          "toolName": "read_article",
+          "input": {
+            "version": "candidate"
+          },
+          "output": {
+            "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+            "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+            "contentHash": "1b1beb59a54429caceb9815ffeeecf35dc764f4493d008edad106e189293fbc4",
+            "contents": "---\nsocial_image: ../desktop-social.webp\ntitle: \"Exportaciones ESM: ¿nombradas o por defecto?\"\nsubTitle: ¿Nombrar o no nombrar?\nmodified: 2024-08-01\ntags: [typescript,javascript,modules]\ncategory: Guides\nsubCategory: JavaScript\ncover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\nsourceHash: \"438740274604\"\n---\n\n## ¿Deberías usar exportaciones `named` o `default` en JavaScript?\n\nNo faltan artículos con opiniones tajantes sobre este tema.\n\nLa mayoría juzga `default export` como \"terrible\". Otros sostienen que `default` debería ganar (por ejemplo, la guía de estilo de AirBnb).\n\nA menudo culpan a cosas **enteramente temporales**: errores de auto-importación del IDE, capacidades de tree-shaking de un bundler en particular, o la mera posibilidad de errores tipográficos al nombrar una importación.\n\n¿Acaso hemos perdido el punto de `export`ar en primer lugar?\n\n**El código es comunicación. ✨**\n\n> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._\n\n### Entonces, ¿qué estamos diciendo?\n\nEn términos generales, hay 2 formas de exportar cosas en JavaScript moderno:\n\n- Un `export default` declara audazmente \"Esta es **_LA COSA MÁS IMPORTANTE_**.\" Además, \"cualquier exportación nombrada solo juega un rol secundario.\"\n- Una `exportación nombrada` dice que es \"definitivamente **_UNA COSA_**.\" También plantea algunas preguntas, \"¿tienes otros compañeros por ahí?\" Seguimiento: \"¿Están invitados o son obligatorios?\"\n\nPor supuesto, puedes combinar ambos o usar diferentes enfoques para distintas partes de tu base de código. [Ver más ejemplos al final del artículo.](#resumen)\n\n### Argumentos débiles, amigo\n\nAbordemos algunos de los \"problemas temporales\" comunes con los que la gente se encuentra.\n\n- Argumento #1: Las exportaciones nombradas aseguran consistencia en los nombres. [fuente](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)\n  - No, no lo hacen. ¿Quizás estás buscando una regla de lint?\n  - (Odio ser quien te lo diga, ¡pero espera a ver lo que pueden hacer las variables!)\n\n```tsx\n// ¡Puedes usar alias con ambas!\nimport { Knife as Handle } from \"./knife.js\"; // 🔪\nimport { default as Handle } from \"./knife.js\"; // 🔪\nimport Handle from \"./knife.js\"; // 🔪\n```\n\n- Argumento #2: Usa `import * as soManyKnives from './kinves.js'` para combinar exportaciones nombradas. (Sin enlace, el autor se retractó.)\n  - Función interesante. No es el punto.\n  - Ahora dime, ¿cómo sostengo tu invento otra vez? Sin intención del autor.\n- Argumento #3: Las exportaciones nombradas tienen mejor soporte de importación o renombrado en el IDE. [fuente](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)\n\n  - Incorrecto (ya no más). Configura/actualiza tus herramientas.\n  - El soporte existe desde hace más de 3 años en [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.\n  - Aun así, hay algunas \"buenas prácticas\" para usar con `default exports` y obtener la mejor experiencia de IDE y refactorización.\n  - ✅ `export default function UserService() {}` - siempre prefiere funciones nombradas.\n  - ❌ `export default function() { }` - las funciones anónimas no están implícitamente ligadas a su nombre de archivo. Si no nombras la cosa, es difícil pedirle a la computadora que la cambie.\n  - **Nota:** Por razones históricas, no puedes combinar `export default` con una expresión `const`.\n\n    ```tsx\n    export default const Knife = () => {...blade, ...handle}\n    // ^ ❌ No soportado ❌ ^\n    // No se puede exportar default const ....\n    // ==========================\n\n    // Sin embargo, una vez declarada, puedes exportar una variable const como default.\n    const Knife = () => {...blade, ...handle}\n    export default Knife;\n    // ^ ✅ Válido\n\n    // Para completar:\n    export default class anyoneStillUseThese {}\n    // ^ ✅ También es válido exportar una clase como default\n    ```\n\n<section className=\"scroll-x\">\n## Resumen\n\nEn realidad hay muchas combinaciones de formas en que podríamos exportar cosas, cada una cuenta una historia diferente:\n\n| Default (Exports) | Named (Exports) | Private Fns | Patrón                                                   | Significado                                                       |\n| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ----------------------------------------------------------------- |\n| ✅                | ❌              | ❌          | Una exportación por defecto.                              | \"¡Presentando UNA función con un solo propósito!\"                 |\n| ❌                | ✅              | ❌          | Una exportación nombrada.                                 | \"Por favor, no me renombres.\"                                     |\n| ✅                | ✅              | ✅          | Exportación por defecto + múltiples funciones 'privadas' no exportadas | \"Aquí hay algo de lógica relacionada. Además, espera comportamiento tipo clase.\" |\n| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. | \"Un conjunto de cosas vagamente relacionadas, sin jerarquía implícita.\" |\n| ✅                | ✅              | ❌          | Una única exportación nombrada TAMBIÉN exportada como default. | \"No puedes equivocarte al importarme.\"                            |\n</section>\n\n**Algo en lo que pensar:** ¿Qué estamos diciendo cuando el nombre del archivo coincide o no con una de sus exportaciones? (Por ejemplo, un `utils.js` con muchas funciones.)\n\n### Conclusión\n\nSi el código es comunicación, por favor `export`a como si en verdad te importara. 💞"
+          },
+          "dynamic": false
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01LXATAMwp5XR5Aa7RqoGJ1x",
+          "toolName": "list_translation_history",
+          "input": {},
+          "output": [
+            {
+              "id": "f3411d66a4c2239120397af995051a7675d5eec8",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "1b1beb59a54429caceb9815ffeeecf35dc764f4493d008edad106e189293fbc4",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": "438740274604"
+            },
+            {
+              "id": "b3a76a2de916e41eb59498b285ed63e371b95600",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "02a673aeb7204c093463c5a0467adb0261acf6d5e99982ef26979ac7bb2252f2",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "b39d13060b663ceaae1323c8c819aa61bcdbf272",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "50dd607e6b85434b9240de44152174a0c10678c2bee4183ea0e1ecec5fc4fedf",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "11dddfecb08918c3a94e2e16d452fb09e4232fbf",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "de69d4884ff85e4754573d0c870687cc15bb1ecd2e45033528256cf33498cccb",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "1400784b910cde012aa4da3e689986c713ed6955",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "96804e2fa41883ac5f16b5cabf3907a1d11d10f0dca98255baf446dc2707a020",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            },
+            {
+              "id": "8a3c1826edded376f858689b6f1e2b79a3ad6013",
+              "path": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/es/index.mdx",
+              "sourcePath": "src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx",
+              "sourceHash": "7d9ec3992b22cf3cfd2618b7bc60245a24d401d7dfc16aea4316596529ce57ed",
+              "translationHash": "481257f2cf3a7f97039a5ce7f3a70d02b8a83531733c01b93c358db9a23a419f",
+              "matchesCurrentSource": true,
+              "declaredSourceHash": null
+            }
+          ],
+          "dynamic": false
+        },
+        {
+          "type": "tool-result",
+          "toolCallId": "toolu_01LqYuV3USbQZGNAV1YNFKtP",
+          "toolName": "read_reference",
+          "input": {
+            "referenceId": "mdn-export-es"
+          },
+          "output": {
+            "id": "mdn-export-es",
+            "url": "https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/export",
+            "scope": "Spanish technical terminology and export semantics; not a mandatory style guide",
+            "summary": "The Spanish documentation distinguishes named exports and default exports and describes how JavaScript modules expose functions, objects and primitive values.",
+            "verified": true,
+            "checkedAt": "2026-09-23",
+            "verificationMethod": "Coordinator inspected the linked page via web tool; summary is a bounded paraphrase, not a quotation."
+          },
+          "dynamic": false
+        }
+      ],
+      "usage": {
+        "inputTokens": 30036,
+        "inputTokenDetails": {
+          "noCacheTokens": 30036,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 250,
+        "outputTokenDetails": {
+          "textTokens": 174,
+          "reasoningTokens": 76
+        },
+        "totalTokens": 30286,
+        "raw": {
+          "prompt_tokens": 30036,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 250,
+          "completion_tokens_details": {
+            "reasoning_tokens": 76,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 30286,
+          "cost": 0.125144,
+          "cost_details": {
+            "upstream_inference_cost": 0.125144,
+            "upstream_inference_prompt_cost": 0.120144,
+            "upstream_inference_completions_cost": 0.005
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Claude Platform on AWS",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "I should read the full context rather than rely on what's in the input alone -- I'll pull the source article, candidate, and history together, and check the mdn-export-es reference too, running these lookups in parallel.",
+              "signature": "CAQSlAYKEAgSGAI4AUIIdGhpbmtpbmcSDLnQ3ZtkOK5dFNOpHBoMGAsf0Zee52X4nje8IjAeidalqwYhwPybv0UZnBAWm+o75xMB65PmUGFd5yaPQnqKbuMqYq6AVNscM9+l6TYqsQXZuR7LC+KT2WN2KGZD9E58ivl8XQjMxjkWYyX/FmxLv36PoPVjyDdI5lBZ9nNnp7s+gW22fyOSQxJ3n7nA/Uf/3j+fKWvgMpDeHpWhnjLYZMswF389LZ4KL6oAElHt1xNxPYjA2R9xT5+THub/0o90eXBE8xZH20bwKK/6kL2BnJ0ZPg2XmsVLWENvS4PE/rsIA4qVkHBRMVFmW/vqPKeaE6Y+GQEqi3CvPvS/dIQQgugiBAWdMlV5LUv0Pgb2CG/UWwEy8qBwUjdL/vpqfDJKIfHY+I9i4KfQib6pvx9Wx66gvC3ZujxaMVWPSQkzlSDxfMRpLgX1mDwwJw6CqVaV/vGyFrWnUWbfMJ1N4xx/6KlcYM89SjUrE0AZH3Nn/u2miprvYj8T+8bnuezkvRKgfq7k5sdR/t+yNZ4d6iT+xDlm/6hhfUlzthY5Jx5yeuaImIjzfQ2WsQMdekdSYLbrGItScMrW5eSqVYbS6A1hLEF5uikAFP6pxz55CnLLm6Cg7AXFV9q2Od4HdSDwK4fY9DSbKAUK0pK1IFcGufjwfJMcyDP00/kCd/bczQ/Rm5MlEfefK7O+sZ9nNUsE7JXo+Gf7hKfqw9yQ40xUHcfIOg4dlolb5cO1Oiw+HPIQXp/aDCY7NsDDUSY2nXPm1VKrWuUJLu1/VO9IJE+FYvF4bCWOfHVmZFOjeh+9DSyMWekdetwVe5RtXn0ezZGQjfqJwDMFc5ZHaxw/QGFK4AN8d4VUMR8mCRZnOE2ZMIHQK2Pi+EFqs2BJM0WZIGENSyWme8IL/TSAdb1fP+xcZgRLnDVal7cSx6LlRJJnsmqjHaXeXHwWjTfjU5OCn2cXdNUImZB2onvDt1Xa0RamWy6SyTrGHGL7m0RqWYZK6zlBBZunlAIbxwbDVL3jFcAU8xEB9hgB",
+              "format": "anthropic-claude-v1",
+              "index": 0
+            }
+          ],
+          "usage": {
+            "promptTokens": 30036,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 250,
+            "completionTokensDetails": {
+              "reasoningTokens": 76
+            },
+            "totalTokens": 30286,
+            "cost": 0.125144,
+            "costDetails": {
+              "upstreamInferenceCost": 0.125144
+            }
+          }
+        }
+      },
+      "finishReason": "tool-calls"
+    },
+    {
+      "text": "```json\n{\"votes\":[\n{\"issueId\":\"es-editor-A-0\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.8,\"rationale\":\"I'm switching from my earlier «¡carajo!» wording. I checked both options against the frozen source. «Fucking» sits inside «mean it» and makes the intent stronger. «Con toda la puta intención» keeps it there. It builds on the set phrase «con toda la intención», so the swear word and the article's main idea arrive together. «¡Carajo!» at the end was a separate exclamation added on, which I now think is weaker. My view that this pattern reads naturally, like «toda la puta razón», is my own judgment about usage. I have no checked source for it. I make no claim about offense or regional strength. The force is similar to the source, so this is not an escalation. The current «te importara» is about caring, not intent, and drops the swear word. That is a voice issue plus a small meaning shift, so severity stays at 2, not 3.\",\"replacement\":\"Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«please `export` like you fucking mean it»: the swear word strengthens the intent itself.\"},{\"referenceId\":\"target\",\"explanation\":\"«como si en verdad te importara» drops the swear word, changes intent into caring and adds a Spanish ending to the keyword.\"}]},\n{\"issueId\":\"es-editor-A-1\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.87,\"rationale\":\"We agree. Spanish words shouldn't sit inside code formatting. «Nombrada» matches the title, Arg #1, Arg #2 and the table. MDN separates the two kinds of export but doesn't require one Spanish wording. This fix covers only part of the span that B-4 changes. B-4's wording includes this change, so the two need to be merged when applied.\",\"replacement\":\"Una exportación nombrada (`named export`)\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The term appears as `named export` in backticks.\"},{\"referenceId\":\"mdn-export-es\",\"explanation\":\"Separates named and default exports without requiring one Spanish term.\"},{\"referenceId\":\"target\",\"explanation\":\"«nombrada(s)» is used consistently everywhere else.\"}]},\n{\"issueId\":\"es-editor-A-2\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.87,\"rationale\":\"We agree. This removes the mixed English-Spanish word «`import`ers». It keeps «señal», the passage's main image. It keeps the vague «algo», which the article picks up again later in «A THING!». The italics stay.\",\"replacement\":\"> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«sending a signal to `import`ers _how to use a thing._»\"},{\"referenceId\":\"target\",\"explanation\":\"«los `import`ers» puts an English suffix into Spanish prose.\"}]},\n{\"issueId\":\"es-editor-A-3\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.86,\"rationale\":\"«Sin intención del autor» can be read as the author acting by accident. The source means the pattern tells the reader nothing about what the author intended. B-6 covers this same span and more, so the fix should be applied once, through B-6.\",\"replacement\":\"No transmite ninguna intención del autor.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«No author intent» sits inside the argument that exports communicate intent.\"}]},\n{\"issueId\":\"es-editor-A-4\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.85,\"rationale\":\"We agree. «Recurso» avoids confusion with «función», which the table uses for JavaScript functions. «No viene al caso» replaces a calque of «not the point». Two short phrases keep the source's clipped rhythm.\",\"replacement\":\"Buen recurso. No viene al caso.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Neat feature. Not the point.» is two short fragments about a language feature.\"},{\"referenceId\":\"target\",\"explanation\":\"The table uses «función» for code functions.\"}]},\n{\"issueId\":\"es-editor-A-5\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.9,\"rationale\":\"«Incorrecto (ya no más)» can be read the wrong way round. «Ya no es cierto» keeps the author's point that the objection no longer holds, without updating the technical claim. Replacing the slash with «o» reads more naturally.\",\"replacement\":\"Ya no es cierto. Configura o actualiza tus herramientas.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Incorrect (any more)» is followed by the note that support has existed for 3+ years.\"}]},\n{\"issueId\":\"es-editor-A-6\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.86,\"rationale\":\"These are descriptive headers, not code. The unexplained «Fns» and the half-translated row both get fixed. The cells and the ✅/❌ combinations stay unchanged. The ❌ in the Named column of the «Multiple named exports» row looks like a possible inconsistency in the source. That is for the author to review, not ours to fix.\",\"replacement\":\"| Exportaciones por defecto | Exportaciones nombradas | Funciones privadas | Patrón                                                   | Significado                                                       |\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The five headers are prose labels. The row in question is in the source itself.\"},{\"referenceId\":\"target\",\"explanation\":\"The cells already use «nombrada» and «por defecto».\"}]},\n{\"issueId\":\"es-editor-A-7\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.88,\"rationale\":\"This removes the calques «perdido el punto» and «en primer lugar». The present-tense «sirve» asks what exporting is fundamentally for. It keeps `export` intact without adding a Spanish verb ending.\",\"replacement\":\"¿No estaremos perdiendo de vista para qué sirve `export`?\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«in the first place» asks about the basic purpose here.\"}]},\n{\"issueId\":\"es-editor-A-8\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.95,\"rationale\":\"This comment is inside the tsx block, and the rules require code comments to be preserved. The cost is one English line inside the example. The prose around it stays in Spanish. Execution is unaffected, so severity is 2.\",\"replacement\":\"// You can alias using both!\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"This is the literal comment in the original block.\"},{\"referenceId\":\"target\",\"explanation\":\"The comment is currently translated.\"}]},\n{\"issueId\":\"es-editor-A-9\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.94,\"rationale\":\"This restores the original comments exactly and leaves the code lines as they are. The Spanish «Nota» before the block already explains the point. The code's behaviour doesn't change, so this stays at 2.\",\"replacement\":\"// ^ ❌ Not Supported ❌ ^\\n    // Cannot export default const ....\\n    // ==========================\\n\\n    // However, once declared you can export a const var as the default.\\n    const Knife = () => {...blade, ...handle}\\n    export default Knife;\\n    // ^ ✅ Valid\\n\\n    // For completeness:\\n    export default class anyoneStillUseThese {}\\n    // ^ ✅ Also valid to export a class as default\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"These are the original comments in the nested tsx block.\"},{\"referenceId\":\"target\",\"explanation\":\"The comments are currently translated.\"}]},\n{\"issueId\":\"es-editor-B-0\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.8,\"rationale\":\"Same wording and reasoning as A-0. What changed my mind is where the swear word sits: on the intent, as in the source. Whether it lands differently by region is unverified, so I make no claim about offense. Severity is 2, not 3, because caring and intent are close in this line and the argument is not reversed.\",\"replacement\":\"Si el código es comunicación, por favor, haz `export` con toda la puta intención. 💞\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«fucking mean it» strengthens the intent.\"},{\"referenceId\":\"target\",\"explanation\":\"The current line has no swear word and talks about caring.\"}]},\n{\"issueId\":\"es-editor-B-1\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.88,\"rationale\":\"Identical to A-7. It removes both calques and keeps the present tense.\",\"replacement\":\"¿No estaremos perdiendo de vista para qué sirve `export`?\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The question is about the basic purpose of exporting.\"}]},\n{\"issueId\":\"es-editor-B-2\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.85,\"rationale\":\"The slate wording now matches A-4: «recurso» with no «Pero». It removes the calque, avoids confusion with JavaScript functions and keeps the two dry fragments.\",\"replacement\":\"Buen recurso. No viene al caso.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Neat feature. Not the point.»\"}]},\n{\"issueId\":\"es-editor-B-3\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.87,\"rationale\":\"Identical to A-2. It removes the mixed word and keeps «señal», «algo» and the italics.\",\"replacement\":\"> Le estamos enviando una señal a quien hace `import` _sobre cómo usar algo._\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«sending a signal… how to use a thing».\"}]},\n{\"issueId\":\"es-editor-B-4\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.86,\"rationale\":\"This takes the Spanish out of code formatting. It restores the «!» in «A THING!» that the joke depends on, and puts the period after the closing quote. «Nombrada» matches A-1 and the rest of the article. This change includes A-1, so the two should be applied together as one edit.\",\"replacement\":\"Una exportación nombrada (`named export`) dice que es \\\"definitivamente **_¡UNA COSA!_**\\\".\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"`named export` is in backticks, and «A THING!» has an exclamation mark.\"},{\"referenceId\":\"target\",\"explanation\":\"The current line has «**_UNA COSA_**» without «!» and the Spanish words inside backticks.\"},{\"referenceId\":\"mdn-export-es\",\"explanation\":\"The Spanish terminology for named exports is understood. MDN sets no required wording.\"}]},\n{\"issueId\":\"es-editor-B-5\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.82,\"rationale\":\"«Seguimiento:» reads like a meeting-agenda label, not a playful second question. «Y la siguiente:» brings back the follow-up question. The colon, the capital after «¿» and the period after the closing quote follow standard Spanish punctuation.\",\"replacement\":\"También plantea algunas preguntas: \\\"¿Tienes más compañeros por ahí?\\\". Y la siguiente: \\\"¿Están invitados o son obligatorios?\\\"\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Follow up» introduces a second, related question.\"}]},\n{\"issueId\":\"es-editor-B-6\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.84,\"rationale\":\"This fixes the ambiguity from A-3, removes the calque of «again» at the end of the question and ties «por dónde se agarra» to the Knife/Handle joke. It covers A-3's span, so it should be applied once.\",\"replacement\":\"A ver, dime otra vez: ¿por dónde se agarra tu invento? No transmite ninguna intención del autor.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«how do I hold your contraption again? No author intent.» comes right after the Knife/Handle example.\"},{\"referenceId\":\"target\",\"explanation\":\"«Sin intención del autor» can suggest the author acted by accident.\"}]},\n{\"issueId\":\"es-editor-B-7\",\"decision\":\"accept\",\"severity\":2,\"confidence\":0.89,\"rationale\":\"Identical to A-5. The meaning is clear and the technical claim is unchanged.\",\"replacement\":\"Ya no es cierto. Configura o actualiza tus herramientas.\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"The next bullet about 3+ years of support confirms this reading.\"}]},\n{\"issueId\":\"es-editor-B-8\",\"decision\":\"accept\",\"severity\":1,\"confidence\":0.74,\"rationale\":\"This is optional polish. «Presentando» is understandable. «Les presento» sounds more like a presenter talking to an audience, and «único» keeps «Single Purpose».\",\"replacement\":\"\\\"¡Les presento UNA función con un único propósito!\\\"\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«Presenting ONE function w/ Single Purpose!»\"}]},\n{\"issueId\":\"es-editor-B-9\",\"decision\":\"accept\",\"severity\":1,\"confidence\":0.73,\"rationale\":\"«DE TODAS» brings back some of the extra emphasis of «SINGLE», and the period moves outside the closing quote. The superlative is already there, so this is polish, not a missing piece.\",\"replacement\":\"\\\"Esta es **_LA COSA MÁS IMPORTANTE DE TODAS_**\\\".\",\"evidence\":[{\"referenceId\":\"source\",\"explanation\":\"«THE SINGLE MOST IMPORTANT» in capitals.\"},{\"referenceId\":\"target\",\"explanation\":\"The current line drops the emphasis of «SINGLE».\"}]},\n{\"issueId\":\"es-editor-B-10\",\"decision\":\"reject\",\"severity\":0,\"confidence\":0.86,\"rationale\":\"We agree this isn't a defect. «Ambos» is grammatical: the two referents are «un `export default`» (masculine) and «una exportación nombrada» (feminine), or the implied noun is «tipos». The code comment it was compared with is being restored to English, so it sets no precedent. The sourceQuote also points to the wrong passage.\",\"replacement\":\"Por supuesto, puedes combinar ambos o usar diferentes enfoques\",\"evidence\":[{\"referenceId\":\"target\",\"explanation\":\"The two referents have different grammatical genders.\"}]},\n{\"issueId\":\"es-editor-B-11\",\"decision\":\"reject\",\"severity\":0,\"confidence\":0.83,\"rationale\":\"sourceHash is legitimate provenance. The history lists this revision as matching the current source, with declaredSourceHash 438740274604. A different format doesn't prove an error, and the proposal changes nothing. Checking the hashing scheme is repository work, not a translation defect.\",\"replacement\":\"sourceHash: \\\"438740274604\\\"\",\"evidence\":[{\"referenceId\":\"target\",\"explanation\":\"The frontmatter declares this value, and the proposal leaves it unchanged.\"}]}\n]}\n```",
+      "toolCalls": [],
+      "toolResults": [],
+      "usage": {
+        "inputTokens": 36862,
+        "inputTokenDetails": {
+          "noCacheTokens": 36862,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0
+        },
+        "outputTokens": 6798,
+        "outputTokenDetails": {
+          "textTokens": 5087,
+          "reasoningTokens": 1711
+        },
+        "totalTokens": 43660,
+        "raw": {
+          "prompt_tokens": 36862,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "completion_tokens": 6798,
+          "completion_tokens_details": {
+            "reasoning_tokens": 1711,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          },
+          "total_tokens": 43660,
+          "cost": 0.283408,
+          "cost_details": {
+            "upstream_inference_cost": 0.283408,
+            "upstream_inference_prompt_cost": 0.147448,
+            "upstream_inference_completions_cost": 0.13596
+          },
+          "is_byok": false
+        }
+      },
+      "providerMetadata": {
+        "openrouter": {
+          "provider": "Claude Platform on AWS",
+          "reasoning_details": [
+            {
+              "type": "reasoning.text",
+              "text": "Now I'm weighing the remaining disagreement on the slate translation choice — my earlier version used \"¡carajo!\" while the peer switched to \"con toda la puta intención,\" which reads as a natural intensified rendering of the idiom \"con toda la intención,\" fitting the source's vulgar emphasis on \"fucking mean it.\"  Since \"puta\" as an intensifier is broadly understood across Spanish-speaking regions while \"carajo\" leans more Latin American and dated in Spain, I'm persuaded to accept the peer's version.\n\nEverything else looks converged, so I'm double-checking that the slate replacements match what we agreed on, confirming A-1's narrower replacement for the named export term doesn't conflict with B-4's broader overlapping span.\n\nI'm accepting A-2 through A-7 as agreed, then pausing on A-8/A-9 since translating code comments touches a hard constraint about preserving them even though it doesn't break execution — I'll stick with severity 2 since meaning stays intact, though it's a defensible edge case. I also notice A-9's source quote excludes the first line of that code block, which matters for how the fix gets applied.\n\nMoving to the B items now, I'm accepting B-0 through B-3 with their proposed wording, and checking B-4's punctuation carefully — the quotation marks and period placement around the emphasized \"¡UNA COSA!\" phrase look correct with the period outside the quotes. For B-5 I'm confirming the punctuation rule: when a quoted question ends the sentence, RAE style places the period after the closing quotation marks, which matches what's written here.\n\nFor B-6 through B-9 I'm accepting each, noting B-6 overlaps with and subsumes A-3, and flagging B-8's use of \"les presento\" as acceptable even in formal Spain contexts despite \"os presento\" being more typical there. B-10 and B-11 I'm rejecting at severity 0, keeping the original text unchanged.\n\nNow I'm drafting the vote for A-0: accepting it at severity 2 with a specific replacement inserting the intensifier phrase into the sentence about exporting with intention, while noting my rationale should frame the \"carajo\" critique as a usage judgment about regional markedness rather than an offensiveness claim, since I can't verify audience reception empirically.",
+              "signature": "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",
+              "format": "anthropic-claude-v1",
+              "index": 0
+            }
+          ],
+          "usage": {
+            "promptTokens": 36862,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 6798,
+            "completionTokensDetails": {
+              "reasoningTokens": 1711
+            },
+            "totalTokens": 43660,
+            "cost": 0.283408,
+            "costDetails": {
+              "upstreamInferenceCost": 0.283408
+            }
+          }
+        }
+      },
+      "finishReason": "stop"
+    }
+  ],
+  "totalUsage": {
+    "inputTokens": 66898,
+    "inputTokenDetails": {
+      "noCacheTokens": 66898,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 7048,
+    "outputTokenDetails": {
+      "textTokens": 5261,
+      "reasoningTokens": 1787
+    },
+    "totalTokens": 73946
+  },
+  "durationMs": 66267.589125,
+  "finishReason": "stop"
+}
