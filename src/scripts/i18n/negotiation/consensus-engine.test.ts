@@ -194,7 +194,7 @@ test("unresolved issue survives omission and triggers revision before final cons
             tradeoff: "None",
             instruction: "Preserve intent",
             kind: "repair",
-            evidenceIds: ["source"],
+            evidenceIds: key.includes("revision-repair") ? ["source"] : [],
           },
         ],
         explanation: "Address criticism",
@@ -203,6 +203,7 @@ test("unresolved issue survives omission and triggers revision before final cons
   });
   expect(result.status).toBe("consensus");
   expect(result.candidate).toBe("new");
+  expect(events.some((e) => e.type === "revision-rejected")).toBe(true);
   expect(result.issues).toHaveLength(1);
   expect(result.issues[0]!.decisions).toHaveLength(2);
   expect(

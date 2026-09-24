@@ -436,7 +436,7 @@ export async function negotiateConsensus(
     }
     if (round === p.maxRounds) break;
     const actor = actors[(round - 1) % Math.min(2, actors.length)]!;
-    const revision = await call(
+    let revision = await call(
       "r" + round + "-revision-v2",
       actor,
       {
@@ -448,23 +448,64 @@ export async function negotiateConsensus(
       },
       revisionSchema,
     );
-    revision.changes.forEach((c) => {
-      if (
-        !input.source.includes(c.sourceQuote) ||
-        c.issueIds.some((id) => !issues.some((i) => i.id === id))
-      )
-        throw Error("Unbound change");
-      evidence(c.evidenceIds);
-    });
-    const patches = revision.changes.map(
-      (c, i) =>
-        ({
-          id: String(i),
-          targetQuote: c.before,
-          replacement: c.after,
-        }) as PatchIssue,
-    );
-    const next = applyPatches(candidate, candidateHash, patches);
+    let next = candidate;
+    for (let repair = 0; ; repair++) {
+      try {
+        revision.changes.forEach((c) => {
+          if (
+            !input.source.includes(c.sourceQuote) ||
+            c.issueIds.some((id) => !issues.some((i) => i.id === id))
+          )
+            throw Error("Unbound change");
+          evidence(c.evidenceIds);
+        });
+        next = applyPatches(
+          candidate,
+          candidateHash,
+          revision.changes.map(
+            (c, i) =>
+              ({
+                id: String(i),
+                targetQuote: c.before,
+                replacement: c.after,
+              }) as PatchIssue,
+          ),
+        );
+        break;
+      } catch (error) {
+        io.emit({
+          type: "revision-rejected",
+          round,
+          repair,
+          error: String(error),
+          revision,
+          candidateHash,
+        });
+        if (repair >= 2) throw error;
+        const groundedRevisionSchema = revisionSchema.extend({
+          changes: z.array(
+            revisionSchema.shape.changes.element.extend({
+              evidenceIds: z
+                .array(z.enum([...refs] as [string, ...string[]]))
+                .min(1),
+            }),
+          ),
+        });
+        revision = await call(
+          `r${round}-revision-repair-${repair + 1}`,
+          actor,
+          {
+            task: "Correct the rejected revision. Every change requires evidenceIds containing source or target for direct textual evidence, or a checked reference ID. Preserve justified edits, use exact source quotes and exact nonoverlapping candidate replacements. Do not invent evidence.",
+            ...context,
+            issues,
+            allowedEvidenceIds: [...refs],
+            rejectedRevision: revision,
+            error: String(error),
+          },
+          groundedRevisionSchema,
+        );
+      }
+    }
     io.emit({
       type: "revision",
       round,
