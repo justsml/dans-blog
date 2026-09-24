@@ -27,6 +27,20 @@ for (const c of calls) {
   c.accountingAnomaly = !!c.text && c.telemetry?.outputTokens === 0;
   if (c.accountingAnomaly) c.catalogEstimateUsd = undefined;
 }
+const settled = extra("cost-audit/reconciliation.jsonl");
+const settledCosts = (receipts: any[]) => {
+  const rs = receipts.map((c) => settled.find((r) => r.callId === c.id));
+  const complete = rs.length > 0 && rs.every(Boolean);
+  return {
+    settlementVerified: complete,
+    openRouterChargeUsd: complete ? sum(rs.map((r) => r.gatewayUsd)) : null,
+    byokCalls: complete ? rs.filter((r) => r.isByok).length : null,
+    byokInferenceReferenceUsd: complete
+      ? sum(rs.map((r) => (r.isByok ? r.upstreamReferenceUsd : 0)))
+      : null,
+    providerInvoiceUsd: null,
+  };
+};
 const manifest = read(join(dir, "manifest.jsonl"));
 const mean = (xs: number[]) =>
   xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : null;
@@ -110,6 +124,7 @@ const rows = manifest.identity.models
     const known = receipts.filter((r) => r.telemetry);
     return {
       model: m.id,
+      ...settledCosts(receipts),
       effort: m.effort,
       byJudge: Object.fromEntries(
         manifest.identity.judges.map((j: string) => {
@@ -228,6 +243,7 @@ const costs = ["gen-", "review-"].map((prefix) => {
   const selected = calls.filter((c) => c.id.startsWith(prefix));
   return {
     phase: prefix === "gen-" ? "generation" : "evaluation",
+    ...settledCosts(selected),
     attempts: selected.length,
     medianSeconds: quantile(
       selected.map((c) => c.durationMs / 1000),
@@ -300,12 +316,19 @@ const lines = [
   "",
   "## Cost accounting",
   "",
-  ...costs.map(
-    (c) =>
-      `${c.phase}: ${c.attempts} calls; gateway reported $${f(c.reportedGatewayUsd, 6)}; upstream reported $${f(c.reportedUpstreamUsd, 6)}; catalog estimate $${f(c.catalogEstimateUsd, 6)} (known subtotal $${f(c.catalogKnownSubtotalUsd, 6)}; ${c.accountingAnomalies} accounting anomalies); ${c.unknownCostAttempts} unknown-cost attempts.`,
+  "| Model | OpenRouter charge $ | BYOK reference $ | BYOK calls |",
+  "|---|---:|---:|---:|",
+  ...rows.map(
+    (r: any) =>
+      `| ${r.model} | ${f(r.openRouterChargeUsd, 6)} | ${f(r.byokInferenceReferenceUsd, 6)} | ${r.byokCalls ?? "unknown"} |`,
   ),
   "",
-  "Gateway and upstream are distinct receipts and are not added. Catalog estimates are API-equivalent comparisons, not invoices. Zero gateway charges may accompany BYOK upstream cost. Latency includes complete request time; effective output throughput is not streaming decode speed. p95 with only five samples is the maximum. All trace IDs and prompts are in calls/*.jsonl.",
+  ...costs.map(
+    (c) =>
+      `${c.phase}: ${c.attempts} calls; gateway reported $${f(c.reportedGatewayUsd, 6)}; BYOK-only inference reference $${f(c.byokInferenceReferenceUsd, 6)} across ${c.byokCalls} calls; provider invoice unknown; catalog estimate $${f(c.catalogEstimateUsd, 6)} (known subtotal $${f(c.catalogKnownSubtotalUsd, 6)}; ${c.accountingAnomalies} accounting anomalies); ${c.unknownCostAttempts} unknown-cost attempts.`,
+  ),
+  "",
+  "Settled OpenRouter charges were verified against all 195 generation lookups. Raw completion upstream fields repeat gateway charges on non-BYOK routes: reportedUpstreamUsd is retained only as legacy raw evidence, not a provider invoice. BYOK inference references are separated using verified is_byok. Adding OpenRouter charges and BYOK-only reference values gives an inference-cost estimate, not reconciled provider spend. Catalog estimates use model-list prices; routed providers can charge differently. DeepSeek actual OpenRouter charge was $0.011946564 versus $0.0045105648 catalog estimate; Qwen 27B was $0.029684 versus $0.0278052. Flash Lite charged $0.0187884 including its zero-charge failed response; its complete catalog estimate remains unknown. Latency includes complete request time; effective output throughput is not streaming decode speed. p95 with only five samples is the maximum. All trace IDs and prompts are in calls/*.jsonl.",
 ];
 writeFileSync(join(dir, "README.md"), lines.join("\n") + "\n");
 console.log(JSON.stringify({ rows, costs }, null, 2));

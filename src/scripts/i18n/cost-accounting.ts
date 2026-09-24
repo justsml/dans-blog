@@ -112,7 +112,7 @@ export function sdkAccounting(event: {
         ? {
             upstreamInferenceCostUsd: upstream,
             upstreamCostNote:
-              "Reported separately; do not add to gateway charge without confirming BYOK billing",
+              "Raw completion field may repeat gateway cost on non-BYOK routes. Verify is_byok via generation lookup; not a reconciled provider invoice.",
           }
         : {}),
     },

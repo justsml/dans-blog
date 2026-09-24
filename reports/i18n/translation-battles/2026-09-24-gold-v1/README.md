@@ -33,7 +33,23 @@ qwen/qwen3.8-flash: quiz signature check failed (gen-effd2456d5f835e8fc25): Erro
 
 ## Cost accounting
 
-generation: 65 calls; gateway reported $1.198122; upstream reported $1.852115; catalog estimate $unknown (known subtotal $1.842801; 1 accounting anomalies); 0 unknown-cost attempts.
-evaluation: 130 calls; gateway reported $8.382072; upstream reported $12.641014; catalog estimate $12.641014 (known subtotal $12.641014; 0 accounting anomalies); 0 unknown-cost attempts.
+| Model | OpenRouter charge $ | BYOK reference $ | BYOK calls |
+|---|---:|---:|---:|
+| anthropic/claude-opus-5.5 | 0.309028 | 0.000000 | 0 |
+| openai/gpt-6-astra | 0.000000 | 0.532312 | 5 |
+| openai/gpt-6-sol | 0.000000 | 0.104512 | 5 |
+| anthropic/claude-fable-5.1 | 0.765170 | 0.000000 | 0 |
+| openai/gpt-5.6-luna | 0.000000 | 0.011946 | 5 |
+| openai/gpt-6-luna | 0.000000 | 0.005223 | 5 |
+| google/gemini-3.8-flash | 0.038764 | 0.000000 | 0 |
+| z-ai/glm-5.3-flash | 0.005736 | 0.000000 | 0 |
+| deepseek/deepseek-v4.1-flash | 0.011947 | 0.000000 | 0 |
+| z-ai/glm-5.3-flashx | 0.013937 | 0.000000 | 0 |
+| google/gemini-3.5-flash-lite | 0.018788 | 0.000000 | 0 |
+| qwen/qwen3.8-27b | 0.029684 | 0.000000 | 0 |
+| qwen/qwen3.8-flash | 0.005068 | 0.000000 | 0 |
 
-Gateway and upstream are distinct receipts and are not added. Catalog estimates are API-equivalent comparisons, not invoices. Zero gateway charges may accompany BYOK upstream cost. Latency includes complete request time; effective output throughput is not streaming decode speed. p95 with only five samples is the maximum. All trace IDs and prompts are in calls/*.jsonl.
+generation: 65 calls; gateway reported $1.198122; BYOK-only inference reference $0.653994 across 20 calls; provider invoice unknown; catalog estimate $unknown (known subtotal $1.842801; 1 accounting anomalies); 0 unknown-cost attempts.
+evaluation: 130 calls; gateway reported $8.382072; BYOK-only inference reference $4.258942 across 65 calls; provider invoice unknown; catalog estimate $12.641014 (known subtotal $12.641014; 0 accounting anomalies); 0 unknown-cost attempts.
+
+Settled OpenRouter charges were verified against all 195 generation lookups. Raw completion upstream fields repeat gateway charges on non-BYOK routes: reportedUpstreamUsd is retained only as legacy raw evidence, not a provider invoice. BYOK inference references are separated using verified is_byok. Adding OpenRouter charges and BYOK-only reference values gives an inference-cost estimate, not reconciled provider spend. Catalog estimates use model-list prices; routed providers can charge differently. DeepSeek actual OpenRouter charge was $0.011946564 versus $0.0045105648 catalog estimate; Qwen 27B was $0.029684 versus $0.0278052. Flash Lite charged $0.0187884 including its zero-charge failed response; its complete catalog estimate remains unknown. Latency includes complete request time; effective output throughput is not streaming decode speed. p95 with only five samples is the maximum. All trace IDs and prompts are in calls/*.jsonl.
