@@ -268,3 +268,19 @@ test("large ballots are bounded and require explicit known evidence", async () =
   expect(sizes.filter((n) => n === 20)).toHaveLength(4);
   expect(sizes.filter((n) => n === 1)).toHaveLength(4);
 });
+
+test("each issue retains only its own ballots to prevent quadratic prompt growth", () => {
+  const ballots = ["a", "b", "c"].map((model) => ({
+    ...ballot(model, "reject"),
+    votes: [
+      ...ballot(model, "reject").votes,
+      { ...ballot(model, "reject").votes[0]!, issueId: "other" },
+    ],
+  }));
+  const result = decideIssue(issue, ballots, "h", policy);
+  expect(
+    result.votes.every(
+      (b) => b.votes.length === 1 && b.votes[0]!.issueId === "i",
+    ),
+  ).toBe(true);
+});

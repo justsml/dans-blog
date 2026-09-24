@@ -3,12 +3,17 @@ import { LangfuseSpanProcessor } from "@langfuse/otel";
 
 const publicKey = process.env.LANGFUSE_PUBLIC_KEY;
 const secretKey = process.env.LANGFUSE_SECRET_KEY;
-const baseUrl = process.env.LANGFUSE_BASE_URL;
+const baseUrl = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
 
-export const langfuseEnabled = publicKey != null && publicKey !== "" && secretKey != null && secretKey !== "";
+export const langfuseEnabled =
+  publicKey != null &&
+  publicKey !== "" &&
+  secretKey != null &&
+  secretKey !== "";
 
+let spanProcessor: LangfuseSpanProcessor | undefined;
 if (langfuseEnabled) {
-  const spanProcessor = new LangfuseSpanProcessor({
+  spanProcessor = new LangfuseSpanProcessor({
     publicKey,
     secretKey,
     baseUrl,
@@ -22,10 +27,9 @@ if (langfuseEnabled) {
  * generateText/streamText spans are exported to Langfuse via the OTel span processor
  * registered above. No-op when Langfuse credentials aren't configured.
  */
-export function withLangfuseTelemetry<T extends { experimental_telemetry?: unknown }>(
-  options: T,
-  metadata?: Record<string, unknown>,
-): T {
+export function withLangfuseTelemetry<
+  T extends { experimental_telemetry?: unknown },
+>(options: T, metadata?: Record<string, unknown>): T {
   if (!langfuseEnabled) return options;
 
   return {
@@ -35,4 +39,9 @@ export function withLangfuseTelemetry<T extends { experimental_telemetry?: unkno
       metadata,
     },
   };
+}
+
+/** Flush short-lived CLI observations before the process exits. */
+export async function flushLangfuse() {
+  await spanProcessor?.forceFlush();
 }

@@ -271,3 +271,17 @@ warnings for peer adjudication; they are not silently treated as established
 facts. Execution failures are recorded as `needs-attention` with the latest
 candidate, preserving partial receipts. Failed cached calls are retained for
 inspection rather than silently overwritten.
+
+### Langfuse
+
+The consensus runner requires configured Langfuse credentials. A parent agent
+trace groups native CLI generations, cache hits, review/ballot decisions,
+revisions, validation events and the final result. Generations include prompts,
+outputs, model/effort, failures, native token counters and reported CLI cost
+when available. Missing cost is not presented as zero. Short-lived calls and
+runs explicitly flush the exporter; JSONL receipts retain trace/observation IDs.
+
+`bun src/scripts/i18n/negotiation/backfill-langfuse.ts RUN_DIRECTORY` imports
+existing receipts without model calls. Backfilled traces are marked as imports;
+their trace duration is not inference latency. Repeating an identical completed
+receipt snapshot is skipped. Local receipts remain the immutable audit source.

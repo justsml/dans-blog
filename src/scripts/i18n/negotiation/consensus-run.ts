@@ -1,3 +1,4 @@
+import { traceNegotiation, traceNegotiationEvent } from "./langfuse.ts";
 import {
   readFileSync,
   writeFileSync,
@@ -78,67 +79,92 @@ if (process.argv.includes("--prepare-only")) {
 // One append-only event stream per execution attempt; retries never erase history.
 const events = join(out, "events-" + Date.now() + ".jsonl");
 let latestCandidate = snapshot.target;
-const result = await negotiateConsensus(
-  { ...snapshot, policy, actors, references, history: snapshot.history ?? [] },
-  {
-    emit: (event) => {
-      if (event.type === "revision" && typeof event.text === "string")
-        latestCandidate = event.text;
-      appendFileSync(
-        events,
-        JSON.stringify({ at: new Date().toISOString(), ...event }) + "\n",
-      );
-    },
-    validate: (candidate) =>
-      validateAdaptive(
-        snapshot.source,
-        candidate,
-        snapshot.target,
-        snapshot.targetPath,
-        snapshot.locale,
+const result = await traceNegotiation(
+  { identity },
+  (ids) =>
+    appendFileSync(
+      join(out, "langfuse.jsonl"),
+      JSON.stringify({ at: new Date().toISOString(), events, ...ids }) + "\n",
+    ),
+  () =>
+    negotiateConsensus(
+      {
+        ...snapshot,
         policy,
-      ),
-    call: async <T>(
-      key: string,
-      actor: { model: string },
-      system: string,
-      payload: unknown,
-      schema: z.ZodType<T>,
-    ) => {
-      const prefix = join(out, "calls", key.replaceAll("/", "--")),
-        outputSchema = z.toJSONSchema(schema);
-      const request = { key, actor, system, payload, outputSchema },
-        fingerprint = hash(JSON.stringify(request));
-      if (existsSync(prefix + "-parsed.jsonl")) {
-        const cached = readRecord(prefix + "-parsed.json");
-        if (cached.fingerprint !== fingerprint)
-          throw Error("Cache identity mismatch");
-        return schema.parse(cached.value);
-      }
-      if (existsSync(prefix + "-request.jsonl"))
-        throw Error(
-          "Prior incomplete attempt retained; inspect before retrying",
-        );
-      writeRecords(prefix + "-request.jsonl", [{ fingerprint, ...request }]);
-      const text = await runCli(
-        actor.model.startsWith("openai/") ? "codex" : "claude",
-        { model: actor.model, effort: "high" },
-        system +
-          "\n" +
-          JSON.stringify(payload) +
-          "\nOUTPUT SCHEMA\n" +
-          JSON.stringify(outputSchema),
-        outputSchema,
-        prefix,
-      );
-      writeRecords(prefix + "-raw.jsonl", [{ fingerprint, text }]);
-      const json = extractJsonObject(text);
-      if (!json) throw Error("No JSON response");
-      const value = schema.parse(JSON.parse(json));
-      writeRecords(prefix + "-parsed.jsonl", [{ fingerprint, value }]);
-      return value;
-    },
-  },
+        actors,
+        references,
+        history: snapshot.history ?? [],
+      },
+      {
+        emit: (event) => {
+          traceNegotiationEvent(event);
+          if (event.type === "revision" && typeof event.text === "string")
+            latestCandidate = event.text;
+          appendFileSync(
+            events,
+            JSON.stringify({ at: new Date().toISOString(), ...event }) + "\n",
+          );
+        },
+        validate: (candidate) =>
+          validateAdaptive(
+            snapshot.source,
+            candidate,
+            snapshot.target,
+            snapshot.targetPath,
+            snapshot.locale,
+            policy,
+          ),
+        call: async <T>(
+          key: string,
+          actor: { model: string },
+          system: string,
+          payload: unknown,
+          schema: z.ZodType<T>,
+        ) => {
+          const prefix = join(out, "calls", key.replaceAll("/", "--")),
+            outputSchema = z.toJSONSchema(schema);
+          const request = { key, actor, system, payload, outputSchema },
+            fingerprint = hash(JSON.stringify(request));
+          if (existsSync(prefix + "-parsed.jsonl")) {
+            const cached = readRecord(prefix + "-parsed.json");
+            if (cached.fingerprint !== fingerprint)
+              throw Error("Cache identity mismatch");
+            traceNegotiationEvent({
+              type: "cached-call",
+              key,
+              model: actor.model,
+              fingerprint,
+              output: cached.value,
+            });
+            return schema.parse(cached.value);
+          }
+          if (existsSync(prefix + "-request.jsonl"))
+            throw Error(
+              "Prior incomplete attempt retained; inspect before retrying",
+            );
+          writeRecords(prefix + "-request.jsonl", [
+            { fingerprint, ...request },
+          ]);
+          const text = await runCli(
+            actor.model.startsWith("openai/") ? "codex" : "claude",
+            { model: actor.model, effort: "high" },
+            system +
+              "\n" +
+              JSON.stringify(payload) +
+              "\nOUTPUT SCHEMA\n" +
+              JSON.stringify(outputSchema),
+            outputSchema,
+            prefix,
+          );
+          writeRecords(prefix + "-raw.jsonl", [{ fingerprint, text }]);
+          const json = extractJsonObject(text);
+          if (!json) throw Error("No JSON response");
+          const value = schema.parse(JSON.parse(json));
+          writeRecords(prefix + "-parsed.jsonl", [{ fingerprint, value }]);
+          return value;
+        },
+      },
+    ),
 ).catch((error) => {
   const failure = {
     status: "needs-attention",

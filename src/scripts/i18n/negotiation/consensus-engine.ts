@@ -119,7 +119,10 @@ export function decideIssue(
     status: status as "resolved" | "overruled" | "open" | "downgraded",
     resultingSeverity,
     candidateHash,
-    votes: ballots,
+    votes: ballots.map((ballot) => ({
+      ...ballot,
+      votes: ballot.votes.filter((vote) => vote.issueId === issue.id),
+    })),
   };
 }
 async function all<T>(jobs: Promise<T>[]): Promise<T[]> {
@@ -434,7 +437,7 @@ export async function negotiateConsensus(
     if (round === p.maxRounds) break;
     const actor = actors[(round - 1) % Math.min(2, actors.length)]!;
     const revision = await call(
-      "r" + round + "-revision",
+      "r" + round + "-revision-v2",
       actor,
       {
         task: "Repair unresolved blockers and low-quality dimensions. Apply policy flexibility to improve local readability and preserve voice. Return exact nonoverlapping before/after replacements; cover all edits, including annotations, instructions, headings or structural moves. Link each change to issue IDs (empty only for explicitly justified new adaptations), quote its source basis and explain tradeoffs. Do not force unnecessary polish.",
