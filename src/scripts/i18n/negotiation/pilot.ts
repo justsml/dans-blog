@@ -1,3 +1,4 @@
+import {writeRecords,readRecord,recordPath} from './records.ts';
 import {readFileSync,writeFileSync,appendFileSync,mkdirSync,existsSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {execFileSync} from 'node:child_process';
@@ -34,8 +35,9 @@ const advisors=[{id:'advisor-A',model:'deepseek/deepseek-v4.1-flash',effort:'low
 type Actor=typeof core[number];
 type Reference={id:string;url:string;checkedAt:string;scope:string;summary:string;verified:boolean};
 type Snapshot={locale:'es'|'ja';sourcePath:string;targetPath:string;source:string;target:string;sourceHash:string;targetHash:string;history:Revision[]};
-const write=(file:string,value:unknown)=>writeFileSync(join(out,file),JSON.stringify(value,null,2)+'\n');
-const read=(file:string)=>JSON.parse(readFileSync(join(out,file),'utf8'));
+const isResult=(file:string)=>file.startsWith('calls/')||/-result\.json$|-ledger\.json$|-blind-mapping\.json$/.test(file)||file==='results.json';
+const write=(file:string,value:unknown)=>isResult(file)?writeRecords(join(out,file.replace(/\.json$/,'.jsonl')),file==='results.json'?value as unknown[]:[value]):writeFileSync(join(out,file),JSON.stringify(value,null,2)+'\n');
+const read=(file:string)=>isResult(file)?readRecord(join(out,file)):JSON.parse(readFileSync(join(out,file),'utf8'));
 mkdirSync(out,{recursive:true});mkdirSync(join(out,'calls'),{recursive:true});
 const references:Reference[]=read('references.json');
 const verifiedRefs=new Set(references.filter(r=>r.verified).map(r=>r.id));
@@ -78,9 +80,9 @@ async function call<T>(key:string,actor:Actor,s:Snapshot,candidate:string,task:s
  const request={...(transport==='api'?{}:{transport,backend:backendFor(actor.model),cliPacket}),actor,sourcePath:s.sourcePath,targetPath:s.targetPath,sourceHash:s.sourceHash,candidateHash:hash(candidate),system:rubric,task,tools:useTools,outputSchema};
  const fingerprint=hash(JSON.stringify(request));
  const parsedPath=join(out,'calls',key+'-parsed.json'),rawPath=join(out,'calls',key+'-raw.json');
- if(existsSync(parsedPath)){const old=read('calls/'+key+'-parsed.json');if(old.fingerprint!==fingerprint){const {outputSchema:_,...legacyRequest}=request;if(old.fingerprint!==hash(JSON.stringify(legacyRequest)))throw Error('Cached call identity mismatch '+key);write('calls/'+key+'-legacy-schema-reuse.json',{reason:'Completed initial call predates explicit schema injection; substantive input, model, hashes and rubric are identical.',originalFingerprint:old.fingerprint,currentFingerprint:fingerprint});}return schema.parse(old.value);}
- if(existsSync(rawPath))throw Error('Unparsed prior call retained: '+key+'; investigate before retrying');
- if(existsSync(join(out,'calls',key+'-request.json')))write('calls/'+key+'-interrupted-request.json',{...read('calls/'+key+'-request.json'),status:'No completed response; provider completion/charge unknown'});
+ if(existsSync(recordPath(parsedPath))){const old=read('calls/'+key+'-parsed.json');if(old.fingerprint!==fingerprint){const {outputSchema:_,...legacyRequest}=request;if(old.fingerprint!==hash(JSON.stringify(legacyRequest)))throw Error('Cached call identity mismatch '+key);write('calls/'+key+'-legacy-schema-reuse.json',{reason:'Completed initial call predates explicit schema injection; substantive input, model, hashes and rubric are identical.',originalFingerprint:old.fingerprint,currentFingerprint:fingerprint});}return schema.parse(old.value);}
+ if(existsSync(recordPath(rawPath)))throw Error('Unparsed prior call retained: '+key+'; investigate before retrying');
+ if(existsSync(recordPath(join(out,'calls',key+'-request.json'))))write('calls/'+key+'-interrupted-request.json',{...read('calls/'+key+'-request.json'),status:'No completed response; provider completion/charge unknown'});
  write('calls/'+key+'-request.json',{...request,fingerprint});
  const config=resolveLlmConfig('llm://openrouter/'+actor.model+'?effort='+actor.effort+'&max=24000&timeout_ms=240000&reasoning_exclude=true');
  const started=performance.now();

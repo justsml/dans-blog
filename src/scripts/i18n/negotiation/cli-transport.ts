@@ -1,3 +1,4 @@
+import {writeRecords} from './records.ts';
 import {mkdtempSync,writeFileSync,readFileSync,existsSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
@@ -30,7 +31,7 @@ export async function runCli(backend:CliBackend,actor:CliActor,prompt:string,sch
  const dir=mkdtempSync(join(tmpdir(),'translation-negotiation-'));
  writeFileSync(join(dir,'schema.json'),JSON.stringify(schema));
  const command=cliCommand(backend,actor,dir,schema);
- writeFileSync(receiptPrefix+'-cli-invocation.json',JSON.stringify({backend,command,cwd:dir,timeoutMs,requestedMaxOutputTokens:24000,outputTokenLimitEnforced:backend==='claude',contextMode:'frozen-inline-packet',session:'fresh'},null,2));
+ writeRecords(receiptPrefix+'-cli-invocation.jsonl',[{backend,command,cwd:dir,timeoutMs,requestedMaxOutputTokens:24000,outputTokenLimitEnforced:backend==='claude',contextMode:'frozen-inline-packet',session:'fresh'}]);
  const env={...process.env,CLAUDE_CODE_MAX_OUTPUT_TOKENS:'24000',OPENCODE_CONFIG_CONTENT:JSON.stringify({permission:{'*':'deny'}})};
  const result=await new Promise<{stdout:string;stderr:string;code:number|null;timedOut:boolean}>((resolve,reject)=>{
   const child=spawn(command[0]!,command.slice(1),{cwd:dir,env,stdio:['pipe','pipe','pipe']});
@@ -44,7 +45,7 @@ export async function runCli(backend:CliBackend,actor:CliActor,prompt:string,sch
   child.stdin.end(prompt);
  });
  writeFileSync(receiptPrefix+'-cli-stdout.txt',result.stdout);writeFileSync(receiptPrefix+'-cli-stderr.txt',result.stderr);
- writeFileSync(receiptPrefix+'-cli-exit.json',JSON.stringify({code:result.code,timedOut:result.timedOut}));
+ writeRecords(receiptPrefix+'-cli-exit.jsonl',[{code:result.code,timedOut:result.timedOut}]);
  if(result.code!==0||result.timedOut)throw Error(backend+' failed; inspect CLI receipts');
  const answerPath=join(dir,'answer.json');
  return cliAnswer(backend,result.stdout,existsSync(answerPath)?readFileSync(answerPath,'utf8'):undefined);

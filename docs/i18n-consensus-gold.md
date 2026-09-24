@@ -105,13 +105,13 @@ No case is exported while required gates remain unresolved. Do not lower the
 gates after seeing results: continue editing or record the unresolved case.
 
 The dataset contains self-contained `cases.jsonl`, a content-hashed manifest,
-and `benchmark-fixtures.json`. The latter strips confidence and creation
+and `benchmark-fixtures.jsonl`. The latter strips confidence and creation
 lineage from evaluator inputs:
 
 ```sh
 bun src/scripts/i18n/judge-benchmark.ts --out reports/i18n/gold-eval-RUN \
   --phase gold-regression --split heldout \
-  --fixtures datasets/i18n/consensus-gold/v1/benchmark-fixtures.json
+  --fixtures datasets/i18n/consensus-gold/v1/benchmark-fixtures.jsonl
 ```
 
 Use `loadGoldenDataset` and `assertCurrentSourceMatches` in other harnesses.
@@ -158,3 +158,14 @@ schema, exact-patch, source hash and gold-admission checks.
 Codex invocation follows its [official non-interactive documentation](https://developers.openai.com/codex/noninteractive);
 CLI flags were also checked against the installed versions. Native receipts
 preserve billing metadata when supplied; missing cost is unknown, never zero.
+
+## Result storage
+
+New call responses, requests, errors, ledgers, audit mappings, CLI receipts and
+locale results use JSONL (newline-delimited JSON), one complete record per line.
+`results.jsonl` and `benchmark-fixtures.jsonl` contain one record per locale or
+fixture, rather than a JSON array. Dataset cases and event streams also use
+JSONL. Configuration, manifests and frozen input snapshots remain JSON; native
+CLI stdout/stderr remain verbatim evidence. Readers accept legacy JSON results
+so prior runs remain resumable without rewriting their evidence or hashes.
+The benchmark fixture reader accepts `.jsonl`, `.ndjson` and legacy `.json`.

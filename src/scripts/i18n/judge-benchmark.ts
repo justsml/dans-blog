@@ -78,7 +78,10 @@ async function main() {
   const customFixturesPath = arg('fixtures', '');
   const fixturesPath = customFixturesPath || join(out, 'fixtures.json');
   let cases: Fixture[];
-  if (customFixturesPath) cases = JSON.parse(readFileSync(fixturesPath, 'utf8'));
+  if (customFixturesPath) {
+    const text = readFileSync(fixturesPath, 'utf8');
+    cases = /\.(jsonl|ndjson)$/.test(fixturesPath) ? text.split('\n').filter(line => line.trim()).map(line => JSON.parse(line)) : JSON.parse(text);
+  }
   else {
     try { cases = JSON.parse(readFileSync(fixturesPath, 'utf8')); } catch { cases = fixtures(); writeFileSync(fixturesPath, JSON.stringify(cases, null, 2)); }
   }

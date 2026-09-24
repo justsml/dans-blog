@@ -1,3 +1,4 @@
+import {readRecordText,readRecord,writeRecords} from './records.ts';
 import {existsSync,mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 import {join,resolve} from 'node:path';
 import {z} from 'zod';
@@ -32,8 +33,8 @@ export function exportGoldenDataset(runDir:string,datasetDir:string,version:stri
  const cases:GoldenCase[]=[];
  for(const locale of manifest.identity.locales){
   const snapshot=JSON.parse(readFileSync(join(runDir,locale+'-snapshot.json'),'utf8'));
-  const resultText=readFileSync(join(runDir,locale+'-result.json'),'utf8'),result=JSON.parse(resultText);
-  const ledgerText=readFileSync(join(runDir,locale+'-ledger.json'),'utf8');
+  const resultText=readRecordText(join(runDir,locale+'-result.json')),result=readRecord(join(runDir,locale+'-result.json'));
+  const ledgerText=readRecordText(join(runDir,locale+'-ledger.json'));
   const candidate=readFileSync(join(runDir,locale+'-candidate.mdx'),'utf8');
   const assessments=result.assessments.map((a:unknown)=>assessmentSchema.parse(a));
   const blind=result.audits.map((a:any)=>assessmentSchema.parse(a.blind.candidates.find((c:any)=>c.label===a.mapping.candidate).assessment));
@@ -54,7 +55,7 @@ export function exportGoldenDataset(runDir:string,datasetDir:string,version:stri
  const contents=cases.map(c=>JSON.stringify(c)).join('\n')+'\n';
  writeFileSync(join(datasetDir,'cases.jsonl'),contents);
  writeFileSync(join(datasetDir,'manifest.json'),JSON.stringify({schemaVersion:1,datasetVersion:version,referenceType:'synthetic-consensus-gold',caseCount:cases.length,casesSha256:hash(contents),createdAt:new Date().toISOString(),rubricHash:manifest.identity.rubricHash,usage:'Canonical golden references for translation/harness evals. Keep fixed per benchmark version; create a new version when inputs or references change.'},null,2)+'\n');
- writeFileSync(join(datasetDir,'benchmark-fixtures.json'),JSON.stringify(goldenBenchmarkFixtures(cases),null,2)+'\n');
+ writeRecords(join(datasetDir,'benchmark-fixtures.jsonl'),goldenBenchmarkFixtures(cases));
  return loadGoldenDataset(datasetDir);
 }
 if(import.meta.main){
