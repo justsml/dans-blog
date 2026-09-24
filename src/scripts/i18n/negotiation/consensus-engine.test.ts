@@ -218,3 +218,53 @@ test("explicit severity consensus can downgrade an issue without pretending it w
   expect(result.status).toBe("downgraded");
   expect(result.resultingSeverity).toBe(3);
 });
+
+test("large ballots are bounded and require explicit known evidence", async () => {
+  const sizes: number[] = [];
+  const result = await negotiateConsensus(input, {
+    validate: async () => ({ passed: true }),
+    emit: () => {},
+    call: async <T>(
+      key: string,
+      actor: any,
+      _: string,
+      payload: any,
+      schema: any,
+    ): Promise<T> => {
+      if (key.includes("review"))
+        return {
+          assessment,
+          findings:
+            actor.model === "a"
+              ? Array.from({ length: 21 }, (_, i) => ({
+                  ...issue,
+                  claim: `Claim ${i}`,
+                }))
+              : [],
+          sourceConcerns: [],
+        } as T;
+      sizes.push(payload.issues.length);
+      const votes = payload.issues.map((i: any) => ({
+        issueId: i.id,
+        verdict: "reject",
+        severity: 1,
+        reason: "The source supports this wording",
+        evidenceIds: ["source"],
+      }));
+      expect(
+        schema.safeParse({
+          votes: votes.map((v: any) => ({ ...v, evidenceIds: [] })),
+        }).success,
+      ).toBe(false);
+      expect(
+        schema.safeParse({
+          votes: votes.map((v: any) => ({ ...v, evidenceIds: ["invented"] })),
+        }).success,
+      ).toBe(false);
+      return { votes } as T;
+    },
+  });
+  expect(result.status).toBe("consensus");
+  expect(sizes.filter((n) => n === 20)).toHaveLength(4);
+  expect(sizes.filter((n) => n === 1)).toHaveLength(4);
+});

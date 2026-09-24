@@ -263,3 +263,11 @@ Use a new output directory for changed policy or source; cached calls are
 identity-bound. V1 gold stays immutable. V2 final results distinguish unanimous
 `consensus` from `consensus-backed` decisions with recorded dissent/overrides;
 they are separate artifacts and do not silently replace an existing gold set.
+
+Ballots are split into at most 20 issues per call, with required evidence IDs
+restricted to the source, target, or checked reference packet. Reviewer claims
+with missing references or inexact quotes are retained with explicit evidence
+warnings for peer adjudication; they are not silently treated as established
+facts. Execution failures are recorded as `needs-attention` with the latest
+candidate, preserving partial receipts. Failed cached calls are retained for
+inspection rather than silently overwritten.

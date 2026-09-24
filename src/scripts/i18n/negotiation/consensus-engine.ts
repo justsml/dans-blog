@@ -321,27 +321,53 @@ export async function negotiateConsensus(
     // Re-adjudicate all historical issues on this exact candidate; nothing closes
     // because an editor simply omitted it from a rewrite or later review.
     if (issues.length) {
+      if (calls + actors.length * Math.ceil(issues.length / 20) > p.maxCalls) {
+        const result = {
+          status: "needs-attention",
+          candidate,
+          candidateHash,
+          issues,
+          calls,
+        };
+        io.emit({ type: "limit", reason: "ballot-call-budget", ...result });
+        return result;
+      }
       const ballots = await all(
         actors.map(async (a) => {
-          const response = await call(
-            "r" + round + "-ballot-" + a.model,
-            a,
-            {
-              task: "Address EVERY issue ID. Respond to the actual opposing argument and prior decisions. resolved means the current text fixes it; reject means the claim is unfounded or nonblocking; uphold means it still requires work. Explain with source/candidate or checked reference evidence. No vote based merely on others agreeing.",
-              ...context,
-              issues,
-            },
-            ballotSchema,
-          );
-          if (
-            response.votes.length !== issues.length ||
-            new Set(response.votes.map((v) => v.issueId)).size !==
-              issues.length ||
-            response.votes.some((v) => !issues.some((i) => i.id === v.issueId))
-          )
-            throw Error("Incomplete or duplicate ballot");
-          response.votes.forEach((v) => evidence(v.evidenceIds));
-          return { model: a.model, candidateHash, votes: response.votes };
+          const votes: ModelBallot["votes"] = [];
+          const groundedBallotSchema = z.object({
+            votes: z.array(
+              ballotSchema.shape.votes.element.extend({
+                evidenceIds: z
+                  .array(z.enum([...refs] as [string, ...string[]]))
+                  .min(1),
+              }),
+            ),
+          });
+          for (let offset = 0; offset < issues.length; offset += 20) {
+            const batch = issues.slice(offset, offset + 20);
+            const response = await call(
+              `r${round}-ballot-${a.model}-batch-${offset / 20 + 1}`,
+              a,
+              {
+                task: "Address EVERY supplied issue ID. Respond to opposing arguments and prior decisions. resolved means current text fixes it; reject means unfounded or nonblocking; uphold means it still requires work. Every vote requires evidenceIds: use source or target for direct textual evidence, or an allowed checked reference ID. Explain the evidence in your reason. Never agree merely because peers agree.",
+                ...context,
+                allowedEvidenceIds: [...refs],
+                issues: batch,
+              },
+              groundedBallotSchema,
+            );
+            if (
+              response.votes.length !== batch.length ||
+              new Set(response.votes.map((v) => v.issueId)).size !==
+                batch.length ||
+              response.votes.some((v) => !batch.some((i) => i.id === v.issueId))
+            )
+              throw Error("Incomplete or duplicate ballot");
+            response.votes.forEach((v) => evidence(v.evidenceIds));
+            votes.push(...response.votes);
+          }
+          return { model: a.model, candidateHash, votes };
         }),
       );
       for (const issue of issues) {

@@ -77,14 +77,18 @@ if (process.argv.includes("--prepare-only")) {
 }
 // One append-only event stream per execution attempt; retries never erase history.
 const events = join(out, "events-" + Date.now() + ".jsonl");
+let latestCandidate = snapshot.target;
 const result = await negotiateConsensus(
   { ...snapshot, policy, actors, references, history: snapshot.history ?? [] },
   {
-    emit: (event) =>
+    emit: (event) => {
+      if (event.type === "revision" && typeof event.text === "string")
+        latestCandidate = event.text;
       appendFileSync(
         events,
         JSON.stringify({ at: new Date().toISOString(), ...event }) + "\n",
-      ),
+      );
+    },
     validate: (candidate) =>
       validateAdaptive(
         snapshot.source,
@@ -135,7 +139,24 @@ const result = await negotiateConsensus(
       return value;
     },
   },
-);
+).catch((error) => {
+  const failure = {
+    status: "needs-attention",
+    reason: "execution-failure",
+    error: String(error),
+    candidate: latestCandidate,
+    calls: null,
+  };
+  appendFileSync(
+    events,
+    JSON.stringify({
+      at: new Date().toISOString(),
+      type: "failure",
+      ...failure,
+    }) + "\n",
+  );
+  return failure;
+});
 writeRecords(join(out, "result.jsonl"), [result]);
 writeFileSync(join(out, "candidate.mdx"), result.candidate);
 console.log(
