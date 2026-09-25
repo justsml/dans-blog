@@ -1,3 +1,4 @@
+import { withTranslationScoreTrace, publishTranslationScores } from "./langfuse-scores.ts";
 import {
   getPostPaths,
   gitCommit,
@@ -824,74 +825,92 @@ async function runJudgeCommand(
   judgePrompt: string,
   contextItems: Array<CandidateRef | string> = [],
 ): Promise<JudgeCommandResult> {
-  const startedAt = Date.now();
-  const provider = createOpenRouter({});
-  const modelId = model.replace(/^openrouter\//, "");
+  return withTranslationScoreTrace(
+    { slug, locale, judgeModel: model, scorer: "candidate-judge" },
+    async () => {
+      const startedAt = Date.now();
+      const provider = createOpenRouter({});
+      const modelId = model.replace(/^openrouter\//, "");
 
-  try {
-    assertNoOutOfCreditMarker();
-    const result = await generateText({
-      model: provider.chat(modelId, OPENROUTER_USAGE_ACCOUNTING),
-      system: [
-        "You are a constrained translation judge.",
-        "You cannot edit files or run shell commands.",
-        "Return strict JSON only. No markdown fences.",
-        'When selecting a candidate, use one of the provided ids exactly. Commit candidates use full SHAs; the pre-existing translation uses "current".',
-      ].join("\n"),
-      prompt: [
-        judgePrompt,
-        "",
-        buildJudgeContext(contextItems),
-        "",
-        "Return strict JSON with this shape:",
-        JSON.stringify(getJudgeJsonShape()),
-      ].join("\n"),
-      temperature: 0.1,
-      maxOutputTokens: 4000,
-      timeout: { totalMs: timeoutSeconds * 1000 },
-      providerOptions: getReasoningProviderOptions(model),
-    });
-    const runtimeMs = Date.now() - startedAt;
-    const usage = result.usage as {
-      inputTokens?: number;
-      outputTokens?: number;
-      inputTokenDetails?: {
-        cacheReadTokens?: number;
-        cacheWriteTokens?: number;
-      };
-    } | undefined;
-    const usageLine = JSON.stringify({
-      usage: {
-        inputTokens: usage?.inputTokens,
-        outputTokens: usage?.outputTokens,
-        cachedInputTokens: usage?.inputTokenDetails?.cacheReadTokens,
-        cache_write_tokens: usage?.inputTokenDetails?.cacheWriteTokens,
-        cost: getOpenRouterProviderCost(result.providerMetadata),
-      },
-    });
+      try {
+        assertNoOutOfCreditMarker();
+        const result = await generateText({
+          model: provider.chat(modelId, OPENROUTER_USAGE_ACCOUNTING),
+          system: [
+            "You are a constrained translation judge.",
+            "You cannot edit files or run shell commands.",
+            "Return strict JSON only. No markdown fences.",
+            'When selecting a candidate, use one of the provided ids exactly. Commit candidates use full SHAs; the pre-existing translation uses "current".',
+          ].join("\n"),
+          prompt: [
+            judgePrompt,
+            "",
+            buildJudgeContext(contextItems),
+            "",
+            "Return strict JSON with this shape:",
+            JSON.stringify(getJudgeJsonShape()),
+          ].join("\n"),
+          temperature: 0.1,
+          maxOutputTokens: 4000,
+          timeout: { totalMs: timeoutSeconds * 1000 },
+          providerOptions: getReasoningProviderOptions(model),
+        });
+        const parsedScore = parseJudgeOutput(result.text);
+        const scores = normalizeJudgeScores(parsedScore.scores);
+        if (scores)
+          await publishTranslationScores({
+            scores,
+            overallScore: averageJudgeScore(scores),
+            slug,
+            locale,
+            judgeModel: model,
+            at: new Date().toISOString(),
+          });
+        const runtimeMs = Date.now() - startedAt;
+        const usage = result.usage as
+          | {
+              inputTokens?: number;
+              outputTokens?: number;
+              inputTokenDetails?: {
+                cacheReadTokens?: number;
+                cacheWriteTokens?: number;
+              };
+            }
+          | undefined;
+        const usageLine = JSON.stringify({
+          usage: {
+            inputTokens: usage?.inputTokens,
+            outputTokens: usage?.outputTokens,
+            cachedInputTokens: usage?.inputTokenDetails?.cacheReadTokens,
+            cache_write_tokens: usage?.inputTokenDetails?.cacheWriteTokens,
+            cost: getOpenRouterProviderCost(result.providerMetadata),
+          },
+        });
 
-    return {
-      ok: true,
-      runtimeMs,
-      output: `${result.text.trim()}\n${usageLine}`,
-    };
-  } catch (error) {
-    if (isOutOfCreditError(error)) {
-      recordOutOfCreditIssue(error, {
-        script: "judge",
-        slug,
-        locale,
-        model,
-        operation: "judge",
-      });
-    }
-    return {
-      ok: false,
-      runtimeMs: Date.now() - startedAt,
-      output: "",
-      errorMessage: error instanceof Error ? error.message : String(error),
-    };
-  }
+        return {
+          ok: true,
+          runtimeMs,
+          output: `${result.text.trim()}\n${usageLine}`,
+        };
+      } catch (error) {
+        if (isOutOfCreditError(error)) {
+          recordOutOfCreditIssue(error, {
+            script: "judge",
+            slug,
+            locale,
+            model,
+            operation: "judge",
+          });
+        }
+        return {
+          ok: false,
+          runtimeMs: Date.now() - startedAt,
+          output: "",
+          errorMessage: error instanceof Error ? error.message : String(error),
+        };
+      }
+    },
+  );
 }
 
 function buildJudgeContext(contextItems: Array<CandidateRef | string>) {

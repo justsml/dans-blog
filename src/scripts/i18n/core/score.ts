@@ -1,3 +1,4 @@
+import { withTranslationScoreTrace, currentScoreTrace, publishTranslationScores } from "../langfuse-scores.ts";
 import { readFileSync } from "node:fs";
 import { generateText as defaultGenerateText } from "../braintrust.ts";
 import {
@@ -45,6 +46,8 @@ export type ScoreTranslationInput = {
 };
 
 export type ScoreTranslationOutput = {
+  langfuseTraceId?: string;
+  langfuseObservationId?: string;
   candidateId: string;
   model: string;
   scores: TranslationScoreMap;
@@ -197,94 +200,136 @@ export type TranslationScoreMap = {
   publishReadiness: number;
 };
 
-export async function scoreTranslation(input: ScoreTranslationInput): Promise<ScoreTranslationOutput> {
-  const llmConfig = resolveLlmConfig(input.model, {
-    temperature: /gpt-(?:5\.6|6)-/.test(input.model) ? undefined : 0,
-    maxTokens: 24_000,
-  });
-  const generateText = input.generateText ?? defaultGenerateText;
-  const startedAt = performance.now();
-  const model = createOpenRouterChatModel(llmConfig);
-  const result = await generateText({
-    model,
-    allowSystemInMessages: true,
-    messages: [
-      {
-        role: "system",
-        content: joinPrompt(
-          "You are a constrained translation judge. Return strict JSON only.",
-          input.promptTuning?.appendSystem,
-          "JUDGE PROMPT PROFILE TUNING",
-        ),
-      },
-      cachedUserMessage(joinPrompt(
-        buildScoreTranslationContract(input),
-        input.promptTuning?.appendCachedContext,
-        "JUDGE PROMPT PROFILE STABLE TUNING",
-      )),
-      cachedUserMessage(buildScoreSourceBlock(input)),
-      cachedUserMessage(buildScoreCandidateBlock(input)),
-      plainUserMessage(joinPrompt(
-        buildScoreDynamicTask(input),
-        input.promptTuning?.appendDynamic,
-        "JUDGE PROMPT PROFILE DYNAMIC TUNING",
-      )),
-    ],
-    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
-    maxOutputTokens: llmConfig.maxTokens,
-    timeout: { totalMs: llmConfig.timeoutMs },
-    providerOptions: llmConfig.providerOptions,
-  });
+export async function scoreTranslation(
+  input: ScoreTranslationInput,
+): Promise<ScoreTranslationOutput> {
+  return withTranslationScoreTrace(
+    {
+      slug: input.slug,
+      locale: input.locale,
+      judgeModel: input.model,
+      candidateId: input.candidateId,
+      roundLabel: input.roundLabel,
+      scorer: "core.scoreTranslation",
+    },
+    async () => {
+      const llmConfig = resolveLlmConfig(input.model, {
+        temperature: /gpt-(?:5\.6|6)-/.test(input.model) ? undefined : 0,
+        maxTokens: 24_000,
+      });
+      const generateText = input.generateText ?? defaultGenerateText;
+      const startedAt = performance.now();
+      const model = createOpenRouterChatModel(llmConfig);
+      const result = await generateText({
+        model,
+        allowSystemInMessages: true,
+        messages: [
+          {
+            role: "system",
+            content: joinPrompt(
+              "You are a constrained translation judge. Return strict JSON only.",
+              input.promptTuning?.appendSystem,
+              "JUDGE PROMPT PROFILE TUNING",
+            ),
+          },
+          cachedUserMessage(
+            joinPrompt(
+              buildScoreTranslationContract(input),
+              input.promptTuning?.appendCachedContext,
+              "JUDGE PROMPT PROFILE STABLE TUNING",
+            ),
+          ),
+          cachedUserMessage(buildScoreSourceBlock(input)),
+          cachedUserMessage(buildScoreCandidateBlock(input)),
+          plainUserMessage(
+            joinPrompt(
+              buildScoreDynamicTask(input),
+              input.promptTuning?.appendDynamic,
+              "JUDGE PROMPT PROFILE DYNAMIC TUNING",
+            ),
+          ),
+        ],
+        ...(llmConfig.temperature == null
+          ? {}
+          : { temperature: llmConfig.temperature }),
+        maxOutputTokens: llmConfig.maxTokens,
+        timeout: { totalMs: llmConfig.timeoutMs },
+        providerOptions: llmConfig.providerOptions,
+      });
 
-  const telemetry = usageFromResult(
-    result.usage,
-    Math.round(performance.now() - startedAt),
-    result.providerMetadata,
-    diagnosticsFromResult(result),
-  );
-  assertGenerationNotTokenLimited(`Translation judge ${llmConfig.modelId}`, result, llmConfig.maxTokens);
-  const cost = estimateTokenCost(
-    llmConfig.modelId,
-    telemetry.inputTokens,
-    telemetry.outputTokens, // Completion usage already includes reasoning tokens.
-    telemetry.cacheReadTokens,
-    { providerCostUsd: telemetry.providerCostUsd },
-  );
-  const parsed = parseJudgeOutput(result.text);
-  const judgeScores = normalizeJudgeScores(parsed.scores);
-  const suggestions = readSuggestionsFromParsed(parsed);
-  const scores = toTranslationScoreMap(judgeScores);
-  const overallScore = judgeScores == null
-    ? averageTranslationScore(scores)
-    : Math.round(averageJudgeScore(judgeScores));
-  const publishReady = booleanValue(parsed.publishReady)
-    ?? (overallScore >= 82 && suggestions.every((suggestion) => suggestion.priority === "low"));
-  const confidence = deriveJudgeConfidence({
-    overallScore,
-    scores: judgeScores,
-    suggestions,
-    publishReady,
-    judgeModel: llmConfig.mastraModel,
-  });
+      const telemetry = usageFromResult(
+        result.usage,
+        Math.round(performance.now() - startedAt),
+        result.providerMetadata,
+        diagnosticsFromResult(result),
+      );
+      assertGenerationNotTokenLimited(
+        `Translation judge ${llmConfig.modelId}`,
+        result,
+        llmConfig.maxTokens,
+      );
+      const cost = estimateTokenCost(
+        llmConfig.modelId,
+        telemetry.inputTokens,
+        telemetry.outputTokens, // Completion usage already includes reasoning tokens.
+        telemetry.cacheReadTokens,
+        { providerCostUsd: telemetry.providerCostUsd },
+      );
+      const parsed = parseJudgeOutput(result.text);
+      const judgeScores = normalizeJudgeScores(parsed.scores);
+      const suggestions = readSuggestionsFromParsed(parsed);
+      const scores = toTranslationScoreMap(judgeScores);
+      const overallScore =
+        judgeScores == null
+          ? averageTranslationScore(scores)
+          : Math.round(averageJudgeScore(judgeScores));
+      const publishReady =
+        booleanValue(parsed.publishReady) ??
+        (overallScore >= 82 &&
+          suggestions.every((suggestion) => suggestion.priority === "low"));
+      const confidence = deriveJudgeConfidence({
+        overallScore,
+        scores: judgeScores,
+        suggestions,
+        publishReady,
+        judgeModel: llmConfig.mastraModel,
+      });
 
-  return {
-    candidateId: input.candidateId ?? "candidate",
-    model: llmConfig.modelId,
-    scores,
-    judgeScores,
-    overallScore,
-    publishReady,
-    confidence: confidence.level,
-    confidenceScore: confidence.score,
-    confidenceSignals: confidence.signals,
-    issueCounts: confidence.issueCounts,
-    suggestions,
-    rationale: typeof parsed.rationale === "string" ? parsed.rationale : "",
-    rawText: result.text,
-    telemetry,
-    cost,
-    roundLabel: input.roundLabel,
-  };
+      const trace = currentScoreTrace();
+      const output: ScoreTranslationOutput = {
+        ...(trace
+          ? {
+              langfuseTraceId: trace.traceId,
+              langfuseObservationId: trace.observationId,
+            }
+          : {}),
+        candidateId: input.candidateId ?? "candidate",
+        model: llmConfig.modelId,
+        scores,
+        judgeScores,
+        overallScore,
+        publishReady,
+        confidence: confidence.level,
+        confidenceScore: confidence.score,
+        confidenceSignals: confidence.signals,
+        issueCounts: confidence.issueCounts,
+        suggestions,
+        rationale: typeof parsed.rationale === "string" ? parsed.rationale : "",
+        rawText: result.text,
+        telemetry,
+        cost,
+        roundLabel: input.roundLabel,
+      };
+
+      await publishTranslationScores({
+        ...output,
+        at: new Date().toISOString(),
+        slug: input.slug,
+        locale: input.locale,
+      });
+      return output;
+    },
+  );
 }
 
 export async function scoreTranslationConsensus(input: ScoreConsensusInput): Promise<ScoreConsensusOutput> {

@@ -1,3 +1,4 @@
+import { withTranslationScoreTrace, currentScoreTrace, publishTranslationScores } from "./langfuse-scores.ts";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -52,6 +53,8 @@ type ScoreResponse = {
 };
 
 type ScoredTranslationRecord = {
+  langfuseTraceId?: string;
+  langfuseObservationId?: string;
   event: string;
   isoDate: string;
   at: string;
@@ -178,105 +181,153 @@ async function processTasks(tasks: TranslationTask[]) {
 }
 
 async function processTask(task: TranslationTask) {
-  const paths = getPostPaths(task.slug, task.locale);
-  if (!existsSync(paths.targetPath)) {
-    console.log(`Skipping missing translation ${task.locale}/${task.slug}`);
-    return;
-  }
-
-  const reportDir = paths.reportDir;
-  const sourceText = readFileSync(paths.sourcePath, "utf8");
-  const translationText = readFileSync(paths.targetPath, "utf8");
-  const sourceHash = hashText(sourceText);
-  const translationHash = hashText(translationText);
-  const combinedHash = hashText(`${sourceHash}:${translationHash}:${model}`);
-  const existingScore = readExistingScore(outputLogPath, task, model, combinedHash);
-  if (existingScore?.hash === combinedHash && !shouldOverwrite) {
-    console.log(`Skipping current score for ${task.locale}/${task.slug}. Pass --overwrite to rescore.`);
-    return;
-  }
-
-  const sourceStats = collectStats(sourceText);
-  const translationStats = collectStats(translationText);
-  const startedAt = Date.now();
-  const response = await scoreTranslation({
-    slug: task.slug,
-    locale: task.locale,
-    sourceText,
-    translationText,
-    sourceStats,
-    translationStats,
-  });
-  const durationMs = Date.now() - startedAt;
-  const telemetry = usageFromResult(response.usage, durationMs, response.providerMetadata);
-  const cost = estimateTokenCost(model, telemetry.inputTokens, telemetry.outputTokens, telemetry.cacheReadTokens, {
-    providerCostUsd: telemetry.providerCostUsd,
-  });
-  const overallScore = averageScore(response.parsed.scores);
-  const issueCounts = countScoreIssues(response.parsed.issues);
-  const confidence = deriveJudgeConfidence({
-    overallScore,
-    highIssueCount: issueCounts.high,
-    mediumIssueCount: issueCounts.medium,
-    lowIssueCount: issueCounts.low,
-    judgeCount: 1,
-    publishReady: response.parsed.recommendation === "accept",
-    judgeModel: model,
-  });
-  const generatedAt = new Date();
-  const record: ScoredTranslationRecord = {
-    event: "translation_scored",
-    isoDate: generatedAt.toISOString().slice(0, 10),
-    at: generatedAt.toISOString(),
-    slug: task.slug,
-    locale: task.locale,
-    judgeModel: model,
-    translationModel: findTranslationModel(reportDir, task, translationHash) ?? "unknown",
-    sourcePath: relativeToRepo(paths.sourcePath),
-    targetPath: relativeToRepo(paths.targetPath),
-    hash: combinedHash,
-    sourceHash,
-    translationHash,
-    scores: response.parsed.scores,
-    overallScore,
-    recommendation: response.parsed.recommendation,
-    confidence: confidence.level,
-    confidenceScore: confidence.score,
-    confidenceSignals: confidence.signals,
-    issueCounts: confidence.issueCounts,
-    stats: {
-      source: sourceStats,
-      translation: translationStats,
-      ratios: getStatsRatios(sourceStats, translationStats),
-      prompt: {
-        sourceCharsIncluded: trimForPrompt(sourceText, maxSourceChars).length,
-        translationCharsIncluded: trimForPrompt(translationText, maxTranslationChars).length,
-        sourceTruncated: sourceText.length > maxSourceChars,
-        translationTruncated: translationText.length > maxTranslationChars,
-      },
+  return withTranslationScoreTrace(
+    {
+      slug: task.slug,
+      locale: task.locale,
+      judgeModel: model,
+      scorer: "score-translations",
     },
-    costs: {
-      inputTokens: telemetry.inputTokens,
-      outputTokens: telemetry.outputTokens,
-      cacheReadTokens: telemetry.cacheReadTokens,
-      cacheWriteTokens: telemetry.cacheWriteTokens,
-      providerCostUsd: telemetry.providerCostUsd,
-      providerUpstreamCostUsd: telemetry.providerUpstreamCostUsd,
-      durationMs: telemetry.durationMs,
-      inputUsd: roundMoney(cost.inputUsd),
-      outputUsd: roundMoney(cost.outputUsd),
-      totalUsd: roundMoney(cost.totalUsd),
-      pricingSource: cost.pricingSource,
+    async () => {
+      const paths = getPostPaths(task.slug, task.locale);
+      if (!existsSync(paths.targetPath)) {
+        console.log(`Skipping missing translation ${task.locale}/${task.slug}`);
+        return;
+      }
+
+      const reportDir = paths.reportDir;
+      const sourceText = readFileSync(paths.sourcePath, "utf8");
+      const translationText = readFileSync(paths.targetPath, "utf8");
+      const sourceHash = hashText(sourceText);
+      const translationHash = hashText(translationText);
+      const combinedHash = hashText(
+        `${sourceHash}:${translationHash}:${model}`,
+      );
+      const existingScore = readExistingScore(
+        outputLogPath,
+        task,
+        model,
+        combinedHash,
+      );
+      if (existingScore?.hash === combinedHash && !shouldOverwrite) {
+        console.log(
+          `Skipping current score for ${task.locale}/${task.slug}. Pass --overwrite to rescore.`,
+        );
+        return;
+      }
+
+      const sourceStats = collectStats(sourceText);
+      const translationStats = collectStats(translationText);
+      const startedAt = Date.now();
+      const response = await scoreTranslation({
+        slug: task.slug,
+        locale: task.locale,
+        sourceText,
+        translationText,
+        sourceStats,
+        translationStats,
+      });
+      const durationMs = Date.now() - startedAt;
+      const telemetry = usageFromResult(
+        response.usage,
+        durationMs,
+        response.providerMetadata,
+      );
+      const cost = estimateTokenCost(
+        model,
+        telemetry.inputTokens,
+        telemetry.outputTokens,
+        telemetry.cacheReadTokens,
+        {
+          providerCostUsd: telemetry.providerCostUsd,
+        },
+      );
+      const overallScore = averageScore(response.parsed.scores);
+      const issueCounts = countScoreIssues(response.parsed.issues);
+      const confidence = deriveJudgeConfidence({
+        overallScore,
+        highIssueCount: issueCounts.high,
+        mediumIssueCount: issueCounts.medium,
+        lowIssueCount: issueCounts.low,
+        judgeCount: 1,
+        publishReady: response.parsed.recommendation === "accept",
+        judgeModel: model,
+      });
+      const generatedAt = new Date();
+      const trace = currentScoreTrace();
+      const record: ScoredTranslationRecord = {
+        ...(trace
+          ? {
+              langfuseTraceId: trace.traceId,
+              langfuseObservationId: trace.observationId,
+            }
+          : {}),
+        event: "translation_scored",
+        isoDate: generatedAt.toISOString().slice(0, 10),
+        at: generatedAt.toISOString(),
+        slug: task.slug,
+        locale: task.locale,
+        judgeModel: model,
+        translationModel:
+          findTranslationModel(reportDir, task, translationHash) ?? "unknown",
+        sourcePath: relativeToRepo(paths.sourcePath),
+        targetPath: relativeToRepo(paths.targetPath),
+        hash: combinedHash,
+        sourceHash,
+        translationHash,
+        scores: response.parsed.scores,
+        overallScore,
+        recommendation: response.parsed.recommendation,
+        confidence: confidence.level,
+        confidenceScore: confidence.score,
+        confidenceSignals: confidence.signals,
+        issueCounts: confidence.issueCounts,
+        stats: {
+          source: sourceStats,
+          translation: translationStats,
+          ratios: getStatsRatios(sourceStats, translationStats),
+          prompt: {
+            sourceCharsIncluded: trimForPrompt(sourceText, maxSourceChars)
+              .length,
+            translationCharsIncluded: trimForPrompt(
+              translationText,
+              maxTranslationChars,
+            ).length,
+            sourceTruncated: sourceText.length > maxSourceChars,
+            translationTruncated: translationText.length > maxTranslationChars,
+          },
+        },
+        costs: {
+          inputTokens: telemetry.inputTokens,
+          outputTokens: telemetry.outputTokens,
+          cacheReadTokens: telemetry.cacheReadTokens,
+          cacheWriteTokens: telemetry.cacheWriteTokens,
+          providerCostUsd: telemetry.providerCostUsd,
+          providerUpstreamCostUsd: telemetry.providerUpstreamCostUsd,
+          durationMs: telemetry.durationMs,
+          inputUsd: roundMoney(cost.inputUsd),
+          outputUsd: roundMoney(cost.outputUsd),
+          totalUsd: roundMoney(cost.totalUsd),
+          pricingSource: cost.pricingSource,
+        },
+      };
+
+      const logRecord = toTranslationLogRecord(record);
+      appendJsonl(outputLogPath, logRecord);
+      appendJsonl(
+        join(dirname(reportDir), "judgements.jsonl"),
+        toJudgementScoreRecord(record, response.parsed),
+      );
+      await publishTranslationScores(logRecord);
+
+      console.log(
+        [
+          `Scored ${task.locale}/${task.slug}: ${overallScore.toFixed(1)}/100 (${response.parsed.recommendation}, ${confidence.level} confidence)`,
+          `- Log: ${relativeToRepo(outputLogPath)}`,
+        ].join("\n"),
+      );
     },
-  };
-
-  appendJsonl(outputLogPath, toTranslationLogRecord(record));
-  appendJsonl(join(dirname(reportDir), "judgements.jsonl"), toJudgementScoreRecord(record, response.parsed));
-
-  console.log([
-    `Scored ${task.locale}/${task.slug}: ${overallScore.toFixed(1)}/100 (${response.parsed.recommendation}, ${confidence.level} confidence)`,
-    `- Log: ${relativeToRepo(outputLogPath)}`,
-  ].join("\n"));
+  );
 }
 
 async function scoreTranslation({
@@ -717,6 +768,8 @@ function readJsonlRows(path: string) {
 
 function toTranslationLogRecord(record: ScoredTranslationRecord) {
   return {
+    langfuseTraceId: record.langfuseTraceId,
+    langfuseObservationId: record.langfuseObservationId,
     event: record.event,
     isoDate: record.isoDate,
     at: record.at,
@@ -772,6 +825,8 @@ function toTranslationLogRecord(record: ScoredTranslationRecord) {
 
 function toJudgementScoreRecord(record: ScoredTranslationRecord, response: ScoreResponse) {
   return {
+    langfuseTraceId: record.langfuseTraceId,
+    langfuseObservationId: record.langfuseObservationId,
     event: "score",
     scoreSource: "scorer",
     isoDate: record.isoDate,
