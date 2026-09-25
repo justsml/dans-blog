@@ -34,6 +34,7 @@ import {
   streamText,
   tracedEval,
 } from "./braintrust.ts";
+import { exitAfterFlush } from "./langfuse.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
   OPENROUTER_USAGE_ACCOUNTING,
@@ -1775,7 +1776,7 @@ const failCount = results.filter((r) => !r.passed).length;
 console.log(`\n${ui.title("Markdown summary")} ${ui.path(summaryPath)}`);
 if (failCount > 0) {
   console.error(ui.bad(`\n❌ ${failCount} eval(s) failed.`));
-  process.exit(1);
+  await exitAfterFlush(1);
 }
 console.log(ui.good(`✅ All ${results.length} eval(s) passed.`));
 

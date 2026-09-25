@@ -28,30 +28,69 @@ if (langfuseEnabled) {
   });
 }
 
+type TelemetryCallOptions = {
+  telemetry?: { includeRuntimeContext?: object };
+  runtimeContext?: unknown;
+};
+
 /**
- * Merges `experimental_telemetry: { isEnabled: true }` into AI SDK call options so
- * generateText/streamText spans are exported to Langfuse via the OTel span processor
- * registered above. No-op when Langfuse credentials aren't configured.
+ * Enables AI SDK 7 telemetry for the registered Langfuse integration. Metadata
+ * rides on `runtimeContext`: the integration exports only the context keys
+ * listed in `telemetry.includeRuntimeContext`, and AI SDK 7 dropped
+ * `telemetry.metadata`. No-op when Langfuse credentials aren't configured.
  */
-export function withLangfuseTelemetry<
-  T extends { experimental_telemetry?: unknown },
->(options: T, metadata?: Record<string, unknown>): T {
+export function withLangfuseTelemetry<T extends TelemetryCallOptions>(
+  options: T,
+  metadata?: Record<string, unknown>,
+): T {
   if (!langfuseEnabled) return options;
+
+  const telemetry = { ...options.telemetry, isEnabled: true };
+  if (metadata == null || Object.keys(metadata).length === 0)
+    return { ...options, telemetry };
 
   return {
     ...options,
-    experimental_telemetry: {
-      ...((options.experimental_telemetry as Record<string, unknown>) ?? {}),
-      isEnabled: true,
-      metadata: {
-        ...((options.experimental_telemetry as any)?.metadata ?? {}),
-        ...metadata,
+    runtimeContext: { ...(options.runtimeContext as object), ...metadata },
+    telemetry: {
+      ...telemetry,
+      includeRuntimeContext: {
+        ...telemetry.includeRuntimeContext,
+        ...Object.fromEntries(Object.keys(metadata).map((key) => [key, true])),
       },
     },
   };
 }
 
-/** Flush short-lived CLI observations before the process exits. */
+const FLUSH_TIMEOUT_MS = 5_000;
+
+/**
+ * Flush short-lived CLI observations before the process exits. Bounded so an
+ * unreachable Langfuse host can't hang the CLI on its way out.
+ */
 export async function flushLangfuse() {
-  await spanProcessor?.forceFlush();
+  if (spanProcessor == null) return;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<void>((resolve) => {
+    timer = setTimeout(() => {
+      console.warn(`Langfuse flush timed out after ${FLUSH_TIMEOUT_MS}ms; some traces may be missing.`);
+      resolve();
+    }, FLUSH_TIMEOUT_MS);
+  });
+  try {
+    await Promise.race([spanProcessor.forceFlush(), timeout]);
+  } catch (error) {
+    console.warn("Langfuse flush failed:", error instanceof Error ? error.message : error);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * `process.exit()` skips `beforeExit`, so any exit after LLM work must flush
+ * first or the batched spans are dropped.
+ */
+export async function exitAfterFlush(code: number): Promise<never> {
+  await flushLangfuse();
+  process.exit(code);
 }

@@ -1,6 +1,6 @@
 import * as ai from "ai";
 import { initLogger, traced, wrapAISDK } from "braintrust";
-import { langfuseEnabled, withLangfuseTelemetry } from "./langfuse.ts";
+import { withLangfuseTelemetry } from "./langfuse.ts";
 
 export const BRAINTRUST_PROJECT_NAME = "danlevy.net";
 
@@ -19,9 +19,9 @@ const instrumentedAi = braintrustEnabled
   : ai;
 
 export const generateText: typeof ai.generateText = (options) =>
-  instrumentedAi.generateText(langfuseEnabled ? withLangfuseTelemetry(options) : options);
+  instrumentedAi.generateText(withLangfuseTelemetry(options));
 export const streamText: typeof ai.streamText = (options) =>
-  instrumentedAi.streamText(langfuseEnabled ? withLangfuseTelemetry(options) : options);
+  instrumentedAi.streamText(withLangfuseTelemetry(options));
 
 /**
  * Wraps fn() in a Braintrust span when BRAINTRUST_API_KEY is set, otherwise

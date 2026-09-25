@@ -20,6 +20,7 @@ import { dirname, join } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
 import { generateText } from "./braintrust.ts";
+import { exitAfterFlush } from "./langfuse.ts";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import { parse as parseLlmString } from "llm-strings";
 import {
@@ -251,7 +252,7 @@ function printInterruptedTotals() {
   if (activeTelemetry) {
     printTelemetryTotals(`\nInterrupted ${activeRunLabel}`, activeTelemetry);
   }
-  process.exit(130);
+  void exitAfterFlush(130);
 }
 
 process.once("SIGINT", printInterruptedTotals);

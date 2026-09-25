@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } fr
 import { dirname, join } from "node:path";
 import "dotenv/config";
 import { generateText } from "./braintrust.ts";
+import { exitAfterFlush } from "./langfuse.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
   getPostPaths,
@@ -270,7 +271,7 @@ function hashText(text: string) {
   return createHash("sha256").update(text).digest("hex");
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("\n❌ Translation selection failed:", err.message);
-  process.exit(1);
+  await exitAfterFlush(1);
 });
