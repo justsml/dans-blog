@@ -1,6 +1,8 @@
 import { expect, test } from "bun:test";
 import {
+  projectEvalScores,
   projectTranslationScores,
+  propagatableMetadata,
   sendTranslationScores,
 } from "./langfuse-score-projection.ts";
 
@@ -88,4 +90,42 @@ test("score delivery preserves source timestamps and treats partial rejection as
       else process.env[name] = old[i];
     }
   }
+});
+
+test("eval scores stay on their 0–1 scale under an eval. prefix with stable ids", () => {
+  const link = { traceId: "t1", observationId: "o1" };
+  const scores = projectEvalScores(
+    "eval:post/ja",
+    [
+      { name: "mdx", score: 1, passed: true, severity: "high" },
+      { name: "judge", score: 0.82, passed: false, severity: "medium", details: "tone drift" },
+      { name: "broken", score: Number.NaN, passed: false, severity: "low" },
+    ],
+    link,
+  );
+  expect(scores.map((s) => [s.name, s.value])).toEqual([
+    ["eval.mdx", 1],
+    ["eval.judge", 0.82],
+  ]);
+  expect(scores[1]).toMatchObject({
+    ...link,
+    dataType: "NUMERIC",
+    comment: "tone drift",
+    metadata: { evalName: "eval:post/ja", passed: false, severity: "medium" },
+  });
+  expect(projectEvalScores("eval:post/ja", [{ name: "mdx", score: 1 }], link)[0].id)
+    .toBe(scores[0].id);
+});
+
+test("only short scalar metadata is propagated to child observations", () => {
+  expect(
+    propagatableMetadata({
+      slug: "trust-but-throttle",
+      attempt: 2,
+      dryRun: false,
+      profiles: { translation: "v3" },
+      missing: undefined,
+      huge: "x".repeat(201),
+    }),
+  ).toEqual({ slug: "trust-but-throttle", attempt: "2", dryRun: "false" });
 });

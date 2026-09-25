@@ -141,3 +141,59 @@ export async function sendTranslationScores(
   if (result.errors?.length)
     throw new Error(`Langfuse rejected ${result.errors.length} score events`);
 }
+
+export type EvalScoreInput = {
+  name: string;
+  score: number;
+  passed?: boolean;
+  severity?: string;
+  details?: string;
+};
+
+/**
+ * Eval scorers report 0–1 values; the `eval.` prefix keeps them apart from the
+ * `i18n.` judge projections, which use the judges' original scales.
+ */
+export function projectEvalScores(
+  evalName: string,
+  scores: EvalScoreInput[],
+  link: ScoreTraceLink,
+): LangfuseScore[] {
+  return scores
+    .filter((s) => Number.isFinite(s.score))
+    .map((s) => {
+      const name = `eval.${s.name}`;
+      return {
+        id: scoreRecordHash(
+          `${evalName}:${link.traceId}:${link.observationId ?? "trace"}:${name}`,
+        ),
+        ...link,
+        name,
+        value: s.score,
+        dataType: "NUMERIC" as const,
+        comment: s.details ?? "",
+        metadata: Object.fromEntries(
+          Object.entries({ evalName, passed: s.passed, severity: s.severity })
+            .filter(([, value]) => value !== undefined),
+        ),
+      };
+    });
+}
+
+const PROPAGATED_VALUE_MAX = 200;
+
+/**
+ * propagateAttributes() drops non-string or >200-char values with a warning,
+ * so keep only the short scalar dimensions worth filtering traces by.
+ */
+export function propagatableMetadata(
+  metadata: Record<string, unknown>,
+): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(metadata)) {
+    if (!["string", "number", "boolean"].includes(typeof value)) continue;
+    const text = String(value);
+    if (text.length <= PROPAGATED_VALUE_MAX) out[key] = text;
+  }
+  return out;
+}

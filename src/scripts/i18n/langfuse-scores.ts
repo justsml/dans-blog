@@ -1,13 +1,17 @@
 import {
   getActiveSpanId,
   getActiveTraceId,
+  propagateAttributes,
   startActiveObservation,
 } from "@langfuse/tracing";
 import { flushLangfuse, langfuseEnabled } from "./langfuse.ts";
 import {
+  projectEvalScores,
   projectTranslationScores,
+  propagatableMetadata,
   scoreRecordHash,
   sendTranslationScores,
+  type EvalScoreInput,
   type ScoreTraceLink,
 } from "./langfuse-score-projection.ts";
 
@@ -59,4 +63,49 @@ export async function withTranslationScoreTrace<T>(
       console.warn("[langfuse] scorer trace flush failed");
     }
   }
+}
+
+/**
+ * Parents every AI SDK generation inside run() under one eval observation,
+ * stamps the eval's trace name and short metadata onto all of them, then
+ * attaches the eval's scores to that observation. Flushing is left to the
+ * caller's exit path so parallel evals don't each block on a flush.
+ */
+export async function withLangfuseEval<
+  T extends { scores?: EvalScoreInput[] },
+>(
+  name: string,
+  metadata: Record<string, unknown>,
+  input: unknown,
+  run: () => Promise<T>,
+): Promise<T> {
+  if (!langfuseEnabled) return run();
+  return startActiveObservation(name, (span) =>
+    propagateAttributes(
+      {
+        traceName: name,
+        metadata: propagatableMetadata(metadata),
+        tags: ["i18n-eval"],
+      },
+      async () => {
+        span.update({ input, metadata });
+        const result = await run();
+        span.update({ output: result });
+        const link = currentScoreTrace();
+        if (link && Array.isArray(result.scores)) {
+          try {
+            await sendTranslationScores(
+              projectEvalScores(name, result.scores, link),
+              new Date().toISOString(),
+            );
+          } catch {
+            console.warn(
+              `[langfuse] eval score export failed for ${name}; local eval output is unaffected`,
+            );
+          }
+        }
+        return result;
+      },
+    ),
+  );
 }

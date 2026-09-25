@@ -1,6 +1,8 @@
 import * as ai from "ai";
 import { initLogger, traced, wrapAISDK } from "braintrust";
 import { withLangfuseTelemetry } from "./langfuse.ts";
+import type { EvalScoreInput } from "./langfuse-score-projection.ts";
+import { withLangfuseEval } from "./langfuse-scores.ts";
 
 export const BRAINTRUST_PROJECT_NAME = "danlevy.net";
 
@@ -24,19 +26,27 @@ export const streamText: typeof ai.streamText = (options) =>
   instrumentedAi.streamText(withLangfuseTelemetry(options));
 
 /**
- * Wraps fn() in a Braintrust span when BRAINTRUST_API_KEY is set, otherwise
- * calls it directly. Attaches the result's scores[] array to the span so each
- * eval case appears as a scored row in the Braintrust UI.
+ * Wraps fn() in a Braintrust span and a Langfuse observation, each only when
+ * its credentials are set. Both receive the result's scores[] so each eval
+ * case appears as a scored row, and in Langfuse the eval's LLM calls nest
+ * under it.
  */
-export async function tracedEval<T extends { scores?: Array<{ name: string; score: number }> }>(
+export async function tracedEval<T extends { scores?: EvalScoreInput[] }>(
   name: string,
   metadata: Record<string, unknown>,
-  fn: () => Promise<T>,
+  evalFn: () => Promise<T>,
   options: {
     llmString?: string;
     inputOverride?: unknown;
   } = {},
 ): Promise<T> {
+  const fn = () =>
+    withLangfuseEval(
+      name,
+      { ...metadata, llmString: options.llmString },
+      options.inputOverride ?? metadata,
+      evalFn,
+    );
   if (!braintrustEnabled) return fn();
 
   return traced(
