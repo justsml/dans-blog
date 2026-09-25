@@ -326,6 +326,22 @@ The live canary verifies both generation and streaming against provider receipts
 results and reconciliation receipts are under `reports/i18n/cost-observability/`.
 Historical reconciliation covers the three recorded v2 negotiation traces. Older
 benchmark runs that never emitted traces have not been retroactively imported.
+
+Pre-tracing score and candidate history is imported with deterministic ids
+(reruns upsert) and the `backfill` tag. Receipts live in
+`reports/i18n/cost-observability/`:
+
+```bash
+bun src/scripts/i18n/langfuse-settle-openrouter.ts   # settle live OpenRouter generations
+bun src/scripts/i18n/langfuse-backfill-score-log.ts FROM_ISO TO_ISO
+bun src/scripts/i18n/langfuse-backfill-candidates.ts
+```
+
+The settler verifies `is_byok` and the gateway charge per generation id. Logs
+without a generation id keep reported charges but mark BYOK as inferred.
+Pricing-table costs are `api-equivalent-estimate`; unpriced records store no
+cost. Langfuse cannot unset a stored cost, so a wrong cost needs a delete and
+re-import.
 Billing invoices, fixed subscription fees and provider-side charges absent from
 responses are not reconstructed from token counts.
 
