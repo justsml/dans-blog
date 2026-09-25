@@ -335,6 +335,7 @@ Pre-tracing score and candidate history is imported with deterministic ids
 bun src/scripts/i18n/langfuse-settle-openrouter.ts   # settle live OpenRouter generations
 bun src/scripts/i18n/langfuse-backfill-score-log.ts FROM_ISO TO_ISO
 bun src/scripts/i18n/langfuse-backfill-candidates.ts
+bun src/scripts/i18n/langfuse-estimate-unpriced.ts CATALOG_JSON # retro-price unknowns
 ```
 
 The settler verifies `is_byok` and the gateway charge per generation id. Logs
