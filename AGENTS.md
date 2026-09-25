@@ -302,6 +302,14 @@ playwright.config.ts         # E2E tests
 - For quiz posts, center the teaching insight behind the questions, not only the answer key mechanics.
 - Humor works best as seasoning. If a bit starts competing with the argument, cut it back.
 
+## Model selection and cost restrictions
+
+- Never use OpenAI **Pro** or **Ultra** models in evaluations, including judges, ancillary calls, retries, fallbacks, and reseller routes. No confirmation exception applies to evals.
+- Never offer these models as app options, presets, suggestions, examples, or defaults. This includes dynamically loaded catalogs and provider aliases.
+- Before any other Pro/Ultra use, warn the user with the exact model/provider, current verified pricing, intended scope, and spending limit. Require **two separate explicit confirmations** for that specific use. A generic instruction to proceed, an old approval, or an available API key does not count. Until both confirmations exist, choose an allowed model or stop that route.
+- Also avoid any other model with a verified output-token price **at or above $50 USD per 1,000,000 tokens**. Exclude such models from evals and app selections/defaults. Check current provider pricing when adding or selecting a new model; do not treat missing pricing, BYOK gateway charges of zero, promotional credits, or stale catalogs as proof that a model is inexpensive.
+- Apply these rules to primary, judge, helper, retry, and fallback calls across every provider. Preserve historical evidence for prohibited models; importing old traces does not authorize new calls.
+
 ## i18n Translation Pipeline
 
 Scripts live in `src/scripts/i18n/`. See `docs/translations.md` for the full workflow.
