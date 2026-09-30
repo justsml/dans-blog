@@ -1,6 +1,6 @@
 import { withTranslationScoreTrace, currentScoreTrace, publishTranslationScores } from "../langfuse-scores.ts";
 import { readFileSync } from "node:fs";
-import { generateText as defaultGenerateText } from "../braintrust.ts";
+import { generateText as defaultGenerateText } from "../ai-sdk.ts";
 import {
   averageJudgeScore,
   countJudgeSuggestionPriorities,

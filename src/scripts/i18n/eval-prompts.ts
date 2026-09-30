@@ -28,13 +28,8 @@ import { basename, dirname, join, relative } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
 import { compile } from "@mdx-js/mdx";
-import {
-  BRAINTRUST_PROJECT_NAME,
-  braintrustEnabled,
-  streamText,
-  tracedEval,
-} from "./braintrust.ts";
-import { exitAfterFlush } from "./langfuse.ts";
+import { streamText, tracedEval } from "./ai-sdk.ts";
+import { exitAfterFlush, langfuseEnabled } from "./langfuse.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {
   OPENROUTER_USAGE_ACCOUNTING,
@@ -1701,10 +1696,8 @@ console.log(
   `${ui.title("Run log")} ${ui.path(relative(process.cwd(), runLogPath))}${printStreams ? ui.warn(" (+stdout)") : ""}\n`,
 );
 
-if (braintrustEnabled) {
-  console.log(
-    `${ui.title("Braintrust")} logging to project ${ui.info(`"${BRAINTRUST_PROJECT_NAME}"`)}\n`,
-  );
+if (langfuseEnabled) {
+  console.log(`${ui.title("Langfuse")} tracing enabled\n`);
 }
 
 const results = await Promise.all(

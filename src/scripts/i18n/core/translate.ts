@@ -1,5 +1,5 @@
 import matter from "gray-matter";
-import { generateText as defaultGenerateText } from "../braintrust.ts";
+import { generateText as defaultGenerateText } from "../ai-sdk.ts";
 import {
   assertGenerationNotTokenLimited,
   cachedUserMessage,

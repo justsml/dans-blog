@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { generateText } from "../i18n/braintrust.ts";
+import { generateText } from "../i18n/ai-sdk.ts";
 import { NEWS_WATCH_DB_PATH } from "./config.ts";
 import { runWithConcurrency } from "./concurrency.ts";
 import type { NewsWatchDb, UnextractedItemRow } from "./db.ts";

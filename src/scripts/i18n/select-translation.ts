@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync, appendFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import "dotenv/config";
-import { generateText } from "./braintrust.ts";
+import { generateText } from "./ai-sdk.ts";
 import { exitAfterFlush } from "./langfuse.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import {

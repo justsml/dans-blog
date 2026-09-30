@@ -1,4 +1,4 @@
-import { generateText, streamText } from "./braintrust.ts";
+import { generateText, streamText } from "./ai-sdk.ts";
 import {
   createOpenRouterChatModel,
   resolveLlmConfig,

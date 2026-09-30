@@ -9,7 +9,7 @@ import {
   collectSourcePosts,
   getPostPaths,
 } from "../i18n/corpus-inventory.ts";
-import { generateText } from "../i18n/braintrust.ts";
+import { generateText } from "../i18n/ai-sdk.ts";
 import { buildSystemPrompt } from "../i18n/prompts.ts";
 import { usageFromResult } from "../i18n/llm-telemetry.ts";
 import { createOpenRouterChatModel, resolveLlmConfig } from "../i18n/core/model-config.ts";

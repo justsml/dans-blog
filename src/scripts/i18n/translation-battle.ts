@@ -3,7 +3,7 @@ import {join} from 'node:path';
 import matter from 'gray-matter';
 import {compile} from '@mdx-js/mdx';
 import {startActiveObservation} from '@langfuse/tracing';
-import {generateText} from './braintrust.ts';
+import {generateText} from './ai-sdk.ts';
 import {langfuseEnabled,flushLangfuse} from './langfuse.ts';
 import {resolveLlmConfig,createOpenRouterChatModel} from './core/model-config.ts';
 import {lowestReasoningEffort} from './core/reasoning-defaults.ts';

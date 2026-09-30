@@ -6,7 +6,7 @@ import {z} from 'zod';
 import {tool,stepCountIs} from 'ai';
 import {compile} from '@mdx-js/mdx';
 import matter from 'gray-matter';
-import {generateText} from '../braintrust.ts';
+import {generateText} from '../ai-sdk.ts';
 import {resolveLlmConfig,createOpenRouterChatModel} from '../core/model-config.ts';
 import {validateTranslation} from '../core/validate.ts';
 import {extractJsonObject} from '../judge-utils.ts';

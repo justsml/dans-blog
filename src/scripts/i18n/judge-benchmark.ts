@@ -4,7 +4,7 @@ import { mkdirSync, readFileSync, writeFileSync, appendFileSync, readdirSync } f
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 import { scoreTranslation, type JudgePromptTuning } from "./core/score.ts";
-import { generateText } from "./braintrust.ts";
+import { generateText } from "./ai-sdk.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 
 export const JUDGE_BENCHMARK_MODELS = [

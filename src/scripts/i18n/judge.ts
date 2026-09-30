@@ -13,7 +13,7 @@ import {
 } from "./utils.ts";
 import { getRunTelemetry, renderTelemetryLines } from "./telemetry.ts";
 import { OPENROUTER_USAGE_ACCOUNTING } from "./llm-telemetry.ts";
-import { generateText } from "./braintrust.ts";
+import { generateText } from "./ai-sdk.ts";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";

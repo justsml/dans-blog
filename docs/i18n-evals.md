@@ -2,15 +2,11 @@
 
 Offline eval harness for the translation pipeline. Runs real LLM inferences with cheap models against real corpus articles, scores outputs with deterministic integrity checks plus a lightweight LLM judge, and records results to `reports/i18n/evals/`.
 
-Works offline (JSONL + markdown) or with Braintrust when `BRAINTRUST_API_KEY` is set.
+Works offline (JSONL + markdown) or with Langfuse when `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY` are set.
 
-## Braintrust integration
+## Langfuse integration
 
-Set `BRAINTRUST_API_KEY` in `.env` and every `runEval` call is automatically wrapped in a `traced` span logged to the `danlevy.net` project. Each (input × model) pair becomes a scored experiment row. LLM calls inside the span are auto-traced via `wrapAISDK`. Without the key, everything runs offline as before.
-
-```sh
-BRAINTRUST_API_KEY=sk-... bun run i18n:eval
-```
+Set `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY` and `LANGFUSE_BASE_URL` in `.env` and every eval case is wrapped in a Langfuse observation by `tracedEval` (`src/scripts/i18n/ai-sdk.ts`). Each (input × model) pair becomes a scored row, and the case's LLM generations nest under it with token usage and cost. Without the keys, everything runs offline as before.
 
 ## When to run
 

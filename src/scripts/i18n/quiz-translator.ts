@@ -9,7 +9,7 @@
  * require it when emitting JSON (e.g., Alibaba/Qwen via OpenRouter).
  */
 
-import { generateText } from "./braintrust.ts";
+import { generateText } from "./ai-sdk.ts";
 import { jsonrepair } from "jsonrepair";
 import { z } from "zod";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";

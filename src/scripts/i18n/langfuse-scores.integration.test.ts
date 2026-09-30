@@ -53,7 +53,6 @@ test("a scorer publishes scores against its real active parent and flushes witho
           LANGFUSE_BASE_URL: `http://127.0.0.1:${server.port}`,
           LANGFUSE_PUBLIC_KEY: "local-test",
           LANGFUSE_SECRET_KEY: "local-test",
-          BRAINTRUST_API_KEY: "",
           OTEL_EXPORTER_OTLP_HEADERS: "",
         },
         stdout: "pipe",
