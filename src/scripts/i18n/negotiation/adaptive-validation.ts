@@ -1,12 +1,13 @@
 import { validateNegotiatedTranslation } from "./batch-validation.ts";
 import { type ConsensusPolicy } from "./consensus-policy.ts";
 import matter from "gray-matter";
+import type { ActiveLocale } from "../../../shared/i18n.ts";
 export async function validateAdaptive(
   source: string,
   target: string,
   baseline: string,
   path: string,
-  locale: "es" | "ja",
+  locale: ActiveLocale,
   policy: ConsensusPolicy,
 ) {
   const raw = await validateNegotiatedTranslation(

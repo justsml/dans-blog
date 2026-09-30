@@ -1,5 +1,6 @@
 import { traceCli } from "./langfuse.ts";
 import { writeRecords } from "./records.ts";
+import type { CallLog } from "./call-log.ts";
 import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -96,14 +97,42 @@ export function cliAnswer(
   if (!text.trim()) throw Error("OpenCode returned no final text");
   return text;
 }
+/**
+ * Where CLI receipts go: a run's append-only call log (keyed by call), or a
+ * legacy file prefix that fans out into per-stage files (v1 pilot/finalize).
+ */
+export type CliReceipts = { log: CallLog; key: string } | string;
+function receiptName(receipts: CliReceipts) {
+  return typeof receipts === "string"
+    ? receipts
+    : receipts.log.path + "#" + receipts.key;
+}
+function recordInvocation(receipts: CliReceipts, invocation: Record<string, unknown>) {
+  if (typeof receipts === "string")
+    writeRecords(receipts + "-cli-invocation.jsonl", [invocation]);
+  else receipts.log.append(receipts.key, "invocation", invocation);
+}
+function recordExit(
+  receipts: CliReceipts,
+  result: { stdout: string; stderr: string; code: number | null; timedOut: boolean },
+) {
+  if (typeof receipts === "string") {
+    writeFileSync(receipts + "-cli-stdout.txt", result.stdout);
+    writeFileSync(receipts + "-cli-stderr.txt", result.stderr);
+    writeRecords(receipts + "-cli-exit.jsonl", [
+      { code: result.code, timedOut: result.timedOut },
+    ]);
+  } else receipts.log.append(receipts.key, "exit", result);
+}
 /** A fresh subprocess per role/round; only the coordinator can apply changes. */
 async function runCliUntraced(
   backend: CliBackend,
   actor: CliActor,
   prompt: string,
   schema: unknown,
-  receiptPrefix: string,
-  timeoutMs = 240000,
+  receipts: CliReceipts,
+  timeoutMs: number,
+  onStdout: (stdout: string) => void,
 ) {
   // CLI validators lag Zod's draft identifier; schema keywords remain unchanged.
   const { $schema: _dialect, ...cliSchema } = schema as Record<string, unknown>;
@@ -111,18 +140,16 @@ async function runCliUntraced(
   const dir = mkdtempSync(join(tmpdir(), "translation-negotiation-"));
   writeFileSync(join(dir, "schema.json"), JSON.stringify(schema));
   const command = cliCommand(backend, actor, dir, schema);
-  writeRecords(receiptPrefix + "-cli-invocation.jsonl", [
-    {
-      backend,
-      command,
-      cwd: dir,
-      timeoutMs,
-      requestedMaxOutputTokens: 24000,
-      outputTokenLimitEnforced: backend === "claude",
-      contextMode: "frozen-inline-packet",
-      session: "fresh",
-    },
-  ]);
+  recordInvocation(receipts, {
+    backend,
+    command,
+    cwd: dir,
+    timeoutMs,
+    requestedMaxOutputTokens: 24000,
+    outputTokenLimitEnforced: backend === "claude",
+    contextMode: "frozen-inline-packet",
+    session: "fresh",
+  });
   const env = {
     ...process.env,
     CLAUDE_CODE_MAX_OUTPUT_TOKENS: "24000",
@@ -166,11 +193,8 @@ async function runCliUntraced(
     });
     child.stdin.end(prompt);
   });
-  writeFileSync(receiptPrefix + "-cli-stdout.txt", result.stdout);
-  writeFileSync(receiptPrefix + "-cli-stderr.txt", result.stderr);
-  writeRecords(receiptPrefix + "-cli-exit.jsonl", [
-    { code: result.code, timedOut: result.timedOut },
-  ]);
+  recordExit(receipts, result);
+  onStdout(result.stdout);
   if (result.code !== 0 || result.timedOut)
     throw Error(backend + " failed; inspect CLI receipts");
   const answerPath = join(dir, "answer.json");
@@ -186,10 +210,22 @@ export async function runCli(
   actor: CliActor,
   prompt: string,
   schema: unknown,
-  receiptPrefix: string,
+  receipts: CliReceipts,
   timeoutMs = 240000,
 ) {
-  return traceCli({ backend, actor, prompt, schema, receiptPrefix }, () =>
-    runCliUntraced(backend, actor, prompt, schema, receiptPrefix, timeoutMs),
+  let stdout: string | undefined;
+  return traceCli(
+    {
+      backend,
+      actor,
+      prompt,
+      schema,
+      receipt: receiptName(receipts),
+      stdout: () => stdout,
+    },
+    () =>
+      runCliUntraced(backend, actor, prompt, schema, receipts, timeoutMs, (text) => {
+        stdout = text;
+      }),
   );
 }

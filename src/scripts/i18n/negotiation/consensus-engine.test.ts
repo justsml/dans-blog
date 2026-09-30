@@ -6,8 +6,8 @@ import {
   type ModelBallot,
   type Event,
 } from "./consensus-engine.ts";
-import { policySchema } from "./consensus-policy.ts";
-import { dimensions } from "./protocol.ts";
+import { policySchema, policyPrompt } from "./consensus-policy.ts";
+import { dimensions, repositoryRules } from "./protocol.ts";
 const policy = policySchema.parse({
   audience: "Japanese developers",
   maxRounds: 2,
@@ -284,4 +284,10 @@ test("each issue retains only its own ballots to prevent quadratic prompt growth
       (b) => b.votes.length === 1 && b.votes[0]!.issueId === "i",
     ),
   ).toBe(true);
+});
+
+test("v2 reviewers see the repository rules for inherited frontmatter", () => {
+  const prompt = policyPrompt(policy);
+  expect(prompt).toContain(repositoryRules);
+  expect(prompt).toContain("inherited date/draft/hidden/unlisted/publish/popularity are omitted");
 });

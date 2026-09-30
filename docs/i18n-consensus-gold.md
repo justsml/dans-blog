@@ -230,11 +230,18 @@ old issue from a subsequent review cannot close it. Dissent and medium/optional
 issues remain visible in the final result. A budget limit yields
 `needs-attention`, never automatic acceptance.
 
+Model calls are recorded in one append-only `calls.jsonl` per run: each line
+is `{at, key, stage, …}` with stages `request`, `invocation`, `exit` (including
+verbatim stdout/stderr), `raw` and `parsed`. The resume cache reads the latest
+`parsed` record per key. Older runs with a `calls/` directory of per-stage files
+can be folded in with `bun src/scripts/i18n/negotiation/compact-calls.ts RUN_DIR`,
+which verifies every record before deleting `calls/`.
+
 `events-*.jsonl` is append-only per execution attempt. It records policy,
 source/baseline hashes, every review, fragment/source quote, issue ID, model,
 ballot, rebuttal, severity, override, reopening, change instruction, rationale,
 tradeoff and before/after revision hash. Full prompts/raw responses remain in
-`calls/`. Revisions use exact nonoverlapping patches; every text change is
+`calls.jsonl`. Revisions use exact nonoverlapping patches; every text change is
 therefore represented in the ledger, including changes to annotations or
 headings. References must be in the frozen checked packet. Model argument
 quality is still assessed by the panel; a reference ID alone is not a proof.
@@ -258,6 +265,17 @@ bun src/scripts/i18n/negotiation/consensus-run.ts \
   reports/i18n/consensus-pilots/2026-09-23-named-exports/references.json
 ```
 
+Any active locale works. Freeze a published translation with
+`bun src/scripts/i18n/negotiation/freeze-snapshot.ts SLUG LOCALE OUT_JSON` and
+give the run a policy whose `audience` names that locale's readers.
+
+The default panel is GPT-6.1 Sol, Claude Opus 5.5, GPT-6 Astra and Claude
+Sonnet 5.5. Claude models are capped at Opus 5.5 until Fable is authorized;
+override the panel with `--actors a,b,c,d`. `--timeout-seconds N` raises the
+240-second per-call limit for long articles. The v2 system prompt includes the
+same repository rules as the v1 rubric (inherited frontmatter, `../` images,
+`sourceHash`); without them reviewers flag correct frontmatter as omissions.
+
 Add `--prepare-only` to freeze and inspect the inputs without model calls.
 Use a new output directory for changed policy or source; cached calls are
 identity-bound. V1 gold stays immutable. V2 final results distinguish unanimous
@@ -279,7 +297,9 @@ trace groups native CLI generations, cache hits, review/ballot decisions,
 revisions, validation events and the final result. Generations include prompts,
 outputs, model/effort, failures, native token counters and reported CLI cost
 when available. Missing cost is not presented as zero. Short-lived calls and
-runs explicitly flush the exporter; JSONL receipts retain trace/observation IDs.
+runs explicitly flush the exporter. Trace and observation IDs are not copied
+into local receipts, and any Langfuse receipt files under `reports/` are
+gitignored.
 
 `bun src/scripts/i18n/negotiation/backfill-langfuse.ts RUN_DIRECTORY` imports
 existing receipts without model calls. Backfilled traces are marked as imports;

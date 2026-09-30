@@ -13,19 +13,26 @@ import { negotiateConsensus } from "./consensus-engine.ts";
 import { validateAdaptive } from "./adaptive-validation.ts";
 import { runCli } from "./cli-transport.ts";
 import { hash } from "./protocol.ts";
-import { writeRecords, readRecord } from "./records.ts";
+import { writeRecords } from "./records.ts";
+import { CallLog } from "./call-log.ts";
 import { extractJsonObject } from "../judge-utils.ts";
+import { ACTIVE_LOCALES } from "../../../shared/i18n.ts";
 const [snapshotArg, outArg, policyArg, refsArg] = process.argv.slice(2);
 if (!snapshotArg || !outArg || !policyArg || !refsArg)
   throw Error(
-    "Usage: bun consensus-run.ts SNAPSHOT_JSON NEW_RUN_DIR POLICY_JSON REFERENCES_JSON [--prepare-only]",
+    "Usage: bun consensus-run.ts SNAPSHOT_JSON NEW_RUN_DIR POLICY_JSON REFERENCES_JSON [--prepare-only] [--timeout-seconds N] [--actors a,b,c,d]",
   );
 const out = resolve(outArg),
   snapshot = JSON.parse(readFileSync(snapshotArg, "utf8")),
   policy = policySchema.parse(JSON.parse(readFileSync(policyArg, "utf8"))),
   references = JSON.parse(readFileSync(refsArg, "utf8"));
+const timeoutFlag = process.argv.indexOf("--timeout-seconds");
+const timeoutMs =
+  timeoutFlag === -1 ? 240_000 : Number(process.argv[timeoutFlag + 1]) * 1000;
+if (!Number.isFinite(timeoutMs) || timeoutMs <= 0)
+  throw Error("--timeout-seconds must be a positive number");
 if (
-  !["es", "ja"].includes(snapshot.locale) ||
+  !(ACTIVE_LOCALES as readonly string[]).includes(snapshot.locale) ||
   hash(snapshot.source) !== snapshot.sourceHash ||
   hash(snapshot.target) !== snapshot.targetHash
 )
@@ -35,12 +42,23 @@ if (
   references.some((r) => !r.id || r.verified !== true)
 )
   throw Error("Only checked reference records can enter evidence packet");
-const actors = [
-  { model: "openai/gpt-6-sol" },
-  { model: "anthropic/claude-opus-5.5" },
-  { model: "openai/gpt-6-astra" },
-  { model: "anthropic/claude-fable-5.1" },
+// Claude models are capped at Opus 5.5 (floor Sonnet 5.5) until Fable is authorized.
+const DEFAULT_ACTORS = [
+  "openai/gpt-6.1-sol",
+  "anthropic/claude-opus-5.5",
+  "openai/gpt-6-astra",
+  "anthropic/claude-sonnet-5.5",
 ];
+const actorsFlag = process.argv.indexOf("--actors");
+const actors = (
+  actorsFlag === -1
+    ? DEFAULT_ACTORS
+    : (process.argv[actorsFlag + 1] ?? "").split(",").filter(Boolean)
+).map((model) => {
+  if (!/^(openai|anthropic)\//.test(model))
+    throw Error("Actors must be openai/ or anthropic/ models: " + model);
+  return { model };
+});
 const identity = {
   protocol: "issue-consensus-v2",
   severityScale: "1-5",
@@ -49,7 +67,12 @@ const identity = {
   referencesHash: hash(JSON.stringify(references)),
   actors,
 };
-mkdirSync(join(out, "calls"), { recursive: true });
+mkdirSync(out, { recursive: true });
+if (existsSync(join(out, "calls")))
+  throw Error(
+    "Legacy calls/ receipts found; run compact-calls.ts on this directory first",
+  );
+const callLog = new CallLog(join(out, "calls.jsonl"));
 const manifest = join(out, "manifest.json");
 if (
   existsSync(manifest) &&
@@ -81,11 +104,7 @@ const events = join(out, "events-" + Date.now() + ".jsonl");
 let latestCandidate = snapshot.target;
 const result = await traceNegotiation(
   { identity },
-  (ids) =>
-    appendFileSync(
-      join(out, "langfuse.jsonl"),
-      JSON.stringify({ at: new Date().toISOString(), events, ...ids }) + "\n",
-    ),
+  () => {},
   () =>
     negotiateConsensus(
       {
@@ -121,12 +140,11 @@ const result = await traceNegotiation(
           payload: unknown,
           schema: z.ZodType<T>,
         ) => {
-          const prefix = join(out, "calls", key.replaceAll("/", "--")),
-            outputSchema = z.toJSONSchema(schema);
+          const outputSchema = z.toJSONSchema(schema);
           const request = { key, actor, system, payload, outputSchema },
             fingerprint = hash(JSON.stringify(request));
-          if (existsSync(prefix + "-parsed.jsonl")) {
-            const cached = readRecord(prefix + "-parsed.json");
+          const cached = callLog.latest(key, "parsed");
+          if (cached) {
             if (cached.fingerprint !== fingerprint)
               throw Error("Cache identity mismatch");
             traceNegotiationEvent({
@@ -138,13 +156,11 @@ const result = await traceNegotiation(
             });
             return schema.parse(cached.value);
           }
-          if (existsSync(prefix + "-request.jsonl"))
+          if (callLog.latest(key, "request"))
             throw Error(
               "Prior incomplete attempt retained; inspect before retrying",
             );
-          writeRecords(prefix + "-request.jsonl", [
-            { fingerprint, ...request },
-          ]);
+          callLog.append(key, "request", { fingerprint, ...request });
           const text = await runCli(
             actor.model.startsWith("openai/") ? "codex" : "claude",
             { model: actor.model, effort: "high" },
@@ -154,13 +170,14 @@ const result = await traceNegotiation(
               "\nOUTPUT SCHEMA\n" +
               JSON.stringify(outputSchema),
             outputSchema,
-            prefix,
+            { log: callLog, key },
+            timeoutMs,
           );
-          writeRecords(prefix + "-raw.jsonl", [{ fingerprint, text }]);
+          callLog.append(key, "raw", { fingerprint, text });
           const json = extractJsonObject(text);
           if (!json) throw Error("No JSON response");
           const value = schema.parse(JSON.parse(json));
-          writeRecords(prefix + "-parsed.jsonl", [{ fingerprint, value }]);
+          callLog.append(key, "parsed", { fingerprint, value });
           return value;
         },
       },

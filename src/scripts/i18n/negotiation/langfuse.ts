@@ -1,7 +1,6 @@
 import { accountUsage, numberOrUnknown as num } from "../cost-accounting.ts";
 import { startActiveObservation, startObservation } from "@langfuse/tracing";
 import { langfuseEnabled, flushLangfuse } from "../langfuse.ts";
-import { readFileSync, existsSync, appendFileSync } from "node:fs";
 
 /** Preserve provider-reported counters; never invent billing from a CLI subscription. */
 export function nativeUsage(
@@ -92,7 +91,10 @@ export async function traceCli<T>(
     actor: { model: string; effort: string };
     prompt: string;
     schema: unknown;
-    receiptPrefix: string;
+    /** Where the local receipt lives, for cross-referencing from the trace. */
+    receipt: string;
+    /** CLI stdout once the process exits; the source of native usage counters. */
+    stdout: () => string | undefined;
   },
   fn: () => Promise<T>,
 ): Promise<T> {
@@ -109,15 +111,10 @@ export async function traceCli<T>(
         },
         metadata: {
           backend: input.backend,
-          receiptPrefix: input.receiptPrefix,
+          receipt: input.receipt,
           costBasis: "provider-reported CLI estimate when available",
         },
       });
-      appendFileSync(
-        input.receiptPrefix + "-langfuse.jsonl",
-        JSON.stringify({ traceId: span.traceId, observationId: span.id }) +
-          "\n",
-      );
       try {
         const output = await fn();
         span.update({ output });
@@ -126,15 +123,9 @@ export async function traceCli<T>(
         span.update({ level: "ERROR", statusMessage: String(error) });
         throw error;
       } finally {
-        const path = input.receiptPrefix + "-cli-stdout.txt";
-        if (existsSync(path))
-          span.update(
-            nativeUsage(
-              input.backend,
-              readFileSync(path, "utf8"),
-              input.actor.model,
-            ),
-          );
+        const stdout = input.stdout();
+        if (stdout !== undefined)
+          span.update(nativeUsage(input.backend, stdout, input.actor.model));
         span.end();
         await flushLangfuse();
       }
