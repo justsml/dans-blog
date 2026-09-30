@@ -1,18 +1,31 @@
 import { traceCli } from "./langfuse.ts";
 import { writeRecords } from "./records.ts";
 import type { CallLog } from "./call-log.ts";
-import { mkdtempSync, writeFileSync, readFileSync, existsSync } from "node:fs";
+import {
+  mkdtempSync,
+  mkdirSync,
+  writeFileSync,
+  readFileSync,
+  existsSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawn } from "node:child_process";
 
 export type CliBackend = "claude" | "codex" | "opencode";
 export type CliActor = { model: string; effort: string };
+/**
+ * A split prompt keeps the run-constant context (policy, source, history) as a
+ * byte-identical prefix: Claude receives it as its own system prompt, other
+ * CLIs receive it first on stdin, so provider prompt caches can reuse it.
+ */
+export type CliPrompt = string | { system: string; user: string };
 export function cliCommand(
   backend: CliBackend,
   actor: CliActor,
   dir: string,
   schema: unknown,
+  systemPromptFile?: string,
 ) {
   const model = actor.model.replace(/^(openai|anthropic)\//, "");
   if (backend === "claude")
@@ -30,6 +43,7 @@ export function cliCommand(
       "--strict-mcp-config",
       "--safe-mode",
       "--no-session-persistence",
+      ...(systemPromptFile ? ["--system-prompt-file", systemPromptFile] : []),
       "--json-schema",
       JSON.stringify(schema),
     ];
@@ -128,7 +142,7 @@ function recordExit(
 async function runCliUntraced(
   backend: CliBackend,
   actor: CliActor,
-  prompt: string,
+  prompt: CliPrompt,
   schema: unknown,
   receipts: CliReceipts,
   timeoutMs: number,
@@ -139,11 +153,23 @@ async function runCliUntraced(
   schema = cliSchema;
   const dir = mkdtempSync(join(tmpdir(), "translation-negotiation-"));
   writeFileSync(join(dir, "schema.json"), JSON.stringify(schema));
-  const command = cliCommand(backend, actor, dir, schema);
+  // Both CLIs put the working directory into their prompts; a per-call cwd
+  // made every request unique and defeated prompt caching. Keep it constant.
+  const cwd = join(tmpdir(), "translation-negotiation-cwd");
+  mkdirSync(cwd, { recursive: true });
+  let systemPromptFile: string | undefined;
+  let stdin = typeof prompt === "string" ? prompt : prompt.system + "\n" + prompt.user;
+  if (typeof prompt !== "string" && backend === "claude") {
+    systemPromptFile = join(dir, "system.md");
+    writeFileSync(systemPromptFile, prompt.system);
+    stdin = prompt.user;
+  }
+  const command = cliCommand(backend, actor, dir, schema, systemPromptFile);
   recordInvocation(receipts, {
     backend,
     command,
-    cwd: dir,
+    cwd,
+    promptLayout: typeof prompt === "string" ? "single" : "stable-prefix",
     timeoutMs,
     requestedMaxOutputTokens: 24000,
     outputTokenLimitEnforced: backend === "claude",
@@ -162,7 +188,7 @@ async function runCliUntraced(
     timedOut: boolean;
   }>((resolve, reject) => {
     const child = spawn(command[0]!, command.slice(1), {
-      cwd: dir,
+      cwd,
       env,
       stdio: ["pipe", "pipe", "pipe"],
     });
@@ -191,7 +217,7 @@ async function runCliUntraced(
       clearTimeout(killTimer);
       resolve({ stdout, stderr, code, timedOut });
     });
-    child.stdin.end(prompt);
+    child.stdin.end(stdin);
   });
   recordExit(receipts, result);
   onStdout(result.stdout);
@@ -208,7 +234,7 @@ async function runCliUntraced(
 export async function runCli(
   backend: CliBackend,
   actor: CliActor,
-  prompt: string,
+  prompt: CliPrompt,
   schema: unknown,
   receipts: CliReceipts,
   timeoutMs = 240000,
@@ -218,7 +244,8 @@ export async function runCli(
     {
       backend,
       actor,
-      prompt,
+      prompt:
+        typeof prompt === "string" ? prompt : prompt.system + "\n" + prompt.user,
       schema,
       receipt: receiptName(receipts),
       stdout: () => stdout,

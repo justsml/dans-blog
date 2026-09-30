@@ -291,3 +291,71 @@ test("v2 reviewers see the repository rules for inherited frontmatter", () => {
   expect(prompt).toContain(repositoryRules);
   expect(prompt).toContain("inherited date/draft/hidden/unlisted/publish/popularity are omitted");
 });
+
+test("a skipped ballot vote gets one targeted follow-up instead of failing the run", async () => {
+  const keys: string[] = [];
+  const events: Event[] = [];
+  const reviewWithIssues = {
+    assessment,
+    findings: [
+      { ...issue, claim: "First claim" },
+      { ...issue, claim: "Second claim" },
+    ],
+    sourceConcerns: [],
+  };
+  const vote = (id: string) => ({
+    issueId: id,
+    verdict: "reject",
+    severity: 1,
+    reason: "The source supports this wording",
+    evidenceIds: ["source"],
+  });
+  const run = (skipAgain: boolean) =>
+    negotiateConsensus(input, {
+      validate: async () => ({ passed: true }),
+      emit: (event) => events.push(event),
+      call: async <T>(key: string, actor: any, _: string, payload: any): Promise<T> => {
+        keys.push(key);
+        if (key.includes("review"))
+          return (actor.model === "a" ? reviewWithIssues : { ...reviewWithIssues, findings: [] }) as T;
+        const ids: string[] = payload.issues.map((i: any) => i.id);
+        const skip = actor.model === "b" && (!key.endsWith("-missing") || skipAgain);
+        return { votes: (skip ? ids.slice(1) : ids).map(vote) } as T;
+      },
+    });
+  const result = await run(false);
+  expect(result.status).toBe("consensus");
+  expect(keys.filter((k) => k.endsWith("-missing"))).toEqual(["r1-ballot-b-batch-1-missing"]);
+  expect(events.some((e) => e.type === "ballot-incomplete" && e.model === "b")).toBe(true);
+  const failure = await run(true).catch((error) => error);
+  expect(failure).toBeInstanceOf(AggregateError);
+  expect(String(failure.errors[0])).toContain("Incomplete or duplicate ballot");
+});
+
+test("votes on unknown issue IDs are dropped visibly while real issues stay covered", async () => {
+  const events: Event[] = [];
+  const result = await negotiateConsensus(input, {
+    validate: async () => ({ passed: true }),
+    emit: (event) => events.push(event),
+    call: async <T>(key: string, actor: any, _: string, payload: any): Promise<T> => {
+      if (key.includes("review"))
+        return {
+          assessment,
+          findings: actor.model === "a" ? [{ ...issue, claim: "Only claim" }] : [],
+          sourceConcerns: [],
+        } as T;
+      const vote = (issueId: string) => ({
+        issueId,
+        verdict: "reject",
+        severity: 1,
+        reason: "The source supports this wording",
+        evidenceIds: ["source"],
+      });
+      const ids: string[] = payload.issues.map((i: any) => i.id);
+      return { votes: [...ids.map(vote), ...(actor.model === "c" ? [vote(ids[0]!.slice(0, -2))] : [])] } as T;
+    },
+  });
+  expect(result.status).toBe("consensus");
+  const dropped = events.filter((e) => e.type === "ballot-unknown-ids");
+  expect(dropped.map((e) => e.model)).toEqual(["c"]);
+});

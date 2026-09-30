@@ -128,6 +128,9 @@ const taskConcurrency = getTaskConcurrency();
 const chunkSize = optionalString(options, "chunk") ?? DEFAULT_CHUNK_SIZE;
 const quizConcurrency = optionalString(options, "quiz-concurrency");
 const challengeRetries = optionalString(options, "challenge-retries");
+const styleSheetModel = optionalString(options, "style-sheet-model");
+const shouldRefreshStyleSheet = options["refresh-style-sheet"] === true;
+const shouldSkipStyleSheet = options["no-style-sheet"] === true;
 const runLockPath = optionalString(options, "run-lock-path") ?? join(process.cwd(), ".git/codex-i18n-translation-run.json");
 const inheritedRunId = optionalString(options, "run-id");
 const processRunId = inheritedRunId ?? `${new Date().toISOString().replace(/[:.]/g, "-")}-${process.pid}`;
@@ -227,7 +230,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
     mkdirSync(reportDir, { recursive: true });
     appendCandidateRunEvent("run_started", buildCandidateRunSummary());
 
-    for (const model of models) {
+    for (const [modelIndex, model] of models.entries()) {
       assertRunLock(runLockPath, processRunId);
       assertNoOutOfCreditMarker();
       const reportPath = getAttemptReportPath(model);
@@ -235,7 +238,9 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
       const startedAt = Date.now();
       try {
         restoreTargetFromHead();
-        await runDirectTranslation(model);
+        // Only the first model may regenerate the shared style sheet; later
+        // models must reuse that same sheet so candidates stay comparable.
+        await runDirectTranslation(model, shouldRefreshStyleSheet && modelIndex === 0);
         assertRunLock(runLockPath, processRunId);
 
         if (!existsSync(targetPath)) {
@@ -401,6 +406,9 @@ function runTaskWorker(task: CandidateTask) {
     ...optionalFlag("--only-modified", shouldOnlyModified),
     ...optionalArg("--quiz-concurrency", quizConcurrency),
     ...optionalArg("--challenge-retries", challengeRetries),
+    ...optionalArg("--style-sheet-model", styleSheetModel),
+    ...optionalFlag("--refresh-style-sheet", shouldRefreshStyleSheet),
+    ...optionalFlag("--no-style-sheet", shouldSkipStyleSheet),
   ];
 
   return new Promise<void>((resolve, reject) => {
@@ -536,7 +544,7 @@ function killChildTree(child: ChildProcess) {
   }
 }
 
-async function runDirectTranslation(model: string) {
+async function runDirectTranslation(model: string, refreshStyleSheet: boolean) {
   const args = [
     "run", "i18n:translate:chunked", "--",
     "--slug", slug,
@@ -547,6 +555,9 @@ async function runDirectTranslation(model: string) {
     "--run-lock-path", runLockPath,
     ...optionalArg("--quiz-concurrency", quizConcurrency),
     ...optionalArg("--challenge-retries", challengeRetries),
+    ...optionalArg("--style-sheet-model", styleSheetModel),
+    ...optionalFlag("--refresh-style-sheet", refreshStyleSheet),
+    ...optionalFlag("--no-style-sheet", shouldSkipStyleSheet),
   ];
   await runTrackedInherited("bun", args, { timeoutMs: timeoutSeconds * 1000 });
 }

@@ -109,14 +109,17 @@ function buildCachedQuizPromptContext(
   locale: ActiveLocale,
   quizDescription: string,
   isQuiz: boolean,
+  styleSheet?: string,
 ): string {
   const contextLines = quizDescription ? [`QUIZ CONTEXT:`, quizDescription, ``] : [];
+  const styleSheetLines = styleSheet ? [styleSheet, ``] : [];
 
   return [
     `STABLE QUIZ TRANSLATION CONTRACT (cache this across all challenges):`,
     buildQuizSystemPrompt(locale, isQuiz),
     ``,
     ...contextLines,
+    ...styleSheetLines,
     `Return a JSON object with these exact fields:`,
     `- title: translated title`,
     `- group: translated group name`,
@@ -169,6 +172,7 @@ export async function translateChallenge(
   quizDescription: string,
   isQuiz: boolean,
   promptTuning?: QuizPromptTuning,
+  styleSheet?: string,
 ): Promise<{
   challenge: QuizChallenge;
   translation: TranslationResult;
@@ -193,7 +197,7 @@ export async function translateChallenge(
         ),
       },
       cachedUserMessage(joinPrompt(
-        buildCachedQuizPromptContext(locale, quizDescription, isQuiz),
+        buildCachedQuizPromptContext(locale, quizDescription, isQuiz, styleSheet),
         promptTuning?.appendCachedContext,
       )),
       plainUserMessage(joinPrompt(

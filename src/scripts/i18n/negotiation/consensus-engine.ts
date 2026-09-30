@@ -349,26 +349,62 @@ export async function negotiateConsensus(
           });
           for (let offset = 0; offset < issues.length; offset += 20) {
             const batch = issues.slice(offset, offset + 20);
-            const response = await call(
-              `r${round}-ballot-${a.model}-batch-${offset / 20 + 1}`,
-              a,
-              {
-                task: "Address EVERY supplied issue ID. Respond to opposing arguments and prior decisions. resolved means current text fixes it; reject means unfounded or nonblocking; uphold means it still requires work. Every vote requires evidenceIds: use source or target for direct textual evidence, or an allowed checked reference ID. Explain the evidence in your reason. Never agree merely because peers agree.",
-                ...context,
-                allowedEvidenceIds: [...refs],
-                issues: batch,
-              },
-              groundedBallotSchema,
+            const key = `r${round}-ballot-${a.model}-batch-${offset / 20 + 1}`;
+            const ask = (task: string, issues: TrackedIssue[], suffix = "") =>
+              call(
+                key + suffix,
+                a,
+                {
+                  task,
+                  ...context,
+                  allowedEvidenceIds: [...refs],
+                  issues,
+                },
+                groundedBallotSchema,
+              );
+            const response = await ask(
+              "Address EVERY supplied issue ID. Respond to opposing arguments and prior decisions. resolved means current text fixes it; reject means unfounded or nonblocking; uphold means it still requires work. Every vote requires evidenceIds: use source or target for direct textual evidence, or an allowed checked reference ID. Explain the evidence in your reason. Never agree merely because peers agree.",
+              batch,
             );
+            // Votes on IDs outside this batch (e.g. a mangled ID) cannot decide any
+            // issue; drop them visibly. Duplicates on real issues still fail closed.
+            const known = (v: { issueId: string }) =>
+              batch.some((i) => i.id === v.issueId);
+            const unknown = response.votes.filter((v) => !known(v));
+            if (unknown.length)
+              io.emit({
+                type: "ballot-unknown-ids",
+                round,
+                model: a.model,
+                dropped: unknown,
+              });
+            let ballot = response.votes.filter(known);
+            // A skipped issue gets one targeted follow-up.
+            const missing = batch.filter(
+              (i) => !ballot.some((v) => v.issueId === i.id),
+            );
+            if (missing.length && missing.length < batch.length) {
+              io.emit({
+                type: "ballot-incomplete",
+                round,
+                model: a.model,
+                missing: missing.map((i) => i.id),
+              });
+              const followUp = await ask(
+                "Your previous ballot omitted these issue IDs. Vote on EVERY supplied issue ID with the same rules: resolved means current text fixes it; reject means unfounded or nonblocking; uphold means it still requires work. Every vote requires evidenceIds (source, target or an allowed checked reference ID) and a reason. Never agree merely because peers agree.",
+                missing,
+                "-missing",
+              );
+              ballot = [...ballot, ...followUp.votes.filter(known)];
+            }
             if (
-              response.votes.length !== batch.length ||
-              new Set(response.votes.map((v) => v.issueId)).size !==
-                batch.length ||
-              response.votes.some((v) => !batch.some((i) => i.id === v.issueId))
+              ballot.length !== batch.length ||
+              new Set(ballot.map((v) => v.issueId)).size !== batch.length ||
+              ballot.some((v) => !batch.some((i) => i.id === v.issueId))
             )
               throw Error("Incomplete or duplicate ballot");
-            response.votes.forEach((v) => evidence(v.evidenceIds));
-            votes.push(...response.votes);
+            ballot.forEach((v) => evidence(v.evidenceIds));
+            votes.push(...ballot);
           }
           return { model: a.model, candidateHash, votes };
         }),

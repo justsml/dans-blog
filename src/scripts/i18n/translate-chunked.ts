@@ -12,6 +12,11 @@
  *   1p  = 1 paragraph per chunk
  *   5s  = 5 sentences per chunk
  *   1000t = ~1000 tokens per chunk
+ *
+ * Style sheet flags (see style-sheet.ts):
+ *   --style-sheet-model <model>  model that writes a missing sheet (default: --model)
+ *   --refresh-style-sheet        regenerate the cached sheet for this source+locale
+ *   --no-style-sheet             translate without a shared sheet
  */
 
 import { createHash } from "node:crypto";
@@ -69,6 +74,16 @@ import {
   isOutOfCreditError,
   recordOutOfCreditIssue,
 } from "./out-of-credit.ts";
+import {
+  applyStyleSheetChallengeGroups,
+  findUnusedStyleSheetTerms,
+  loadOrCreateStyleSheet,
+  renderStyleSheet,
+  toStyleSheetRef,
+  type StyleSheet,
+  type StyleSheetRef,
+  type StyleSheetTerm,
+} from "./style-sheet.ts";
 
 interface LlmConfig {
   modelId: string;
@@ -445,6 +460,8 @@ function writeCandidateRun({
   timestamp,
   chunkReportName,
   chunkReport,
+  styleSheet,
+  styleSheetUnusedTerms,
 }: {
   slug: string;
   locale: ActiveLocale;
@@ -458,6 +475,8 @@ function writeCandidateRun({
   timestamp: string;
   chunkReportName: string;
   chunkReport: string;
+  styleSheet?: StyleSheetRef;
+  styleSheetUnusedTerms?: StyleSheetTerm[];
 }) {
   const paths = getCandidateRunPaths(slug, locale, llmConfig.modelId, timestamp);
   const sourceHash = hashText(sourceRaw);
@@ -476,6 +495,7 @@ function writeCandidateRun({
       locale,
       model: llmConfig.modelId,
       createdAt,
+      ...(styleSheet == null ? {} : { styleSheetHash: styleSheet.hash }),
       ...chunk,
     });
   }
@@ -497,6 +517,8 @@ function writeCandidateRun({
     maxTokens: llmConfig.maxTokens,
     timeoutMs: llmConfig.timeoutMs,
     articleSummary,
+    ...(styleSheet == null ? {} : { styleSheet }),
+    ...(styleSheetUnusedTerms == null ? {} : { styleSheetUnusedTerms }),
     totalInputTokens: telemetry.totalInputTokens,
     totalOutputTokens: telemetry.totalOutputTokens,
     totalCacheReadTokens: telemetry.totalCacheReadTokens,
@@ -518,6 +540,7 @@ function writeCandidateRun({
     createdAt,
     sourceHash,
     outputHash,
+    ...(styleSheet == null ? {} : { styleSheet }),
   }, null, 2), "utf8");
   appendJsonl(paths.candidatesPath, summary);
 
@@ -593,6 +616,7 @@ async function translateChunk(
   nextSourceContext: string | undefined,
   isQuiz: boolean,
   promptTuning?: TranslationPromptTuning,
+  styleSheet?: string,
 ): Promise<{
   text: string;
   inputTokens: number;
@@ -611,6 +635,7 @@ async function translateChunk(
     previousSourceContext,
     nextSourceContext,
     articleSummary,
+    styleSheet,
   };
   const cachedContext = buildCachedChunkContextPrompt(locale, context, isQuiz);
   const dynamicPrompt = buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz);
@@ -700,7 +725,9 @@ async function translateQuiz(
   dryRun: boolean,
   reportOptions: QuizReportOptions,
   promptTuning?: TranslationPromptTuning,
+  styleSheet?: StyleSheet,
 ): Promise<{ body: string; telemetry: Telemetry; articleSummary: string }> {
+  const renderedStyleSheet = styleSheet == null ? undefined : renderStyleSheet(styleSheet);
   console.log("🧩 Parsing quiz structure...");
   const quiz = parseQuiz(sourceBody);
   console.log(`   ${quiz.challenges.length} challenges found\n`);
@@ -789,7 +816,7 @@ async function translateQuiz(
   if (quiz.intro) {
     console.log("🔄 Translating quiz intro...");
     reporter?.append("intro_started", {});
-    const intro = await translateProse(quiz.intro, locale, llmConfig, quizDescription, promptTuning);
+    const intro = await translateProse(quiz.intro, locale, llmConfig, quizDescription, promptTuning, renderedStyleSheet);
     reportOptions.assertActiveRun();
     translatedIntro = intro.text;
     const cost = addTelemetry(telemetry, { index: -2, label: "intro", ...intro });
@@ -822,6 +849,7 @@ async function translateQuiz(
             quizDescription,
             true,
             promptTuning,
+            renderedStyleSheet,
           );
           reportOptions.assertActiveRun();
 
@@ -896,7 +924,7 @@ async function translateQuiz(
   if (quiz.outro) {
     console.log("\n🔄 Translating quiz outro...");
     reporter?.append("outro_started", {});
-    const outro = await translateProse(quiz.outro, locale, llmConfig, quizDescription, promptTuning);
+    const outro = await translateProse(quiz.outro, locale, llmConfig, quizDescription, promptTuning, renderedStyleSheet);
     reportOptions.assertActiveRun();
     translatedOutro = outro.text;
     const cost = addTelemetry(telemetry, { index: -3, label: "outro", ...outro });
@@ -914,7 +942,11 @@ async function translateQuiz(
 
   const translatedQuiz = {
     intro: translatedIntro,
-    challenges: translatedChallenges,
+    // Models translate each Challenge's group independently; pin every label
+    // to the sheet so one English section name yields one translated label.
+    challenges: styleSheet == null
+      ? translatedChallenges
+      : applyStyleSheetChallengeGroups(styleSheet, quiz.challenges, translatedChallenges),
     outro: translatedOutro,
   };
 
@@ -947,6 +979,7 @@ async function translateProse(
   llmConfig: LlmConfig,
   context: string,
   promptTuning?: TranslationPromptTuning,
+  styleSheet?: string,
 ): Promise<{
   text: string;
   inputTokens: number;
@@ -981,6 +1014,7 @@ async function translateProse(
             ``,
             `QUIZ CONTEXT:`,
             context,
+            ...(styleSheet ? [``, styleSheet] : []),
           ].join("\n"), promptTuning?.appendCachedContext, "TRANSLATION PROMPT PROFILE STABLE TUNING")),
           {
             type: "text",
@@ -1058,6 +1092,9 @@ async function main() {
   const challengeRetries = parseChallengeRetries(options["challenge-retries"]);
   const promptProfileId = optionalString(options, "prompt-profile-id") ?? optionalString(options, "translation-prompt-profile-id");
   const usePromptProfile = options["no-prompt-profile"] !== true;
+  const useStyleSheet = options["no-style-sheet"] !== true;
+  const refreshStyleSheet = options["refresh-style-sheet"] === true;
+  const styleSheetModelInput = optionalString(options, "style-sheet-model");
   const runLockPath = typeof options["run-lock-path"] === "string" ? options["run-lock-path"] : undefined;
   const expectedRunId = typeof options["run-id"] === "string" ? options["run-id"] : undefined;
   const assertActiveRun = () => assertRunLock(runLockPath, expectedRunId);
@@ -1105,6 +1142,38 @@ async function main() {
     console.log(`🧪 Prompt profile: ${promptTuning.profileId} v${promptTuning.version}\n`);
   }
 
+  // One glossary + register decision per source+locale, reused by every
+  // chunk, frontmatter field, Challenge, and candidate model.
+  let styleSheet: Awaited<ReturnType<typeof loadOrCreateStyleSheet>> | undefined;
+  if (useStyleSheet && !dryRun) {
+    assertActiveRun();
+    styleSheet = await loadOrCreateStyleSheet({
+      sourceRaw,
+      locale,
+      cacheDir: runPaths.localeReportDir,
+      refresh: refreshStyleSheet,
+      call: () => {
+        const sheetConfig = resolveLlmConfig(styleSheetModelInput ?? modelId);
+        assertNoOutOfCreditMarker();
+        console.log(`📘 Generating style sheet with ${sheetConfig.modelId}...`);
+        return {
+          model: createOpenRouter(sheetConfig.providerSettings).chat(sheetConfig.modelId, OPENROUTER_USAGE_ACCOUNTING),
+          modelId: sheetConfig.modelId,
+          temperature: sheetConfig.temperature,
+          maxOutputTokens: sheetConfig.maxTokens,
+          timeoutMs: sheetConfig.timeoutMs,
+          providerOptions: sheetConfig.providerOptions,
+        };
+      },
+    });
+    assertActiveRun();
+    console.log(
+      `📘 Style sheet ${styleSheet.generated ? "written" : "reused"}: ${relativeToRepo(styleSheet.path)} `
+      + `(${styleSheet.sheet.terms.length} terms, ${styleSheet.sheet.challengeGroups.length} groups, address: ${styleSheet.sheet.register.addressForm})\n`,
+    );
+  }
+  const renderedStyleSheet = styleSheet == null ? undefined : renderStyleSheet(styleSheet.sheet);
+
   let translatedBody: string;
   let telemetry: Telemetry;
   let articleSummary: string;
@@ -1121,7 +1190,7 @@ async function main() {
       runDir: runPaths.runDir,
       timestamp: runTimestamp,
       assertActiveRun,
-    }, promptTuning);
+    }, promptTuning, styleSheet?.sheet);
     if (dryRun) return;
     translatedBody = result.body;
     telemetry = result.telemetry;
@@ -1156,10 +1225,26 @@ async function main() {
     }
 
     assertActiveRun();
-    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput, assertActiveRun, promptTuning);
+    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput, assertActiveRun, promptTuning, renderedStyleSheet);
     assertActiveRun();
     translatedBody = reassembleChunks(result.translatedChunks);
     telemetry = result.telemetry;
+  }
+
+  if (styleSheet?.telemetry != null) {
+    // The run that wrote the sheet pays for it; runs reusing it add nothing.
+    const t = styleSheet.telemetry;
+    addTelemetry(telemetry, {
+      index: -4,
+      label: "style-sheet",
+      inputTokens: t.inputTokens,
+      outputTokens: t.outputTokens,
+      cacheReadTokens: t.cacheReadTokens,
+      cacheWriteTokens: t.cacheWriteTokens,
+      providerCostUsd: t.providerCostUsd,
+      providerUpstreamCostUsd: t.providerUpstreamCostUsd,
+      durationMs: t.durationMs,
+    });
   }
 
   assertActiveRun();
@@ -1167,7 +1252,7 @@ async function main() {
 
   // Build frontmatter
   const frontmatter: Record<string, unknown> = { ...parsed.data };
-  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz, promptTuning);
+  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz, promptTuning, renderedStyleSheet);
   // Record which English source this was translated from, so a later source
   // edit makes the translation detectably stale.
   translatedFrontmatter[SOURCE_HASH_KEY] = hashPostSource(sourceRaw);
@@ -1179,6 +1264,18 @@ async function main() {
   const reportName = isQuiz ? "quiz" : chunkSizeInput;
   const chunkReportName = `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`;
   const chunkReport = formatTelemetryReport(telemetry, articleSummary);
+
+  // Warn-only: inflection can hide a correctly used term, so never fail here.
+  const styleSheetUnusedTerms = styleSheet == null
+    ? undefined
+    : findUnusedStyleSheetTerms(styleSheet.sheet, sourceRaw, finalOutput);
+  if (styleSheetUnusedTerms != null && styleSheetUnusedTerms.length > 0) {
+    console.warn(`⚠️  ${styleSheetUnusedTerms.length} style sheet term(s) appear in the source but their target never appears in the output:`);
+    for (const term of styleSheetUnusedTerms) {
+      console.warn(`   - "${term.source}" → "${term.target}"`);
+    }
+  }
+
   assertActiveRun();
   const candidatePaths = writeCandidateRun({
     slug,
@@ -1193,6 +1290,8 @@ async function main() {
     timestamp: runTimestamp,
     chunkReportName,
     chunkReport,
+    styleSheet: styleSheet == null ? undefined : toStyleSheetRef(styleSheet, relativeToRepo),
+    styleSheetUnusedTerms,
   });
 
   if (shouldPublish) {
@@ -1228,6 +1327,7 @@ async function translateArticleChunks(
   chunkSize: string,
   assertActiveRun: () => void,
   promptTuning?: TranslationPromptTuning,
+  styleSheet?: string,
 ): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
   const telemetry = createTelemetry(llmConfig, chunkSize, chunks.length);
@@ -1252,6 +1352,7 @@ async function translateArticleChunks(
       nextParagraphContext(chunks, i),
       false,
       promptTuning,
+      styleSheet,
     );
     assertActiveRun();
 
@@ -1305,6 +1406,7 @@ async function translateFrontmatter(
   llmConfig: LlmConfig,
   isQuiz: boolean,
   promptTuning?: TranslationPromptTuning,
+  styleSheet?: string,
 ): Promise<Record<string, unknown>> {
   const result = omitInheritedTranslatedFrontmatter(normalizeFrontmatterAssetPaths(frontmatter));
 
@@ -1343,6 +1445,7 @@ async function translateFrontmatter(
             cachedText(appendPromptProfile([
               `STABLE FRONTMATTER TRANSLATION CONTRACT (cache this across frontmatter fields):`,
               buildSystemPrompt(locale, isQuiz),
+              ...(styleSheet ? [``, styleSheet] : []),
             ].join("\n"), promptTuning?.appendFrontmatter ?? promptTuning?.appendCachedContext, "TRANSLATION PROMPT PROFILE FRONTMATTER TUNING")),
             {
               type: "text",

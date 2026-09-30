@@ -34,6 +34,8 @@ export interface ChunkContext {
   previousSourceContext?: string;
   nextSourceContext?: string;
   articleSummary: string;
+  /** Rendered per-article style sheet (glossary + register); see style-sheet.ts. */
+  styleSheet?: string;
 }
 
 function voiceGuidance(): string {
@@ -199,6 +201,11 @@ export function buildCachedChunkContextPrompt(
   parts.push(`ARTICLE SUMMARY (for consistency across chunks):`);
   parts.push(context.articleSummary);
   parts.push("");
+
+  if (context.styleSheet) {
+    parts.push(context.styleSheet);
+    parts.push("");
+  }
 
   parts.push("Remember: preserve all code, MDX components, imports, markdown heading levels, and roughly the same content length. For inherited local images, CSS, links, or other resources, prefix/prepend relative URL paths with `../`. Same-page heading links must point at the translated heading slug, not the English heading slug. Translate only reader-facing prose.");
 

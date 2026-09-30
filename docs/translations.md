@@ -151,6 +151,12 @@ Judge comparison calls are capped at three candidate commits by default. `--judg
 
 Article translation chunks default to `18p`: eighteen paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Stable translation instructions, locale guidance, and article/quiz context are sent in cacheable prompt blocks; the dynamic prompt should contain only per-chunk or per-question material. Quiz posts ignore prose chunk padding because they use structured Challenge input/output instead.
 
+**Style sheet.** Before translating, `translate-chunked.ts` loads a per-article style sheet (`src/scripts/i18n/style-sheet.ts`): one register decision (reader address form such as du/Sie or です/ます, plus tone), up to 40 binding glossary terms, and a translation for every `<Challenge group="...">` name. It is built from the full English source in one JSON call and cached at `reports/i18n/{slug}/{locale}/style-sheets/{locale}-{sourceHash}-v{version}.json`, keyed by a hash of the full source (frontmatter + body), the locale, and `STYLE_SHEET_PROMPT_VERSION`. Every candidate model, body chunk, frontmatter field, quiz intro/outro, and Challenge call for that source and locale reuses the same sheet in its cached prompt block, and translated Challenge `group` labels are overwritten from the sheet after translation. Candidate rows in `candidates.jsonl`, `run.json`, and `usage.jsonl` record the sheet path and hash (`styleSheet`, `styleSheetHash`); `styleSheetUnusedTerms` lists glossary terms whose target never appears in the output (warn-only; inflection can cause false positives). Flags, accepted by both `i18n:translate:chunked` and `i18n:translate:candidates`:
+
+- `--style-sheet-model <model>`: model that writes a missing sheet (default: the translating model; a cached sheet is reused whichever model wrote it).
+- `--refresh-style-sheet`: regenerate the cached sheet. The candidates wrapper passes it to the first model only, so the rest reuse the fresh sheet.
+- `--no-style-sheet`: translate without a sheet.
+
 Example: For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
 
 ```sh

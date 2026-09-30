@@ -63,6 +63,13 @@ export function withLangfuseTelemetry<T extends TelemetryCallOptions>(
 }
 
 const FLUSH_TIMEOUT_MS = 5_000;
+// CLI runs flush after every call; an unreachable host should warn once, not per call.
+let flushWarned = false;
+function warnFlushOnce(message: string) {
+  if (flushWarned) return;
+  flushWarned = true;
+  console.warn(`${message} (further Langfuse flush warnings suppressed)`);
+}
 
 /**
  * Flush short-lived CLI observations before the process exits. Bounded so an
@@ -73,14 +80,14 @@ export async function flushLangfuse() {
   let timer: ReturnType<typeof setTimeout> | undefined;
   const timeout = new Promise<void>((resolve) => {
     timer = setTimeout(() => {
-      console.warn(`Langfuse flush timed out after ${FLUSH_TIMEOUT_MS}ms; some traces may be missing.`);
+      warnFlushOnce(`Langfuse flush timed out after ${FLUSH_TIMEOUT_MS}ms; some traces may be missing.`);
       resolve();
     }, FLUSH_TIMEOUT_MS);
   });
   try {
     await Promise.race([spanProcessor.forceFlush(), timeout]);
   } catch (error) {
-    console.warn("Langfuse flush failed:", error instanceof Error ? error.message : error);
+    warnFlushOnce(`Langfuse flush failed: ${error instanceof Error ? error.message : error}`);
   } finally {
     clearTimeout(timer);
   }

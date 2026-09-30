@@ -99,6 +99,12 @@ if (process.argv.includes("--prepare-only")) {
   console.log("Prepared frozen v2 negotiation: " + out);
   process.exit(0);
 }
+/** Parallel panel calls nest AggregateErrors; String() alone hides every cause. */
+function describeError(error: unknown): string {
+  return error instanceof AggregateError
+    ? error.errors.map(describeError).join("\n")
+    : String(error);
+}
 // One append-only event stream per execution attempt; retries never erase history.
 const events = join(out, "events-" + Date.now() + ".jsonl");
 let latestCandidate = snapshot.target;
@@ -156,19 +162,50 @@ const result = await traceNegotiation(
             });
             return schema.parse(cached.value);
           }
-          if (callLog.latest(key, "request"))
-            throw Error(
-              "Prior incomplete attempt retained; inspect before retrying",
+          const prior = callLog.records().filter((r) => r.key === key);
+          if (prior.length) {
+            // A request with no CLI exit means the process was killed mid-call:
+            // nothing was answered, so retrying is safe. Anything that exited
+            // (error, bad JSON, schema failure) still needs a human look.
+            const lastRequest = prior.findLastIndex((r) => r.stage === "request");
+            if (prior.slice(lastRequest).some((r) => r.stage !== "request" && r.stage !== "invocation"))
+              throw Error(
+                "Prior incomplete attempt retained; inspect before retrying",
+              );
+            traceNegotiationEvent({ type: "interrupted-call-retried", key, model: actor.model });
+            appendFileSync(
+              events,
+              JSON.stringify({ at: new Date().toISOString(), type: "interrupted-call-retried", key }) + "\n",
             );
+          }
           callLog.append(key, "request", { fingerprint, ...request });
+          // Run-constant context first so every call shares a cacheable prefix;
+          // the per-round candidate and per-call task follow.
+          const {
+            source,
+            sourceHash,
+            references,
+            history,
+            candidate,
+            candidateHash,
+            ...task
+          } = payload as Record<string, unknown>;
           const text = await runCli(
             actor.model.startsWith("openai/") ? "codex" : "claude",
             { model: actor.model, effort: "high" },
-            system +
-              "\n" +
-              JSON.stringify(payload) +
-              "\nOUTPUT SCHEMA\n" +
-              JSON.stringify(outputSchema),
+            {
+              system:
+                system +
+                "\nFROZEN RUN CONTEXT (identical for every call in this run)\n" +
+                JSON.stringify({ sourceHash, source, references, history }),
+              user:
+                "CURRENT CANDIDATE\n" +
+                JSON.stringify({ candidateHash, candidate }) +
+                "\nTASK\n" +
+                JSON.stringify(task) +
+                "\nOUTPUT SCHEMA\n" +
+                JSON.stringify(outputSchema),
+            },
             outputSchema,
             { log: callLog, key },
             timeoutMs,
@@ -186,7 +223,7 @@ const result = await traceNegotiation(
   const failure = {
     status: "needs-attention",
     reason: "execution-failure",
-    error: String(error),
+    error: describeError(error),
     candidate: latestCandidate,
     calls: null,
   };
