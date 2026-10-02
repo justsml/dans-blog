@@ -36,6 +36,7 @@ type Props = {
   locale?: Locale;
   isTranslation?: boolean;
   readingTimeMinutes?: number;
+  tocReadingTimeMinutes?: number;
   headings?: ArticleHeading[];
 
   frontmatter?: {
@@ -82,7 +83,7 @@ const locale = Astro.props.locale ?? DEFAULT_LOCALE;
 const isTranslation = Astro.props.isTranslation === true;
 const readingTimeMinutes = Astro.props.readingTimeMinutes ?? 1;
 const tocSections = getTocSections(Astro.props.headings ?? []);
-const showToc = shouldShowToc(readingTimeMinutes, tocSections);
+const showToc = shouldShowToc(Astro.props.tocReadingTimeMinutes ?? readingTimeMinutes, tocSections);
 const htmlLang = getHtmlLang(locale);
 const canonicalPath = PostCollections.getLocalizedPostHref(baseSlug, locale);
 const englishPath = PostCollections.getLocalizedPostHref(baseSlug, DEFAULT_LOCALE);

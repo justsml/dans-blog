@@ -26,6 +26,10 @@ const post = Astro.props as Props;
 const results = await render(post);
 const { Content, headings } = results;
 const readingTimeMinutes = getReadingTimeMinutes(post.body);
+// The word-based estimate undercounts CJK text. Keep navigation available
+// whenever the source article qualifies, while linking localized headings.
+const sourcePost = PostCollections._postsBySlug[post.baseSlug ?? post.slug];
+const tocReadingTimeMinutes = Math.max(readingTimeMinutes, getReadingTimeMinutes(sourcePost?.body));
 ---
 
 <Post
@@ -36,6 +40,7 @@ const readingTimeMinutes = getReadingTimeMinutes(post.body);
   isTranslation={post.isTranslation}
   frontmatter={{ ...post.data }}
   readingTimeMinutes={readingTimeMinutes}
+  tocReadingTimeMinutes={tocReadingTimeMinutes}
   headings={headings}
 >
   <Content />
