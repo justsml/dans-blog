@@ -117,6 +117,7 @@ const modDate = modified ? new Date(modified) : null;
 const modTime = modDate ? modDate.toISOString().split("T")[0] : "";
 const pubTime = date ? new Date(date).toISOString().split("T")[0] : "";
 const dateFormatter = new Intl.DateTimeFormat(htmlLang, {
+  timeZone: "UTC",
   year: "numeric",
   month: "short",
   day: "numeric",
@@ -502,6 +503,9 @@ const shouldCropMobileBanner =
 </html>
 
 <style>
+  /* hidden creates a non-scrolling ancestor that prevents sticky navigation. */
+  :global(html:has(.article-reading-layout.has-toc)),
+  :global(body:has(.article-reading-layout.has-toc)) { overflow-x: clip; }
   .article-reading-layout { display: contents; }
   .article-toc-sidebar { display: none; }
   @media (min-width: 1280px) {
