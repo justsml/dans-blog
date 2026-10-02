@@ -2,7 +2,7 @@
 title: "Semantic Vector Search and Other Topics to Win Friends and Lovers"
 subTitle: "The full search landscape: exact, fuzzy, semantic, hybrid — and when to layer all of them."
 date: 2026-05-01
-modified: 2026-05-04
+modified: 2026-10-01
 tags: [postgres, postgresql, pgvector, vector-search, semantic-search, hybrid-search, rag, ai, databases, search, embeddings]
 category: Code
 subCategory: Databases
@@ -19,6 +19,31 @@ cover_icon: ./square.webp
 
 Search is not one thing, and semantic search is not a replacement for the rest of it.
 
+## Vector Search Landscape: Compare 16 Options
+
+Compare deployment, licensing, search capabilities, and workload fit. Column explanations and SQL examples follow below.
+
+[How to read this comparison](#how-to-read-the-comparison)
+
+| Database | Deployment | License | Hybrid Search | Sparse Vectors | Query Interface | Built-in Multimodal Embedding | Disk Index | Vector Dimension Limits | Best Fit |
+|---|---|---|---|---|---|---|---|---|---|
+| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 storage; 2,000 indexed `vector` | Already on Postgres; moderate vector counts |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
+| **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
+| **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
+| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
+| **[Chroma](https://github.com/chroma-core/chroma)** | Embedded / self-host | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | Local dev and prototyping only |
+| **[LanceDB](https://github.com/lancedb/lancedb)** | Embedded / Cloud | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ Native | ✅ (Lance format) | Unlimited | Edge / serverless; multimodal lakehouse |
+| **[Orama](https://github.com/oramasearch/orama)** | Embedded / Cloud | Apache 2.0 | ✅ Full-text + vector | ❌ | ❌ | ❌ | ❌ | Varies | JS/edge apps; lightweight site/app search |
+| **[Turbopuffer](https://turbopuffer.com/)** | Cloud only (serverless) | Proprietary | ✅ BM25 + vector | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | Multi-tenant SaaS; millions of namespaces |
+| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | Self-host / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | Already on Elastic stack; hybrid enterprise search |
+| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | Self-host / AWS managed | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS-native; open-source Elastic alternative |
+| **[Vespa](https://github.com/vespa-engine/vespa)** | Self-host / Cloud | Apache 2.0 | ✅ Native | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | Effectively unbounded | Search + ranking + recommendation systems |
+| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | Self-host / Cloud | Apache 2.0 | Manual | ❌ | ✅ Full SQL | ❌ | ✅ Columnar + HNSW | Varies | Analytics/logs with vector search beside OLAP |
+| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | Cloud / self-host | SSPL | ✅ Built-in | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | Already on MongoDB; document + vector in one |
+| **[Redis (VSS)](https://github.com/redis/redis)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | Ultra-low latency; cache-layer vector search |
+| **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | End-to-end multimodal: image + text + video |
+
 "Find user with email `dan@example.com`" and "find me articles about debugging as a new engineer" are both described as search, but they have almost nothing in common as engineering problems. The first has a correct answer and an `O(log n)` index lookup. The second has no correct answer — only relevance — and requires understanding language, intent, and meaning.
 
 The engineers who are most persuasive about search decisions — the ones who win the arguments and ship the right system — understand the whole landscape. They know which tool to reach for and why, and they can explain it clearly.
@@ -29,7 +54,7 @@ The lexical and fuzzy half of the picture — `tsvector`, `pg_trgm`, `pg_search`
 
 ---
 
-## Terms at a Glance
+## Terms Used in This Guide
 
 **Embedding** — A dense list of floating-point numbers produced by a model, representing a piece of text (or image, audio, etc.) as a point in high-dimensional space. Semantically related content lands nearby; unrelated content lands far apart.
 
@@ -49,7 +74,7 @@ The lexical and fuzzy half of the picture — `tsvector`, `pg_trgm`, `pg_search`
 
 ---
 
-## What Semantic Search Actually Does
+## How Embeddings Find Related Content
 
 Vector embeddings convert text (or images, audio, etc.) into a list of numbers — a point in high-dimensional space. An embedding model is trained so that semantically related text lands nearby in that space. "Dog" and "canine" end up close. "Running a marathon" and "running a Python script" end up far apart despite sharing a word.
 
@@ -98,7 +123,7 @@ LIMIT 10;
 
 `<=>` is cosine distance. `1 - cosine_distance` gives cosine similarity (1.0 = identical, 0.0 = orthogonal). For `ivfflat` (the older, faster-to-build alternative), use `lists = sqrt(row_count)` as a starting point.
 
-### What pgvector Doesn't Handle Well
+### Where Vector Search Returns the Wrong Answer
 
 - Exact token matching — product SKUs, error codes, function names. `ORD-12345` is not semantically similar to anything. An embedding-based search may return `ORD-12344` or nothing relevant. Use FTS or a B-tree index.
 - Names and proper nouns. Embedding space organizes by meaning, not spelling. "Micheal Jordan" the user record doesn't necessarily land near "Michael Jordan" in vector space.
@@ -107,7 +132,7 @@ LIMIT 10;
 
 ---
 
-## Hybrid Search: The Case for Both
+## Combine Keywords and Vectors for Mixed Queries
 
 Technical documentation is the clearest example where neither tool is enough alone.
 
@@ -119,7 +144,7 @@ Vector search handles the conceptual queries. FTS handles the exact terms. Neith
 
 The solution is hybrid search: run both and fuse the results.
 
-### Reciprocal Rank Fusion
+### Merge Ranked Results with RRF
 
 **Reciprocal Rank Fusion (RRF)** is the standard algorithm for combining ranked lists from different retrieval systems. It doesn't require normalizing scores across systems — it only uses rank positions. A result that appears high in *both* lists gets a stronger combined score than one that dominates only one.
 
@@ -157,7 +182,7 @@ The `60` in the denominator is the RRF constant. Higher values dampen rank-posit
 
 RRF avoids the harder problem of normalizing `ts_rank` (a log-frequency score) against cosine distance (a geometric measure). They're not comparable. RRF only asks: "how high did this result appear in each list?"
 
-### Hybrid Search with Trigrams Too
+### Add Trigrams for Typos and Names
 
 For user-facing search over mixed content — where users might search for a person name, a concept, or an exact term in the same session — three-way fusion handles all of them:
 
@@ -204,7 +229,7 @@ This handles: fuzzy name matches (trigrams), exact keyword matches (FTS), and co
 
 ---
 
-## Multi-Layer Hybrid Architectures
+## Match Each Search Surface to Its Query Types
 
 Real applications rarely have a single search surface. They have multiple, each with a different need:
 
@@ -221,7 +246,7 @@ Real applications rarely have a single search surface. They have multiple, each 
 
 These aren't hypothetical. Most content-heavy applications need at least two distinct search surfaces with different query shapes. The temptation is to pick one approach and use it everywhere — usually vector search now, since it's the fashionable choice. That leads to expensive embeddings for problems where a trigram index would have been faster, cheaper, and more correct.
 
-### The Rule of Thumb
+### Add a Search Layer When a Query Type Fails
 
 Add a layer when a failure mode appears that the current layer can't fix:
 
@@ -232,11 +257,11 @@ Add a layer when a failure mode appears that the current layer can't fix:
 
 ---
 
-## If You Do Need a Dedicated Vector Store
+## When to Move Beyond pgvector
 
 pgvector handles a lot of application search before you need another database. The rough cutoff depends on vector count, index settings, write rate, filters, hardware, and concurrency, so treat any "under 10M vectors" rule as a starting assumption to benchmark, not a product limit. When you genuinely outgrow it — very high concurrency, very low p99 latency requirements, billions of vectors, or serious multi-tenant isolation needs — the dedicated vector database landscape is wide and worth understanding.
 
-### What the Matrix Columns Actually Mean
+### How to Read the Comparison
 
 **Hybrid search** means BM25 keyword search and vector similarity run in one query, merged via RRF. Without it, you either pick one search mode or fuse two queries yourself.
 
@@ -294,28 +319,7 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 **Max dimensions** is a migration hiding in your architecture. `text-embedding-3-large` uses 3072 dims, Jina v3 can emit larger embeddings, and research models keep pushing higher. Some managed services publish hard dimension caps; others document high caps or no practical cap for typical embedding models. Check current docs before committing. Pick something with headroom; migrating a vector index because you hit a dimension ceiling is a painful sprint.
 
-### The Landscape
-
-| Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
-|---|---|---|---|---|---|---|---|---|---|
-| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 storage; 2,000 indexed `vector` | Already on Postgres; moderate vector counts |
-| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
-| **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
-| **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
-| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
-| **[Chroma](https://github.com/chroma-core/chroma)** | Embedded / self-host | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | Local dev and prototyping only |
-| **[LanceDB](https://github.com/lancedb/lancedb)** | Embedded / Cloud | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ Native | ✅ (Lance format) | Unlimited | Edge / serverless; multimodal lakehouse |
-| **[Orama](https://github.com/oramasearch/orama)** | Embedded / Cloud | Apache 2.0 | ✅ Full-text + vector | ❌ | ❌ | ❌ | ❌ | Varies | JS/edge apps; lightweight site/app search |
-| **[Turbopuffer](https://turbopuffer.com/)** | Cloud only (serverless) | Proprietary | ✅ BM25 + vector | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | Multi-tenant SaaS; millions of namespaces |
-| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | Self-host / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | Already on Elastic stack; hybrid enterprise search |
-| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | Self-host / AWS managed | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS-native; open-source Elastic alternative |
-| **[Vespa](https://github.com/vespa-engine/vespa)** | Self-host / Cloud | Apache 2.0 | ✅ Native | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | Effectively unbounded | Search + ranking + recommendation systems |
-| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | Self-host / Cloud | Apache 2.0 | Manual | ❌ | ✅ Full SQL | ❌ | ✅ Columnar + HNSW | Varies | Analytics/logs with vector search beside OLAP |
-| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | Cloud / self-host | SSPL | ✅ Built-in | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | Already on MongoDB; document + vector in one |
-| **[Redis (VSS)](https://github.com/redis/redis)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | Ultra-low latency; cache-layer vector search |
-| **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | End-to-end multimodal: image + text + video |
-
-### A Few Things That Don't Fit in the Table
+### Operational Tradeoffs the Table Can't Show
 
 **Turbopuffer's multi-tenancy** is built around very high namespace counts. Its public positioning and customer stories emphasize workloads like Notion's large, namespace-heavy corpus. If each user or organization needs isolated vector search, that architecture can change the economics, but still benchmark your own tenant shape.
 
@@ -329,7 +333,7 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 **Sparse vectors are how you get BM25-quality keyword matching inside a vector index** — without running a separate full-text engine. Qdrant and Elasticsearch have especially mature implementations here. If hybrid search is critical and a two-system architecture is a deal-breaker, sparse vector support is what to look for.
 
-### Choosing When You've Outgrown pgvector
+### Choose a Store by Workload
 
 - **SaaS product with per-tenant isolation** → Turbopuffer
 - **Complex metadata filtering at scale** → Qdrant
@@ -347,7 +351,7 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 ---
 
-## The One Thing to Not Do
+## Don't Embed IDs and Expect Exact Matches
 
 Don't use vector search as fuzzy text search for things that have correct answers.
 
@@ -359,7 +363,7 @@ The same applies in the other direction: don't use FTS for queries where the use
 
 ---
 
-## The Full Picture
+## Build Search Around Query Shape
 
 Most production search systems need more than one layer:
 

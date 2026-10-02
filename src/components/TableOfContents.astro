@@ -1,0 +1,65 @@
+---
+import type { TocSection } from "../shared/articleHeadings";
+import type { Locale } from "../shared/i18n";
+
+interface Props {
+  sections: TocSection[];
+  locale: Locale;
+  presentation: "mobile" | "desktop";
+}
+
+const { sections, locale, presentation } = Astro.props;
+const labels: Record<Locale, { title: string; subsections: string }> = {
+  en: { title: "On this page", subsections: "Subsections" },
+  es: { title: "En esta página", subsections: "Subsecciones" },
+  hi: { title: "इस पृष्ठ पर", subsections: "उपखंड" },
+  ja: { title: "このページの内容", subsections: "小見出し" },
+  ru: { title: "На этой странице", subsections: "Подразделы" },
+  de: { title: "Auf dieser Seite", subsections: "Unterabschnitte" },
+  fr: { title: "Sur cette page", subsections: "Sous-sections" },
+  it: { title: "In questa pagina", subsections: "Sottosezioni" },
+  ar: { title: "في هذه الصفحة", subsections: "الأقسام الفرعية" },
+  he: { title: "בעמוד זה", subsections: "סעיפי משנה" },
+  zh: { title: "本页内容", subsections: "子章节" },
+};
+const label = labels[locale];
+---
+
+<nav class:list={["article-toc", presentation]} aria-label={label.title} data-pagefind-ignore="all">
+  <details open={presentation === "desktop"}>
+    <summary class="toc-title">{label.title}</summary>
+    <ul class="toc-sections">
+      {sections.map((section) => (
+        <li>
+          <a href={`#${section.slug}`}>{section.text}</a>
+          {section.children.length > 0 && (
+            <details class="toc-subsections">
+              <summary aria-label={`${section.text}: ${label.subsections}`}>{label.subsections}</summary>
+              <ul>
+                {section.children.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}
+              </ul>
+            </details>
+          )}
+        </li>
+      ))}
+    </ul>
+  </details>
+</nav>
+
+<style>
+  .article-toc { font-size: 0.9rem; line-height: 1.45; }
+  .article-toc.mobile { margin-block: 1rem 2rem; padding: 1rem; border: 1px solid currentColor; border-radius: 0.5rem; }
+  summary { cursor: pointer; }
+  .toc-title { font-weight: 700; }
+  ul { list-style: none; padding: 0; margin: 0; }
+  .toc-sections { margin-block-start: 1rem; }
+  li { margin-block: 0.75rem; }
+  a { display: block; color: inherit; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+  .toc-subsections { margin-block-start: 0.35rem; font-size: 0.8rem; }
+  .toc-subsections ul { padding-inline-start: 1rem; }
+  @media (min-width: 1280px) {
+    .article-toc.mobile { display: none; }
+  }
+</style>

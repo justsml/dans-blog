@@ -24,7 +24,7 @@ type Props = CollectionEntry<"posts"> & {
 
 const post = Astro.props as Props;
 const results = await render(post);
-const { Content } = results;
+const { Content, headings } = results;
 const readingTimeMinutes = getReadingTimeMinutes(post.body);
 ---
 
@@ -36,6 +36,7 @@ const readingTimeMinutes = getReadingTimeMinutes(post.body);
   isTranslation={post.isTranslation}
   frontmatter={{ ...post.data }}
   readingTimeMinutes={readingTimeMinutes}
+  headings={headings}
 >
   <Content />
 </Post>
