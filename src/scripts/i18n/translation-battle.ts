@@ -20,11 +20,11 @@ const dir=process.argv[2]??'reports/i18n/translation-battles/2026-09-24-gold-v1'
 const mode=process.argv[3]??'canary';
 const catalog=JSON.parse(readFileSync(join(dir,'catalog.json'),'utf8'));
 const cases=loadGoldenDataset('datasets/i18n/consensus-gold/v1');
-const judges=['openai/gpt-6-sol','anthropic/claude-opus-5.5'];
+const judges=['openai/gpt-6.1-sol','anthropic/claude-opus-5.5'];
 const write=(path:string,value:unknown)=>writeFileSync(path,JSON.stringify(value)+'\n');
 const read=(path:string)=>JSON.parse(readFileSync(path,'utf8'));
 const judgeSystem=rubric+'\nYou are conducting an independent BLIND paired evaluation, not a negotiation. Neither candidate is authoritative. Compare each against English and independently score every dimension. Use preferredLabel X, Y, or tie. Do not infer model identities. No external tools are available: mark unverifiable cultural claims requiresReference=true. Return ONLY JSON matching: '+JSON.stringify({candidates:[{label:'X',assessment:assessmentShape},{label:'Y',assessment:assessmentShape}],preferredLabel:'tie',reason:'specific comparison'});
-const identity={datasetHash:hash(readFileSync('datasets/i18n/consensus-gold/v1/cases.jsonl','utf8')),catalogHash:hash(JSON.stringify(catalog)),harnessHash:hash(readFileSync(import.meta.path,'utf8')),models:catalog.models.map((m:any)=>({id:m.id,effort:lowestReasoningEffort(m)})),judges,judgeEffort:'high',maxOutputTokens:24000,retries:0,concurrency:4,method:'whole-document translation; source only; paired blinded reviews',judgePromptHash:hash(judgeSystem),terra:'unavailable'};
+const identity={datasetHash:hash(readFileSync('datasets/i18n/consensus-gold/v1/cases.jsonl','utf8')),catalogHash:hash(JSON.stringify(catalog)),harnessHash:hash(readFileSync(import.meta.path,'utf8')),models:catalog.models.map((m:any)=>({id:m.id,effort:lowestReasoningEffort(m)})),judges,judgeEffort:{'openai/gpt-6.1-sol':'low','anthropic/claude-opus-5.5':'high'},maxOutputTokens:24000,retries:0,concurrency:4,method:'whole-document translation; source only; paired blinded reviews',judgePromptHash:hash(judgeSystem),terra:'unavailable'};
 mkdirSync(join(dir,'calls'),{recursive:true});
 if(existsSync(join(dir,'manifest.jsonl'))){if(JSON.stringify(read(join(dir,'manifest.jsonl')).identity)!==JSON.stringify(identity))throw Error('Run identity changed: choose a new run directory');}
 else {write(join(dir,'manifest.jsonl'),{createdAt:new Date().toISOString(),identity});writeFileSync(join(dir,'inputs.jsonl'),cases.map(c=>JSON.stringify(c)).join('\n')+'\n');}
@@ -57,7 +57,7 @@ async function review(g:any,j:string){
  const generatedLabel=parseInt(hash(g.id+j).slice(0,8),16)%2?'X':'Y';
  const pair=generatedLabel==='X'?{X:g.target,Y:c.reference.text}:{X:c.reference.text,Y:g.target};
  const id='review-'+hash(g.id+j).slice(0,20);
- const row=await call(id,j,'high',judgeSystem,JSON.stringify({locale:c.locale,english:c.source.text,candidates:pair}));
+ const row=await call(id,j,j==='openai/gpt-6.1-sol'?'low':'high',judgeSystem,JSON.stringify({locale:c.locale,english:c.source.text,candidates:pair}));
  let result:any=null,error:string|undefined;
  if(row.ok)try{result=auditSchema.parse(JSON.parse(extractJsonObject(row.text)??'null'));if(new Set(result.candidates.map((x:any)=>x.label)).size!==2||!result.candidates.every((x:any)=>['X','Y'].includes(x.label))||!['X','Y','tie'].includes(result.preferredLabel))throw Error('Invalid labels');}catch(e){error=String(e);}
  write(join(dir,id+'-result.jsonl'),{id,generationId:g.id,caseId:c.id,model:g.model,judge:j,generatedLabel,ok:!!result,result,error});

@@ -576,7 +576,9 @@ function buildScoreTranslationContract(input: ScoreTranslationInput) {
     "- publishReadiness: high only when no medium/high fixes remain.",
     "Return concrete medium/high-priority fixes in suggestions with exact match/replacement strings from the candidate.",
     "Do not require titles, subtitles, headings, or quiz title/group values to remain in English; they are reader-facing.",
-    "Do preserve code, component names, prop names, imports, API names, external URLs, route URLs, and non-reader-facing metadata.",
+    "Do preserve code, component names, prop names, API names, external URLs, route URLs, and controlled metadata.",
+    "Repository layout: localized MDX lives in a locale subdirectory beside the English post. Parent-relative assets (../image.webp) and imports with one additional ../ are required relocation adjustments; do not restore the English-relative paths. This does not permit changing external URLs or code literals.",
+    "Localized frontmatter inherits date, draft, unlisted, hidden, publish, and popularity from English: their omission is correct. Preserve modified and other controlled metadata. sourceHash is legitimate translation provenance.",
     "When a same-page heading link changes from an English #fragment to the matching translated #fragment, treat that as correct localization rather than link drift.",
     getLengthValidationGuidance(input.locale),
   ].filter(Boolean).join("\n");

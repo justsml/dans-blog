@@ -1,3 +1,4 @@
+import { assertAllowedModel } from "../model-policy.ts";
 import { traceCli } from "./langfuse.ts";
 import { writeRecords } from "./records.ts";
 import type { CallLog } from "./call-log.ts";
@@ -27,6 +28,7 @@ export function cliCommand(
   schema: unknown,
   systemPromptFile?: string,
 ) {
+  assertAllowedModel(actor.model);
   const model = actor.model.replace(/^(openai|anthropic)\//, "");
   if (backend === "claude")
     return [

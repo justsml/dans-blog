@@ -11,7 +11,7 @@ const base=resolve(process.argv[2]??'reports/i18n/consensus-batches/2026-09-23-e
 const only=process.argv[3]??'';
 const selected=readFileSync(join(base,'selection.jsonl'),'utf8').trim().split('\n').map(line=>JSON.parse(line)).filter(s=>only.split(',').some(term=>(s.post+'-'+s.locale).includes(term)));
 const schema=z.object({approveExactText:z.boolean(),candidateHash:z.string(),assessment:assessmentSchema,sourceConcerns:z.array(z.string()),explanation:z.string()});
-const actors=[{id:'editor-A',model:'openai/gpt-6-sol',backend:'codex'},{id:'editor-B',model:'anthropic/claude-opus-5.5',backend:'claude'},{id:'auditor-A',model:'openai/gpt-6-astra',backend:'codex'},{id:'auditor-B',model:'anthropic/claude-fable-5.1',backend:'claude'}] as const;
+const actors=[{id:'editor-A',model:'openai/gpt-6.1-sol',backend:'codex'},{id:'editor-B',model:'anthropic/claude-opus-5.5',backend:'claude'},{id:'auditor-A',model:'openai/gpt-6-sol',backend:'codex'},{id:'auditor-B',model:'anthropic/claude-sonnet-5.5',backend:'claude'}] as const;
 async function finalize(s:any){
  const dir=s.runPath??join(base,s.post+'-'+s.locale),locale=s.locale;
  const snapshot=JSON.parse(readFileSync(join(dir,locale+'-snapshot.json'),'utf8'));
@@ -29,7 +29,7 @@ async function finalize(s:any){
   if(existsSync(path+'-parsed.jsonl')){const old=readRecord(path+'-parsed.json');if(old.fingerprint!==fingerprint)throw Error('Finalization identity changed');return schema.parse(old.value);}
   if(existsSync(path+'-raw.jsonl'))throw Error('Prior raw result needs inspection');
   writeRecords(path+'-request.jsonl',[{actor,system,task,fingerprint}]);
-  const text=await runCli(actor.backend,{model:actor.model,effort:'high'},system+'\n'+JSON.stringify(task)+'\nOUTPUT SCHEMA\n'+JSON.stringify(z.toJSONSchema(schema)),z.toJSONSchema(schema),path);
+  const text=await runCli(actor.backend,{model:actor.model,effort:actor.model==='openai/gpt-6.1-sol'?'low':'high'},system+'\n'+JSON.stringify(task)+'\nOUTPUT SCHEMA\n'+JSON.stringify(z.toJSONSchema(schema)),z.toJSONSchema(schema),path);
   writeRecords(path+'-raw.jsonl',[{fingerprint,text}]);
   const object=extractJsonObject(text);if(!object)throw Error('No JSON');
   const value=schema.parse(JSON.parse(object));if(value.candidateHash!==candidateHash)throw Error('Endorsement hash mismatch');

@@ -58,8 +58,8 @@ test('supplemental phases join their named comparison without overwriting eviden
   expect(comparisonCohort(row)).toBe('baseline');
   expect(comparisonCohort({...row,cohort:undefined})).toBe('gpt6-baseline');
 });
-test('Astra and Sol scoring omit temperature at minimum reasoning', async () => {
-  for (const [model, effort] of [['astra','low'], ['sol','none']]) {
+test('Sol scoring omits temperature at minimum reasoning', async () => {
+  for (const [model, effort] of [['sol','none']]) {
     let captured: any;
     await expect(scoreTranslation({model:`llm://openrouter/openai/gpt-6-${model}?reasoning_effort=${effort}`,locale:'es',sourceContents:'Hello',targetContents:'Hola',generateText:(async (options:any)=>{captured=options;throw new Error('offline capture');}) as any})).rejects.toThrow('offline capture');
     expect(captured.temperature).toBeUndefined();
@@ -107,7 +107,7 @@ test('catalog defaults disable optional thinking and minimize mandatory thinking
   }
   expect(resolveLlmConfig('openrouter/qwen/qwen3.8-max-0902').reasoningEffort).toBe('minimal');
   expect(resolveLlmConfig('openrouter/google/gemini-3.5-flash-lite').reasoningEffort).toBe('minimal');
-  expect(resolveLlmConfig('openrouter/openai/gpt-6-astra').reasoningEffort).toBe('low');
+  expect(() => resolveLlmConfig('openrouter/openai/gpt-6-astra')).toThrow('prohibited');
   expect(resolveLlmConfig('llm://openrouter/qwen/qwen3.8-flash?effort=high').reasoningEffort).toBe('high');
   expect(() => resolveLlmConfig('openrouter/unknown/unlisted')).toThrow('No reasoning capabilities');
 });
@@ -117,7 +117,7 @@ test('first-party OpenAI receives the same minimum default and honors overrides'
     expect(config.reasoningEffort).toBe('none');
     expect(config.providerOptions.openai?.reasoningEffort).toBe('none');
   }
-  expect(resolveLlmConfig('llm://openai/gpt-6-astra').providerOptions.openai?.reasoningEffort).toBe('low');
+  expect(() => resolveLlmConfig('llm://openai/gpt-6-astra')).toThrow('prohibited');
   expect(resolveLlmConfig('llm://openai/gpt-6-sol?effort=high').providerOptions.openai?.reasoningEffort).toBe('high');
 });
 test('virtual provider-routing suffixes retain base-model reasoning capabilities', () => {

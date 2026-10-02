@@ -46,7 +46,7 @@ if (
 const DEFAULT_ACTORS = [
   "openai/gpt-6.1-sol",
   "anthropic/claude-opus-5.5",
-  "openai/gpt-6-astra",
+  "openai/gpt-6-sol",
   "anthropic/claude-sonnet-5.5",
 ];
 const actorsFlag = process.argv.indexOf("--actors");
@@ -192,7 +192,7 @@ const result = await traceNegotiation(
           } = payload as Record<string, unknown>;
           const text = await runCli(
             actor.model.startsWith("openai/") ? "codex" : "claude",
-            { model: actor.model, effort: "high" },
+            { model: actor.model, effort: actor.model === "openai/gpt-6.1-sol" ? "low" : "high" },
             {
               system:
                 system +

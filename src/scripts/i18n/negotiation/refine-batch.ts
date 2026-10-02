@@ -21,8 +21,8 @@ const samples=[
  {post:'2024-08-29--handling-international-numbers-and-currency',locale:'ja',reason:'Locale-specific number/currency conventions and technical APIs; latest recorded score 77.6.'},
  {post:'2024-10-31--quiz-js-interfaces-symbols-and-enumerables',locale:'es',reason:'Quiz wording, hints, explanations, executable examples and answer-key preservation; latest recorded score 87.6.'},
 ] as const;
-const editors=[{id:'editor-A',model:'openai/gpt-6-sol',effort:'high',backend:'codex'},{id:'editor-B',model:'anthropic/claude-opus-5.5',effort:'high',backend:'claude'}] as const;
-const auditors=[{id:'auditor-A',model:'openai/gpt-6-astra',effort:'high',backend:'codex'},{id:'auditor-B',model:'anthropic/claude-fable-5.1',effort:'high',backend:'claude'}] as const;
+const editors=[{id:'editor-A',model:'openai/gpt-6.1-sol',effort:'low',backend:'codex'},{id:'editor-B',model:'anthropic/claude-opus-5.5',effort:'high',backend:'claude'}] as const;
+const auditors=[{id:'auditor-A',model:'openai/gpt-6-sol',effort:'high',backend:'codex'},{id:'auditor-B',model:'anthropic/claude-sonnet-5.5',effort:'high',backend:'claude'}] as const;
 type Actor={id:string;model:string;effort:string;backend:CliBackend};
 const reviewSchema=z.object({assessment:assessmentSchema,sourceConcerns:z.array(z.string())});
 const proposalSchema=z.object({translation:z.string().min(100),changes:z.array(z.object({before:z.string(),after:z.string(),severity:z.number().int().min(1).max(5),confidence:z.number().min(0).max(1),rationale:z.string(),evidenceIds:z.array(z.string())})),responseToPeer:z.string(),sourceConcerns:z.array(z.string())});

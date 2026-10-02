@@ -418,7 +418,7 @@ async function scoreTranslation({
     // gpt-5.x reasoning models reject temperature/top_p; resolveLlmConfig
     // returns undefined for those and the AI SDK omits the field.
     ...(llmConfig.temperature == null ? {} : { temperature: 0, topP: 1 }),
-    seed: JUDGE_SEED,
+    ...(model.includes("gpt-6.1-sol") ? {} : { seed: JUDGE_SEED }),
     maxOutputTokens: judgeMaxOutputTokens(model),
     timeout: { totalMs: timeoutMs },
     providerOptions: withDeterministicRouting(llmConfig.providerOptions),
@@ -466,6 +466,7 @@ function judgeMaxOutputTokens(modelId: string) {
 
 function judgeReasoningEffort(modelId: string) {
   if (reasoningEffortOverride != null) return reasoningEffortOverride;
+  if (modelId.includes("gemini-3.8")) return "low";
   if (modelId.includes("gemini-3") || modelId.includes("glm-5")) return "minimal";
   if (modelId.includes("gpt-5.6")) return "none";
   return "low";
@@ -910,6 +911,8 @@ function validateScoringModel(modelId: string) {
     "openrouter/openai/gpt-5.6-luna",
     "openai/gpt-5.6-sol",
     "openrouter/openai/gpt-5.6-sol",
+    "openai/gpt-6.1-sol",
+    "openrouter/openai/gpt-6.1-sol",
   ];
   if (allowedGptJudgeModels.includes(modelId)) return;
 

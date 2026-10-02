@@ -59,7 +59,7 @@ export function normalizeModelId(modelId: string) {
 
   if (normalized.startsWith("current/")) return normalized;
   if (normalized.startsWith("openrouter/")) return normalized;
-  if (normalized.startsWith("openai/") && normalized.match(/^openai\/gpt-[45]/)) return normalized;
+  if (normalized.startsWith("openai/") && normalized.match(/^openai\/gpt-[456]/)) return normalized;
 
   const owner = normalized.split("/", 1)[0];
   if (OPENROUTER_MODEL_OWNERS.has(owner)) return `openrouter/${normalized}`;

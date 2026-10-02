@@ -1,5 +1,6 @@
 export const CHEAP_FAST_TRANSLATION_MODELS = [
   "openrouter/openai/gpt-5.6-luna",
+  "openrouter/openai/gpt-6.1-sol",
   "openrouter/z-ai/glm-5.3-flash",
   "openrouter/deepseek/deepseek-v4.1-flash",
   "openrouter/qwen/qwen3.8-max",

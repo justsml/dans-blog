@@ -26,8 +26,7 @@ import "dotenv/config";
 import matter from "gray-matter";
 import { generateText } from "./ai-sdk.ts";
 import { exitAfterFlush } from "./langfuse.ts";
-import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
-import { parse as parseLlmString } from "llm-strings";
+import { resolveLlmConfig as resolveSharedLlmConfig, createOpenRouterChatModel, type ResolvedLlmConfig } from "./core/model-config.ts";
 import {
   assertRunLock,
   parseArgs,
@@ -67,7 +66,7 @@ import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
-import { OPENROUTER_USAGE_ACCOUNTING, cachedText, usageFromResult } from "./llm-telemetry.ts";
+import { cachedText, usageFromResult } from "./llm-telemetry.ts";
 import { isTranslationOlderThanSource } from "./corpus-inventory.ts";
 import {
   assertNoOutOfCreditMarker,
@@ -85,23 +84,7 @@ import {
   type StyleSheetTerm,
 } from "./style-sheet.ts";
 
-interface LlmConfig {
-  modelId: string;
-  providerSettings: OpenRouterProviderSettings;
-  providerOptions: {
-    openrouter: {
-      reasoning: {
-        effort: string;
-        max_tokens?: number;
-        exclude?: boolean;
-      };
-    };
-  };
-  reasoningEffort: string;
-  temperature?: number;
-  maxTokens: number;
-  timeoutMs: number;
-}
+type LlmConfig = ResolvedLlmConfig;
 
 const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
@@ -112,99 +95,11 @@ const DEFAULT_CHALLENGE_RETRIES = 2;
 const MAX_CHALLENGE_RETRIES = 5;
 
 function resolveLlmConfig(modelInput: string): LlmConfig {
-  if (modelInput.startsWith("llm://")) {
-    const parsed = parseLlmString(modelInput);
-    const normalizedModelId = parsed.model.replace(/^openrouter\//, "");
-    const reasoningEffort = String(
-      parsed.params.reasoning_effort
-        ?? parsed.params.reasoningEffort
-        ?? parsed.params.effort
-        ?? DEFAULT_REASONING_EFFORT,
-    );
-    const reasoningMaxTokens = optionalNumberParam(parsed.params.reasoning_max_tokens ?? parsed.params.reasoningMaxTokens);
-    const reasoningExclude = optionalBooleanParam(parsed.params.reasoning_exclude ?? parsed.params.reasoningExclude);
-
-    return {
-      modelId: normalizedModelId,
-      providerSettings: {
-        apiKey: parsed.apiKey,
-        baseURL: openRouterBaseUrl(parsed.host),
-      },
-      providerOptions: {
-        openrouter: {
-          reasoning: {
-            effort: reasoningEffort,
-            ...(reasoningMaxTokens == null ? {} : { max_tokens: reasoningMaxTokens }),
-            exclude: reasoningExclude ?? shouldExcludeReasoning(normalizedModelId),
-          },
-        },
-      },
-      reasoningEffort,
-      temperature: optionalNumberParam(
-        parsed.params.temperature ?? parsed.params.temp ?? defaultTemperatureForModel(normalizedModelId),
-      ),
-      maxTokens: Number(parsed.params.max_tokens ?? parsed.params.maxTokens ?? 16000),
-      timeoutMs: Number(parsed.params.timeout_ms ?? parsed.params.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS),
-    };
-  }
-
-  // Normalize OpenRouter-prefixed model IDs like "openrouter/qwen/qwen3.8-max"
-  const modelId = modelInput.replace(/^openrouter\//, "");
-
-  return {
-    modelId,
-    providerSettings: {},
-    providerOptions: {
-      openrouter: {
-        reasoning: {
-          effort: DEFAULT_REASONING_EFFORT,
-          exclude: shouldExcludeReasoning(modelId),
-        },
-      },
-    },
+  return resolveSharedLlmConfig(modelInput, {
     reasoningEffort: DEFAULT_REASONING_EFFORT,
-    temperature: defaultTemperatureForModel(modelId),
     maxTokens: 16000,
     timeoutMs: DEFAULT_LLM_TIMEOUT_MS,
-  };
-}
-
-function defaultTemperatureForModel(modelId: string) {
-  const normalized = modelId.replace(/^openrouter\//, "");
-  if (normalized.includes("gpt-5.6")) return undefined;
-  return normalized.includes("gpt-oss") ? 0.1 : 0.3;
-}
-
-function shouldExcludeReasoning(modelId: string) {
-  const normalized = modelId.replace(/^openrouter\//, "");
-  return (
-    normalized.includes("gpt-oss")
-    || normalized.includes("qwen")
-    || normalized.includes("deepseek")
-    || normalized.includes("glm")
-    || normalized.includes("gemini-3")
-  );
-}
-
-function optionalNumberParam(value: unknown) {
-  if (value == null) return undefined;
-  const parsed = Number(value);
-  return Number.isFinite(parsed) ? parsed : undefined;
-}
-
-function optionalBooleanParam(value: unknown) {
-  if (value == null) return undefined;
-  if (typeof value === "boolean") return value;
-  const normalized = String(value).trim().toLowerCase();
-  if (["true", "1", "yes"].includes(normalized)) return true;
-  if (["false", "0", "no"].includes(normalized)) return false;
-  return undefined;
-}
-
-function openRouterBaseUrl(host: string | undefined) {
-  if (host == null || host === "" || host === "openrouter.ai") return undefined;
-  if (host === "openrouter.ai/api/v1") return undefined;
-  return `https://${host}`;
+  });
 }
 
 interface Telemetry {
@@ -640,8 +535,7 @@ async function translateChunk(
   const cachedContext = buildCachedChunkContextPrompt(locale, context, isQuiz);
   const dynamicPrompt = buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz);
 
-  const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
+  const model = createOpenRouterChatModel(llmConfig);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -697,8 +591,7 @@ async function generateSummary(
   isQuiz: boolean,
   promptTuning?: TranslationPromptTuning,
 ): Promise<string> {
-  const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
+  const model = createOpenRouterChatModel(llmConfig);
   assertNoOutOfCreditMarker();
   const result = await generateText({
     model,
@@ -989,8 +882,7 @@ async function translateProse(
   durationMs: number;
 }> {
   const start = performance.now();
-  const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
+  const model = createOpenRouterChatModel(llmConfig);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -1157,7 +1049,7 @@ async function main() {
         assertNoOutOfCreditMarker();
         console.log(`📘 Generating style sheet with ${sheetConfig.modelId}...`);
         return {
-          model: createOpenRouter(sheetConfig.providerSettings).chat(sheetConfig.modelId, OPENROUTER_USAGE_ACCOUNTING),
+          model: createOpenRouterChatModel(sheetConfig),
           modelId: sheetConfig.modelId,
           temperature: sheetConfig.temperature,
           maxOutputTokens: sheetConfig.maxTokens,
@@ -1424,8 +1316,7 @@ async function translateFrontmatter(
     const value = result[key];
     if (typeof value !== "string" || !value.trim()) continue;
 
-    const provider = createOpenRouter(llmConfig.providerSettings);
-    const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
+    const model = createOpenRouterChatModel(llmConfig);
     assertNoOutOfCreditMarker();
     const translation = await generateText({
       model,

@@ -12,9 +12,8 @@ import {
   writeTextFile,
 } from "./utils.ts";
 import { getRunTelemetry, renderTelemetryLines } from "./telemetry.ts";
-import { OPENROUTER_USAGE_ACCOUNTING } from "./llm-telemetry.ts";
 import { generateText } from "./ai-sdk.ts";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createOpenRouterChatModel, resolveLlmConfig } from "./core/model-config.ts";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import {
@@ -829,13 +828,14 @@ async function runJudgeCommand(
     { slug, locale, judgeModel: model, scorer: "candidate-judge" },
     async () => {
       const startedAt = Date.now();
-      const provider = createOpenRouter({});
-      const modelId = model.replace(/^openrouter\//, "");
+      const llmConfig = resolveLlmConfig(model, {
+        temperature: 0.1, reasoningEffort: model.includes("gpt-6.1-sol") ? "low" : undefined,
+      });
 
       try {
         assertNoOutOfCreditMarker();
         const result = await generateText({
-          model: provider.chat(modelId, OPENROUTER_USAGE_ACCOUNTING),
+          model: createOpenRouterChatModel(llmConfig),
           system: [
             "You are a constrained translation judge.",
             "You cannot edit files or run shell commands.",
@@ -850,10 +850,10 @@ async function runJudgeCommand(
             "Return strict JSON with this shape:",
             JSON.stringify(getJudgeJsonShape()),
           ].join("\n"),
-          temperature: 0.1,
+          ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
           maxOutputTokens: 4000,
           timeout: { totalMs: timeoutSeconds * 1000 },
-          providerOptions: getReasoningProviderOptions(model),
+          providerOptions: llmConfig.provider === "openai" ? llmConfig.providerOptions : getReasoningProviderOptions(model) ?? llmConfig.providerOptions,
         });
         const parsedScore = parseJudgeOutput(result.text);
         const scores = normalizeJudgeScores(parsedScore.scores);
@@ -1040,7 +1040,11 @@ function resolveSelectedCandidate(judge: JudgeCommandResult, candidates: Candida
 }
 
 function getReasoningProviderOptions(model: string) {
-  if (model.includes("gpt-5") || model.includes("gpt-oss") || model.includes("qwen") || model.includes("glm")) {
+  if (model.includes("gpt-5") || model.includes("gpt-6.1-sol") || model.includes("gpt-oss") || model.includes("qwen") || model.includes("glm")) {
+    return { openrouter: { reasoning: { effort: "low" } } };
+  }
+
+  if (model.includes("gemini-3.8")) {
     return { openrouter: { reasoning: { effort: "low" } } };
   }
 
@@ -1063,19 +1067,19 @@ function validateJudgeModels({
   const cheapJudgeModels = [judgeModel, secondJudgeModel].filter((model): model is string => model != null);
   const forbiddenCheapJudges = cheapJudgeModels.filter((model) =>
     model.includes("-fast") ||
-    model.startsWith("openrouter/openai/") ||
+    (model.startsWith("openrouter/openai/") && model !== "openrouter/openai/gpt-6.1-sol") ||
     model.startsWith("openrouter/anthropic/"),
   );
   const forbiddenEscalation = escalationJudgeModel == null
     ? []
     : [escalationJudgeModel].filter((model) =>
       model.includes("-fast") ||
-      model.startsWith("openrouter/openai/"),
+      (model.startsWith("openrouter/openai/") && model !== "openrouter/openai/gpt-6.1-sol"),
     );
 
   if (forbiddenCheapJudges.length > 0 || forbiddenEscalation.length > 0) {
     throw new Error([
-      "Judge models must use cheap non-GPT/non-Anthropic models, except Anthropic is allowed only as the explicit escalation judge.",
+      "Judge models must use cheap non-GPT/non-Anthropic models, except GPT-6.1 Sol (low) is allowed and Anthropic is allowed only as the explicit escalation judge.",
       `Forbidden model(s): ${[...forbiddenCheapJudges, ...forbiddenEscalation].join(", ")}`,
     ].join(" "));
   }

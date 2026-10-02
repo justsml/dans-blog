@@ -364,13 +364,14 @@ function validateCandidateModels(models: string[]) {
     (model.startsWith("openrouter/openai/") && ![
       "openrouter/openai/gpt-oss-120b:nitro",
       "openrouter/openai/gpt-5.6-luna",
+      "openrouter/openai/gpt-6.1-sol",
     ].includes(model)) ||
     model.startsWith("openrouter/anthropic/"),
   );
 
   if (forbiddenModels.length > 0) {
     throw new Error([
-      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro and gpt-5.6-luna. Anthropic and -fast variants are forbidden.",
+      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro, gpt-5.6-luna, and gpt-6.1-sol (low). Anthropic and -fast variants are forbidden.",
       `Forbidden model(s): ${forbiddenModels.join(", ")}`,
     ].join(" "));
   }

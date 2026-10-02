@@ -14,6 +14,12 @@ interface ModelPricing {
 }
 
 const MODEL_PRICING: Record<string, ModelPricing> = {
+  "openai/gpt-6.1-sol": {
+    inputPerMillionUsd: 2,
+    cachedInputPerMillionUsd: 0.1,
+    outputPerMillionUsd: 10,
+    source: "openrouter-2026-10-02",
+  },
   "openai/gpt-6-sol": {
     inputPerMillionUsd: 2,
     cachedInputPerMillionUsd: 0.2,
@@ -194,7 +200,8 @@ export function estimateTokenCost(
   cacheReadTokens = 0,
   options: { providerCostUsd?: number } = {},
 ): TokenCostEstimate {
-  const pricing = MODEL_PRICING[normalizeOpenRouterModelId(modelId)];
+  const normalizedId = normalizeOpenRouterModelId(modelId);
+  const pricing = MODEL_PRICING[normalizedId.startsWith("gpt-") ? `openai/${normalizedId}` : normalizedId];
   const providerCostUsd = normalizeProviderCost(options.providerCostUsd);
   const providerEstimate = providerCostUsd == null
     ? undefined

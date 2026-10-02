@@ -22,7 +22,7 @@ Set `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY` and `LANGFUSE_BASE_URL` in `.en
 # Dry-run: list cases without spending tokens
 bun run i18n:eval -- --dry-run
 
-# Run defaults (newest article + newest quiz, all active locales, four models)
+# Run defaults (newest article + newest quiz, all active locales, five models)
 bun run i18n:eval
 
 # Multiple locales — each becomes its own set of eval cases
@@ -60,7 +60,7 @@ bun run i18n:eval -- --print-streams
 
 | Flag | Default | Description |
 | --- | --- | --- |
-| `--models` | four current defaults | Comma-separated translation models to compare in parallel |
+| `--models` | five current defaults | Comma-separated translation models to compare in parallel |
 | `--judge-model` | `gemini-3.8-flash` | Model used to score translations |
 | `--locales` | all active locales | Comma-separated locales (`es,hi,ja,ru,de,fr,it,ar,he,zh`, …) — each is a separate eval axis |
 | `--kind` | `all` | `article`, `quiz`, or `all` |
@@ -75,7 +75,7 @@ bun run i18n:eval -- --print-streams
 
 All combinations of `--locales × --models` run in parallel via `Promise.all`. Each `(input × locale × model)` triple is an independent eval case scored by the same shared scorers, so results are directly comparable across any axis.
 
-Default models: `openrouter/z-ai/glm-5.3-flash`, `openrouter/qwen/qwen3.8-max`, `openrouter/google/gemini-3.8-flash`, and `openrouter/google/gemini-3.5-flash-lite`.
+Default models: `openrouter/z-ai/glm-5.3-flash`, `openrouter/qwen/qwen3.8-max`, `openrouter/google/gemini-3.8-flash`, `openrouter/google/gemini-3.5-flash-lite`, and `openrouter/openai/gpt-6.1-sol` (low).
 Model names resolve through `model-presets.ts` — short substrings like `nitro` or `flash` are accepted.
 
 ## Input: real corpus posts
@@ -309,3 +309,20 @@ capabilities; recheck first-party availability separately.
 The full matched 24k comparison and prior-limit recovery attempts are retained
 under `reports/i18n/judge-benchmarks/2026-09-22/qwen-24k/`. Previous 8k/16k runs
 remain historical evidence and must not be pooled into the new comparison.
+
+### October 2 GPT-6.1 Sol calibration
+
+The new model uses low reasoning, omits unsupported sampling controls, and has separately dated capabilities/prices. New benchmark matrices reject unavailable models, missing output prices, prohibited model tiers, and unsupported reasoning settings before inference. Astra and Fable remain in historical reports but are excluded from active eval presets at their verified $50/M output prices. Active panels use allowed Sol/Opus/Sonnet models and preserve distinct identities.
+
+Reproduce the post-calibration frozen-input comparison in a **new output directory**:
+
+```sh
+bun src/scripts/i18n/judge-benchmark.ts \
+  --out reports/i18n/judge-benchmarks/NEW-RUN \
+  --fixtures reports/i18n/judge-benchmarks/2026-10-02-gpt61-low/fresh-heldout.json \
+  --phase fresh-heldout --split heldout \
+  --models openai/gpt-6.1-sol,google/gemini-3.8-flash \
+  --effort low --max-output-tokens 6000
+```
+
+This command makes paid calls. The original run also retained an unchanged-prompt baseline, repository-contract calibration, five immutable synthetic-consensus references, and article/quiz translation canaries. [Results and limits](../reports/i18n/judge-benchmarks/2026-10-02-gpt61-low/summary.md). The fresh cases support basic defect detection and false-positive checks; they are not independent native-speaker quality ratings or evidence that Sol exceeds Gemini.

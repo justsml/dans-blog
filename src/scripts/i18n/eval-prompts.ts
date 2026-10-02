@@ -114,6 +114,7 @@ const DEFAULT_MODELS = [
   "openrouter/z-ai/glm-5.3-flash",
   "openrouter/qwen/qwen3.8-max",
   "openrouter/google/gemini-3.8-flash",
+  "openrouter/openai/gpt-6.1-sol",
   "openrouter/google/gemini-3.5-flash-lite",
 ];
 const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
@@ -1451,12 +1452,16 @@ function getEvalReasoningProviderOptions(
   }
 
   if (
-    normalized.includes("gpt-5")
+    (normalized.includes("gpt-5") || normalized.includes("gpt-6"))
     || normalized.includes("gpt-oss")
     || normalized.includes("qwen")
     || normalized.includes("glm")
     || normalized.includes("deepseek")
   ) {
+    return { openrouter: { reasoning: { effort: "low", exclude: true } } };
+  }
+
+  if (normalized.includes("gemini-3.8")) {
     return { openrouter: { reasoning: { effort: "low", exclude: true } } };
   }
 
@@ -1479,12 +1484,12 @@ function getEvalQuizLlmConfig(model: string): QuizLlmConfig {
 }
 
 function evalTemperatureOption(model: string, temperature: number) {
-  return model.replace(/^openrouter\//, "").includes("gpt-5.6") ? {} : { temperature };
+  return /gpt-(?:5\.6|6(?:\.1)?)-/.test(model) ? {} : { temperature };
 }
 
 function getEvalQuizReasoningProviderOptions(model: string): QuizLlmConfig["providerOptions"] {
   const normalized = model.replace(/^openrouter\//, "");
-  const effort = normalized.includes("gemini-3") ? "minimal" : "low";
+  const effort = normalized.includes("gemini-3") && !normalized.includes("gemini-3.8") ? "minimal" : "low";
   return { openrouter: { reasoning: { effort } } };
 }
 

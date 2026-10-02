@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { supportsTemperature } from "../i18n/core/model-config.ts";
 import { generateText } from "../i18n/ai-sdk.ts";
 import { NEWS_WATCH_DB_PATH } from "./config.ts";
 import { runWithConcurrency } from "./concurrency.ts";
@@ -18,7 +19,7 @@ const EXTRACTION_TEMPERATURE = Number.parseFloat(process.env.NEWS_WATCH_EXTRACTI
 const EXTRACTION_MAX_TOKENS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_TOKENS ?? "4000", 10);
 const EXTRACTION_TIMEOUT_MS = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_TIMEOUT_MS ?? "45000", 10);
 const EXTRACTION_CONCURRENCY = Math.max(1, Number.parseInt(process.env.NEWS_WATCH_CONCURRENCY ?? "4", 10));
-const EXTRACTION_REASONING_EFFORT = process.env.NEWS_WATCH_EXTRACTION_REASONING_EFFORT ?? "none";
+const EXTRACTION_REASONING_EFFORT = process.env.NEWS_WATCH_EXTRACTION_REASONING_EFFORT ?? (EXTRACTION_MODEL === "openai/gpt-6.1-sol" ? "low" : "none");
 
 const SYSTEM_PROMPT = [
   "You are an entity extractor for a tech/AI news index.",
@@ -227,7 +228,7 @@ async function runExtractionBatch(rows: UnextractedItemRow[]): Promise<LlmOutput
       { role: "system", content: SYSTEM_PROMPT },
       { role: "user", content: userPayload },
     ],
-    temperature: EXTRACTION_TEMPERATURE,
+    ...(supportsTemperature(EXTRACTION_MODEL) ? { temperature: EXTRACTION_TEMPERATURE } : {}),
     maxOutputTokens: EXTRACTION_MAX_TOKENS,
     timeout: { totalMs: EXTRACTION_TIMEOUT_MS },
     providerOptions: {

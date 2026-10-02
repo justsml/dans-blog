@@ -1,3 +1,4 @@
+import { createOpenRouterChatModel } from "./core/model-config.ts";
 /**
  * Structured quiz translator.
  *
@@ -12,13 +13,12 @@
 import { generateText } from "./ai-sdk.ts";
 import { jsonrepair } from "jsonrepair";
 import { z } from "zod";
-import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
+import { type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import type { QuizChallenge, ParsedQuiz } from "./quiz-parser.ts";
 import { normalizeMarkdownIndentation, slotToTranslatable, slotFromTranslatable } from "./quiz-parser.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import {
-  OPENROUTER_USAGE_ACCOUNTING,
   assertGenerationNotTokenLimited,
   cachedUserMessage,
   diagnosticsFromResult,
@@ -181,8 +181,7 @@ export async function translateChallenge(
 }> {
   const start = performance.now();
 
-  const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
+  const model = createOpenRouterChatModel(llmConfig as Parameters<typeof createOpenRouterChatModel>[0]);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -350,8 +349,7 @@ export async function generateQuizDescription(
     quiz.outro.slice(0, 400),
   ].join("\n");
 
-  const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
+  const model = createOpenRouterChatModel(llmConfig as Parameters<typeof createOpenRouterChatModel>[0]);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -379,7 +377,7 @@ export async function generateQuizDescription(
         `---`,
       ].join("\n")),
     ],
-    ...(llmConfig.modelId.includes("gpt-5.6") ? {} : { temperature: 0.3 }),
+    ...(/gpt-(?:5\.6|6(?:\.1)?)-/.test(llmConfig.modelId) ? {} : { temperature: 0.3 }),
     maxOutputTokens: 500,
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,

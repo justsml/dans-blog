@@ -223,9 +223,10 @@ Thinking-capable models are run with cheap reasoning variants by default:
 
 - `openrouter/openai/gpt-oss-120b:nitro`: `--variant low`
 - `openrouter/openai/gpt-5.6-luna`: `--variant low` (temperature omitted)
+- `openrouter/openai/gpt-6.1-sol`: low reasoning; temperature/top-p omitted ($2/M input, $0.10/M cached input, $10/M output, verified 2026-10-02)
 - `openrouter/qwen/qwen3-32b:nitro`: `--variant low`
 - `openrouter/qwen/qwen3.8-max`: `--variant low`
-- `openrouter/google/gemini-3.8-flash`: `--variant minimal`
+- `openrouter/google/gemini-3.8-flash`: `--variant low`
 - `openrouter/google/gemini-3.5-flash-lite`: `--variant minimal`
 - `openrouter/z-ai/glm-5.1`: `--variant low`
 
@@ -250,6 +251,7 @@ openrouter/qwen/qwen3.8-max
 openrouter/deepseek/deepseek-v4.1-flash
 openrouter/openai/gpt-oss-120b:nitro
 openrouter/openai/gpt-5.6-luna
+openrouter/openai/gpt-6.1-sol
 openrouter/qwen/qwen3-32b:nitro
 openrouter/z-ai/glm-5.3-flash
 openrouter/minimax/minimax-m2.5
@@ -437,3 +439,15 @@ The useful bugs found during the pilot:
 - provider failures must not become fake candidates just because the previous target file exists
 
 Those are now encoded in scripts, tests, and this workflow.
+
+### GPT-6.1 Sol judge option (October 2)
+
+GPT-6.1 Sol is available as a translation candidate, primary/secondary candidate judge, scoring model, agent model, and benchmark model. Its minimum supported reasoning is **low**, not none/minimal. Bare `openai/gpt-6.1-sol` selects first-party OpenAI in the shared resolver; `openrouter/openai/gpt-6.1-sol` selects OpenRouter. First-party credentials/availability must be verified separately; this calibration used OpenRouter.
+
+```sh
+bun run i18n:judge -- --slug semantic-vector-search-landscape --locale es \
+  --model openrouter/openai/gpt-6.1-sol \
+  --second-model openrouter/google/gemini-3.8-flash
+```
+
+The calibrated production scoring contract explicitly allows inherited publishing metadata and locale-folder asset/import adjustments. The model is an opt-in primary judge; Gemini Flash remains the default because both passed the controlled pilot and no quality advantage was demonstrated. See [calibration results](../reports/i18n/judge-benchmarks/2026-10-02-gpt61-low/summary.md). Pro/Ultra variants and models priced at $50/M output or higher are blocked on SDK/CLI eval routes; historical evidence remains intact.

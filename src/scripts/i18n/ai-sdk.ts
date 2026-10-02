@@ -1,12 +1,17 @@
+import { assertAllowedModel } from "./model-policy.ts";
 import * as ai from "ai";
 import { withLangfuseTelemetry } from "./langfuse.ts";
 import type { EvalScoreInput } from "./langfuse-score-projection.ts";
 import { withLangfuseEval } from "./langfuse-scores.ts";
 
-export const generateText: typeof ai.generateText = (options) =>
-  ai.generateText(withLangfuseTelemetry(options));
-export const streamText: typeof ai.streamText = (options) =>
-  ai.streamText(withLangfuseTelemetry(options));
+export const generateText: typeof ai.generateText = (options) => {
+  assertAllowedModel(typeof options.model === "string" ? options.model : options.model.modelId);
+  return ai.generateText(withLangfuseTelemetry(options));
+};
+export const streamText: typeof ai.streamText = (options) => {
+  assertAllowedModel(typeof options.model === "string" ? options.model : options.model.modelId);
+  return ai.streamText(withLangfuseTelemetry(options));
+};
 
 /**
  * Wraps fn() in a Langfuse observation when credentials are set. The result's

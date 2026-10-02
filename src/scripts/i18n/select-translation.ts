@@ -4,7 +4,7 @@ import { dirname, join } from "node:path";
 import "dotenv/config";
 import { generateText } from "./ai-sdk.ts";
 import { exitAfterFlush } from "./langfuse.ts";
-import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { createOpenRouterChatModel, resolveLlmConfig } from "./core/model-config.ts";
 import {
   getPostPaths,
   optionalString,
@@ -193,12 +193,12 @@ async function judgeCandidates({
     candidateBlocks,
   ].join("\n");
 
-  const provider = createOpenRouter({});
+  const llmConfig = resolveLlmConfig(judgeModel, { reasoningEffort: "low", temperature: 0.1 });
   const result = await generateText({
-    model: provider.chat(judgeModel.replace(/^openrouter\//, "")),
+    model: createOpenRouterChatModel(llmConfig),
     system: "You judge translation candidates and return strict JSON only.",
     prompt,
-    temperature: 0.1,
+    ...(llmConfig.temperature == null ? {} : { temperature: llmConfig.temperature }),
     maxOutputTokens: 2000,
     timeout: { totalMs: 200_000 },
     providerOptions: {

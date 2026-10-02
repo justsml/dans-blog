@@ -1,3 +1,4 @@
+import { assertAllowedModel } from "../model-policy.ts";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import { createOpenAI } from "@ai-sdk/openai";
 import type { ProviderOptions } from "@ai-sdk/provider-utils";
@@ -48,6 +49,7 @@ export function resolveLlmConfig(
   if (source === "") throw new Error("Model config cannot be empty.");
 
   if (!source.startsWith("llm://")) {
+    assertAllowedModel(source);
     // A bare `openai/<model>` means first-party OpenAI. `openrouter/openai/<model>`
     // still routes through OpenRouter.
     if (source.startsWith("openai/")) {
@@ -70,7 +72,7 @@ export function resolveLlmConfig(
         },
       } as OpenRouterProviderOptions,
       reasoningEffort,
-      temperature: defaults.temperature ?? defaultTemperatureForModel(modelId),
+      temperature: supportsTemperature(modelId) ? defaults.temperature ?? defaultTemperatureForModel(modelId) : undefined,
       maxTokens: defaults.maxTokens ?? 24_000,
       timeoutMs: defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS,
     };
@@ -94,6 +96,7 @@ export function resolveLlmConfig(
   const provider = aiSdkOptions.provider;
   const host = normalized.config.host;
   const modelId = normalized.config.model.replace(/^openrouter\//, "");
+  assertAllowedModel(`${provider ?? "openrouter"}/${modelId}`);
   const reasoningEffort = stringParam(params, ["reasoning_effort", "reasoningEffort", "effort"])
     ?? defaults.reasoningEffort
     ?? defaultReasoningEffort(provider === "openai" ? `openai/${modelId}` : modelId);
@@ -129,11 +132,11 @@ export function resolveLlmConfig(
     },
     providerOptions,
     reasoningEffort,
-    temperature: optionalNumberParam(
+    temperature: supportsTemperature(modelId) ? optionalNumberParam(
       params,
       ["temperature", "temp"],
       defaults.temperature ?? defaultTemperatureForModel(modelId),
-    ),
+    ) : undefined,
     maxTokens: numberParam(
       params,
       ["max_tokens", "maxOutputTokens", "maxTokens", "max_completion_tokens", "max"],
@@ -141,6 +144,10 @@ export function resolveLlmConfig(
     ),
     timeoutMs: numberParam(params, ["timeout_ms", "timeoutMs", "timeout"], defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS),
   };
+}
+
+export function supportsTemperature(modelId: string) {
+  return !/gpt-(?:5\.6|6(?:\.1)?)-/.test(modelId);
 }
 
 function defaultTemperatureForModel(modelId: string) {
@@ -189,7 +196,7 @@ function resolveDirectOpenAiConfig(
       openrouter: { reasoning: { effort: reasoningEffort } },
     } as OpenRouterProviderOptions,
     reasoningEffort,
-    temperature: defaults.temperature ?? defaultTemperatureForModel(modelId),
+    temperature: supportsTemperature(modelId) ? defaults.temperature ?? defaultTemperatureForModel(modelId) : undefined,
     maxTokens: defaults.maxTokens ?? 24_000,
     timeoutMs: defaults.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   };

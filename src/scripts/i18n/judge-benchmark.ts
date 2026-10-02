@@ -1,3 +1,4 @@
+import { assertAllowedModel } from "./model-policy.ts";
 /** Matched-input judge comparison. Never promotes or edits translations. */
 import { lowestReasoningEffort, type ReasoningCapability } from "./core/reasoning-defaults.ts";
 import { mkdirSync, readFileSync, writeFileSync, appendFileSync, readdirSync } from "node:fs";
@@ -11,8 +12,8 @@ export const JUDGE_BENCHMARK_MODELS = [
   "openai/gpt-6-luna", "openai/gpt-5.6-luna", "google/gemini-3.8-flash",
   "google/gemini-3.5-flash-lite", "deepseek/deepseek-v4.1-flash",
   "z-ai/glm-5.3-flash", "z-ai/glm-5.3-flashx", "anthropic/claude-opus-5.5",
-  "anthropic/claude-fable-5.1",
-  "openai/gpt-6-astra", "openai/gpt-6-sol",
+  "anthropic/claude-sonnet-5.5",
+  "openai/gpt-6.1-sol", "openai/gpt-6-sol",
   "qwen/qwen3.8-flash", "qwen/qwen3.8-27b",
 ];
 export function benchmarkReasoningEffort(requested: string, model: { reasoning?: ReasoningCapability | null }) {
@@ -106,8 +107,18 @@ async function main() {
     const body = await response.json() as { data: Array<{ id: string }> };
     return { checkedAt: new Date().toISOString(), models: body.data.filter(m => [...JUDGE_BENCHMARK_MODELS, ...models].includes(m.id)) };
   })();
-  for (const model of models) if (!catalog.models.some((m: any) => m.id === model)) throw new Error(`Model unavailable: ${model}`);
+  for (const model of models) {
+    const record = catalog.models.find((m: any) => m.id === model);
+    if (!record) throw new Error(`Model unavailable: ${model}`);
+    if (!record.pricing?.completion) throw new Error(`Missing current output pricing: ${model}`);
+    assertAllowedModel(model, Number(record.pricing.completion));
+  }
   const effortByModel = Object.fromEntries(models.map(model => [model, benchmarkReasoningEffort(effort === 'default' ? defaultBenchmarkEffort(model) : effort, catalog.models.find((m: any) => m.id === model))]));
+  // Reject deterministic capability/config errors before launching a paid matrix.
+  for (const model of models) {
+    const supported = catalog.models.find((m: any) => m.id === model).reasoning?.supported_efforts;
+    if (supported && !supported.includes(effortByModel[model])) throw new Error(`Unsupported reasoning effort ${effortByModel[model]} for ${model}`);
+  }
   if (retryRows?.some(row => row.effort !== effortByModel[row.model])) throw new Error('Retry reasoning differs from original phase');
   if (resumeOf) {
     const previous = JSON.parse(readFileSync(join(out, `${resumeOf}-manifest.json`), 'utf8'));

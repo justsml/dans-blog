@@ -47,7 +47,7 @@ export function accountUsage(
   ) {
     const longContext =
       usage.input >= 272000 &&
-      ["openai/gpt-6-sol", "openai/gpt-6-astra"].includes(model);
+      ["openai/gpt-6.1-sol", "openai/gpt-6-sol", "openai/gpt-6-astra"].includes(model.replace(/^openrouter\//, ""));
     const estimate = estimateTokenCost(
       model,
       usage.input * (longContext ? 2 : 1),

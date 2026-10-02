@@ -28,8 +28,8 @@ if(!['api','cli','opencode'].includes(transport))throw Error('Transport must be 
 const backendFor=(model:string):CliBackend=>transport==='opencode'?'opencode':model.startsWith('openai/')?'codex':model.startsWith('anthropic/')?'claude':'opencode';
 const tier=arg('tier','pilot');
 if(!['pilot','frontier'].includes(tier))throw Error('Tier must be pilot or frontier');
-const core=tier==='pilot'?[{id:'editor-A',model:'openai/gpt-6-sol',effort:'high'},{id:'editor-B',model:'anthropic/claude-opus-5.5',effort:'high'}]:[{id:'editor-A',model:'openai/gpt-6-astra',effort:'high'},{id:'editor-B',model:'anthropic/claude-fable-5.1',effort:'high'}];
-const auditors=tier==='pilot'?[{id:'auditor-A',model:'openai/gpt-6-astra',effort:'high'},{id:'auditor-B',model:'anthropic/claude-fable-5.1',effort:'high'}]:[{id:'auditor-A',model:'openai/gpt-6-sol',effort:'high'},{id:'auditor-B',model:'anthropic/claude-opus-5.5',effort:'high'}];
+const core=tier==='pilot'?[{id:'editor-A',model:'openai/gpt-6.1-sol',effort:'low'},{id:'editor-B',model:'anthropic/claude-opus-5.5',effort:'high'}]:[{id:'editor-A',model:'openai/gpt-6.1-sol',effort:'low'},{id:'editor-B',model:'anthropic/claude-sonnet-5.5',effort:'high'}];
+const auditors=tier==='pilot'?[{id:'auditor-A',model:'openai/gpt-6-sol',effort:'high'},{id:'auditor-B',model:'anthropic/claude-sonnet-5.5',effort:'high'}]:[{id:'auditor-A',model:'openai/gpt-6-sol',effort:'high'},{id:'auditor-B',model:'anthropic/claude-opus-5.5',effort:'high'}];
 // Catalog does not support medium for these models. Never silently upgrade to high.
 const advisors=[{id:'advisor-A',model:'deepseek/deepseek-v4.1-flash',effort:'low'},{id:'advisor-B',model:'z-ai/glm-5.3-flash',effort:'low'}];
 type Actor=typeof core[number];
