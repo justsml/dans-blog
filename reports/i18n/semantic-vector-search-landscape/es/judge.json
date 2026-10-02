@@ -1,30 +1,57 @@
 {
-  "selectedCommit": "8e35a85c8c89e19c7f242ebd949cc3982a78272d",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "72e1173af5e59da278f161e5eaa08d66373c1042",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 9,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 96,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 94,
+    "languagePurity": 98
   },
-  "suggestions": [],
-  "rationale": "This candidate provides a high-quality, natural translation that captures Dan's direct and technical style. It correctly translates the title and frontmatter which were missing in the 'current' and other candidates. It maintains all MDX structures, code blocks, and table formatting perfectly. The terminology used (e.g., 'Incrustación' for Embedding, 'Ranking' for Ranking) is appropriate for a technical audience in Spanish.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[Cómo leer esta comparación](#cómo-leer-la-comparación)",
+      "replacement": "[Cómo leer esta comparación](#cómo-leer-la-comparación)",
+      "reason": "Verify anchor target matches heading slug perfectly"
+    }
+  ],
+  "rationale": "Both candidates are very strong, but 896580ca has a corrupted character typo ('devolver颚') under 'No incrustes IDs y esperes coincidencias exactas'. 72e1173af5e59da278f161e5eaa08d66373c1042 has clean, natural Spanish prose, captures Dan's direct cadence without glitches, and correctly matches heading anchor slugs.",
+  "confidence": "low",
+  "confidenceScore": 0.33,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "semantic-vector-search-landscape",
   "locale": "es",
   "candidateCommits": [
-    "8e35a85c8c89e19c7f242ebd949cc3982a78272d",
-    "7093a8acf18ea159a1ecd9df982f86b9af2427bc",
-    "197698a8b427534e6c257ad68d9fabf46e27bf80",
-    "a414394e9a5d7e5de0ebff01a6081177f97cb1ce",
-    "69d16ad3bc1478a5091ca8de534ed72edc3611ad"
+    "896580ca31bdeac57d98173d06dcff715e1d6f76",
+    "72e1173af5e59da278f161e5eaa08d66373c1042"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[Cómo leer esta comparación](#cómo-leer-la-comparación)",
+      "replacement": "[Cómo leer esta comparación](#cómo-leer-la-comparación)",
+      "reason": "Verify anchor target matches heading slug perfectly",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
   "validation": {
-    "ok": false,
+    "ok": true,
     "scope": "local",
     "command": "bun run i18n:validate --slug semantic-vector-search-landscape --locale es --skip-global",
-    "error": "Command failed: bun run i18n:validate --slug semantic-vector-search-landscape --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug semantic-vector-search-landscape --locale es --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-01--semantic-vector-search-landscape/es/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+    "output": ""
   }
 }
