@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 4fd17cca9c8ca612008ab4c9b35dbff866425157
-- Selected model: openrouter/moonshotai/kimi-k2.6
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 12dee3198a6f6b114fbab9ea4bbef23207dc90d5
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.887)
 
-The moonshotai/kimi-k2.6 candidate is the best choice because it provides a complete and natural translation of the entire document, including the complex comparison table and technical explanations. The 'current' translation and the other candidate (gpt-oss-120b) both contain a significant error: they leave a paragraph in Korean ('이 쿼리는 퍼지 이름 매치...') in the middle of the Japanese translation. Kimi-k2.6 correctly translates this section into Japanese. It also maintains Dan's direct, punchy style and preserves all MDX formatting and heading counts perfectly.
+The high-priority anchor target issue identified in pass 1 was already applied in the current Japanese MDX ([この比較表の読み方](#比較の読み方) matches '### 比較の読み方'). MDX structure, headings, tables, code blocks, and technical terminology are completely aligned and preserved accurately.
