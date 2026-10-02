@@ -1,26 +1,52 @@
 {
-  "selectedCommit": "c0358d6f398a48a3e470131aab58e37e84995fe1",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "54bdaf3686ca4b944a6fa050e2624396f951a55b",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 9,
-    "coherence": 9,
-    "relevance": 9,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 96,
+    "technicalAccuracy": 98,
+    "coherence": 97,
+    "relevance": 98,
+    "translationQuality": 96,
+    "mdxPreservation": 92,
+    "culturalAdaptation": 94,
+    "languagePurity": 98
   },
-  "suggestions": [],
-  "rationale": "This candidate provides the most natural and technically accurate translation. It correctly translates 'embeddings' as 'plongements lexicaux' (or keeps the term where appropriate) and maintains Dan's direct, punchy style. It also correctly handles the MDX structure and heading counts. The other candidate (c0ce) had a typo in a heading ('Termsat a Glance') and used slightly less natural phrasing in some technical sections.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[Comment lire cette comparaison](#comment-lire-la-comparaison)",
+      "replacement": "[Comment lire cette comparaison](#comment-lire-la-comparaison)",
+      "reason": "Verify heading slug anchor: the target H3 heading is '### Comment lire la comparaison', which generates #comment-lire-la-comparaison, so the link matches."
+    }
+  ],
+  "rationale": "Candidate 54bdaf3686ca4b944a6fa050e2624396f951a55b provides an excellent French translation that preserves technical terminology, code snippets, table structure, and heading levels. The heading link anchor `#comment-lire-la-comparaison` correctly matches the translated H3 '### Comment lire la comparaison'.",
+  "confidence": "low",
+  "confidenceScore": 0.333,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "semantic-vector-search-landscape",
   "locale": "fr",
   "candidateCommits": [
-    "c0358d6f398a48a3e470131aab58e37e84995fe1",
-    "5ba0398b5ece8d5752ba1e8704f16e4af5e83687",
-    "c5f28fee796296976fdd890c0b5151082a2e14e2",
-    "c0ce3344cc9cc8a078faa409f77a0663adf7c8d2",
-    "a05b9e5b5b303b738964826f6407aee0f6596a0e"
+    "54bdaf3686ca4b944a6fa050e2624396f951a55b"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[Comment lire cette comparaison](#comment-lire-la-comparaison)",
+      "replacement": "[Comment lire cette comparaison](#comment-lire-la-comparaison)",
+      "reason": "Verify heading slug anchor: the target H3 heading is '### Comment lire la comparaison', which generates #comment-lire-la-comparaison, so the link matches.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
