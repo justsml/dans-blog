@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 1c941f8b3a03fbcd18aeea279a4c0f3f4d5cb348
-- Selected model: deepseek/deepseek-v4-flash
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 8a8c11337aae9b32b3fe3a5d8ebabad3f69d7bc1
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.883)
 
-The DeepSeek candidate provides the most accurate and natural technical translation. It correctly translates 'trigrams' as '三元组' (or keeps context clear) and maintains the professional yet direct tone of the original. It also correctly handles the MDX requirements, including the relative paths for assets. Compared to the current version, it improves the flow of the technical explanations and the table descriptions.
+The same-page heading link `[如何阅读这份对比](#如何阅读这张对比表)` correctly references the target heading `### 如何阅读这张对比表`, and all frontmatter, structure, code blocks, tables, and translations are intact and accurate.

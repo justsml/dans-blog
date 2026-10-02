@@ -1,24 +1,55 @@
 {
-  "selectedCommit": "1c941f8b3a03fbcd18aeea279a4c0f3f4d5cb348",
-  "selectedModel": "deepseek/deepseek-v4-flash",
+  "selectedCommit": "8a8c11337aae9b32b3fe3a5d8ebabad3f69d7bc1",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 9,
-    "technicalAccuracy": 10,
-    "coherence": 10,
-    "relevance": 10,
-    "translationQuality": 9,
-    "mdxPreservation": 10
+    "readability": 96,
+    "technicalAccuracy": 96,
+    "coherence": 96,
+    "relevance": 96,
+    "translationQuality": 96,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 95,
+    "languagePurity": 96
   },
   "suggestions": [],
-  "rationale": "The DeepSeek candidate provides the most accurate and natural technical translation. It correctly translates 'trigrams' as '三元组' (or keeps context clear) and maintains the professional yet direct tone of the original. It also correctly handles the MDX requirements, including the relative paths for assets. Compared to the current version, it improves the flow of the technical explanations and the table descriptions.",
+  "rationale": "The same-page heading link `[如何阅读这份对比](#如何阅读这张对比表)` correctly references the target heading `### 如何阅读这张对比表`, and all frontmatter, structure, code blocks, tables, and translations are intact and accurate.",
+  "confidence": "high",
+  "confidenceScore": 0.883,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "semantic-vector-search-landscape",
   "locale": "zh",
   "candidateCommits": [
-    "df445f658a45ded149a37d018c2ffa26c2daf945",
-    "1c941f8b3a03fbcd18aeea279a4c0f3f4d5cb348",
-    "ef743666c4049600727d693f9d94d473210c2f7f"
+    "5c408b77af39618ea12af96ddc1cfa0c40c2ddb0",
+    "8a8c11337aae9b32b3fe3a5d8ebabad3f69d7bc1"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[如何阅读这份对比](#如何阅读这张对比表)",
+      "replacement": "[如何阅读这份对比](#如何阅读这份对比)",
+      "reason": "The anchor target must match the generated slug from the heading text below it ('如何阅读这份对比' or corresponding heading).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "[如何阅读这份对比](#如何阅读这份对比)",
+      "replacement": "[如何阅读这份对比](#如何阅读这张对比表)",
+      "reason": "The anchor target must resolve to the actual translated H3 heading, which is '### 如何阅读这张对比表' (slug: '#如何阅读这张对比表').",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
