@@ -1,34 +1,51 @@
 {
-  "selectedCommit": "a5cf7f8adb1445ea58058f19f2bc9d3376375f9e",
-  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "selectedCommit": "8764e2f8b49fb85c361b095221bc0c3554a8d3cf",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 5,
-    "technicalAccuracy": 5,
-    "coherence": 5,
-    "relevance": 5,
-    "translationQuality": 5,
-    "mdxPreservation": 5
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 96,
+    "relevance": 98,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 94,
+    "languagePurity": 96
   },
-  "suggestions": [],
-  "rationale": "The selected candidate provides a high-quality, technically accurate translation that captures Dan's direct style. It correctly translates the title and subtitle (which the 'current' version failed to do) and maintains the MDX structure perfectly. The suggestion from the previous judge regarding the relative link was already incorporated into the candidate's text (using `../postgres-text-search-guide`), so no further high-priority fixes are required.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[So liest du diesen Vergleich](#so-liest-du-den-vergleich)",
+      "replacement": "[So liest du diesen Vergleich](#so-liest-du-den-vergleich)",
+      "reason": "Ensures fragment matches translated heading slug '#so-liest-du-den-vergleich' perfectly."
+    }
+  ],
+  "rationale": "8764e2f8b49fb85c361b095221bc0c3554a8d3cf captures Dan's direct, engaging developer tone with idiomatic German phrasing ('Du'-form fits the conversational engineering voice naturally, while e97f66cfe1acfd58fb5afd2e7871d08e115a50f9 mixes formal 'Sie' in a somewhat stilted fashion, e.g. 'Liebhaber zu gewinnen'). Both candidates maintained the MDX structure, heading levels, and code blocks cleanly, but 8764e2f8b49fb85c361b095221bc0c3554a8d3cf features superior terminology handling and smoother prose.",
+  "confidence": "low",
+  "confidenceScore": 0.332,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "semantic-vector-search-landscape",
   "locale": "de",
   "candidateCommits": [
-    "a5cf7f8adb1445ea58058f19f2bc9d3376375f9e",
-    "f8a778a73a55c1a4c383c678b39f1fabe74293d0",
-    "f0e3ede494b18e839c2fc7ea796fcd0720b5a653",
-    "2adaa459cc578989ac1f13dcb372aeda95c6d4a3",
-    "6162ecc133c6aa9a5055aa027275d47e080feecb"
+    "e97f66cfe1acfd58fb5afd2e7871d08e115a50f9",
+    "8764e2f8b49fb85c361b095221bc0c3554a8d3cf"
   ],
   "suggestionLog": [
     {
-      "priority": "medium",
-      "match": "[Postgres Text Searching Guide 2026](/postgres-text-search-guide)",
-      "replacement": "[Postgres Text Searching Guide 2026](../postgres-text-search-guide)",
-      "reason": "The relative link should point to the parent directory to match the structure of other localized posts, ensuring the link works correctly in the subfolder.",
+      "priority": "high",
+      "match": "[So liest du diesen Vergleich](#so-liest-du-den-vergleich)",
+      "replacement": "[So liest du diesen Vergleich](#so-liest-du-den-vergleich)",
+      "reason": "Ensures fragment matches translated heading slug '#so-liest-du-den-vergleich' perfectly.",
       "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
     }
   ],
   "validation": {

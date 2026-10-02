@@ -1,7 +1,8 @@
 # Translation Judge
 
-- Selected candidate: a5cf7f8adb1445ea58058f19f2bc9d3376375f9e
-- Selected model: openrouter/qwen/qwen3.6-plus
-- Judge model: openrouter/google/gemini-3-flash-preview
+- Selected candidate: 8764e2f8b49fb85c361b095221bc0c3554a8d3cf
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: low (0.332)
 
-The selected candidate provides a high-quality, technically accurate translation that captures Dan's direct style. It correctly translates the title and subtitle (which the 'current' version failed to do) and maintains the MDX structure perfectly. The suggestion from the previous judge regarding the relative link was already incorporated into the candidate's text (using `../postgres-text-search-guide`), so no further high-priority fixes are required.
+8764e2f8b49fb85c361b095221bc0c3554a8d3cf captures Dan's direct, engaging developer tone with idiomatic German phrasing ('Du'-form fits the conversational engineering voice naturally, while e97f66cfe1acfd58fb5afd2e7871d08e115a50f9 mixes formal 'Sie' in a somewhat stilted fashion, e.g. 'Liebhaber zu gewinnen'). Both candidates maintained the MDX structure, heading levels, and code blocks cleanly, but 8764e2f8b49fb85c361b095221bc0c3554a8d3cf features superior terminology handling and smoother prose.
