@@ -7,6 +7,8 @@ description: Art-direct and generate DanLevy.net blog hero images plus compositi
 
 Create an image family that explains the post's idea at a glance. Treat the wide hero and square thumbnail as two compositions of the same concept, not an arbitrary crop and not unrelated artwork.
 
+Default to the Warm Editorial aesthetic: restrained photographic still lifes of real-feeling physical mechanisms, warm paper and mineral backgrounds, tactile materials, directional natural light, and one clear causal relationship. The picture should belong beside ivory paper or warm charcoal without a color filter. Read the refined composition, dark-mode, and acceptance guidance in `references/visual-language.md`. Prefer this direction over colorful miniature worlds or digital illustration unless the article or user calls for an exception.
+
 Use the requested image generation tool, or the best available one, for raster generation. If the user named a tool or model, use it. Otherwise pick the strongest image generator available in the current environment, and say which one you chose before generating. Read `references/visual-language.md` before writing prompts. Read the target `index.mdx` in full and inspect its existing images before generating anything.
 
 ## Workflow
@@ -19,7 +21,7 @@ Use the requested image generation tool, or the best available one, for raster g
    - visual cliches to avoid
    - any layout, palette, or subject constraints from existing assets
 3. Inspect 2-4 relevant post image families. Prefer recent posts with similar subject matter or rhetorical shape. View contact sheets or individual images with whatever image-viewing tool the environment provides. Do not imitate one image closely.
-4. Develop 3-5 candidate concepts before generation. Default to five when the user asks for a range. Each candidate must use a different metaphor, setting, or image-making mode. Color changes do not count as variation.
+4. Develop 3-5 candidate concepts before generation. Default to five when the user asks for a range. Each candidate must use a different metaphor or physical mechanism; changing color or rearranging the same objects does not count. Most candidates should stay in the refined photographic direction. Include another image-making mode only when it improves the argument.
 5. For each candidate, record a short concept name, the connection to the thesis, the image-generation prompt, and square-composition notes. Avoid a long pitch deck.
 6. Generate each wide candidate with a separate image-generation call. Do not ask the model for a contact sheet. Generate art without baked-in title text, logos, watermarks, fake UI copy, or illegible labels.
 7. Inspect every output. Reject candidates with generic AI imagery, accidental text, broken causal logic, weak focal hierarchy, or a subject that cannot survive a square composition. If fewer than three credible candidates remain, generate replacements.
@@ -57,7 +59,7 @@ Use this skeleton only as needed:
 Editorial hero image for a technical essay about [thesis].
 Depict [physical metaphor and relationship between objects].
 Composition: [focal point, camera/framing, negative space, crop safety].
-Visual language: [specific materials, image-making mode, light, restrained palette].
+Visual language: refined editorial object photography, [specific tactile materials], warm neutral background, directional window or studio light, restrained palette with one purposeful accent.
 The image should feel intelligent, tactile, and slightly wry rather than futuristic or corporate.
 No words, labels, logos, watermarks, code text, floating holograms, glowing brains, or generic AI circuitry.
 ```
@@ -87,3 +89,11 @@ At least one candidate should be simple enough to recognize at 200px. At least o
 - Never overwrite an existing final without explicit permission. Use `wide-v2.webp` and `square-v2.webp` when needed.
 - Keep source generations until selection is complete. Remove nothing the user did not ask to remove.
 - Prefer a regenerated square. Use ImageMagick cropping only for already crop-safe art or when the user explicitly wants a derived crop.
+
+## Acceptance checks
+
+- Read the visual mechanism at 200px and again at 96px. Remove peripheral props if the causal relationship disappears.
+- Inspect wide and square on ivory (`#faf7f1`) and warm charcoal (`#211f1c`). Preserve edge separation and readable shadows; never fix contrast by tinting the entire image or laying a gradient over it.
+- Check the wide image in a shallow 2.25:1 editorial feature as well as 16:9. Keep essential objects away from edges and preserve breathing room. Regenerate or change object positioning if the layout crop breaks the metaphor.
+- Reject baked-in slogans, labels on props, fake handwritten notes, ornamental equations, incidental brand marks, and invented evidence. Let HTML titles and captions carry the language.
+- Record `cover_alt` describing the actual objects and their relationship. Use `cover_credit` for real attribution when applicable; do not invent a photographer or quote.
