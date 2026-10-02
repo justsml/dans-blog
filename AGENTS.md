@@ -330,7 +330,7 @@ bun run i18n:eval                   # offline prompt evals (see below)
 ```bash
 bun run i18n:eval -- --dry-run
 bun run i18n:eval -- --locale ja
-bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4.1-flash
 bun run i18n:eval -- --slug stop-hardcoding-your-prompts --locale es
 ```
 

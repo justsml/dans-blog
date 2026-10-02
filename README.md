@@ -14,7 +14,7 @@ Common TUI commands:
 bun run i18n:candidates:tui -- \
   --quiz-concurrency 24 \
   --task-concurrency 12 \
-  --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro,deepseek/deepseek-v4-flash,qwen/qwen3.6-plus,qwen/qwen3.6-35b-a3b,qwen/qwen3.5-9b
+  --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro,deepseek/deepseek-v4.1-flash,qwen/qwen3.6-plus,qwen/qwen3.6-35b-a3b,qwen/qwen3.5-9b
 bun run i18n:candidates:tui -- --judge
 ```
 

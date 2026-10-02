@@ -32,8 +32,8 @@ describe("candidate artifact paths", () => {
 
     expect(candidateRunDir("Run: 42/alpha", { repoRoot }))
       .toBe(join(repoRoot, "reports/i18n-agent/runs/Run-42-alpha"));
-    expect(candidateFilePath("Run: 42/alpha", "es", "openrouter/deepseek/deepseek-v4:flash", { repoRoot }))
-      .toBe(join(repoRoot, "reports/i18n-agent/runs/Run-42-alpha/candidates/es/deepseek-deepseek-v4-flash.mdx"));
+    expect(candidateFilePath("Run: 42/alpha", "es", "openrouter/deepseek/deepseek-v4.1:flash", { repoRoot }))
+      .toBe(join(repoRoot, "reports/i18n-agent/runs/Run-42-alpha/candidates/es/deepseek-deepseek-v4.1-flash.mdx"));
   });
 });
 
@@ -75,7 +75,7 @@ describe("writeCandidateArtifact", () => {
       runId,
       slug: "hello",
       locale: "es",
-      model: "openrouter/deepseek/deepseek-v4-flash",
+      model: "openrouter/deepseek/deepseek-v4.1-flash",
       contents: "![Diagram](./diagram.webp)\n",
       paths,
       notes: "draft candidate",
@@ -93,7 +93,7 @@ describe("writeCandidateArtifact", () => {
       runId,
       slug: "hello",
       locale: "es",
-      model: "openrouter/deepseek/deepseek-v4-flash",
+      model: "openrouter/deepseek/deepseek-v4.1-flash",
       sourcePath: relative(repoRoot, paths.sourcePath),
       targetPath: relative(repoRoot, paths.targetPath),
       latestCandidatePath: written.candidatePath,

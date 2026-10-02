@@ -33,9 +33,9 @@ describe("resolveLlmConfig", () => {
   });
 
   test("normalizes bare OpenRouter model ids", () => {
-    const config = resolveLlmConfig("openrouter/deepseek/deepseek-v4-flash");
-    expect(config.modelId).toBe("deepseek/deepseek-v4-flash");
-    expect(config.mastraModel).toBe("openrouter/deepseek/deepseek-v4-flash");
+    const config = resolveLlmConfig("openrouter/deepseek/deepseek-v4.1-flash");
+    expect(config.modelId).toBe("deepseek/deepseek-v4.1-flash");
+    expect(config.mastraModel).toBe("openrouter/deepseek/deepseek-v4.1-flash");
   });
 });
 
@@ -46,7 +46,7 @@ describe("i18n agent CLI", () => {
 
   test("uses DeepSeek Nitro as the default agent model", () => {
     expect(parseCliArgs([]).agentModel).toBe(DEFAULT_AGENT_MODEL);
-    expect(DEFAULT_AGENT_MODEL).toContain("openrouter/deepseek/deepseek-v4-flash:nitro");
+    expect(DEFAULT_AGENT_MODEL).toContain("openrouter/deepseek/deepseek-v4.1-flash:nitro");
   });
 
   test("uses a high configurable max step budget", () => {
@@ -377,7 +377,7 @@ describe("scoreTranslation", () => {
       locale: "es",
       models: [
         "openrouter/google/gemini-3-flash-preview",
-        "openrouter/deepseek/deepseek-v4-flash",
+        "openrouter/deepseek/deepseek-v4.1-flash",
       ],
       escalationModels: ["openrouter/anthropic/claude-haiku-4.5"],
       generateText: fakeGenerateText,
@@ -427,7 +427,7 @@ describe("scoreTranslation", () => {
       locale: "es",
       models: [
         "openrouter/google/gemini-3-flash-preview",
-        "openrouter/deepseek/deepseek-v4-flash",
+        "openrouter/deepseek/deepseek-v4.1-flash",
       ],
       escalationModels: ["openrouter/anthropic/claude-haiku-4.5"],
       generateText: fakeGenerateText,
@@ -517,7 +517,7 @@ describe("reverseTranslation", () => {
     const result = await reverseTranslation({
       locale: "ja",
       translatedInput: Buffer.from("逆翻訳だけの本文。"),
-      model: "openrouter/deepseek/deepseek-v4-flash",
+      model: "openrouter/deepseek/deepseek-v4.1-flash",
       generateText: fakeGenerateText,
     });
 
@@ -609,7 +609,7 @@ describe("translateWithModel", () => {
         "Original text.",
       ].join("\n"),
       locale: "es",
-      model: "openrouter/deepseek/deepseek-v4-flash",
+      model: "openrouter/deepseek/deepseek-v4.1-flash",
       generateText: fakeGenerateText,
     });
 
@@ -644,7 +644,7 @@ describe("translateWithModel", () => {
         "Original text.",
       ].join("\n"),
       locale: "es",
-      model: "openrouter/deepseek/deepseek-v4-flash",
+      model: "openrouter/deepseek/deepseek-v4.1-flash",
       skipSummary: true,
       promptTuning: {
         appendSystem: "SYSTEM_TUNE",
@@ -687,7 +687,7 @@ describe("translateWithModel", () => {
         "Original text.",
       ].join("\n"),
       locale: "es",
-      model: "openrouter/deepseek/deepseek-v4-flash",
+      model: "openrouter/deepseek/deepseek-v4.1-flash",
       skipSummary: true,
       generateText: fakeGenerateText,
     });
@@ -720,7 +720,7 @@ describe("translateWithModel", () => {
           "A paragraph that needs translation.",
         ].join("\n"),
         locale: "es",
-        model: "llm://openrouter/deepseek/deepseek-v4-flash?max=7",
+        model: "llm://openrouter/deepseek/deepseek-v4.1-flash?max=7",
         skipSummary: true,
         generateText: fakeGenerateText,
       });
@@ -740,12 +740,12 @@ describe("prompt profiles", () => {
     try {
       const first = createPromptProfileVersion({
         locale: "ja",
-        modelPattern: "openrouter/deepseek/deepseek-v4-flash",
+        modelPattern: "openrouter/deepseek/deepseek-v4.1-flash",
         appendDynamic: "Prefer concise Japanese phrasing.",
       });
       const second = createPromptProfileVersion({
         locale: "ja",
-        modelPattern: "openrouter/deepseek/deepseek-v4-flash",
+        modelPattern: "openrouter/deepseek/deepseek-v4.1-flash",
         appendDynamic: "Prefer concise Japanese phrasing and preserve technical loanwords.",
       });
       const judge = createPromptProfileVersion({
@@ -757,7 +757,7 @@ describe("prompt profiles", () => {
 
       const resolved = resolvePromptProfile({
         locale: "ja",
-        model: "llm://openrouter/deepseek/deepseek-v4-flash",
+        model: "llm://openrouter/deepseek/deepseek-v4.1-flash",
       });
       const resolvedJudge = resolvePromptProfile({
         kind: "judge",

@@ -247,7 +247,7 @@ Current low-cost OpenRouter set:
 
 ```text
 openrouter/qwen/qwen3.8-max
-openrouter/deepseek/deepseek-v4-flash
+openrouter/deepseek/deepseek-v4.1-flash
 openrouter/openai/gpt-oss-120b:nitro
 openrouter/openai/gpt-5.6-luna
 openrouter/qwen/qwen3-32b:nitro
@@ -259,7 +259,7 @@ openrouter/google/gemini-3.5-flash-lite
 openrouter/deepseek/deepseek-v3.2
 ```
 
-`--models` accepts full IDs or loose case-insensitive substrings matched against that list in order. For example, `--models nitro,32b,deepseek` resolves to `openrouter/openai/gpt-oss-120b:nitro`, `openrouter/qwen/qwen3-32b:nitro`, and the first DeepSeek match, `openrouter/deepseek/deepseek-v4-flash`.
+`--models` accepts full IDs or loose case-insensitive substrings matched against that list in order. For example, `--models nitro,32b,deepseek` resolves to `openrouter/openai/gpt-oss-120b:nitro`, `openrouter/qwen/qwen3-32b:nitro`, and the first DeepSeek match, `openrouter/deepseek/deepseek-v4.1-flash`.
 
 OpenRouter pricing checked on 2026-05-13 showed `openrouter/openai/gpt-oss-120b:nitro` at $0.039/M input and $0.18/M output tokens, and `openrouter/qwen/qwen3-32b:nitro` at $0.08/M input and $0.24/M output tokens. Both are kept after the current primary Qwen and DeepSeek candidates in the cheap pool.
 

@@ -8,9 +8,9 @@ import { openNewsWatchDb } from "./db.ts";
 import { fmtDuration, printTable, truncate } from "./format.ts";
 import type { Entity, EntityMention, EntityType } from "./types.ts";
 
-// Default to DeepSeek V4 Flash (fast + cheap for bulk entity extraction).
+// Default to DeepSeek V4.1 Flash (fast + cheap for bulk entity extraction).
 // Swap to GPT-OSS 120B via NEWS_WATCH_EXTRACTION_MODEL=openai/gpt-oss-120b for higher-quality runs.
-const EXTRACTION_MODEL = process.env.NEWS_WATCH_EXTRACTION_MODEL ?? "deepseek/deepseek-v4-flash:nitro";
+const EXTRACTION_MODEL = process.env.NEWS_WATCH_EXTRACTION_MODEL ?? "deepseek/deepseek-v4.1-flash:nitro";
 const EXTRACTION_MIN_RELEVANCE = Number.parseFloat(process.env.NEWS_WATCH_EXTRACTION_MIN_RELEVANCE ?? "0.2");
 const EXTRACTION_BATCH_SIZE = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_BATCH_SIZE ?? "20", 10);
 const EXTRACTION_MAX_BATCHES = Number.parseInt(process.env.NEWS_WATCH_EXTRACTION_MAX_BATCHES ?? "25", 10);

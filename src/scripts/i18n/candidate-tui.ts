@@ -103,7 +103,7 @@ const DEFAULT_TUI_QUIZ_CONCURRENCY = "18";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/deepseek/deepseek-v3.2",
-  "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/deepseek/deepseek-v4.1-flash",
   "openrouter/google/gemini-3.8-flash",
   "openrouter/google/gemini-3.5-flash-lite",
   "openrouter/minimax/minimax-m2.5",

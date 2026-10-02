@@ -33,10 +33,10 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     source: "openrouter-2026-09-22",
   },
   "deepseek/deepseek-v4.1-flash": {
-    inputPerMillionUsd: 0.1,
-    cachedInputPerMillionUsd: 0.1,
-    outputPerMillionUsd: 0.8,
-    source: "openrouter-2026-09-22",
+    inputPerMillionUsd: 0.015,
+    cachedInputPerMillionUsd: 0.015,
+    outputPerMillionUsd: 0.75,
+    source: "openrouter-2026-10-02",
   },
   "openai/gpt-6-luna": {
     inputPerMillionUsd: 0.1,
@@ -110,6 +110,7 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     outputPerMillionUsd: 0.34,
     source: "openrouter-2026-09-13",
   },
+  // Historical pricing retained to account for old runs; not active model choices.
   "deepseek/deepseek-v4-pro": {
     inputPerMillionUsd: 0.51,
     outputPerMillionUsd: 1.01,

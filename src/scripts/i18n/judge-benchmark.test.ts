@@ -121,5 +121,5 @@ test('first-party OpenAI receives the same minimum default and honors overrides'
   expect(resolveLlmConfig('llm://openai/gpt-6-sol?effort=high').providerOptions.openai?.reasoningEffort).toBe('high');
 });
 test('virtual provider-routing suffixes retain base-model reasoning capabilities', () => {
-  expect(resolveLlmConfig('openrouter/deepseek/deepseek-v4-flash:nitro').reasoningEffort).toBe(resolveLlmConfig('openrouter/deepseek/deepseek-v4-flash').reasoningEffort);
+  expect(resolveLlmConfig('openrouter/deepseek/deepseek-v4.1-flash:nitro').reasoningEffort).toBe(resolveLlmConfig('openrouter/deepseek/deepseek-v4.1-flash').reasoningEffort);
 });

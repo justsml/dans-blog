@@ -4,7 +4,7 @@ import { isTrackableModelId, modelIdsMatch, normalizeModelId } from "./model-id.
 describe("normalizeModelId", () => {
   test("canonicalizes OpenRouter shorthand model IDs", () => {
     expect(normalizeModelId("qwen/qwen3.6-plus")).toBe("openrouter/qwen/qwen3.6-plus");
-    expect(normalizeModelId("deepseek/deepseek-v4-flash")).toBe("openrouter/deepseek/deepseek-v4-flash");
+    expect(normalizeModelId("deepseek/deepseek-v4.1-flash")).toBe("openrouter/deepseek/deepseek-v4.1-flash");
     expect(normalizeModelId("openai/gpt-oss-120b:nitro")).toBe("openrouter/openai/gpt-oss-120b:nitro");
   });
 
@@ -21,7 +21,7 @@ describe("normalizeModelId", () => {
 
 describe("modelIdsMatch", () => {
   test("matches legacy shorthand and canonical OpenRouter IDs", () => {
-    expect(modelIdsMatch("deepseek/deepseek-v4-flash", "openrouter/deepseek/deepseek-v4-flash")).toBe(true);
+    expect(modelIdsMatch("deepseek/deepseek-v4.1-flash", "openrouter/deepseek/deepseek-v4.1-flash")).toBe(true);
   });
 });
 

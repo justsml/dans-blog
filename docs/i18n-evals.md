@@ -29,10 +29,10 @@ bun run i18n:eval
 bun run i18n:eval -- --locales es,hi,ja,ru,de,fr,it,ar,he,zh
 
 # Compare multiple models in parallel against the same inputs
-bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+bun run i18n:eval -- --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4.1-flash
 
 # Full matrix: multiple locales × multiple models
-bun run i18n:eval -- --locales es,ja --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4-flash
+bun run i18n:eval -- --locales es,ja --models openrouter/qwen/qwen3-32b:nitro,openrouter/deepseek/deepseek-v4.1-flash
 
 # Pin to one or more specific slugs
 bun run i18n:eval -- --slug stop-hardcoding-your-prompts --locales es
@@ -46,7 +46,7 @@ bun run i18n:eval -- --kind quiz --locales zh
 bun run i18n:eval -- --judge-model openrouter/google/gemini-3.8-flash
 
 # Test a specific translation or judge prompt profile
-bun run i18n:eval -- --translation-prompt-profile-id ja-deepseek-deepseek-v4-flash
+bun run i18n:eval -- --translation-prompt-profile-id ja-deepseek-deepseek-v4.1-flash
 bun run i18n:eval -- --judge-prompt-profile-id judge-quiz-ja-google-gemini-3-flash-preview
 
 # Disable translation-agent prompt profiles for a clean legacy-prompt baseline
