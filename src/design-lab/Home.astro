@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+import Layout from "./Layout.astro";
+import Article from "./Article.astro";
+import type { Design } from "./designs";
+import type { ArticlePost } from "../types";
+import { PostCollections } from "../shared/postsCache";
+import { getListedArchivePosts, sortArchivePosts } from "../shared/archivePagination";
+interface Props { design: Design }
+const { design } = Astro.props;
+const posts = sortArchivePosts(getListedArchivePosts(PostCollections.getPostsForLocale("en") as ArticlePost[]), { field: "date", direction: "desc" }).filter((post) => !post.data.hidden && !post.data.draft && post.data.publish !== false);
+const sample = posts.slice(0, 9);
+const lead = sample[0];
+const heroImage = lead?.data.cover_full_width ?? lead?.data.cover_mobile;
+const isGrid = design === "bold-type" || design === "modular-magazine";
+const categories = [...new Set(sample.map((post) => post.data.category))];
+const topicCounts = categories.map((category) => ({ category, count: posts.filter((post) => post.data.category === category).length }));
+---
+<Layout design={design}>
+  <section class="hero" aria-labelledby="home-heading">
+    <div class="hero-copy">
+      <p class="eyebrow">Field notes <span> / Dan Levy</span></p>
+      <h1 id="home-heading">Notes from where<br class="hero-break" /> the docs run out.</h1>
+      <p class="hero-intro">AI systems, JavaScript, security, databases, and bug fixes worth remembering.</p>
+      <div class="hero-links"><a href="/consulting/">Build better AI systems <span>↗</span></a><a href="/open-source-journal/">Follow the commits <span>↗</span></a></div>
+    </div>
+    {isGrid ? <div class="cat-aside" aria-hidden="true"><svg viewBox="0 0 180 190" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M55 79 52 35 77 52 Q90 45 107 52 L132 32 130 80 Q140 95 125 109 Q134 139 129 170 L67 170 Q50 144 66 108 Q45 96 55 79Z"/><path d="M77 77h3m29 0h3m-22 12 5 3 5-3m-5 3v9m0-3q-8 6-13 0m13 0q8 6 13 0M67 170Q22 180 22 153q0-18 13-5M81 126v42m32-42v42M49 87l-22-6m22 14-23 3m109-11 23-6m-24 14 22 3"/></svg><p>Come for the code.<br />Stay for the cats.</p></div> : heroImage && <figure class="hero-art">{typeof heroImage === "string" ? <img src={heroImage} alt={lead.data.cover_alt ?? ""} /> : <Image src={heroImage} alt={lead.data.cover_alt ?? ""} width={1100} format="webp" loading="eager" />}<figcaption>{lead.data.cover_alt ?? "Small pieces. Better systems."}</figcaption></figure>}
+  </section>
+  <section id="articles" aria-labelledby="articles-heading">
+    <div class="section-heading"><h2 id="articles-heading">Latest articles<span class="section-count"> / {posts.length} notes in the archive</span></h2><a href="/pages/1-date-desc.html">All articles ↗</a></div>
+    <div class="filter-row" role="group" aria-label="Filter preview articles by topic"><button type="button" data-filter="All" aria-pressed="true">All</button>{categories.map((category) => <button type="button" data-filter={category} aria-pressed="false">{category}</button>)}<p id="filter-status" role="status" aria-live="polite">{sample.length} articles</p></div>
+    <div class="editorial-layout">
+      <div class="article-grid">{sample.map((post, index) => <Article post={post} index={index} featured={isGrid && index === 0} />)}</div>
+      <aside class="journal-sidebar" aria-label="More from Dan">
+        <section class="topic-list"><p class="eyebrow">Explore the archive</p><h2>Topics</h2>{topicCounts.map(({ category, count }) => <a href={`/category/${category.toLowerCase()}/`}><span>{category}</span><span>{count}</span></a>)}</section>
+        <section class="source-panel"><p class="eyebrow">Open source log</p><h2>Good software leaves a trail.</h2><p>The projects, pull requests, and small fixes behind the articles.</p><a href="/open-source-journal/">Follow the commits ↗</a><div class="source-links"><a href="https://github.com/justsml">GitHub / justsml ↗</a><a href="/consulting/">Build something together ↗</a></div></section>
+        <p class="sidebar-signoff">A useful note beats another perfect demo.<span>— Dan</span></p>
+      </aside>
+    </div>
+    <a class="archive-link" href="/pages/1-date-desc.html">Keep reading in the archive <span>→</span></a>
+  </section>
+</Layout>

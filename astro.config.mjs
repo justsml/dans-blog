@@ -23,6 +23,7 @@ import { statSync } from "fs";
 // import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 const siteUrl = "https://danlevy.net";
 const ignorePaths = [
+  "/designs/",
   "/404",
   "/404.html",
   "/500",

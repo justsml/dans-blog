@@ -1,0 +1,22 @@
+---
+import { Image } from "astro:assets";
+import type { ArticlePost } from "../types";
+import { getLocalizedPostPath } from "../shared/i18n";
+import { getReadingTimeMinutes } from "../shared/readingTime";
+interface Props { post: ArticlePost; index?: number; featured?: boolean }
+const { post, index = 0, featured = false } = Astro.props;
+const image = featured ? (post.data.cover_full_width ?? post.data.cover_mobile) : post.data.cover_mobile;
+const date = new Date(post.data.date);
+const subtitle = post.data.subTitle.replace(/`/g, "").replace(/<[^>]*>/g, "");
+---
+<article class:list={["note", { "note-feature": featured }]} data-article data-category={post.data.category} data-search={`${post.data.title} ${subtitle} ${post.data.category} ${post.data.tags?.join(" ") ?? ""}`.toLocaleLowerCase()}>
+  <a class="note-link" href={getLocalizedPostPath(post.baseSlug ?? post.slug)}>
+    {image && <div class="note-image">{typeof image === "string" ? <img src={image} alt={post.data.cover_alt ?? ""} loading={featured ? "eager" : "lazy"} /> : <Image src={image} alt={post.data.cover_alt ?? ""} width={featured ? 1100 : 640} loading={featured ? "eager" : "lazy"} format="webp" />}</div>}
+    <div class="note-copy">
+      <div class="note-kicker"><span class="note-index">{String(index + 1).padStart(2, "0")} — </span>{post.data.category}</div>
+      <h2>{post.data.title}</h2>
+      <p>{subtitle}</p>
+      <div class="note-meta"><time datetime={date.toISOString()}>{date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" })}</time><span>·</span><span>{getReadingTimeMinutes(post.body)} min read</span><span class="read-arrow" aria-hidden="true">↗</span></div>
+    </div>
+  </a>
+</article>

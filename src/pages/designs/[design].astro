@@ -1,0 +1,10 @@
+---
+import Home from "../../design-lab/Home.astro";
+import { designs, type Design } from "../../design-lab/designs";
+export function getStaticPaths() {
+  return designs.map(({ id }) => ({ params: { design: id }, props: { design: id } }));
+}
+interface Props { design: Design }
+const { design } = Astro.props;
+---
+<Home design={design} />

@@ -1,0 +1,70 @@
+---
+import { designs, type Design } from "./designs";
+import "./styles.css";
+interface Props { design: Design }
+const { design } = Astro.props;
+const current = designs.find((item) => item.id === design)!;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{current.name} · DanLevy.net design lab</title>
+    <meta name="description" content={current.note} />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body class={design} data-pagefind-ignore="all">
+    <a class="skip-link" href="#main">Skip to articles</a>
+    <nav class="design-switcher" aria-label="Design previews">
+      <span class="lab-label">Design lab</span>
+      <div class="design-options">
+        {designs.map((item, index) => <a href={`/designs/${item.id}/`} aria-current={design === item.id ? "page" : undefined}><span>{index + 1}</span> {item.name}</a>)}
+      </div>
+      <a class="live-link" href="/">Current site ↗</a>
+    </nav>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="wordmark" href={`/designs/${design}/`}>DanLevy<span>.net</span></a>
+        <nav aria-label="Main navigation">
+          <a href="#articles">Articles</a>
+          <a href="/open-source-journal/">Projects</a>
+          <a href="/about/">About</a>
+        </nav>
+        <label class="search-field"><span aria-hidden="true">⌕</span><input type="search" id="article-search" placeholder="Find a note…" aria-label="Search preview articles" /></label>
+      </header>
+      <main id="main"><slot /></main>
+      <footer class="site-footer">
+        <a class="footer-brand" href="/">DanLevy.net</a>
+        <p>Come for the code, stay for the cats.</p>
+        <nav aria-label="Footer"><a href="/contact/">Say hello ↗</a><a href="/open-source-journal/">Open source ↗</a></nav>
+      </footer>
+    </div>
+    <script>
+      const input = document.querySelector<HTMLInputElement>("#article-search");
+      const filters = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+      const articles = document.querySelectorAll<HTMLElement>("[data-article]");
+      const status = document.querySelector<HTMLElement>("#filter-status");
+      let category = "All";
+      function update() {
+        const query = input?.value.trim().toLocaleLowerCase() ?? "";
+        let count = 0;
+        for (const article of articles) {
+          const matches = (category === "All" || article.dataset.category === category) && (article.dataset.search ?? "").includes(query);
+          article.hidden = !matches;
+          if (matches) count++;
+        }
+        if (status) {
+          status.textContent = count ? `${count} ${count === 1 ? "article" : "articles"}${query ? ` matching “${input?.value.trim()}”` : ""}` : "No matching notes. Try another topic or search.";
+        }
+      }
+      input?.addEventListener("input", update);
+      for (const button of filters) button.addEventListener("click", () => {
+        category = button.dataset.filter ?? "All";
+        for (const filter of filters) filter.setAttribute("aria-pressed", String(filter === button));
+        update();
+      });
+    </script>
+  </body>
+</html>
