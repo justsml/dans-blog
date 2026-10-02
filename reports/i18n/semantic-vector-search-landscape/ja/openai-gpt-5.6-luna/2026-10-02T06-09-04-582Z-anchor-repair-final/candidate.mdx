@@ -1,0 +1,384 @@
+---
+title: セマンティックベクトル検索と、友人や恋人をつくるためのその他の話題
+subTitle: 検索の全体像：完全一致、あいまい検索、セマンティック検索、ハイブリッド検索――そして、それらを組み合わせるべきタイミング。
+modified: '2026-10-02'
+tags:
+  - postgres
+  - postgresql
+  - pgvector
+  - vector-search
+  - semantic-search
+  - hybrid-search
+  - rag
+  - ai
+  - databases
+  - search
+  - embeddings
+category: Code
+subCategory: Databases
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+sourceHash: 16001f2ff247
+---
+検索は一つのものではなく、セマンティック検索も、それ以外の検索に取って代わるものではありません。
+
+## ベクトル検索の選択肢：16製品を比較
+
+デプロイ方法、ライセンス、検索機能、ワークロードへの適合性を比較します。各列の説明と SQL の例は後述します。
+
+[この比較表の読み方](#比較表の読み方)
+
+| データベース | デプロイ | ライセンス | ハイブリッド検索 | Sparse Vector | クエリインターフェース | マルチモーダル埋め込みの組み込み | ディスクインデックス | ベクトル次元数の上限 | 適する用途 |
+|---|---|---|---|---|---|---|---|---|---|
+| **[pgvector](https://github.com/pgvector/pgvector)** | セルフホスト / マネージド（Supabase、Neon、RDS） | OSS（PostgreSQL） | 手動（SQL 経由の RRF） | ❌ | ✅ フル SQL | ❌ | ✅ ディスク上の HNSW | ストレージ上は 16,000、インデックス対象の `vector` は 2,000 | すでに Postgres を使っている場合、中規模のベクトル件数 |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | セルフホスト / Cloud | Apache 2.0 | ✅ ネイティブ BM25 | ✅ 成熟したサポート | ❌（REST/gRPC） | ❌ | ✅ | 65,535 | 大規模なフィルタ付きクエリ、複雑なメタデータ |
+| **[Weaviate](https://github.com/weaviate/weaviate)** | セルフホスト / Cloud | BSD 3 | ✅ ネイティブ BM25 + RRF | ✅ | ❌（GraphQL / gRPC） | ✅ モジュール経由 | ✅ | 65,535 | GraphQL のアクセスパターン、組み込みベクトル化 |
+| **[Pinecone](https://www.pinecone.io/)** | Cloud のみ | プロプライエタリ | ✅（2024 年追加） | ✅ | ❌ | ❌ | ✅（サーバーレス） | 20,000 | 運用を単純にしたい場合、運用チームがない場合 |
+| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | セルフホスト / Cloud（Zilliz） | Apache 2.0 | ✅ ネイティブ | ✅ | ✅ SQL 風（Milvus Query Language） | ✅ | ✅ DiskANN | 32,768 | 10 億件規模、エンタープライズのオンプレミス |
+| **[Chroma](https://github.com/chroma-core/chroma)** | 組み込み / セルフホスト | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | ローカル開発とプロトタイピング専用 |
+| **[LanceDB](https://github.com/lancedb/lancedb)** | 組み込み / Cloud | Apache 2.0 | ✅ | ❌ | ✅ DataFusion 経由の SQL | ✅ ネイティブ | ✅（Lance 形式） | 無制限 | エッジ / サーバーレス、マルチモーダルなレイクハウス |
+| **[Orama](https://github.com/oramasearch/orama)** | 組み込み / Cloud | Apache 2.0 | ✅ 全文 + ベクトル | ❌ | ❌ | ❌ | ❌ | 変動 | JS / エッジアプリ、軽量なサイト・アプリ内検索 |
+| **[Turbopuffer](https://turbopuffer.com/)** | Cloud のみ（サーバーレス） | プロプライエタリ | ✅ BM25 + ベクトル | ❌ | ❌ | ❌ | ✅（オブジェクトストレージ） | 16,000 | マルチテナント SaaS、数百万のネームスペース |
+| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | セルフホスト / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅（ELSER） | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | すでに Elastic スタックを使っている場合、エンタープライズ向けハイブリッド検索 |
+| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | セルフホスト / AWS マネージド | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS ネイティブ、オープンソースの Elastic 代替 |
+| **[Vespa](https://github.com/vespa-engine/vespa)** | セルフホスト / Cloud | Apache 2.0 | ✅ ネイティブ | ✅ テンソル / 字句ランキング | ✅ YQL | ✅ テンソル | ✅ | 実質無制限 | 検索 + ランキング + レコメンデーションシステム |
+| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | セルフホスト / Cloud | Apache 2.0 | 手動 | ❌ | ✅ フル SQL | ❌ | ✅ カラム型 + HNSW | 変動 | OLAP の隣にベクトル検索を置く分析・ログ用途 |
+| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | Cloud / セルフホスト | SSPL | ✅ 組み込み | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | すでに MongoDB を使っている場合、ドキュメントとベクトルを一つにまとめる |
+| **[Redis (VSS)](https://github.com/redis/redis)** | セルフホスト / Redis Cloud | RSALv2 / SSPL | ✅（RediSearch） | ✅ | ❌ | ❌ | ❌ RAM のみ | 32,768 | 超低レイテンシ、キャッシュ層でのベクトル検索 |
+| **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / セルフホスト | Apache 2.0 | ✅ | ❌ | ❌ | ✅ ネイティブ重視 | ✅ | 変動 | エンドツーエンドのマルチモーダル：画像 + テキスト + 動画 |
+
+「メールアドレスが `dan@example.com` のユーザーを探して」と「新人エンジニア向けのデバッグ記事を探して」は、どちらも検索と呼ばれます。しかし、エンジニアリング上の問題としては、ほとんど共通点がありません。前者には正解があり、`O(log n)` のインデックス検索で求められます。後者に正解はなく、あるのは関連性だけです。言語、意図、意味を理解しなければなりません。
+
+検索に関する意思決定で最も説得力を持つエンジニア、つまり議論を制して正しいシステムを出荷できる人たちは、全体像を理解しています。どのツールを、なぜ選ぶべきかを知っていて、その理由を明確に説明できます。
+
+この記事では、セマンティック層を扱います。ベクトル検索が実際に何をするのか、どんな場面で強いのか、そしてどこでは邪魔をせず引っ込んでいるべきなのか。役に立つ答えは「すべてを埋め込む」ことではありません。ベクトルを、字句検索、曖昧検索、完全一致検索と並べて、ハイブリッドアーキテクチャの一部として使うべきタイミングを理解することです。
+
+この全体像のうち字句検索と曖昧検索にあたる部分、つまり `tsvector`、`pg_trgm`、`pg_search` については、[Postgres Text Searching Guide 2026](/postgres-text-search-guide) を参照してください。
+
+---
+
+## このガイドで使う用語
+
+**Embedding（埋め込み）** — モデルが生成する浮動小数点数の密なリストです。テキスト（画像、音声などの場合もあります）を高次元空間上の一点として表します。意味的に関連するコンテンツは近くに配置され、関係のないコンテンツは遠く離れます。
+
+**Lexical search（字句検索）** — 単語やトークンの完全一致に基づく検索です。高速で決定論的であり、既知の用語を探す場合に正確です。一方で、同義語、言い換え、異なる言語間の対応語は理解しません。
+
+**Semantic search（セマンティック検索）** — トークンではなく意味に基づく検索です。「タイムアウトにはどう対処すればよいか」というクエリが、「リトライポリシーの設定」というタイトルの文書に、共有する単語が一つもないのにマッチすることがあります。埋め込みが幾何学的に近い位置にあるためです。
+
+**Vector（ベクトル）** — 数値のリストです。検索の文脈では、埋め込みモデルの出力を指します。「ベクトル検索」は、クエリベクトルとの幾何学的距離が最も近いベクトルを探します。
+
+**FTS (Full-Text Search)** — `tsvector` / `tsquery` を基盤とする、Postgres 組み込みの字句検索です。テキストをトークン化・ステミングし、キーワードクエリ用にインデックス化します。文章や正確な用語の検索には強い一方、意味は理解しません。
+
+**BM25** — 字句検索用のランキングアルゴリズムです（Elasticsearch、Qdrant などが使用）。コーパス全体での用語の希少性を重み付けしながら、用語の出現頻度に基づいて結果をスコアリングします。素朴なキーワード一致よりは優れていますが、あくまで字句検索です。
+
+**HNSW (Hierarchical Navigable Small World)** — ベクトル検索で標準的に使われる近似最近傍インデックスです。近傍グラフを複数の層に分けて構築し、高速で再現率の高い類似度クエリを実現します。pgvector、Qdrant、Weaviate をはじめ、ほとんどの製品がこれを使っています。
+
+**RRF（Reciprocal Rank Fusion）** — 複数の検索システムから得た順位付き結果リストを統合するアルゴリズムです。順位だけを使うため、スコアの正規化は必要ありません。FTS とベクトル検索の両方で上位に入った結果は、一方のリストだけで突出した結果よりも、統合後のスコアが高くなります。
+
+---
+
+## Embedding が関連コンテンツを見つける仕組み
+
+ベクトル embedding は、テキスト（または画像、音声など）を数値のリスト、つまり高次元空間上の一点に変換します。Embedding モデルは、意味的に関連するテキストがその空間内で近くに配置されるように学習されます。「dog」と「canine」は近くに位置します。一方、「マラソンを走る」と「Python スクリプトを実行する」は、同じ単語を含んでいても大きく離れます。
+
+この空間で類似度検索を行うと、単語が正確に一致しているかどうかに関係なく、クエリの意味に最も近い文書を見つけられます。
+
+つまり、次のような検索が可能です。
+
+- 「リクエストのタイムアウトを設定するには？」で、「接続数の制限とリトライポリシーの設定」というタイトルの記事にヒットする。キーワードの重複はなくても、概念的な関連性は高い
+- 「夏の夕方に合う軽いもの」で、商品説明にそのキーワードが一つも含まれていないワインの推薦にヒットする
+- Embedding モデルが多言語で学習されていれば、英語のクエリで、フランス語・スペイン語・日本語の関連文書にヒットする
+
+字句検索（`tsvector`、`pg_trgm`）には、これらはできません。字句検索が扱うのは意味ではなく、単語と文字です。両者は置き換え可能な道具ではありません。解決する問題が違います。
+
+---
+
+## pgvector が有利な場面
+
+**RAG を構築する場合。** Retrieval-Augmented Generation は、ユーザーの質問に意味が最も近い文書チャンクを取得し、それをコンテキストとして言語モデルに渡します。この取得処理はベクトル演算です。FTS では、関連するチャンクが別の表現で書かれている場合、その言い換え、同義語、概念的な一致を取り逃がします。単独のベクトルストアと比べた pgvector の利点は、既存の Postgres インスタンス内で動くことです。別サービスをデプロイ、運用したり、データを同期したりする必要がありません。
+
+**ユーザーが検索語ではなく、欲しいものを説明する場合。** 「新任マネージャーとして自信を身につける方法の記事」には、関連する記事に確実に現れるキーワードがありません。「副作用を扱うための軽量なフレームワーク」も、ドキュメント内でそのままの単語が使われているとは限りません。ベクトル検索は綴りではなく、意図にマッチします。
+
+**似た項目を見つける場合。** 関連商品、類似したサポートチケット、重複したバグ報告、「こちらもおすすめ」の記事などです。「この問題に似た issue を探す」は最近傍検索です。項目を embedding に変換し、幾何学的に近い近傍を探します。ただし重要な注意点があります。ベクトル検索は、本当に似たものが何もない場合でも必ず結果を返します。重複排除や推薦では、最小類似度のしきい値（たとえばコサイン類似度 ≥ 0.80）でフィルタリングし、信頼度の低い一致を意味のある結果のように表示しないようにしてください。
+
+**意味ベースの重複排除。** RAG や検索用にコンテンツをインデックス化する前に、コーパス内の準重複を特定しなければならないことがよくあります。何度も改訂された記事、二重に登録されたサポートチケット、内容が大きく重なるナレッジベース項目などです。文書を embedding に変換し、コサイン類似度のしきい値でフィルタリングして、インデックスを汚染する前に準重複を検出または統合します。これにより、検索結果にほぼ同一のチャンクが複数返され、コンテキストウィンドウが薄まるのを防げます。
+
+**多言語検索。** 多言語 embedding モデルは、意味的に同等のコンテンツを言語をまたいで近いベクトルに配置します。スペイン語の「perder peso（体重を減らす）」というクエリで、英語の「持続可能な減量習慣」に関する記事にヒットさせることができます。共有するトークンはなくても、根底にある意味は同じです。FTS では言語ごとに辞書設定が必要で、言語をまたぐクエリの扱いも得意ではありません。`pg_trgm` は言語に依存しませんが、扱うのは意味ではなく表記です。
+
+### pgvector のセットアップ
+
+拡張機能のインストールから類似度クエリまで、必要なのは数個の SQL 文だけです。
+
+```sql
+CREATE EXTENSION IF NOT EXISTS vector;
+
+ALTER TABLE documents ADD COLUMN embedding vector(1536);
+
+-- HNSW is usually the first index to try for moderate-size datasets
+CREATE INDEX documents_embedding_idx
+  ON documents USING hnsw (embedding vector_cosine_ops);
+
+-- Semantic search query
+SELECT id, title, 1 - (embedding <=> $1::vector) AS similarity
+FROM documents
+ORDER BY embedding <=> $1::vector
+LIMIT 10;
+```
+
+`<=>` はコサイン距離です。`1 - cosine_distance` でコサイン類似度が得られます（1.0 = 完全一致、0.0 = 直交）。`ivfflat`（より古く、構築は高速な代替手段）を使う場合は、まず `lists = sqrt(row_count)` を起点にしてください。
+
+### ベクトル検索が誤った答えを返す場面
+
+- 完全一致が必要なトークン — 商品 SKU、エラーコード、関数名など。`ORD-12345` は、意味的に似ているものがあるわけではありません。埋め込みベースの検索では、`ORD-12344` や、関係のない結果が返る可能性があります。FTS または B-tree インデックスを使ってください。
+- 名前や固有名詞。埋め込み空間は綴りではなく意味で整理されます。ユーザーレコードの `"Micheal Jordan"` が、ベクトル空間上で必ずしも `"Michael Jordan"` の近くに配置されるとは限りません。
+- 意味よりも文字レベルの類似性が重要な短い文字列。こうした場合は `pg_trgm` が適しています。
+- 検索語そのものが必ず含まれていなければならないクエリ。既知の語の照合には、BM25 と FTS のほうが信頼できます。
+
+---
+
+## キーワードとベクトルを組み合わせて混合クエリに対応する
+
+技術文書は、どちらか一方のツールだけでは不十分なことが最もよく分かる例です。
+
+`"how to configure timeouts"` を検索するユーザーには、概念による照合が必要です。`"Setting retry policies and connection limits"` というタイトルの記事には共通するキーワードがありませんが、まさに必要な内容です。
+
+同じユーザーが、`withRetry()`、`ECONNRESET`、`ERR_SOCKET_TIMEOUT` を検索することもあります。これらの完全一致する文字列は、結果に現れなければなりません。意味検索では安定して見つからない可能性があり、誤検出（概念的には似ているが、求めている API ではない結果）は、実際にユーザーを誤誘導します。
+
+ベクトル検索は概念的なクエリを処理します。FTS は完全一致する語を処理します。どちらも単独では、両方をうまく扱えません。
+
+解決策はハイブリッド検索です。両方を実行し、結果を融合します。
+
+### RRF で順位付き結果を統合する
+
+**Reciprocal Rank Fusion（RRF）** は、異なる検索システムから得た順位付きリストを組み合わせるための標準的なアルゴリズムです。システム間でスコアを正規化する必要はなく、順位だけを使います。*両方*のリストで上位に現れる結果は、一方のリストだけで突出している結果よりも高い統合スコアになります。
+
+```sql
+WITH fts_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM documents, to_tsquery('english', $1) query
+  WHERE search_vector @@ query
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + f.rank), 0) +
+    COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM fts_results f
+  FULL OUTER JOIN vector_results v ON f.id = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+分母にある `60` は、RRF の定数です。値を大きくすると順位差の影響が弱まり、小さくすると強まります。デフォルトの 60 は、ほとんどのコンテンツ種別でうまく機能します。
+
+RRF を使うと、`ts_rank`（対数頻度に基づくスコア）とコサイン距離（幾何学的な尺度）を正規化するという、より難しい問題を避けられます。この2つは比較できません。RRF が問うのは、「この結果は、それぞれのリストでどれだけ上位に現れたか」だけです。
+
+### タイポや名前にはトライグラムを加える
+
+ユーザー向けの検索で、同じセッション中に人名、概念、完全一致する語のいずれも検索される可能性がある場合は、3種類の検索結果を融合すればすべてに対応できます。
+
+```sql
+WITH trgm_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY similarity(title, $1) DESC) AS rank
+  FROM documents
+  WHERE title % $1
+  LIMIT 50
+),
+fts_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, to_tsquery('english', $1)) DESC) AS rank
+  FROM documents
+  WHERE search_vector @@ to_tsquery('english', $1)
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id,
+    ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(t.id, f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + t.rank), 0) +
+    COALESCE(1.0 / (60 + f.rank), 0) +
+    COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM trgm_results t
+  FULL OUTER JOIN fts_results f ON t.id = f.id
+  FULL OUTER JOIN vector_results v ON COALESCE(t.id, f.id) = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+これで、あいまいな名前の照合（トライグラム）、キーワードの完全一致（FTS）、概念的なクエリ（ベクトル）を処理できます。1つの検索ボックスで、ユーザーの3種類の意図すべてに対応できます。
+
+---
+
+## 検索対象ごとにクエリの種類を対応させる
+
+実際のアプリケーションに検索対象が1つしかないことは、ほとんどありません。複数の検索対象があり、それぞれ異なる要件を持っています。
+
+| 検索対象 | ユーザーが検索するもの | 推奨レイヤー |
+|---|---|---|
+| ブログ／ドキュメント検索 | キーワード + 概念 | FTS + pgvector（RRF） |
+| ユーザー／顧客名の検索 | タイプミスを含む名前 | `pg_trgm` |
+| 商品検索 | 名前、説明、「〜に似たもの」 | `pg_trgm` + FTS + pgvector |
+| サポートチケットの重複排除 | 「これに似た問題」 | pgvectorのみ |
+| 社内SKU／注文検索 | 正確な識別子 | B-treeインデックス |
+| 大規模ナレッジベースに対するRAG | 自然言語の質問 | pgvector（チャンク化したドキュメント） |
+| ECの「こちらもおすすめ」 | 行動 + 意味的類似性 | pgvector |
+| オートコンプリート | 前方一致、スペル揺れを許容 | `pg_trgm` |
+
+これは机上の話ではありません。コンテンツ量の多いアプリケーションの多くは、クエリの形が異なる検索対象を少なくとも2つ持っています。1つの方式を選んでどこでも使いたくなりますが、いまその対象になりがちなのが、流行しているベクトル検索です。その結果、トライグラムインデックスならより速く、安く、正確に解けた問題にまで、高価なembeddingを適用することになります。
+
+### クエリ種別で問題が起きたら検索レイヤーを追加する
+
+現在のレイヤーでは解消できない失敗パターンが現れたら、レイヤーを追加します。
+
+- タイプミスがあると一致しないという苦情が出る → `pg_trgm`を追加
+- 概念で検索すると、関連する結果を取りこぼす → pgvectorを追加
+- 正確な記号やコードを検索したのに、代わりに概念的な結果が返る → FTSを追加するか、ベクトル検索に依存しすぎていないか確認
+- レイテンシーが問題になる → 事前フィルタリング、近似インデックス、専用ストアを検討
+
+---
+
+## pgvectorの先に進むタイミング
+
+別のデータベースが必要になるまで、pgvectorでかなり多くのアプリケーション検索を処理できます。大まかな限界は、ベクトル数、インデックス設定、書き込み速度、フィルタ、ハードウェア、同時実行数によって変わります。したがって、「1,000万ベクトル未満」というルールがあっても、製品上の上限ではなく、ベンチマークの出発点と考えてください。本当に限界を超えるとき――非常に高い同時実行数、極めて低いp99レイテンシー要件、数十億ベクトル、あるいは本格的なマルチテナント分離の必要性があるとき――専用ベクトルデータベースの選択肢は広く、その全体像を理解しておく価値があります。
+
+### 比較表の読み方
+
+**ハイブリッド検索**とは、BM25によるキーワード検索とベクトル類似度検索を1つのクエリで実行し、RRFで統合することです。これがなければ、どちらか一方の検索モードを選ぶか、2つのクエリを自分で融合する必要があります。
+
+**スパースベクトル**はBM25より一歩進んだものです。SPLADEのスパースベクトルは約30,000次元（語彙中の各語に1次元）で、その約98%がゼロです。ゼロでない位置から、どの語がどの程度重要かが分かります。「dogs」というクエリでは「canine」や「pet」にも重みが付く――BM25レベルの精度に、ベクトルインデックス内での語の拡張を組み合わせたものです。この列がfalseなら、正確な語句の検索には別のFTSレイヤーが必要です。
+
+```python
+# SPLADE: ~30,000 dims, ~60 non-zero — only relevant vocabulary positions fire
+def encode_splade(text: str) -> dict:
+    tokens = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    with torch.no_grad():
+        output = model(**tokens)
+    vec = torch.log1p(torch.relu(output.logits)).max(dim=1).values.squeeze()
+    return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
+```
+
+**SQL／SQLライク**という項目は、実際にはフィルタリングの話です。フィルタなしのベクトル検索はデモにすぎません。テナントのスコープ、日付範囲、権限、カテゴリのフィルタは、結局必要になります。完全なSQL（pgvector、LanceDB）なら、既存のJOINの隣にこれらを記述できます。専用データベースでは、JSONのフィルタオブジェクト（Qdrant、Pinecone）、クエリDSL（Elasticsearch、Milvus）、GraphQL（Weaviate）を使います。どれも機能しますが、フィルタロジックが複雑になるほどSQLの魅力が増します。
+
+```sql
+-- pgvector: vector similarity is just another expression
+SELECT id, title, 1 - (embedding <=> $1) AS score
+FROM documents
+WHERE tenant_id = $2
+  AND category = ANY($3::text[])
+  AND created_at > NOW() - INTERVAL '90 days'
+ORDER BY embedding <=> $1
+LIMIT 10;
+```
+
+```python
+# Qdrant: equivalent filter as a Python object — same result, more ceremony
+results = client.query_points(
+    collection_name="documents", query=query_embedding,
+    query_filter=models.Filter(must=[
+        models.FieldCondition(key="tenant_id", match=models.MatchValue(value=tenant_id)),
+        models.FieldCondition(key="category",  match=models.MatchAny(any=categories)),
+        models.FieldCondition(key="created_at", range=models.DatetimeRange(gte=cutoff)),
+    ]),
+    limit=10,
+)
+```
+
+**マルチモーダルネイティブ**とは、データベースがテキスト以外のコンテンツ用embeddingモデルを内蔵していることです。生の画像URLを渡せば、ベクトル化まで処理してくれます。ほとんどのデータベースはembeddingに関知しないため、embeddingパイプラインは自分で用意します。MarqoとWeaviate（CLIP／ImageBindモジュール経由）は、この一連の処理を完結させます。
+
+```python
+# Marqo: POST raw images, query with text — no external embedding step
+mq.index("products").add_documents(
+    [{"id": "shoe-001", "image": "https://cdn.example.com/shoes/001.jpg"}],
+    tensor_fields=["image"]
+)
+results = mq.index("products").search(q="lightweight shoes for summer")
+# Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
+```
+
+**ディスクベースのインデックス**は、コストを左右する要素です。RAM上に常駐するHNSWインデックスでは、生ベクトル、グラフのオーバーヘッド、メタデータまで含めると、1536次元ベクトル100万件あたり数GBのRAMが必要になることがあります。ディスクネイティブな代替手段（Milvus DiskANN、Elasticsearch DiskBBQ、LanceDBのLanceフォーマット、Turbopufferのオブジェクトストレージ層）は、クエリレイテンシーを多少犠牲にして、インフラコストを下げることがよくあります。モデルのレイテンシーがすでに支配的なRAGワークロードでは、このトレードオフはベンチマークする価値があります。
+
+**最大次元数**は、アーキテクチャに潜む移行作業です。`text-embedding-3-large`は3072次元を使い、Jina v3はさらに大きなembeddingを出力できます。研究モデルは今後も次元数を押し上げていくでしょう。マネージドサービスの中には次元数に厳しい上限を公開しているものがあり、高い上限、または一般的なembeddingモデルに対して実質的な上限なしと説明しているものもあります。採用を決める前に、現在のドキュメントを確認してください。余裕のあるものを選びましょう。次元数の上限に達してベクトルインデックスを移行するのは、かなりつらいスプリントになります。
+
+### 表では見えない運用上のトレードオフ
+
+**Turbopufferのマルチテナンシー**は、非常に多くのnamespaceを扱うことを中心に設計されています。同社の公開上の位置付けや顧客事例では、Notionのような、namespace数が多く大規模なコーパスを持つワークロードが強調されています。ユーザーや組織ごとに分離されたベクトル検索が必要なら、このアーキテクチャによってコスト構造が変わる可能性があります。ただし、自分のテナント構成で必ずベンチマークしてください。
+
+**LanceDBのembeddedモード**は、「ベクトル検索のSQLite」に最も近い存在です。プロセス内で動作し、サーバーを必要とせず、Lambda、Cloudflare Workers、エッジ環境で使えます。Lanceのカラムナフォーマットによって、実用的な規模での組み込み運用が可能になっています。
+
+**Chromaは、開発・テストと小規模アプリケーションへの導入で最も強みを発揮します。** 非常に大規模なコーパス、高可用性、ディスク中心の運用、あるいは第一級のハイブリッド検索を目指すなら、プロトタイプを本番インフラへ昇格させる前に、本番指向のストアを評価してください。
+
+**検索がプロダクトの半分にすぎないなら、Vespaを選ぶことになります。** 字句検索、近傍探索、テンソル、ランキング式、グルーピング、オンラインサービングを組み合わせられます。この強力さは本物ですが、運用とモデリングの複雑さも同じく本物です。「CRUDアプリにセマンティック検索を追加したい」という用途より、検索・レコメンデーションを専門にするチームに向いています。
+
+**検索が分析と結び付いているなら、ClickHouseも候補に入ります。** イベント、ログ、トレース、メトリクスが信頼できる唯一の情報源なら、ClickHouseではベクトル距離、フィルタリング、集計、本格的な全文インデックスを1つのSQLエンジンにまとめられます。専用のベクトルデータベースではありませんが、分析検索における「地味だが正しい」選択肢になることはよくあります。
+
+**スパースベクトルを使えば、別の全文検索エンジンを動かさずに、ベクトルインデックス内でBM25品質のキーワードマッチングを実現できます。** この分野では、QdrantとElasticsearchの実装が特に成熟しています。ハイブリッド検索が重要で、2システム構成が受け入れられないなら、スパースベクトルのサポートを確認すべきです。
+
+### ワークロードでストアを選ぶ
+
+- **テナントごとの分離が必要なSaaSプロダクト** → Turbopuffer
+- **大規模な複雑メタデータフィルタリング** → Qdrant
+- **すでにElastic/ELKスタックを利用している** → DiskBBQを備えたElasticsearch
+- **オープンソースを求めるAWS中心の環境** → OpenSearch
+- **本格的なランキング要件を持つ検索・レコメンデーション基盤** → Vespa
+- **分析、オブザーバビリティ、ログ・イベント検索** → ClickHouse
+- **オンプレミス／セルフホストで十億規模** → Milvus
+- **エッジ／サーバーレス／マルチモーダル** → LanceDB
+- **小規模なJSアプリ、ドキュメントサイト、エッジネイティブな検索UX** → Orama
+- **運用をゼロにしたく、コストを二の次にできる** → Pinecone
+- **マルチモーダルを最優先（画像、動画、音声）** → Marqo
+- **すでにMongoDBを利用している** → Atlas Vector Search
+- **すでにPostgresを利用しており、さらに余裕が必要** → Supabase VectorまたはNeon（どちらもpgvectorのマネージドサービスで、ツールが充実している）
+
+---
+
+## IDをEmbeddingして完全一致を期待してはいけない
+
+正解が決まっているものに対して、ベクトル検索をあいまいテキスト検索として使ってはいけません。
+
+「メールアドレスが `dan@example.com` のユーザーを探して」は、ベクトル検索の問題ではありません。「IDが `ORD-12345` の注文を探して」も同じです。`ORD-12345`をEmbeddingしてコサイン類似度で検索すれば、*何か*は返ってきます。しかし、それが正しいとは限りません。識別子には正解があります。識別子に対する近似マッチはバグです。
+
+ベクトル検索は、データセット内で*最も類似した*ものを返します。実際には関連するものが何もない場合でも同じです。適切な答えが存在しないことを判断する機能はありません。関連文書の検索なら、それで問題ありません。しかし、確信ありげな誤答が空の結果より悪い、正確なレコード検索では深刻な問題になります。
+
+逆方向も同じです。ユーザーが概念を説明しているクエリにFTSを使ってはいけません。「不確実性の下で難しい意思決定をすることについての記事」には、信頼できるキーワードが含まれていません。FTSではノイズばかり返るか、何も返りません。クエリの形に合ったツールを使ってください。
+
+---
+
+## クエリの形を中心に検索を構築する
+
+本番の検索システムの多くは、複数のレイヤーを必要とします。
+
+- **`pg_trgm`**：名前、タイプミス、オートコンプリート
+- **FTS / `pg_search`**：キーワードベースの文章検索
+- **pgvector**：セマンティック検索、概念検索
+- **RRFフュージョン**：ユーザーが複数のクエリ種別を混在させる画面
+- **通常のインデックス**：正確な識別子、フィルタ、ソート済みリスト
+
+これらは競合するツールではありません。相互に補完するものです。よく設計された検索システムは、クエリの形ごとに適切なレイヤーを選びます。クエリの形が重なる場合は、複数のレイヤーを実行して結果を融合します。
+
+優れた検索機能をリリースするチームは、スタック全体を理解しています。そうでないチームはベクトルデータベースに手を伸ばし、何でもEmbeddingし、完全一致の検索でときどき間違ったレコードが返る理由に首をかしげることになります。
