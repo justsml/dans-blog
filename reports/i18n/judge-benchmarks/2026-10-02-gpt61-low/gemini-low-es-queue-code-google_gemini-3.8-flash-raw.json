@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"826cbb7fb102\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 70,\n    \"coherence\": 95,\n    \"relevance\": 95,\n    \"translationQuality\": 88,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"const concurrency = 70;\",\n      \"replacement\": \"const concurrency = 7;\",\n      \"reason\": \"The code block erroneously sets `concurrency = 70` instead of `7`, which contradicts the source text ('at most 7 jobs concurrently').\"\n    }\n  ],\n  \"rationale\": \"The translation is fluent and properly localizes the heading and anchor links. However, there is a critical technical error introduced into the code block where `concurrency` is changed from `7` to `70`.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 698,
+    "inputTokenDetails": {
+      "noCacheTokens": 698,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 272,
+    "outputTokenDetails": {
+      "textTokens": 272,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 970
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a195dEdCihppLaameZpb23wiuKAL3S4YPLuUCVcXdPwgwqdILs1IGMdxy7Zl8LNJo8aUvRFd2PtRYa0+9porslLZlrV5jAsEAi0MdmDSqMGEY1Zf",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 698,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 272,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 970,
+        "cost": 0.0015435,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0015435
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

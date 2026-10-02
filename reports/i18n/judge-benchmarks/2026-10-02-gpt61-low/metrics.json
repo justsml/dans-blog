@@ -1,0 +1,94 @@
+{
+  "metrics": [
+    {
+      "phase": "sol-baseline",
+      "model": "openai/gpt-6.1-sol",
+      "attempts": 17,
+      "valid": 17,
+      "correct": 12,
+      "medianSeconds": 5.299,
+      "estimatedUsd": 0.105103,
+      "providerCreditsUsd": 0,
+      "readyWithBlockingSuggestions": 0,
+      "noOpBlockingSuggestions": 0
+    },
+    {
+      "phase": "gemini-low",
+      "model": "google/gemini-3.8-flash",
+      "attempts": 17,
+      "valid": 17,
+      "correct": 17,
+      "medianSeconds": 3.418,
+      "estimatedUsd": 0.030652566666666665,
+      "providerCreditsUsd": 0.030652566666666665,
+      "readyWithBlockingSuggestions": 0,
+      "noOpBlockingSuggestions": 0
+    },
+    {
+      "phase": "repository-contract",
+      "model": "openai/gpt-6.1-sol",
+      "attempts": 17,
+      "valid": 17,
+      "correct": 17,
+      "medianSeconds": 5.031,
+      "estimatedUsd": 0.08949800000000001,
+      "providerCreditsUsd": 0,
+      "readyWithBlockingSuggestions": 0,
+      "noOpBlockingSuggestions": 0
+    },
+    {
+      "phase": "repository-contract",
+      "model": "google/gemini-3.8-flash",
+      "attempts": 17,
+      "valid": 17,
+      "correct": 17,
+      "medianSeconds": 4.3,
+      "estimatedUsd": 0.03243855,
+      "providerCreditsUsd": 0.03243855,
+      "readyWithBlockingSuggestions": 0,
+      "noOpBlockingSuggestions": 0
+    },
+    {
+      "phase": "fresh-heldout",
+      "model": "openai/gpt-6.1-sol",
+      "attempts": 8,
+      "valid": 8,
+      "correct": 8,
+      "medianSeconds": 5.0875,
+      "estimatedUsd": 0.02377,
+      "providerCreditsUsd": 0,
+      "readyWithBlockingSuggestions": 0,
+      "noOpBlockingSuggestions": 0
+    },
+    {
+      "phase": "fresh-heldout",
+      "model": "google/gemini-3.8-flash",
+      "attempts": 8,
+      "valid": 8,
+      "correct": 8,
+      "medianSeconds": 4.1825,
+      "estimatedUsd": 0.012553500000000002,
+      "providerCreditsUsd": 0.012553499999999997,
+      "readyWithBlockingSuggestions": 0,
+      "noOpBlockingSuggestions": 0
+    }
+  ],
+  "invalidPreInference": 17,
+  "invalidModelGenerations": 0,
+  "decision": "Opt-in primary judge candidate; Gemini remains default. No observed correctness advantage in this small controlled calibration.",
+  "contracts": {
+    "scoringFileSha256": "a0575f6dfdd21b5d15d71927d0d7dfb5a1f72b214f3c65f648a802275c0812b6",
+    "reasoning": "low",
+    "maxOutputTokens": 6000,
+    "maxRetries": 0
+  },
+  "implementationCommit": "ef2cb404e",
+  "validation": {
+    "offlineTests": 488,
+    "failures": 0,
+    "astroErrors": 0,
+    "contentErrors": 0,
+    "contentWarnings": 110,
+    "evalDryRun": "semantic-vector-search-landscape / es / openrouter/openai/gpt-6.1-sol passed"
+  }
+}

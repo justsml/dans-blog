@@ -1,0 +1,163 @@
+{
+  "source": {
+    "index": 0,
+    "group": "Advanced Interfaces",
+    "title": "Getter vs Direct Property Access",
+    "objectives": [],
+    "extraProps": [],
+    "clientVisible": "client:visible={{rootMargin: \"150px\"}}",
+    "options": [
+      {
+        "text": "Use a loop"
+      },
+      {
+        "text": "Call a method to access the value"
+      },
+      {
+        "text": "Access the value directly",
+        "isAnswer": true
+      },
+      {
+        "text": "Throw an error"
+      }
+    ],
+    "question": {
+      "fragments": [
+        {
+          "type": "prose",
+          "content": "How should you access a JavaScript object property that uses a getter method?"
+        },
+        {
+          "type": "code",
+          "content": "    const obj = {\n      get val() {\n        return 'got it!';\n      }\n    };\n    console.log(obj.val);",
+          "language": "js"
+        }
+      ],
+      "raw": "How should you access a JavaScript object property that uses a getter method?\n    ```js\n    const obj = {\n      get val() {\n        return 'got it!';\n      }\n    };\n    console.log(obj.val);\n    ```"
+    },
+    "hints": {
+      "fragments": [],
+      "raw": ""
+    },
+    "explanation": {
+      "fragments": [
+        {
+          "type": "prose",
+          "content": "In JavaScript, a getter can be accessed like a normal property. There's no need to call it like a function. \n    In this example, accessing `obj.val` directly invokes the getter method and outputs `got it!`."
+        }
+      ],
+      "raw": "In JavaScript, a getter can be accessed like a normal property. There's no need to call it like a function. \n    In this example, accessing `obj.val` directly invokes the getter method and outputs `got it!`."
+    },
+    "raw": "<Challenge\n  client:visible={{rootMargin: \"150px\"}}\n  group=\"Advanced Interfaces\"\n  title=\"Getter vs Direct Property Access\"\n  index={0}\n  options={[\n    {text: 'Use a loop'},\n    {text: 'Call a method to access the value'},\n    {text: 'Access the value directly', isAnswer: true },\n    {text: 'Throw an error'},\n  ]}\n>\n\n  <slot name=\"question\">\n  <div className=\"question\">\n    How should you access a JavaScript object property that uses a getter method?\n    ```js\n    const obj = {\n      get val() {\n        return 'got it!';\n      }\n    };\n    console.log(obj.val);\n    ```\n  </div>\n  </slot>\n\n  <slot name='hints'>\n  </slot>\n\n  <slot name='explanation'>\n  <div className=\"explanation\">\n    In JavaScript, a getter can be accessed like a normal property. There's no need to call it like a function. \n    In this example, accessing `obj.val` directly invokes the getter method and outputs `got it!`.\n  </div>\n  </slot>\n\n</Challenge>"
+  },
+  "result": {
+    "challenge": {
+      "index": 0,
+      "group": "Interfaces avanzadas",
+      "title": "Getter frente a acceso directo a propiedades",
+      "objectives": [],
+      "extraProps": [],
+      "clientVisible": "client:visible={{rootMargin: \"150px\"}}",
+      "options": [
+        {
+          "text": "Usar un bucle"
+        },
+        {
+          "text": "Llamar a un método para acceder al valor"
+        },
+        {
+          "text": "Acceder al valor directamente",
+          "isAnswer": true
+        },
+        {
+          "text": "Lanzar un error"
+        }
+      ],
+      "question": {
+        "fragments": [
+          {
+            "type": "prose",
+            "content": "¿Cómo debes acceder a una propiedad de un objeto JavaScript que usa un getter?"
+          },
+          {
+            "type": "code",
+            "content": "    const obj = {\n      get val() {\n        return 'got it!';\n      }\n    };\n    console.log(obj.val);",
+            "language": "js"
+          }
+        ],
+        "raw": ""
+      },
+      "hints": {
+        "fragments": [],
+        "raw": ""
+      },
+      "explanation": {
+        "fragments": [
+          {
+            "type": "prose",
+            "content": "En JavaScript, puedes acceder a un getter como a una propiedad normal. No hace falta llamarlo como si fuera una función.\nEn este ejemplo, acceder directamente a `obj.val` invoca el getter y muestra `got it!`."
+          }
+        ],
+        "raw": ""
+      },
+      "raw": "<Challenge\n  client:visible={{rootMargin: \"150px\"}}\n  group=\"Advanced Interfaces\"\n  title=\"Getter vs Direct Property Access\"\n  index={0}\n  options={[\n    {text: 'Use a loop'},\n    {text: 'Call a method to access the value'},\n    {text: 'Access the value directly', isAnswer: true },\n    {text: 'Throw an error'},\n  ]}\n>\n\n  <slot name=\"question\">\n  <div className=\"question\">\n    How should you access a JavaScript object property that uses a getter method?\n    ```js\n    const obj = {\n      get val() {\n        return 'got it!';\n      }\n    };\n    console.log(obj.val);\n    ```\n  </div>\n  </slot>\n\n  <slot name='hints'>\n  </slot>\n\n  <slot name='explanation'>\n  <div className=\"explanation\">\n    In JavaScript, a getter can be accessed like a normal property. There's no need to call it like a function. \n    In this example, accessing `obj.val` directly invokes the getter method and outputs `got it!`.\n  </div>\n  </slot>\n\n</Challenge>"
+    },
+    "translation": {
+      "title": "Getter frente a acceso directo a propiedades",
+      "group": "Interfaces avanzadas",
+      "options": [
+        {
+          "text": "Usar un bucle"
+        },
+        {
+          "text": "Llamar a un método para acceder al valor"
+        },
+        {
+          "text": "Acceder al valor directamente"
+        },
+        {
+          "text": "Lanzar un error"
+        }
+      ],
+      "objectives": [],
+      "questionProse": [
+        "¿Cómo debes acceder a una propiedad de un objeto JavaScript que usa un getter?"
+      ],
+      "hintsProse": [],
+      "explanationProse": [
+        "En JavaScript, puedes acceder a un getter como a una propiedad normal. No hace falta llamarlo como si fuera una función.\n    En este ejemplo, acceder directamente a `obj.val` invoca el getter y muestra `got it!`."
+      ]
+    },
+    "rawText": "{\n  \"title\": \"Getter frente a acceso directo a propiedades\",\n  \"group\": \"Interfaces avanzadas\",\n  \"options\": [\n    {\n      \"text\": \"Usar un bucle\"\n    },\n    {\n      \"text\": \"Llamar a un método para acceder al valor\"\n    },\n    {\n      \"text\": \"Acceder al valor directamente\"\n    },\n    {\n      \"text\": \"Lanzar un error\"\n    }\n  ],\n  \"objectives\": [],\n  \"questionProse\": [\n    \"¿Cómo debes acceder a una propiedad de un objeto JavaScript que usa un getter?\"\n  ],\n  \"hintsProse\": [],\n  \"explanationProse\": [\n    \"En JavaScript, puedes acceder a un getter como a una propiedad normal. No hace falta llamarlo como si fuera una función.\\n    En este ejemplo, acceder directamente a `obj.val` invoca el getter y muestra `got it!`.\"\n  ]\n}",
+    "telemetry": {
+      "inputTokens": 806,
+      "outputTokens": 205,
+      "totalTokens": 1011,
+      "reasoningTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0,
+      "durationMs": 5980,
+      "finishReason": "stop",
+      "rawFinishReason": "stop",
+      "warnings": [],
+      "providerCostUsd": 0,
+      "providerUpstreamCostUsd": 0.003662,
+      "pricingSource": "openrouter-usage-accounting",
+      "openRouterUsage": {
+        "promptTokens": 806,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 205,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1011,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.003662
+        }
+      }
+    }
+  }
+}

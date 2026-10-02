@@ -1,0 +1,70 @@
+[
+  {
+    "id": "fresh-table-clean",
+    "locale": "es",
+    "source": "# Region limits\n\n| Region | Maximum jobs |\n| --- | --- |\n| Europe | 12 |\n| Asia | 8 |\n| Americas | 5 |\n\nAll three regions are supported.\n",
+    "target": "# Límites por región\n\n| Región | Máximo de trabajos |\n| --- | --- |\n| Europa | 12 |\n| Asia | 8 |\n| América | 5 |\n\nSe admiten las tres regiones.\n",
+    "expectedReady": true,
+    "split": "heldout"
+  },
+  {
+    "id": "fresh-table-defect",
+    "locale": "es",
+    "source": "# Region limits\n\n| Region | Maximum jobs |\n| --- | --- |\n| Europe | 12 |\n| Asia | 8 |\n| Americas | 5 |\n\nAll three regions are supported.\n",
+    "target": "# Límites por región\n\n| Región | Máximo de trabajos |\n| --- | --- |\n| Europa | 12 |\n| América | 5 |\n\nSe admiten las tres regiones.\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Entire Asia table row omitted"
+  },
+  {
+    "id": "fresh-quiz-clean",
+    "locale": "ja",
+    "source": "import Challenge from '../../../components/QuizUI/Challenge';\n\n## Boolean values\n\n<Challenge index={0} group=\"Basics\" title=\"Which value is truthy?\" options={[{text:'[]',isAnswer:true},{text:'0'}]} client:visible={{rootMargin:\"150px\"}}>\n  <div slot=\"question\">Choose the truthy value.</div>\n  <div slot=\"explanation\">An empty array is truthy in JavaScript.</div>\n</Challenge>\n",
+    "target": "import Challenge from '../../../../components/QuizUI/Challenge';\n\n## 真偽値\n\n<Challenge index={0} group=\"基礎\" title=\"どちらが真と評価されますか？\" options={[{text:'[]',isAnswer:true},{text:'0'}]} client:visible={{rootMargin:\"150px\"}}>\n  <div slot=\"question\">真と評価される値を選んでください。</div>\n  <div slot=\"explanation\">JavaScriptでは空の配列は真と評価されます。</div>\n</Challenge>\n",
+    "expectedReady": true,
+    "split": "heldout"
+  },
+  {
+    "id": "fresh-quiz-defect",
+    "locale": "ja",
+    "source": "import Challenge from '../../../components/QuizUI/Challenge';\n\n## Boolean values\n\n<Challenge index={0} group=\"Basics\" title=\"Which value is truthy?\" options={[{text:'[]',isAnswer:true},{text:'0'}]} client:visible={{rootMargin:\"150px\"}}>\n  <div slot=\"question\">Choose the truthy value.</div>\n  <div slot=\"explanation\">An empty array is truthy in JavaScript.</div>\n</Challenge>\n",
+    "target": "import Challenge from '../../../../components/QuizUI/Challenge';\n\n## 真偽値\n\n<Challenge index={0} group=\"基礎\" title=\"どちらが真と評価されますか？\" options={[{text:'[]'},{text:'0',isAnswer:true}]} client:visible={{rootMargin:\"150px\"}}>\n  <div slot=\"question\">真と評価される値を選んでください。</div>\n  <div slot=\"explanation\">JavaScriptでは空の配列は真と評価されます。</div>\n</Challenge>\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Correct answer flag moved from [] to 0"
+  },
+  {
+    "id": "fresh-anchor-clean",
+    "locale": "ar",
+    "source": "# Cache policy\n\n[Read the policy](#cache-policy).\n\nCache entries expire after 90 seconds.\n",
+    "target": "# سياسة التخزين المؤقت\n\n[اقرأ السياسة](#سياسة-التخزين-المؤقت).\n\nتنتهي صلاحية عناصر التخزين المؤقت بعد 90 ثانية.\n",
+    "expectedReady": true,
+    "split": "heldout"
+  },
+  {
+    "id": "fresh-anchor-defect",
+    "locale": "ar",
+    "source": "# Cache policy\n\n[Read the policy](#cache-policy).\n\nCache entries expire after 90 seconds.\n",
+    "target": "# سياسة التخزين المؤقت\n\n[اقرأ السياسة](#cache-policy).\n\nتنتهي صلاحية عناصر التخزين المؤقت بعد 90 ثانية.\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Same-page fragment retains absent English heading ID"
+  },
+  {
+    "id": "fresh-negation-clean",
+    "locale": "de",
+    "source": "# Delete operation\n\nNever delete a running job. Wait until it stops, then delete it.\n",
+    "target": "# Löschvorgang\n\nLösche niemals einen laufenden Job. Warte, bis er beendet ist, und lösche ihn dann.\n",
+    "expectedReady": true,
+    "split": "heldout"
+  },
+  {
+    "id": "fresh-negation-defect",
+    "locale": "de",
+    "source": "# Delete operation\n\nNever delete a running job. Wait until it stops, then delete it.\n",
+    "target": "# Löschvorgang\n\nLösche immer einen laufenden Job. Warte, bis er beendet ist, und lösche ihn dann.\n",
+    "expectedReady": false,
+    "split": "heldout",
+    "defect": "Never delete running job changed to always delete"
+  }
+]

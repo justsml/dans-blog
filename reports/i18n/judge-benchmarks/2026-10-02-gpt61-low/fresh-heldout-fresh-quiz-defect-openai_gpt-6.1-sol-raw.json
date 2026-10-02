@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"91a626c6e8c9\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":98,\"technicalAccuracy\":40,\"coherence\":55,\"relevance\":100,\"translationQuality\":75,\"mdxPreservation\":75,\"culturalAdaptation\":98,\"languagePurity\":100},\"suggestions\":[{\"priority\":\"high\",\"match\":\"options={[{text:'[]'},{text:'0',isAnswer:true}]}\",\"replacement\":\"options={[{text:'[]',isAnswer:true},{text:'0'}]}\",\"reason\":\"The candidate reverses the correct quiz answer. In JavaScript, [] is truthy and 0 is falsy. Restore isAnswer:true on [] to match the source and the translated explanation.\"}],\"rationale\":\"The Japanese prose is natural, and the additional parent-relative import segment correctly accommodates the localized file location. However, the quiz marks 0 rather than [] as correct, creating a critical technical error and contradicting its explanation. Publication requires correcting the answer metadata.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 812,
+    "inputTokenDetails": {
+      "noCacheTokens": 812,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 219,
+    "outputTokenDetails": {
+      "textTokens": 219,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1031
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 812,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 219,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1031,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.003814
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

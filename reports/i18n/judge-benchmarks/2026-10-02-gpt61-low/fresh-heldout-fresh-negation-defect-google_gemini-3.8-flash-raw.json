@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"ebd207e2e834\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 90,\n    \"technicalAccuracy\": 0,\n    \"coherence\": 50,\n    \"relevance\": 60,\n    \"translationQuality\": 30,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 80,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"Lösche immer einen laufenden Job.\",\n      \"replacement\": \"Lösche niemals einen laufenden Job.\",\n      \"reason\": \"The translation inverts the meaning ('Lösche immer' vs 'Never delete'). It should be 'Lösche niemals einen laufenden Job.'\"\n    }\n  ],\n  \"rationale\": \"The candidate directly contradicts the core technical instruction by translating 'Never delete' as 'Lösche immer' (Always delete), which is a critical safety and technical accuracy failure.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 659,
+    "inputTokenDetails": {
+      "noCacheTokens": 659,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 319,
+    "outputTokenDetails": {
+      "textTokens": 265,
+      "reasoningTokens": 54
+    },
+    "totalTokens": 978
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19X5x7R0kzXTo1rBNGMYxxj3ERsvlokdx/+QO96eEJ3Z+XcsYtbIS+8USrtKpDzBEPMXifxrIN7bdtAptfkI2i7OPpGLZjj8Oy/JYegR2AxUK0N55GneXo4so9risy1Z3buvvx4i/HBo9NuyJdMjwtG9S57kJHGOPOy8k8zDHmrXIDZZ8eMnVNvwqAObtWAiQ12IJyoCukrnnI7v5/DPWE5aXmNfnSgRugqMNnwZak+LD1f/6lHfLVISciA0/GEnK+rjdPTKcNJ1dcDEVXPX19BuaFEQcddahguzyRXeeGqQCF+5Pb40yn0fU/WioqUhJ1/Y79EDMGKqYsygFxfrI/4cLThsHJvrE2YuJSLWOV+OwsMQsViUAh4i5mi4dxfBiHlIch24BI74Ou64DZJ6ksRkY1hRFnXW9oYFZg0kayrVlwyPiZdbVIlmP/OBUyvUfdYYbZXl5/wo84QdGr+TqhqjB1doMMseotajoBcLE0eTZHgEKupv9DfwIU=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 659,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 319,
+        "completionTokensDetails": {
+          "reasoningTokens": 54
+        },
+        "totalTokens": 978,
+        "cost": 0.0016905,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0016905
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

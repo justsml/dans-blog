@@ -1,0 +1,54 @@
+{
+  "text": "{\n  \"selectedCommit\": \"f3ca4f3560e9\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 96,\n    \"technicalAccuracy\": 98,\n    \"coherence\": 97,\n    \"relevance\": 99,\n    \"translationQuality\": 96,\n    \"mdxPreservation\": 80,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 98\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"social_image: ../desktop-social.webp\",\n      \"replacement\": \"social_image: ./desktop-social.webp\",\n      \"reason\": \"The relative asset path was changed without a known target location that would justify rebasing it. Preserve the source asset reference.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"cover: ../austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: ../w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: ../icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"replacement\": \"cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\\ncover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp\",\n      \"reason\": \"All three cover paths have been rebased to the parent directory. With the target path unknown, these changes are unsupported and may break asset resolution.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"modified: 2024-08-01\",\n      \"replacement\": \"date: 2023-08-10\\nmodified: 2024-08-01\",\n      \"reason\": \"Restore the omitted publication date, which is non-reader-facing metadata that must be preserved.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"sourceHash: \\\"438740274604\\\"\\n\",\n      \"replacement\": \"\",\n      \"reason\": \"Remove metadata introduced without a source equivalent or an explicitly supplied localization-pipeline requirement.\"\n    }\n  ],\n  \"rationale\": \"The Spanish is natural, complete, and faithful to the technical argument and informal tone. Code, external links, MDX structure, and table content are preserved; #resumen correctly targets the localized heading. The prose length is within the requested range. Publication is blocked by unsupported asset-path changes and frontmatter differences, not by translation quality.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 3118,
+    "inputTokenDetails": {
+      "noCacheTokens": 3118,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3115
+    },
+    "outputTokens": 623,
+    "outputTokenDetails": {
+      "textTokens": 571,
+      "reasoningTokens": 52
+    },
+    "totalTokens": 3741
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Assessing unknown paths**\n\nI need to assess unknown paths and can't just assume they're correct regarding the rules for preserving source asset paths that were requested for fixing. I should note that the date for the source hash has changed, so I need to remove that hash and restore the date. I also want to combine and match any modified line dates during insertion and remove the source hash. It’s crucial to aim for high scores in translation, while making sure there are no code comments needing fixes.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqv0_kdBHua5A72z_jqcm6cI1LJEkjXz4hPyyork739RkaFso40Z1zEEKpQTagVA__-grZL-yJ4p1zASVqJxDYrmTBV6CdJWqtpXbRrjXXMlRDHi0_FkE3kFdAhOv2Joplpp85URvLaOjxPaTK_KUVNgVRIb3pU9e-8JZOTtEuLvSDKJcEE2EzWv-zxJ2AX9w6HfBNrtRnxVomFt1K-azrXpfQ36Ol4O3S-VRckYoNty7RDemlIgUY61Zwyf_DptX2_x7sgbQEpG62aSUmVIADPrY6mxHjD81uADT86UQQDWqo6rvDo_BS18aPuAhxzT9e3zC_OCc75aEuDdXi3ug6WV7ra7fMvxfe5e4Mxu1w3Mgw2bTt4m2gaNBcEdlLIlrvCjg4HidOXA9M1PS-Z3uh0JDQRcglVHSyLM3uu6yVmZZgRkpNNWlvDLfZ9p2oSQrbhEiNxv6crmcBuKrxpxGKAiYV71AKwxagKekIvt_pG0X6CkuU-A_mo9IHPj9sMVZu7Z6LsxIAbgR2GN4PvsD1ZFekXXRvYeyscxRgcijhuLYiVDgx0hVkZ71TDyKXVHxhqC3rn6ven70z98PWuQs5wbuISwDeSEuNj0gPNAau9Sh4oQFu9LJiAIGOqyQGqHjc_AtqG16QPksnKtYsAyrTg4Zdp0HGvji4m6KOW0tqgQ9WVAIXKeU9IyorQlqjsFsZs8uTNyGgxGUPetmYzQ1xtQLiOqDUJK1zMRLHtTmI2nTj6A8wbvZfLRj2gwB-XCMpfl51Lq_OrzWUVIpMbPuP1JVSVvW_b1qw4Lz_cpL2Z62z6Je7qc3mtk21g2l-3hMPmiqmXVdAnUo5eaDMUNhIuZNTBKxWU97kaR_RdKZeCo7EgTCExodwGBJFCIocJLZkokNyDxxVrfaNPAJPQ2ScTwphEdc-vF8mgFOjceY5S4FSznY70hCU2Uk4TkjeW02PcbEJ41bCoYiqPpGqG7vlv_Ed15dN47uau90PkYE54_ovgQGZ3vIvQRop3Ssm5ukZ4KbzOOT3tZp0mU_64k_cUrCmP9FzPDVjTw5p81__EbO4fBE6jEIfQKIDvAnbck1Ik9QUZ0vNGanMefBa_D30jr6Hvim4bPMIw7hC0YQJ6V5khAyZr3ZrmvbO_DyXu8ARGwWWkcUHEzqpnSIo18h9meH2Zy_tLG0gzOVM-jgPTzEF2FKM4rokrJHzW75rwx_Y73fCdpFAq9qNsjrFN6EPba18MfPEGbueQCa0IbTrLPVNtZfX8aA-CGGFogWWMODeJfRMYn7tl23g3QCYOTNFcyGTZPybbdBi_Riw0-D9s_WG4Xp17bmGsu__-dqVplRTagVCZqVPkZQ2OXVHklwE0FFD5IDIjKgcQzXIyBlUHA4G5ermyT_Hv1A9M7HsAZfURuSwpqme5fNE_-oegpuCd74j3P4sI-mzRu0RUfDKh21nEh1Ef6rIKYpbQBnkLnDHMfjczdSwYhsWAQj3_jPNboZfAdNNmxS3MduZWR5GtaHXw4U19bQ3ozCceW4YjP7VGwOfY_stnjF62mbSRridJfb83eEeQUU2HnZQvt031rv0d5gzGSCOvmNtrw28o_D-SysJpD7WHFvvrgVPzW8C-04IRQtTtlhpJeBNCf65VMGztTruJMXVnezW2mm-jQ4zfof0EyzKJXyJ7j8xuEsukpgJW97dhhYWDUzzqNJwRbgWnQbVigEru4aVvhNV7FGGeFcU.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LjEtc29sLTIwMjYwOTI5fG9wZW5haSJ9",
+          "id": "rs_0244d0c9acc95ab4016abf4fe2557c87d1bd3750bb15586809",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 3118,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 623,
+        "completionTokensDetails": {
+          "reasoningTokens": 52
+        },
+        "totalTokens": 3741,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0140235
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

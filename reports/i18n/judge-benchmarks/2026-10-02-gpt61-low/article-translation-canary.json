@@ -1,0 +1,232 @@
+{
+  "source": "---\ntitle: Queue limits\ndate: 2026-10-02\ncategory: Code\n---\n\n## Queue limits\n\nThe worker processes at most 7 jobs concurrently. Never log access tokens.\n\n```js\nconst concurrency = 7;\n```\n",
+  "result": {
+    "contents": "---\ntitle: Límites de la cola\ncategory: Code\n---\n## Límites de la cola\n\nEl worker procesa como máximo 7 tareas simultáneamente. Nunca registres tokens de acceso en los logs.\n\n```js\nconst concurrency = 7;\n```",
+    "body": "## Límites de la cola\n\nEl worker procesa como máximo 7 tareas simultáneamente. Nunca registres tokens de acceso en los logs.\n\n```js\nconst concurrency = 7;\n```",
+    "frontmatter": {
+      "title": "Límites de la cola",
+      "category": "Code"
+    },
+    "locale": "es",
+    "model": "openai/gpt-6.1-sol",
+    "isQuiz": false,
+    "articleSummary": "No summary provided. Translate each chunk independently.",
+    "telemetry": {
+      "model": "openai/gpt-6.1-sol",
+      "chunkSize": "18p",
+      "totalChunks": 1,
+      "totalInputTokens": 1161,
+      "totalOutputTokens": 43,
+      "totalReasoningTokens": 0,
+      "totalCacheReadTokens": 0,
+      "totalCacheWriteTokens": 1158,
+      "totalDurationMs": 2634,
+      "totalCostUsd": 0.002752,
+      "pricingSource": "openrouter-2026-10-02",
+      "chunks": [
+        {
+          "index": 0,
+          "inputTokens": 1161,
+          "outputTokens": 43,
+          "totalTokens": 1204,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 1158,
+          "durationMs": 2634,
+          "finishReason": "stop",
+          "rawFinishReason": "stop",
+          "warnings": [],
+          "providerCostUsd": 0,
+          "providerUpstreamCostUsd": 0.003331,
+          "pricingSource": "openrouter-usage-accounting",
+          "openRouterUsage": {
+            "promptTokens": 1161,
+            "promptTokensDetails": {
+              "cachedTokens": 0
+            },
+            "completionTokens": 43,
+            "completionTokensDetails": {
+              "reasoningTokens": 0
+            },
+            "totalTokens": 1204,
+            "cost": 0,
+            "costDetails": {
+              "upstreamInferenceCost": 0.003331
+            }
+          },
+          "costUsd": 0.002752
+        }
+      ],
+      "providerCostUsd": 0,
+      "providerUpstreamCostUsd": 0.003331
+    }
+  },
+  "calls": [
+    {
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a technical translator. Follow the stable translation contract in the user message. Output only the requested translated text."
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "STABLE TRANSLATION CONTRACT (cache this across all chunks):\nYou are an expert technical translator translating into Español.\n\nYour job is to produce a translation that reads like it was originally written by a senior engineer — not like a translation.\n\nVOICE & STYLE (critical — do not soften):\n- The author is direct, technical, and allergic to vendor-blog gloss.\n- Keep the scar tissue, remove the brochure.\n- Prefer concrete tradeoffs and operational detail over catalog density.\n- Humor works best as seasoning. If a bit starts competing with the argument, cut it back.\n- For fast-moving AI/search/database content, distinguish measured facts from current impressions.\n- For security prose, avoid absolute guarantees. Prefer defense-in-depth wording: \"reduces risk\", \"makes exploitation harder\", \"limits blast radius\".\n- Preserve the original sentence rhythm and paragraph structure where possible.\n- Translate figurative English by intent, not by word-for-word mimicry. If a metaphor, joke, or verb phrase becomes ungrammatical or awkward in the target language, use a native idiom or a clear technical paraphrase that preserves the bite.\n\nSPANISH QUALITY NOTES:\n- Avoid English calques and false friends. Check verb valency: transitive English verbs should not become intransitive Spanish phrases.\n- For metaphors like \"crutches that will hobble a generation\", preserve the meaning of impeding or crippling a generation; do not use \"cojear\" as if it were transitive.\n- For \"set your watch by\", use the predictability/punctuality idiom (\"poner en hora\" or \"sincronizar\"), not \"marcar\".\n- For \"historical receipts\", use evidence/context language such as \"antecedentes históricos\" or \"pruebas históricas\", not literal purchase receipts.\n- Keep Dan's dry directness, but prefer natural Spanish punctuation and idioms over literal em-dash-heavy English rhythm when needed.\n\nMDX & CODE PRESERVATION (critical):\n- Preserve ALL code blocks exactly, byte-for-byte, including comments, spacing, line breaks, and fence languages. Do NOT translate code comments, variable names, file paths, or shell commands.\n- Preserve ALL MDX component tags and their prop names. Only translate string prop VALUES that are reader-facing text (e.g., question text, labels, alt text).\n- Preserve ALL import statements and their relative module paths.\n- Preserve the exact markdown heading level structure. Translate heading text, but keep the same number of H1, H2, H3, H4, H5, and H6 headings.\n- Preserve inline code spans exactly, including the surrounding backticks. HTML tag names like `<div>`, component names, selectors, filenames, paths, commands, API names, and CSS values must remain inside inline code when the source uses inline code.\n- Preserve roughly the same amount of prose. The translated body must be comparable to the English prose length, using the target language's natural expansion or compression; CJK, Arabic, Hebrew, and Hindi may differ more from English. Do not summarize or pad.\n- ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a `../`.\n- Preserve external URLs, absolute URLs, route paths, and non-heading link targets except relative URLs that need the locale-folder `../` prefix. Only translate the link text.\n- For same-page heading links such as `[text](#some-heading)` or `<a href=\"#some-heading\">`, update the `#fragment` to the slug generated from the translated heading text. Do not keep an English heading fragment after translating that heading.\n- Do not add or remove blank lines around code fences or components unless the original has them.\n\nYAML FRONTMATTER RULES (critical):\n- Preserve the YAML frontmatter block, key order, and all non-reader-facing metadata keys.\n- Translate only reader-facing frontmatter values: language, title, subTitle, cover_alt, and cover_credit.\n- If a language field exists, set it exactly to \"Spanish\".\n- Omit inherited metadata from translated files: date, draft, unlisted, hidden, publish, and popularity. Keep modified when present.\n- Preserve taxonomy and routing metadata exactly: category, subCategory, tags, related, redirects, commentsKeyOverride, label, modified, and minReleaseDate.\n- Preserve social_image, cover, cover_full_width, cover_mobile, and cover_icon filenames, but use ../ for inherited local asset paths inside locale folders.\n- For frontmatter values containing HTML, preserve every HTML tag, attribute, URL, opening tag, and closing tag exactly. Translate only the human-readable text around or between tags.\n\nOutput ONLY the translated text. Do not wrap it in markdown code fences. Do not add meta-commentary.\n\nTRANSLATION TARGET: Español\n\nARTICLE SUMMARY (for consistency across chunks):\nNo summary provided. Translate each chunk independently.\n\nRemember: preserve all code, MDX components, imports, markdown heading levels, and roughly the same content length. For inherited local images, CSS, links, or other resources, prefix/prepend relative URL paths with `../`. Same-page heading links must point at the translated heading slug, not the English heading slug. Translate only reader-facing prose.",
+                "providerOptions": {
+                  "openrouter": {
+                    "cacheControl": {
+                      "type": "ephemeral"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "TRANSLATE the following chunk into Español.\nThis is chunk 1 of 1.\n\n--- CHUNK START ---\n## Queue limits\n\nThe worker processes at most 7 jobs concurrently. Never log access tokens.\n\n```js\nconst concurrency = 7;\n```\n--- CHUNK END ---\n"
+              }
+            ]
+          }
+        ],
+        "providerOptions": {
+          "openrouter": {
+            "reasoning": {
+              "effort": "low",
+              "exclude": false
+            }
+          }
+        },
+        "maxOutputTokens": 3000
+      },
+      "response": {
+        "text": "## Límites de la cola\n\nEl worker procesa como máximo 7 tareas simultáneamente. Nunca registres tokens de acceso en los logs.\n\n```js\nconst concurrency = 7;\n```",
+        "usage": {
+          "inputTokens": 1161,
+          "inputTokenDetails": {
+            "noCacheTokens": 1161,
+            "cacheReadTokens": 0,
+            "cacheWriteTokens": 1158
+          },
+          "outputTokens": 43,
+          "outputTokenDetails": {
+            "textTokens": 43,
+            "reasoningTokens": 0
+          },
+          "totalTokens": 1204
+        },
+        "providerMetadata": {
+          "openrouter": {
+            "provider": "OpenAI",
+            "reasoning_details": [],
+            "usage": {
+              "promptTokens": 1161,
+              "promptTokensDetails": {
+                "cachedTokens": 0
+              },
+              "completionTokens": 43,
+              "completionTokensDetails": {
+                "reasoningTokens": 0
+              },
+              "totalTokens": 1204,
+              "cost": 0,
+              "costDetails": {
+                "upstreamInferenceCost": 0.003331
+              }
+            }
+          }
+        },
+        "finishReason": "stop"
+      }
+    },
+    {
+      "request": {
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are a technical translator. Follow the stable frontmatter translation contract in the user message. Output only the requested translated text."
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "STABLE FRONTMATTER TRANSLATION CONTRACT (cache this across frontmatter fields):\nYou are an expert technical translator translating into Español.\n\nYour job is to produce a translation that reads like it was originally written by a senior engineer — not like a translation.\n\nVOICE & STYLE (critical — do not soften):\n- The author is direct, technical, and allergic to vendor-blog gloss.\n- Keep the scar tissue, remove the brochure.\n- Prefer concrete tradeoffs and operational detail over catalog density.\n- Humor works best as seasoning. If a bit starts competing with the argument, cut it back.\n- For fast-moving AI/search/database content, distinguish measured facts from current impressions.\n- For security prose, avoid absolute guarantees. Prefer defense-in-depth wording: \"reduces risk\", \"makes exploitation harder\", \"limits blast radius\".\n- Preserve the original sentence rhythm and paragraph structure where possible.\n- Translate figurative English by intent, not by word-for-word mimicry. If a metaphor, joke, or verb phrase becomes ungrammatical or awkward in the target language, use a native idiom or a clear technical paraphrase that preserves the bite.\n\nSPANISH QUALITY NOTES:\n- Avoid English calques and false friends. Check verb valency: transitive English verbs should not become intransitive Spanish phrases.\n- For metaphors like \"crutches that will hobble a generation\", preserve the meaning of impeding or crippling a generation; do not use \"cojear\" as if it were transitive.\n- For \"set your watch by\", use the predictability/punctuality idiom (\"poner en hora\" or \"sincronizar\"), not \"marcar\".\n- For \"historical receipts\", use evidence/context language such as \"antecedentes históricos\" or \"pruebas históricas\", not literal purchase receipts.\n- Keep Dan's dry directness, but prefer natural Spanish punctuation and idioms over literal em-dash-heavy English rhythm when needed.\n\nMDX & CODE PRESERVATION (critical):\n- Preserve ALL code blocks exactly, byte-for-byte, including comments, spacing, line breaks, and fence languages. Do NOT translate code comments, variable names, file paths, or shell commands.\n- Preserve ALL MDX component tags and their prop names. Only translate string prop VALUES that are reader-facing text (e.g., question text, labels, alt text).\n- Preserve ALL import statements and their relative module paths.\n- Preserve the exact markdown heading level structure. Translate heading text, but keep the same number of H1, H2, H3, H4, H5, and H6 headings.\n- Preserve inline code spans exactly, including the surrounding backticks. HTML tag names like `<div>`, component names, selectors, filenames, paths, commands, API names, and CSS values must remain inside inline code when the source uses inline code.\n- Preserve roughly the same amount of prose. The translated body must be comparable to the English prose length, using the target language's natural expansion or compression; CJK, Arabic, Hebrew, and Hindi may differ more from English. Do not summarize or pad.\n- ALL relative URL paths for images, CSS, links, or other resources should prefix/prepend with a `../`.\n- Preserve external URLs, absolute URLs, route paths, and non-heading link targets except relative URLs that need the locale-folder `../` prefix. Only translate the link text.\n- For same-page heading links such as `[text](#some-heading)` or `<a href=\"#some-heading\">`, update the `#fragment` to the slug generated from the translated heading text. Do not keep an English heading fragment after translating that heading.\n- Do not add or remove blank lines around code fences or components unless the original has them.\n\nYAML FRONTMATTER RULES (critical):\n- Preserve the YAML frontmatter block, key order, and all non-reader-facing metadata keys.\n- Translate only reader-facing frontmatter values: language, title, subTitle, cover_alt, and cover_credit.\n- If a language field exists, set it exactly to \"Spanish\".\n- Omit inherited metadata from translated files: date, draft, unlisted, hidden, publish, and popularity. Keep modified when present.\n- Preserve taxonomy and routing metadata exactly: category, subCategory, tags, related, redirects, commentsKeyOverride, label, modified, and minReleaseDate.\n- Preserve social_image, cover, cover_full_width, cover_mobile, and cover_icon filenames, but use ../ for inherited local asset paths inside locale folders.\n- For frontmatter values containing HTML, preserve every HTML tag, attribute, URL, opening tag, and closing tag exactly. Translate only the human-readable text around or between tags.\n\nOutput ONLY the translated text. Do not wrap it in markdown code fences. Do not add meta-commentary.\n",
+                "providerOptions": {
+                  "openrouter": {
+                    "cacheControl": {
+                      "type": "ephemeral"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "text",
+                "text": "Translate the following title into Español. Keep it concise and natural.\n\nQueue limits"
+              }
+            ]
+          }
+        ],
+        "providerOptions": {
+          "openrouter": {
+            "reasoning": {
+              "effort": "low",
+              "exclude": false
+            }
+          }
+        },
+        "maxOutputTokens": 500
+      },
+      "response": {
+        "text": "Límites de la cola",
+        "usage": {
+          "inputTokens": 1030,
+          "inputTokenDetails": {
+            "noCacheTokens": 1030,
+            "cacheReadTokens": 0,
+            "cacheWriteTokens": 1027
+          },
+          "outputTokens": 10,
+          "outputTokenDetails": {
+            "textTokens": 10,
+            "reasoningTokens": 0
+          },
+          "totalTokens": 1040
+        },
+        "providerMetadata": {
+          "openrouter": {
+            "provider": "OpenAI",
+            "reasoning_details": [],
+            "usage": {
+              "promptTokens": 1030,
+              "promptTokensDetails": {
+                "cachedTokens": 0
+              },
+              "completionTokens": 10,
+              "completionTokensDetails": {
+                "reasoningTokens": 0
+              },
+              "totalTokens": 1040,
+              "cost": 0,
+              "costDetails": {
+                "upstreamInferenceCost": 0.0026735
+              }
+            }
+          }
+        },
+        "finishReason": "stop"
+      }
+    }
+  ]
+}

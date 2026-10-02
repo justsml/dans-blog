@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"3348915b1acd\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 70,\n    \"coherence\": 95,\n    \"relevance\": 95,\n    \"translationQuality\": 80,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"const concurrency = 70;\",\n      \"replacement\": \"const concurrency = 7;\",\n      \"reason\": \"Code snippet value was incorrectly changed from 7 to 70, contradicting both the source code and the prose description.\"\n    }\n  ],\n  \"rationale\": \"The translation is generally fluent and properly localizes the heading fragment, but it introduces a critical technical error by altering code literals (`concurrency = 70` instead of `7`).\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 773,
+    "inputTokenDetails": {
+      "noCacheTokens": 773,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 328,
+    "outputTokenDetails": {
+      "textTokens": 258,
+      "reasoningTokens": 70
+    },
+    "totalTokens": 1101
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a19uP35NG7JJOeVQvDjeuMJHUA3JO/HuvUWEFsfRyEAZGDwPQarlo2y2LxHrr842gquksNK/rvO3xJL+lJr0KkU6IpNZQN0ZroAMuAPXeJjVzdnkf5CX3E8WUvxEBMvDzE//id0Uy7IxFIez7ZdMWGfnwdPRmKegjN3zMA9lYbyhQtXaugeJ968cn4UFSd1cd2oyDPUriKufd7f50QQRWfcxBDZ4IwQJPzo16xAGgQUaxxR2XLC/i4nIgDENg6d3JpcXBm60ZL0xl8cGX/tdpdpXowwkYU853M+at1w/7DPFu3o66iWzFWTPWSii7ZengH8sBTM1yrRBN8dac3FyoPx/toEK0Ccc+snojCWdQ4CvFvkeXDaY3qaHEZlMG0/tD+wi73kYsm7HpQO0oKGQgYUY/YK3Ytt2HeYZ9l4/w6ylyCnLuWg4epuKOPj2oDx7yDrCNR7Az0Re3R32yrnO7mS7gclO0qxeAmimFXpugCvf1AbGMuQg0ViHwNyOS1a86msEJqQvK1rjSFSQvQHYb7H20iQj7Tc=",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 773,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 328,
+        "completionTokensDetails": {
+          "reasoningTokens": 70
+        },
+        "totalTokens": 1101,
+        "cost": 0.00180975,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00180975
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

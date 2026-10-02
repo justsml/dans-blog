@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"4d6c861f7f5e\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 60,\n    \"coherence\": 95,\n    \"relevance\": 95,\n    \"translationQuality\": 80,\n    \"mdxPreservation\": 95,\n    \"culturalAdaptation\": 95,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"const concurrency = 70;\",\n      \"replacement\": \"const concurrency = 7;\",\n      \"reason\": \"Preserve code literals from the source; the concurrency value was incorrectly modified from 7 to 70.\"\n    }\n  ],\n  \"rationale\": \"The prose translation is accurate and natural, and heading anchors are properly localized. However, the code block contains a hallucinated/modified value (`concurrency = 70` instead of `7`), violating code preservation and technical accuracy.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 802,
+    "inputTokenDetails": {
+      "noCacheTokens": 802,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 307,
+    "outputTokenDetails": {
+      "textTokens": 266,
+      "reasoningTokens": 41
+    },
+    "totalTokens": 1109
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1+tvuVCt3Ip9yRnvc6c4SC58xp7TBD/OdrdHYcTn/PFkpdPhhuDd4fuoG50BVk34PHMGDg3hvHuXMi646ofSONg0I8WhFmeuZr9fVZUUI1a8rocMt2/3n5/Sy/LKgp0ywA0aXyitcNIv+axHNk2o9IdTUv9WTTukMB3ydDnrboT3W1gcohGo9rpWLC6X9wpk64CbOVmpR+Gi84hqxCZwevlIu2DYBC1cmshEMRapZ2KZaKjqcnvUZFkPH7VjnhaD2f++O50PRw7nDzQZjeJV7bsyNIV0j5zV+9gm1BmYfAP0XjZEnV/wk1vVgqZkS0xGeLmzgj1iDbBj6PSwn9DOeeGOtx/rxaxKMy5BIVR9CK0Ebe8mf6ZS0hxt44S7Ox+FePy",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 802,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 307,
+        "completionTokensDetails": {
+          "reasoningTokens": 41
+        },
+        "totalTokens": 1109,
+        "cost": 0.00175275,
+        "costDetails": {
+          "upstreamInferenceCost": 0.00175275
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

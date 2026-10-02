@@ -1,0 +1,40 @@
+{
+  "text": "{\"selectedCommit\":\"4ee79ae83bd7\",\"selectedModel\":\"unknown\",\"scores\":{\"readability\":97,\"technicalAccuracy\":100,\"coherence\":98,\"relevance\":100,\"translationQuality\":97,\"mdxPreservation\":76,\"culturalAdaptation\":97,\"languagePurity\":99},\"suggestions\":[{\"priority\":\"high\",\"match\":\"import Challenge from '../../../../components/QuizUI/Challenge';\\nimport QuizUI from '../../../../components/QuizUI/QuizUI';\",\"replacement\":\"import Challenge from '../../../components/QuizUI/Challenge';\\nimport QuizUI from '../../../components/QuizUI/QuizUI';\",\"reason\":\"The candidate changes both import paths. With no target-path information establishing a required relocation, preserve the source imports to avoid broken component resolution.\"},{\"priority\":\"high\",\"match\":\"social_image: ../desktop-social.webp\",\"replacement\":\"social_image: ./desktop-social.webp\",\"reason\":\"Preserve the source asset path; the additional parent-directory traversal is unsupported by the supplied target-path information.\"},{\"priority\":\"high\",\"match\":\"cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp\\ncover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp\\ncover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp\",\"replacement\":\"cover_full_width: logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp\\ncover_mobile: logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp\\ncover_icon: logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp\",\"reason\":\"The candidate changes all cover asset paths without a documented relocation rule, potentially breaking image resolution.\"},{\"priority\":\"medium\",\"match\":\"---\\ntitle: 'Quiz: símbolos y propiedades enumerables'\",\"replacement\":\"---\\nunlisted: false\\ndate: 2024-10-31\\ntitle: 'Quiz: símbolos y propiedades enumerables'\",\"reason\":\"Restore the omitted publication date and listing metadata; these are non-reader-facing fields that must be preserved.\"},{\"priority\":\"medium\",\"match\":\"sourceHash: \\\"2f893bc4aee3\\\"\\n\",\"replacement\":\"\",\"reason\":\"The source contains no sourceHash field, and no instruction authorizes adding generated metadata.\"}],\"rationale\":\"The Spanish is natural, complete, and within the required length range. All quiz answers, technical explanations, and code are preserved. Publication is blocked by unsupported import and asset-path changes and altered frontmatter metadata, not by translation quality.\",\"publishReady\":false}",
+  "usage": {
+    "inputTokens": 4681,
+    "inputTokenDetails": {
+      "noCacheTokens": 4681,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 4678
+    },
+    "outputTokens": 571,
+    "outputTokenDetails": {
+      "textTokens": 571,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 5252
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [],
+      "usage": {
+        "promptTokens": 4681,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 571,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 5252,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.017411
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

@@ -1,0 +1,54 @@
+{
+  "text": "{\n  \"selectedCommit\": \"d5f205f26994\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 96,\n    \"technicalAccuracy\": 98,\n    \"coherence\": 97,\n    \"relevance\": 99,\n    \"translationQuality\": 96,\n    \"mdxPreservation\": 79,\n    \"culturalAdaptation\": 96,\n    \"languagePurity\": 98\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"social_image: ../desktop-social.webp\",\n      \"replacement\": \"social_image: ./desktop-social.webp\",\n      \"reason\": \"The asset reference differs from the source. With no target-path information or relocation rule supplied, changing the relative directory is unsupported and may break the social image.\"\n    },\n    {\n      \"priority\": \"high\",\n      \"match\": \"cover_full_width: ../currency-banner-wide.webp\\ncover_mobile: ../currency-banner-pic__w200.webp\\ncover_icon: ../currency-banner-pic__w200.webp\",\n      \"replacement\": \"cover_full_width: currency-banner-wide.webp\\ncover_mobile: currency-banner-pic__w200.webp\\ncover_icon: currency-banner-pic__w200.webp\",\n      \"reason\": \"Preserve the source asset references unless a known localization asset-path rule requires relocation. The added parent-directory prefixes may resolve to incorrect files.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"modified: '2024-09-03'\",\n      \"replacement\": \"draft: false\\ndate: 2024-08-28\\nmodified: '2024-09-03'\",\n      \"reason\": \"The candidate drops the source draft status and publication date. These are non-reader-facing metadata and should be preserved.\"\n    },\n    {\n      \"priority\": \"medium\",\n      \"match\": \"sourceHash: \\\"35a9fa8c75e4\\\"\\n\",\n      \"replacement\": \"\",\n      \"reason\": \"This metadata field is absent from the source, and no instruction authorizes adding it. Remove the unsupported metadata addition.\"\n    }\n  ],\n  \"rationale\": \"The Japanese is natural, complete, and faithful to the technical content and informal tone. Code, external links, and MDX structure are preserved, and the localized same-page links appropriately follow the translated headings. Publication is blocked by unsupported asset-path changes and frontmatter omissions/additions, not by translation quality.\",\n  \"publishReady\": false\n}",
+  "usage": {
+    "inputTokens": 3473,
+    "inputTokenDetails": {
+      "noCacheTokens": 3473,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 3470
+    },
+    "outputTokens": 588,
+    "outputTokenDetails": {
+      "textTokens": 531,
+      "reasoningTokens": 57
+    },
+    "totalTokens": 4061
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "OpenAI",
+      "reasoning_details": [
+        {
+          "type": "reasoning.summary",
+          "summary": "**Evaluating instructions for restoration**\n\nI need to assess different paths and make sure to preserve the instructions for restoration. I’m thinking about using a full-width format for the GitHub slug, which involves removing punctuation. Should I use a globe emoji in its original variation? If there’s no variation in the source for the globe emoji, then that’s fine. I also need to clean up metadata related to the date and source hash, focusing on high and medium scores along the way.",
+          "format": "openai-responses-v1",
+          "index": 0
+        },
+        {
+          "type": "reasoning.encrypted",
+          "data": "gAAAAABqv0_oF2qJkOuOl5f2ldS4BS1AkJB-4nolsZYxCZWX-U46pco6fxCpg6qsmTPi_8l7O-tC7yNwLAAJEKCXJJzm63hgE2WOb7CwH4Do7BUlhApvczMLfd4uLcioXPxSG6ucUrF80gzeaNbVDAqPmFx-mHjP5FjOG_JhmPeY04ncEzS0wef0d_lW5g1yMX9IpY_lRjIO05fDLxdnJa3vSO95FVE3pBK5IDUqtk8Sh6ovFA7ZUXnXMkm4SZ635VWN7nZk2JM15JPCTmshgRBB47EAczfOjuE-rLm8bTUzJosWSQLWpvgPCd3LlI0EUSiLSqxRVewZdFZro21uHBCLojJTqDwNISu9nE2XVKY2QUQOQutum6_cZfz8AhlZgkW481q2Kt6-P8cE8XA4hrygqishjobwdxAw53A85lO7oS6yejZ9ol9nc-I-g5Ivw6PWj7eUWFecxaDXTp-uGhjW4J_vtQaXmyQvh7tioaz0FzBPrxA4hzvBMGjTb20WD0NfX94JfR8v2DwYk_4jvxf26-n5oEmdaPuRi8ArI8DSSfZ67rE_LRcIO5T_oDNZrhl41Z66xVhjCO-CUGiP8Ugu-wYPVEft1jVO2-rrTVYL8u4NuEX6Oh4C1NQzrngeqOm8QuFqQm1CPuDU20eU-4_NmpoBiaVYZSEcrIPjMV6iJY9ZQk2vJ8O41LLbSjkuckuse7yTTRbjlH5SokXwF8SwprrFJeyuwknS5UVssz1GZe2Il6glq3Lt6ekKCaJfQjasR3MJdS9a1GfQoI34jCjzDpbfZvL82BoPn6pXuhmOf0rKKVZmZbE-3C_beDbLU-sYs_crSW98qzrnhFkpwBBK2iPJN3R16inJR8x0WPlKBdhjkD75nVwdjjtZ0ItMIP-tiNtqcUxnv9wiH68Ix7HusfBzEjShAZ-cvEZ3D4sgJlTETWGsECv2Y8-crEF3TT9oCLbUgcuVyInPEzQjhxPneFB_tWP_Xf9muxV16UwzCo4OjbgQaBVC53T2_ZnIkgzXWoGbTcxC9n6Ji_RS1SiJ8JF9Z0fNKv3zEDLAtuItpwdn116_gfackPotwVGIm4IJBu6VinqJMPTarYh-px8our671nRWhWIuMOw8UrvVyjB07thVHqeh-ex-Fcmm1OLUyn-uHn3A4oxcP63LHDclmUrxfLIUKGT-5XzOe7H91qgudQW0QC4IH8qx-5aSe2Kb-P8neCciIGQeltK_UTU4aGIpDJ0xjedfLaMiMrNDfrHFSmvaua69PtCI9gxSczdB5kkgVLcFvf_MJZ_Os97HOtoggWitijPUuI6Ihchpp7i3KRA9NDMZeTH09Z-eKkZFI_-bJ4K6YCINN0geywopZd3l1DuJ-Id2uYKR01MnoKOPV7d8x6EMpWWYSr5NJSkIr3YsuFG8LjICVMBXGWBXXvsjswRlSBCUIdZMuK8NJ3JAe0hI1WxOXMA2oSuhzBGGYsWbT0Q_DPG3XuvGeKBFvlFkNlW6-nr1x_XbgZA490OhFXbba9_Iba-tDecuvtOws4VXIzy2U3DTxrshKRGmX6KUAD51U-yUQUTLBGSx-Htdbvku_9j0WE9PhZcVihLtGksVAxZPns6yKKKha9KNMQv-sgEMy9nEDJGs04JwQiNpg7PkQPIOvg9Fp_87UOq8es_l36mj0Tche2fhnRT2KBe6uky_injlV-jA_QlbURzuXcZc3dl0526i4Ax0opLBawfYffB3B1MIPC1GmPc8z3KkEVLCQP_zwObBJSscJQ_2yxR_XrNVivoccB7jZc2PdBctyxrl.eyJlbmRwb2ludF9zbHVnIjoib3BlbmFpL2dwdC02LjEtc29sLTIwMjYwOTI5fG9wZW5haSJ9",
+          "id": "rs_05958abc1f371669016abf4fe4517c87d199d66c9b85617975",
+          "format": "openai-responses-v1",
+          "index": 1
+        }
+      ],
+      "usage": {
+        "promptTokens": 3473,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 588,
+        "completionTokensDetails": {
+          "reasoningTokens": 57
+        },
+        "totalTokens": 4061,
+        "cost": 0,
+        "costDetails": {
+          "upstreamInferenceCost": 0.014561
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

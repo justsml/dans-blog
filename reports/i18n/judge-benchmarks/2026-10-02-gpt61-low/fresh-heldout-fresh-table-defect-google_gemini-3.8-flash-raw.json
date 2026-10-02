@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"1ce98417bb75\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 90,\n    \"technicalAccuracy\": 60,\n    \"coherence\": 80,\n    \"relevance\": 75,\n    \"translationQuality\": 65,\n    \"mdxPreservation\": 100,\n    \"culturalAdaptation\": 90,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"| Europa | 12 |\\n| América | 5 |\",\n      \"replacement\": \"| Europa | 12 |\\n| Asia | 8 |\\n| América | 5 |\",\n      \"reason\": \"The row for Asia ('| Asia | 8 |') was omitted from the table, contradicting the subsequent text stating that all three regions are supported.\"\n    }\n  ],\n  \"rationale\": \"The translation omitted an entire row in the table ('Asia | 8'), which is a significant technical omission especially when the text directly below references all three regions.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 698,
+    "inputTokenDetails": {
+      "noCacheTokens": 698,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 280,
+    "outputTokenDetails": {
+      "textTokens": 280,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 978
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1/RZEtCT9RPMxAKZEPF6qjgQuK6oQVm/iu3+9+rtsdmEzz71ZNcvipjttBwiGwhZpg7viO9DbxguC7y6Zt8D04dMZpQWD9eXAHqfpswS4O9Mxr6",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 698,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 280,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 978,
+        "cost": 0.0015735,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0015735
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}

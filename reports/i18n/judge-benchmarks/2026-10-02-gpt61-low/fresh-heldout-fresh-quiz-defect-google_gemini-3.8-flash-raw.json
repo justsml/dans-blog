@@ -1,0 +1,47 @@
+{
+  "text": "```json\n{\n  \"selectedCommit\": \"91a626c6e8c9\",\n  \"selectedModel\": \"unknown\",\n  \"scores\": {\n    \"readability\": 95,\n    \"technicalAccuracy\": 20,\n    \"coherence\": 90,\n    \"relevance\": 95,\n    \"translationQuality\": 60,\n    \"mdxPreservation\": 95,\n    \"culturalAdaptation\": 90,\n    \"languagePurity\": 95\n  },\n  \"suggestions\": [\n    {\n      \"priority\": \"high\",\n      \"match\": \"options={[{text:'[]'},{text:'0',isAnswer:true}]}\",\n      \"replacement\": \"options={[{text:'[]',isAnswer:true},{text:'0'}]}\",\n      \"reason\": \"The candidate inverted the quiz answer. '[]' is truthy, while '0' is falsy in JavaScript. The source marks '[]' as isAnswer:true.\"\n    }\n  ],\n  \"rationale\": \"The translation introduced a critical technical inaccuracy: it inverted the quiz answer in the Challenge component, marking '0' as `isAnswer:true` instead of `[]`. In JavaScript, `0` is falsy and `[]` is truthy, which also contradicts the translated explanation.\",\n  \"publishReady\": false\n}\n```",
+  "usage": {
+    "inputTokens": 828,
+    "inputTokenDetails": {
+      "noCacheTokens": 828,
+      "cacheReadTokens": 0,
+      "cacheWriteTokens": 0
+    },
+    "outputTokens": 314,
+    "outputTokenDetails": {
+      "textTokens": 314,
+      "reasoningTokens": 0
+    },
+    "totalTokens": 1142
+  },
+  "providerMetadata": {
+    "openrouter": {
+      "provider": "Google",
+      "reasoning_details": [
+        {
+          "type": "reasoning.text",
+          "signature": "AY89a1++oA8un2PuQLbrL1OsnGU6Q6/zavctiZEO8ggyBbfRJeFHcWcqATGvfHX0OFgDvQ9c6CrEJ//+E/sMNJ8/A/vXqzBHdRPkQXDvOdSss1+tF4kx",
+          "format": "google-gemini-v1",
+          "index": 0
+        }
+      ],
+      "usage": {
+        "promptTokens": 828,
+        "promptTokensDetails": {
+          "cachedTokens": 0
+        },
+        "completionTokens": 314,
+        "completionTokensDetails": {
+          "reasoningTokens": 0
+        },
+        "totalTokens": 1142,
+        "cost": 0.0017985,
+        "costDetails": {
+          "upstreamInferenceCost": 0.0017985
+        }
+      }
+    }
+  },
+  "finishReason": "stop",
+  "warnings": []
+}
