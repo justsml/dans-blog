@@ -1,7 +1,8 @@
-# Judge decision: semantic-vector-search-landscape / hi
+# Translation Judge
 
-Selected candidate: `af140620bfc2d5fc3890430727c2610495df1953` (`openrouter/moonshotai/kimi-k2.6`).
+- Selected candidate: 9db1c69f2be469310d04eb154a210e644a4552d6
+- Selected model: openrouter/openai/gpt-5.6-luna
+- Judge model: openrouter/google/gemini-3.8-flash
+- Confidence: high (0.879)
 
-This was the best available Hindi translation because it preserved the article structure, kept the technical examples intact, and read more naturally than the other complete candidates. The Qwen candidate left large sections in English and felt like mixed-source output. Gemini and z-ai were more localized, but introduced more awkward phrasing and more editorial drift.
-
-The judge model ran out of OpenRouter credits before writing this full report or restoring the selected file, so this follow-up records the same selection and restores the selected candidate.
+The pre-publish fix from pass 2 was successfully applied: `[इस तुलना को कैसे पढ़ें](#तुलना-को-कैसे-पढ़ें)` now precisely matches the target heading slug. Code blocks, frontmatter, heading counts, and table structures are intact with zero remaining high- or medium-priority issues.
