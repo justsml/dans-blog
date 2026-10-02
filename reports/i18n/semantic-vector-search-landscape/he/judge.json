@@ -1,24 +1,52 @@
 {
-  "selectedCommit": "current",
-  "selectedModel": "current",
+  "selectedCommit": "1d37b182af1ea426d4d4bd179553acee318d4f43",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 98,
+    "readability": 94,
+    "technicalAccuracy": 95,
     "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 95,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "relevance": 96,
+    "translationQuality": 94,
+    "mdxPreservation": 92,
+    "culturalAdaptation": 92,
+    "languagePurity": 96
   },
-  "suggestions": [],
-  "rationale": "The current translation is excellent. It maintains Dan's direct tone, uses accurate technical terminology in Hebrew (e.g., using 'הטמעה' for embedding while keeping the English term for clarity), and correctly handles the MDX structure. The candidate 659128a9780017c6b4a0c7bfb5df3144c6f15e38 is also very good but has a few minor issues: it uses 'משולב' instead of 'היברידי' in the subtitle (hybrid is the standard term in Hebrew tech circles), and it translates 'embeddings' as 'טבעות' in the final paragraph which is a hallucination/error (it should be הטמעות). The current version is more robust and technically sound.",
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "[איך לקרוא את ההשוואה הזו](#איך-לקרוא-את-ההשוואה)",
+      "replacement": "[איך לקרוא את ההשוואה הזו](#איך-לקרוא-את-ההשוואה)",
+      "reason": "The anchor matches the localized H3 heading '#איך-לקרוא-את-ההשוואה' exactly."
+    }
+  ],
+  "rationale": "Candidate 1d37b182af1ea426d4d4bd179553acee318d4f43 provides an accurate, idiomatically natural translation into Hebrew while maintaining Dan's direct tone and technical accuracy. Structural elements such as table columns, links, code blocks, frontmatter assets, and headings are properly preserved. The in-page anchor link correctly resolves to the slug generated from the translated heading.",
+  "confidence": "low",
+  "confidenceScore": 0.324,
+  "confidenceSignals": [
+    "1 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "semantic-vector-search-landscape",
   "locale": "he",
   "candidateCommits": [
-    "659128a9780017c6b4a0c7bfb5df3144c6f15e38"
+    "1d37b182af1ea426d4d4bd179553acee318d4f43"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "[איך לקרוא את ההשוואה הזו](#איך-לקרוא-את-ההשוואה)",
+      "replacement": "[איך לקרוא את ההשוואה הזו](#איך-לקרוא-את-ההשוואה)",
+      "reason": "The anchor matches the localized H3 heading '#איך-לקרוא-את-ההשוואה' exactly.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
