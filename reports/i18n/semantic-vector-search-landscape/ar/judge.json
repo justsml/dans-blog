@@ -1,61 +1,36 @@
 {
-  "selectedCommit": "ac208c5c1804bad0e7aa3098d6f09450f9982d4e",
-  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "selectedCommit": "a8f79cfa20715299fe232e102c3cef047aa78895",
+  "selectedModel": "openrouter/openai/gpt-5.6-luna",
   "scores": {
     "readability": 95,
-    "technicalAccuracy": 98,
+    "technicalAccuracy": 96,
     "coherence": 95,
-    "relevance": 100,
-    "translationQuality": 92,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 90,
-    "languagePurity": 95
+    "relevance": 96,
+    "translationQuality": 96,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 94,
+    "languagePurity": 97
   },
   "suggestions": [],
-  "rationale": "The candidate translation is excellent and already incorporates the fixes mentioned in the previous judge report (the 'Rule of Thumb' list is already translated in the provided MDX content). It maintains technical accuracy, preserves MDX structure, and captures the author's direct style effectively. No further high-priority suggestions are needed.",
+  "rationale": "Candidate a8f79cfa20715299fe232e102c3cef047aa78895 provides an exceptionally clean, natural, and technically precise translation into Arabic. It correctly localizes the intra-page anchor link ([كيفية قراءة هذه المقارنة](#كيف-تقرأ-المقارنة) matching ## كيف تقرأ المقارنة), handles technical terms like sparse vectors (المتجهات المتناثرة) and Disk-based index (فهرس على القرص) elegantly, and preserves code blocks and frontmatter without issues.",
+  "confidence": "high",
+  "confidenceScore": 0.881,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
   "slug": "semantic-vector-search-landscape",
   "locale": "ar",
   "candidateCommits": [
-    "ac208c5c1804bad0e7aa3098d6f09450f9982d4e"
+    "60f0ee1ce8c87ba102506e31c56960b13baae2ea",
+    "a8f79cfa20715299fe232e102c3cef047aa78895"
   ],
-  "suggestionLog": [
-    {
-      "priority": "high",
-      "match": "- Users complain about typos not matching → add `pg_trgm`",
-      "replacement": "- يشتكي المستخدمون من عدم مطابقة الأخطاء الإملائية ← أضف `pg_trgm`",
-      "reason": "This list item was left in English in the candidate.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- Users search by concept and miss relevant results → add pgvector",
-      "replacement": "- يبحث المستخدمون بالمفهوم ويفوتهم النتائج ذات الصلة ← أضف pgvector",
-      "reason": "This list item was left in English in the candidate.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- Users search for exact symbols or codes and get conceptual results instead → add FTS or check if you're over-relying on vector search",
-      "replacement": "- يبحث المستخدمون عن رموز أو أكواد دقيقة ويحصلون على نتائج مفهومية بدلاً من ذلك ← أضف FTS أو تحقق مما إذا كنت تعتمد بشكل مفرط على البحث المتجهي",
-      "reason": "This list item was left in English in the candidate.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "- Latency becomes a problem → evaluate pre-filtering, approximate indexes, or a dedicated store",
-      "replacement": "- يصبح زمن الاستجابة مشكلة ← قيم ما قبل الترشيح، الفهارس التقريبية، أو مخزن مخصص",
-      "reason": "This list item was left in English in the candidate.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    }
-  ],
+  "suggestionLog": [],
   "validation": {
     "ok": true,
     "scope": "local",
