@@ -1,0 +1,226 @@
+---
+unlisted: false
+draft: true
+title: "LLM-Powered Translations (i18n)"
+subTitle: "Leveraging AI to Translate Content"
+date: 2024-12-08
+modified: 2024-12-09
+tags: [ai, translation, i18n, l10n, astro, llm]
+category: AI
+subCategory: Translation
+# social_image: mobile.webp
+cover_full_width: translations-cyberscape-wide.webp
+cover_mobile: translations-cyberscape-square.webp
+cover_icon: translations-cyberscape-square.webp
+---
+
+<p class="inset">In my previous post, I shared how I've been [using AI to enhance my content creation workflows.](/replacing-my-job-with-gpt-and-llm/) One of the most impactful applications has been **localizing content** for a global audience. By leveraging AI tools like GPT-4*, Llama 3, Mistral, and other (Large Language Models), I've been able to translate over 50 posts into many languages while maintaining cultural nuance.</p>
+
+In this post, I'll dive deeper into how I've integrated AI-powered translations into my content creation pipeline, the benefits I've experienced, and the considerations to keep in mind when using these tools.
+
+## Requirements
+
+I wanted both component-level translations (for Button Labels, alt text) and full-page translations (for complete blog posts). I've worked with either approach at various companies, and each has left me missing features from the other approach.
+
+### Must-Haves
+
+- **Be Component-level:** I wanted to be able to translate individual substrings.
+- **Support full page translations:** I wanted a way to translate entire posts. (1,500-30,000 tokens.)
+- **Support multiple languages:** I needed a way to manage translations for many different languages.
+- **Integrate with my existing Astro setup:** I wanted a solution that could seamlessly integrate with my Astro project.
+- **Speed** I needed something that wouldn't interfere with my site's 99/100 Lighthouse score.
+- **Flexibility:** I wanted to be able to easily switch between different translation services or models.
+- **Cost-effective:** I needed a solution that wouldn't break the bank. (Free)
+- **SEO-friendly:** I wanted a solution that wouldn't negatively impact my site's SEO.
+
+### Nice-to-Haves
+
+- **Customizable:** I wanted to be able to fine-tune translations for specific languages or regions.
+- **Automated:** I wanted a solution that could automatically detect the language of a page and serve the appropriate translation.
+- **Offline support:** I wanted a solution that could work offline or with intermittent internet connectivity.
+- **Collaborative:** I wanted a solution that could support multiple contributors working on translations simultaneously.
+
+## Component Translations
+
+I've used a few different approaches to handle component-level translations in the past, from manual JSON files, to more robust solutions with [react-i18next](https://react.i18next.com/) and 3rd party translation services. 
+
+For my blog I wanted a lightweight solution that could handle translations for individual components, like button labels, alt text, and other small strings.
+
+I ultimately decided to use the [Paraglide](https://inlang.com/m/gerre34r/library-inlang-paraglideJs/) plugin. It's a lightweight, flexible solution that works well with my existing Astro setup.
+
+It relies on a config file w/ translations.
+
+```json translations.json
+{
+  "en": {
+    "form": {
+      "submit": "Submit",
+      "cancel": "Cancel"
+    }
+  },
+  "fr": {
+    "form": {
+      "submit": "Soumettre",
+      "cancel": "Annuler"
+    }
+  }
+}
+```
+
+To add a new language, I wrote a simple script to send the JSON file to a translation service and update the config file with the translated strings.
+
+```txt prompt.txt
+Translate the following JSON dictionary file into Japanese.
+
+{
+  "en": {
+    "button": {
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "quiz": {
+      "start": "Start Quiz",
+      "explanation": "Show Explanation",
+      "next": "Next Question",
+      "checkScore": "Check Score"
+    },
+    "site": {
+      "logo": "Logo"
+    },
+    "categories": {
+      "quiz": "Quiz",
+      "post": "Post",
+      "about": "About"
+    }
+  }
+}
+```
+
+From the prompt, the translation service would generate the following JSON file.
+
+```json translations.json
+{
+  "en": {
+    "button": {
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "quiz": {
+      "start": "Start Quiz",
+      "explanation": "Show Explanation",
+      "next": "Next Question",
+      "checkScore": "Check Score"
+    },
+    "site": {
+      "logo": "Logo"
+    },
+    "categories": {
+      "quiz": "Quiz",
+      "post": "Post",
+      "about": "About"
+    }
+  },
+  "ja": {
+    "button": {
+      "submit": "送信",
+      "cancel": "キャンセル"
+    },
+    "quiz": {
+      "start": "クイズを開始",
+      "explanation": "説明を表示",
+      "next": "次の質問",
+      "checkScore": "スコアを確認"
+    },
+    "site": {
+      "logo": "ロゴ"
+    },
+    "categories": {
+      "quiz": "クイズ",
+      "post": "投稿",
+      "about": "概要"
+    }
+  }
+}
+```
+
+
+## Solution: LLM-Powered Translations
+
+I've used many translation services in the past, from humble manual JSON files, Google's Translate API, and other 3rd party services. Since the rise of LLMs, I've been curious to see how well they could help me translate my technical content.
+
+### Step 1: Setting Up the LLM
+
+I used LMStudio to fine-tune my translation prompts against many local models, models & configurations. I also used services including GPT-4, Claude Sonnet, to compare with.
+
+Part of the challenge was figuring out the right prompt to get the model to understand my content.
+
+A key insight was using the LLM to analyze each page, and generate a tailored prompt specific to each language (and possibly country.)
+
+```text
+Generate a prompt for translating the following markdown post into {{LANGUAGE}}. Include appropriate recent and cultural contextual awareness. Maintain a similar tone and style.
+```
+
+Then I'd feed the generated prompt with my markdown content into the LLM and generate the translated markdown.
+
+It's not beautiful, but it is a simple single script: `translator.ts`.
+
+The main reason for writing a custom script was to customize the folder structure and file naming conventions to avoid a spanning mess of duplicate folder names.
+
+For example, this is what is recommended:
+
+```text
+src/
+  content/
+    posts/
+      es/
+        2024-12-01--post-title/
+          index.mdx
+        2025-01-31--another-post-title/
+          index.mdx
+      fr/
+        2024-12-01--post-title/
+          index.mdx
+        2025-01-31--another-post-title/
+          index.mdx
+      de/
+        2024-12-01--post-title/
+          index.mdx
+        2025-01-31--another-post-title/
+          index.mdx
+      2024-12-01--post-title/
+        index.mdx
+      2025-01-31--another-post-title/
+        index.mdx
+```
+
+### That's a lot of noise
+
+I wanted to avoid this mess, so I wrote a script that would generate the following structure:
+
+```text
+// 👍 ✅
+2024-12-01--post-title/
+  index.mdx
+  es.mdx
+  fr.mdx
+  de.mdx
+```
+
+This is quite different from the folder based approaches, but it works well for my needs. I can easily see all the translations for a post in one place. This makes it easier to manage and update translations incrementally.
+
+### Step 2: Translating the Content
+
+I used a combination of GPT-4, Llama 3, and Mistral to generate translations for my content. I found that each model had its strengths and weaknesses, and I often had to combine translations from multiple models to get the best results.
+
+I also used a custom script to fine-tune the translations for specific languages or regions. For example, I found that GPT-4 was great for translating technical content, while Llama 3 was better at capturing cultural nuances.
+
+### Step 3: Getting Feedback
+
+Once I had the translated content, I shared it with a few native speakers and translators to get feedback. This step was crucial for ensuring that the translations were accurate and culturally appropriate.
+
+## To be continued...
+
+I'll be posting the final translations and more details on the rest of my journey soon.
+
+<p class="inset">Stay tuned!</p>
+
