@@ -1,3 +1,5 @@
+import { surfaces } from "./surfaces";
+
 const themeMedia = matchMedia("(prefers-color-scheme: dark)");
 function preference() {
   try { return localStorage.getItem("design-lab-theme") || "system"; }
@@ -12,6 +14,22 @@ function initialize() {
   listeners?.abort();
   listeners = new AbortController();
   const { signal } = listeners;
+  const surfaceSelect = document.querySelector<HTMLSelectElement>("#surface-select");
+  const surfaceDescription = document.querySelector<HTMLElement>("#surface-description");
+  function describeSurface() {
+    const surface = surfaces.find(({ id }) => id === document.documentElement.dataset.surface);
+    if (surfaceDescription) surfaceDescription.textContent = surface ? (document.body.classList.contains("article-page") ? surface.article : surface.home) : "The original, untextured background.";
+  }
+  if (surfaceSelect) surfaceSelect.value = document.documentElement.dataset.surface ?? "cotton";
+  describeSurface();
+  surfaceSelect?.addEventListener("change", () => {
+    document.documentElement.dataset.surface = surfaceSelect.value;
+    try { localStorage.setItem("design-lab-surface", surfaceSelect.value); } catch { /* The current page still updates. */ }
+    const url = new URL(location.href);
+    url.searchParams.set("surface", surfaceSelect.value);
+    history.replaceState(history.state, "", url);
+    describeSurface();
+  }, { signal });
   applyTheme();
   const theme = document.querySelector<HTMLSelectElement>("#theme-select");
   if (theme) theme.value = preference();

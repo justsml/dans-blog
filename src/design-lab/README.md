@@ -47,3 +47,19 @@ To remove the experiment, delete `src/design-lab/` and `src/pages/designs/`, and
 remove `tests/e2e/warm-editorial.spec.ts` and the `/designs/` entry from
 `ignorePaths` in `astro.config.mjs`. Generated
 reference images and prompts remain in `output/design-mockups/2026-10-02/`.
+
+## Background experiments
+
+Warm layouts include a Background picker with five treatments: Cotton stock
+(fine paper tooth), Morning mist (clouded edges), Mineral wash (clay and sage
+pigment), Sunday edition (dry newsprint grain), and Window light (diffuse garden
+light). Plain paper disables every texture. Share a choice with `?surface=cotton`,
+`mist`, `mineral`, `press`, or `light`; it is also remembered across layout changes
+and article navigation. A valid URL choice overrides the saved preference.
+
+Articles automatically use a quieter version, preserving the central reading
+column and stopping decorative movement. Dark mode uses lower-opacity grain and
+muted color. Window light drifts slowly on homepages only; reduced motion stops
+it. Print omits all effects and the picker. The three small procedural SVG tiles
+live in `textures/`; `surfaces.css` owns the entire effect and is scoped to warm
+preview layouts. No production backgrounds or dependencies change.

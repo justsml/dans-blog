@@ -2,7 +2,9 @@
 import { ClientRouter } from "astro:transitions";
 import { designs, warmDesigns, isWarmDesign, type Design } from "./designs";
 import Footer from "./Footer.astro";
+import SurfacePicker from "./SurfacePicker.astro";
 import "./styles.css";
+import "./surfaces.css";
 interface Props { design: Design; title?: string; article?: boolean }
 const { design, title, article = false } = Astro.props;
 const current = designs.find((item) => item.id === design)!;
@@ -27,6 +29,22 @@ const options = warm ? warmDesigns : designs;
         document.documentElement.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       }
     </script>
+    <script is:inline data-astro-rerun>
+      (() => {
+        const allowed = ["none", "cotton", "mist", "mineral", "press", "light"];
+        let surface = "cotton";
+        const query = new URL(location.href).searchParams.get("surface");
+        try {
+          const saved = localStorage.getItem("design-lab-surface");
+          if (saved && allowed.includes(saved)) surface = saved;
+        } catch { /* Storage is optional. */ }
+        if (query && allowed.includes(query)) {
+          surface = query;
+          try { localStorage.setItem("design-lab-surface", surface); } catch { /* URL selection still works. */ }
+        }
+        document.documentElement.dataset.surface = surface;
+      })();
+    </script>
   </head>
   <body class:list={[design, { "warm-editorial": warm && design !== "warm-editorial", "article-page": article }]} data-warm={warm ? true : undefined} data-pagefind-ignore="all">
     <a class="skip-link" href="#main">Skip to articles</a>
@@ -37,6 +55,7 @@ const options = warm ? warmDesigns : designs;
       </div>
       <a class="live-link" href="/">Current site ↗</a>
     </nav>
+    {warm && <SurfacePicker article={article} />}
     <div class="site-shell">
       <header class="site-header">
         <a class="wordmark" href={`/designs/${design}/`}>DanLevy<span>.net</span></a>
