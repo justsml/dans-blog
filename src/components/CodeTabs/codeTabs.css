@@ -174,7 +174,7 @@ This is the inner tab bar that contains the title and the frame.
     border-top: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndTopCol) !important;
   }
   &:hover::after {
-    border-top: var(--ec-frm-edActTabIndHt) solid hsl(var(--neon-cyan)) !important;
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--paper-blue) !important;
   }
 
   /* &.active::after {
@@ -184,13 +184,13 @@ This is the inner tab bar that contains the title and the frame.
   &.active {
     background-color: var(--ec-frm-trmTtbBrdBtmCol) !important;
     &::after {
-      border-top: var(--ec-frm-edActTabIndHt) solid hsl(var(--neon-pink)) !important;
+      border-top: var(--ec-frm-edActTabIndHt) solid var(--paper-accent) !important;
     }
 
     &:hover {
       background-color: var(--ec-frm-edActTabBg) !important;
       &::after {
-        border-top: var(--ec-frm-edActTabIndHt) solid hsl(var(--neon-pink)) !important;
+        border-top: var(--ec-frm-edActTabIndHt) solid var(--paper-accent) !important;
       }
     }
   }
@@ -199,7 +199,7 @@ This is the inner tab bar that contains the title and the frame.
 .codeTabs .tabBar .title.active:hover {
   background-color: var(--ec-frm-edActTabBg) !important;
   &::after {
-    border-top: var(--ec-frm-edActTabIndHt) solid hsl(var(--neon-cyan)) !important;
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--paper-blue) !important;
   }
 }
 
@@ -233,3 +233,7 @@ This is the inner tab bar that contains the title and the frame.
     animation: fadeInFast 0.5s forwards;
   }
 }
+
+.codeTabs .tabBar .title { color:var(--paper-muted); }
+.codeTabs .tabBar .title.active { color:var(--paper-ink); }
+@media(prefers-reduced-motion:reduce) { .codeTabs .expressive-code.slideOutRight,.codeTabs .expressive-code.fadeInFast { animation:none; } }

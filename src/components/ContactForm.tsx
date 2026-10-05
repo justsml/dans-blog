@@ -56,8 +56,8 @@ export function ContactForm({
     toast({
       title: copy.successTitle,
       description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{copy.sent}</code>
+        <pre className="mt-2 max-w-full rounded-sm bg-secondary p-4">
+          <code className="text-secondary-foreground">{copy.sent}</code>
         </pre>
       ),
     });
@@ -69,7 +69,7 @@ export function ContactForm({
       <form
         name="contact"
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-2/3 space-y-6 mt-10 mx-auto contact-form"
+        className="w-full max-w-xl space-y-6 mt-10 mx-auto contact-form"
         data-netlify="true"
         data-netlify-honeypot="botField"
         data-netlify-recaptcha="true"

@@ -1,0 +1,19 @@
+/* A calm, unrotated reading sheet. All hero variants share one media frame. */
+.post-page main.article { background:var(--paper-sheet); color:var(--paper-ink); box-shadow:var(--paper-shadow); border-block-start:5px solid var(--paper-blue); max-inline-size:1000px; margin:1.5rem auto 3rem; padding:clamp(1.25rem,4vw,3rem); --padding-inline:0rem; --content-max-width:760px; --breakout-max-width:900px; }
+.post-page main.article > h1.p-name { font-family:var(--paper-serif,Georgia,serif); font-weight:500; color:var(--paper-ink); font-size:clamp(2.2rem,5vw,4.2rem); line-height:1.1; letter-spacing:-.04em; margin-block:0 1rem; text-shadow:none; }
+.post-page main.article > h1.p-name::after { content:none; }
+.post-page main.article > .dek { color:var(--paper-muted); font-size:clamp(1.15rem,2vw,1.5rem); line-height:1.6; margin-block:0 1.5rem; }
+.post-page .post-meta { color:var(--paper-muted); font-size:.8rem; line-height:1.7; gap:.45rem .8rem; display:flex; flex-wrap:wrap; align-items:center; }
+.post-page .post-meta > * + *::before { content:none; }
+.post-page .translation-note { flex-basis:100%; margin-block:.5rem 0; font-size:.85rem; }
+.post-page .post-language-links,.post-page .draft-notice { padding:1rem; background:var(--paper-desk); border-inline-start:3px solid var(--paper-accent); color:var(--paper-ink); font-size:.9rem; margin-block:1rem; }
+.post-page main.article .banner-wrapper,.post-page main.article .hero-image { grid-column:breakout; display:block; inline-size:100%; margin:1.5rem 0 2rem; padding:.6rem; background:var(--paper-desk); box-shadow:var(--paper-shadow); position:relative; }
+.post-page .hero-image-wrapper { position:relative; }
+.post-page .banner-wrapper img,.post-page .hero-image-wrapper img { inline-size:100%; block-size:auto; max-block-size:none; object-fit:contain; display:block; opacity:1; filter:none; transform:none; margin:0; border:0; }
+.post-page .hero-credit { color:var(--paper-muted); padding:.6rem .25rem 0; font-size:.75rem; line-height:1.5; text-align:end; margin:0; }
+.post-page .hero-credit a { color:inherit; text-decoration:underline; }
+.post-page .comments-wrapper { background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); margin:2rem auto; padding:1.5rem; max-inline-size:900px; inline-size:calc(100% - 2rem); }
+.post-page .loading-msg { color:var(--paper-muted); font-size:.9rem; }
+.post-page .share-counters { color:var(--paper-muted); margin-block:1.5rem; }
+@media(max-width:600px) { .post-page main.article { margin:1rem .5rem 2rem; padding:1.25rem 1rem; } }
+@media print { .post-page main.article { box-shadow:none; border:0; padding:0; margin:0; } .post-page .comments-wrapper { display:none; } }

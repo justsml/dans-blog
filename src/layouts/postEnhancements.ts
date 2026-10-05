@@ -22,7 +22,7 @@ export function installPostEnhancementLifecycle() {
 export function bootPostEnhancements() {
   ensureArticleExternalLinksOpenInNewWindow();
   checkForEmptyShareCounts();
-  void bootBannerEffects();
+
 }
 
 export function ensureArticleExternalLinksOpenInNewWindow() {
@@ -38,17 +38,6 @@ export function ensureArticleExternalLinksOpenInNewWindow() {
 
     link.target = "_blank";
     link.rel = mergeRelTokens(link.rel, ["noopener", "noreferrer"]);
-  });
-}
-
-async function bootBannerEffects() {
-  const banner = document.querySelector(".banner-wrapper, .hero-image");
-  if (!banner || typeof window === "undefined") return;
-
-  const { initBannerEffects } = await import("../scripts/bannerEffects");
-  initBannerEffects("scanline", {
-    distortionStrength: 0.5,
-    scrollSensitivity: 0.125,
   });
 }
 

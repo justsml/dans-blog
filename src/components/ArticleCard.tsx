@@ -51,7 +51,7 @@ export const ArticleCard = ({
     typeof icon === "string" ? (
       <img
         src={icon}
-        alt={title}
+        alt={article.data.cover_alt || title}
         loading="lazy"
         decoding="async"
         width={width}
@@ -61,7 +61,7 @@ export const ArticleCard = ({
       icon && (
         <img
           src={icon.src}
-          alt={title}
+          alt={article.data.cover_alt || title}
           loading="lazy"
           decoding="async"
           width={icon.width}
@@ -110,7 +110,7 @@ export const ArticleCard = ({
         </h2>
       )}
       <p dangerouslySetInnerHTML={{ __html: subTitle.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
-      {image && <span className="article-card__media">{image}</span>}
+      {image && <span className="article-card__media" style={{ viewTransitionName: `article-image-${slug.replace(/^\/*|\/*$/g, "")}` }}>{image}</span>}
       <span className="article-card__meta" title={tags && tags.join(", ")}>
         {publishedDate && <time dateTime={publishedDate.toISOString()}>{dateLabel}</time>}
         <span>{readingTimeMinutes} min read</span>

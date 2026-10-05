@@ -16,7 +16,7 @@ import CategoryLink from "../components/CategoryLink.astro";
 import { ShareCounters } from "../components/ShareCounters";
 import PostLinkedData from "../components/Seo/PostLinkedData.astro";
 import ConsultingCTA from "../components/ConsultingCTA.astro";
-import "@/styles/banner-webgl.css";
+import "./post-paper.css";
 import { PostCollections } from "../shared/postsCache";
 import {
   DEFAULT_LOCALE,
@@ -337,6 +337,7 @@ const shouldCropMobileBanner =
             {/* LCP target — eager + high priority, preloaded in <head> */}
             <Image
               class="flow u-photo banner-image"
+              style={{ viewTransitionName: `article-image-${slug.replace(/^\/*|\/*$/g, "")}` }}
               src={cover_full_width as ImageMetadata}
               alt={heroAlt}
               format="webp"
@@ -356,6 +357,7 @@ const shouldCropMobileBanner =
                 {/* LCP target — eager + high priority, preloaded in <head> */}
                 <Image
                   class="u-photo"
+                  style={{ viewTransitionName: `article-image-${slug.replace(/^\/*|\/*$/g, "")}` }}
                   src={cover as ImageMetadata}
                   alt={heroAlt}
                   loading="eager"
@@ -442,36 +444,8 @@ const shouldCropMobileBanner =
           loadCodeFontStyles();
         }
 
-        const initialScrollY = window.scrollY;
-        const scrollAwayThreshold = initialScrollY + 160;
-        const returnThreshold = initialScrollY + 48;
-        let hasScrolledAwayFromHero = false;
-        let heroFallbackTimer: number | undefined;
+        loadPostEnhancements();
 
-        const activateHeroEffect = () => {
-          if (heroFallbackTimer) window.clearTimeout(heroFallbackTimer);
-          window.removeEventListener("scroll", watchForHeroReturn);
-          loadPostEnhancements();
-        };
-
-        const watchForHeroReturn = () => {
-          const currentScrollY = window.scrollY;
-
-          if (!hasScrolledAwayFromHero && currentScrollY >= scrollAwayThreshold) {
-            hasScrolledAwayFromHero = true;
-            return;
-          }
-
-          if (hasScrolledAwayFromHero && currentScrollY <= returnThreshold) {
-            activateHeroEffect();
-          }
-        };
-
-        // The decorative hero stays out of the initial render. It starts after
-        // ten seconds, or sooner only when a reader has left the hero and then
-        // returned to it.
-        window.addEventListener("scroll", watchForHeroReturn, { passive: true });
-        heroFallbackTimer = window.setTimeout(activateHeroEffect, 10_000);
       };
 
       if (document.readyState === "loading") {
@@ -480,24 +454,6 @@ const shouldCropMobileBanner =
         schedulePostWork();
       }
 
-      /**
-       * - Added a check to **prevent double-initialization**. Previously, the script ran twice (once on load, once on hydration), causing the "flash and vanish" bug.
-       * - Removed conflicting auto-initialization code.
-       * - **Final Window Reveal Logic**:
-       *     - **Fixed 200px Window**: The banner stays exactly 200px tall with `overflow: hidden`.
-       *     - **Native Scale (Un-resized)**: The shader now uses aspect-correct logic (similar to `object-fit: cover`). The image is NOT stretched or zoomed to fit the 200px height.
-       *     - **Interactive Pan**: As you scroll, the "window" pans over the full-scale image, revealing what was hidden.
-       *     - **Premium Polish & Accessibility**:
-       *         - **Subtle Distortion**: The liquid effects have been toned down for a more professional, sophisticated look.
-       *         - **Mouse Velocity**: The distortion now reacts to both scroll speed and **how fast you move your mouse** over the banner.
-       *         - **Reduced Motion Support**: Respects the `prefers-reduced-motion` system setting by disabling animations for an accessible experience.
-       * -   **Load & Style Polish**:
-       *     -   **Neon Borders**: Added top and bottom 1px neon pink borders (`--primary`) with a subtle glow.
-       *     -   **Jump-Free Load**: The banner now initializes its scroll position immediately, eliminating the "sliding into place" behavior on refresh.
-       *     -   **Smooth Reveal**: The effect now fades in over 800ms for a more cinematic entrance.
-       *
-       * This combination decouples the page layout from the WebGL rendering, ensuring a stable, performant experience.
-       */
     </script>
   </body>
 
