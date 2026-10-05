@@ -26,6 +26,12 @@ shadows, and typography.
 
 ## Ranked regeneration list
 
+### Proposal progress
+
+- Ranks 1–5: revised broad editorial proposals in [batch two](../../output/paper-atelier-heroes-v2/proposals.md).
+- Ranks 6–17: twelve new proposals, including PostgreSQL, AWS Storage, and Bash quizzes, in [batch three](../../output/paper-atelier-heroes-v3/proposals.md). Every Markdown row embeds the current wide cover alongside the new proposal. [Exact prompts, source files, alternatives, and crop guidance](../../output/paper-atelier-heroes-v3/manifest.json) are preserved.
+- These are wide candidates pending selection. Existing cover references remain in place; fresh square compositions and shared locale promotion follow selection.
+
 | Rank | Article / current thumbnail | Priority surface | Why replace it | Proposed direction |
 | --- | --- | --- | --- | --- |
 | 1 | [Announcing ExploitHunter.app](../../src/content/posts/2026-07-17--announcing-exploithunter-app/square.webp) | Homepage / favorites | Dark robot crowd and red lighting; weak focal point. | Layered folders passing through an inspection aperture; one rust evidence slip. |
