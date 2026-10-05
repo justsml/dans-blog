@@ -119,7 +119,7 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
     </div>
   </section>
 
-  <div class:list={["article-list"]} aria-label={copy.home.latestTitle}>
+  <div class:list={["article-list", "article-list--bento"]} aria-label={copy.home.latestTitle}>
     {
       posts.map((props: any) => (
         <ArticleCard article={props as ArticlePost} width={200} locale={locale} />

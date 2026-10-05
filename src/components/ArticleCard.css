@@ -315,7 +315,24 @@
 
 }
 
+/* Home uses position for its bento rhythm: a lead feature, compact cards,
+   and periodic wide cards. Popularity must not make every recent post wide.
+   The parent selector also covers cards appended by the More posts fragment. */
+.article-list--bento {
+  gap: clamp(0.5rem, 1vw, 0.85rem);
+}
+
+@media (min-width: 720px) and (max-width: 1039px) {
+  .article-list--bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 1040px) {
+  .article-list--bento {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .article-card {
     --article-compact-media-inline: 34%;
     --article-corner-media-block: 32%;
@@ -387,13 +404,13 @@
     mask-size: 100% 100%;
   }
 
-  .article-card:nth-child(6n + 2):not(.article-card--popular):not(:nth-child(9n + 5)) {
+  .article-card:nth-child(6n + 2):not(:is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child)):not(:nth-child(9n + 5)) {
     grid-row: span 3;
     padding-block-end: max(var(--article-card-pad), var(--article-corner-media-block));
     padding-inline-end: var(--article-card-pad);
   }
 
-  .article-card:nth-child(6n + 2):not(.article-card--popular):not(:nth-child(9n + 5)) .article-card__media {
+  .article-card:nth-child(6n + 2):not(:is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child)):not(:nth-child(9n + 5)) .article-card__media {
     aspect-ratio: 16 / 10;
     block-size: calc(var(--article-corner-media-block) + 1px);
     border-end-end-radius: 0;
@@ -402,7 +419,7 @@
     inset: auto -1px -1px auto;
   }
 
-  .article-card:nth-child(6n + 2):not(.article-card--popular):not(:nth-child(9n + 5)) .article-card__media::after {
+  .article-card:nth-child(6n + 2):not(:is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child)):not(:nth-child(9n + 5)) .article-card__media::after {
     background:
       linear-gradient(180deg, var(--article-card-bg) 0%, rgba(8, 14, 18, 0.86) 18%, transparent 54%),
       linear-gradient(90deg, var(--article-card-bg) 0%, rgba(8, 14, 18, 0.52) 18%, transparent 42%),
@@ -410,7 +427,7 @@
     opacity: 1;
   }
 
-  .article-card:nth-child(6n + 2):not(.article-card--popular):not(:nth-child(9n + 5)) .article-card__media img {
+  .article-card:nth-child(6n + 2):not(:is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child)):not(:nth-child(9n + 5)) .article-card__media img {
     -webkit-mask-image:
       linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.18) 18%, #000 48%),
       linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.12) 16%, #000 42%);
@@ -421,7 +438,7 @@
     mask-composite: intersect;
   }
 
-  .article-card--popular,
+  :is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child),
   .article-card:nth-child(9n + 5) {
     grid-column: span 2;
     grid-row: span 3;
@@ -435,26 +452,26 @@
     padding: var(--article-card-pad);
   }
 
-  .article-card--feature {
+  :is(.article-card--feature:not(.article-list--bento > *), .article-list--bento > .article-card:first-child) {
     --article-card-pad: clamp(0.9rem, 1.6vw, 1.15rem);
     grid-row: span 4;
     grid-template-columns: minmax(0, 1.2fr) minmax(13rem, 0.8fr);
   }
 
-  .article-card--feature .post-title {
+  :is(.article-card--feature:not(.article-list--bento > *), .article-list--bento > .article-card:first-child) .post-title {
     font-size: clamp(1.55rem, 3.7cqi, 2.15rem);
     line-height: 1.02;
   }
 
-  .article-card--popular .post-title,
+  :is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child) .post-title,
   .article-card:nth-child(9n + 5) .post-title,
-  .article-card--popular > p,
+  :is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child) > p,
   .article-card:nth-child(9n + 5) > p {
     display: block;
     overflow: visible;
   }
 
-  .article-card--popular .article-card__media,
+  :is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child) .article-card__media,
   .article-card:nth-child(9n + 5) .article-card__media {
     align-self: stretch;
     aspect-ratio: auto;
@@ -470,7 +487,7 @@
     position: relative;
   }
 
-  .article-card--popular .article-card__media img,
+  :is(.article-card--popular:not(.article-list--bento > *), .article-list--bento > .article-card:first-child) .article-card__media img,
   .article-card:nth-child(9n + 5) .article-card__media img {
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 10%, #000 32%);
     mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.16) 10%, #000 32%);
