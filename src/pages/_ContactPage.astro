@@ -166,4 +166,23 @@ const copy = getUiCopy(locale);
 .utility-sheet p { line-height:1.8; }
 .utility-eyebrow { color:var(--paper-accent); font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
 .text-center { margin-block-start:2rem; padding-block-start:1rem; border-block-start:1px solid var(--paper-line); }
+
+.utility-sheet :global(.contact-form) { display:grid; grid-template-columns:1fr; gap:1.25rem; max-width:600px; margin:1.5rem auto 0; }
+.utility-sheet :global(.contact-form .bot-food),
+.utility-sheet :global(.contact-form .success-message),
+.utility-sheet :global(.contact-form .error-message),
+.utility-sheet :global(.contact-form .loading-message) { display:none; }
+.utility-sheet :global(.contact-form .columns-all) { grid-column:1 / -1; }
+.utility-sheet :global(.contact-form .form-item) { min-width:0; margin:0; }
+.utility-sheet :global(.contact-form label) { color:var(--paper-ink); font-size:.85rem; font-weight:600; }
+.utility-sheet :global(.contact-form input),.utility-sheet :global(.contact-form textarea) { width:100%; min-height:44px; background:var(--paper-raised); color:var(--paper-ink); border:1px solid var(--paper-line); padding:.8rem; }
+.utility-sheet :global(.contact-form textarea) { min-height:150px; }
+.utility-sheet :global(.contact-form > button) { grid-column:1 / -1; min-height:44px; background:var(--paper-blue); color:var(--paper-sheet); border:1px solid var(--paper-blue); padding:.9rem 1.2rem; font-size:.9rem; font-weight:600; }
+.utility-sheet :global(.contact-form.loading .loading-message) { display:flex; justify-content:center; padding:1rem; color:var(--paper-muted); }
+.utility-sheet :global(.contact-form.loading > button) { opacity:.65; pointer-events:none; }
+.utility-sheet :global(.contact-form.success .form-item) { display:none; }
+.utility-sheet :global(.contact-form.success .success-message) { display:block; padding:1rem; border-inline-start:3px solid var(--paper-success); color:var(--paper-success); background:var(--paper-desk); }
+.utility-sheet :global(.contact-form.failure .error-message) { display:block; padding:1rem; border-inline-start:3px solid var(--paper-error); color:var(--paper-error); background:var(--paper-desk); }
+.utility-sheet :global(.contact-form.failure .success-message) { display:none; }
+@media(min-width:600px) { .utility-sheet :global(.contact-form) { grid-template-columns:1fr 1fr; } }
 </style>
