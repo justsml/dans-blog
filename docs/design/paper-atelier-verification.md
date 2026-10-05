@@ -34,3 +34,13 @@ Eight initial hero candidates are published in the comparison gallery, including
 both Postgres quizzes. Existing article frontmatter/final covers remain intact;
 ExploitHunter and llm connection strings need dedicated square recomposition
 before final promotion. Markdown proposals and exact prompts accompany the gallery.
+
+## Published preview
+
+https://warm-editorial-preview--danlevy.netlify.app/
+
+Netlify deployment: 6ac4218e0ad147d72012033e. Deployed ordinary routes,
+archive fragments, Pagefind, and hero gallery/Markdown return 200. Native live
+checks confirmed dark theme, 18 cards after the first append, 19 Pagefind results
+for postgres, and no desktop overflow. The comparison gallery has eight proposals.
+Deployment and HTTP receipts are archived with the browser matrix.
