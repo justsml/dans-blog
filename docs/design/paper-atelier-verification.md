@@ -14,6 +14,10 @@ Verified 2026-10-05 on the isolated design/warm-editorial branch.
 - Pagefind: `postgres` returns 19 results on the built site, with paper panel colors.
 - Pagination: eight requests append 18,27,36,45,54,63,72,78 unique cards; rapid
   double-clicks do not add requests or duplicates, and the terminal state appears.
+- Retry: a failed fragment request preserves all nine current cards and shows
+  a visible error; retry appends successfully to 18 cards.
+- History: returning from an article preserves all 78 loaded cards, the previous
+  card focus, and the reading position with the bounded in-memory cache.
 - Production quiz: lazy visible hydration works; first question changes from
   untouched to incorrect at one attempt, then correct at two attempts. Light
   question surface is ivory with ink text; dark mode uses the independent palette.
