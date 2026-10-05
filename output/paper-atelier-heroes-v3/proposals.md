@@ -8,7 +8,7 @@ Current article covers alongside new wide proposals. Built-in image generation; 
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2026-01-30--llm-connection-strings/hero-wide.webp) | ![An oxblood thread crosses ochre paper and gathers five distinct photographic scraps into one simple bound bundle.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2026-01-30--llm-connection-strings/paper-editorial-v3-continuous-thread.webp) |
 
-**One continuous thread.** Fresh square: recompose around the binding and three distinctive scraps; preserve the continuous thread. Shallow crop should retain knot and horizontal thread. Alternatives considered: Continuous thread unifying fragmented configuration; Portable accordion itinerary; One binding around incompatible loose swatches.
+**One continuous thread.** Decision: keep the existing LLM connection strings cover because it conveys important details. New proposal is retained for comparison only; do not promote it. Fresh square: recompose around the binding and three distinctive scraps; preserve the continuous thread. Shallow crop should retain knot and horizontal thread. Alternatives considered: Continuous thread unifying fragmented configuration; Portable accordion itinerary; One binding around incompatible loose swatches.
 
 ## 7. Quiz: Deep Postgres: Pt. 2
 

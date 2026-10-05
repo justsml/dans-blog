@@ -30,7 +30,8 @@ shadows, and typography.
 
 - Ranks 1–5: revised broad editorial proposals in [batch two](../../output/paper-atelier-heroes-v2/proposals.md).
 - Ranks 6–17: twelve new proposals, including PostgreSQL, AWS Storage, and Bash quizzes, in [batch three](../../output/paper-atelier-heroes-v3/proposals.md). Every Markdown row embeds the current wide cover alongside the new proposal. [Exact prompts, source files, alternatives, and crop guidance](../../output/paper-atelier-heroes-v3/manifest.json) are preserved.
-- These are wide candidates pending selection. Existing cover references remain in place; fresh square compositions and shared locale promotion follow selection.
+- Rank 6, LLM connection strings: user chose to retain the existing image because it conveys important details; exclude this family from further regeneration.
+- The other new images are wide candidates pending selection. Existing cover references remain in place; fresh square compositions and shared locale promotion follow selection.
 
 | Rank | Article / current thumbnail | Priority surface | Why replace it | Proposed direction |
 | --- | --- | --- | --- | --- |
@@ -39,7 +40,7 @@ shadows, and typography.
 | 3 | [Don't Fear the Model Router](../../src/content/posts/2026-07-03--dont-fear-the-model-router/square.webp) | Homepage | Busy cartoon control room, character, and many small signals. | A single paper routing gate dividing three channels, with one selected path. |
 | 4 | [Into the Breach](../../src/content/posts/2026-05-13--into-the-breach/square.webp) | Homepage / favorites | Bright toy bricks and baked-in security labels. | Nested cut-paper boundaries around a small protected opening; one visibly contained breach. |
 | 5 | [Fight Evils with Evals!](../../src/content/posts/2026-05-06--llm-evals-are-broken/square.webp) | Homepage | Cinematic split scene, scattered screens, and saturated light. | Two layered test sheets against a common reference; a mismatch exposed through a cut-out. |
-| 6 | [It's Time for llm:// Connection Strings](../../src/content/posts/2026-01-30--llm-connection-strings/square-200.webp) | Homepage / favorites | Baked-in connection string and model name dominate the thumbnail. | Paper connector tabs joining a blue provider block to an ivory model slot; no text. |
+| 6 — retained | [It's Time for llm:// Connection Strings](../../src/content/posts/2026-01-30--llm-connection-strings/square-200.webp) | Homepage / favorites | User chose to preserve the existing image because it conveys important details. | Keep the current family; no regeneration or promotion. |
 | 7 | [Quiz: Deep Postgres: Pt. 2](../../src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/dancing-postgres-elephant-square-200.webp) | Quiz index | Neon mascot illustration overwhelms the teaching topic. | Layered relational tables with keyed slots; physical paper tabs make the joins visible. |
 | 8 | [Quiz: Deep Postgres: Pt. 1](../../src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/elephant-synthwave-gym-square-200.webp) | Quiz index | Second neon elephant creates an inconsistent image family. | Companion SQL paper composition with a simpler keyed join and distinct step in the mechanism. |
 | 9 | [JSONB: The Best Way to Ruin Your Database](../../src/content/posts/2025-12-29--the-jsonb-seduction/square.webp) | Archive | Glowing braces and digital trails; generic futuristic database imagery. | A structured paper grid interrupted by one swollen unstructured pocket. |
