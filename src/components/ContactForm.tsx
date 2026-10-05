@@ -68,6 +68,8 @@ export function ContactForm({
       {children}
       <form
         name="contact"
+        action="/"
+        method="POST"
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full max-w-xl space-y-6 mt-10 mx-auto contact-form"
         data-netlify="true"
@@ -96,7 +98,7 @@ export function ContactForm({
             <FormItem className="form-item name-field">
               <FormLabel>{copy.name}</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input placeholder="" required minLength={2} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,7 +111,7 @@ export function ContactForm({
             <FormItem className="form-item email-field">
               <FormLabel>{copy.email}</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} />
+                <Input type="email" placeholder="" required {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -125,7 +127,7 @@ export function ContactForm({
             >
               <FormLabel>{copy.message}</FormLabel>
               <FormControl>
-                <Textarea placeholder={copy.messagePlaceholder} {...field} />
+                <Textarea placeholder={copy.messagePlaceholder} required minLength={5} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -138,10 +140,10 @@ export function ContactForm({
 
         <div id="recaptcha" className="columns-all" data-recaptcha-site-key={reCaptchaSiteKey}></div>
 
-        <aside className="success-message columns-all">
+        <aside className="success-message columns-all" role="status" aria-live="polite">
           <p>{copy.thanks}</p>
         </aside>
-        <aside className="error-message columns-all">
+        <aside className="error-message columns-all" role="alert">
           <p>{copy.error}</p>
         </aside>
 

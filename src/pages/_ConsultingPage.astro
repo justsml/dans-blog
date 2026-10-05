@@ -469,38 +469,49 @@ const fitSignals = [
 </Layout>
 
 <script>
-  (function () {
-    const form = document.getElementById("consulting-signup-form");
-    if (!(form instanceof HTMLFormElement)) return;
+  let signupListeners: AbortController | undefined;
+  let signupForm: HTMLFormElement | null = null;
+  function cleanupSignup() { signupListeners?.abort(); signupForm = null; }
+  function initializeSignup() {
+    const form = document.querySelector<HTMLFormElement>("#consulting-signup-form");
+    if (form === signupForm) return;
+    cleanupSignup();
+    if (!form) return;
+    signupForm = form;
+    signupListeners = new AbortController();
+    const { signal } = signupListeners;
     const status = document.getElementById("consulting-signup-status");
-
-    form.addEventListener("submit", async (event) => {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    let submitting = false;
+    form.addEventListener("submit", async event => {
       event.preventDefault();
-      const data = new FormData(form);
+      if (submitting || !form.reportValidity()) return;
+      submitting = true;
+      if (button) button.disabled = true;
+      form.setAttribute("aria-busy", "true");
+      if (status) status.textContent = "Sending…";
       const body = new URLSearchParams();
-      data.forEach((value, key) => body.append(key, String(value)));
-
+      new FormData(form).forEach((value, key) => { if (typeof value === "string") body.append(key, value); });
       try {
-        const response = await fetch("/", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: body.toString(),
-        });
+        const response = await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body, signal });
         if (!response.ok) throw new Error(`Form submission failed: ${response.status}`);
-
+        if (signal.aborted || !form.isConnected) return;
         form.hidden = true;
-        if (status) {
-          status.textContent =
-            "Thanks — you're on the list. I'll be in touch when there's room.";
-        }
-      } catch (err) {
-        if (status) {
-          status.textContent =
-            "Something went wrong. Please try again or book a call directly.";
+        if (status) status.textContent = "Thanks — you're on the list. I'll be in touch when there's room.";
+      } catch {
+        if (!signal.aborted && status) status.textContent = "Something went wrong. Please try again or book a call directly.";
+      } finally {
+        submitting = false;
+        if (!signal.aborted) {
+          form.removeAttribute("aria-busy");
+          if (button) button.disabled = false;
         }
       }
-    });
-  })();
+    }, { signal });
+  }
+  initializeSignup();
+  document.addEventListener("astro:page-load", initializeSignup);
+  document.addEventListener("astro:before-swap", cleanupSignup);
 </script>
 
 <style>
@@ -514,7 +525,7 @@ const fitSignals = [
 .eyebrow,.card-kicker { color:var(--paper-accent); font-size:.7rem; text-transform:uppercase; letter-spacing:.13em; font-weight:700; }
 .hero-actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-block:1.5rem; }
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:.75rem; padding:.9rem 1.2rem; min-height:44px; border:1px solid var(--paper-line); color:var(--paper-ink); text-decoration:none; font-size:.85rem; font-weight:600; transition:transform 180ms; }
-.btn-primary { background:var(--paper-blue); color:var(--paper-sheet); border-color:var(--paper-blue); }
+.btn-primary { background:var(--paper-blue); color:var(--paper-on-blue); border-color:var(--paper-blue); }
 .btn-secondary { background:var(--paper-sheet); }
 .btn:hover { transform:translateY(-2px); }
 .btn-icon { color:inherit; }
@@ -546,7 +557,7 @@ const fitSignals = [
 .featured-card h3,.service-card h3 { font:500 1.7rem/1.2 var(--paper-serif); margin:0; }
 .featured-card p,.service-card p { line-height:1.7; margin:0; }
 .featured-card p:not(.card-kicker),.service-card p:not(.card-kicker) { font-size:.9rem; color:var(--paper-muted); }
-.service-mark { display:grid; place-items:center; width:2.5rem; height:2.5rem; background:var(--paper-blue); color:var(--paper-sheet); font-size:.8rem; }
+.service-mark { display:grid; place-items:center; width:2.5rem; height:2.5rem; background:var(--paper-blue); color:var(--paper-on-blue); font-size:.8rem; }
 .card-link { margin-block-start:auto; padding-block-start:1rem; color:var(--paper-accent); font-size:.8rem; font-weight:600; }
 .service-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1.5rem; margin-block-start:1.5rem; }
 .service-grid .service-card h3 { font-size:1.4rem; }

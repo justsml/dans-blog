@@ -44,13 +44,20 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form.subscribe-form');
-    form?.addEventListener('submit', function (event) {
-      event.preventDefault();
-      console.log('Form submitted', event.target);
+  let subscriptionListeners: AbortController | undefined;
+  function initializeSubscriptions() {
+    subscriptionListeners?.abort();
+    subscriptionListeners = new AbortController();
+    const { signal } = subscriptionListeners;
+    document.querySelectorAll<HTMLFormElement>("form.subscribe-form").forEach(form => {
+      // Ghost Portal owns submission. Suppress a native page request while its
+      // asynchronous script initializes, without stopping delegated handlers.
+      form.addEventListener("submit", event => event.preventDefault(), { signal });
     });
-  });
+  }
+  initializeSubscriptions();
+  document.addEventListener("astro:page-load", initializeSubscriptions);
+  document.addEventListener("astro:before-swap", () => subscriptionListeners?.abort());
 </script>
 <style id="subscribe-form-styles">
   .subscribe-form { position:relative; }
