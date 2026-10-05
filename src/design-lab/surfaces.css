@@ -1,9 +1,12 @@
 /* Background-only experiments. No raster downloads, line grids, or content overlays. */
 body[data-warm] { isolation: isolate; --surface-clay: 171, 110, 78; --surface-sage: 122, 144, 118; --surface-gold: 202, 166, 104; --surface-cloud: 220, 226, 223; }
 :root[data-theme=dark] body[data-warm] { --surface-clay: 157, 104, 76; --surface-sage: 106, 133, 116; --surface-gold: 182, 137, 80; --surface-cloud: 120, 138, 146; }
-body[data-warm]::before, body[data-warm]::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; }
-body[data-warm]::before { background-image: url('./textures/paper.svg'); background-size: 256px; mix-blend-mode: multiply; opacity: .08; }
-:root[data-theme=dark] body[data-warm]::before { mix-blend-mode: soft-light; opacity: .045; }
+body[data-warm]::before, body[data-warm]::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+body[data-warm] > .surface-toolbar, body[data-warm] > .site-shell { position: relative; z-index: 1; }
+body[data-warm] > .design-switcher { position: sticky; z-index: 10; }
+body[data-warm] > .skip-link { position: fixed; z-index: 20; }
+body[data-warm]::before { background-image: url('./textures/paper.svg'); background-size: 256px; mix-blend-mode: multiply; opacity: .2; }
+:root[data-theme=dark] body[data-warm]::before { mix-blend-mode: soft-light; opacity: .09; }
 body[data-warm]::after { background-repeat: no-repeat; }
 .surface-toolbar { display: flex; align-items: center; gap: 24px; padding: 12px 24px; border-bottom: 1px solid var(--line); color: var(--muted); background: var(--paper); font-size: 12px; }
 .surface-toolbar label { display: flex; align-items: center; gap: 10px; white-space: nowrap; font-size: 11px; }
@@ -12,56 +15,69 @@ body[data-warm]::after { background-repeat: no-repeat; }
 .surface-toolbar p { max-width: 680px; }
 .surface-context { margin-left: auto; font-size: 10px; white-space: nowrap; }
 
+
+/* Each stock has its own visible base tone as well as its own texture. */
+:root[data-surface=cotton] body[data-warm] { --paper: #f4ebdc; }
+:root[data-surface=mist] body[data-warm] { --paper: #f0f2ee; }
+:root[data-surface=mineral] body[data-warm] { --paper: #f1e6db; }
+:root[data-surface=press] body[data-warm] { --paper: #eee8d9; }
+:root[data-surface=light] body[data-warm] { --paper: #faf1dc; }
+:root[data-theme=dark][data-surface=cotton] body[data-warm] { --paper: #29251e; }
+:root[data-theme=dark][data-surface=mist] body[data-warm] { --paper: #222b2c; }
+:root[data-theme=dark][data-surface=mineral] body[data-warm] { --paper: #30251f; }
+:root[data-theme=dark][data-surface=press] body[data-warm] { --paper: #28271f; }
+:root[data-theme=dark][data-surface=light] body[data-warm] { --paper: #292b21; }
+
 /* 01. Cotton stock: fine tooth, with a larger fiber-scale variation. */
-:root[data-surface=cotton] body[data-warm]::after { background-image: url('./textures/paper.svg'); background-size: 930px 930px; background-repeat: repeat; mix-blend-mode: multiply; opacity: .035; }
-:root[data-theme=dark][data-surface=cotton] body[data-warm]::after { mix-blend-mode: soft-light; opacity: .025; }
+:root[data-surface=cotton] body[data-warm]::after { background-image: url('./textures/pigment.svg'); background-size: 930px 930px; background-repeat: repeat; mix-blend-mode: multiply; opacity: .13; }
+:root[data-theme=dark][data-surface=cotton] body[data-warm]::after { mix-blend-mode: soft-light; opacity: .08; }
 :root[data-surface=cotton] body.article-page::after { display: none; }
 
 /* 02. Morning mist: irregular, broad cloud masses; open space around the text. */
 :root[data-surface=mist] body[data-warm]::after {
-  background-image: radial-gradient(ellipse 48% 32% at 98% 2%, rgba(var(--surface-cloud), .78), transparent 75%), radial-gradient(ellipse 42% 25% at -5% 34%, rgba(var(--surface-gold), .19), transparent 74%), radial-gradient(ellipse 28% 24% at 82% 35%, rgba(var(--surface-sage), .17), transparent 80%), radial-gradient(ellipse 70% 30% at 55% -8%, rgba(255, 255, 255, .85), transparent 80%);
-  opacity: .9;
+  background-image: url('./textures/mist.svg'); background-size: cover; background-position: center top; opacity: 1;
 }
-:root[data-theme=dark][data-surface=mist] body[data-warm]::after { opacity: .21; }
+:root[data-theme=dark][data-surface=mist] body[data-warm]::after { mix-blend-mode: soft-light; opacity: .6; }
 
 /* 03. Mineral wash: broad color staining under a coarse pigment layer. */
-:root[data-surface=mineral] body[data-warm]::before { background-image: url('./textures/pigment.svg'), url('./textures/paper.svg'); background-size: 1200px 1200px, 256px 256px; opacity: .07; }
+:root[data-surface=mineral] body[data-warm]::before { background-image: url('./textures/pigment.svg'), url('./textures/paper.svg'); background-size: 1200px 1200px, 256px 256px; opacity: .22; }
 :root[data-surface=mineral] body[data-warm]::after {
-  background-image: radial-gradient(ellipse 39% 56% at -8% 11%, rgba(var(--surface-clay), .27), transparent 76%), radial-gradient(ellipse 35% 29% at 108% 45%, rgba(var(--surface-sage), .28), transparent 70%), radial-gradient(ellipse 48% 25% at 63% -10%, rgba(var(--surface-gold), .21), transparent 74%);
+  background-image: radial-gradient(ellipse 39% 56% at -8% 11%, rgba(var(--surface-clay), .55), transparent 76%), radial-gradient(ellipse 35% 29% at 108% 45%, rgba(var(--surface-sage), .5), transparent 70%), radial-gradient(ellipse 48% 25% at 63% -10%, rgba(var(--surface-gold), .4), transparent 74%);
 }
-:root[data-theme=dark][data-surface=mineral] body[data-warm]::before { opacity: .13; }
-:root[data-theme=dark][data-surface=mineral] body[data-warm]::after { opacity: .45; }
+:root[data-theme=dark][data-surface=mineral] body[data-warm]::before { opacity: .14; }
+:root[data-theme=dark][data-surface=mineral] body[data-warm]::after { opacity: .7; }
 
 /* 04. Sunday edition: dry ink speckle and ghost impressions, no fake lettering. */
-:root[data-surface=press] body[data-warm]::before { background-image: url('./textures/press.svg'); background-size: 384px; opacity: .105; }
+:root[data-surface=press] body[data-warm]::before { background-image: url('./textures/press.svg'); background-size: 384px; opacity: .23; }
 :root[data-surface=press] body[data-warm]::after {
-  background-image: linear-gradient(rgba(97, 77, 49, .026), rgba(97, 77, 49, .026)), linear-gradient(rgba(97, 77, 49, .033), rgba(97, 77, 49, .033)), radial-gradient(ellipse 65% 40% at 0 0, rgba(var(--surface-gold), .12), transparent 80%);
+  background-image: linear-gradient(rgba(97, 77, 49, .09), rgba(97, 77, 49, .09)), linear-gradient(rgba(97, 77, 49, .12), rgba(97, 77, 49, .12)), radial-gradient(ellipse 65% 40% at 0 0, rgba(var(--surface-gold), .35), transparent 80%);
   background-size: 15% 34%, 21% 22%, 100% 100%; background-position: -4% 19%, 108% 54%, center;
 }
-:root[data-theme=dark][data-surface=press] body[data-warm]::before { opacity: .045; }
-:root[data-theme=dark][data-surface=press] body[data-warm]::after { opacity: .4; }
+:root[data-theme=dark][data-surface=press] body[data-warm]::before { opacity: .09; }
+:root[data-theme=dark][data-surface=press] body[data-warm]::after { opacity: 1; background-image: linear-gradient(rgba(232, 209, 161, .085), rgba(232, 209, 161, .085)), linear-gradient(rgba(232, 209, 161, .11), rgba(232, 209, 161, .11)), radial-gradient(ellipse 65% 40% at 0 0, rgba(var(--surface-gold), .2), transparent 80%); }
 :root[data-surface=press] body.article-page::after { display: none; }
 
 /* 05. Window light: defocused garden light, without literal window frames. */
 :root[data-surface=light] body[data-warm]::after {
   inset: -5%;
-  background-image: radial-gradient(ellipse 34% 48% at 100% 0, rgba(var(--surface-gold), .36), transparent 76%), radial-gradient(ellipse 22% 36% at 1% 38%, rgba(var(--surface-sage), .25), transparent 76%), radial-gradient(ellipse 20% 26% at 93% 48%, rgba(var(--surface-sage), .19), transparent 76%), radial-gradient(ellipse 14% 19% at 67% 1%, rgba(255, 255, 255, .85), transparent 76%);
+  background-image: url('./textures/window.svg'), radial-gradient(ellipse 80% 80% at 90% 0, rgba(var(--surface-gold), .5), transparent 80%);
+  background-size: cover; background-position: center;
   animation: surface-daylight 48s ease-in-out infinite alternate;
 }
-:root[data-theme=dark][data-surface=light] body[data-warm]::after { opacity: .35; }
+:root[data-theme=dark][data-surface=light] body[data-warm]::after { opacity: .85; filter: brightness(1.6); }
 @keyframes surface-daylight { from { transform: translate3d(-.7%, -.4%, 0); } to { transform: translate3d(.7%, .4%, 0); } }
 
 /* Article treatment: stop motion and protect the central reading column. */
-:root[data-surface] body.article-page::after { animation: none; opacity: .4; mask-image: linear-gradient(90deg, #000 0%, transparent 25%, transparent 78%, #000 100%); }
-:root[data-theme=dark][data-surface] body.article-page::after { opacity: .14; }
-:root[data-surface] body.article-page::before { opacity: .065; }
-:root[data-theme=dark][data-surface] body.article-page::before { opacity: .03; }
+:root[data-surface] body.article-page::after { animation: none; opacity: .65; mask-image: linear-gradient(90deg, #000 0%, rgba(0,0,0,.15) 28%, rgba(0,0,0,.15) 72%, #000 100%); }
+:root[data-theme=dark][data-surface] body.article-page::after { opacity: .4; }
+:root[data-surface] body.article-page::before { opacity: .12; }
+:root[data-theme=dark][data-surface] body.article-page::before { opacity: .055; }
 :root[data-surface=none] body[data-warm]::before, :root[data-surface=none] body[data-warm]::after { display: none; }
 @media (max-width: 760px) {
   .surface-toolbar { flex-wrap: wrap; padding: 10px 16px; gap: 7px 14px; }
   .surface-toolbar p { width: 100%; order: 3; font-size: 11px; line-height: 1.4; }
   .surface-context { font-size: 9px; }
-  :root[data-surface] body.article-page::after { mask-image: linear-gradient(90deg, #000, transparent 10%, transparent 90%, #000); opacity: .045; }
+  :root[data-surface] body.article-page::after { mask-image: linear-gradient(90deg, #000, rgba(0,0,0,.15) 20%, rgba(0,0,0,.15) 80%, #000); opacity: .4; }
 }
 @media (prefers-reduced-motion: reduce) {
   :root[data-surface=light] body[data-warm]::after { animation: none; }

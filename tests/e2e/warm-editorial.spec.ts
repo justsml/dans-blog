@@ -9,6 +9,8 @@ for (const width of [1440, 390]) {
       await page.emulateMedia({ colorScheme: "light" });
       await page.goto(`/designs/${variant}/`);
       await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+      // Check the original theme palette independently of the background experiment.
+      await page.getByLabel("Background treatment").selectOption("none");
       await page.getByLabel("Color theme").selectOption("dark");
       await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
       const background = await page.locator("body").evaluate((body) => getComputedStyle(body).backgroundColor);
