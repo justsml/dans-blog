@@ -23,7 +23,7 @@ export const LineChangeIndicator = ({
         className="gh-activity removed"
         data-deletions={deletions}
         style={{
-          "--activity-bg-color": "#f85149",
+          "--activity-bg-color": "var(--paper-error)",
         }}
       >
         {/* <aside className="activity-box removed" /> */}

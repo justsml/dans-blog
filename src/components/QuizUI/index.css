@@ -1614,3 +1614,8 @@ body .challenge-modern .help-box { background:var(--paper-sheet); border-color:v
 /* Explanation fences must fit the reading sheet, including hidden flip faces. */
 body .challenge section.explanation :is(pre.astro-code,.expressive-code pre) { inline-size:100%; width:100%; max-inline-size:100%; overflow:auto; }
 body .challenge .expressive-code pre > code { inline-size:100%; max-inline-size:100%; }
+/* Inline hints remain inside the answer sheet and keep dismissal controls distinct. */
+body .challenge .hint-tooltip { margin-block:1rem; padding:1rem; background:var(--paper-raised); color:var(--paper-ink); border:1px solid var(--paper-line); border-inline-start:3px solid var(--paper-accent); box-shadow:var(--paper-shadow); font-family:var(--paper-sans); cursor:default; }
+body .challenge .hint-tooltip h4 { color:var(--paper-ink); font-size:1rem; }
+body .challenge .hint-tooltip button { margin-block-start:.75rem; min-block-size:36px; padding:.5rem .75rem; background:var(--paper-sheet); color:var(--paper-ink); border:1px solid var(--paper-line); font-size:.8rem; cursor:pointer; }
+body .challenge .hint-tooltip button:focus-visible { outline:2px solid var(--paper-accent); outline-offset:3px; }

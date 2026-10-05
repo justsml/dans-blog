@@ -24,10 +24,10 @@
   }
 
   &.added {
-    color: #28a745;
+    color: var(--paper-success);
   }
   &.removed {
-    color: #f85149;
+    color: var(--paper-error);
   }
   /* .lines {
     display: inline-block;
@@ -43,8 +43,8 @@
     height: 0; /*1.75rem;*/
     bottom: .5rem;;
     
-    background-color: #28a745;
-    color: #28a745;
+    background-color: var(--paper-success);
+    color: var(--paper-success);
   }
   &.removed::before {
     content: '';
@@ -53,8 +53,8 @@
     height: 0; /*1.75rem;*/
     bottom: .5rem;;
     
-    color: #f85149;
-    background-color: #f85149;
+    color: var(--paper-error);
+    background-color: var(--paper-error);
   }
   &:has(.activity-line:empty) {
     display: none;
@@ -85,7 +85,7 @@
   &::before {
     content: attr(data-added);
     position: absolute;
-    color: var(--activity-bg-color, #28a745);
+    color: var(--activity-bg-color, var(--paper-success));
 
     width: 100%;
     height: 100%;
@@ -97,8 +97,8 @@
     width: 1rem;
     height: 1rem;
     content: '';
-    color: var(--activity-bg-color, #28a745);
-    background-color: var(--activity-bg-color, #28a745);
+    color: var(--activity-bg-color, var(--paper-success));
+    background-color: var(--activity-bg-color, var(--paper-success));
     border-radius: .25rem;
     display: inline-block;
     margin-inline: 0.5rem;
@@ -108,10 +108,10 @@
   }
 
   &.added {
-    color: #28a745;
+    color: var(--paper-success);
   }
   &.removed {
-    color: #f85149;
+    color: var(--paper-error);
   }
   &::after.added {
     right: -1.25rem;
@@ -120,7 +120,7 @@
     left: -1.25rem;
   }
   .removed {
-    --activity-bg-color: #f85149;
+    --activity-bg-color: var(--paper-error);
   } */
 }
 
