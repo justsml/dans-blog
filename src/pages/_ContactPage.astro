@@ -28,9 +28,11 @@ const copy = getUiCopy(locale);
   locale={locale}
   className="article"
 >
+  <section class="utility-sheet">
   <ContactForm reCaptchaSiteKey={reCaptchaSiteKey} locale={locale}>
     <h1>{copy.contact.heading}</h1>
   </ContactForm>
+  </section>
 </Layout>
 
 <script>
@@ -100,7 +102,7 @@ const copy = getUiCopy(locale);
     // @ts-ignore
     window.grecaptcha.render("recaptcha", {
       sitekey: reCaptchaSiteKey,
-      theme: "light",
+      theme: document.documentElement.dataset.theme === "dark" ? "dark" : "light",
       // size: "compact",
       callback: (response: unknown) => {
         if ($gRecaptchaResponse)
@@ -157,3 +159,11 @@ const copy = getUiCopy(locale);
     }
   }
 </script>
+
+<style>
+.utility-sheet { background:var(--paper-sheet); padding:clamp(1.5rem,5vw,3.5rem); border:1px solid var(--paper-line); border-block-start:4px solid var(--paper-blue); box-shadow:var(--paper-shadow); min-width:0; }
+.utility-sheet h1 { margin-block:0 1.5rem; }
+.utility-sheet p { line-height:1.8; }
+.utility-eyebrow { color:var(--paper-accent); font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.text-center { margin-block-start:2rem; padding-block-start:1rem; border-block-start:1px solid var(--paper-line); }
+</style>

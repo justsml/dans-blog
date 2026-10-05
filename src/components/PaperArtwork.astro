@@ -1,0 +1,20 @@
+
+<div class="paper-art" aria-hidden="true">
+  <div class="paper-stage">
+    <div class="paper-mount"></div><div class="paper-disc"></div><div class="paper-arch"></div><div class="paper-inner"></div>
+    <div class="paper-step paper-step-back"></div><div class="paper-step paper-step-front"></div>
+  </div>
+</div>
+<style>
+.paper-art { min-width:0; padding:1rem; }
+.paper-stage { position:relative; aspect-ratio:1.08; isolation:isolate; background:var(--paper-sheet); box-shadow:var(--paper-shadow); }
+.paper-stage > div { position:absolute; box-shadow:3px 5px 7px color-mix(in srgb,var(--paper-ink) 16%,transparent); }
+.paper-mount { inset:7% 8% 12%; background:var(--paper-desk); transform:rotate(-4deg); }
+.paper-disc { width:44%; aspect-ratio:1; inset-block-start:9%; inset-inline-end:9%; border-radius:50%; background:var(--paper-accent); }
+.paper-arch { width:46%; height:70%; inset-inline-start:15%; inset-block-start:13%; border-radius:140px 140px 0 0; background:var(--paper-blue); }
+.paper-inner { width:22%; height:51%; inset-inline-start:27%; inset-block-start:32%; border-radius:90px 90px 0 0; background:var(--paper-desk); }
+.paper-step { background:var(--paper-sheet); }
+.paper-step-back { width:45%; height:20%; inset-inline-start:40%; inset-block-end:20%; transform:rotate(-4deg); }
+.paper-step-front { width:62%; height:15%; inset-inline-start:24%; inset-block-end:12%; transform:rotate(2deg); }
+@media(max-width:700px) { .paper-art { max-width:440px; width:100%; margin-inline:auto; } }
+</style>

@@ -21,26 +21,24 @@ const posts: ArticlePost[] = PostCollections.getPostsByCategory(category, locale
 ---
 
 <style>
-  .path-display {
-    display: grid;
-    align-items: baseline;
-    grid-template-columns: auto 1fr;
 
-    h1 {
-      font-size: 1.75rem;
-      margin: 1.5rem 0 1rem;
-    }
-  }
+.path-display { display:flex; align-items:baseline; flex-wrap:wrap; gap:1rem; padding-block:1.5rem .5rem; }
+.path-display h1 { font-size:clamp(2.5rem,6vw,4rem); margin:0; }
+.path-display h3 { font-size:.8rem; font-weight:500; margin:0; }
+.category-breadcrumb { color:var(--paper-muted); }
+.category-count { color:var(--paper-muted); margin-block:0 2rem; }
+.article-list { padding:0; }
+
 </style>
 
 <Page title={copy.category.pageTitle(category)} locale={locale}>
   <div class="path-display">
     <h3>
-      <a style="color: #c4c4c4; font-weight: 100; text-wrap: nowrap;" href={getLocalizedPagePath("/category/", locale)}>{copy.category.breadcrumb}</a>
+      <a class="category-breadcrumb" href={getLocalizedPagePath("/category/", locale)}>{copy.category.breadcrumb}</a>
     </h3>
     <h1>{category}</h1>
   </div>
-  <p style="margin: .2rem .75rem">{copy.category.found(count)}</p>
+  <p class="category-count">{copy.category.found(count)}</p>
   <div class:list={["article-list"]}>
     {
       posts.map((post) => <ArticleCard article={post} locale={locale} />)

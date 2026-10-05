@@ -16,8 +16,9 @@ const copy = getUiCopy(locale);
   locale={locale}
   className="h-resume article"
 >
-  <h3>{copy.about.heading}</h3>
-  <h1 style={{ marginTop: 0 }}>{copy.about.name}</h1>
+  <section class="utility-sheet">
+  <p class="utility-eyebrow">{copy.about.heading}</p>
+  <h1>{copy.about.name}</h1>
 
   <p class:list="p-summary">
     {copy.about.summary}
@@ -35,4 +36,14 @@ const copy = getUiCopy(locale);
     </a>
     <br />
   </div>
+  </section>
 </Layout>
+
+<style>
+.utility-sheet { background:var(--paper-sheet); padding:clamp(1.5rem,5vw,3.5rem); border:1px solid var(--paper-line); border-block-start:4px solid var(--paper-blue); box-shadow:var(--paper-shadow); min-width:0; }
+.utility-sheet h1 { margin-block:0 1.5rem; }
+.utility-sheet p { line-height:1.8; }
+.utility-sheet > * + * { margin-block-start:1.25rem; }
+.utility-eyebrow { color:var(--paper-accent); font-size:.75rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.text-center { margin-block-start:2rem; padding-block-start:1rem; border-block-start:1px solid var(--paper-line); }
+</style>

@@ -77,7 +77,7 @@ function getPagefindSection(path: string) {
   <body>
     <Header className="content-grid" locale={locale} />
     <main
-      class={clsx("content-grid", Astro.props.className)}
+      class={clsx("content-grid", "paper-page", Astro.props.className)}
       data-pagefind-body={pagefindBody ? true : undefined}
     >
       <slot name="default" />
@@ -87,3 +87,9 @@ function getPagefindSection(path: string) {
     <SiteLinkedData />
   </body>
 </html>
+
+<style>
+  main.paper-page { --content-max-width:1180px; --breakout-max-width:1180px; --padding-inline:1.5rem; min-width:0; margin-block:1.5rem 0; }
+  main.paper-page.article { --content-max-width:780px; --breakout-max-width:780px; }
+  @media(max-width:700px) { main.paper-page { --padding-inline:1rem; margin-block-start:.5rem; } }
+</style>

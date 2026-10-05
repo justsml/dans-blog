@@ -1,7 +1,8 @@
 ---
 import { SITE_TITLE } from "../consts";
-import AnimatedLogoType from "./AnimatedLogoType.astro";
+
 import StaticNavMenu from "./StaticNavMenu.astro";
+import ThemePicker from "./ThemePicker.astro";
 import avatarImage from "@/assets/avatar-88.webp";
 import { PostCollections } from "@/shared/postsCache";
 import SearchBar from "@/components/SearchUI/SearchBar.astro";
@@ -10,6 +11,7 @@ import {
   ACTIVE_LOCALES,
   DEFAULT_LOCALE,
   getPageLanguageOptions,
+  getLocalizedPagePath,
   type LanguageOption,
   type Locale,
 } from "../shared/i18n";
@@ -74,10 +76,10 @@ function getNavPostData(post: MyPost) {
 <header class:list={["top-header", "default-links", className]}>
   <div class:list={["header-nav", "h-card"]}>
     <h2>
-      <AnimatedLogoType
-        avatarSrc={avatarImage.src}
-        siteTitle={SITE_TITLE}
-      />
+      <a class="paper-wordmark u-url" href={getLocalizedPagePath("/", locale)}>
+        <img src={avatarImage.src} alt="" width="42" height="42" class="u-logo" />
+        <span class="p-name">Dan Levy</span>
+      </a>
     </h2>
     <div class="nav-box screenshot-hidden">
       <StaticNavMenu
@@ -86,6 +88,7 @@ function getNavPostData(post: MyPost) {
         recentPosts={recentPosts}
         locale={locale}
       >
+        <li slot="after-search"><ThemePicker locale={locale} /></li>
         {
           languageOptions.length > 0 && currentLanguage && (
             <li slot="after-search" class="languageToggle">
@@ -133,8 +136,13 @@ function getNavPostData(post: MyPost) {
 
 <script
   is:inline
+  data-astro-rerun
   set:html={`
     (() => {
+      window.__paperLanguageListeners?.abort();
+      const listeners = new AbortController();
+      window.__paperLanguageListeners = listeners;
+      const { signal } = listeners;
       const KEY = "danlevy:preferred-locale";
       const config = ${languagePreferenceConfig};
       const supportedLocales = new Set(config.locales);
@@ -175,20 +183,20 @@ function getNavPostData(post: MyPost) {
         const link = target.closest("a[data-language-locale]");
         if (!(link instanceof HTMLAnchorElement)) return;
         writePreferredLocale(link.dataset.languageLocale);
-      });
+      }, { signal });
 
       document.addEventListener("click", (event) => {
         const target = event.target;
         if (!(target instanceof Element) || target.closest(".header-language-menu")) return;
         closeLanguageMenu();
-      });
+      }, { signal });
 
-      document.addEventListener("closeNavPanels", closeLanguageMenu);
+      document.addEventListener("closeNavPanels", closeLanguageMenu, { signal });
 
       document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape") return;
         closeLanguageMenu();
-      });
+      }, { signal });
 
       if (config.currentLocale !== config.defaultLocale) {
         writePreferredLocale(config.currentLocale);

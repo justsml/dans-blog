@@ -193,114 +193,67 @@ function getPostPath(post: NavPost) {
 </nav>
 
 <script>
-  const navRoot = document.querySelector(".static-nav");
-  const searchButton = navRoot?.querySelector(".btnSearchToggle");
-  const menus: HTMLDetailsElement[] = navRoot ? Array.from(navRoot.querySelectorAll("details.static-nav-menu")) : [];
-  let closeTimer = 0;
+  let listeners: AbortController | undefined;
   let hoverTimer = 0;
-  let stickyMenu: HTMLDetailsElement | null = null;
-  let searchRuntimeReady = false;
-
-  const closeMenus = (except: HTMLDetailsElement | null = null) => {
+  let closeTimer = 0;
+  function initializeNavigation() {
+    listeners?.abort();
     window.clearTimeout(hoverTimer);
     window.clearTimeout(closeTimer);
-    if (!except || stickyMenu !== except) stickyMenu = null;
-    menus.forEach((details) => {
-      if (details !== except) details.removeAttribute("open");
-    });
-  };
-
-  const openMenu = (details: HTMLDetailsElement, sticky = false) => {
-    window.clearTimeout(hoverTimer);
-    window.clearTimeout(closeTimer);
-    document.dispatchEvent(new CustomEvent("closeSearchPanel"));
-    stickyMenu = sticky ? details : null;
-    details.setAttribute("open", "");
-    closeMenus(details);
-  };
-
-  const closePreviewMenu = () => {
-    if (stickyMenu) return;
-    closeMenus();
-  };
-
-  navRoot?.addEventListener("toggle", (event) => {
-    const current = event.target;
-    if (!(current instanceof HTMLDetailsElement) || !current.open) return;
-    closeMenus(current);
-  }, true);
-
-  menus.forEach((details) => {
-    const summary = details.querySelector("summary");
-
-    summary?.addEventListener("click", (event) => {
-      event.preventDefault();
-      openMenu(details, true);
-    });
-
-    details.addEventListener("pointerenter", (event) => {
-      if (!(event instanceof PointerEvent)) return;
-      if (event.pointerType === "touch") return;
+    listeners = new AbortController();
+    const { signal } = listeners;
+    const root = document.querySelector(".static-nav");
+    if (!root) return;
+    const menus = Array.from(root.querySelectorAll<HTMLDetailsElement>("details.static-nav-menu"));
+    let pinned: HTMLDetailsElement | null = null;
+    const closeMenus = (except: HTMLDetailsElement | null = null) => {
       window.clearTimeout(hoverTimer);
-      hoverTimer = window.setTimeout(() => {
-        if (details.matches(":hover")) {
-          openMenu(details, false);
-        }
-      }, 160);
-    });
-
-    details.addEventListener("pointerleave", (event) => {
-      if (!(event instanceof PointerEvent)) return;
-      if (event.pointerType === "touch") return;
-      window.clearTimeout(hoverTimer);
-      if (stickyMenu) return;
-      if (event.relatedTarget instanceof Element && event.relatedTarget.closest(".static-nav")) return;
       window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(() => {
-        if (!details.matches(":focus-within")) details.removeAttribute("open");
-      }, 120);
+      if (pinned !== except) pinned = null;
+      menus.forEach((menu) => { if (menu !== except) menu.open = false; });
+    };
+    const openMenu = (menu: HTMLDetailsElement, pin = false) => {
+      document.dispatchEvent(new CustomEvent("closeNavPanels"));
+      document.dispatchEvent(new CustomEvent("closeSearchPanel"));
+      closeMenus(menu);
+      menu.open = true;
+      pinned = pin ? menu : null;
+    };
+    menus.forEach((menu) => {
+      menu.querySelector("summary")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (menu.open && pinned === menu) closeMenus();
+        else openMenu(menu, true);
+      }, { signal });
+      menu.addEventListener("pointerenter", (event) => {
+        if (!(event instanceof PointerEvent) || event.pointerType === "touch" || pinned) return;
+        window.clearTimeout(hoverTimer);
+        window.clearTimeout(closeTimer);
+        hoverTimer = window.setTimeout(() => { if (menu.matches(":hover")) openMenu(menu); }, 160);
+      }, { signal });
+      menu.addEventListener("pointerleave", (event) => {
+        if (!(event instanceof PointerEvent) || event.pointerType === "touch" || pinned) return;
+        window.clearTimeout(hoverTimer);
+        closeTimer = window.setTimeout(() => { if (!menu.matches(":focus-within")) menu.open = false; }, 150);
+      }, { signal });
     });
-
-    details.addEventListener("focusin", () => {
-      if (details.matches(":hover")) return;
-      openMenu(details, false);
-    });
-  });
-
-  navRoot?.addEventListener("pointerleave", (event) => {
-    if (!(event instanceof PointerEvent)) return;
-    if (event.pointerType === "touch") return;
-    window.clearTimeout(hoverTimer);
-    if (stickyMenu) return;
-    if (event.relatedTarget instanceof Element && event.relatedTarget.closest(".static-nav")) return;
-    window.clearTimeout(closeTimer);
-    closeTimer = window.setTimeout(closePreviewMenu, 140);
-  });
-
-  document.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof Element) || target.closest(".static-nav")) return;
-    closeMenus();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    closeMenus();
-  });
-
-  document.addEventListener("closeNavPanels", () => {
-    closeMenus();
-  });
-
-  searchButton?.addEventListener("click", async (event) => {
-    event.preventDefault();
-    stickyMenu = null;
-    closeMenus();
-    const { installSearchPanelDismissal, toggleSearchPanel } = await import("./SearchUI/searchPanelRuntime");
-    if (!searchRuntimeReady) {
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Element && !event.target.closest(".static-nav")) closeMenus();
+    }, { signal });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const open = menus.find((menu) => menu.open);
+      closeMenus();
+      open?.querySelector<HTMLElement>("summary")?.focus();
+    }, { signal });
+    document.addEventListener("closeNavPanels", () => closeMenus(), { signal });
+    root.querySelector(".btnSearchToggle")?.addEventListener("click", async () => {
+      closeMenus();
+      const { installSearchPanelDismissal, toggleSearchPanel } = await import("./SearchUI/searchPanelRuntime");
       installSearchPanelDismissal();
-      searchRuntimeReady = true;
-    }
-    await toggleSearchPanel({ dispatchCloseNavPanels: false });
-  });
+      await toggleSearchPanel({ dispatchCloseNavPanels: true });
+    }, { signal });
+  }
+  initializeNavigation();
+  document.addEventListener("astro:page-load", initializeNavigation);
 </script>

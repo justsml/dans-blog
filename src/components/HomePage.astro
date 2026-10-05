@@ -1,5 +1,6 @@
 ---
 import Page from "../layouts/Page.astro";
+import PaperArtwork from "./PaperArtwork.astro";
 
 import { getImage } from "astro:assets";
 import { PostCollections } from "../shared/postsCache.ts";
@@ -45,16 +46,16 @@ posts = await Promise.all(posts.map(withOptimizedCardImage));
 
 const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 
-async function withOptimizedCardImage(post: ArticlePost): Promise<ArticlePost> {
+async function withOptimizedCardImage(post: ArticlePost, index: number): Promise<ArticlePost> {
   const coverMobile = post.data.cover_mobile;
 
   if (!isImageMetadata(coverMobile)) return post;
 
   const optimizedCover = await getImage({
     src: coverMobile,
-    width: Math.min(coverMobile.width, 360),
+    width: Math.min(coverMobile.width, index === 0 ? 960 : 480),
     format: "webp",
-    quality: 62,
+    quality: index === 0 ? 78 : 70,
   }).catch(() => coverMobile);
 
   return {
@@ -78,31 +79,15 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
 ---
 
 <Page title={defaultFullTitle} subTitle={copy.site.seoDescription} className="home-page" locale={locale}>
-  <!-- <div class="background-effect full-width" aria-hidden="true">
-    <FloatingLines
-      client:load
-      enabledWaves={["top", "middle", "bottom"]}
-      lineCount={8}
-      lineDistance={8}
-      bendRadius={14}
-      bendStrength={10.5}
-      interactive
-      parallax={true}
-      animationSpeed={3.2}
-      gradientStart="hsl(var(--neon-pink))"
-      gradientMid="hsl(var(--neon-cyan))"
-      gradientEnd="hsl(var(--neon-purple))"
-      backgroundColor="hsl(var(--background))"
-      backgroundAccentColor="hsl(var(--bg-dark))"
-      backgroundGlowColor="hsl(var(--neon-cyan))"
-    />
-  </div> -->
   <section class="home-explainer" aria-labelledby="home-title">
+    <div class="home-copy">
     <p class="eyebrow">{copy.home.eyebrow}</p>
     <h1 id="home-title">{copy.home.heading}</h1>
     <p>
       {copy.home.intro}
     </p>
+    </div>
+    <PaperArtwork />
   </section>
 
   <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
@@ -133,267 +118,21 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
 <script is:inline src="/js/htmx.min.js" defer></script>
 
 <style>
-  .background-effect {
-    height: min(600px, 62vh);
-    inset: 0 auto auto 50%;
-    min-height: 360px;
-    overflow: hidden;
-    padding-inline: 0;
-    position: absolute;
-    transform: translateX(-50%);
-    width: 100vw;
-    z-index: 0;
-  }
 
-  .background-effect::after {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--background) / 0) 0%,
-      hsl(var(--background) / 0.28) 72%,
-      hsl(var(--background)) 100%
-    );
-    content: "";
-    inset: 0;
-    pointer-events: none;
-    position: absolute;
-    z-index: 1;
-  }
+:global(main.home-page) { --content-max-width:1180px; --breakout-max-width:1180px; }
+.home-explainer { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); align-items:center; gap:clamp(2rem,5vw,5rem); padding-block:2rem 4rem; }
+.home-copy { min-width:0; }
+.eyebrow,.link-kicker { color:var(--paper-accent); font-size:.72rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase; }
+.home-explainer h1 { font:500 clamp(2.6rem,4.8vw,4.5rem)/1.05 var(--paper-serif); letter-spacing:-.045em; color:var(--paper-ink); margin:.9rem 0 1.4rem; text-wrap:balance; }
+.home-explainer p:not(.eyebrow) { color:var(--paper-muted); font-size:1.1rem; line-height:1.7; max-width:52ch; }
+.home-link-spotlight { margin-block:0 2rem; }
+.spotlight-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.25rem; }
+.spotlight-link { display:grid; gap:.4rem; padding:1.4rem 1.6rem; border:1px solid var(--paper-line); border-inline-start:4px solid var(--paper-blue); background:var(--paper-sheet); color:var(--paper-ink); text-decoration:none; box-shadow:var(--paper-shadow); transition:transform 180ms; }
+.spotlight-link.oss-link { border-inline-start-color:var(--paper-accent); }
+.spotlight-link:hover { transform:translateY(-2px); }
+.link-title { font:500 1.5rem/1.3 var(--paper-serif); }
+.article-list { margin-block:1rem 0; padding-inline:0; }
+@media(max-width:700px) { .home-explainer { grid-template-columns:1fr; gap:1.5rem; padding-block:1rem 2rem; } .home-explainer h1 { font-size:clamp(2.5rem,10vw,3.5rem); } .spotlight-actions { grid-template-columns:1fr; } }
+@media(prefers-reduced-motion:reduce) { .spotlight-link { transition:none; } }
 
-  .background-effect :global(astro-island),
-  .background-effect :global(.floating-lines-container) {
-    display: block;
-    height: 100%;
-    width: 100%;
-  }
-
-  :global(main.home-page) {
-    --site-shell-gutter: clamp(1rem, 5vw, 2rem);
-    --site-shell-width: 1180px;
-    --content-max-width: var(--site-shell-width);
-    --breakout-max-width: var(--site-shell-width);
-    --padding-inline: 0;
-    isolation: isolate;
-    position: relative;
-  }
-
-  .home-explainer,
-  .home-link-spotlight,
-  .article-list {
-    grid-column: 1 / -1;
-    justify-self: center;
-    position: relative;
-    width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
-    z-index: 1;
-  }
-
-  .home-explainer {
-    margin-inline: auto;
-    max-width: none;
-  }
-
-  .home-explainer {
-    display: grid;
-    gap: 0.45rem;
-    margin-top: clamp(0.5rem, 2vw, 1.5rem);
-    padding-block: clamp(0.75rem, 2vw, 1.5rem) clamp(0.35rem, 1vw, 0.75rem);
-  }
-
-  .home-explainer h1 {
-    color: var(--clr-muted-100);
-    font-family: "Raleway", sans-serif;
-    letter-spacing: 0;
-    line-height: 1.05;
-    margin: 0;
-    text-shadow: none;
-    text-wrap: balance;
-  }
-
-  .home-explainer h1 {
-    font-size: clamp(1.35rem, 3vw, 2.25rem);
-    font-weight: 700;
-    max-width: 30ch;
-    text-wrap: wrap;
-  }
-
-  .home-explainer p:not(.eyebrow) {
-    color: hsl(var(--muted-foreground));
-    font-size: clamp(0.98rem, 1.15vw, 1.08rem);
-    line-height: 1.65;
-    margin: 0;
-    max-width: 62ch;
-  }
-
-  .home-link-spotlight {
-    --spotlight-cyan: hsl(var(--neon-cyan));
-    --spotlight-pink: hsl(var(--neon-pink));
-    --spotlight-lime: #b8ff5f;
-    --spotlight-ink: rgb(5, 8, 10);
-    align-items: center;
-    display: block;
-    isolation: isolate;
-    margin: 0.65rem auto 0;
-    max-width: none;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .home-link-spotlight::before {
-    background:
-      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent),
-      linear-gradient(90deg, var(--spotlight-cyan), var(--spotlight-lime), var(--spotlight-pink));
-    content: "";
-    height: 1px;
-    inset: 0 auto auto 0;
-    opacity: 0.82;
-    position: absolute;
-    width: 100%;
-  }
-
-  .eyebrow {
-    color: var(--spotlight-cyan, hsl(var(--neon-cyan)));
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    margin: 0;
-    text-transform: uppercase;
-  }
-
-  .spotlight-actions {
-    display: grid;
-    gap: 0;
-    grid-template-columns: 1fr;
-  }
-
-  .article-list {
-    margin-top: clamp(0.6rem, 1.5vw, 1rem);
-    max-width: none;
-  }
-
-  .spotlight-link {
-    --link-accent: var(--spotlight-cyan);
-    align-items: center;
-    background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)) padding-box,
-      linear-gradient(var(--spotlight-ink), var(--spotlight-ink)) padding-box,
-      conic-gradient(from var(--spin-angle, 0deg), var(--link-accent), rgba(255, 255, 255, 0.12) 34%, var(--spotlight-pink), rgba(255, 255, 255, 0.12) 68%, var(--link-accent)) border-box;
-    border: 1px solid transparent;
-    border-radius: 0;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.12) inset,
-      0 0 1rem color-mix(in srgb, var(--link-accent), transparent 84%);
-    color: var(--clr-muted-100);
-    display: grid;
-    min-height: 4.4rem;
-    overflow: hidden;
-    padding: 1rem;
-    position: relative;
-    text-decoration: none;
-    transform: translateZ(0);
-    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
-  }
-
-  .spotlight-link::before {
-    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.22), transparent 48%);
-    content: "";
-    inset: 0;
-    position: absolute;
-    transform: translateX(-120%);
-    transition: transform 520ms ease;
-  }
-
-  .spotlight-link::after {
-    background: linear-gradient(90deg, var(--link-accent), transparent);
-    block-size: 3px;
-    content: "";
-    inset: auto 1rem 0.85rem 1rem;
-    opacity: 0.85;
-    position: absolute;
-    transform: scaleX(0.36);
-    transform-origin: left;
-    transition: transform 180ms ease;
-  }
-
-  .spotlight-link:hover,
-  .spotlight-link:focus-visible {
-    border-color: color-mix(in srgb, var(--link-accent), white 18%);
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
-      0 0 1.5rem color-mix(in srgb, var(--link-accent), transparent 68%);
-    color: white;
-    outline: none;
-    transform: translateY(-2px);
-  }
-
-  .spotlight-link:hover::before,
-  .spotlight-link:focus-visible::before {
-    transform: translateX(120%);
-  }
-
-  .spotlight-link:hover::after,
-  .spotlight-link:focus-visible::after {
-    transform: scaleX(1);
-  }
-
-  .oss-link {
-    --link-accent: var(--spotlight-lime);
-  }
-
-  .link-kicker,
-  .link-title {
-    position: relative;
-    z-index: 1;
-  }
-
-  .link-kicker {
-    color: var(--link-accent);
-    font-size: 0.75rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .link-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 0;
-    line-height: 1.08;
-    max-width: 13ch;
-  }
-
-  @property --spin-angle {
-    syntax: "<angle>";
-    inherits: false;
-    initial-value: 0deg;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .spotlight-link {
-      animation: border-spin 7s linear infinite;
-    }
-
-    .oss-link {
-      animation-direction: reverse;
-      animation-duration: 8.5s;
-    }
-  }
-
-  @keyframes border-spin {
-    to {
-      --spin-angle: 360deg;
-    }
-  }
-
-  @media (min-width: 720px) {
-    .home-link-spotlight {
-      margin-top: 0.85rem;
-    }
-
-    .spotlight-actions {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .link-title {
-      font-size: 1.42rem;
-    }
-  }
 </style>
