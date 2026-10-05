@@ -63,3 +63,14 @@ muted color. Window light drifts slowly on homepages only; reduced motion stops
 it. Print omits all effects and the picker. The small procedural SVG textures
 live in `textures/`; `surfaces.css` owns the entire effect and is scoped to warm
 preview layouts. No production backgrounds or dependencies change.
+
+## Paper atelier
+
+`/designs/warm-paper/` explores professional paper cut-outs: architectural blue
+and terracotta forms, offset ivory stock, restrained directional shadows, and
+stacked photographic article cards. `PaperArtwork.astro` builds the hero collage
+from native elements; `paper.css` owns the complete variant. It has a separate
+dark palette and a flat reading sheet on article routes. This variant uses its
+own paper surface instead of the background picker; other warm routes keep their
+saved surface choice. Theme, filters, search, footer content, and shared article
+transitions use the existing lab runtime.

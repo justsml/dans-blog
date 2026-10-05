@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import Layout from "./Layout.astro";
 import Article from "./Article.astro";
+import PaperArtwork from "./PaperArtwork.astro";
 import type { Design } from "./designs";
 import { getLabPosts } from "./posts";
 interface Props { design: Design }
@@ -10,7 +11,7 @@ const posts = getLabPosts();
 const sample = posts.slice(0, 9);
 const lead = sample[0];
 const heroImage = lead?.data.cover_full_width ?? lead?.data.cover_mobile;
-const isGrid = ["bold-type", "modular-magazine", "warm-journal", "warm-dispatch"].includes(design);
+const isGrid = ["bold-type", "modular-magazine", "warm-journal", "warm-dispatch", "warm-paper"].includes(design);
 const categories = [...new Set(sample.map((post) => post.data.category))];
 const topicCounts = categories.map((category) => ({ category, count: posts.filter((post) => post.data.category === category).length }));
 ---
@@ -22,7 +23,7 @@ const topicCounts = categories.map((category) => ({ category, count: posts.filte
       <p class="hero-intro">AI systems, JavaScript, security, databases, and bug fixes worth remembering.</p>
       <div class="hero-links"><a href="/consulting/">Build better AI systems <span>↗</span></a><a href="/open-source-journal/">Follow the commits <span>↗</span></a></div>
     </div>
-    {isGrid ? <div class="cat-aside" aria-hidden="true"><svg viewBox="0 0 180 190" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M55 79 52 35 77 52 Q90 45 107 52 L132 32 130 80 Q140 95 125 109 Q134 139 129 170 L67 170 Q50 144 66 108 Q45 96 55 79Z"/><path d="M77 77h3m29 0h3m-22 12 5 3 5-3m-5 3v9m0-3q-8 6-13 0m13 0q8 6 13 0M67 170Q22 180 22 153q0-18 13-5M81 126v42m32-42v42M49 87l-22-6m22 14-23 3m109-11 23-6m-24 14 22 3"/></svg><p>Come for the code.<br />Stay for the cats.</p></div> : heroImage && <figure class="hero-art">{typeof heroImage === "string" ? <img src={heroImage} alt={lead.data.cover_alt ?? ""} /> : <Image src={heroImage} alt={lead.data.cover_alt ?? ""} width={1100} format="webp" loading="eager" />}<figcaption>{lead.data.cover_alt ?? "Small pieces. Better systems."}</figcaption></figure>}
+    {design === "warm-paper" ? <PaperArtwork /> : isGrid ? <div class="cat-aside" aria-hidden="true"><svg viewBox="0 0 180 190" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M55 79 52 35 77 52 Q90 45 107 52 L132 32 130 80 Q140 95 125 109 Q134 139 129 170 L67 170 Q50 144 66 108 Q45 96 55 79Z"/><path d="M77 77h3m29 0h3m-22 12 5 3 5-3m-5 3v9m0-3q-8 6-13 0m13 0q8 6 13 0M67 170Q22 180 22 153q0-18 13-5M81 126v42m32-42v42M49 87l-22-6m22 14-23 3m109-11 23-6m-24 14 22 3"/></svg><p>Come for the code.<br />Stay for the cats.</p></div> : heroImage && <figure class="hero-art">{typeof heroImage === "string" ? <img src={heroImage} alt={lead.data.cover_alt ?? ""} /> : <Image src={heroImage} alt={lead.data.cover_alt ?? ""} width={1100} format="webp" loading="eager" />}<figcaption>{lead.data.cover_alt ?? "Small pieces. Better systems."}</figcaption></figure>}
   </section>
   <section id="articles" aria-labelledby="articles-heading">
     <div class="section-heading"><h2 id="articles-heading">Latest articles<span class="section-count"> / {posts.length} notes in the archive</span></h2><a href="/pages/1-date-desc.html">All articles ↗</a></div>

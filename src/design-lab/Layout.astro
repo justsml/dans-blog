@@ -5,6 +5,7 @@ import Footer from "./Footer.astro";
 import SurfacePicker from "./SurfacePicker.astro";
 import "./styles.css";
 import "./surfaces.css";
+import "./paper.css";
 interface Props { design: Design; title?: string; article?: boolean }
 const { design, title, article = false } = Astro.props;
 const current = designs.find((item) => item.id === design)!;
@@ -12,7 +13,7 @@ const warm = isWarmDesign(design);
 const options = warm ? warmDesigns : designs;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" data-design={design}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -31,6 +32,10 @@ const options = warm ? warmDesigns : designs;
     </script>
     <script is:inline data-astro-rerun>
       (() => {
+        if (document.documentElement.dataset.design === "warm-paper") {
+          document.documentElement.dataset.surface = "none";
+          return;
+        }
         const allowed = ["none", "cotton", "mist", "mineral", "press", "light"];
         let surface = "cotton";
         const query = new URL(location.href).searchParams.get("surface");
@@ -55,7 +60,7 @@ const options = warm ? warmDesigns : designs;
       </div>
       <a class="live-link" href="/">Current site ↗</a>
     </nav>
-    {warm && <SurfacePicker article={article} />}
+    {warm && design !== "warm-paper" && <SurfacePicker article={article} />}
     <div class="site-shell">
       <header class="site-header">
         <a class="wordmark" href={`/designs/${design}/`}>DanLevy<span>.net</span></a>
