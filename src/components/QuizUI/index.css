@@ -1611,3 +1611,6 @@ body .quiz-reset-button { color:var(--paper-ink); background:var(--paper-desk); 
 body .quiz-reset-button:hover:not(:disabled) { background:var(--paper-desk); border-color:var(--paper-blue); }
 body .challenge-modern .expressive-code,body .challenge-modern pre.astro-code { border-color:var(--paper-line)!important; box-shadow:none!important; background:#202725!important; }
 body .challenge-modern .help-box { background:var(--paper-sheet); border-color:var(--paper-line); box-shadow:none; }
+/* Explanation fences must fit the reading sheet, including hidden flip faces. */
+body .challenge section.explanation :is(pre.astro-code,.expressive-code pre) { inline-size:100%; width:100%; max-inline-size:100%; overflow:auto; }
+body .challenge .expressive-code pre > code { inline-size:100%; max-inline-size:100%; }
