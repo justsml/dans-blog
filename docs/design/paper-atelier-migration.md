@@ -3,9 +3,13 @@
 Accepted direction: `/designs/warm-paper/`. Reference implementation:
 `src/design-lab/PaperArtwork.astro` and `src/design-lab/paper.css`.
 
-Status: the prototype is implemented and checked in light/dark at desktop and
-mobile widths. Production layouts, routes, and components are **not yet migrated**.
-This document is the implementation and acceptance plan, not a completion report.
+Status (2026-10-05): production layouts and reachable visual components now use
+Paper atelier. The source audit classifies 66 migrated visual owners, 46 retained
+nonvisual owners, and 41 inactive files; see `paper-atelier-component-audit.md`
+and the updated CSV for per-file evidence. Runtime verification is reported
+separately in `paper-atelier-verification.md`; the checklists below retain the
+original acceptance scope and are not a blanket claim that every external service
+or conditional state has been exercised.
 
 ## Visual direction
 
@@ -131,7 +135,7 @@ number of directional shadows. Shape and depth should establish hierarchy.
 
 ## Migration ledger and completeness gate
 
-`paper-atelier-inventory.csv` lists 147 production route/layout/component/style/runtime
+`paper-atelier-inventory.csv` lists 166 production route/layout/component/style/runtime
 files audited on this branch: 109 are statically reachable from page/content
 imports, and 38 need explicit usage review. Static reachability is a discovery
 hint, not proof of runtime coverage: imports can be conditional or commented,
@@ -193,7 +197,11 @@ remain in place on failure. Successful batches announce added and total counts;
 keyboard focus continues at the first new card without a forced scroll jump.
 The final batch displays a clear end-of-list message. Paging copy is localized.
 
-Remaining integration work:
+Paging implementation now includes visible loading/retry/end states, announced counts,
+consistent optimized thumbnails, directory URLs matching the generated output, and
+a two-route in-memory history cache capped at 500KB.
+
+Future paging refinements:
 
 - [ ] Style loader, loading, retry, and terminal states as a compact paper action
   strip with a consistent touch target and theme-specific contrast.

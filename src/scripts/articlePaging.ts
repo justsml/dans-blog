@@ -59,7 +59,7 @@ document.addEventListener("astro:before-preparation", event => {
   const list = document.querySelector<HTMLElement>("main.home-page .article-list");
   if (!list || list.hasAttribute("aria-busy")) return;
   const html = list.innerHTML;
-  if (html.length > 250_000) return; // At most 500KB of HTML across two routes.
+  if (new TextEncoder().encode(html).byteLength > 250_000) return; // At most 500KB of HTML across two routes.
   const active = document.activeElement;
   const focusHref = active instanceof HTMLAnchorElement && list.contains(active) ? active.getAttribute("href") ?? undefined : undefined;
   const key = navigation.from.pathname;
