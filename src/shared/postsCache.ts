@@ -8,6 +8,7 @@ import {
 import { fixSlugPrefix, getSlugFromId, parsePostId, slugify } from "./pathHelpers.ts";
 import type { ArticlePost, QuizPost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
+import { isContentPreviewBuild, isPostRoutableInBuild } from "./contentPreview";
 import {
   isFeedPost,
   isListedPost,
@@ -32,7 +33,7 @@ const _rawPostsCollection: ArticlePost[] = (
   }));
 
 const _allPosts = buildLocalizedPosts(_rawPostsCollection)
-  .filter(isRoutablePost)
+  .filter((post) => isPostRoutableInBuild(post))
   .sort(
     // @ts-expect-error - data is not always defined
     (a, b) => toDate(a?.data?.date) - toDate(b?.data?.date),
@@ -213,6 +214,10 @@ export const PostCollections = {
     return PostCollections._allPosts;
   },
 
+  getPreviewPosts() {
+    return isContentPreviewBuild() ? _allPosts : [];
+  },
+
   getQuizPosts() {
     return PostCollections._quizPosts;
   },
@@ -251,7 +256,7 @@ export const PostCollections = {
   },
 
   getMissingTranslationRedirectSourcePosts() {
-    return _posts.flatMap((post) => {
+    return _posts.filter(isRoutablePost).flatMap((post) => {
       const baseSlug = post.baseSlug ?? post.slug;
       return ACTIVE_LOCALES.flatMap((locale) => {
         const localizedSlug = getLocalizedPostSlug(baseSlug, locale);
@@ -283,7 +288,7 @@ export const PostCollections = {
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
-    posts = posts.filter(isRoutablePost);
+    posts = posts.filter((post) => isPostRoutableInBuild(post));
     return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },

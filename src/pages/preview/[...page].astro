@@ -1,0 +1,47 @@
+---
+import Page from "../../layouts/Page.astro";
+import { PostCollections } from "../../shared/postsCache";
+import { isContentPreviewBuild } from "../../shared/contentPreview";
+import { getChangedPostDirectories } from "../../shared/previewChanges";
+import { isListedPostData } from "../../shared/editorialRules";
+
+export function getStaticPaths() {
+  return isContentPreviewBuild() ? [{ params: { page: undefined } }] : [];
+}
+
+const changes = await getChangedPostDirectories();
+const posts = PostCollections.getPreviewPosts();
+const changed = posts.filter((post) => changes.directories.has(post.sourcePostId ?? post.id.split("/")[0]));
+const changedSlugs = new Set(changed.map((post) => post.slug));
+const drafts = posts.filter((post) => !isListedPostData(post.data) && !changedSlugs.has(post.slug));
+const sections = [
+  { title: "Changed articles", posts: changed },
+  { title: "Other drafts and unlisted articles", posts: drafts },
+];
+---
+
+<Page title="Article previews" subTitle="Changed articles and unpublished drafts for editorial review.">
+  <h1>Article previews</h1>
+  <p>These links include drafts, hidden posts, and unpublished articles.</p>
+  {!changes.available && <p>Comparison with main is unavailable in this checkout. All drafts remain available below.</p>}
+  {sections.map((section) => (
+    <section class="preview-section">
+      <h2>{section.title}</h2>
+      {section.posts.length === 0 ? <p>No articles in this group.</p> : (
+        <ul>
+          {section.posts.map((post) => (
+            <li>
+              <a href={`/${post.slug}/`}>{post.data.title}</a>{" "}
+              <small>({post.locale ?? "en"}{!isListedPostData(post.data) ? ", editorial preview" : ""})</small>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
+  ))}
+</Page>
+
+<style>
+  .preview-section { margin-block: 1.5rem; }
+  li { margin-block: 0.75rem; }
+</style>
