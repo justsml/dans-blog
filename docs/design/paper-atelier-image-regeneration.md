@@ -6,7 +6,23 @@ Ranking is editorial judgment: visible aesthetic mismatch first, current homepag
 
 ## Target direction
 
-Photograph a mature physical paper construction: precise cut edges, layered ivory stock, muted blue and terracotta, directional shadows, one readable relationship. Avoid childish stickers, origami animals, busy collage, neon, fake code, baked-in titles, and generic arch/sun art repeated across unrelated articles. Keep each metaphor tied to the article. Compatible existing object photography may stay; paper cut-outs are not mandatory for every cover. The layout supplies card borders, outside shadows, and typography.
+Use professional paper cut-outs as a broad editorial medium, not a repeated
+studio-product template. The user rejected the first eight candidates as far too
+conforming. Their shared ivory/blue/terracotta palette, architectural mechanisms,
+and similar camera/light are no longer the default generation recipe.
+
+Keep tactile cut edges and thoughtful composition as continuity. Vary palette,
+scale, density, lighting, subject, and image-making mode: photographic collage,
+printmaking, torn-paper abstraction, sculptural cut-outs, and narrative scenes.
+Images need not match the interface palette. Avoid childish craft, generic AI
+symbols, fake code, and baked-in titles. The directions in the ranked table below
+are initial metaphor suggestions, **not mandatory scenes**; reinterpret them
+rather than rendering every article as a gate, tray, or keyed slot.
+
+For a batch of five or more, require at least three palettes and three
+composition/image-making modes, then judge the whole contact sheet. Compatible
+existing object photography may stay. The layout supplies card borders, outside
+shadows, and typography.
 
 ## Ranked regeneration list
 

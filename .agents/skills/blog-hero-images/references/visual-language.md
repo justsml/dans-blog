@@ -2,18 +2,25 @@
 
 ## Current direction: Paper atelier (2026-10-05)
 
-The selected site theme is professional paper cut-outs. Prefer photographed,
-precisely constructed paper mechanisms: layered ivory stock, muted architectural
-blue and terracotta, visible cut edges, directional natural shadows, and one
-clear causal relationship. Think architectural models and editorial still lifes,
-not children's craft, stickers, playful mascots, or a dense scrapbook.
+The site uses professional paper cut-outs, but cover art needs a wider range.
+Treat paper as a medium with expressive possibilities: cut photographic collage,
+torn and folded stock, printmaking, oversized sculpture, strong silhouettes,
+quiet scenes, and selective surrealism. Mature means deliberate composition and
+material intelligence, not beige minimalism.
 
-Choose shapes from the article's mechanism: keyed tabs, nested boundaries,
-routing apertures, layered indexes, test templates, and connected paper modules.
-Do not repeat the homepage's arch and disc on every cover. Avoid baked-in labels,
-fake code, generated diagrams that imply measured evidence, and brand marks.
-Physical shadows between layers belong in the photograph; card framing, outer
-shadows, and title typography belong in HTML/CSS. Recompose square companions.
+**User correction:** the initial eight images were far too conforming. Do not
+repeat the ivory architectural model + blue/terracotta accent + shallow studio
+camera formula. Nor should every article become a miniature mechanism. Vary
+palette, camera, scale, density, light, and image-making mode across a batch.
+A dramatic ink-black plate, moss/cobalt collage, or saffron paper composition
+can belong beside the same site typography. Artwork need not match UI tokens.
+
+Choose a metaphor from the article's tension and consequence, including human,
+natural, narrative, or gestural ideas. Literal gates, trays, and keyed apertures
+are occasional options rather than the visual vocabulary of the whole blog.
+Avoid baked-in labels, fake code, generated diagrams that imply measured
+results, and incidental brand marks. Physical interlayer shadows belong in the
+art; outer card framing and title typography belong in HTML/CSS.
 
 Existing restrained object photography remains compatible and should not be
 regenerated just to force every post into paper. Keep real explanatory diagrams
@@ -26,7 +33,7 @@ The homepage exploration selected a quieter editorial image aesthetic. Default t
 
 The desired feeling is an independent technical journal: observant, tactile, intelligent, and a little wry. The current AI-hiring bridge and LLM-judge measurement apparatus are useful source examples. Keep the physical metaphor while reducing prop count and visual noise.
 
-### Refined photographic direction
+### Photographic lane (one option among several)
 
 - One subject, one mechanism, one readable consequence. A load on a bridge, an instrument calibrating a measurement, a gate dividing routes, or ordered drawers holding evidence should communicate without a legend.
 - Real-feeling wood, paper, stone, oxidized steel, brass, glass, and enamel. Show subtle wear and construction detail, not gratuitous grime or perfect plastic.

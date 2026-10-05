@@ -7,7 +7,7 @@ description: Art-direct and generate DanLevy.net blog hero images plus compositi
 
 Create an image family that explains the post's idea at a glance. Treat the wide hero and square thumbnail as two compositions of the same concept, not an arbitrary crop and not unrelated artwork.
 
-Default to the Paper atelier aesthetic: mature photographed paper constructions, precise layered ivory stock, muted architectural blue and terracotta, directional natural shadows, and one clear causal relationship. Compatible restrained object photography remains welcome; avoid childish craft and repetitive decorative shapes. The picture should belong beside ivory paper or warm charcoal without a color filter. Read the refined composition, dark-mode, and acceptance guidance in `references/visual-language.md`. Prefer this direction over colorful miniature worlds or digital illustration unless the article or user calls for an exception.
+Default to Paper atelier as an editorial medium, with mature paper cut-outs, collage, printmaking, or tactile photography. It is not a fixed ivory/blue/terracotta palette or an architectural-model template. Let the article determine subject, color, scale, lighting, and composition. A batch must feel like distinct artworks from one thoughtful publication, not product shots from one catalog. Compatible object photography remains welcome. Read the refined composition, dark-mode, and acceptance guidance in `references/visual-language.md`.
 
 Use the requested image generation tool, or the best available one, for raster generation. If the user named a tool or model, use it. Otherwise pick the strongest image generator available in the current environment, and say which one you chose before generating. Read `references/visual-language.md` before writing prompts. Read the target `index.mdx` in full and inspect its existing images before generating anything.
 
@@ -21,7 +21,7 @@ Use the requested image generation tool, or the best available one, for raster g
    - visual cliches to avoid
    - any layout, palette, or subject constraints from existing assets
 3. Inspect 2-4 relevant post image families. Prefer recent posts with similar subject matter or rhetorical shape. View contact sheets or individual images with whatever image-viewing tool the environment provides. Do not imitate one image closely.
-4. Develop 3-5 candidate concepts before generation. Default to five when the user asks for a range. Each candidate must use a different metaphor or physical mechanism; changing color or rearranging the same objects does not count. Most candidates should stay in the refined photographic direction. Include another image-making mode only when it improves the argument.
+4. Develop 3-5 candidate concepts before generation. Default to five when the user asks for a range. Each candidate must use a different metaphor or physical mechanism; changing color or rearranging the same objects does not count. Vary image-making modes where useful: photographed sculpture, cut photographic collage, torn-paper abstraction, ink/print textures, or an editorial scene. Do not force most candidates into the same studio photograph.
 5. For each candidate, record a short concept name, the connection to the thesis, the image-generation prompt, and square-composition notes. Avoid a long pitch deck.
 6. Generate each wide candidate with a separate image-generation call. Do not ask the model for a contact sheet. Generate art without baked-in title text, logos, watermarks, fake UI copy, or illegible labels.
 7. Inspect every output. Reject candidates with generic AI imagery, accidental text, broken causal logic, weak focal hierarchy, or a subject that cannot survive a square composition. If fewer than three credible candidates remain, generate replacements.
@@ -71,6 +71,17 @@ Create a square companion to the referenced wide hero. Preserve [metaphor, objec
 ```
 
 ## Candidate diversity
+
+The user rejected the first eight Paper atelier proposals as too conforming.
+Their shared ivory stock, blue/rust accents, shallow three-quarter camera, and
+folded engineering mechanisms created an assembly-line look. Do not repeat it.
+
+For a batch of five or more, use at least three distinct palettes and three
+composition/image-making modes. Change subject scale and density too. Judge
+variety by looking at the whole contact sheet; separate prompts alone do not
+prove diversity. A recurring cut edge or tactile quality is sufficient continuity.
+Avoid making every technical subject into a gate, aperture, keyed slot, or tray.
+
 
 Choose 3-5 lanes that fit the post. Do not force every lane into every job:
 
