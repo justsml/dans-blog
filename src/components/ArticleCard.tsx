@@ -1,3 +1,4 @@
+import { articleTransitionName } from "../shared/articleTransitions";
 import { slugify } from "../shared/pathHelpers";
 import { getReadingTimeMinutes } from "../shared/readingTime";
 import type { ArticlePost } from "../types";
@@ -82,7 +83,7 @@ export const ArticleCard = ({
       : !isTile && popularity >= 0.7
         ? " article-card--popular"
         : "";
-  const viewTransitionName = `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`;
+  const viewTransitionName = articleTransitionName(slug);
   const hrefLocale = article.locale === locale ? locale : DEFAULT_LOCALE;
 
   return (
@@ -110,7 +111,7 @@ export const ArticleCard = ({
         </h2>
       )}
       <p dangerouslySetInnerHTML={{ __html: subTitle.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
-      {image && <span className="article-card__media" style={{ viewTransitionName: `article-image-${slug.replace(/^\/*|\/*$/g, "")}` }}>{image}</span>}
+      {image && <span className="article-card__media" style={{ viewTransitionName: articleTransitionName(slug, true) }}>{image}</span>}
       <span className="article-card__meta" title={tags && tags.join(", ")}>
         {publishedDate && <time dateTime={publishedDate.toISOString()}>{dateLabel}</time>}
         <span>{readingTimeMinutes} min read</span>

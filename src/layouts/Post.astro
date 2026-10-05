@@ -1,4 +1,5 @@
 ---
+import { articleTransitionName } from "../shared/articleTransitions";
 // import { fade } from 'astro:transitions';
 import TableOfContents from "../components/TableOfContents.astro";
 import type { ArticleHeading } from "../shared/articleHeadings";
@@ -276,7 +277,7 @@ const shouldCropMobileBanner =
             class="p-name"
             data-pagefind-meta="title"
             style={{
-              viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
+              viewTransitionName: articleTransitionName(slug),
             }}
           >
             {title}
@@ -337,7 +338,7 @@ const shouldCropMobileBanner =
             {/* LCP target — eager + high priority, preloaded in <head> */}
             <Image
               class="flow u-photo banner-image"
-              style={{ viewTransitionName: `article-image-${slug.replace(/^\/*|\/*$/g, "")}` }}
+              style={{ viewTransitionName: articleTransitionName(slug, true) }}
               src={cover_full_width as ImageMetadata}
               alt={heroAlt}
               format="webp"
@@ -357,7 +358,7 @@ const shouldCropMobileBanner =
                 {/* LCP target — eager + high priority, preloaded in <head> */}
                 <Image
                   class="u-photo"
-                  style={{ viewTransitionName: `article-image-${slug.replace(/^\/*|\/*$/g, "")}` }}
+                  style={{ viewTransitionName: articleTransitionName(slug, true) }}
                   src={cover as ImageMetadata}
                   alt={heroAlt}
                   loading="eager"

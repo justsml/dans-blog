@@ -55,7 +55,7 @@ test('paging shows loading, prevents duplicate requests, and continues keyboard 
   let requestCount = 0;
   let release!: () => void;
   const pending = new Promise<void>(resolve => { release = resolve; });
-  await page.route('**/pages/2-date-desc.html', async route => {
+  await page.route('**/pages/2-date-desc/', async route => {
     requestCount++;
     await pending;
     await route.continue();
@@ -76,14 +76,14 @@ test('paging shows loading, prevents duplicate requests, and continues keyboard 
 });
 
 test('failed paging preserves cards and permits an inline retry', async ({ page }) => {
-  await page.route('**/pages/2-date-desc.html', route => route.fulfill({ status: 503, body: 'Unavailable' }));
+  await page.route('**/pages/2-date-desc/', route => route.fulfill({ status: 503, body: 'Unavailable' }));
   await page.goto('/');
   await page.getByRole('button', { name: 'More posts', exact: true }).click();
   await expect(page.locator('.article-list > .article-card')).toHaveCount(9);
   await expect(page.locator('.article-list-loader [role="alert"]')).toBeVisible();
   const retry = page.getByRole('button', { name: 'Try again', exact: true });
   await expect(retry).toBeEnabled();
-  await page.unroute('**/pages/2-date-desc.html');
+  await page.unroute('**/pages/2-date-desc/');
   await retry.click();
   await expect(page.locator('.article-list > .article-card')).toHaveCount(18);
   await expect(page.locator('.article-list-loader [role="alert"]')).toBeHidden();

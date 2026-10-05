@@ -37,8 +37,8 @@ let posts = sortArchivePosts(
 const hasMorePosts = posts.length > pageSize;
 const defaultNextUrl = hasMorePosts
   ? locale === DEFAULT_LOCALE
-    ? "/pages/2-date-desc.html"
-    : `/${locale}/pages/2-date-desc.html`
+    ? "/pages/2-date-desc/"
+    : `/${locale}/pages/2-date-desc/`
   : null;
 
 posts = posts.slice(0, pageSize);

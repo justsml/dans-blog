@@ -30,11 +30,11 @@ describe("archive pagination", () => {
     const descendingModified = { field: "modified", direction: "desc" } as const;
 
     expect(getArchiveSortKey(ascendingDate)).toBe("date-asc");
-    expect(getArchivePageUrlSuffix(ascendingDate)).toBe("-date.html");
+    expect(getArchivePageUrlSuffix(ascendingDate)).toBe("-date/");
     expect(getArchivePageParam(undefined, ascendingDate)).toBe("1-date");
 
     expect(getArchiveSortKey(descendingModified)).toBe("modified-desc");
-    expect(getArchivePageUrlSuffix(descendingModified)).toBe("-modified-desc.html");
+    expect(getArchivePageUrlSuffix(descendingModified)).toBe("-modified-desc/");
     expect(getArchivePageParam("3", descendingModified)).toBe("3-modified-desc");
   });
 
@@ -88,14 +88,14 @@ describe("archive pagination", () => {
       locale: "es",
       page: "1-date",
       sortKey: "date-asc",
-      pageUrlSuffix: "-date.html",
+      pageUrlSuffix: "-date/",
       field: "date",
       direction: "asc",
     });
     expect(pages[0].props).toMatchObject({
       locale: "es",
       sortKey: "date-asc",
-      pageUrlSuffix: "-date.html",
+      pageUrlSuffix: "-date/",
       field: "date",
       direction: "asc",
     });
@@ -108,7 +108,7 @@ describe("archive pagination", () => {
       locale: "es",
       page: "2-date-desc",
       sortKey: "date-desc",
-      pageUrlSuffix: "-date-desc.html",
+      pageUrlSuffix: "-date-desc/",
     });
     expect(pages[3].props.page.data.map((item) => item.props.slug)).toEqual([
       "oldest",
@@ -126,15 +126,15 @@ describe("archive pagination", () => {
         currentPage: 1,
         lastPage: 3,
         next: "/pages/2",
-        pageUrlSuffix: "-date-desc.html",
+        pageUrlSuffix: "-date-desc/",
       }),
-    ).toBe("/pages/2-date-desc.html");
+    ).toBe("/pages/2-date-desc/");
     expect(
       getArchiveNextUrl({
         currentPage: 3,
         lastPage: 3,
         next: undefined,
-        pageUrlSuffix: "-date-desc.html",
+        pageUrlSuffix: "-date-desc/",
       }),
     ).toBeNull();
 

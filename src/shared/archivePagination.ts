@@ -111,7 +111,7 @@ export function getArchiveSortKey(sortMode: ArchiveSortMode) {
 }
 
 export function getArchivePageUrlSuffix(sortMode: ArchiveSortMode) {
-  return `-${sortMode.field}${sortMode.direction === "asc" ? "" : "-desc"}.html`;
+  return `-${sortMode.field}${sortMode.direction === "asc" ? "" : "-desc"}/`;
 }
 
 export function getArchivePageParam(
