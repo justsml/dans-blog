@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from "astro";
+import { ClientRouter } from "astro:transitions";
 import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import socialBanner from "../assets/social-banner.webp";
@@ -75,13 +76,24 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 ---
 
 <meta charset="utf-8" />
+<ClientRouter />
+<script is:inline data-astro-rerun>
+  (() => {
+    let value = "system";
+    try { const saved = localStorage.getItem("danlevy.theme"); if (saved === "light" || saved === "dark") value = saved; } catch {}
+    const resolved = value === "system" ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : value;
+    document.documentElement.dataset.theme = resolved;
+    document.documentElement.classList.toggle("dark", resolved === "dark");
+  })();
+</script>
+<script>import "../scripts/siteTheme";</script>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
 <link
   rel="preload"
-  href="/fonts/raleway-latin-wght-normal.woff2"
+  href="/fonts/atkinson-regular.woff"
   as="font"
-  type="font/woff2"
+  type="font/woff"
   crossorigin
 />
 <link rel="canonical" class="p-url" href={canonicalURL} />
@@ -133,14 +145,15 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 
 <meta
   name="theme-color"
-  content="#12283a"
+  content="#e8e3d9"
   media="(prefers-color-scheme: light)"
 />
 <meta
   name="theme-color"
-  content="#12283a"
+  content="#202725"
   media="(prefers-color-scheme: dark)"
 />
+<meta name="theme-color" content="#e8e3d9" />
 {/*Open Graph / Facebook*/}
 <meta name="fediverse:creator" content="@justsml@mastodon.social" />
 <meta name="bsky:creator" content="@justsml.bsky.social" />
@@ -192,62 +205,3 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   href="/icons/icon-512x512.webp"
 />
 
-<style is:global>
-  @keyframes slideUp {
-    0% {
-      opacity: 0;
-      transform: translateY(calc(-1 * 50vh)), scale(1);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  @view-transition {
-    navigation: auto;
-  }
-
-  /* Customize the default animation behavior */
-
-  ::view-transition-group(root) {
-    animation-duration: 0.35s;
-  }
-
-  /* Create a custom animation */
-
-  @keyframes move-out {
-    100% {
-      transform: translateY(3rem) scale(0.9);
-      opacity: 0;
-    }
-    30% {
-      transform: translateY(2rem) scale(0.96);
-      opacity: 0.3;
-    }
-    5% {
-      opacity: 0.95;
-    }
-  }
-
-  @keyframes move-in {
-    /* from {
-        transform: translateY(-120%) scale(0.9);
-    } */
-
-    100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
-    }
-  }
-
-  /* Apply the custom animation to the old and new page states */
-
-  /* ::view-transition-old(root) {
-    animation: 0.35s ease-in both move-in;
-  }
-
-  ::view-transition-new(root) {
-    animation: 0.35s ease-in both move-out;
-  } */
-</style>

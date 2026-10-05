@@ -13,6 +13,8 @@ import { PaginateFunction } from "astro";
 import { DEFAULT_LOCALE, type Locale } from "../../shared/i18n";
 // import { RefreshCw } from "lucide-react";
 
+import { optimizeArticleCardImage } from "../../shared/articleImages";
+
 export const partial = true;
 
 type Props = ArchiveRouteProps<Locale>;
@@ -50,10 +52,11 @@ const nextUrl = getArchiveNextUrl({
   pageUrlSuffix,
 });
 
+const optimizedPosts = await Promise.all(data.map(({ props }: any) => optimizeArticleCardImage(props as ArticlePost)));
 ---
 
 {
-  data.map(({ props }: any) => (
+  optimizedPosts.map((props) => (
     <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
   ))
 }
