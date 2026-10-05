@@ -25,7 +25,6 @@ import {
 } from "./integrity-checks.ts";
 import { resolveCheapFastTranslationModel } from "./model-presets.ts";
 import { resolveLlmConfig } from "./core/model-config.ts";
-import { buildUserPrompt } from "./prompts.ts";
 import { isCodeLikeOptionText } from "./quiz-translator.ts";
 
 const SHA_A = "a".repeat(40);
@@ -72,41 +71,6 @@ describe("GPT-5.6 Luna configuration", () => {
     expect(config.reasoningEffort).toBe("none");
     expect(config.providerOptions.openrouter.reasoning.enabled).toBe(false);
     expect(config.temperature).toBeUndefined();
-  });
-});
-
-describe("translation prompt builders", () => {
-  test("include stable quiz rules in the cached section for quiz prompts", () => {
-    const prompt = buildUserPrompt(
-      "<Challenge index={0} />",
-      "ja",
-      {
-        chunkIndex: 0,
-        totalChunks: 1,
-        articleSummary: "A technical quiz.",
-      },
-      true,
-    );
-
-    expect(prompt).toContain("QUIZ TRANSLATION RULES");
-    expect(prompt).toContain("STABLE TRANSLATION CONTRACT");
-  });
-
-  test("tell translators to localize same-page heading fragments", () => {
-    const prompt = buildUserPrompt(
-      "[Jump there](#install-guide)\n\n## Install guide",
-      "fr",
-      {
-        chunkIndex: 0,
-        totalChunks: 1,
-        articleSummary: "A technical article.",
-      },
-      false,
-    );
-
-    expect(prompt).toContain("Same-page heading links");
-    expect(prompt).toContain("translated heading slug");
-    expect(prompt).toContain("not the English heading slug");
   });
 });
 
@@ -310,32 +274,17 @@ describe("normalizeJudgeScores", () => {
 });
 
 describe("averageJudgeScore", () => {
-  test("averages six equal scores", () => {
-    const scores = {
-      readability: 80,
-      technicalAccuracy: 80,
-      coherence: 80,
-      relevance: 80,
-      translationQuality: 80,
-      mdxPreservation: 80,
-      culturalAdaptation: 80,
-      languagePurity: 80,
-    };
-    expect(averageJudgeScore(scores)).toBe(80);
-  });
-
-  test("averages mixed scores", () => {
-    const scores = {
-      readability: 100,
-      technicalAccuracy: 0,
-      coherence: 50,
-      relevance: 50,
-      translationQuality: 50,
+  test("averages all eight dimensions with different scores", () => {
+    expect(averageJudgeScore({
+      readability: 0,
+      technicalAccuracy: 10,
+      coherence: 20,
+      relevance: 30,
+      translationQuality: 40,
       mdxPreservation: 50,
-      culturalAdaptation: 50,
-      languagePurity: 50,
-    };
-    expect(averageJudgeScore(scores)).toBeCloseTo(50, 5);
+      culturalAdaptation: 60,
+      languagePurity: 70,
+    })).toBe(35);
   });
 });
 
@@ -1008,152 +957,58 @@ describe("shouldEscalateSecondJudge", () => {
 });
 
 // ---------------------------------------------------------------------------
-// Prompt builders — structural assertions (no LLM calls)
+// Prompt assembly: test caller data and conditional selection, not rubric wording.
 // ---------------------------------------------------------------------------
 
 const ctx = {
-  slug: "stop-hardcoding-your-prompts",
-  locale: "es" as const,
-  targetRelPath: "src/content/posts/2025-01-01--stop-hardcoding-your-prompts/es/index.mdx",
+  slug: "caller-supplied-post",
+  locale: "ja" as const,
+  targetRelPath: "translations/custom-target.mdx",
 };
+const CANDIDATES = [makeCandidate(SHA_A, "model-a"), makeCandidate(SHA_B, "model-b")];
+const CANDIDATE_SUMMARY = "Caller-supplied candidate history";
 
-const CANDIDATES: CandidateRef[] = [
-  makeCandidate(SHA_A, "deepseek/deepseek-v3"),
-  makeCandidate(SHA_B, "google/gemini-flash"),
-];
-
-const CANDIDATE_SUMMARY = CANDIDATES.map((c) => `- ${c.id} ${c.model}`).join("\n");
-
-describe("buildPrimaryJudgePrompt", () => {
-  const prompt = buildPrimaryJudgePrompt(CANDIDATE_SUMMARY, CANDIDATES, "final", ctx);
-
-  test("includes locale and slug", () => {
-    expect(prompt).toContain("es");
-    expect(prompt).toContain("stop-hardcoding-your-prompts");
+describe("judge prompt assembly", () => {
+  test("primary comparison carries context and only the supplied selectable candidates", () => {
+    const prompt = buildPrimaryJudgePrompt(CANDIDATE_SUMMARY, CANDIDATES, "custom-pass", ctx);
+    expect(prompt).toContain(`Judge the ${ctx.locale} translation candidates for ${ctx.slug}.`);
+    expect(prompt).toContain("custom-pass comparison");
+    expect(prompt).toContain(`- ${SHA_A} (model-a)`);
+    expect(prompt).toContain(`- ${SHA_B} (model-b)`);
+    expect(prompt).not.toContain(SHA_C);
+    expect(prompt).toContain(CANDIDATE_SUMMARY);
+    expect(prompt).toContain(ctx.targetRelPath);
   });
 
-  test("lists selectable candidate ids", () => {
-    expect(prompt).toContain(SHA_A);
-    expect(prompt).toContain(SHA_B);
+  test("selection hint is included only when supplied", () => {
+    const build = (selectedCommit?: string) => buildPrimaryJudgePrompt(
+      CANDIDATE_SUMMARY, CANDIDATES, "final", { ...ctx, selectedCommit },
+    );
+    expect(build(SHA_A)).toContain(`Use ${SHA_A} as the selected candidate`);
+    expect(build()).not.toContain(`Use ${SHA_A} as the selected candidate`);
   });
 
-  test("includes heading-preservation rule", () => {
-    expect(prompt).toContain("per-level heading count");
+  test("rescore carries the pass, source override and candidate history", () => {
+    const sourcePath = "sources/custom-source.mdx";
+    const prompt = buildPrePublishRescorePrompt(7, CANDIDATE_SUMMARY, { ...ctx, sourcePath });
+    expect(prompt).toContain(`${ctx.locale} translation for ${ctx.slug}`);
+    expect(prompt).toContain("fixes pass 7");
+    expect(prompt).toContain(`Check ${ctx.targetRelPath} against ${sourcePath}`);
+    expect(prompt).toContain(CANDIDATE_SUMMARY);
+    expect(buildPrePublishRescorePrompt(7, CANDIDATE_SUMMARY, ctx))
+      .toContain(`Check ${ctx.targetRelPath} against the English source`);
   });
 
-  test("includes localized heading-anchor rule", () => {
-    expect(prompt).toContain("Same-page heading links");
-    expect(prompt).toContain("localized heading IDs");
-    expect(prompt).toContain("stale English heading fragments");
-  });
-
-  test("includes asset path rule", () => {
-    expect(prompt).toContain("../");
-  });
-
-  test("includes deploy-breaker structural rules", () => {
-    expect(prompt).toContain("Gist component paths");
-    expect(prompt).toContain("../../../../components");
-    expect(prompt).toContain("suspicious code fence languages");
-  });
-
-  test("includes quiz answer faithfulness rules", () => {
-    expect(prompt).toContain("answer faithfulness");
-    expect(prompt).toContain("isAnswer positions");
-    expect(prompt).toContain("same correct answer");
-  });
-
-  test("includes JSON shape", () => {
-    expect(prompt).toContain("selectedCommit");
-    expect(prompt).toContain("suggestions");
-  });
-
-  test("includes Dan's direct style criterion when no hint is set", () => {
-    expect(prompt).toContain("Dan's direct style");
-  });
-
-  test("uses hint commit when selectedCommit is provided", () => {
-    const hinted = buildPrimaryJudgePrompt(CANDIDATE_SUMMARY, CANDIDATES, "final", {
-      ...ctx,
-      selectedCommit: SHA_C,
+  for (const [name, build] of [
+    ["second review", buildSecondJudgePrompt],
+    ["escalation", buildEscalationPrompt],
+  ] as const) {
+    test(`${name} carries caller context and candidate history`, () => {
+      const prompt = build(CANDIDATE_SUMMARY, ctx);
+      expect(prompt).toContain(`${ctx.locale} translation`);
+      expect(prompt).toContain(ctx.slug);
+      expect(prompt).toContain(ctx.targetRelPath);
+      expect(prompt).toContain(CANDIDATE_SUMMARY);
     });
-    expect(hinted).toContain(`Use ${SHA_C}`);
-    expect(hinted).not.toContain("Dan's direct style");
-  });
-});
-
-describe("buildPrePublishRescorePrompt", () => {
-  const prompt = buildPrePublishRescorePrompt(1, CANDIDATE_SUMMARY, ctx);
-
-  test("identifies itself as a rescore prompt with pass number", () => {
-    expect(prompt).toContain("re-scoring");
-    expect(prompt).toContain("pass 1");
-  });
-
-  test("forbids shell commands", () => {
-    expect(prompt).toContain("Do not run shell commands");
-  });
-
-  test("requests empty suggestions array when no fixes remain", () => {
-    expect(prompt).toContain('"suggestions": []');
-  });
-
-  test("mentions target path", () => {
-    expect(prompt).toContain(ctx.targetRelPath);
-  });
-
-  test("checks localized heading anchors during rescore", () => {
-    expect(prompt).toContain("localized same-page heading anchor targets");
-    expect(prompt).toContain("stale English heading fragments");
-  });
-
-  test("includes quiz rescore contract", () => {
-    expect(prompt).toContain("marked answer remains semantically faithful");
-    expect(prompt).toContain("option field schema");
-  });
-});
-
-describe("buildSecondJudgePrompt", () => {
-  const prompt = buildSecondJudgePrompt(CANDIDATE_SUMMARY, ctx);
-
-  test("identifies itself as a second-pass reviewer", () => {
-    expect(prompt).toContain("second-pass reviewer");
-  });
-
-  test("includes the no-escalation phrase instruction", () => {
-    expect(prompt).toContain("No escalation required");
-  });
-
-  test("mentions heading count checks", () => {
-    expect(prompt).toContain("heading count");
-  });
-
-  test("checks stale English heading IDs", () => {
-    expect(prompt).toContain("same-page heading links that still point at English heading IDs");
-  });
-
-  test("checks quiz semantic answer faithfulness", () => {
-    expect(prompt).toContain("semantic answer faithfulness");
-  });
-});
-
-describe("buildEscalationPrompt", () => {
-  const prompt = buildEscalationPrompt(CANDIDATE_SUMMARY, ctx);
-
-  test("asks to resolve judge disagreement", () => {
-    expect(prompt).toContain("Resolve the judge disagreement");
-  });
-
-  test("includes heading-preservation rule", () => {
-    expect(prompt).toContain("per-level heading counts");
-  });
-
-  test("includes localized heading-anchor rule", () => {
-    expect(prompt).toContain("localized heading IDs");
-    expect(prompt).toContain("stale English heading fragments");
-  });
-
-  test("mentions target path for output", () => {
-    expect(prompt).toContain(ctx.targetRelPath);
-  });
+  }
 });

@@ -1,84 +1,72 @@
-import { describe, beforeAll, afterAll, test, expect } from "bun:test";
+import { describe, beforeEach, afterEach, test, expect, spyOn } from "bun:test";
 import Database from "libsql";
-import { _createLocalCache } from "./localCache.ts"; // Update with the actual path
-import { makeLogs } from "../components/LogHelper.ts";
-import * as fs from "fs";
-import * as path from "path";
-
-const log = makeLogs(`SqliteCache`);
-
-type Database = ReturnType<typeof Database>;
+import { _createLocalCache } from "./localCache.ts";
 
 describe("SqliteCache", () => {
-  const testDbPath = path.join(__dirname, "../../node_modules/.cache/test-db.sqlite");
-  let db: Database;
-  let cache: Awaited<ReturnType<typeof _createLocalCache>>;
+  let cache: ReturnType<typeof _createLocalCache>;
 
-  beforeAll(async () => {
-    log("Creating test database");
-    if (fs.existsSync(testDbPath)) {
-      fs.unlinkSync(testDbPath);
-    }
-    db = new Database(`${testDbPath}`);
-    cache = _createLocalCache(db);
+  beforeEach(() => {
+    cache = _createLocalCache(new Database(":memory:"));
   });
 
-  afterAll(async () => {
-    log("Closing test database & cleaning up");
+  afterEach(() => {
     cache.close();
-    if (fs.existsSync(testDbPath)) {
-      fs.unlinkSync(testDbPath);
+  });
+
+  test("get returns undefined for non-existent keys", async () => {
+    expect(await cache.get("no-such-key")).toBeUndefined();
+  });
+
+  test("default TTL preserves new values and expires them after one day", async () => {
+    let now = 1_000_000_000_000;
+    const clock = spyOn(Date, "now").mockImplementation(() => now);
+    try {
+      await cache.set("test-key", { foo: "answer" });
+      expect(await cache.get<{ foo: string }>("test-key")).toEqual({ foo: "answer" });
+      now += 86_400_001;
+      expect(await cache.get<{ foo: string }>("test-key")).toBeUndefined();
+    } finally {
+      clock.mockRestore();
     }
   });
 
-  test("get should return undefined for non-existent keys", async () => {
-    const result = await cache.get("no-such-key");
-    expect(result).toBeUndefined();
-  });
-
-  test("set and get should store and retrieve data", async () => {
-    await cache.set("test-key", { foo: "answer" });
-
-    const result = await cache.get("test-key");
-    expect(result).toEqual({ foo: "answer" });
-  });
-
-  test("compression should store and retrieve compressed data", async () => {
+  test("compressed data survives a round trip", async () => {
     const largeObject = { text: "x".repeat(1000) };
     await cache.set("large-key", largeObject, { compress: true });
-    const retrieved = await cache.get("large-key");
-    expect(retrieved).toEqual(largeObject);
+    expect(await cache.get<{ text: string }>("large-key")).toEqual(largeObject);
   });
 
-  test("delete should remove keys", async () => {
+  test("delete removes a live key and preserves other keys", async () => {
     await cache.set("delete-key", "value");
+    await cache.set("keep-key", "kept");
+    expect(await cache.get<string>("delete-key")).toBe("value");
     cache.delete("delete-key");
-    const result = await cache.get("delete-key");
-    expect(result).toBeUndefined();
+    expect(await cache.get<string>("delete-key")).toBeUndefined();
+    expect(await cache.get<string>("keep-key")).toBe("kept");
   });
 
-  test("clear should remove all keys", async () => {
+  test("clear removes all stored keys", async () => {
     await cache.set("clear-key1", "val1");
     await cache.set("clear-key2", "val2");
+    expect(await cache.get<string>("clear-key1")).toBe("val1");
+    expect(await cache.get<string>("clear-key2")).toBe("val2");
     cache.clear();
-    const result1 = await cache.get("clear-key1");
-    const result2 = await cache.get("clear-key2");
-    expect(result1).toBeUndefined();
-    expect(result2).toBeUndefined();
+    expect(await cache.get<string>("clear-key1")).toBeUndefined();
+    expect(await cache.get<string>("clear-key2")).toBeUndefined();
   });
 
-  test("keys should expire after the specified TTL", async () => {
-    const key = "ttl-key";
-    const longTermKey = "long-term-key";
-    await cache.set(key, { foo: "answer" }, { ttlMs: 2 });
-    await cache.set(longTermKey, { foo: "answer" }, { ttlMs: 5_000 });
-    const immediateResult = await cache.get(key);
-    expect(immediateResult).toEqual({ foo: "answer" });
-    // wait for expiry
-    await new Promise((r) => setTimeout(r, 10));
-    const expiredResult = await cache.get(key);
-    const longTermResult = await cache.get(longTermKey);
-    expect(expiredResult).toBeUndefined();
-    expect(longTermResult).toEqual({ foo: "answer" });
+  test("custom TTL expires only the short-lived key", async () => {
+    let now = 1_000_000_000_000;
+    const clock = spyOn(Date, "now").mockImplementation(() => now);
+    try {
+      await cache.set("ttl-key", { foo: "answer" }, { ttlMs: 2 });
+      await cache.set("long-term-key", { foo: "answer" }, { ttlMs: 5_000 });
+      expect(await cache.get<{ foo: string }>("ttl-key")).toEqual({ foo: "answer" });
+      now += 10;
+      expect(await cache.get<{ foo: string }>("ttl-key")).toBeUndefined();
+      expect(await cache.get<{ foo: string }>("long-term-key")).toEqual({ foo: "answer" });
+    } finally {
+      clock.mockRestore();
+    }
   });
 });

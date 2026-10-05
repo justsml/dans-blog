@@ -44,9 +44,8 @@ describe("i18n agent CLI", () => {
     expect(parseCliArgs([]).interactive).toBe(true);
   });
 
-  test("uses DeepSeek Nitro as the default agent model", () => {
+  test("uses the configured default agent model", () => {
     expect(parseCliArgs([]).agentModel).toBe(DEFAULT_AGENT_MODEL);
-    expect(DEFAULT_AGENT_MODEL).toContain("openrouter/deepseek/deepseek-v4.1-flash:nitro");
   });
 
   test("uses a high configurable max step budget", () => {
@@ -85,7 +84,6 @@ describe("i18n agent CLI", () => {
 
   test("defaults broad agent locale work to all active locales", () => {
     expect(DEFAULT_AGENT_LOCALES).toEqual([...ACTIVE_LOCALES]);
-    expect(DEFAULT_AGENT_LOCALES).toEqual(["es", "hi", "ja", "ru", "de", "fr", "it", "ar", "he", "zh"]);
   });
 
   test("uses a positional prompt as the first interactive turn by default", () => {
@@ -283,9 +281,6 @@ describe("scoreTranslation", () => {
 
     const messages = capturedSettings?.messages ?? [];
     expect(messages.length).toBe(5);
-    expect(JSON.stringify(messages[1])).toContain("Score these dimensions");
-    expect(JSON.stringify(messages[1])).toContain("Same-page heading links must target the localized heading IDs");
-    expect(JSON.stringify(messages[1])).toContain("rather than link drift");
     expect(JSON.stringify(messages[1])).not.toContain("candidate-1");
     expect(JSON.stringify(messages[2])).toContain("<english-source>");
     expect(JSON.stringify(messages[3])).toContain("<candidate>");

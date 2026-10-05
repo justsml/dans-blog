@@ -1,6 +1,5 @@
 import { describe, expect, test } from "bun:test";
 import {
-  EDITORIAL_CATEGORIES,
   getCanonicalTag,
   getMechanicalTagFix,
   getPreferredCategory,
@@ -17,9 +16,7 @@ import {
 } from "./editorialRules";
 
 describe("editorial rules", () => {
-  test("defines the controlled category tuple used by content config", () => {
-    expect(EDITORIAL_CATEGORIES).toContain("AI");
-    expect(EDITORIAL_CATEGORIES).toContain("Quiz");
+  test("accepts controlled categories and rejects unknown ones", () => {
     expect(isEditorialCategory("Security")).toBe(true);
     expect(isEditorialCategory("Projects")).toBe(false);
   });

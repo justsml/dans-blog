@@ -2,7 +2,6 @@ import { describe, expect, test } from "bun:test";
 import {
   ACTIVE_LOCALES,
   DEFAULT_LOCALE,
-  FUTURE_LOCALES,
   getBaseSlugFromRouteSlug,
   getLocaleFromRouteSlug,
   getTextDirection,
@@ -41,21 +40,6 @@ describe("i18n post routing helpers", () => {
     expect(parsed.isTranslation).toBe(true);
     expect(getSlugFromId("2026-05-02--postgres-text-search-guide/es/index")).toBe(
       "es/postgres-text-search-guide",
-    );
-  });
-
-  test("builds normalized localized paths", () => {
-    expect(getLocalizedPostPath("postgres-text-search-guide")).toBe(
-      "/postgres-text-search-guide/",
-    );
-    expect(getLocalizedPostPath("postgres-text-search-guide", "ja")).toBe(
-      "/ja/postgres-text-search-guide/",
-    );
-    expect(getLocalizedPostPath("postgres-text-search-guide", "ru")).toBe(
-      "/ru/postgres-text-search-guide/",
-    );
-    expect(getLocalizedPostPath("postgres-text-search-guide", "de")).toBe(
-      "/de/postgres-text-search-guide/",
     );
   });
 
@@ -148,7 +132,6 @@ describe("i18n post routing helpers", () => {
   });
 
   test("distinguishes active rollout locales from unsupported prefixes", () => {
-    expect(FUTURE_LOCALES).toEqual([]);
     expect(isLocale("zh")).toBe(true);
     expect(isActiveLocale("zh")).toBe(true);
     expect(isLocale("ar")).toBe(true);

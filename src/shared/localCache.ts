@@ -64,7 +64,7 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
       value: T,
       opts?: { ttlMs?: number; compress?: boolean },
     ) {
-      const expires = opts?.ttlMs ? Date.now() + opts.ttlMs : DEFAULT_TTL_MS;
+      const expires = Date.now() + (opts?.ttlMs || DEFAULT_TTL_MS);
       let data = Buffer.from(JSON.stringify(value));
       let compressFlag = 0;
       if (opts?.compress) {
@@ -91,7 +91,7 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
 
     clear() {
       log(`WARNING: Clearing ALL local_cache in ${db.name}`);
-      return void db.prepare("DELETE FROM cache").run();
+      return void db.prepare(`DELETE FROM ${TABLE_NAME}`).run();
     },
 
     close() {

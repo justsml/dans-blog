@@ -1,7 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import type { ArticlePost, Page } from "../types";
 import {
-  ARCHIVE_SORT_MODES,
   buildArchivePagePaths,
   getArchiveArticleListCtaOccurrence,
   getArchiveArticleListOffset,
@@ -16,15 +15,6 @@ import {
 } from "./archivePagination";
 
 describe("archive pagination", () => {
-  test("defines the archive sort modes once", () => {
-    expect(ARCHIVE_SORT_MODES).toEqual([
-      { field: "date", direction: "asc" },
-      { field: "date", direction: "desc" },
-      { field: "modified", direction: "asc" },
-      { field: "modified", direction: "desc" },
-    ]);
-  });
-
   test("builds sort keys, suffixes, and page params", () => {
     const ascendingDate = { field: "date", direction: "asc" } as const;
     const descendingModified = { field: "modified", direction: "desc" } as const;

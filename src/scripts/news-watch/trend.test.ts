@@ -16,10 +16,13 @@ const baseItem: CapturedItem = {
 };
 
 describe("news-watch trend detection", () => {
-  test("builds stable item and topic keys", () => {
-    expect(makeItemId(baseItem)).toHaveLength(24);
-    expect(makeTopicKey(baseItem)).toHaveLength(16);
-    expect(makeItemId(baseItem)).toBe(makeItemId(baseItem));
+  test("item identity ignores metric updates but separates sources and external IDs", () => {
+    const id = makeItemId(baseItem);
+    expect(makeItemId({ ...baseItem, metrics: { score: 999 }, capturedAt: "2026-07-08" })).toBe(id);
+    expect(makeItemId({ ...baseItem, externalId: "different" })).not.toBe(id);
+    expect(makeItemId({ ...baseItem, sourceKey: "another-source" })).not.toBe(id);
+    expect(makeTopicKey({ ...baseItem, title: baseItem.title.toUpperCase() })).toBe(makeTopicKey(baseItem));
+    expect(makeTopicKey({ ...baseItem, title: "Postgres replication outage" })).not.toBe(makeTopicKey(baseItem));
   });
 
   test("weights comments and rank into engagement", () => {
