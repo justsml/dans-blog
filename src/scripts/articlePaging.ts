@@ -47,3 +47,45 @@ document.addEventListener("htmx:afterRequest", (event) => {
   if (idle) idle.textContent = state.loader.dataset.retry ?? "";
   announce(state.list, ""); // The visible alert announces the failure once.
 });
+
+// Preserve a bounded pair of enhanced lists for Back/Forward within this session.
+// Keeping this in memory avoids storing article HTML in persistent browser storage.
+type ArchiveSnapshot = { html: string; scroll: number; focusHref?: string; status: string };
+const archiveSnapshots = new Map<string, ArchiveSnapshot>();
+let returnSnapshot: ArchiveSnapshot | undefined;
+type ArchiveNavigation = Event & { from: URL; to: URL; navigationType: string; newDocument: Document; sourceElement?: Element };
+document.addEventListener("astro:before-preparation", event => {
+  const navigation = event as ArchiveNavigation;
+  const list = document.querySelector<HTMLElement>("main.home-page .article-list");
+  if (!list || list.hasAttribute("aria-busy")) return;
+  const html = list.innerHTML;
+  if (html.length > 250_000) return; // At most 500KB of HTML across two routes.
+  const active = document.activeElement;
+  const focusHref = active instanceof HTMLAnchorElement && list.contains(active) ? active.getAttribute("href") ?? undefined : undefined;
+  const key = navigation.from.pathname;
+  archiveSnapshots.delete(key);
+  archiveSnapshots.set(key, { html, scroll: window.scrollY, focusHref, status: list.parentElement?.querySelector("[data-article-loading-status]")?.textContent ?? "" });
+  while (archiveSnapshots.size > 2) archiveSnapshots.delete(archiveSnapshots.keys().next().value!);
+});
+document.addEventListener("astro:before-swap", event => {
+  const navigation = event as ArchiveNavigation;
+  returnSnapshot = undefined;
+  if (navigation.navigationType !== "traverse") return;
+  const saved = archiveSnapshots.get(navigation.to.pathname);
+  const list = navigation.newDocument.querySelector<HTMLElement>("main.home-page .article-list");
+  if (!saved || !list) return;
+  list.innerHTML = saved.html;
+  returnSnapshot = saved;
+});
+document.addEventListener("astro:page-load", () => {
+  const saved = returnSnapshot;
+  returnSnapshot = undefined;
+  if (!saved) return;
+  const list = document.querySelector<HTMLElement>("main.home-page .article-list");
+  if (!list) return;
+  announce(list, saved.status);
+  requestAnimationFrame(() => {
+    if (saved.focusHref) [...list.querySelectorAll<HTMLAnchorElement>(".article-card")].find(card => card.getAttribute("href") === saved.focusHref)?.focus({ preventScroll: true });
+    window.scrollTo({ top: saved.scroll, behavior: "instant" });
+  });
+});
