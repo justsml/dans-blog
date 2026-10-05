@@ -56,7 +56,9 @@ const copy = getUiCopy(locale);
 .utility-sheet :global(.contact-form > button) { grid-column:1 / -1; min-height:44px; background:var(--paper-blue); color:var(--paper-on-blue); border:1px solid var(--paper-blue); padding:.9rem 1.2rem; font-size:.9rem; font-weight:600; }
 .utility-sheet :global(.contact-form.loading .loading-message) { display:flex; justify-content:center; padding:1rem; color:var(--paper-muted); }
 .utility-sheet :global(.contact-form.loading > button) { opacity:.65; pointer-events:none; }
-.utility-sheet :global(.contact-form.success .form-item) { display:none; }
+.utility-sheet :global(.contact-form.success .form-item),
+.utility-sheet :global(.contact-form.success > button),
+.utility-sheet :global(.contact-form.success [data-recaptcha-site-key]) { display:none; }
 .utility-sheet :global(.contact-form.success .success-message) { display:block; padding:1rem; border-inline-start:3px solid var(--paper-success); color:var(--paper-success); background:var(--paper-desk); }
 .utility-sheet :global(.contact-form.failure .error-message) { display:block; padding:1rem; border-inline-start:3px solid var(--paper-error); color:var(--paper-error); background:var(--paper-desk); }
 .utility-sheet :global(.contact-form.failure .success-message) { display:none; }
