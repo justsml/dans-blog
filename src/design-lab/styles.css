@@ -393,3 +393,14 @@ h1, h2, p, figure { margin: 0; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
+
+/* Native dropdown interaction, compact conventional icon presentation. */
+.theme-icon-picker { position: relative; display: flex; align-items: center; justify-content: center; gap: 5px; min-width: 44px; min-height: 44px; color: var(--ink); border-radius: 4px; }
+.theme-icon-picker > svg { width: 19px; height: 19px; }
+.theme-icon-picker > .theme-chevron { width: 10px; height: 10px; }
+.theme-icon-picker > .theme-moon { display: none; }
+:root[data-theme=dark] .theme-icon-picker > .theme-sun { display: none; }
+:root[data-theme=dark] .theme-icon-picker > .theme-moon { display: block; }
+.theme-icon-picker select { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; opacity: 0; cursor: pointer; }
+.theme-icon-picker:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+.theme-icon-picker:hover { background: var(--panel); }

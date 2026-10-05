@@ -45,7 +45,7 @@ number of directional shadows. Shape and depth should establish hierarchy.
   media frames, cut-outs, and typography. Adapt existing Tailwind/UI variables to
   these tokens rather than maintaining two separate palettes.
 - [ ] Put theme initialization in `BaseHead.astro` before first paint. Provide one
-  accessible System/Light/Dark control and a single production storage key.
+  small conventional sun/moon icon with a native System/Light/Dark dropdown and a single production storage key.
   Preserve selection across routes; follow OS changes in System mode; tolerate
   unavailable storage. Preview preferences must not become production settings.
 - [ ] Integrate foundation styles through `BaseHead`, `Page.astro`, and
@@ -131,8 +131,8 @@ number of directional shadows. Shape and depth should establish hierarchy.
 
 ## Migration ledger and completeness gate
 
-`paper-atelier-inventory.csv` lists 145 production route/layout/component/style
-files audited on this branch: 107 are statically reachable from page/content
+`paper-atelier-inventory.csv` lists 147 production route/layout/component/style/runtime
+files audited on this branch: 109 are statically reachable from page/content
 imports, and 38 need explicit usage review. Static reachability is a discovery
 hint, not proof of runtime coverage: imports can be conditional or commented,
 MDX can carry its own styles, and third-party markup needs separate checks.
@@ -182,3 +182,36 @@ No pending rows or unexplained old visual treatments may remain at release.
 Suggested delivery commits: foundation/theme; shell/search/footer; cards and
 listings; reading/interactive components; page/locale polish; verification and
 CSS cleanup. Each commit should leave the branch usable and reviewable.
+
+
+## Article paging and loading
+
+The paging control now keeps the existing explicit More posts interaction and
+static archive URLs, adds a visible loading label, prevents parallel duplicate
+requests, times out stalled requests, and offers an inline retry. Existing cards
+remain in place on failure. Successful batches announce added and total counts;
+keyboard focus continues at the first new card without a forced scroll jump.
+The final batch displays a clear end-of-list message. Paging copy is localized.
+
+Remaining integration work:
+
+- [ ] Style loader, loading, retry, and terminal states as a compact paper action
+  strip with a consistent touch target and theme-specific contrast.
+- [ ] Show loaded/total counts using the same visibility/locale collection as the
+  listing. Preserve chronological ordering and prevent append-induced card
+  promotion from changing the layout or scroll position.
+- [ ] Add real standalone archive pages with previous/next links for no-JavaScript
+  browsing and shareable page URLs; keep the existing fragment URL contract for
+  enhanced loading. Raw fragment pages are not an adequate navigation fallback.
+- [ ] Restore loaded batches and scroll position when returning from an article,
+  including keyboard and browser Back, without duplicate cards or surprise
+  automatic loading. Test bounded caching rather than storing the full corpus.
+- [ ] Optimize thumbnails consistently on initial and appended batches, reserve
+  image aspect ratios, and keep below-fold loading lazy. Consider bounded idle
+  prefetch of only the next batch after measuring benefit; do not auto-append.
+- [ ] Test rapid clicks, slow/offline/404 responses, retry, final page, locale and
+  sort changes, focus continuity, reduced motion, and return navigation.
+
+The ranked image queue is in `paper-atelier-image-regeneration.md`. Generation is
+separate from the layout migration; retain compatible object photographs and
+real educational diagrams. Start with the mismatched current homepage imagery.

@@ -125,8 +125,9 @@ function isImageMetadata(value: unknown): value is ImageMetadata {
         <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
       ))
     }
-    <ArticleListSkeleton nextUrl={defaultNextUrl} />
+    <ArticleListSkeleton nextUrl={defaultNextUrl} locale={locale} />
   </div>
+  <p class="visually-hidden" data-article-loading-status role="status" aria-live="polite" aria-atomic="true"></p>
 </Page>
 
 <script is:inline src="/js/htmx.min.js" defer></script>

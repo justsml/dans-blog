@@ -50,3 +50,41 @@ for (const prefix of ['', '/es']) {
     }
   });
 }
+
+test('paging shows loading, prevents duplicate requests, and continues keyboard focus', async ({ page }) => {
+  let requestCount = 0;
+  let release!: () => void;
+  const pending = new Promise<void>(resolve => { release = resolve; });
+  await page.route('**/pages/2-date-desc.html', async route => {
+    requestCount++;
+    await pending;
+    await route.continue();
+  });
+  await page.goto('/');
+  const button = page.getByRole('button', { name: 'More posts', exact: true });
+  await button.focus();
+  await button.click();
+  await expect(button).toBeDisabled();
+  await expect(page.locator('.article-list')).toHaveAttribute('aria-busy', 'true');
+  await expect(page.locator('.article-list-loader__loading')).toBeVisible();
+  await button.evaluate(node => { (node as HTMLButtonElement).click(); });
+  release();
+  await expect(page.locator('.article-list > .article-card')).toHaveCount(18);
+  expect(requestCount).toBe(1);
+  await expect(page.locator('[data-article-loading-status]')).toHaveText('9 more articles loaded. 18 articles shown.');
+  await expect(page.locator('.article-list > .article-card').nth(9)).toBeFocused();
+});
+
+test('failed paging preserves cards and permits an inline retry', async ({ page }) => {
+  await page.route('**/pages/2-date-desc.html', route => route.fulfill({ status: 503, body: 'Unavailable' }));
+  await page.goto('/');
+  await page.getByRole('button', { name: 'More posts', exact: true }).click();
+  await expect(page.locator('.article-list > .article-card')).toHaveCount(9);
+  await expect(page.locator('.article-list-loader [role="alert"]')).toBeVisible();
+  const retry = page.getByRole('button', { name: 'Try again', exact: true });
+  await expect(retry).toBeEnabled();
+  await page.unroute('**/pages/2-date-desc.html');
+  await retry.click();
+  await expect(page.locator('.article-list > .article-card')).toHaveCount(18);
+  await expect(page.locator('.article-list-loader [role="alert"]')).toBeHidden();
+});

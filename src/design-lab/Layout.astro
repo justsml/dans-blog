@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import { designs, warmDesigns, isWarmDesign, type Design } from "./designs";
 import Footer from "./Footer.astro";
 import SurfacePicker from "./SurfacePicker.astro";
+import ThemePicker from "./ThemePicker.astro";
 import "./styles.css";
 import "./surfaces.css";
 import "./paper.css";
@@ -70,7 +71,7 @@ const options = warm ? warmDesigns : designs;
           <a href="/about/">About</a>
         </nav>
         {!article && <label class="search-field"><span aria-hidden="true">⌕</span><input type="search" id="article-search" placeholder="Find a note…" aria-label="Search preview articles" /></label>}
-        <label class="theme-control"><span class="sr-only">Color theme</span><select id="theme-select" aria-label="Color theme"><option value="system">System ◐</option><option value="light">Light ○</option><option value="dark">Dark ●</option></select></label>
+        <ThemePicker />
       </header>
       <main id="main"><slot /></main>
       <Footer />

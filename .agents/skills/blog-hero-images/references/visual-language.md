@@ -1,6 +1,26 @@
 # DanLevy.net visual language
 
-## Current direction: Warm Editorial (2026-10-02)
+## Current direction: Paper atelier (2026-10-05)
+
+The selected site theme is professional paper cut-outs. Prefer photographed,
+precisely constructed paper mechanisms: layered ivory stock, muted architectural
+blue and terracotta, visible cut edges, directional natural shadows, and one
+clear causal relationship. Think architectural models and editorial still lifes,
+not children's craft, stickers, playful mascots, or a dense scrapbook.
+
+Choose shapes from the article's mechanism: keyed tabs, nested boundaries,
+routing apertures, layered indexes, test templates, and connected paper modules.
+Do not repeat the homepage's arch and disc on every cover. Avoid baked-in labels,
+fake code, generated diagrams that imply measured evidence, and brand marks.
+Physical shadows between layers belong in the photograph; card framing, outer
+shadows, and title typography belong in HTML/CSS. Recompose square companions.
+
+Existing restrained object photography remains compatible and should not be
+regenerated just to force every post into paper. Keep real explanatory diagrams
+and screenshots in the body. Use the regeneration queue in
+`docs/design/paper-atelier-image-regeneration.md` to prioritize mismatches.
+
+### Compatible foundation: Warm Editorial (2026-10-02)
 
 The homepage exploration selected a quieter editorial image aesthetic. Default to a believable photograph of a carefully composed object or small physical system, rather than a busy miniature world, saturated illustration, or a rendered dashboard. Use the Warm Editorial mockups in `output/design-mockups/2026-10-02/` as mood references, not sources of factual copy or a template to reproduce. Their generated slogans and labels are not part of the approved image language.
 
