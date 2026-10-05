@@ -421,7 +421,11 @@ const shouldCropMobileBanner =
         document.head.appendChild(fontStyles);
       };
 
+      const initializedReadingSheets = new WeakSet<HTMLElement>();
       const schedulePostWork = () => {
+        const article = document.querySelector<HTMLElement>("main.article");
+        if (!article || initializedReadingSheets.has(article)) return;
+        initializedReadingSheets.add(article);
         // Navigation and scoring must not wait for decorative hero effects.
         const quiz = document.querySelector<HTMLElement>(".quiz-ui");
         if (quiz) {
@@ -448,6 +452,7 @@ const shouldCropMobileBanner =
 
       };
 
+      document.addEventListener("astro:page-load", schedulePostWork);
       if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", schedulePostWork, { once: true });
       } else {

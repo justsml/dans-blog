@@ -127,6 +127,8 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
 </div>
 
 <script>
+  const initializedGrids = new WeakSet<HTMLElement>();
+  const initializeRepoControls = () => {
   const chips = document.querySelectorAll<HTMLButtonElement>(".oss-filter-chip");
   const cards = Array.from(document.querySelectorAll<HTMLElement>(".repo-card"));
   const clearBtn = document.querySelector<HTMLButtonElement>(".oss-filter-clear");
@@ -191,4 +193,11 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   });
 
   sortCards();
+  };
+  document.addEventListener("astro:page-load", initializeRepoControls);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initializeRepoControls, { once: true });
+  } else {
+    initializeRepoControls();
+  }
 </script>
