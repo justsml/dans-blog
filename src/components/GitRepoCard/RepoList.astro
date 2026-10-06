@@ -89,7 +89,9 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   </aside>
 )}
 
-<p class="oss-ledger" aria-label="Open source contribution summary" hidden={offlinePreview}>
+{!offlinePreview && (
+  <>
+<p class="oss-ledger" aria-label="Open source contribution summary">
   <span>{repoCount.toLocaleString()} repos</span>
   <span>{pullRequestCount.toLocaleString()} pull requests</span>
   <span>{totalStars.toLocaleString()} stars represented</span>
@@ -97,7 +99,7 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   <span class="oss-ledger-updated">Updated {updatedDate}</span>
 </p>
 
-<div class="oss-controls" hidden={offlinePreview}>
+<div class="oss-controls">
   <div class="oss-control-group" role="group" aria-label="Sort contributions">
     <span class="oss-control-label">Sort</span>
     <button class="oss-sort-button" data-sort-key="stars" aria-pressed="true">
@@ -120,7 +122,7 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   </div>
 </div>
 
-<div {...{ className }} hidden={offlinePreview}>
+<div {...{ className }}>
   {
     loadedRepos.map(async ({ contrib, pr }) => {
       const targetRepo = contrib.renamed ?? contrib.repo;
@@ -138,6 +140,9 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
     })
   }
 </div>
+
+  </>
+)}
 
 <script>
   const chips = document.querySelectorAll<HTMLButtonElement>(".oss-filter-chip");
