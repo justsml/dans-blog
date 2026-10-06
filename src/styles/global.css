@@ -68,6 +68,19 @@ main .info svg { width: 1.25rem; height: 1.25rem; }
 .share-counters { color: var(--paper-muted); }
 @keyframes paper-arrive { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 ::view-transition-group(*) { animation-duration: 240ms; }
+/* The title anchors the morph. Boxes hug their text and snapshots scale by height from the top-left, so text resizes evenly instead of stretching. */
+.post-title, main.article > h1.p-name { view-transition-class: article-title; inline-size: fit-content; }
+.article-card__media, main.article .u-photo { view-transition-class: article-media; }
+::view-transition-group(.article-title), ::view-transition-group(.article-media) { animation-duration: 420ms; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+::view-transition-old(.article-title), ::view-transition-new(.article-title) { block-size: 100%; inline-size: auto; object-fit: contain; object-position: left top; }
+::view-transition-old(.article-title) { animation-duration: 200ms; }
+::view-transition-new(.article-title) { animation-duration: 280ms; animation-delay: 140ms; }
+::view-transition-old(.article-media), ::view-transition-new(.article-media) { block-size: 100%; object-fit: cover; }
+/* Going back: the article sinks away and the archive settles up into place, rather than double-exposing. */
+[data-astro-transition=back]::view-transition-old(root) { animation: vt-sink 240ms cubic-bezier(.4, 0, 1, 1) both; }
+[data-astro-transition=back]::view-transition-new(root) { animation: vt-rise 360ms 60ms cubic-bezier(0, 0, .2, 1) both; }
+@keyframes vt-sink { to { opacity: 0; transform: translateY(28px) scale(.985); } }
+@keyframes vt-rise { from { opacity: 0; transform: translateY(-10px) scale(1.01); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 @media print { body { background: white; color: #222; } body::before, body::after { display: none; } .top-header, .site-footer, .searchBar, .paper-theme-picker { display: none !important; } a { color: inherit; } }
 /* Keep quiz screenshot tooling's intentional isolated-question presentation. */

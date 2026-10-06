@@ -50,7 +50,7 @@ document.addEventListener("htmx:afterRequest", (event) => {
 
 // Preserve a bounded pair of enhanced lists for Back/Forward within this session.
 // Keeping this in memory avoids storing article HTML in persistent browser storage.
-type ArchiveSnapshot = { html: string; scroll: number; focusHref?: string; status: string };
+type ArchiveSnapshot = { html: string; scroll: number; focusHref?: string; anchorHref?: string; anchorTop?: number; status: string };
 const archiveSnapshots = new Map<string, ArchiveSnapshot>();
 let returnSnapshot: ArchiveSnapshot | undefined;
 type ArchiveNavigation = Event & { from: URL; to: URL; navigationType: string; newDocument: Document; sourceElement?: Element };
@@ -62,9 +62,13 @@ document.addEventListener("astro:before-preparation", event => {
   if (new TextEncoder().encode(html).byteLength > 250_000) return; // At most 500KB of HTML across two routes.
   const active = document.activeElement;
   const focusHref = active instanceof HTMLAnchorElement && list.contains(active) ? active.getAttribute("href") ?? undefined : undefined;
+  // Restored cards lack their rendered heights (content-visibility), so a raw scroll offset drifts; anchor on the clicked card instead.
+  const anchor = navigation.sourceElement?.closest<HTMLAnchorElement>(".article-card");
+  const anchorHref = anchor && list.contains(anchor) ? anchor.getAttribute("href") ?? undefined : undefined;
+  const anchorTop = anchorHref ? anchor!.getBoundingClientRect().top : undefined;
   const key = navigation.from.pathname;
   archiveSnapshots.delete(key);
-  archiveSnapshots.set(key, { html, scroll: window.scrollY, focusHref, status: list.parentElement?.querySelector("[data-article-loading-status]")?.textContent ?? "" });
+  archiveSnapshots.set(key, { html, scroll: window.scrollY, focusHref, anchorHref, anchorTop, status: list.parentElement?.querySelector("[data-article-loading-status]")?.textContent ?? "" });
   while (archiveSnapshots.size > 2) archiveSnapshots.delete(archiveSnapshots.keys().next().value!);
 });
 document.addEventListener("astro:before-swap", event => {
@@ -77,6 +81,15 @@ document.addEventListener("astro:before-swap", event => {
   list.innerHTML = saved.html;
   returnSnapshot = saved;
 });
+// Runs inside the view-transition update, after Astro's own scroll restore, so the incoming snapshot is already in place.
+document.addEventListener("astro:after-swap", () => {
+  const saved = returnSnapshot;
+  if (!saved) return;
+  const list = document.querySelector<HTMLElement>("main.home-page .article-list");
+  const anchor = saved.anchorHref ? [...(list?.querySelectorAll<HTMLAnchorElement>(".article-card") ?? [])].find(card => card.getAttribute("href") === saved.anchorHref) : undefined;
+  const top = anchor && saved.anchorTop !== undefined ? anchor.getBoundingClientRect().top + window.scrollY - saved.anchorTop : saved.scroll;
+  window.scrollTo({ top, behavior: "instant" });
+});
 document.addEventListener("astro:page-load", () => {
   const saved = returnSnapshot;
   returnSnapshot = undefined;
@@ -84,8 +97,5 @@ document.addEventListener("astro:page-load", () => {
   const list = document.querySelector<HTMLElement>("main.home-page .article-list");
   if (!list) return;
   announce(list, saved.status);
-  requestAnimationFrame(() => {
-    if (saved.focusHref) [...list.querySelectorAll<HTMLAnchorElement>(".article-card")].find(card => card.getAttribute("href") === saved.focusHref)?.focus({ preventScroll: true });
-    window.scrollTo({ top: saved.scroll, behavior: "instant" });
-  });
+  if (saved.focusHref) [...list.querySelectorAll<HTMLAnchorElement>(".article-card")].find(card => card.getAttribute("href") === saved.focusHref)?.focus({ preventScroll: true });
 });
