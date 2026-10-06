@@ -31,7 +31,8 @@ shadows, and typography.
 - Ranks 1–5: revised broad editorial proposals in [batch two](../../output/paper-atelier-heroes-v2/proposals.md).
 - Ranks 6–17: twelve new proposals, including PostgreSQL, AWS Storage, and Bash quizzes, in [batch three](../../output/paper-atelier-heroes-v3/proposals.md). Every Markdown row embeds the current wide cover alongside the new proposal. [Exact prompts, source files, alternatives, and crop guidance](../../output/paper-atelier-heroes-v3/manifest.json) are preserved.
 - Rank 6, LLM connection strings: user chose to retain the existing image because it conveys important details; exclude this family from further regeneration.
-- The other new images are wide candidates pending selection. Existing cover references remain in place; fresh square compositions and shared locale promotion follow selection.
+- The sixteen approved families from batches two and three are promoted, with native1254×1254 square companions and160px search icons across English and ten shared locales. [Responsive delivery and selected assets](paper-atelier-responsive-images.md).
+- The next ten review candidates cover ranks18–26 plus the homepage Postgres text-search guide (rank33), in [batch four](../../output/paper-atelier-heroes-v4/proposals.md).
 
 | Rank | Article / current thumbnail | Priority surface | Why replace it | Proposed direction |
 | --- | --- | --- | --- | --- |

@@ -161,12 +161,14 @@ const heroAlt =
       ? `Hero image for ${title}`
       : "");
 
+const imageWidths = (image: unknown, widths: number[]) =>
+  [...new Set(widths.map(width => isImageMetadata(image) ? Math.min(width, image.width) : width))];
 const responsiveImgSizes_fullWidth = {
-  widths: [320, 480, 720, 960, 1280, 1600],
+  widths: imageWidths(cover_full_width, [320, 480, 720, 960, 1280, 1600]),
   sizes: "(max-width: 600px) calc(100vw - 4.2rem), (max-width: 1000px) calc(100vw - 7.2rem), 880px",
 };
 const responsiveImgSizes_breakRight = {
-  widths: [800, 1440, 1920],
+  widths: imageWidths(cover, [800, 1440, 1920]),
   sizes: `
     (max-width: 600px) 100vw,
     (max-width: 1200px) 80vw,
@@ -194,7 +196,7 @@ const heroPreload = _heroSrc
 // Older tiny thumbnails remain card-only and never replace a detailed hero.
 const mobileHero = cover_mobile_hero && isImageMetadata(cover_full_width) && isImageMetadata(cover_mobile) &&
   cover_mobile.width >= 1024 && cover_mobile.width === cover_mobile.height
-  ? await getImage({src: cover_mobile, widths: [320, 480, 720, 960, 1280].filter(width => width <= cover_mobile.width), width: 480, format: "webp", quality: 78})
+  ? await getImage({src: cover_mobile, widths: imageWidths(cover_mobile, [320, 480, 720, 960, 1280]), width: 480, format: "webp", quality: 78})
   : null;
 
 const shouldCropMobileBanner =
@@ -372,6 +374,8 @@ const shouldCropMobileBanner =
                   style={{ viewTransitionName: articleTransitionName(slug, true) }}
                   src={cover as ImageMetadata}
                   alt={heroAlt}
+                  format="webp"
+                  quality={78}
                   loading="eager"
                   fetchpriority="high"
                   {...responsiveImgSizes_breakRight}

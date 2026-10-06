@@ -12,6 +12,13 @@ material intelligence, not beige minimalism.
 repeat the ivory architectural model + blue/terracotta accent + shallow studio
 camera formula. Nor should every article become a miniature mechanism. Vary
 palette, camera, scale, density, light, and image-making mode across a batch.
+The second correction also rejected repetitive flat cut-outs on solid colored
+fields. Color changes alone do not create range. Include environmental scenes,
+atmospheric photography, natural subjects, gestural prints, and compositions
+with different depth and density. Avoid repeating hands, parcels, stitching,
+thread, and repaired tears across several neighboring covers. Inspect the batch
+as a contact sheet before presenting it; preserve a few quiet graphic plates
+among more expansive images rather than enforcing one treatment everywhere.
 A dramatic ink-black plate, moss/cobalt collage, or saffron paper composition
 can belong beside the same site typography. Artwork need not match UI tokens.
 

@@ -20,13 +20,16 @@ manifests in the same folder preserve generation provenance and review notes.
   `sizes` attribute describes the reading sheet's actual breakout width.
 - `cover_mobile_hero: true` explicitly selects separately composed square art
   below 601px through native `picture` and `source`. Ordinary legacy thumbnails
-  remain card-only. Square delivery uses 320, 480, 720, and 960px variants.
+  remain card-only. Square delivery uses 320, 480, 720, 960, and native 1254px
+  variants; candidate widths never exceed the source resolution.
 - Hero preload media, srcset, sizes, format, and quality match the rendered hero.
   Only the source appropriate to the viewport is preloaded with high priority.
 - Landscape cards use the wide composition, responsive srcset, intrinsic width
   and height, and lazy decoding/loading. Only the initial homepage lead is eager
   with high fetch priority. Initial, appended, category, and footer cards share
   the build-time optimizer; repeated requests are memoized within the build.
+- Sparse category grids use one/two-column size hints and candidates up to
+  1600px so their larger cards receive appropriately sized images.
 - Pagefind uses the small icon rather than downloading a square master for each
   result. No image-selection JavaScript, client image service, or new dependency
   was added. Existing bounded paging cache and quiz lazy hydration remain intact.

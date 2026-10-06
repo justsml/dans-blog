@@ -1,12 +1,12 @@
 # Eleven new proposals; LLM connection strings retained
 
-Current article covers alongside new wide proposals. Built-in image generation; source artwork and exact prompts preserved. Fresh square companions follow selection.
+Current article covers alongside new wide proposals. Built-in image generation; source artwork and exact prompts preserved. These wide proposals are adopted on the blog, with freshly recomposed high-resolution square companions.
 
 LLM connection strings: keep the existing cover; the rejected proposal has been removed from this comparison.
 
 ## 7. Quiz: Deep Postgres: Pt. 2
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/dancing-postgres-elephant-wide.webp) | ![Separate cobalt, peach and chartreuse paper bands cross and interlace into a broad woven sheet, with a few unjoined ends continuing beyond it.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/paper-editorial-v3-relational-weave.webp) |
 
@@ -14,7 +14,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 8. Quiz: Deep Postgres: Pt. 1
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/elephant-synthwave-gym-wide.webp) | ![A large monochrome elephant photographic cut-out curls its trunk toward a triangular paper shape among a circle, rectangle and polygon on coral-red paper.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/paper-editorial-v3-type-impostor.webp) |
 
@@ -22,7 +22,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 9. JSONB: The Best Way to Ruin Your Database
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-12-29--the-jsonb-seduction/wide.webp) | ![A crimson envelope bulges with mismatched torn paper shapes and trailing threads on a blush field.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-12-29--the-jsonb-seduction/paper-editorial-v3-overflowing-envelope.webp) |
 
@@ -30,7 +30,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 10. 2025's Wave of Database Innovation
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-09-15--serverless-database-magic/data-city-wide.webp) | ![Three folded paper boats carry stacks of sheets across indigo and cyan printed waves toward a simple shoreline.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-09-15--serverless-database-magic/paper-editorial-v3-files-on-the-tide.webp) |
 
@@ -38,7 +38,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 11. The Unassuming Power of Multiple-Choice Questions
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/digital-mcq-hero-wide.webp) | ![Four similar sage paper shoots have distinctly branching, looped, shallow, and deep pink root systems beneath a coral ground line on plum paper.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/paper-editorial-v3-hidden-roots.webp) |
 
@@ -46,7 +46,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 12. From Zero to Regex Hero
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/regex-url-parsing-wide.webp) | ![A loose paper net gathers tangled moss and saffron ribbons while one ribbon straightens into five adjoining colored segments.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/paper-editorial-v3-ribbon-capture.webp) |
 
@@ -54,7 +54,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 13. Quiz: AWS Storage: 20+ Questions!
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-12-28--quiz-in-the-aws-cloud/aws-cloud--city-focus-wide.webp) | ![A broad torn-paper cloud drops paper records toward a leafy orchard on one side and a glacial archival landscape on the other.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-12-28--quiz-in-the-aws-cloud/paper-editorial-v3-storage-climates.webp) |
 
@@ -62,7 +62,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 14. Quiz: Bash & Shell Mastery
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-11-20--quiz-bash-in-the-shell/psychedelic-shell-wide.webp) | ![Two large white seashell cut-outs are connected by a vermillion paper ribbon carrying circles that emerge as diamond shapes.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-11-20--quiz-bash-in-the-shell/paper-editorial-v3-shell-pipeline.webp) |
 
@@ -70,7 +70,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 15. Replacing Myself with AI
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/robot-dude-wide.webp) | ![A monochrome cut-photo hand peels the smooth surface of a blank white paper oval to expose rough charcoal strokes against scarlet and pink paper.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/paper-editorial-v3-friction-and-judgment.webp) |
 
@@ -78,7 +78,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 16. You May Not Need Algolia
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-03-01--you-might-not-need-algolia/synth-wave-city-wide.webp) | ![Oversized silver scissors cut an unnecessary black cable beside a tabbed book on torn blue paper.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2025-03-01--you-might-not-need-algolia/paper-editorial-v3-one-fewer-tether.webp) |
 
@@ -86,7 +86,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 17. Lessons Learned Upgrading My Blog
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/galaxy-contribution-banner.webp) | ![An open graphite paper book with a yellow bookmark has lifting pages that become the sweeping wings of a paper bird on pale blue printed stock.](/Users/dan/code/oss/dans-blog-backgrounds/src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/paper-editorial-v3-archive-takes-flight.webp) |
 

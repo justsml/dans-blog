@@ -11,6 +11,11 @@ const approved = [
   ...JSON.parse(readFileSync(resolve(root, "output/paper-atelier-heroes-v3/manifest.json"), "utf8")),
 ];
 if (squares.length !== 16 || approved.length !== 16) throw new Error("Expected sixteen approved families");
+const commonAlts: Record<string, string> = {
+  "the-unassuming-power-of-multiple-choice-questions": "Similar sage paper shoots reveal contrasting pink root systems beneath a coral ground line on plum paper.",
+  "serverless-database-magic": "A paper boat carries a stack of sheets across indigo and cyan printed waves toward a curved shore.",
+  "announcing-exploithunter-app": "A silver magnifying glass reveals torn vermilion paper fibers and a metal fragment amid black paper and monochrome evidence scraps."
+};
 const receipt = [];
 for (const proposal of approved) {
   const square = squares.find(item => item.slug === proposal.slug);
@@ -39,7 +44,7 @@ for (const proposal of approved) {
       cover_mobile_hero: true,
       cover_icon: imagePath(iconPath),
       social_image: imagePath(widePath),
-      cover_alt: proposal.alt,
+      cover_alt: commonAlts[proposal.slug] ?? proposal.alt,
     };
     for (const [key, value] of Object.entries(updates)) {
       const line = `${key}: ${JSON.stringify(value)}`;

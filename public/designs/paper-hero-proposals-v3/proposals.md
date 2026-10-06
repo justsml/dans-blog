@@ -1,12 +1,12 @@
 # Eleven new proposals; LLM connection strings retained
 
-Current article covers alongside new wide proposals. Built-in image generation; source artwork and exact prompts preserved. Fresh square companions follow selection.
+Current article covers alongside new wide proposals. Built-in image generation; source artwork and exact prompts preserved. These wide proposals are adopted on the blog, with freshly recomposed high-resolution square companions.
 
 LLM connection strings: keep the existing cover; the rejected proposal has been removed from this comparison.
 
 ## 7. Quiz: Deep Postgres: Pt. 2
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-postgres-sql-mastery-pt2-current.webp) | ![Separate cobalt, peach and chartreuse paper bands cross and interlace into a broad woven sheet, with a few unjoined ends continuing beyond it.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-postgres-sql-mastery-pt2.webp) |
 
@@ -14,7 +14,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 8. Quiz: Deep Postgres: Pt. 1
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-postgres-sql-mastery-pt1-current.webp) | ![A large monochrome elephant photographic cut-out curls its trunk toward a triangular paper shape among a circle, rectangle and polygon on coral-red paper.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-postgres-sql-mastery-pt1.webp) |
 
@@ -22,7 +22,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 9. JSONB: The Best Way to Ruin Your Database
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/the-jsonb-seduction-current.webp) | ![A crimson envelope bulges with mismatched torn paper shapes and trailing threads on a blush field.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/the-jsonb-seduction.webp) |
 
@@ -30,7 +30,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 10. 2025's Wave of Database Innovation
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/serverless-database-magic-current.webp) | ![Three folded paper boats carry stacks of sheets across indigo and cyan printed waves toward a simple shoreline.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/serverless-database-magic.webp) |
 
@@ -38,7 +38,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 11. The Unassuming Power of Multiple-Choice Questions
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/the-unassuming-power-of-multiple-choice-questions-current.webp) | ![Four similar sage paper shoots have distinctly branching, looped, shallow, and deep pink root systems beneath a coral ground line on plum paper.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/the-unassuming-power-of-multiple-choice-questions.webp) |
 
@@ -46,7 +46,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 12. From Zero to Regex Hero
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/from-zero-to-regex-hero-extract-url-like-strings-current.webp) | ![A loose paper net gathers tangled moss and saffron ribbons while one ribbon straightens into five adjoining colored segments.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/from-zero-to-regex-hero-extract-url-like-strings.webp) |
 
@@ -54,7 +54,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 13. Quiz: AWS Storage: 20+ Questions!
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-in-the-aws-cloud-current.webp) | ![A broad torn-paper cloud drops paper records toward a leafy orchard on one side and a glacial archival landscape on the other.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-in-the-aws-cloud.webp) |
 
@@ -62,7 +62,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 14. Quiz: Bash & Shell Mastery
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-bash-in-the-shell-current.webp) | ![Two large white seashell cut-outs are connected by a vermillion paper ribbon carrying circles that emerge as diamond shapes.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/quiz-bash-in-the-shell.webp) |
 
@@ -70,7 +70,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 15. Replacing Myself with AI
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/replacing-my-job-with-gpt-and-llm-current.webp) | ![A monochrome cut-photo hand peels the smooth surface of a blank white paper oval to expose rough charcoal strokes against scarlet and pink paper.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/replacing-my-job-with-gpt-and-llm.webp) |
 
@@ -78,7 +78,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 16. You May Not Need Algolia
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/you-might-not-need-algolia-current.webp) | ![Oversized silver scissors cut an unnecessary black cable beside a tabbed book on torn blue paper.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/you-might-not-need-algolia.webp) |
 
@@ -86,7 +86,7 @@ LLM connection strings: keep the existing cover; the rejected proposal has been 
 
 ## 17. Lessons Learned Upgrading My Blog
 
-| Current cover | New proposal |
+| Before | Adopted hero |
 | --- | --- |
 | ![Current cover](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/upgrade-from-gatsby-to-astro-current.webp) | ![An open graphite paper book with a yellow bookmark has lifting pages that become the sweeping wings of a paper bird on pale blue printed stock.](https://warm-editorial-preview--danlevy.netlify.app/designs/paper-hero-proposals-v3/upgrade-from-gatsby-to-astro.webp) |
 

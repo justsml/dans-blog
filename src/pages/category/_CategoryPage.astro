@@ -16,7 +16,13 @@ type Props = {
 const { category, count } = Astro.props as Props;
 const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 const copy = getUiCopy(locale);
-const posts = await Promise.all((PostCollections.getPostsByCategory(category, locale) as unknown as ArticlePost[]).map(post => optimizeArticleCardImage(post)));
+const categoryPosts = PostCollections.getPostsByCategory(category, locale) as unknown as ArticlePost[];
+const categoryImageSizes = categoryPosts.length === 1
+  ? "(max-width: 1212px) calc(100vw - 6rem), 1116px"
+  : categoryPosts.length === 2
+    ? "(max-width: 744px) calc(100vw - 6rem), (max-width: 1212px) calc((100vw - 7.5rem) / 2), 550px"
+    : "(max-width: 744px) calc(100vw - 6rem), (max-width: 1088px) calc((100vw - 7.5rem) / 2), (max-width: 1212px) calc((100vw - 9rem) / 3), 352px";
+const posts = await Promise.all(categoryPosts.map(post => optimizeArticleCardImage(post, false, {sizes: categoryImageSizes, maxWidth: categoryPosts.length <= 2 ? 1600 : 960})));
 
 // console.log("category.astro.props", Astro.props);
 ---
