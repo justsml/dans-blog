@@ -39,11 +39,16 @@
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
     /* Ambient light lags the page, swelling and turning as it rises: the far layer. */
-    .post-ambient { animation:ambient-in 900ms ease-out both, ambient-drift linear both; animation-timeline:auto, scroll(root); animation-range:normal, 0 140vh; }
+    .post-ambient { animation:ambient-in 900ms ease-out both, ambient-drift linear both; }
     /* Hero sinks into its frame as it leaves: the middle layer. Scale covers the gap the drift opens. */
-    .post-page main.article .u-photo { animation:hero-depth linear both; animation-timeline:view(); animation-range:exit; }
+    .post-page main.article .u-photo { animation:hero-depth linear both; }
     /* Glass catches the light: a sheen sweeps the contents panel with the page: the near layer. */
-    .post-page .article-toc-sidebar .article-toc::before { animation:glass-sheen linear both; animation-timeline:scroll(root); }
+    .post-page .article-toc-sidebar .article-toc::before { animation:glass-sheen linear both; }
+    /* Timelines live in separate :root rules: minifiers fold same-rule longhands into the animation shorthand,
+       where browsers reject a timeline and drop the whole declaration. */
+    :root .post-ambient { animation-timeline:auto, scroll(root); animation-range:normal, 0 140vh; }
+    :root .post-page main.article .u-photo { animation-timeline:view(); animation-range:exit; }
+    :root .post-page .article-toc-sidebar .article-toc::before { animation-timeline:scroll(root); }
   }
 }
 @keyframes ambient-drift { to { translate:0 -22vh; scale:1.5; rotate:5deg; } }
