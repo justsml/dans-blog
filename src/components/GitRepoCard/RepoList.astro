@@ -89,15 +89,17 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   </aside>
 )}
 
-<dl class="oss-ledger" aria-label="Open source contribution summary" hidden={offlinePreview}>
+{!offlinePreview && (
+  <>
+<dl class="oss-ledger" aria-label="Open source contribution summary">
   <div><dt>Repositories</dt><dd>{repoCount.toLocaleString()}</dd></div>
   <div><dt>Pull requests</dt><dd>{pullRequestCount.toLocaleString()}</dd></div>
   <div><dt>Stars represented</dt><dd>{totalStars.toLocaleString()}</dd></div>
   <div><dt>Files touched</dt><dd>{changedFileCount.toLocaleString()}</dd></div>
 </dl>
-<p class="oss-ledger-updated" hidden={offlinePreview}>Updated {updatedDate}</p>
+<p class="oss-ledger-updated">Updated {updatedDate}</p>
 
-<div class="oss-controls" hidden={offlinePreview}>
+<div class="oss-controls">
   <div class="oss-control-group" role="group" aria-label="Sort contributions">
     <span class="oss-control-label">Sort</span>
     <button class="oss-sort-button" data-sort-key="stars" aria-pressed="true">
@@ -123,7 +125,7 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   </details>
 </div>
 
-<div {...{ className }} hidden={offlinePreview}>
+<div {...{ className }}>
   {
     loadedRepos.map(async ({ contrib, pr }) => {
       const targetRepo = contrib.renamed ?? contrib.repo;
@@ -141,6 +143,8 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
     })
   }
 </div>
+  </>
+)}
 
 <script>
   const initializedGrids = new WeakSet<HTMLElement>();
