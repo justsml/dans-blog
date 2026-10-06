@@ -134,7 +134,7 @@ Promise.resolve(42)
     return 99
   })
   .then(num => num + 1)
-  .then(console.log) // expected output: 100
+  .then(console.log) // expected: 100
 ```
 
 **The sequence is what's important to understand.**
@@ -168,7 +168,7 @@ Promise.resolve(10)          // 10
   .then(x => x / 4)          // 5
   .then(x => x * x)          // 25
   .then(x => x.toFixed(2))   // "25.00"
-  .then(x => console.log(x)) // expected output: "25.00"
+  .then(x => console.log(x)) // expected: "25.00"
 ```
 
 
@@ -180,7 +180,7 @@ Promise.resolve(10) // 10
   .then(quarter)    // 5
   .then(square)     // 25
   .then(format)     // "25.00"
-  .then(log)        // expected output: "25.00"
+  .then(log)        // expected: "25.00"
 
 const double = x => x * 2
 const quarter = x => x / 4
@@ -221,7 +221,7 @@ You could use them however you need:
 const result = format(square(quarter(double(10))))
 
 log(result)
-// expected output: "25.00"
+// expected: "25.00"
 ```
 
 
