@@ -4,7 +4,7 @@ import { getComputedDates } from "@/shared/dateUtils";
 import avatarImage from "@/assets/avatar-256.webp";
 import docSlurpImage from "@/assets/projects/docslurp.webp";
 import emojiExplorerImage from "@/assets/projects/emoji-explorer.webp";
-import exploitHunterImage from "@/content/posts/2026-07-17--announcing-exploithunter-app/paper-atelier-hero-v3-investigative.webp";
+import exploitHunterImage from "@/assets/projects/exploithunter.webp";
 import { Image } from "astro:assets";
 import {
   DEFAULT_LOCALE,
@@ -45,7 +45,7 @@ const quizPosts = PostCollections.getPostsByCategory("Quiz", locale)
 
 // Flagship projects lead the Projects menu with artwork; the rest stay a compact list.
 const featuredProjects = [
-  { name: "ExploitHunter.app", href: "https://exploithunter.app/", image: exploitHunterImage, alt: "A magnifying glass over torn paper evidence", text: "An open source workbench for AI-assisted security research: scope, approvals, tools, and evidence in one project." },
+  { name: "ExploitHunter.app", href: "https://exploithunter.app/", image: exploitHunterImage, alt: "ExploitHunter asking for approval before an agent runs an HTTP probe", text: "An open source workbench for AI-assisted security research: scope, approvals, tools, and evidence in one project." },
   { name: "Emoji Explorer", href: "https://emoji-brain.vercel.app/", image: emojiExplorerImage, alt: "Emoji Explorer's grid of custom emoji stickers", text: "Browse 350+ upscaled emoji and stickers, pick favorites, and export them to Slack in one paste." },
   { name: "DocSlurp.io", href: "https://docslurp.io/", image: docSlurpImage, alt: "DocSlurp's home page: Your documents. Ready for your application.", text: "White-label document ingestion: upload PDFs, Office files, and media, then search with cited answers via REST, SDK, or chat." },
 ];
