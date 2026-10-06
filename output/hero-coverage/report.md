@@ -4,7 +4,7 @@
 
 73 published squares are 600px or larger. 7 retain native 400–494px compositions rather than upscaling or switching artwork.
 
-LLM connection strings keeps its original informative landscape hero on mobile and desktop. Its 600px square is available for previews. Two private drafts without assigned art remain unchanged: Less effort, please; Security Agents Need Model Routers, Not Model Rankings.
+LLM connection strings keeps its original informative landscape hero on mobile and desktop. Its 600px square is available for previews. Both formerly artless private drafts now have new Paper atelier wide and separately recomposed square artwork; their draft visibility is preserved. See [the artwork review](../private-draft-artwork/review.md).
 
 ## Crop review
 
