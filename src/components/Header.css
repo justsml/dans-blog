@@ -1,6 +1,6 @@
 
-.top-header { position:relative; z-index:50; padding-block:1.25rem; background:var(--paper-desk); color:var(--paper-ink); }
-.top-header .header-nav { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; width:min(1180px,calc(100% - 3rem)); margin-inline:auto; grid-column:1 / -1; padding:0; border-block-end:1px solid var(--paper-line); padding-block-end:1.25rem; }
+.top-header { position:relative; z-index:50; padding-block:.75rem 0; background:transparent; color:var(--paper-ink); }
+.top-header .header-nav { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; width:min(1180px,calc(100% - 3rem)); margin-inline:auto; grid-column:1 / -1; padding:0; border-block-end:1px solid var(--paper-line); padding-block-end:.75rem; }
 .top-header h2 { margin:0; font-size:1rem; flex-shrink:0; }
 .top-header .paper-wordmark { display:flex; align-items:center; gap:.75rem; color:var(--paper-ink); text-decoration:none; }
 .paper-wordmark img { border-radius:50%; width:42px; height:42px; border:1px solid var(--paper-line); }
@@ -9,6 +9,7 @@
 .header-language-menu { position:relative; }
 .header-language-trigger { display:flex; align-items:center; gap:.3rem; min-height:44px; padding:.65rem; font-size:.78rem; cursor:pointer; list-style:none; color:var(--paper-muted); }
 .header-language-trigger::-webkit-details-marker { display:none; }
+.header-language-trigger:hover,.header-language-menu[open] > .header-language-trigger { background:var(--paper-sheet); color:var(--paper-ink); }
 .header-language-panel { position:absolute; inset-block-start:calc(100% + .5rem); inset-inline-end:0; width:min(19rem,calc(100vw - 2rem)); background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); padding:.5rem; z-index:100; }
 .header-language-panel a { display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:.65rem; padding:.7rem; color:var(--paper-ink); text-decoration:none; border-block-end:1px solid var(--paper-line); }
 .header-language-panel a:hover,.header-language-panel a[aria-current=page] { background:var(--paper-desk); }

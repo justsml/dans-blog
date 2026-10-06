@@ -24,5 +24,9 @@
 .banner-wrapper .hero-credit { grid-column: content; }
 .full-width > :where(astro-island, astro-slot) { display: contents; }
 p:has(img), figure { margin-block: 1.5rem; }
+/* Post body rhythm: global.css zeroes paragraph margins and preflight zeroes headings. */
+.content-grid.article > :is(p, ul, ol, blockquote, table, .expressive-code):not(.p-summary, :has(img)) { margin-block: 0 1.25rem; }
+.content-grid.article > :is(h2, h3, h4) { margin-block: 2.5rem .75rem; }
+.content-grid.article > :is(h3, h4) { margin-block-start: 2rem; }
 p img { margin-inline: auto; }
 @media (max-width: 760px) { .content-grid { --breakout-size: 0px; } .content-grid .inset { padding-inline-start: 1rem; } }

@@ -10,6 +10,10 @@
   --paper-accent: #96492f;
   --paper-blue: #314f5b; --paper-on-blue: #fffaf2;
   --paper-line: #cec7bb;
+  /* Desk texture: lit cold-press relief multiplied into the desk, plus a top-edge glow. Used by body::before/::after in global.css. */
+  --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.045 .09' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='#fff' surfaceScale='1.6'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.22' intercept='0.78'/%3E%3CfeFuncG type='linear' slope='0.22' intercept='0.78'/%3E%3CfeFuncB type='linear' slope='0.22' intercept='0.78'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23p)'/%3E%3C/svg%3E");
+  --paper-glow-a: color-mix(in oklab, var(--paper-accent) 26%, transparent);
+  --paper-glow-b: color-mix(in oklab, var(--paper-blue) 14%, transparent);
   --paper-shadow: 0 1px 2px #262b2910, 3px 6px 16px #262b2915;
   --paper-shadow-raised: 0 2px 4px #262b2912, 8px 14px 32px #262b2922;
   --paper-success: #386243;
@@ -53,6 +57,9 @@
   --paper-desk: #202725; --paper-sheet: #2c3430; --paper-raised: #343d37;
   --paper-ink: #f1eee5; --paper-muted: #bdc0b5; --paper-accent: #df9875;
   --paper-blue: #82a8b4; --paper-on-blue: #202725; --paper-line: #4b554c;
+  --paper-tooth: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p' x='0' y='0' width='100%' height='100%' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.045 .09' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='#fff' surfaceScale='1.6'%3E%3CfeDistantLight azimuth='45' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.6' intercept='0.4'/%3E%3CfeFuncG type='linear' slope='0.6' intercept='0.4'/%3E%3CfeFuncB type='linear' slope='0.6' intercept='0.4'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23p)'/%3E%3C/svg%3E");
+  --paper-glow-a: color-mix(in oklab, var(--paper-accent) 22%, transparent);
+  --paper-glow-b: color-mix(in oklab, var(--paper-blue) 24%, transparent);
   --paper-shadow: 0 1px 2px #00000025, 3px 6px 16px #00000030;
   --paper-shadow-raised: 0 2px 4px #00000030, 8px 14px 32px #00000055;
   --paper-success: #abd0a6; --paper-error: #efa693; --paper-warning: #dfc08b;
