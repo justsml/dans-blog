@@ -45,7 +45,7 @@ export const ArticleCard = ({
     day: "numeric",
   });
 
-  const icon = cover_mobile;
+  const icon = article.cardImage ?? cover_mobile;
   const popularity = article.data.popularity ?? 0;
   // console.log(cover_icon);
   const image =
@@ -62,8 +62,11 @@ export const ArticleCard = ({
       icon && (
         <img
           src={icon.src}
+          srcSet={article.cardImage?.srcSet}
+          sizes={article.cardImage?.sizes}
           alt={article.data.cover_alt || title}
-          loading="lazy"
+          loading={article.cardImage?.priority ? "eager" : "lazy"}
+          fetchPriority={article.cardImage?.priority ? "high" : undefined}
           decoding="async"
           width={icon.width}
           height={icon.height}

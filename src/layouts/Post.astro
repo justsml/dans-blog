@@ -52,6 +52,7 @@ type Props = {
     cover_full_width?: unknown;
     cover_icon?: unknown;
     cover_mobile?: unknown;
+    cover_mobile_hero?: boolean;
     cover_alt?: string;
     cover_credit?: string;
     category?: string;
@@ -67,6 +68,7 @@ const {
   cover_full_width,
   cover_icon,
   cover_mobile,
+  cover_mobile_hero,
   cover_alt,
   cover_credit,
   category,
@@ -160,11 +162,8 @@ const heroAlt =
       : "");
 
 const responsiveImgSizes_fullWidth = {
-  widths: [480, 720, 960, 1280],
-  sizes: `
-    (max-width: 600px) 66vw,
-    (max-width: 1200px) 80vw,
-    60vw`,
+  widths: [320, 480, 720, 960, 1280, 1600],
+  sizes: "(max-width: 600px) calc(100vw - 4.2rem), (max-width: 1000px) calc(100vw - 7.2rem), 880px",
 };
 const responsiveImgSizes_breakRight = {
   widths: [800, 1440, 1920],
@@ -185,10 +184,17 @@ const _heroSrc = isImageMetadata(cover_full_width)
 const heroPreload = _heroSrc
   ? await getImage({
       src: _heroSrc,
-      widths: isImageMetadata(cover_full_width) ? [480, 720, 960, 1280] : [800, 1440, 1920],
+      widths: (isImageMetadata(cover_full_width) ? responsiveImgSizes_fullWidth.widths : responsiveImgSizes_breakRight.widths).filter(width => width <= _heroSrc.width),
       format: "webp",
-      quality: 70,
+      quality: 78,
     }).catch(() => null)
+  : null;
+
+// A high-resolution, separately composed square is deliberate mobile art.
+// Older tiny thumbnails remain card-only and never replace a detailed hero.
+const mobileHero = cover_mobile_hero && isImageMetadata(cover_full_width) && isImageMetadata(cover_mobile) &&
+  cover_mobile.width >= 1024 && cover_mobile.width === cover_mobile.height
+  ? await getImage({src: cover_mobile, widths: [320, 480, 720, 960, 1280].filter(width => width <= cover_mobile.width), width: 480, format: "webp", quality: 78})
   : null;
 
 const shouldCropMobileBanner =
@@ -250,10 +256,12 @@ const shouldCropMobileBanner =
         as="image"
         href={heroPreload.src}
         imagesrcset={heroPreload.srcSet.attribute}
-        imagesizes="(max-width: 600px) 66vw, (max-width: 1200px) 80vw, 60vw"
+        imagesizes={isImageMetadata(cover_full_width) ? responsiveImgSizes_fullWidth.sizes : responsiveImgSizes_breakRight.sizes}
+        media={mobileHero ? "(min-width: 601px)" : undefined}
         fetchpriority="high"
       />
     )}
+    {mobileHero && <link rel="preload" as="image" href={mobileHero.src} imagesrcset={mobileHero.srcSet.attribute} imagesizes="calc(100vw - 4.2rem)" media="(max-width: 600px)" fetchpriority="high" />}
   </head>
   <body class="post-page">
     <Header
@@ -336,17 +344,20 @@ const shouldCropMobileBanner =
             ]}
           >
             {/* LCP target — eager + high priority, preloaded in <head> */}
+            <picture>
+            {mobileHero && <source media="(max-width: 600px)" srcset={mobileHero.srcSet.attribute} sizes="calc(100vw - 4.2rem)" width={Number(mobileHero.attributes.width)} height={Number(mobileHero.attributes.height)} type="image/webp" />}
             <Image
               class="flow u-photo banner-image"
               style={{ viewTransitionName: articleTransitionName(slug, true) }}
               src={cover_full_width as ImageMetadata}
               alt={heroAlt}
               format="webp"
-              quality={70}
+              quality={78}
               loading="eager"
               fetchpriority="high"
               {...responsiveImgSizes_fullWidth}
             />
+            </picture>
             {cover_credit && <p class="hero-credit" set:html={cover_credit} />}
           </div>
         ) : (

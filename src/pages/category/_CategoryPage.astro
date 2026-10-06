@@ -5,6 +5,7 @@ import { PostCollections } from "../../shared/postsCache";
 import type { ArticlePost } from "../../types";
 import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../../shared/i18n";
 import { getUiCopy } from "../../shared/uiTranslations";
+import { optimizeArticleCardImage } from "../../shared/articleImages";
 
 type Props = {
   category: string;
@@ -15,7 +16,7 @@ type Props = {
 const { category, count } = Astro.props as Props;
 const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 const copy = getUiCopy(locale);
-const posts: ArticlePost[] = PostCollections.getPostsByCategory(category, locale) as unknown as ArticlePost[];
+const posts = await Promise.all((PostCollections.getPostsByCategory(category, locale) as unknown as ArticlePost[]).map(post => optimizeArticleCardImage(post)));
 
 // console.log("category.astro.props", Astro.props);
 ---

@@ -14,6 +14,7 @@ import SocialLinks from "./SocialLinks.astro";
 import SubscribeForm from "./SubscribeForm.astro";
 import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
 import { getUiCopy } from "../shared/uiTranslations";
+import { optimizeArticleCardImage } from "../shared/articleImages";
 
 type Props = {
   showSubscribeForm?: boolean;
@@ -51,7 +52,7 @@ if (slugs.length < articleLimit) {
 
 slugs = addFallbackArticleSlugs(slugs, articleLimit);
 
-const footerArticles = PostCollections.getPostsBySlugs(slugs).map((post) => post as ArticlePost);
+const footerArticles = await Promise.all(PostCollections.getPostsBySlugs(slugs).map(post => optimizeArticleCardImage(post as ArticlePost)));
 
 function getRelatedArticleSlugs(
   currentSlugs: string[],
@@ -102,6 +103,7 @@ function addFallbackArticleSlugs(currentSlugs: string[], limit: number) {
 }
 
 function getArticleImage(article: ArticlePost) {
+  if (article.cardImage) return article.cardImage.src;
   const icon = article.data.cover_mobile;
   if (typeof icon === "string") return icon;
   if (icon && typeof icon === "object" && "src" in icon) return icon.src;
@@ -177,6 +179,10 @@ function getArticleHref(article: ArticlePost) {
                 <span class="footer-article-card__media">
                   <img
                     src={getArticleImage(article)}
+                    srcset={article.cardImage?.srcSet}
+                    sizes="(max-width: 600px) calc(100vw - 6rem), 240px"
+                    width={article.cardImage?.width}
+                    height={article.cardImage?.height}
                     alt={`${article.data.title} ${copy.footer.coverAltSuffix}`}
                     loading="lazy"
                     decoding="async"

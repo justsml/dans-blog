@@ -43,6 +43,27 @@ The desired feeling is an independent technical journal: observant, tactile, int
 - Give objects breathing room. Aim for one dominant silhouette and two or three meaningful supporting objects. Negative space is compositional; do not reserve a giant empty area for a baked-in title.
 - Wit comes from a physical tension: an unexpectedly small support carrying a load, a calibration tool judging its own readings, or an orderly system revealing a bottleneck. No pasted-on cat mascots unless the article earns them.
 
+### Resolution and delivery
+
+Preserve native high-resolution sources beside the post. Request a 2048px square
+when the generator supports it, record the actual output dimensions, and never
+upscale a smaller generation merely to report a larger file. A fresh square of
+at least 1200px is suitable as a mobile hero master; tiny icons are derivatives.
+
+Use `cover_full_width` for the landscape hero and landscape cards, `cover_mobile`
+for the separately recomposed square, and a 160px derivative in `cover_icon` for
+search/compact previews. Set `cover_mobile_hero: true` to opt into mobile hero art
+direction; ordinary legacy thumbnails remain card-only. Update shared localized image references together.
+Remove credits belonging to replaced artwork while preserving body-image credit.
+
+Use Astro's build-time `astro:assets` pipeline to create width variants. Match
+`sizes` to the actual layout, supply intrinsic dimensions, and use native
+`picture`/`source` art direction for square mobile versus wide desktop heroes.
+Preload only the above-the-fold hero with matching media, srcset, and sizes;
+lazy-load supporting cards and footer images. Verify selected `currentSrc`,
+decoded size, and transfer size on mobile and desktop, including high-DPR
+displays. Preserve quiz lazy hydration and the existing bounded paging cache.
+
 ### Pairing with the design
 
 Images are rectangular editorial plates with clean edges. Do not bake shadows, rounded cards, gradients, borders, title typography, or UI into the asset. The layout owns those treatments. Use the same image on light and dark themes; retain detail at both extremes and make the subject distinct from its backdrop. Do not invert or darken photographs for dark mode.

@@ -111,6 +111,14 @@ export type UserPullRequestData = {
 
 
 export type ArticlePost = {
+  cardImage?: {
+    src: string;
+    srcSet: string;
+    sizes: string;
+    width: number;
+    height: number;
+    priority: boolean;
+  };
   id: string;
   body?: string;
   slug: string;
@@ -137,6 +145,7 @@ export type ArticlePost = {
     cover_credit?: string;
     cover_icon: ImageMetadata;
     cover_mobile: ImageMetadata;
+    cover_mobile_hero?: boolean;
     date: string;
     modified: string;
     category: string;

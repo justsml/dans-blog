@@ -38,6 +38,7 @@ export const posts = defineCollection({
       cover_alt: z.string().optional(),
       cover_credit: z.string().optional(),
       cover_mobile: image().optional(),
+      cover_mobile_hero: z.boolean().optional(),
       // cover_tablet: image().optional(),
       // cover_desktop: image().optional(),
       cover_icon: image().optional(),
