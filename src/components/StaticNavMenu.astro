@@ -2,6 +2,9 @@
 import { slugify } from "@/shared/pathHelpers";
 import { getComputedDates } from "@/shared/dateUtils";
 import avatarImage from "@/assets/avatar-256.webp";
+import emojiExplorerImage from "@/assets/projects/emoji-explorer.webp";
+import exploitHunterImage from "@/content/posts/2026-07-17--announcing-exploithunter-app/paper-atelier-hero-v3-investigative.webp";
+import { Image } from "astro:assets";
 import {
   DEFAULT_LOCALE,
   getLocalizedPagePath,
@@ -38,6 +41,12 @@ const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 const quizPosts = PostCollections.getPostsByCategory("Quiz", locale)
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 5);
+
+// Flagship projects lead the Projects menu with artwork; the rest stay a compact list.
+const featuredProjects = [
+  { name: "ExploitHunter.app", href: "https://exploithunter.app/", image: exploitHunterImage, alt: "A magnifying glass over torn paper evidence", text: "An open source workbench for AI-assisted security research: scope, approvals, tools, and evidence in one project." },
+  { name: "Emoji Explorer", href: "https://emoji-brain.vercel.app/", image: emojiExplorerImage, alt: "Emoji Explorer's grid of custom emoji stickers", text: "Browse 350+ upscaled emoji and stickers, pick favorites, and export them to Slack in one paste." },
+];
 
 function getPostPath(post: NavPost) {
   return PostCollections.getLocalizedPostHref(post.baseSlug ?? post.slug, locale);
@@ -151,6 +160,17 @@ function getPostPath(post: NavPost) {
         </summary>
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List two">
+            {
+              featuredProjects.map((project) => (
+                <li class="featured-project">
+                  <a class="Callout FeaturedProject" href={project.href} target="_blank" rel="noopener">
+                    <Image src={project.image} alt={project.alt} width={480} quality={72} format="webp" loading="lazy" class="FeaturedProjectImage" />
+                    <div class="CalloutHeading">{project.name} <span aria-hidden="true">↗</span></div>
+                    <p class="CalloutText">{project.text}</p>
+                  </a>
+                </li>
+              ))
+            }
             <li class="panel-projects">
               <a class="Callout neon-bg-2" href="https://github.com/justsml" target="_blank">
                 <div class="CalloutHeading">{copy.nav.demosTitle}</div>

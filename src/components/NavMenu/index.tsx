@@ -374,6 +374,18 @@ const NavMenu = ({
                 A journal of my open source contributions, projects, and experiments.
               </ListItem>
               <ListItem
+                href="https://exploithunter.app/"
+                title="ExploitHunter.app"
+              >
+                An open source workbench for AI-assisted security research.
+              </ListItem>
+              <ListItem
+                href="https://emoji-brain.vercel.app/"
+                title="Emoji Explorer"
+              >
+                Browse 350+ upscaled emoji and stickers, then export them to Slack.
+              </ListItem>
+              <ListItem
                 href="https://dataanalyzer.app/"
                 title="DataAnalyzer.app"
               >
