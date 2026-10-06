@@ -41,10 +41,9 @@ const defaultNextUrl = hasMorePosts
   : null;
 
 posts = posts.slice(0, pageSize);
-posts = await Promise.all(posts.map((post, index) => optimizeArticleCardImage(post, index === 0)));
-
 // The first card is the full-width feature, so it never competes for a wide slot.
-const widePosts = getWidePosts(posts, 1);
+const wideSlugs = new Set([...getWidePosts(posts, 1)].map((post) => post.slug));
+posts = await Promise.all(posts.map((post, index) => optimizeArticleCardImage(post, index === 0, { wide: wideSlugs.has(post.slug) })));
 const spotlightAfter = 7;
 
 const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
@@ -63,7 +62,7 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
   <div class:list={["article-list", "article-list--bento"]} aria-label={copy.home.latestTitle}>
     {
       posts.slice(0, spotlightAfter).map((props: any) => (
-        <ArticleCard article={props as ArticlePost} width={200} locale={locale} className={widePosts.has(props) ? "article-card--wide" : undefined} />
+        <ArticleCard article={props as ArticlePost} width={200} locale={locale} className={wideSlugs.has(props.slug) ? "article-card--wide" : undefined} />
       ))
     }
     <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
@@ -81,7 +80,7 @@ const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPT
     </section>
     {
       posts.slice(spotlightAfter).map((props: any) => (
-        <ArticleCard article={props as ArticlePost} width={200} locale={locale} className={widePosts.has(props) ? "article-card--wide" : undefined} />
+        <ArticleCard article={props as ArticlePost} width={200} locale={locale} className={wideSlugs.has(props.slug) ? "article-card--wide" : undefined} />
       ))
     }
     <ArticleListSkeleton nextUrl={defaultNextUrl} locale={locale} />
