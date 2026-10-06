@@ -386,6 +386,12 @@ const NavMenu = ({
                 Browse 350+ upscaled emoji and stickers, then export them to Slack.
               </ListItem>
               <ListItem
+                href="https://docslurp.io/"
+                title="DocSlurp.io"
+              >
+                White-label document ingestion with cited search over your files.
+              </ListItem>
+              <ListItem
                 href="https://dataanalyzer.app/"
                 title="DataAnalyzer.app"
               >
