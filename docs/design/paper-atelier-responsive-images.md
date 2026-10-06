@@ -1,12 +1,12 @@
 # Adopted paper editorial image families
 
-Sixteen approved wide proposals are now the article heroes, landscape card art,
+Twenty-six approved wide proposals are now the article heroes, landscape card art,
 and social images. Their freshly generated square companions are native
 1254×1254: the built-in generator returned that size despite a 2048px request.
 No upscaling was used. Search icons are separate 160px WebP derivatives.
 
 The English sources and all ten shared locale references were updated together
-(176 files). Article bodies and quiz hydration were preserved. LLM connection
+(286 files across both batches). Article bodies and quiz hydration were preserved. LLM connection
 strings retains its original image family, including its useful visual details.
 
 [Selected wide and square compositions](../../output/paper-atelier-promoted/selected.md)
@@ -34,11 +34,12 @@ manifests in the same folder preserve generation provenance and review notes.
   result. No image-selection JavaScript, client image service, or new dependency
   was added. Existing bounded paging cache and quiz lazy hydration remain intact.
 
-## Next review batch
+## Second adopted batch
 
-The next ten are the homepage Postgres text-search guide (rank33), plus ranks18–26
-from the editorial queue. Their wide proposals remain review candidates until
-selected; they are not silently substituted into article content.
+The homepage Postgres text-search guide (rank33), plus ranks18–26 from the
+editorial queue, are approved and installed with fresh squares across110 files.
+[Wide/square compositions](../../output/paper-atelier-promoted-v5/selected.md)
+and the adjacent manifest preserve source paths and generation provenance.
 
 Runtime delivery results will be recorded in
 `output/paper-atelier-promoted/verification.json` after the production build.
