@@ -7,7 +7,10 @@ dist = root / 'dist'
 assert (dist / 'index.html').exists()
 output = root / '.vercel/output'
 output.mkdir(parents=True, exist_ok=True)
-shutil.copytree(dist, output / 'static', dirs_exist_ok=True)
+static = output / 'static'
+if static.exists():
+    shutil.rmtree(static)  # Only this script's generated deployment copy.
+shutil.copytree(dist, static)
 
 def pattern(path):
     return '^' + re.escape(path).replace(r'\*', '(.*)') + '$'

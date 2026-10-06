@@ -41,5 +41,18 @@ editorial queue, are approved and installed with fresh squares across110 files.
 [Wide/square compositions](../../output/paper-atelier-promoted-v5/selected.md)
 and the adjacent manifest preserve source paths and generation provenance.
 
-Runtime delivery results will be recorded in
-`output/paper-atelier-promoted/verification.json` after the production build.
+Runtime delivery results are recorded in `output/paper-atelier-promoted/verification.json`
+and `output/paper-atelier-promoted-v5/verification.json`.
+
+## Vercel branch preview
+
+The current `design/warm-editorial` snapshot is available at
+[the Vercel preview](https://dans-blog-warm-editorial.vercel.app), including
+all26 adopted families and ExploitHunter in the curated popular-article menu.
+The isolated `dans-blog-preview` project serves the existing static Astro build.
+Source files and environment files are not uploaded. Existing cache headers,
+legacy redirects, and 404 behavior are retained; preview responses carry noindex.
+
+After building, `python3 output/paper-atelier-promoted-v5/prepare-vercel.py`
+packages the static output. Deploy using `bunx vercel deploy --prebuilt --target=preview`
+and update the review alias to the returned preview URL.
