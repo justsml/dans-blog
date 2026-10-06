@@ -1,5 +1,4 @@
 ---
-import { articleTransitionName } from "../shared/articleTransitions";
 // import { fade } from 'astro:transitions';
 import TableOfContents from "../components/TableOfContents.astro";
 import type { ArticleHeading } from "../shared/articleHeadings";
@@ -292,9 +291,6 @@ const shouldCropMobileBanner =
           <h1
             class="p-name"
             data-pagefind-meta="title"
-            style={{
-              viewTransitionName: articleTransitionName(slug),
-            }}
           >
             {title}
           </h1>
@@ -356,7 +352,6 @@ const shouldCropMobileBanner =
             {mobileHero && <source media="(max-width: 600px)" srcset={mobileHero.srcSet.attribute} sizes="calc(100vw - 4.2rem)" width={Number(mobileHero.attributes.width)} height={Number(mobileHero.attributes.height)} type="image/webp" />}
             <Image
               class="flow u-photo banner-image"
-              style={{ viewTransitionName: articleTransitionName(slug, true) }}
               src={cover_full_width as ImageMetadata}
               alt={heroAlt}
               format="webp"
@@ -377,7 +372,6 @@ const shouldCropMobileBanner =
                 {/* LCP target — eager + high priority, preloaded in <head> */}
                 <Image
                   class="u-photo"
-                  style={{ viewTransitionName: articleTransitionName(slug, true) }}
                   src={cover as ImageMetadata}
                   alt={heroAlt}
                   format="webp"
