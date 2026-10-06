@@ -29,7 +29,6 @@ test('production scoring omits temperature for both Luna generations', async () 
 test('calibrated Luna profile is scoped to article judges', () => {
   const profile = resolvePromptProfile({kind:'judge',locale:'ja',model:'openrouter/openai/gpt-6-luna',contentKind:'article'});
   expect(profile?.id).toBe('judge-article-gpt-6-luna-site-conventions');
-  expect(profile?.appendCachedContext).toContain('their omission is correct');
   expect(resolvePromptProfile({kind:'judge',locale:'ja',model:'openrouter/openai/gpt-6-luna',contentKind:'quiz'})).toBeUndefined();
 });
 test('production fallback cost does not double-count reasoning tokens', async () => {

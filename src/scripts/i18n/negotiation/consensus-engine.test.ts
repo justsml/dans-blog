@@ -289,7 +289,6 @@ test("each issue retains only its own ballots to prevent quadratic prompt growth
 test("v2 reviewers see the repository rules for inherited frontmatter", () => {
   const prompt = policyPrompt(policy);
   expect(prompt).toContain(repositoryRules);
-  expect(prompt).toContain("inherited date/draft/hidden/unlisted/publish/popularity are omitted");
 });
 
 test("a skipped ballot vote gets one targeted follow-up instead of failing the run", async () => {

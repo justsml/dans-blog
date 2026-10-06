@@ -16,6 +16,7 @@ import {
   type Locale,
 } from "../shared/i18n";
 import { getUiCopy } from "../shared/uiTranslations";
+import { isContentPreviewBuild } from "../shared/contentPreview";
 
 import "./Header.css";
 
@@ -74,6 +75,11 @@ function getNavPostData(post: MyPost) {
 ---
 
 <header class:list={["top-header", "default-links", className]}>
+  {isContentPreviewBuild() && (
+    <aside data-pagefind-ignore="all">
+      <a href="/preview/">Content preview: review changed articles and drafts</a>
+    </aside>
+  )}
   <div class:list={["header-nav", "h-card"]}>
     <h2>
       <a class="paper-wordmark u-url" href={getLocalizedPagePath("/", locale)}>

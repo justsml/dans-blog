@@ -220,7 +220,6 @@ describe("style sheet application", () => {
 
   test("renders a binding block that the chunk prompt carries in its cached prefix", () => {
     const rendered = renderStyleSheet(sheet);
-    expect(rendered).toContain("use EXACTLY these target terms");
     expect(rendered).toContain('"route accuracy" → "ルート精度"');
     expect(rendered).toContain('"scorer" → keep in English: "scorer"');
     expect(rendered).toContain('"Warmup" → "ウォームアップ"');

@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import socialBanner from "../assets/social-banner.webp";
+import { isContentPreviewBuild } from "../shared/contentPreview";
 import "@/styles/nav.css";
 import "@/styles/layout.css";
 import "@/styles/global.css";
@@ -25,6 +26,7 @@ const {
   alternates = [],
   noindex = false,
 } = Astro.props as Props;
+const contentPreview = isContentPreviewBuild();
 
 const canonicalURL = new URL(canonicalPath, Astro.site);
 const xDefaultHref =
@@ -129,8 +131,8 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     />
   )
 }
-{noindex && <meta name="robots" content="noindex,follow" />}
-<link rel="sitemap" href="/sitemap-0.xml" />
+{(noindex || contentPreview) && <meta name="robots" content="noindex,follow" />}
+{!contentPreview && <link rel="sitemap" href="/sitemap-0.xml" />}
 <link rel="manifest" href="/manifest.webmanifest" />
 {/*Primary Meta Tags*/}
 <slot name="title">

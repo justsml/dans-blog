@@ -1,0 +1,328 @@
+---
+title: "Give Your Agent a Profiler"
+subTitle: "How to tune software with an agent, Chrome CDP, flame graphs, and evidence that survives the next run."
+date: 2026-10-05
+modified: 2026-10-05
+category: Code
+subCategory: Engineering
+tags: [performance, agents, profiling, debugging, observability, testing, frontend, tools]
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+related:
+  - you-might-not-need-algolia
+  - upgrade-from-gatsby-to-astro
+---
+
+An agent made our scrolling three times worse and brought back a passing benchmark.
+
+The change looked reasonable: let the browser skip more off-screen content. The benchmark jumped straight to the bottom of the page, where the change helped. Browsing through the same content got slower.
+
+We were tuning [Emoji Brain](https://github.com/justsml/emoji-brain), whose Emoji Explorer is a dense grid of selectable stickers. Some animate. Selection persists. Export builds a ZIP. There are plenty of places to spend a frame budget before anyone gets to enjoy a dancing cat.
+
+The productive part of the tuning session started when the agent could run the software, reproduce the slow interaction, and inspect where the time went. Then it could test its ideas against something sturdier than its own explanation.
+
+That workflow carries over to a command-line parser, an API, a build pipeline, or a GPU workload. The instruments change. The loop stays recognizable:
+
+**Reproduce the work. Locate the cost. Change one thing. Check the result and the behavior. Repeat.**
+
+This article uses our browser work as the example, then follows the same questions into CPU profiles, system calls, disk I/O, and GPU timelines. The CLI recommendations are tools I would choose for those jobs; they weren't all used in the Emoji Brain investigation. Documentation checked October 5, 2026.
+
+## Define the Job Before Measuring It
+
+“Make this faster” leaves an agent too much room to choose what counts as success.
+
+For the grid, the job included slow browsing, rapid scroll reversals, jumping between document ends, selecting cards, and searching while an export ran. For a parser, it might include the same large fixture, the same output, and a memory ceiling. For an API, specify request mix, concurrency, dataset size, and error rate alongside latency.
+
+Write that down before touching the implementation:
+
+```text
+Workload: export the full catalog while typing in
+  search.
+Measure: export duration, input responsiveness,
+  longest main-thread task.
+Preserve: exported files, selection state, keyboard
+  behavior, visual design.
+Environment: production build, pinned browser, fixed
+  viewport and dataset.
+Reject: incomplete exports, hidden errors, or a
+  faster run with worse input lag.
+```
+
+Measure completion time and responsiveness separately. A process can finish sooner while becoming unpleasant to use. Throughput needs its own error and latency checks too; accepting fewer requests is a remarkably effective performance optimization.
+
+Keep a baseline with repeated runs, raw measurements, the commit, tool versions, hardware, and workload settings. Treat cold and warm caches as separate scenarios. For a service, separate startup from steady state and make sure the load generator isn't the bottleneck.
+
+The first deliverable should be a command that reproduces the problem and proves it completed the intended work. Give the agent that command before giving it permission to rearrange the hot path.
+
+## Give the Agent a Browser It Can Profile
+
+Our harness used Playwright to drive Chromium and [Chrome DevTools Protocol sessions](https://playwright.dev/docs/api/class-cdpsession) to reach the browser's profiling controls. The automation drove the interaction; CDP supplied instrumentation.
+
+Use a production build, a dedicated benchmark runner, and one test worker. Check whether the application's server is already running before starting another. Keep unrelated builds and screenshot jobs out of the measurement window.
+
+In Chrome's [Performance panel](https://developer.chrome.com/docs/devtools/performance/reference), record the actual slow interaction. Inspect the Main track, Bottom-up view, and Call tree. Use CPU throttling to expose main-thread work your development machine hides, and network throttling for load-dependent scenarios. Keep those settings constant across comparisons. Disable extra screenshot capture for timing runs unless you need it to diagnose the problem.
+
+The [Rendering panel](https://developer.chrome.com/docs/devtools/rendering/performance) adds paint flashing and frame rendering stats. Paint flashing helps answer “why did this whole region repaint?” It is a diagnostic overlay, so turn it off for the final comparison.
+
+Here's a small CDP setup for a current Chromium build:
+
+```ts
+const cdp = await page.context().newCDPSession(page);
+await cdp.send('Performance.enable');
+await cdp.send('Emulation.setCPUThrottlingRate', {
+  rate: 2,
+});
+await cdp.send('Network.enable');
+await cdp.send('Network.setCacheDisabled', {
+  cacheDisabled: true,
+});
+
+const network = {
+  latency: 150,
+  downloadThroughput: 200_000, // bytes per second
+  uploadThroughput: 96_000,
+};
+
+await cdp.send(
+  'Network.emulateNetworkConditionsByRule',
+  {
+    offline: false,
+    matchedNetworkConditions: [
+      { urlPattern: '', ...network },
+    ],
+  },
+);
+await cdp.send('Network.overrideNetworkState', {
+  offline: false,
+  ...network,
+});
+```
+
+The older `Network.emulateNetworkConditions` method used by our original harness is deprecated. Its replacements separate request throttling from the network state exposed to page JavaScript. Check the [Network protocol](https://chromedevtools.github.io/devtools-protocol/tot/Network/) against your pinned browser; newer methods can be experimental. If a required setting isn't supported, fail setup instead of quietly benchmarking a different environment.
+
+[`setCPUThrottlingRate`](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setCPUThrottlingRate) sets a slowdown factor. It doesn't turn your laptop into a phone or throttle its GPU. Disabling the browser cache also doesn't clear every service-worker, application, or host cache. Label the scenario with what you actually controlled.
+
+### Make the interaction falsifiable
+
+We exercised slow wheel input, rapid reversals, and alternating instant top/bottom jumps. The pointer sat over the grid, because cards passing under it could trigger hover downloads.
+
+Wheel input and programmatic scroll jumps stress different paths. Test both when both matter. Automated wheel events don't reproduce every property of a physical trackpad gesture, so retain a check on representative devices.
+
+The harness asserted jump endpoints, stable document height, and no page errors. It also tested selection persistence and export behavior. A benchmark that accidentally stayed at the top of the page otherwise looked beautifully fast.
+
+For each phase, collect `requestAnimationFrame` gaps and long tasks with a page sampler, then take before/after snapshots of [`Performance.getMetrics`](https://chromedevtools.github.io/devtools-protocol/tot/Performance/#method-getMetrics). Duration deltas for `ScriptDuration`, `LayoutDuration`, and `RecalcStyleDuration` help narrow the investigation. Heap size and DOM node count provide context.
+
+Those duration counters are in seconds. Heap size is a point-in-time reading, not proof of a leak. Frame gaps describe callback scheduling, not physical display FPS. A Playwright input round trip includes automation overhead and isn't INP.
+
+An agent needs these definitions in the report schema. Otherwise it will turn a convenient number into a much more impressive claim.
+
+## Read the Stacks Before Rewriting the Function
+
+A benchmark tells you whether a change helped. A profile helps explain where to make it.
+
+When browser counters point at JavaScript, collect a CPU profile around the slow phase:
+
+```ts
+import { writeFile } from 'node:fs/promises';
+
+await cdp.send('Profiler.enable');
+await cdp.send('Profiler.start');
+
+// Your workload driver:
+await runExportAndSearch(page);
+
+const { profile } = await cdp.send('Profiler.stop');
+await writeFile(
+  'export-search.cpuprofile',
+  JSON.stringify(profile),
+);
+```
+
+[`Profiler`](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/) gives you sampled JavaScript stacks. If the cost is layout, rasterization, or coordination across threads, collect a browser trace instead. With [`Tracing`](https://chromedevtools.github.io/devtools-protocol/tot/Tracing/), subscribe to events before recording and wait for `tracingComplete` after stopping. Preserve the trace; a screenshot of one hot function throws away most of the evidence.
+
+Use a short diagnostic recording to explain a bad phase, then measure the proposed fix without the heavy recording enabled. Profiling overhead belongs in the experiment notes.
+
+A [flame graph](https://www.brendangregg.com/flamegraphs.html) aggregates stacks: width represents their share of the sampled population, and height represents stack depth. Its horizontal axis isn't elapsed time. A flame chart retains time order, which matters when investigating a burst or a stall.
+
+Ask the agent to identify the widest relevant stacks, distinguish self time from time in children, and connect them to the workload. A wide serialization stack suggests repeated or oversized serialization. It doesn't automatically justify swapping JSON libraries.
+
+For command-line software, I would start with these:
+
+| Tool | Good fit | What you get |
+| --- | --- | --- |
+| [hyperfine](https://github.com/sharkdp/hyperfine) | Repeatable finite commands | Repeated timings, warmups, JSON exports; a benchmark runner |
+| [samply](https://github.com/mstange/samply) | Native CPU investigations on macOS, Linux, or Windows | Sampled stacks with Firefox Profiler views |
+| [Linux perf](https://perfwiki.github.io/main/tutorial/) | Native Linux CPU costs and hardware counters | Event counts, recorded samples, stack reports |
+| [Node's CPU profiler](https://nodejs.org/api/cli.html#--cpu-prof) | Node.js application code | V8 `.cpuprofile` output |
+| [py-spy](https://github.com/benfred/py-spy) | Python application stacks | Sampling without adding profiling code to the application |
+
+`hyperfine` is my first choice for “did this CLI get faster?” Use equivalent fixtures and verify outputs separately:
+
+```bash
+hyperfine --warmup 3 --runs 10 \
+  --export-json timings.json \
+  './baseline-parser fixtures/large.json' \
+  './candidate-parser fixtures/large.json'
+```
+
+These commands assume tools are installed and the named programs exist. Warmups deliberately measure a warmed workload; they don't establish cold-start performance. Stateful commands need a reset between repetitions.
+
+For “where did it spend CPU?”, try `samply record ./parser fixtures/large.json`. On Linux, `perf stat -r 5 -- ./parser fixtures/large.json` provides aggregate counts, while `perf record -F 99 --call-graph dwarf -- ./parser fixtures/large.json` captures stacks for `perf report`. Keep optimized builds and usable symbols. Stack quality and available events depend on architecture, compiler, and permissions.
+
+For a Node job, `node --cpu-prof job.mjs` records JavaScript CPU samples. Node's older `--prof` workflow produces a V8 log processed with `node --prof-process`; choose one workflow deliberately. Native/JIT investigations with Linux perf need [Node's perf integration](https://nodejs.org/en/learn/diagnostics/poor-performance/using-linux-perf), or generated code can appear as anonymous addresses. For Python, `py-spy record -o profile.svg -- python job.py` produces a flame graph; native extension visibility depends on platform and options.
+
+A CPU profile can look unremarkable while a request takes seconds. That is your cue to investigate waiting.
+
+## Follow the Waits
+
+Before asking the agent to rewrite another loop, check whether the process is getting CPU time, waiting on storage, or blocked somewhere else.
+
+On Linux, the [sysstat tools](https://github.com/sysstat/sysstat) are a useful first pass. `pidstat` attributes activity to processes; `iostat` describes device activity. Capture a bounded window during the workload:
+
+```bash
+# Replace 12345 with the workload PID.
+pidstat -u -r -d -w -p 12345 1 10
+iostat -xz -y 1 10
+```
+
+Run them alongside the reproduction. Look for CPU consumption, faults, reads/writes, context switches, and device latency. A device's utilization percentage alone doesn't prove saturation on modern parallel storage.
+
+[iotop](https://github.com/Tomas-M/iotop) helps identify processes doing disk I/O. Its batch mode is convenient for an agent: `iotop -b -o -n 10` retains text instead of requiring it to watch a terminal UI. Check the installed implementation's options and kernel accounting support. Process and device I/O figures can differ because of buffering and writeback.
+
+When you need to see the boundary between the process and kernel, reach for [strace](https://strace.io/):
+
+```bash
+# Summary of calls, including child processes.
+strace -f -c -o syscall-summary.txt \
+  ./parser fixtures/large.json
+
+# Timestamps and elapsed syscall durations:
+strace -f -tt -T -e trace=%file,read,write,futex \
+  -o syscalls.txt ./parser fixtures/large.json
+```
+
+Thousands of repeated file opens might explain a metadata-heavy build. Long `futex` calls might justify examining lock contention. Follow the evidence into the relevant code rather than optimizing the most familiar function.
+
+The [strace manual](https://man7.org/linux/man-pages/man1/strace.1.html) distinguishes elapsed syscall durations from summary accounting. Neither is a CPU profile. Tracing can substantially perturb syscall-heavy workloads; use it to diagnose, then rerun timings without it.
+
+[ltrace](https://ltrace.org/) observes dynamic library calls. I'd use it when a native program's library boundary is the question. It won't show every inlined or statically linked function, and it isn't a general profiler for JavaScript or Python. `ltrace -c ./native-tool` is a starting point, not an automatic second step after every strace run.
+
+For a deeper Linux investigation, [BCC's eBPF tools](https://github.com/iovisor/bcc) include `biolatency` for block-I/O latency distributions and `offcputime` for stacks associated with time spent off CPU. These help when average throughput conceals long waits. Select a bounded capture and the relevant process where supported; kernel support and privileges matter.
+
+Linux perf, strace, and BCC don't become native macOS tools because the agent typed their names confidently. On a Mac, start with samply or Instruments; use the OS tools on the host where the workload actually runs. If profiling is blocked by permissions, have the agent report that boundary rather than casually weaken host-wide settings.
+
+## Check the GPU Before Optimizing Around It
+
+Our default headless Chromium used SwiftShader software rendering. A windowed run used Apple M2 Metal. That changed what a rendering experiment could tell us.
+
+Record identity and feature status using a browser-level CDP session:
+
+```ts
+const browser = page.context().browser()!;
+const session = await browser.newBrowserCDPSession();
+const { gpu } = await session.send(
+  'SystemInfo.getInfo',
+);
+await session.detach();
+
+report.renderer = {
+  devices: gpu.devices,
+  features: gpu.featureStatus,
+};
+```
+
+[`SystemInfo`](https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo/) describes the environment; it doesn't measure GPU throughput. Use browser traces to investigate raster and compositor work, then check the target device. A change that helps software rendering needs its own comparison on the GPU path you ship to.
+
+For NVIDIA compute workloads, use three levels of instrumentation:
+
+| Question | Tool | What I would look for |
+| --- | --- | --- |
+| Is the GPU active, memory constrained, or power limited? | [nvidia-smi](https://docs.nvidia.com/deploy/nvidia-smi/index.html) | Utilization, memory, power, clocks, supported limit indicators |
+| Where does time go between CPU and GPU? | [Nsight Systems CLI: `nsys`](https://docs.nvidia.com/nsight-systems/UserGuide/index.html) | Launches, copies, synchronization, gaps between kernels |
+| Why is a particular CUDA kernel expensive? | [Nsight Compute CLI: `ncu`](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html) | Kernel counters and memory/compute behavior |
+
+A one-second utilization sample can miss short stalls. High utilization doesn't establish efficient execution, either. Use it to choose the next question.
+
+```bash
+# Stop the monitor after the workload.
+nvidia-smi \
+  --query-gpu=timestamp,utilization.gpu,memory.used \
+  --format=csv -l 1
+
+# Separate diagnostic run for a CUDA application.
+nsys profile --trace=cuda,nvtx \
+  --sample=none --cpuctxsw=none \
+  -o workload ./cuda-app
+nsys stats workload.nsys-rep
+```
+
+Start with the timeline. If it reveals idle gaps because the CPU can't feed the GPU, kernel tuning is premature. Use `ncu` on the selected kernel once the question is narrow; collecting many metrics can require replay and change execution conditions. That profile isn't an ordinary throughput run.
+
+For Apple GPU work, use [Metal System Trace and the Metal profiling tools](https://developer.apple.com/metal/tools/). Instruments also covers native CPU investigations, with `xctrace` providing command-line recording/export workflows; enumerate templates on the installed Xcode version. For AMD compute, use the [ROCm profiling tools](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/). Match the backend to the hardware instead of treating GPU profiling as a synonym for CUDA.
+
+## Make Every Change Earn Its Place
+
+Our containment experiment is a useful model for what an agent should report. Three-run medians at 1440 × 1000 with 2× CPU slowdown showed:
+
+| Interaction | Baseline p95 frame gap | Broader containment |
+| --- | ---: | ---: |
+| Slow wheel scrolling | 16.8 ms | 33.3 ms |
+| Rapid reversals | 16.8 ms | 50.0 ms |
+| Instant top/bottom jumps | 16.8 ms | 16.8 ms |
+
+The [retained experiment](https://github.com/justsml/emoji-brain/blob/5f6c209/docs/performance/selection-scrolling.md) also recorded jump task duration dropping from 437 to 319 ms, while rapid-reversal work rose from 824 to 1,335 ms. It helped one path and hurt another. We rejected it.
+
+An environment-gated stylesheet made that experiment cheap to repeat. Both runs used the same build with one test-time flag changed. Other software can use a feature flag or separately built binaries. The important property is an attributable comparison.
+
+Require a hypothesis before each change: “The pointer crossing cards starts animation downloads; hover intent should reduce incidental requests while preserving deliberate playback.” Our 20 ms crossing test went from starting an animation request to starting none. Keyboard focus still played immediately. The result was avoided work, with a direct behavioral check.
+
+Larger wins came from asking why work happened at all. In a separate [recorded animation experiment](https://github.com/justsml/emoji-brain/commit/9ab1f627a36e8d132b5227f12952e29973e6fe9c), using still previews cut the 92-item animated-subset payload from 5.45 MB to 0.20 MB and recorded raster time from 1,859 to 844 ms. Those figures came from three traced scroll runs. They aren't a controlled comparison with the containment table above.
+
+The same question travels well: why reread that configuration per request? Why rebuild that lookup per render? Why synchronize after every GPU operation? Why compress data that is already compressed?
+
+Some cost buys the product. We kept the grid's shadows and frosted surfaces. Put those requirements in the agent's instructions so “faster” doesn't become permission to remove the design.
+
+After a candidate helps, alternate baseline and candidate runs where practical to reduce time-order bias. Report spread and outliers as well as a median. Ten whole-command timings don't establish a service's p99. Keep failed experiments and invalid runs labeled; don't mix host-load contamination into the baseline.
+
+## The Instructions I'd Give the Agent
+
+Once the harness exists, the prompt can be quite boring:
+
+```text
+Reproduce the workload using the documented
+  production benchmark.
+Record the baseline, environment, and correctness
+  results before editing.
+
+Identify the dominant cost using a short profile or
+  trace.
+State the hypothesis and expected metric change
+  before each experiment.
+Change one thing; preserve output, interaction
+  behavior, and design constraints.
+
+Repeat the same workloads. Keep raw reports and
+  profiler artifacts.
+Reject regressions in other phases. Do not relax
+  thresholds to make a run pass.
+Measure final timings without diagnostic tracing
+  enabled.
+
+Report what improved, what regressed, and what
+  remains unmeasured.
+If the instrument or environment is invalid, fix the
+  experiment first.
+```
+
+Store those artifacts beside an experiment ledger: commit, workload, hypothesis, settings, commands, results, decision. Prefer JSON/CSV or batch output when feeding measurements back to the agent. Keep the original trace or profile for a human to inspect. [Perfetto's trace processor](https://perfetto.dev/docs/analysis/trace-processor) can query supported traces with SQL when you need reproducible summaries across recordings.
+
+For a browser application, my starting kit is Playwright plus CDP and Chrome's Performance panel. For a finite CLI, hyperfine plus a runtime or native sampling profiler. For a slow Linux service, add pidstat/iostat and follow the waits with strace or a targeted BCC tool. For GPU compute, start with monitoring and a CPU/GPU timeline before reaching for kernel counters.
+
+The agent contributes speed: reading unfamiliar code, forming hypotheses, wiring up experiments, and trying changes you might not have bothered with. You contribute the definition of useful work and the conditions under which a result counts.
+
+Our first passing benchmark would have shipped worse scrolling. The next one scrolled backward, found the regression, and made the agent try again.
+
+Give it a profiler. Give it a workload worth preserving. Make it bring back the evidence.
