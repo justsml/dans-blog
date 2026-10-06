@@ -34,6 +34,11 @@ const { categories, popularPosts, recentPosts, locale = DEFAULT_LOCALE } = Astro
 const copy = getUiCopy(locale);
 const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 
+// Newest quizzes fill the tile so it matches the Categories panel beside it.
+const quizPosts = PostCollections.getPostsByCategory("Quiz", locale)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 5);
+
 function getPostPath(post: NavPost) {
   return PostCollections.getLocalizedPostHref(post.baseSlug ?? post.slug, locale);
 }
@@ -61,10 +66,19 @@ function getPostPath(post: NavPost) {
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List one">
             <li class="item-quizzes">
-              <a href={pagePath("/challenges/")} class="Callout CalloutItem nav-tile-quiz">
+              <div class="Callout nav-tile-quiz">
                 <div class="CalloutHeading">{copy.nav.quizzes}</div>
-                <p class="CalloutText">{copy.nav.quizzesText}</p>
-              </a>
+                <div class="CalloutText">
+                  {
+                    quizPosts.map((post) => (
+                      <a title={post.data.subTitle ?? post.data.title} href={getPostPath(post)} class="CalloutItem">
+                        {post.data.title.replace(/^Quiz:\s*/i, "")}
+                      </a>
+                    ))
+                  }
+                  <a href={pagePath("/challenges/")} class="CalloutItem nav-tile-more">{copy.nav.quizzesText} →</a>
+                </div>
+              </div>
             </li>
 
             <li class="item-categories">

@@ -32,8 +32,8 @@
 
 /* Scroll depth. Layers move at different speeds; browsers without scroll timelines keep the static look. */
 .post-page .article-toc-sidebar .article-toc { position:relative; isolation:isolate; overflow:clip; }
-.post-page .article-toc-sidebar .article-toc::before { content:""; position:absolute; inset:-60% -30%; z-index:-1; pointer-events:none; background:linear-gradient(115deg, transparent 38%, rgb(255 255 255 / .5) 47%, rgb(255 255 255 / .12) 53%, transparent 62%); }
-:root[data-theme=dark] .post-page .article-toc-sidebar .article-toc::before { background:linear-gradient(115deg, transparent 38%, rgb(255 255 255 / .14) 47%, rgb(255 255 255 / .03) 53%, transparent 62%); }
+.post-page .article-toc-sidebar .article-toc::before { content:""; position:absolute; inset:-60% -30%; z-index:-1; pointer-events:none; background:linear-gradient(115deg, transparent 34%, rgb(255 255 255 / .2) 47%, rgb(255 255 255 / .05) 55%, transparent 66%); }
+:root[data-theme=dark] .post-page .article-toc-sidebar .article-toc::before { background:linear-gradient(115deg, transparent 34%, rgb(255 255 255 / .06) 47%, rgb(255 255 255 / .015) 55%, transparent 66%); }
 /* clip, not hidden: hidden would make the frame a scroll container and stall the hero's view() timeline. */
 .post-page main.article :is(.banner-wrapper, .hero-image-wrapper) { overflow:clip; }
 @supports (animation-timeline: scroll()) {
@@ -48,10 +48,10 @@
        where browsers reject a timeline and drop the whole declaration. */
     :root .post-ambient { animation-timeline:auto, scroll(root); animation-range:normal, 0 140vh; }
     :root .post-page main.article .u-photo { animation-timeline:view(); animation-range:exit; }
-    :root .post-page .article-toc-sidebar .article-toc::before { animation-timeline:scroll(root); }
+    :root .post-page .article-toc-sidebar .article-toc::before { animation-timeline:scroll(root); animation-range:0 100vh; }
   }
 }
 @keyframes ambient-drift { to { translate:0 -22vh; scale:1.5; rotate:5deg; } }
 @keyframes hero-depth { to { transform:translateY(12%) scale(1.25); } }
-/* Five passes over the article, each starting off-panel so the wrap is invisible. */
-@keyframes glass-sheen { 0%, 20%, 40%, 60%, 80% { translate:0 -45%; } 19.99%, 39.99%, 59.99%, 79.99%, 100% { translate:0 45%; } }
+/* One pass across the first screen of scrolling, starting and ending off-panel. */
+@keyframes glass-sheen { from { translate:0 -60%; } to { translate:0 60%; } }
