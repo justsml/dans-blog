@@ -1,6 +1,6 @@
 """Package the already-built Astro site for a Vercel preview, without source/env uploads."""
 from pathlib import Path
-import json, re, shutil
+import json, os, re, shutil
 
 root = Path(__file__).resolve().parents[2]
 dist = root / 'dist'
@@ -10,7 +10,8 @@ output.mkdir(parents=True, exist_ok=True)
 static = output / 'static'
 if static.exists():
     shutil.rmtree(static)  # Only this script's generated deployment copy.
-shutil.copytree(dist, static)
+# Both paths are on this checkout filesystem; hard links avoid duplicating the static build.
+shutil.copytree(dist, static, copy_function=os.link)
 
 def pattern(path):
     return '^' + re.escape(path).replace(r'\*', '(.*)') + '$'
