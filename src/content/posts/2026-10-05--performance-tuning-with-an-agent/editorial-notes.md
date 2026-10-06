@@ -29,3 +29,7 @@ If artwork is produced: wide.webp 1600x900, square.webp 800x800, desktop-social.
 - `git diff --check` passed.
 - Original article SHA-256 stayed `43e1ae00b14d146dd7235edd1f0d41c2bef69e70633e26ea86fd5c51ca7d82a3`.
 - Full site build and live browser rendering were not run. Draft remains excluded from published routes.
+
+## PR review edition
+
+Added a concrete experiment-ledger JSON example so the general workflow has an artifact an agent can preserve across sessions. The original article and preview implementation already landed on main in `69bb31303`; this review PR keeps the new article private and exercises the changed-article grouping in a real Netlify Deploy Preview.

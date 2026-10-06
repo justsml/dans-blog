@@ -319,6 +319,27 @@ If the instrument or environment is invalid, fix the
 
 Store those artifacts beside an experiment ledger: commit, workload, hypothesis, settings, commands, results, decision. Prefer JSON/CSV or batch output when feeding measurements back to the agent. Keep the original trace or profile for a human to inspect. [Perfetto's trace processor](https://perfetto.dev/docs/analysis/trace-processor) can query supported traces with SQL when you need reproducible summaries across recordings.
 
+Make that ledger a file the next session can read. For example, start an export experiment with a record like this, then attach the actual measurements before deciding whether to keep the change:
+
+```json
+{
+  "revision": "<commit SHA>",
+  "workload": "full export while typing in search",
+  "hypothesis": "chunk decoding to limit input stalls",
+  "environment": {
+    "cpuSlowdown": 2,
+    "cache": "disabled",
+    "renderer": "<recorded GPU and feature status>"
+  },
+  "baselineReports": [],
+  "candidateReports": [],
+  "correctnessPassed": null,
+  "decision": "pending"
+}
+```
+
+Empty report lists mean the experiment hasn't earned a conclusion yet. Record profiler-enabled diagnostic runs separately from timing runs, and have the harness produce the measurements. The agent can write the hypothesis and explain the result; the retained artifacts let you check its explanation.
+
 For a browser application, my starting kit is Playwright plus CDP and Chrome's Performance panel. For a finite CLI, hyperfine plus a runtime or native sampling profiler. For a slow Linux service, add pidstat/iostat and follow the waits with strace or a targeted BCC tool. For GPU compute, start with monitoring and a CPU/GPU timeline before reaching for kernel counters.
 
 The agent contributes speed: reading unfamiliar code, forming hypotheses, wiring up experiments, and trying changes you might not have bothered with. You contribute the definition of useful work and the conditions under which a result counts.
