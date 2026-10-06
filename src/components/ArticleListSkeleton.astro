@@ -6,7 +6,7 @@ const { nextUrl, locale = DEFAULT_LOCALE } = Astro.props as Props;
 const copy = getArticlePagingCopy(locale);
 ---
 {nextUrl ? (
-  <div class="article-list-loader" hx-get={nextUrl} hx-trigger="click" hx-swap="outerHTML"
+  <div class="article-list-loader" hx-get={nextUrl} hx-trigger="intersect once, click" hx-swap="outerHTML"
     hx-sync="this:drop" hx-disabled-elt="find button" hx-request='{"timeout":15000}'
     data-loading={copy.loading} data-retry={copy.retry} data-failure={copy.failure} data-announcement={copy.announcement}>
     <button class="article-list-loader__button" type="button">
