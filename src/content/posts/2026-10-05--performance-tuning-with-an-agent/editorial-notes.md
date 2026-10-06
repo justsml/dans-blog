@@ -14,7 +14,7 @@ Code examples are teaching examples, not excerpts represented as the original ha
 
 ## Image concepts
 
-No hero generated or referenced yet. Three distinct directions for later comparison:
+Initial art directions considered:
 
 1. **The instrument bench:** an engineer's workbench with a flame graph, timing strips, and a small sticker grid; warm paper, precise ink, amber/teal. Emphasize measured work rather than robot imagery.
 2. **The evidence loop:** four physical cards arranged in a loop, showing a workload, sampled stacks, a small code patch, and a timing comparison. Minimal geometric editorial illustration with a central artifact tray.
@@ -33,3 +33,11 @@ If artwork is produced: wide.webp 1600x900, square.webp 800x800, desktop-social.
 ## PR review edition
 
 Added a concrete experiment-ledger JSON example so the general workflow has an artifact an agent can preserve across sessions. The original article and preview implementation already landed on main in `69bb31303`; this review PR keeps the new article private and exercises the changed-article grouping in a real Netlify Deploy Preview.
+
+## Hero image edition
+
+Selected the instrument bench: a cream conveyor with wooden workload tiles accumulating at a brass measuring gate, an articulated probe, and a paper recorder carrying an unlabelled terracotta stack profile. Built-in image generation produced the wide hero and a freshly recomposed square companion; no crop was used for mobile. Warm tactile materials, natural studio light, restrained teal/brass accents; no title text or logos. Finals: `wide.webp` (1672×941) and `square.webp` (1254×1254).
+
+Wide prompt: miniature performance test bench, workload tiles bunching at measuring gate, instrument arm probing gate, connected chart recorder with stacked profile; few mechanically plausible objects, clear bottleneck, warm off-white/charcoal/brass/teal/terracotta palette, no text or generic AI imagery.
+
+Square prompt: preserve the referenced bench and materials, recompose around gate/probe in top half and profile recorder in bottom half, shorten conveyor, one strong central silhouette, no new narrative elements or labels.
