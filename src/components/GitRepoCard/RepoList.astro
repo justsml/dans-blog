@@ -8,14 +8,16 @@ import { _isValidRepo } from "../../shared/githubGqlApi.ts";
 import "./GitContribution.css";
 import { cx } from "class-variance-authority";
 import { Contribution, UserPullRequestData } from "../../types.ts";
+import { isContentPreviewBuild } from "../../shared/contentPreview";
 
 const { GITHUB_TOKEN } = process.env;
+const offlinePreview = isContentPreviewBuild() && !GITHUB_TOKEN;
 
 type Props = {
   className?: string;
 };
 
-if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
+if (!GITHUB_TOKEN && !offlinePreview)
   throw new Error("GITHUB_TOKEN is required to fetch GitHub data");
 
 const log = makeLogs("ossContributions");
@@ -28,7 +30,7 @@ type RepoData = {
   contrib: Contribution;
 };
 
-let loadedRepos: RepoData[] = (await Promise.all(
+let loadedRepos: RepoData[] = offlinePreview ? [] : (await Promise.all(
   ossContributions.flatMap(async (contrib) => {
     const targetRepo = contrib.renamed ?? contrib.repo;
     if (!_isValidRepo(targetRepo)) return [];
@@ -76,15 +78,26 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
 });
 ---
 
-<dl class="oss-ledger" aria-label="Open source contribution summary">
+{offlinePreview && (
+  <aside class="default-links">
+    <p>Live contribution statistics are unavailable in this preview. Explore the repositories below.</p>
+    <ul>
+      {ossContributions.filter((contrib) => _isValidRepo(contrib.renamed ?? contrib.repo)).map((contrib) => (
+        <li><a href={`https://github.com/${contrib.renamed ?? contrib.repo}`}>{contrib.renamed ?? contrib.repo}</a></li>
+      ))}
+    </ul>
+  </aside>
+)}
+
+<dl class="oss-ledger" aria-label="Open source contribution summary" hidden={offlinePreview}>
   <div><dt>Repositories</dt><dd>{repoCount.toLocaleString()}</dd></div>
   <div><dt>Pull requests</dt><dd>{pullRequestCount.toLocaleString()}</dd></div>
   <div><dt>Stars represented</dt><dd>{totalStars.toLocaleString()}</dd></div>
   <div><dt>Files touched</dt><dd>{changedFileCount.toLocaleString()}</dd></div>
 </dl>
-<p class="oss-ledger-updated">Updated {updatedDate}</p>
+<p class="oss-ledger-updated" hidden={offlinePreview}>Updated {updatedDate}</p>
 
-<div class="oss-controls">
+<div class="oss-controls" hidden={offlinePreview}>
   <div class="oss-control-group" role="group" aria-label="Sort contributions">
     <span class="oss-control-label">Sort</span>
     <button class="oss-sort-button" data-sort-key="stars" aria-pressed="true">
@@ -110,7 +123,7 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
   </details>
 </div>
 
-<div {...{ className }}>
+<div {...{ className }} hidden={offlinePreview}>
   {
     loadedRepos.map(async ({ contrib, pr }) => {
       const targetRepo = contrib.renamed ?? contrib.repo;
