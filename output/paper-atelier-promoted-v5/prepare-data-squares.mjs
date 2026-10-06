@@ -1,0 +1,6 @@
+import sharp from "sharp";
+import {copyFile,readFile,writeFile} from "node:fs/promises";
+const path=new URL("./data-squares.json",import.meta.url);const rows=JSON.parse(await readFile(path,"utf8"));const patches=[];
+for(let i=0;i<rows.length;i++){const r=rows[i];await copyFile(r.sourceGeneration,r.sourcePath);const m=await sharp(r.sourcePath).metadata();r.nativeDimensions={width:m.width,height:m.height};await sharp(r.sourcePath).webp({quality:90}).toFile(r.squarePath);r.outputDimensions=r.nativeDimensions;if(m.width<2048)r.cropNotes+=" Native source is smaller than requested; preserved without upscaling.";for(let side=0;side<2;side++){const x=side*420;const y=i*300;patches.push({input:await sharp({create:{width:420,height:300,channels:3,background:side?"#211f1c":"#faf7f1"}}).png().toBuffer(),left:x,top:y});patches.push({input:await sharp(r.squarePath).resize(200,200).png().toBuffer(),left:x+18,top:y+20});patches.push({input:await sharp(r.squarePath).resize(96,96).png().toBuffer(),left:x+260,top:y+20});}}
+await sharp({create:{width:840,height:900,channels:3,background:"#faf7f1"}}).composite(patches).png().toFile(new URL("./data-squares-review.png",import.meta.url).pathname);await writeFile(path,JSON.stringify(rows,null,2)+"\n");console.log(rows.map(r=>({slug:r.slug,native:r.nativeDimensions})));
+
