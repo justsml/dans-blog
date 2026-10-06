@@ -8,8 +8,10 @@ category: Thoughts
 subCategory: angularjs
 tags: [programming, angularjs, javascript, python, opinion]
 cover: alex-perez-753751-unsplash.webp
-cover_mobile: w300_alex-perez-753751-unsplash.webp
-cover_icon: icon_alex-perez-753751-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 I think we are witnessing the Python 2->3 'Conversion' all over again.

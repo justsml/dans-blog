@@ -8,8 +8,10 @@ category: Guides
 subCategory: programming
 tags: [programming, patterns, naming, source-code, organization]
 cover: rawpixel-652639-unsplash.webp
-cover_mobile: w300_rawpixel-652639-unsplash.webp
-cover_icon: icon_rawpixel-652639-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Naming stuff: Object Oriented Basics

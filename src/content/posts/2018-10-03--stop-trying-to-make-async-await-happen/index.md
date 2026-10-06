@@ -9,8 +9,10 @@ subCategory: promises
 tags: [promises, async, await, async-await, javascript, composition]
 related: [intro-to-promises, promise-gotchas, visualizing-promises, you-may-not-need-axios]
 cover: matt-nelson-414464-unsplash.webp
-cover_mobile: w300_matt-nelson-414464-unsplash.webp
-cover_icon: icon_matt-nelson-414464-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 Since the beginning of time, developers have fought many silly fights. From the classic _"Tabs vs. Spaces"_ to the timeless _"Mac vs. PC"_ debate, we're good at finding distracting arguments.

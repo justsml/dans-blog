@@ -56,3 +56,27 @@ legacy redirects, and 404 behavior are retained; preview responses carry noindex
 After building, `python3 output/paper-atelier-promoted-v5/prepare-vercel.py`
 packages the static output. Deploy using `bunx vercel deploy --prebuilt --target=preview`
 and update the review alias to the returned preview URL.
+
+## Existing artwork format completion
+
+All 80 published article families now have landscape and square formats, with
+matching references in localized content. Existing photography and approved
+artwork remain intact. The format completion manifest records each recut source;
+original files are retained. There is no raster upscaling.
+
+Squares are at least 400px; most are 600px or larger. Native 400–494px compositions
+remain valid when larger matching artwork is unavailable. Search uses separate
+200px WebP icons. Native `picture` selects explicitly enabled square heroes below
+601px, with candidates at 200, 320, 400, 600, 960 and native source width as needed.
+The preload uses identical media, srcset and sizes. No image-selection JavaScript
+or runtime image service is added. LLM connection strings preserves its original
+wide hero on both viewport sizes to retain the useful URL details.
+
+Two private drafts with no assigned artwork are excluded.
+[Coverage and side-by-side crop review](../../output/hero-coverage/report.md)
+and [source manifest](../../output/hero-coverage/manifest.json) record the full inventory.
+
+`bun src/scripts/hero-formats.ts` audits existing families; `--write` fills missing
+formats from matching sources and updates shared locale references. Review source
+overrides and crops before writing; do not substitute exploratory artwork merely
+because it has higher resolution.

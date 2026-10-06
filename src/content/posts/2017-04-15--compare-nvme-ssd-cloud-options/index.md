@@ -8,8 +8,10 @@ category: DevOps
 subCategory: programming
 tags: [cloud, servers, architecture, scaling, digital-ocean, amazon-web-services, google-cloud-engine, azure, packet, ovh, ssd, io]
 cover: solaiman-hossen-553024-unsplash.webp
-cover_mobile: w300_solaiman-hossen-553024-unsplash.webp
-cover_icon: icon_solaiman-hossen-553024-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Boost Cloud Performance up to 70%

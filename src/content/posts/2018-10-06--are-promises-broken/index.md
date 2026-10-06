@@ -9,8 +9,10 @@ tags: [promises, javascript, errors, programming]
 category: Code
 subCategory: promises
 cover: lennart-heim-766366-unsplash.webp
-cover_mobile: w300_lennart-heim-766366-unsplash.webp
-cover_icon: icon_lennart-heim-766366-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Are JavaScript Promises Broken?

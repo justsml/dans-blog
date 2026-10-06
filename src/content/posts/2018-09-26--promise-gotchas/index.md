@@ -9,8 +9,10 @@ subCategory: promises
 tags: [promises, async, debugging, errors, javascript, composition]
 related: [intro-to-promises, visualizing-promises, are-promises-broken, javascript-promises-quiz]
 cover: michal-parzuchowski-224092-unsplash.webp
-cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp
-cover_icon: icon_michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ### Promises don't work like other values

@@ -192,11 +192,11 @@ const heroPreload = _heroSrc
     }).catch(() => null)
   : null;
 
-// A high-resolution, separately composed square is deliberate mobile art.
-// Older tiny thumbnails remain card-only and never replace a detailed hero.
+// Explicitly approved square compositions include native 400/600px recuts.
+// Never enlarge a source; picture and its matching preload choose the same asset.
 const mobileHero = cover_mobile_hero && isImageMetadata(cover_full_width) && isImageMetadata(cover_mobile) &&
-  cover_mobile.width >= 1024 && cover_mobile.width === cover_mobile.height
-  ? await getImage({src: cover_mobile, widths: imageWidths(cover_mobile, [320, 480, 720, 960, 1280]), width: 480, format: "webp", quality: 78})
+  cover_mobile.width >= 200 && cover_mobile.width === cover_mobile.height
+  ? await getImage({src: cover_mobile, widths: imageWidths(cover_mobile, [200, 320, 400, 600, 960, 1280]), width: Math.min(400, cover_mobile.width), format: "webp", quality: 78})
   : null;
 
 const shouldCropMobileBanner =

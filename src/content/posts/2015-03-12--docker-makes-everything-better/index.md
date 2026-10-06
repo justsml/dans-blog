@@ -9,8 +9,10 @@ subCategory: docker
 tags: [docker, devops, patterns]
 related: [docker-server-setup-notes, docker-rocks, docker-security-tips-for-self-hosting]
 cover: guillaume-bolduc-259596-unsplash.webp
-cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
-cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Docker Can Do Everything!\*

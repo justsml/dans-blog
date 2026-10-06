@@ -10,8 +10,10 @@ publish: true
 subCategory: servers
 tags: [benchmarks, servers, performance]
 cover: rod-long-1052613-unsplash.webp
-cover_mobile: w300_rod-long-1052613-unsplash.webp
-cover_icon: icon_rod-long-1052613-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Linux Benchmark Shell Scripts

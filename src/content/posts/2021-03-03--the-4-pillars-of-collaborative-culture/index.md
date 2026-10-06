@@ -8,9 +8,11 @@ tags: [collaborative-culture, culture, teams, growth, personal-development]
 category: Leadership
 subCategory: culture
 cover: pexels-fauxels-3184430-cropped.webp
-cover_mobile: w300_pexels-fauxels-3184430-cropped.webp
-cover_icon: icon_pexels-fauxels-3184430-cropped.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
 credit: Photo by fauxels from Pexels
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## The 4 Pillars of Collaborative Culture

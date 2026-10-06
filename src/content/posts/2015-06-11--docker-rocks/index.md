@@ -9,8 +9,10 @@ subCategory: docker
 tags: [docker, boot2docker, devops]
 related: [docker-makes-everything-better, docker-server-setup-notes, docker-security-tips-for-self-hosting]
 cover: guillaume-bolduc-259596-unsplash.webp
-cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
-cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Docker Rocks

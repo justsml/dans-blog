@@ -58,9 +58,9 @@ upscale a smaller generation merely to report a larger file. A fresh square of
 at least 1200px is suitable as a mobile hero master; tiny icons are derivatives.
 
 Use `cover_full_width` for the landscape hero and landscape cards, `cover_mobile`
-for the separately recomposed square, and a 160px derivative in `cover_icon` for
+for the separately recomposed square, and a 200px derivative in `cover_icon` for
 search/compact previews. Set `cover_mobile_hero: true` to opt into mobile hero art
-direction; ordinary legacy thumbnails remain card-only. Update shared localized image references together.
+direction; legacy thumbnails under 200px remain card-only. For existing artwork, native 400–600px square recuts are valid mobile hero sources when explicitly approved; never upscale, and preserve detailed explanatory landscape art when a square would lose its meaning. Update shared localized image references together.
 Remove credits belonging to replaced artwork while preserving body-image credit.
 
 Use Astro's build-time `astro:assets` pipeline to create width variants. Match

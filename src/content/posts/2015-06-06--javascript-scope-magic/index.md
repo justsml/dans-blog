@@ -9,8 +9,10 @@ draft: true
 publish: true
 tags: [javascript, programming, performance, patterns]
 cover: markus-spiske-197281-unsplash.webp
-cover_mobile: w300_markus-spiske-197281-unsplash.webp
-cover_icon: icon_markus-spiske-197281-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Imperative vs. Recursive vs. Functional
