@@ -76,13 +76,13 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
 });
 ---
 
-<p class="oss-ledger" aria-label="Open source contribution summary">
-  <span>{repoCount.toLocaleString()} repos</span>
-  <span>{pullRequestCount.toLocaleString()} pull requests</span>
-  <span>{totalStars.toLocaleString()} stars represented</span>
-  <span>{changedFileCount.toLocaleString()} files touched</span>
-  <span class="oss-ledger-updated">Updated {updatedDate}</span>
-</p>
+<dl class="oss-ledger" aria-label="Open source contribution summary">
+  <div><dt>Repositories</dt><dd>{repoCount.toLocaleString()}</dd></div>
+  <div><dt>Pull requests</dt><dd>{pullRequestCount.toLocaleString()}</dd></div>
+  <div><dt>Stars represented</dt><dd>{totalStars.toLocaleString()}</dd></div>
+  <div><dt>Files touched</dt><dd>{changedFileCount.toLocaleString()}</dd></div>
+</dl>
+<p class="oss-ledger-updated">Updated {updatedDate}</p>
 
 <div class="oss-controls">
   <div class="oss-control-group" role="group" aria-label="Sort contributions">
@@ -95,6 +95,8 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
     </button>
   </div>
 
+  <details class="oss-filter-options">
+    <summary>Filter by technology</summary>
   <div class="oss-filter-bar" role="group" aria-label="Filter by technology">
     {allTags.map(([tag, count]) => (
       <button class="oss-filter-chip" data-filter-tag={tag} aria-pressed="false">
@@ -105,6 +107,7 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
       Clear
     </button>
   </div>
+  </details>
 </div>
 
 <div {...{ className }}>
@@ -136,6 +139,8 @@ const updatedDate = new Date().toLocaleDateString("en-US", {
     document.querySelectorAll<HTMLButtonElement>(".oss-sort-button");
   const grid = document.querySelector<HTMLElement>(".contrib-grid");
 
+  if (!grid || initializedGrids.has(grid)) return;
+  initializedGrids.add(grid);
   const active = new Set<string>();
   let sortKey: "stars" | "last-pr" = "stars";
 

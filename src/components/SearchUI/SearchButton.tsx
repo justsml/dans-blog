@@ -20,6 +20,9 @@ export const SearchButton = () => {
   return (
     <Button
       title="Toggle search panel"
+      aria-label="Search"
+      aria-controls="site-search-panel"
+      aria-expanded={false}
       type="button"
       className={"btnSearchToggle"}
       variant={"ghost"}

@@ -7,10 +7,11 @@ type Props = {
   pageSize?: number;
 };
 
-const { showImages = false, pageSize = 25, className } = Astro.props;
+const { showImages = true, pageSize = 25, className } = Astro.props;
 ---
 
-<div class:list={["searchBar", "collapsed", className]}>
+<div id="site-search-panel" role="dialog" aria-label="Search articles" inert class:list={["searchBar", "collapsed", className]}>
+  <div class="search-panel-toolbar"><span>Search articles</span><button type="button" class="search-panel-close" aria-label="Close search">✕</button></div>
   <div
     id="search"
     class="pagefind-ui pagefind-init"

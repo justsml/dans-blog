@@ -318,7 +318,7 @@ const shouldCropMobileBanner =
         )
       }
 
-      <aside class="skinny screenshot-hidden">
+      <aside class="skinny screenshot-hidden" data-pagefind-ignore="all">
         <div class="post-meta" aria-label="Article details">
           {date && <time datetime={pubTime}>Published {dateFormatter.format(new Date(date))}</time>}
           {modified && modTime !== pubTime && <time datetime={modTime}>Updated {dateFormatter.format(new Date(modified))}</time>}
@@ -360,7 +360,7 @@ const shouldCropMobileBanner =
               {...responsiveImgSizes_fullWidth}
             />
             </picture>
-            {cover_credit && <p class="hero-credit" set:html={cover_credit} />}
+            {cover_credit && <p class="hero-credit" data-pagefind-ignore="all" set:html={cover_credit} />}
           </div>
         ) : (
           cover &&
@@ -380,7 +380,7 @@ const shouldCropMobileBanner =
                   fetchpriority="high"
                   {...responsiveImgSizes_breakRight}
                 />
-                {cover_credit && <p class="hero-credit" set:html={cover_credit} />}
+                {cover_credit && <p class="hero-credit" data-pagefind-ignore="all" set:html={cover_credit} />}
               </div>
             </div>
           )
