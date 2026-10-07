@@ -65,7 +65,7 @@ class ScreenshotService {
 
     const page: Page = await this.browser.newPage({
       viewport: { width: 1024, height: 720 },
-      deviceScaleFactor: 4,
+      deviceScaleFactor: 2,
     });
     this.pages.push(page);
     try {
@@ -106,7 +106,7 @@ class ScreenshotService {
     }
 
     const page: Page = await this.browser.newPage({
-      deviceScaleFactor: 4,
+      deviceScaleFactor: 2,
     });
     this.pages.push(page);
 

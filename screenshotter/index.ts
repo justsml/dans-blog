@@ -1,4 +1,5 @@
-import { mkdir, rm } from "fs/promises";
+import { copyFile, mkdir, rm } from "fs/promises";
+import { existsSync } from "node:fs";
 import path, { dirname, join } from "path";
 import getSiteRss, { type RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
@@ -114,9 +115,11 @@ function buildArgs(rssItem: RssishItem, siteUrlPrefix: string): ScreenshotTask {
   const link = new URL(rssItem.link ?? `/${slug}/`, siteUrlPrefix).toString();
   const sourceDir = getSourceDir(rssItem.sourcePath);
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
-  const contentPath = sourceDir
-    ? path.join(process.cwd(), "src/content/posts", sourceDir)
-    : path.join("/tmp/screenshots", slug);
+  const contentPath =
+    sourceDir &&
+    existsSync(path.join(process.cwd(), "src/content/posts", sourceDir))
+      ? path.join(process.cwd(), "src/content/posts", sourceDir)
+      : path.join(process.cwd(), "public/previews", sourceDir ?? slug);
   const previewPath = sourceDir
     ? path.join(process.cwd(), "public/previews", sourceDir)
     : path.join("/tmp/screenshots", slug);
@@ -337,10 +340,7 @@ async function withScreenshotRetry<T>(
   }
 }
 
-async function applyScreenshotModeSafely(
-  page: Page,
-  classModifier?: string,
-) {
+async function applyScreenshotModeSafely(page: Page, classModifier?: string) {
   await applyScreenshotMode(page, classModifier).catch((error) => {
     if (error instanceof Error) assertNotAutoRefresh(error);
     throw error;
@@ -424,15 +424,27 @@ async function generateImagesForUrl(url: string, options: ScreenshotOptions) {
         });
 
         const outputFile = await takeScreenshot(page, newFile);
+        if (classModifier === "desktop-shot") {
+          const sourceDir = path.relative(
+            path.join(process.cwd(), "src/content/posts"),
+            dirname(outputFile),
+          );
+          if (!sourceDir.startsWith("..")) {
+            const mainPreview = path.join(
+              process.cwd(),
+              "public/previews",
+              sourceDir,
+              "main.webp",
+            );
+            await mkdir(dirname(mainPreview), { recursive: true });
+            await copyFile(outputFile, mainPreview);
+          }
+        }
         if (postProcess === "resizeAndCrop") {
           const socialBannerPath = outputFile
             .replace(".jpg", "-social.jpg")
             .replace(".webp", "-social.webp");
-          await resizeAndCrop(
-            outputFile,
-            socialBannerPath,
-            SOCIAL_BANNER_SIZE,
-          );
+          await resizeAndCrop(outputFile, socialBannerPath, SOCIAL_BANNER_SIZE);
         }
         log(`Screenshot saved to ${outputFile}`);
       }
@@ -600,7 +612,11 @@ async function prepareElementScreenshot(page: Page, selector: string) {
       const optionsHeight = options.scrollHeight;
       if (optionsHeight > 0) {
         panel.style.setProperty("height", `${optionsHeight}px`, "important");
-        panel.style.setProperty("min-height", `${optionsHeight}px`, "important");
+        panel.style.setProperty(
+          "min-height",
+          `${optionsHeight}px`,
+          "important",
+        );
       }
     }
 
@@ -620,7 +636,9 @@ async function prepareElementScreenshot(page: Page, selector: string) {
       return (
         rect.width > 0 &&
         rect.height > 0 &&
-        Boolean(optionsRect && optionsRect.width > 0 && optionsRect.height > 0) &&
+        Boolean(
+          optionsRect && optionsRect.width > 0 && optionsRect.height > 0,
+        ) &&
         style.display !== "none" &&
         style.visibility !== "hidden" &&
         style.opacity !== "0"
@@ -659,11 +677,7 @@ function parseCliOptions(args: string[]): CliOptions {
       ? DEFAULT_RETRIES
       : Number.parseInt(retriesArg, 10);
 
-  if (
-    !Number.isFinite(concurrency) ||
-    concurrency < 1 ||
-    concurrency > 8
-  ) {
+  if (!Number.isFinite(concurrency) || concurrency < 1 || concurrency > 8) {
     throw new Error("--concurrency must be an integer from 1 to 8.");
   }
 

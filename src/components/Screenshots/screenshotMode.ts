@@ -11,6 +11,8 @@ export async function applyScreenshotMode(
 ) {
   await page.evaluate(
     ({ classModifier, hiddenClass, modeClass, styleId }) => {
+      document.documentElement.dataset.theme = "light";
+      document.documentElement.classList.remove("dark");
       document.body.classList.add(modeClass);
       if (classModifier) document.body.classList.add(classModifier);
 

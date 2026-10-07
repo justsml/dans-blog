@@ -124,6 +124,7 @@ export default defineConfig({
         return item;
       },
       filter: (page) => {
+        if (new URL(page).pathname.startsWith("/social-card/")) return false;
         const isIgnoredPath = ignorePaths.every((path) => {
           return !page.includes(path);
         });

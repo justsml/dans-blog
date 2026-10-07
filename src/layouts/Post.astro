@@ -9,6 +9,8 @@ import Footer from "../components/Footer.astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { GitHubIssueComments } from "../components/Comments";
 import socialBanner from "../assets/social-banner.webp";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
@@ -227,7 +229,7 @@ const shouldCropMobileBanner =
     <BaseHead
       title={title}
       description={metaDescription}
-      image={coverUrl}
+      image={existsSync(join(process.cwd(), "public/social", `${slug}.png`)) ? `/social/${slug}.png` : coverUrl}
       canonicalPath={canonicalPath}
       alternates={alternates}
     />

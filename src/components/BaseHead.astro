@@ -73,8 +73,9 @@ const siteDescription = normalizeMetaDescription(description || SITE_SEO_DESCRIP
 const version = pkg.version;
 
 const imgSrc = typeof image === "string" ? image : image?.src;
-const imageWidth = typeof image !== "string" ? image?.width : null;
-const imageHeight = typeof image !== "string" ? image?.height : null;
+const isSocialCard = typeof image === "string" && image.startsWith("/social/");
+const imageWidth = typeof image !== "string" ? image?.width : isSocialCard ? 1200 : null;
+const imageHeight = typeof image !== "string" ? image?.height : isSocialCard ? 630 : null;
 ---
 
 <meta charset="utf-8" />
@@ -163,7 +164,8 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta name="bsky:creator" content="@justsml.bsky.social" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
-{imgSrc && <meta property="og:image" content={new URL(imgSrc, Astro.url)} />}
+{imgSrc && <meta property="og:image" content={new URL(imgSrc, Astro.site ?? Astro.url)} />}
+{imgSrc && <meta property="og:image:alt" content={title || SITE_TITLE} />}
 {imageWidth && <meta property="og:image:width" content={`${imageWidth}`} />}
 {imageHeight && <meta property="og:image:height" content={`${imageHeight}`} />}
 
@@ -174,7 +176,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta property="twitter:url" content={canonicalURL} />
 {
   imgSrc && (
-    <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />
+    <meta property="twitter:image" content={new URL(imgSrc, Astro.site ?? Astro.url)} />
   )
 }
 

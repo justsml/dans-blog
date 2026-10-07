@@ -1,12 +1,12 @@
-# 3. Handling Errors
+# 3. Chaining `.then` and `.catch`'s
 
 What will the output be for the following code?
 
 var p = new Promise((resolve, reject) => {
-    reject(Error('The Fails!'))
-  })
-  .catch(error => console.log(error))
-  .then(error => console.log(error))
+  reject(Error('The Fails!'))
+})
+.catch(error => console.log(error))
+.then(error => console.log(error))
 ------
 
 1. print error and `undefined`
