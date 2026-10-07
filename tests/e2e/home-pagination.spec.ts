@@ -37,17 +37,24 @@ for (const prefix of ['', '/es']) {
 for (const prefix of ['', '/es']) {
   test(`More posts appends successive batches ${prefix || '/en'}`, async ({ page, request }) => {
     await page.goto(`${prefix}/`, { waitUntil: 'domcontentloaded' });
-    const cards = page.locator('.article-list > .article-card');
+    const list = page.locator('.article-list');
+    const hrefs = () => page.locator('.article-list > .article-card').evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
     for (let batch = 0; batch < 2; batch++) {
+      // The loader also fires when it scrolls into view, so read the list and its next URL together, at rest.
+      await expect(list).not.toHaveAttribute('aria-busy', 'true');
+      const previous = await hrefs();
       const nextUrl = await page.locator('.article-list-loader').getAttribute('hx-get');
       expect(nextUrl).toBeTruthy();
       const next = await readPage(request, nextUrl!);
-      const previous = await cards.evaluateAll(nodes => nodes.map(node => node.getAttribute('href')));
-      await page.getByRole('button', { name: 'More posts', exact: true }).click();
-      await expect(cards).toHaveCount(previous.length + next.links.length);
-      expect(await cards.evaluateAll(nodes => nodes.map(node => node.getAttribute('href'))))
+      // Focus scrolls the loader into view, which may start the load itself; Enter covers the case where it doesn't.
+      await page.locator('.article-list-loader__button').focus();
+      await page.keyboard.press('Enter');
+      // A further batch may autoload once the new loader is visible; the clicked batch comes first, once.
+      await expect.poll(async () => (await hrefs()).slice(0, previous.length + next.links.length))
         .toEqual([...previous, ...next.links]);
     }
+    const all = await hrefs();
+    expect(new Set(all).size).toBe(all.length);
   });
 }
 
@@ -61,9 +68,12 @@ test('paging shows loading, prevents duplicate requests, and continues keyboard 
     await route.continue();
   });
   await page.goto('/');
-  const button = page.getByRole('button', { name: 'More posts', exact: true });
+  // Located by class: its accessible name switches to the loading label while busy.
+  const button = page.locator('.article-list-loader__button');
+  // Focusing scrolls the loader into view, which starts the load on its own; Enter covers a viewport where
+  // it doesn't. A click would wait out the disabled request and then fire a second one.
   await button.focus();
-  await button.click();
+  await page.keyboard.press('Enter');
   await expect(button).toBeDisabled();
   await expect(page.locator('.article-list')).toHaveAttribute('aria-busy', 'true');
   await expect(page.locator('.article-list-loader__loading')).toBeVisible();
