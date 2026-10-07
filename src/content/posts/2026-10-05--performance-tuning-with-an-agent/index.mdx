@@ -11,6 +11,9 @@ unlisted: true
 hidden: true
 publish: false
 popularity: 0.8
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
 related:
   - trust-but-throttle
   - you-might-not-need-algolia
@@ -276,7 +279,28 @@ Report what improved, what regressed, and what
   is still unmeasured.
 ```
 
-Keep a ledger next to the artifacts: commit, workload, hypothesis, settings, commands, result, decision. Feed the agent JSON or CSV, and keep the original traces for a human to open. When you need the same summary from a dozen recordings, [Perfetto's trace processor](https://perfetto.dev/docs/analysis/trace-processor) lets you query traces with SQL.
+Keep a ledger next to the artifacts, as a file the next session can read. Here's the containment experiment from earlier, written down before the edit:
+
+```json
+{
+  "revision": "<commit SHA>",
+  "workload": "slow wheel, reversals, jumps",
+  "hypothesis": "contain selected cards too",
+  "environment": {
+    "cpuSlowdown": 2,
+    "viewport": "1440x1000",
+    "renderer": "<recorded GPU status>"
+  },
+  "baselineReports": [],
+  "candidateReports": [],
+  "correctnessPassed": null,
+  "decision": "pending"
+}
+```
+
+Empty report lists mean the experiment hasn't earned a conclusion yet. The harness fills them in, not the agent. The agent writes the hypothesis and explains the result, and the saved reports let you check that explanation. This one ended as `"decision": "rejected"`.
+
+Feed the agent JSON or CSV, and keep the original traces for a human to open. When you need the same summary from a dozen recordings, [Perfetto's trace processor](https://perfetto.dev/docs/analysis/trace-processor) lets you query traces with SQL.
 
 The agent brings speed. It reads unfamiliar code quickly, wires up experiments you'd skip, and tries ideas you wouldn't bother with. You bring the definition of useful work and the rules for when a result counts. The profiler covers the part neither of you can supply from memory: where this particular program spends its time.
 

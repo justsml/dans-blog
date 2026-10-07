@@ -14,7 +14,7 @@ Code examples are teaching examples, not excerpts represented as the original ha
 
 ## Image concepts
 
-No hero generated or referenced yet. Three distinct directions for later comparison:
+Initial art directions considered:
 
 1. **The instrument bench:** an engineer's workbench with a flame graph, timing strips, and a small sticker grid; warm paper, precise ink, amber/teal. Emphasize measured work rather than robot imagery.
 2. **The evidence loop:** four physical cards arranged in a loop, showing a workload, sampled stacks, a small code patch, and a timing comparison. Minimal geometric editorial illustration with a central artifact tray.
@@ -30,6 +30,20 @@ If artwork is produced: wide.webp 1600x900, square.webp 800x800, desktop-social.
 - Original article SHA-256 stayed `43e1ae00b14d146dd7235edd1f0d41c2bef69e70633e26ea86fd5c51ca7d82a3`.
 - Full site build and live browser rendering were not run. Draft remains excluded from published routes.
 
+## PR review edition
+
+Added a concrete experiment-ledger JSON example so the general workflow has an artifact an agent can preserve across sessions. The original article and preview implementation already landed on main in `69bb31303`; this review PR keeps the new article private and exercises the changed-article grouping in a real Netlify Deploy Preview.
+
+## Hero image edition
+
+Selected the instrument bench: a cream conveyor with wooden workload tiles accumulating at a brass measuring gate, an articulated probe, and a paper recorder carrying an unlabelled terracotta stack profile. Built-in image generation produced the wide hero and a freshly recomposed square companion; no crop was used for mobile. Warm tactile materials, natural studio light, restrained teal/brass accents; no title text or logos. Finals: `wide.webp` (1672×941) and `square.webp` (1254×1254).
+
+Wide prompt: miniature performance test bench, workload tiles bunching at measuring gate, instrument arm probing gate, connected chart recorder with stacked profile; few mechanically plausible objects, clear bottleneck, warm off-white/charcoal/brass/teal/terracotta palette, no text or generic AI imagery.
+
+Square prompt: preserve the referenced bench and materials, recompose around gate/probe in top half and profile recorder in bottom half, shorten conveyor, one strong central silhouette, no new narrative elements or labels.
+
 ## Revision, October 7, 2026
 
 Rewritten for coherence. The old opening (a benchmark that jumped to the bottom) argued for better workloads, not profilers, so the title's thesis never landed. New spine: benchmark = scoreboard, profile = map; agents without a map optimize from folklore (`content-visibility`, `will-change`, both rejected), while the real win came from a trace (animated WebPs invalidating tiles; raster 1,859 → 844 ms, from emoji-brain commit 9ab1f62). The export+search workload example was replaced with the actual scroll workload, and the invalid first baseline (unsettled Home/End scroll) is now the "can't be fooled" example. The tool catalog was condensed into one question → tool table plus the CPU-idle → waits pivot. Numbers verified against `docs/performance/selection-scrolling.md` and commit messages; no new measurements were run.
+
+On merge into PR 201, the ledger JSON example was kept and rewritten around the real containment experiment so it matches the scroll workload used everywhere else.
