@@ -141,7 +141,7 @@ function getPostPath(post: NavPost) {
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
                       return (
                         <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
-                          {title}
+                          <span class="nav-post-title">{title}</span>
                           <sup>{modifiedAgo} ago</sup>
                         </a>
                       );

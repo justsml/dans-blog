@@ -10,9 +10,6 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-padding-block-start: 6rem; }
 body { margin: 0; isolation: isolate; background: var(--paper-desk); color: var(--paper-ink); font: 1.0625rem/1.65 var(--paper-sans); overflow-wrap: break-word; }
-:where(body)::before { content: ""; position: fixed; z-index: -1; pointer-events: none; }
-/* Texture and desk colour share one element so multiply has a backdrop; body's own background paints outside its isolation group. */
-:where(body)::before { inset: 0; background: var(--paper-tooth) 0 0 / 300px, var(--paper-desk); background-blend-mode: multiply; }
 h1, h2, h3, h4, h5, h6 { color: var(--paper-ink); font-family: var(--paper-serif); font-weight: 400; line-height: 1.18; letter-spacing: -.025em; text-wrap: balance; }
 h1 { font-size: var(--fs-900); }
 h2 { font-size: var(--fs-700); }
