@@ -24,10 +24,10 @@ export async function optimizeArticleCardImage(post: ArticlePost, lead = false, 
   return {...post, cardImage: {
     src: optimized.src,
     srcSet: optimized.srcSet.attribute,
-    sizes: options.sizes ?? (lead
-      ? "(max-width: 600px) calc(100vw - 4rem), (max-width: 1212px) calc((100vw - 9rem) * .524), 576px"
-      : options.wide
-        ? "(max-width: 900px) calc(100vw - 4rem), (max-width: 1212px) calc((100vw - 7rem) / 3), 380px"
+    sizes: options.sizes ?? (options.wide
+      ? "(max-width: 600px) calc(100vw - 4rem), (max-width: 900px) calc((100vw - 5.625rem) * .535), (max-width: 1212px) calc((100vw - 7rem) / 3), 380px"
+      : lead
+        ? "(max-width: 600px) calc(100vw - 4rem), (max-width: 1212px) calc((100vw - 9rem) * .524), 576px"
         : "(max-width: 600px) calc(100vw - 4rem), (max-width: 900px) calc((100vw - 5.5rem) / 2), (max-width: 1212px) calc((100vw - 7rem) / 3), 352px"),
     width: Number(optimized.attributes.width),
     height: Number(optimized.attributes.height),

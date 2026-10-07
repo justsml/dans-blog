@@ -41,8 +41,8 @@ const defaultNextUrl = hasMorePosts
   : null;
 
 posts = posts.slice(0, pageSize);
-// The first card is the full-width feature, so it never competes for a wide slot.
-const wideSlugs = new Set([...getWidePosts(posts, 1)].map((post) => post.slug));
+// Popular posts get a wide card, including the lead article.
+const wideSlugs = new Set([...getWidePosts(posts)].map((post) => post.slug));
 posts = await Promise.all(posts.map((post, index) => optimizeArticleCardImage(post, index === 0, { wide: wideSlugs.has(post.slug) })));
 const spotlightAfter = 7;
 

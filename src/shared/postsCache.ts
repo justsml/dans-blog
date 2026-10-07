@@ -63,6 +63,7 @@ const openSourceJournalPost = {
   collection: "pages",
   data: {
     title: "Open Source Journal",
+    popularity: 0.955,
     subTitle: "A collection of open-source projects I've worked on.",
     publish: true,
     category: "Projects",
