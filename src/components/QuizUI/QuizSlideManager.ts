@@ -615,96 +615,30 @@ export function initQuizSlideManager(
         island.style.width = "100%";
       });
 
+      // A soft cross-fade: the outgoing question blurs away as the next one resolves out of the same blur,
+      // drifting a few pixels in the direction of travel. A brief overlap keeps it from reading as a cut.
+      const drift = dir === "next" ? 4 : -4;
       currentIsland.style.zIndex = "1";
-      currentIsland.style.opacity = "1";
-      currentIsland.style.transform = "translateY(0) scale(1)";
       nextIsland.style.zIndex = "2";
       nextIsland.style.opacity = "1";
-      nextIsland.style.transform = "translateY(0) scale(1)";
-      if (nextChallenge) {
-        nextChallenge.style.opacity = "0.98";
-        nextChallenge.style.transform = "translateY(0) scale(0.995)";
-      }
-      nextRevealTargets.forEach((target) => {
-        target.style.opacity = "0";
-        target.style.transform = `translateY(${dir === "next" ? 14 : -14}px)`;
-        target.style.clipPath =
-          dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)";
-      });
+      if (nextChallenge) nextChallenge.style.opacity = "0";
 
       void Promise.all([
-        animateElements(
-          currentRevealTargets,
-          [
-            { opacity: 1, transform: "translateY(0)" },
-            {
-              opacity: 0,
-              transform: `translateY(${dir === "next" ? -8 : 8}px)`,
-            },
-          ],
-          {
-            duration: 160,
-            easing: "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-            fill: "both",
-            stagger: 18,
-          },
-        ),
         animateElement(
           currentChallenge,
           [
-            { opacity: 1, transform: "scale(1)", filter: "brightness(1)" },
-            {
-              opacity: 0,
-              transform: "scale(0.992)",
-              filter: "brightness(0.82)",
-            },
+            { opacity: 1, filter: "blur(0px)", transform: "translateY(0)" },
+            { opacity: 0, filter: "blur(6px)", transform: `translateY(${-drift * 0.75}px)` },
           ],
-          {
-            delay: 60,
-            duration: 220,
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-            fill: "both",
-          },
+          { duration: 220, easing: "cubic-bezier(0.4, 0, 1, 1)", fill: "both" },
         ),
         animateElement(
           nextChallenge,
           [
-            {
-              opacity: 0.98,
-              transform: "scale(0.995)",
-              filter: "brightness(0.96)",
-            },
-            { opacity: 1, transform: "scale(1)", filter: "brightness(1)" },
+            { opacity: 0, filter: "blur(6px)", transform: `translateY(${drift}px)` },
+            { opacity: 1, filter: "blur(0px)", transform: "translateY(0)" },
           ],
-          {
-            delay: 80,
-            duration: 220,
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-            fill: "both",
-          },
-        ),
-        animateElements(
-          nextRevealTargets,
-          [
-            {
-              opacity: 0,
-              transform: `translateY(${dir === "next" ? 14 : -14}px)`,
-              clipPath:
-                dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
-            },
-            {
-              opacity: 1,
-              transform: "translateY(0)",
-              clipPath: "inset(0% 0% 0% 0%)",
-            },
-          ],
-          {
-            delay: 160,
-            duration: 340,
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-            fill: "both",
-            stagger: 45,
-          },
+          { delay: 190, duration: 480, easing: "cubic-bezier(0.33, 1, 0.68, 1)", fill: "both" },
         ),
       ]).then(onComplete);
 
