@@ -88,8 +88,10 @@ test.describe("mobile locale controls", () => {
       await first.locator(".option").nth(entry.quiz.challenges[0].options.findIndex(option => option.isAnswer)).click();
       await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18", { timeout: 15000 });
       await page.reload();
-      await first.scrollIntoViewIfNeeded();
+      await page.locator(".quiz-ui").scrollIntoViewIfNeeded();
       await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/18", { timeout: 15000 });
+      // Reloading resumes at the first unanswered question.
+      await expect(page.locator(".quiz-dot").nth(1)).toHaveClass(/active/);
       const reset = page.locator(".quiz-reset-button");
       await expect(reset).toHaveAccessibleName(messages.resetLabel);
       await reset.click();

@@ -834,8 +834,17 @@ export function initQuizSlideManager(
       navigateToHash();
     });
 
-    // Navigate to initial hash if present
-    if (!navigateToHash()) {
+    // Resume at the first unanswered question. A link to a question still open wins; the hash also tracks
+    // the current slide, so after a reload it usually names a question already answered.
+    const linkedIndex = resolveIndexFromHash(window.location.hash);
+    const firstOpenIndex = Array.from({ length: totalQuestions }, (_, index) => index).find(
+      (index) => !isQuestionAnswered(index),
+    );
+    if (linkedIndex != null && !isQuestionAnswered(linkedIndex)) {
+      navigateToHash();
+    } else if (firstOpenIndex != null && firstOpenIndex !== currentIndex) {
+      goToQuestion(firstOpenIndex, "next");
+    } else if (!navigateToHash()) {
       updateHash();
     }
   }
