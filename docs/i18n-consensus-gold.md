@@ -338,8 +338,10 @@ Verification commands:
 ```bash
 LANGFUSE_PUBLIC_KEY='' LANGFUSE_SECRET_KEY='' bun test src/scripts/i18n/langfuse-ai-sdk.test.ts
 bun test src/scripts/i18n/negotiation/langfuse.test.ts
+bun test src/scripts/i18n/langfuse-v4.test.ts src/scripts/i18n/langfuse-scores.integration.test.ts
+bun src/scripts/i18n/verify-langfuse-v4.ts # synthetic root/generation/event with v2 readback, no inference
 bun src/scripts/i18n/verify-langfuse-cost.ts # two minimal real provider calls
-bun src/scripts/i18n/reconcile-langfuse-costs.ts TRACE_ID # updates existing generations in place
+bun src/scripts/i18n/reconcile-langfuse-costs.ts TRACE_ID # linked reconciliation scores
 ```
 
 The live canary verifies both generation and streaming against provider receipts;
@@ -348,7 +350,7 @@ Historical reconciliation covers the three recorded v2 negotiation traces. Older
 benchmark runs that never emitted traces have not been retroactively imported.
 
 Pre-tracing score and candidate history is imported with deterministic ids
-(reruns upsert) and the `backfill` tag. Receipts live in
+(reruns check destination IDs before export) and the `backfill` tag. Receipts live in
 `reports/i18n/cost-observability/`:
 
 ```bash
@@ -361,10 +363,34 @@ bun src/scripts/i18n/langfuse-estimate-unpriced.ts CATALOG_JSON # retro-price un
 The settler verifies `is_byok` and the gateway charge per generation id. Logs
 without a generation id keep reported charges but mark BYOK as inferred.
 Pricing-table costs are `api-equivalent-estimate`; unpriced records store no
-cost. Langfuse cannot unset a stored cost, so a wrong cost needs a delete and
-re-import.
+cost. Langfuse v4 observations are immutable after export. Settlement and
+retroactive estimates are attached as `reconciled.cost.*` and
+`reconciled.usage.*` scores with accounting metadata; they do not replace the
+original observation's billed cost or usage, or alter aggregate cost dashboards.
+Local provider receipts remain authoritative.
 Billing invoices, fixed subscription fees and provider-side charges absent from
 responses are not reconstructed from token counts.
+
+### Langfuse v4 transport
+
+The JS tracing, OTEL, and AI SDK adapter packages are pinned together at the
+latest published stable version verified on 2026-10-07: `5.13.1`. SDK major
+version 5 is separate from the Langfuse v4 server data model.
+
+Runtime traces and events export to `/api/public/otel/v1/traces` with the
+explicit `x-langfuse-ingestion-version: 4` header. Overall input/output belongs
+to the root observation; negotiation context is propagated to child operations.
+Historical candidate/score-call imports use complete OTLP spans and preserve
+their recorded timing, IO, usage, and cost. They check destination observation
+IDs first and refuse partial-trace replays rather than duplicate accepted spans.
+Do not run concurrent imports of the same source snapshot.
+
+All trace readers use the cursor-paginated observations v2 API.
+`/api/public/ingestion` remains only for supported score-create batches.
+No exported trace, generation, span, or event is updated or re-exported in place.
+
+See the [official v4 migration guide](https://langfuse.com/integrations/native/opentelemetry/migration-to-v4)
+and [immutable observation rules](https://langfuse.com/faq/all/tracing-data-updates).
 
 References: [official AI SDK 7 integration](https://langfuse.com/changelog/2026-06-26-vercel-ai-sdk-7),
 [Langfuse token/cost semantics](https://langfuse.com/docs/observability/features/token-and-cost-tracking),

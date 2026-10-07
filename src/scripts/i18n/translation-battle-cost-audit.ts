@@ -1,3 +1,4 @@
+import { getLangfuseTrace, publishCostReconciliation } from "./langfuse-v4.ts";
 import {
   readdirSync,
   readFileSync,
@@ -111,15 +112,6 @@ writeFileSync(
 );
 console.log(JSON.stringify(summaries));
 if (process.argv.includes("--sync-langfuse")) {
-  const base = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
-  const headers = {
-    Authorization:
-      "Basic " +
-      Buffer.from(
-        process.env.LANGFUSE_PUBLIC_KEY + ":" + process.env.LANGFUSE_SECRET_KEY,
-      ).toString("base64"),
-    "Content-Type": "application/json",
-  };
   let cursor = 0;
   const updates: any[] = [];
   await Promise.all(
@@ -127,11 +119,7 @@ if (process.argv.includes("--sync-langfuse")) {
       while (cursor < rows.length) {
         const r = rows[cursor++],
           c = calls.find((c) => c.id === r.callId);
-        const response = await fetch(base + "/api/public/traces/" + c.traceId, {
-          headers,
-        });
-        if (!response.ok) throw Error("Trace lookup failed");
-        const trace = await response.json();
+        const trace = await getLangfuseTrace(c.traceId);
         const observations = trace.observations.filter(
           (o: any) => o.type === "GENERATION",
         );
@@ -161,19 +149,12 @@ if (process.argv.includes("--sync-langfuse")) {
             },
           },
         ];
-        const update = await fetch(base + "/api/public/ingestion", {
-          method: "POST",
-          headers,
-          body: JSON.stringify({ batch }),
-        });
-        const body = await update.json();
-        if (!update.ok || body.errors?.length)
-          throw Error("Langfuse update failed");
+        await publishCostReconciliation(batch);
         updates.push({
           callId: c.id,
           traceId: c.traceId,
           observationId: o.id,
-          httpStatus: update.status,
+          annotation: "reconciliation scores; observation unchanged",
           ...metadata,
         });
       }
@@ -183,7 +164,9 @@ if (process.argv.includes("--sync-langfuse")) {
     join(out, "langfuse-updates.jsonl"),
     updates.map((r) => JSON.stringify(r)).join("\n") + "\n",
   );
-  console.log("Updated " + updates.length + " existing generations");
+  console.log(
+    "Annotated " + updates.length + " immutable generations with scores",
+  );
 }
 if (process.argv.includes("--verify-langfuse")) {
   const base = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
@@ -201,20 +184,29 @@ if (process.argv.includes("--verify-langfuse")) {
       while (cursor < rows.length) {
         const r = rows[cursor++],
           c = calls.find((c) => c.id === r.callId);
-        const response = await fetch(base + "/api/public/traces/" + c.traceId, {
-          headers,
-        });
-        if (!response.ok) throw Error("Trace lookup failed");
-        const t = await response.json(),
-          gs = t.observations.filter((o: any) => o.type === "GENERATION"),
-          o = gs[0];
-        const passed =
-          gs.length === 1 &&
-          o.costDetails.total === r.gatewayUsd &&
-          o.metadata.isByok === r.isByok &&
-          o.metadata.byokInferenceReferenceUsd ===
-            (r.isByok ? r.upstreamReferenceUsd : 0) &&
-          o.metadata.providerInvoiceReconciled === false;
+        const observations = (
+          await getLangfuseTrace(c.traceId)
+        ).observations.filter((o: any) => o.type === "GENERATION");
+        if (observations.length !== 1) throw Error("Expected one generation");
+        const response = await fetch(
+          base +
+            "/api/public/v2/scores?" +
+            new URLSearchParams({
+              traceId: c.traceId,
+              observationId: observations[0].id,
+              name: "reconciled.cost.total",
+            }),
+          { headers },
+        );
+        if (!response.ok) throw Error("Reconciliation score lookup failed");
+        const scores = (await response.json()).data;
+        const passed = scores.some(
+          (s: any) =>
+            s.value === r.gatewayUsd &&
+            s.metadata?.isByok === r.isByok &&
+            s.metadata?.byokInferenceReferenceUsd ===
+              (r.isByok ? r.upstreamReferenceUsd : 0),
+        );
         checked.push({ callId: c.id, traceId: c.traceId, passed });
       }
     }),

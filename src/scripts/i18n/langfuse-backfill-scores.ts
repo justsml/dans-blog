@@ -1,3 +1,4 @@
+import { getLangfuseTrace, listLangfuseObservations } from "./langfuse-v4.ts";
 // Project saved translation metrics onto existing traces. No LLM calls or trace writes.
 // bun src/scripts/i18n/langfuse-backfill-scores.ts [--apply]
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -53,15 +54,8 @@ for (const { key, record } of records)
 
 // Validate historical links against actual destination trace IDs.
 const available = new Set<string>();
-async function listTraces(query: string): Promise<any[]> {
-  const traces: any[] = [];
-  for (let page = 1; ; page++) {
-    const result = await get(`traces?limit=100&page=${page}&${query}`);
-    traces.push(...result.data);
-    if (page >= result.meta.totalPages) return traces;
-  }
-}
-for (const t of await listTraces("tags=i18n-score")) available.add(t.id);
+for (const o of await listLangfuseObservations({ isRootObservation: "true" }))
+  available.add(o.traceId);
 const missing = records.filter(({ key }) => !links.has(key));
 const recovered: Array<Record<string, unknown>> = [];
 if (missing.length) {
@@ -73,27 +67,28 @@ if (missing.length) {
       "Unlinked scores lack valid timestamps/durations; provide explicit trace IDs",
     );
   const from = new Date(Math.min(...times) - 10000).toISOString();
-  const candidates = await listTraces(
-    `fromTimestamp=${encodeURIComponent(from)}`,
-  );
+  const candidates = await listLangfuseObservations({
+    fromStartTime: from,
+    isRootObservation: "true",
+  });
   for (const { key, record: r } of missing) {
     const matched = candidates.filter((t) => {
       const argv =
         t.metadata?.resourceAttributes?.["process.command_args"] ?? [];
       const option = (name: string) => argv[argv.indexOf(name) + 1];
       return (
-        t.name ===
+        (t.traceName ?? t.name) ===
           `invoke_agent ${r.judgeModel.replace(/^openrouter\//, "")}` &&
         argv.includes("--slug") &&
         option("--slug") === r.slug &&
         ((argv.includes("--locales") && option("--locales") === r.locale) ||
           (argv.includes("--locale") && option("--locale") === r.locale)) &&
-        Math.abs(Date.parse(t.timestamp) - (Date.parse(r.at) - r.durationMs)) <
+        Math.abs(Date.parse(t.startTime) - (Date.parse(r.at) - r.durationMs)) <
           3000
       );
     });
     if (matched.length !== 1) continue;
-    const trace = await get(`traces/${matched[0].id}`);
+    const trace = await getLangfuseTrace(matched[0].traceId);
     const generations = trace.observations.filter(
       (o: any) => o.type === "GENERATION",
     );
@@ -115,7 +110,7 @@ if (missing.length) {
 for (const { key, record } of records) {
   const link = links.get(key);
   if (record.langfuseTraceId && link && !available.has(link.traceId)) {
-    await get(`traces/${link.traceId}`);
+    await getLangfuseTrace(link.traceId);
     available.add(link.traceId);
   }
 }

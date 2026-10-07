@@ -1,7 +1,8 @@
+import { exportLangfuseBackfill } from "./langfuse-v4.ts";
 // Import translation_scored records from reports/translations-log.jsonl that
 // never reached Langfuse. Usage:
 //   bun langfuse-backfill-score-log.ts FROM_ISO TO_ISO
-// Ids derive from the record hash, so reruns upsert instead of duplicating.
+// IDs derive from the record hash; destination observations are checked before export.
 // The log keeps usage, charges and timing but no prompt, output text or
 // OpenRouter generation id: BYOK is inferred from the charge pattern, not
 // verified by generation lookup.
@@ -11,15 +12,7 @@ const [from, to] = process.argv.slice(2);
 if (!from || !to) throw Error("Usage: FROM_ISO TO_ISO");
 const out = "reports/i18n/cost-observability/score-log-backfill.jsonl";
 mkdirSync("reports/i18n/cost-observability", { recursive: true });
-const base = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
-const headers = {
-  Authorization:
-    "Basic " +
-    Buffer.from(
-      process.env.LANGFUSE_PUBLIC_KEY + ":" + process.env.LANGFUSE_SECRET_KEY,
-    ).toString("base64"),
-  "Content-Type": "application/json",
-};
+
 const records = readFileSync("reports/translations-log.jsonl", "utf8")
   .split("\n")
   .filter(Boolean)
@@ -137,16 +130,7 @@ for (const { line, r } of records) {
   );
   receipts.push({ traceId, observationId, at: r.at, model, slug: r.slug, locale: r.locale, costUsd: cost ?? null, ...metadata });
 }
-for (let i = 0; i < batch.length; i += 40) {
-  const r = await fetch(base + "/api/public/ingestion", {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ batch: batch.slice(i, i + 40) }),
-  });
-  const body = await r.json();
-  if (!r.ok || body.errors?.length)
-    throw Error("Langfuse ingestion failed " + JSON.stringify(body.errors));
-}
+await exportLangfuseBackfill(batch);
 for (const receipt of receipts) appendFileSync(out, JSON.stringify(receipt) + "\n");
 console.log(
   `Imported ${receipts.length} score calls from ${from} to ${to}; skipped ${skipped} without usage, cost or timing`,

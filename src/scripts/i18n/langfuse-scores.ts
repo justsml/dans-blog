@@ -49,12 +49,20 @@ export async function withTranslationScoreTrace<T>(
 ): Promise<T> {
   if (!langfuseEnabled) return run();
   try {
-    return await startActiveObservation(
-      "i18n.translation-score",
-      async (span) => {
-        span.update({ metadata });
-        return run();
-      },
+    return await startActiveObservation("i18n.translation-score", (span) =>
+      propagateAttributes(
+        {
+          traceName: "i18n.translation-score",
+          metadata: propagatableMetadata(metadata),
+          tags: ["i18n-score"],
+        },
+        async () => {
+          span.update({ input: metadata, metadata });
+          const result = await run();
+          span.update({ output: result });
+          return result;
+        },
+      ),
     );
   } finally {
     try {
@@ -71,9 +79,7 @@ export async function withTranslationScoreTrace<T>(
  * attaches the eval's scores to that observation. Flushing is left to the
  * caller's exit path so parallel evals don't each block on a flush.
  */
-export async function withLangfuseEval<
-  T extends { scores?: EvalScoreInput[] },
->(
+export async function withLangfuseEval<T extends { scores?: EvalScoreInput[] }>(
   name: string,
   metadata: Record<string, unknown>,
   input: unknown,

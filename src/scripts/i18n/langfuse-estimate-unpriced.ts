@@ -1,3 +1,4 @@
+import { getLangfuseTrace, publishCostReconciliation } from "./langfuse-v4.ts";
 // Price backfilled Langfuse generations whose cost is unknown, using the
 // current OpenRouter catalog and each generation's stored token usage.
 // Retroactive estimate: historical prices and routed providers may differ, and
@@ -11,15 +12,7 @@ const catalog = new Map(
 );
 const pricingSource = "openrouter-catalog-" + new Date().toISOString().slice(0, 10) + "-retro";
 const out = "reports/i18n/cost-observability/unpriced-estimates.jsonl";
-const base = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
-const headers = {
-  Authorization:
-    "Basic " +
-    Buffer.from(
-      process.env.LANGFUSE_PUBLIC_KEY + ":" + process.env.LANGFUSE_SECRET_KEY,
-    ).toString("base64"),
-  "Content-Type": "application/json",
-};
+
 const rows = (path: string) =>
   readFileSync(path, "utf8").split("\n").filter(Boolean).map((l) => JSON.parse(l));
 const traceIds = [
@@ -33,9 +26,7 @@ const traceIds = [
 const updates: any[] = [];
 const receipts: any[] = [];
 for (const traceId of traceIds) {
-  const res = await fetch(base + "/api/public/traces/" + traceId, { headers });
-  if (!res.ok) throw Error("Trace lookup failed " + traceId);
-  const trace = await res.json();
+  const trace = await getLangfuseTrace(traceId);
   for (const o of trace.observations) {
     if (o.type !== "GENERATION" || o.metadata?.costBasis !== "unknown") continue;
     const entry: any =
@@ -68,15 +59,7 @@ for (const traceId of traceIds) {
     receipts.push({ traceId, observationId: o.id, model: o.model, pricedAs: entry.id, usage: u, estimatedUsd: cost, pricingSource });
   }
 }
-for (let i = 0; i < updates.length; i += 40) {
-  const res = await fetch(base + "/api/public/ingestion", {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ batch: updates.slice(i, i + 40) }),
-  });
-  const body = await res.json();
-  if (!res.ok || body.errors?.length) throw Error("Langfuse update failed at " + i);
-}
+await publishCostReconciliation(updates);
 for (const r of receipts) appendFileSync(out, JSON.stringify(r) + "\n");
 const byModel: Record<string, { calls: number; usd: number }> = {};
 for (const r of receipts) {

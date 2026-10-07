@@ -1,22 +1,15 @@
+import { exportLangfuseBackfill } from "./langfuse-v4.ts";
 // Import translation candidate runs from reports/i18n/*/candidates.jsonl,
 // which predate Langfuse tracing. One trace per candidate, one generation per
 // chunk. Chunks ran sequentially, so they are laid out back to back, ending at
-// the candidate's createdAt; per-chunk durations are original. Ids derive from
-// the record hash, so reruns upsert instead of duplicating.
+// the candidate's createdAt; per-chunk durations are original. IDs derive from
+// the record hash; destination observations are checked before export.
 import { createHash } from "node:crypto";
 import { appendFileSync, mkdirSync, readFileSync } from "node:fs";
 import { Glob } from "bun";
 const out = "reports/i18n/cost-observability/candidates-backfill.jsonl";
 mkdirSync("reports/i18n/cost-observability", { recursive: true });
-const base = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
-const headers = {
-  Authorization:
-    "Basic " +
-    Buffer.from(
-      process.env.LANGFUSE_PUBLIC_KEY + ":" + process.env.LANGFUSE_SECRET_KEY,
-    ).toString("base64"),
-  "Content-Type": "application/json",
-};
+
 const sha = (s: string) => createHash("sha256").update(s).digest("hex");
 const lines: string[] = [];
 for await (const path of new Glob("reports/i18n/*/candidates.jsonl").scan("."))
@@ -132,15 +125,6 @@ for (const line of lines) {
   }
   receipts.push({ traceId, runId: r.runId, slug: r.slug, locale: r.locale, model: r.model, chunks: chunks.length, knownCostUsd: known, unknownCostChunks: unknown });
 }
-for (let i = 0; i < events.length; i += 40) {
-  const res = await fetch(base + "/api/public/ingestion", {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ batch: events.slice(i, i + 40) }),
-  });
-  const body = await res.json();
-  if (!res.ok || body.errors?.length)
-    throw Error("Langfuse ingestion failed at " + i + " " + JSON.stringify(body.errors).slice(0, 500));
-}
+await exportLangfuseBackfill(events);
 for (const receipt of receipts) appendFileSync(out, JSON.stringify(receipt) + "\n");
 console.log(`Imported ${receipts.length} candidates (${events.length - receipts.length} chunk generations) of ${lines.length} records`);

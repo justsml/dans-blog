@@ -1,5 +1,10 @@
 import { accountUsage, numberOrUnknown as num } from "../cost-accounting.ts";
-import { startActiveObservation, startObservation } from "@langfuse/tracing";
+import {
+  propagateAttributes,
+  startActiveObservation,
+  startObservation,
+} from "@langfuse/tracing";
+import { propagatableMetadata } from "../langfuse-score-projection.ts";
 import { langfuseEnabled, flushLangfuse } from "../langfuse.ts";
 
 /** Preserve provider-reported counters; never invent billing from a CLI subscription. */
@@ -144,21 +149,33 @@ export async function traceNegotiation<T>(
     );
   return startActiveObservation(
     "translation-negotiation",
-    async (span) => {
-      span.update({ input });
-      onTrace({ traceId: span.traceId, observationId: span.id });
-      try {
-        const output = await fn();
-        span.update({ output });
-        return output;
-      } catch (error) {
-        span.update({ level: "ERROR", statusMessage: String(error) });
-        throw error;
-      } finally {
-        span.end();
-        await flushLangfuse();
-      }
-    },
+    (span) =>
+      propagateAttributes(
+        {
+          traceName: "translation-negotiation",
+          tags: ["i18n-negotiation"],
+          metadata: propagatableMetadata(
+            input != null && typeof input === "object"
+              ? (input as Record<string, unknown>)
+              : {},
+          ),
+        },
+        async () => {
+          span.update({ input });
+          onTrace({ traceId: span.traceId, observationId: span.id });
+          try {
+            const output = await fn();
+            span.update({ output });
+            return output;
+          } catch (error) {
+            span.update({ level: "ERROR", statusMessage: String(error) });
+            throw error;
+          } finally {
+            span.end();
+            await flushLangfuse();
+          }
+        },
+      ),
     { asType: "agent", endOnExit: false },
   );
 }

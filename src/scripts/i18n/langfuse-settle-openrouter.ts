@@ -1,30 +1,16 @@
+import {
+  listLangfuseObservations,
+  publishCostReconciliation,
+} from "./langfuse-v4.ts";
 // Settle live Langfuse generations against OpenRouter's generation lookup.
-// Writes the verified gateway charge and BYOK flag in place, using the same
+// Annotates the verified gateway charge and BYOK flag as reconciliation scores, using the same
 // cost-accounting v3 fields as translation-battle-cost-audit.ts.
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 const out = "reports/i18n/cost-observability/openrouter-settlement";
 mkdirSync(out, { recursive: true });
-const base = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
-const headers = {
-  Authorization:
-    "Basic " +
-    Buffer.from(
-      process.env.LANGFUSE_PUBLIC_KEY + ":" + process.env.LANGFUSE_SECRET_KEY,
-    ).toString("base64"),
-  "Content-Type": "application/json",
-};
-const all: any[] = [];
-for (let page = 1; ; page++) {
-  const r = await fetch(
-    `${base}/api/public/observations?type=GENERATION&limit=100&page=${page}`,
-    { headers },
-  );
-  if (!r.ok) throw Error("Observation listing failed " + r.status);
-  const j = await r.json();
-  all.push(...j.data);
-  if (page >= j.meta.totalPages) break;
-}
+
+const all = await listLangfuseObservations({ type: "GENERATION" });
 const pending = all.filter(
   (o) =>
     o.metadata?.costAccountingVersion !== 3 &&
@@ -42,7 +28,9 @@ for (const o of pending) {
     const response = await fetch(
       "https://openrouter.ai/api/v1/generation?id=" +
         encodeURIComponent(generationId),
-      { headers: { Authorization: "Bearer " + process.env.OPENROUTER_API_KEY } },
+      {
+        headers: { Authorization: "Bearer " + process.env.OPENROUTER_API_KEY },
+      },
     );
     receipt = {
       observationId: o.id,
@@ -77,27 +65,16 @@ for (const o of pending) {
     upstreamCostNote:
       "Legacy raw completion field may repeat gateway charge. Use verified isByok and byokInferenceReferenceUsd. Provider invoice has not been reconciled.",
   };
-  const r = await fetch(base + "/api/public/ingestion", {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      batch: [
-        {
-          id: crypto.randomUUID(),
-          timestamp: new Date().toISOString(),
-          type: "generation-update",
-          body: {
-            id: o.id,
-            traceId: o.traceId,
-            costDetails: { total: d.total_cost },
-            metadata,
-          },
-        },
-      ],
-    }),
-  });
-  const body = await r.json();
-  if (!r.ok || body.errors?.length) throw Error("Langfuse update failed");
+  await publishCostReconciliation([
+    {
+      body: {
+        id: o.id,
+        traceId: o.traceId,
+        costDetails: { total: d.total_cost },
+        metadata,
+      },
+    },
+  ]);
   updates.push({
     observationId: o.id,
     traceId: o.traceId,
@@ -110,5 +87,16 @@ for (const o of pending) {
 }
 for (const u of updates)
   appendFileSync(join(out, "langfuse-updates.jsonl"), JSON.stringify(u) + "\n");
-console.log(`Updated ${updates.length} generations`);
-console.table(updates.map(({ model, isByok, openRouterChargeUsd, byokInferenceReferenceUsd }) => ({ model, isByok, openRouterChargeUsd, byokInferenceReferenceUsd })));
+console.log(
+  `Annotated ${updates.length} generations (immutable observations unchanged)`,
+);
+console.table(
+  updates.map(
+    ({ model, isByok, openRouterChargeUsd, byokInferenceReferenceUsd }) => ({
+      model,
+      isByok,
+      openRouterChargeUsd,
+      byokInferenceReferenceUsd,
+    }),
+  ),
+);

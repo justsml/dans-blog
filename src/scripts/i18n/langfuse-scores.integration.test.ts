@@ -3,6 +3,7 @@ import { expect, test } from "bun:test";
 test("a scorer publishes scores against its real active parent and flushes without a model call", async () => {
   const batches: any[] = [];
   let traceExports = 0;
+  const ingestionVersions: Array<string | null> = [];
   let activeLink: any;
   const server = Bun.serve({
     port: 0,
@@ -24,6 +25,7 @@ test("a scorer publishes scores against its real active parent and flushes witho
         });
       }
       if (path === "/api/public/otel/v1/traces") {
+        ingestionVersions.push(request.headers.get("x-langfuse-ingestion-version"));
         await request.arrayBuffer();
         traceExports++;
         return Response.json({});
@@ -76,6 +78,7 @@ test("a scorer publishes scores against its real active parent and flushes witho
       value: 94.4,
     });
     expect(traceExports).toBeGreaterThan(0);
+    expect(ingestionVersions.every(version => version === "4")).toBe(true);
   } finally {
     server.stop(true);
   }

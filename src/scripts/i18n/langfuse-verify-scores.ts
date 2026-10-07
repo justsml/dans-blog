@@ -89,7 +89,6 @@ const result = {
   apiReportedTotal: first.meta.totalItems,
   missingScores: missing.length,
   mismatches,
-  traceCount: (await get("traces?limit=1")).meta.totalItems,
   note: "Compared every deterministic score ID, value, trace ID and observation ID against the saved source. Verification uses enumerated unique IDs rather than the API aggregate count.",
 };
 writeFileSync(

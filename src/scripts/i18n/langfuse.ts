@@ -34,6 +34,8 @@ if (langfuseEnabled) {
     publicKey,
     secretKey,
     baseUrl,
+    // Select observations-first ingestion explicitly, including self-hosted v4.
+    additionalHeaders: { "x-langfuse-ingestion-version": "4" },
   });
   const sdk = new NodeSDK({ spanProcessors: [spanProcessor] });
   sdk.start();

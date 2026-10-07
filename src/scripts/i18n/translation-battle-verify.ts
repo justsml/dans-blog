@@ -1,3 +1,4 @@
+import { getLangfuseTrace } from "./langfuse-v4.ts";
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import matter from "gray-matter";
@@ -82,16 +83,13 @@ await Promise.all(
   Array.from({ length: 4 }, async () => {
     while (index < calls.length) {
       const c = calls[index++];
-      const response = await fetch(base + "/api/public/traces/" + c.traceId, {
-        headers,
-      });
-      const trace = await response.json();
+      const trace = await getLangfuseTrace(c.traceId);
       const generations =
         trace.observations?.filter((o: any) => o.type === "GENERATION") ?? [];
       rows.push({
         callId: c.id,
         traceId: c.traceId,
-        httpStatus: response.status,
+        httpStatus: 200,
         generationCount: generations.length,
         observations: generations.map((o: any) => ({
           id: o.id,
