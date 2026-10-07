@@ -5,7 +5,6 @@ import avatarImage from "@/assets/avatar-256.webp";
 import docSlurpImage from "@/assets/projects/docslurp.webp";
 import emojiExplorerImage from "@/assets/projects/emoji-explorer.webp";
 import exploitHunterImage from "@/assets/projects/exploithunter-demo.webp";
-import { Image } from "astro:assets";
 import {
   DEFAULT_LOCALE,
   getLocalizedPagePath,
@@ -169,7 +168,8 @@ function getPostPath(post: NavPost) {
               featuredProjects.map((project) => (
                 <li class="featured-project">
                   <a class="Callout FeaturedProject" href={project.href} target="_blank" rel="noopener">
-                    <Image src={project.image} alt={project.alt} width={480} quality={72} format="webp" loading="lazy" class="FeaturedProjectImage" />
+                    {/* These small WebP previews are already compressed; serve them directly in dev and production. */}
+                    <img src={project.image.src} alt={project.alt} width={project.image.width} height={project.image.height} loading="lazy" decoding="async" class="FeaturedProjectImage" />
                     <div class="CalloutHeading">{project.name} <span aria-hidden="true">↗</span></div>
                     <p class="CalloutText">{project.text}</p>
                   </a>
