@@ -495,14 +495,15 @@ const shouldCropMobileBanner =
   .article-reading-layout { display: contents; }
   .article-toc-sidebar { display: none; }
   @media (min-width: 1280px) {
-    /* Sheet stays centred under the header; the contents ride in the right margin instead of pushing it left. */
+    /* Sheet and contents fill the header's measure together: the sheet starts under the logo, the contents end under the nav. */
     .article-reading-layout.has-toc {
       display: grid;
-      grid-template-columns: minmax(15rem, 1fr) minmax(0, 920px) minmax(15rem, 1fr);
+      grid-template-columns: minmax(0, 1fr) 16rem;
       align-items: start;
-      padding-inline: 1rem;
+      inline-size: min(1180px, calc(100% - 3rem));
+      margin-inline: auto;
     }
-    .article-reading-layout.has-toc > main { grid-column: 2; min-width: 0; }
-    .article-toc-sidebar { grid-column: 3; grid-row: 1; justify-self: start; inline-size: min(15rem, 100%); display: block; position: sticky; top: 1.5rem; margin-block-start: 1.5rem; padding-inline-start: 1.5rem; max-height: calc(100dvh - 3rem); overflow-y: auto; }
+    .article-reading-layout.has-toc > main { grid-column: 1; min-width: 0; max-inline-size: none; margin-inline: 0; }
+    .article-toc-sidebar { grid-column: 2; grid-row: 1; display: block; position: sticky; top: 1.5rem; margin-block-start: 1.5rem; padding-inline-start: 1.5rem; max-height: calc(100dvh - 3rem); overflow-y: auto; }
   }
 </style>

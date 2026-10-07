@@ -1,5 +1,6 @@
 /* A calm, unrotated reading sheet. All hero variants share one media frame. */
-.post-page main.article { background:var(--paper-sheet); color:var(--paper-ink); box-shadow:var(--paper-shadow); border-block-start:5px solid var(--paper-blue); max-inline-size:920px; margin:1.5rem auto 3rem; --sheet-pad:clamp(1.25rem,5vw,4.5rem); padding:clamp(1.25rem,3vw,2.75rem) var(--sheet-pad) var(--sheet-pad); --padding-inline:0rem; --content-max-width:720px; --breakout-max-width:820px; font-size:clamp(1.0625rem,.98rem + .3vw,1.2rem); line-height:1.72; }
+/* The sheet shares the header's measure (Header.css), so its edges line up with the logo and the nav. */
+.post-page main.article { background:var(--paper-sheet); color:var(--paper-ink); box-shadow:var(--paper-shadow); border-block-start:5px solid var(--paper-blue); max-inline-size:min(1180px,calc(100% - 3rem)); margin:1.5rem auto 3rem; --sheet-pad:clamp(1.25rem,5vw,4.5rem); padding:clamp(1.25rem,3vw,2.75rem) var(--sheet-pad) var(--sheet-pad); --padding-inline:0rem; --content-max-width:720px; --breakout-max-width:820px; font-size:clamp(1.0625rem,.98rem + .3vw,1.2rem); line-height:1.72; }
 /* Breakouts use the space left around the reading column, rather than taking another fixed inset. */
 .post-page main.article { grid-template-columns:[full-width-start breakout-start] minmax(0,1fr) [content-start] minmax(0,min(100%,var(--content-max-width))) [content-end] minmax(0,1fr) [breakout-end full-width-end]; }
 .post-page main.article > h1.p-name { font-family:var(--paper-serif,Georgia,serif); font-weight:500; color:var(--paper-ink); font-size:clamp(2.2rem,5vw,4.2rem); line-height:1.1; letter-spacing:-.04em; margin-block:0 1rem; max-inline-size:100%; overflow-wrap:anywhere; mix-blend-mode:multiply; text-shadow:0 1px 1px var(--paper-sheet); filter:drop-shadow(0 0 1px var(--paper-sheet)); }
@@ -21,7 +22,8 @@
 .post-page .comments-wrapper { background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); margin:2rem auto; padding:1.5rem; max-inline-size:900px; inline-size:calc(100% - 2rem); }
 .post-page .loading-msg { color:var(--paper-muted); font-size:.9rem; }
 .post-page .share-counters { color:var(--paper-muted); margin-block:1.5rem; }
-@media(max-width:600px) { .post-page main.article { margin:1rem .5rem 2rem; --sheet-pad:1rem; padding:1.25rem var(--sheet-pad); } }
+@media(max-width:700px) { .post-page main.article { max-inline-size:calc(100% - 2rem); } }
+@media(max-width:600px) { .post-page main.article { margin:1rem auto 2rem; --sheet-pad:1rem; padding:1.25rem var(--sheet-pad); } }
 @media print { .post-page main.article { box-shadow:none; border:0; padding:0; margin:0; } .post-page .comments-wrapper { display:none; } }
 .post-page .share-counters { flex-wrap:wrap; max-inline-size:100%; align-items:center; justify-content:center; gap:.5rem; }
 .post-page .share-counters h4 { font-size:1rem; margin:0; }
