@@ -17,25 +17,19 @@ related:
   - upgrade-from-gatsby-to-astro
 ---
 
-Ask an agent to make a slow image grid scroll faster and it already knows the answer. It has read every blog post about it.
+Ask an agent to make a slow image grid scroll faster and it already knows the answer, because it has read every blog post on the subject. It will reach for `content-visibility: auto` so the browser can skip off-screen cards, and `will-change: transform` so each image gets its own compositor layer. Those are the two tricks everyone writes about, so those are the two it tries first.
 
-`content-visibility: auto`, so the browser skips off-screen cards. `will-change: transform`, so each image gets its own compositor layer. Those are the two tricks everyone writes about, so those are the two the agent reaches for first.
+We watched exactly that happen on [Emoji Brain](https://adorbs.fun/), a dense grid of selectable stickers where some of the stickers dance. Broader containment tripled the worst frame gaps during rapid scroll reversals, and promoting every image to its own layer made the software renderer slower. Both changes arrived with confident, reasonable explanations. Neither came from looking at where the time actually went.
 
-We tried both on [Emoji Brain](https://adorbs.fun/), a dense grid of selectable stickers where some of them dance. Broader containment tripled the p95 frame gap during rapid scroll reversals. Layer promotion on every image made the software renderer slower. Both changes sounded plausible, and both came with confident explanations. Neither came from looking at where the time went.
+The change that worked came from a trace. Once the agent could record what the browser was doing during a scroll, the problem stopped being a matter of opinion: raster work dominated every run. Ninety-two of the 402 stickers were animated WebPs, and an animated image invalidates its compositor tile on every frame, so with dozens of them on screen the grid could never hold on to a cached raster. Drawing a still first frame until the pointer hovered cut raster time from 1,859 ms to 844 ms and shrank the payload for those stickers from 5.45 MB to 0.20 MB. No blog post would have suggested that fix, because it was specific to this grid. The trace pointed straight at it.
 
-The fix that worked came from a trace. Raster dominated the scroll. 92 of the 402 stickers were animated WebPs, and an animated image invalidates its compositor tile on every frame. With dozens on screen, the grid could never keep a cached raster. Drawing a still first frame until hover cut raster time from 1,859 ms to 844 ms, and the payload for those 92 stickers dropped from 5.45 MB to 0.20 MB.
+That is the real story here, and it's bigger than one grid. Bespoke performance tuning used to be a luxury. Finding the one expensive thing your particular application does, and proving that removing it helps without breaking anything else, took a specialist who understood browsers, operating systems, and hardware, plus days of patient measurement that most teams never had. So most teams settled for generic advice and a Lighthouse score. An agent changes that math. It reads unfamiliar code quickly, it doesn't get bored rerunning a benchmark for the fortieth time, and it will happily try the experiment you would have skipped. What it can't do is see. Give it instruments that measure the right thing and a goal it can't game, and it will find improvements that a human would rarely have had the time, or the budget, to find.
 
-No blog post would have suggested that fix. The trace pointed straight at it.
+The bar for getting there is much lower than becoming a performance expert. You need to know what to ask for and which tools to connect. The rest of this post covers both, starting in the browser, where we did the work, and then following the same questions into CPUs, system calls, disks, and GPUs. Where I recommend a tool we didn't use on Emoji Brain, I'll say so. Documentation was checked on October 5, 2026.
 
-That's the argument of this post. **A benchmark is a scoreboard. A profile is a map.** An agent with only a scoreboard is a very fast hill-climber that picks hills by reputation. Give it the map and its hypotheses start coming from your program instead of from its training data.
+## Start With a Goal It Can't Game
 
-The examples come from the browser, because that's where we did the work. The second half follows the same questions into CLIs, syscalls, disk, and GPUs. I'll say when a tool is one I'd pick rather than one we actually ran. Docs checked October 5, 2026.
-
-## First, a Scoreboard That Can't Be Fooled
-
-A profiler doesn't replace the benchmark. It needs one: a repeatable workload that shows the problem and proves the work actually got done.
-
-"Make scrolling faster" lets the agent decide what counts as faster. Write the job down instead:
+An agent optimizes whatever you point it at, so the first job is pointing it at the right thing. "Make scrolling faster" leaves it free to decide what faster means, and an agent left to decide will usually find a number that improves. Writing the job down closes that gap:
 
 ```text
 Workload: slow wheel scroll, rapid reversals,
@@ -49,17 +43,13 @@ Environment: production build, pinned Chromium,
 Reject: a faster run that skipped the work.
 ```
 
-The last line looks paranoid until it saves you. Our first scroll baseline used plain Home/End keys and didn't wait long enough for things to settle. The browser's smooth-scroll animation kept running into the next phase, so the "jump" numbers measured a page that was still moving. They looked great.
+That last line looks paranoid until it saves you, and it saved us early. Our first scroll baseline jumped with the Home and End keys and didn't wait long enough between phases, so the browser's smooth-scroll animation was still running when the next measurement started. The jump numbers looked wonderful because they were measuring a page in motion rather than the jump itself. The harness now asserts that every jump lands where it should and that the document height stays stable, because a benchmark that never leaves the top of the page is very fast and measures nothing.
 
-The harness now asserts every jump endpoint and checks that the document height stays stable. A benchmark that never leaves the top of the page is very fast. It just isn't measuring anything.
+The same principle holds outside the browser. A parser benchmark should confirm that the output didn't change, and a load test should count errors alongside latency, since rejecting requests is a remarkably effective way to lower response times. Keep the baseline's raw runs together with the commit, tool versions, and hardware, and treat cold and warm caches as separate scenarios. Only then hand the agent the command.
 
-The same rule holds outside the browser. A parser benchmark checks that the output didn't change. A load test counts errors as well as latency, because rejecting requests is a remarkably effective way to lower response times.
+## Give It Eyes in the Browser
 
-Keep the baseline's raw runs, commit, tool versions, and hardware. Treat cold and warm caches as separate scenarios. Then hand the agent the command and nothing else yet.
-
-## Wire the Browser for Evidence
-
-We drove Chromium with Playwright and used [CDP sessions](https://playwright.dev/docs/api/class-cdpsession) to get at the browser's instruments. Playwright moves the mouse. CDP records what that cost.
+A benchmark tells the agent whether a change helped. To form a good hypothesis in the first place, it needs to see where the time goes, and in a browser that means the Chrome DevTools Protocol. We drove Chromium with Playwright and opened a [CDP session](https://playwright.dev/docs/api/class-cdpsession) alongside it, so Playwright could move the mouse while CDP recorded what each movement cost:
 
 ```ts
 const cdp = await page.context().newCDPSession(page);
@@ -93,22 +83,15 @@ await cdp.send('Network.overrideNetworkState', {
 });
 ```
 
-Our original harness used `Network.emulateNetworkConditions`, which is now deprecated. The replacements split request throttling from the network state that page JavaScript sees, and some of them are experimental. Check the [Network domain](https://chromedevtools.github.io/devtools-protocol/tot/Network/) against your pinned browser. If a setting isn't supported, fail setup. Don't quietly benchmark a different environment.
+Our original harness used `Network.emulateNetworkConditions`, which has since been deprecated in favor of methods that separate request throttling from the network state page JavaScript sees. Some of those replacements are still experimental, so check the [Network domain](https://chromedevtools.github.io/devtools-protocol/tot/Network/) against your pinned browser and make setup fail loudly if a setting isn't supported, rather than quietly benchmarking a different environment. It also helps to be precise about what you controlled. [`setCPUThrottlingRate`](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setCPUThrottlingRate) is a slowdown factor, not a phone emulator, and it leaves the GPU alone; disabling the HTTP cache leaves service-worker caches in place.
 
-Also label what you actually controlled. [`setCPUThrottlingRate`](https://chromedevtools.github.io/devtools-protocol/tot/Emulation/#method-setCPUThrottlingRate) is a slowdown factor. It doesn't turn a MacBook into a phone, and it doesn't touch the GPU. Disabling the HTTP cache leaves service-worker and other caches alone.
+For each phase of the workload, the harness sampled `requestAnimationFrame` gaps and long tasks from inside the page and took before-and-after snapshots of [`Performance.getMetrics`](https://chromedevtools.github.io/devtools-protocol/tot/Performance/#method-getMetrics) for script, layout, and style durations. Those numbers need their definitions written into the report, because an agent will otherwise round a convenient metric up into a more impressive claim. The durations are cumulative seconds. A frame gap records when callbacks ran, not what the display showed. A heap reading is a single moment, not evidence of a leak, and a Playwright input round trip includes automation overhead, so it isn't INP.
 
-For each phase, the harness collected `requestAnimationFrame` gaps and long tasks from inside the page. It also took before/after snapshots of [`Performance.getMetrics`](https://chromedevtools.github.io/devtools-protocol/tot/Performance/#method-getMetrics) for `ScriptDuration`, `LayoutDuration`, and `RecalcStyleDuration`. Put the units and limits in the report schema, because the agent will round up otherwise:
+Everything so far is still a scoreboard, though. It can tell the agent that scrolling got worse, but not why.
 
-- Those durations are in seconds, cumulative.
-- A frame gap measures when callbacks ran, not what the display showed.
-- A heap reading is one moment, not evidence of a leak.
-- A Playwright input round trip includes automation overhead. It isn't INP.
+## Let It Read the Map
 
-So far this is still a scoreboard. It says scrolling got worse. It doesn't say why.
-
-## Read the Map Before Touching the Code
-
-When the counters point at JavaScript, record a CPU profile around the slow phase:
+When the counters point at JavaScript, a CPU profile around the slow phase shows which functions are responsible:
 
 ```ts
 import { writeFile } from 'node:fs/promises';
@@ -125,29 +108,19 @@ await writeFile(
 );
 ```
 
-[`Profiler`](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/) gives you sampled JavaScript stacks. Our problem wasn't JavaScript, though. It was raster and image decode, which happen off the main thread, and only a browser trace shows those. With [`Tracing`](https://chromedevtools.github.io/devtools-protocol/tot/Tracing/), subscribe to events before you start recording, and wait for `tracingComplete` after you stop. Keep the whole trace file. A screenshot of one hot function throws away the evidence that matters.
+Our problem wasn't JavaScript, which is exactly why the instruments mattered. Raster and image decode happen off the main thread, so a [`Profiler`](https://chromedevtools.github.io/devtools-protocol/tot/Profiler/) recording would have shown an idle main thread next to a scroll that still stuttered. A browser trace from the [`Tracing`](https://chromedevtools.github.io/devtools-protocol/tot/Tracing/) domain captures those threads too. Subscribe to its events before you start recording, wait for `tracingComplete` after you stop, and keep the whole file, since a screenshot of one hot function throws away most of the evidence.
 
-Our trace summaries counted raster time, image decode time, and raster tasks per scroll. Those three numbers sent us to the animated stickers. Once stills went in, all three fell together: raster tasks dropped from 1,228 to 458 and decode time from 440 ms to 149 ms. A JavaScript profile would have shown an idle main thread and a scroll that still stuttered.
+Our trace summaries counted raster time, decode time, and raster tasks for each scroll, and those three numbers led the agent to the animated stickers. When the stills went in, all three fell together: raster tasks dropped from 1,228 to 458 and decode time from 440 ms to 149 ms.
 
-Reading the map takes a little vocabulary, and agents get it wrong in predictable ways:
+Reading traces well does take some vocabulary, and agents tend to stumble in predictable places. In a [flame graph](https://www.brendangregg.com/flamegraphs.html), width is a share of samples and the horizontal axis is not time, whereas a flame chart preserves time order and is the better view when you're chasing a single stall. A wide frame may be spending all of its time in its children, so ask the agent to name the frame where the time is actually spent. And a stack is not a cause: a wide `JSON.stringify` frame means something serializes too often or too much, not that you need a faster JSON library.
 
-- **Flame graph vs. flame chart.** In a [flame graph](https://www.brendangregg.com/flamegraphs.html), width is a share of samples and the x-axis is not time. A flame chart keeps time order. Use the chart when you're chasing one stall rather than overall cost.
-- **Self time vs. total time.** A wide frame might be doing nothing but calling its children. Make the agent name the frame where the time is actually spent.
-- **Stack vs. cause.** A wide `JSON.stringify` stack means something serializes too often or serializes too much. It doesn't mean you need a faster JSON library.
+That last distinction leads to the most valuable question a profile can raise. The question isn't "how do I make this faster?" but "why is this happening at all?" The stills fix didn't make raster faster; it removed raster work nobody needed. Asked repeatedly, the same question turned up a string of smaller wins in the grid. Pointer movement across cards was starting animation downloads, so a 120 ms hover delay took a quick pass-through from one request to none while keyboard focus still played immediately. The selection provider was rebuilding a lookup table on every render, which a lazy initializer now builds once. And a Google Fonts stylesheet was blocking the whole selection island while it loaded, so we self-hosted the fonts. None of those is exotic. Each one is the kind of thing a specialist finds on day three of an engagement, and an agent with a trace finds in an afternoon.
 
-That last one generalizes. The best question a profile raises is not "how do I make this faster?" It's **"why is this happening at all?"** The stills fix didn't speed up raster. It removed raster work nobody needed.
+Profiling has a cost of its own, so use short traced runs to explain a bad phase and measure the fix with tracing turned off.
 
-The same question found smaller wins in the grid:
+## Know What to Connect
 
-- The pointer crossing cards started animation downloads. A 120 ms hover delay took a 20 ms pass-through from one request to zero, while keyboard focus still played immediately.
-- The provider rebuilt its saved-selection lookup on every render. A lazy reducer initializer builds it once.
-- A Google Fonts stylesheet blocked the whole selection island while it loaded. We self-hosted the fonts.
-
-Profiling also costs time. Use a short traced run to explain a bad phase, then measure the fix with tracing turned off.
-
-## Same Loop, Different Instruments
-
-Off the browser, the questions stay the same: where does CPU go, what is the process waiting on, and is the accelerator busy or starved? Here's what I'd hand an agent for each. Emoji Brain didn't need most of these.
+Off the browser, the questions stay the same: where does the CPU time go, what is the process waiting on, and is the accelerator busy or starved? You don't need to be an expert in each tool to connect it to an agent, but you do need to know which tool answers which question. Here is what I would reach for. Emoji Brain needed few of these, so treat the table as recommendations rather than war stories.
 
 | Question | Tool | Notes |
 | --- | --- | --- |
@@ -158,7 +131,7 @@ Off the browser, the questions stay the same: where does CPU go, what is the pro
 | Is it waiting, not working? | [sysstat](https://github.com/sysstat/sysstat), [strace](https://strace.io/) | Linux; pidstat, iostat, syscall timing |
 | Which waits are long? | [BCC](https://github.com/iovisor/bcc) | `offcputime`, `biolatency`; needs privileges |
 
-The scoreboard first. Fixtures must match, and outputs get checked separately:
+For a command-line tool, hyperfine plays the role of the scoreboard. Give both versions identical fixtures and check their outputs separately:
 
 ```bash
 hyperfine --warmup 3 --runs 10 \
@@ -167,13 +140,9 @@ hyperfine --warmup 3 --runs 10 \
   './candidate-parser fixtures/large.json'
 ```
 
-Warmups measure a warm workload on purpose, so they say nothing about cold start. Stateful commands need a reset between runs.
+Warmups deliberately measure a warm workload, so they say nothing about cold start, and stateful commands need a reset between runs. For the map, `samply record ./parser fixtures/large.json` works on most platforms, and on Linux `perf record -F 99 --call-graph dwarf` followed by `perf report` gives you the same view with hardware counters available. Profile an optimized build that still has symbols, and if you're profiling Node under perf, enable [Node's perf integration](https://nodejs.org/en/learn/diagnostics/poor-performance/using-linux-perf) or JIT-compiled code will show up as anonymous addresses.
 
-Then the map: `samply record ./parser fixtures/large.json`, or on Linux `perf record -F 99 --call-graph dwarf -- ./parser ...` followed by `perf report`. Profile an optimized build that still has symbols. Under perf, JIT-compiled Node code shows up as anonymous addresses unless you enable [Node's perf integration](https://nodejs.org/en/learn/diagnostics/poor-performance/using-linux-perf).
-
-### When the CPU profile is boring
-
-A request takes four seconds and the flame graph is mostly idle. That isn't a dead end. It means the process is waiting on something, so profile the waiting:
+Sometimes a request takes four seconds and the flame graph is mostly empty. That isn't a dead end; it means the process is waiting on something, and the next step is to profile the waiting:
 
 ```bash
 # Replace 12345 with the workload PID.
@@ -187,15 +156,13 @@ strace -f -tt -T -e trace=%file,read,futex \
   -o calls.txt ./parser fixtures/large.json
 ```
 
-Thousands of repeated `openat` calls point at a metadata-heavy build. Long `futex` waits point at lock contention. Neither one is a CPU problem, so rewriting a loop won't touch it. If averages look fine but the tail is ugly, BCC's `offcputime` shows the stacks that were waiting, not running. strace slows syscall-heavy programs a lot, so use it to diagnose and rerun the timings without it.
+Thousands of repeated `openat` calls suggest a metadata-heavy build, and long `futex` waits suggest lock contention. Neither is a CPU problem, so no amount of loop rewriting will touch it. When the averages look fine but the tail is ugly, BCC's `offcputime` shows the stacks that were waiting rather than running. Because strace slows syscall-heavy programs considerably, use it to diagnose and then rerun the timings without it.
 
-One warning the agent needs in writing: perf, strace, and BCC don't become macOS tools because the agent typed their names confidently. On a Mac, use samply or Instruments, and run the Linux tools on the Linux host where the workload actually runs. If a profiler is blocked by permissions, the agent should report that and stop. It shouldn't loosen host-wide settings to get around it.
+One instruction belongs in writing: perf, strace, and BCC do not become macOS tools because the agent typed their names confidently. On a Mac, use samply or Instruments, and run the Linux tools on the Linux host where the workload actually runs. If a profiler is blocked by permissions, the agent should report that and stop rather than loosen host-wide settings to get around it.
 
-## Ask Which GPU You're Measuring
+## Make Sure It's Measuring the Right GPU
 
-Our default headless Chromium rendered with SwiftShader, which is software. The windowed run used Metal on an Apple M2. Same build, same benchmark, different rendering paths. The `will-change` regression was measured on SwiftShader, and a result on one path tells you nothing about the other.
-
-Record what the browser actually got:
+Our default headless Chromium rendered with SwiftShader, a software renderer, while the windowed run used Metal on an Apple M2. Same build, same benchmark, two different rendering paths. The `will-change` regression was measured on SwiftShader, and a result on one path tells you nothing about the other, so the harness now records what the browser actually got:
 
 ```ts
 const browser = page.context().browser()!;
@@ -212,13 +179,9 @@ report.renderer = {
 };
 ```
 
-[`SystemInfo`](https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo/) tells you which renderer you got. It doesn't measure throughput. Even the browser channel doesn't guarantee a GPU, so check the recorded status on every run.
+[`SystemInfo`](https://chromedevtools.github.io/devtools-protocol/tot/SystemInfo/) identifies the renderer but doesn't measure its throughput, and even the browser channel doesn't guarantee a GPU, so check the recorded status on every run.
 
-For GPU compute, work from coarse to fine:
-
-1. [`nvidia-smi`](https://docs.nvidia.com/deploy/nvidia-smi/index.html): busy, memory-bound, or power-limited? It's coarse. A one-second sample misses short stalls, and high utilization doesn't mean efficient work.
-2. [Nsight Systems (`nsys`)](https://docs.nvidia.com/nsight-systems/UserGuide/index.html): the CPU/GPU timeline, with launches, copies, syncs, and the gaps between kernels.
-3. [Nsight Compute (`ncu`)](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html): why one particular kernel is expensive.
+GPU compute work follows the same coarse-to-fine path as everything else. [`nvidia-smi`](https://docs.nvidia.com/deploy/nvidia-smi/index.html) answers whether the device is busy, memory-bound, or power-limited, though a one-second sample misses short stalls and high utilization doesn't imply efficient work. [Nsight Systems](https://docs.nvidia.com/nsight-systems/UserGuide/index.html) then shows the CPU and GPU on one timeline, with kernel launches, memory copies, synchronization, and the gaps between them:
 
 ```bash
 nsys profile --trace=cuda,nvtx \
@@ -227,11 +190,11 @@ nsys profile --trace=cuda,nvtx \
 nsys stats workload.nsys-rep
 ```
 
-Start with the timeline. If the GPU sits idle because the CPU can't feed it, tuning kernels is premature, the same way rewriting a loop is premature when the process is blocked on a lock. `ncu` replays kernels to collect counters, so treat its runs as diagnostics, not timings. On Apple hardware, use [Metal System Trace](https://developer.apple.com/metal/tools/). On AMD, use [ROCm's profilers](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/). GPU profiling is not a synonym for CUDA.
+Start with that timeline. If the GPU sits idle because the CPU can't feed it, tuning kernels is premature, in the same way that rewriting a loop is premature when the process is blocked on a lock. Only once the question has narrowed to a single expensive kernel is it time for [Nsight Compute](https://docs.nvidia.com/nsight-compute/NsightComputeCli/index.html), which replays kernels to collect counters and so belongs in diagnostic runs rather than timing runs. On Apple hardware the equivalent is [Metal System Trace](https://developer.apple.com/metal/tools/), and on AMD it's [ROCm's profilers](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/). GPU profiling is not a synonym for CUDA.
 
 ## Make Every Change Earn Its Place
 
-Here is the containment experiment from the opening, as the agent should report it. Three-run medians, 1440 × 1000, 2× CPU slowdown:
+The other half of the agent's advantage is that experiments become cheap, and cheap experiments only help if bad ones get rejected. Here is the containment experiment from the opening, reported the way an agent should report it, as three-run medians at 1440 × 1000 with a 2× CPU slowdown:
 
 | Interaction | Baseline p95 gap | Containment p95 |
 | --- | ---: | ---: |
@@ -239,19 +202,15 @@ Here is the containment experiment from the opening, as the agent should report 
 | Rapid reversals | 16.8 ms | 50.0 ms |
 | Instant jumps | 16.8 ms | 16.8 ms |
 
-Main-thread work for jumps fell from 437 to 319 ms. Rapid reversals rose from 824 to 1,335 ms. Containment helped one motion and hurt two, so [we rejected it](https://github.com/justsml/emoji-brain/blob/5f6c209/docs/performance/selection-scrolling.md). A benchmark that only jumped would have shipped it.
+Main-thread work for the jumps fell from 437 ms to 319 ms, while rapid reversals rose from 824 ms to 1,335 ms. Containment helped one kind of motion and hurt the other two, so [we rejected it](https://github.com/justsml/emoji-brain/blob/5f6c209/docs/performance/selection-scrolling.md). A benchmark that only jumped would have shipped it.
 
-An environment flag (`SCROLL_CONTAINMENT_EXPERIMENT=1`) made the experiment cheap to repeat. Both arms ran the same build with one switch flipped. A feature flag or two binaries work just as well elsewhere. What matters is that any difference can only come from the change.
+An environment flag, `SCROLL_CONTAINMENT_EXPERIMENT=1`, made that experiment cheap to repeat, because both arms ran the same build with a single switch flipped. A feature flag or a pair of binaries does the same job elsewhere; what matters is that any difference can only have come from the change. Each experiment should also start with a written hypothesis and the number it expects to move. "Hover intent will stop incidental animation requests without delaying focus playback" can be checked, while "this should be faster" can't.
 
-Each experiment needs a hypothesis written before the edit, along with the number it expects to move. "Hover intent will stop incidental animation requests without delaying focus playback" can be checked. "This should be faster" can't.
+Some of the cost is the product, and the agent needs to know which parts. We kept the grid's shadows and frosted surfaces even though dropping `backdrop-filter` measured about 8% better, and that decision belongs in the instructions, or "faster" quietly becomes permission to delete the design. Once a candidate looks good, alternate baseline and candidate runs to reduce time-of-day bias, and report the spread along with the median, since ten whole-command timings don't make a p99. Keep the failed experiments too, clearly labeled. The rejected containment run is one of the most useful files in the repo.
 
-Some of the cost is the product. We kept the grid's shadows and frosted surfaces. Dropping `backdrop-filter` measured only about 8% better, and we said no. Put that kind of decision in the instructions, or "faster" quietly turns into permission to delete the design.
+## What to Ask For
 
-Once a candidate looks good, alternate baseline and candidate runs to cut time-of-day bias. Report the spread, not just a median. Ten whole-command timings do not make a p99. Keep the failed experiments too, labeled. The rejected containment run is in the repo, and it's the most useful file there.
-
-## The Instructions I'd Give the Agent
-
-Once the harness and instruments exist, the prompt is boring. That's the goal.
+With a harness and instruments in place, the prompt itself can be boring, and boring is the goal:
 
 ```text
 Reproduce the workload with the documented
@@ -276,10 +235,10 @@ Report what improved, what regressed, and what
   is still unmeasured.
 ```
 
-Keep a ledger next to the artifacts: commit, workload, hypothesis, settings, commands, result, decision. Feed the agent JSON or CSV, and keep the original traces for a human to open. When you need the same summary from a dozen recordings, [Perfetto's trace processor](https://perfetto.dev/docs/analysis/trace-processor) lets you query traces with SQL.
+Keep a ledger next to the artifacts that records the commit, workload, hypothesis, settings, commands, result, and decision for each experiment. Feed the agent JSON or CSV, and keep the original traces where a human can open them. When you need the same summary from a dozen recordings, [Perfetto's trace processor](https://perfetto.dev/docs/analysis/trace-processor) can query traces with SQL.
 
-The agent brings speed. It reads unfamiliar code quickly, wires up experiments you'd skip, and tries ideas you wouldn't bother with. You bring the definition of useful work and the rules for when a result counts. The profiler covers the part neither of you can supply from memory: where this particular program spends its time.
+None of this asks you to become a browser internals expert, a Linux performance engineer, and a GPU specialist at once. It asks you to describe the work that matters, connect the instruments that can see it, and set the rules for when a result counts. The agent supplies the patience and the volume: reading the traces, forming the hypotheses, running the experiments nobody on the team had time for. That combination used to require a consultant and a budget. Now it requires knowing what to ask.
 
-Without one, the agent tuned our grid with the two tricks from the blog posts. Both made it worse. With a trace, it found 92 dancing stickers repainting every frame, and cut raster time by more than half.
+Without instruments, the agent tuned our grid with the two tricks from the blog posts, and both made it worse. With a trace, it found 92 dancing stickers repainting on every frame and cut raster time by more than half.
 
 Give it a profiler.
