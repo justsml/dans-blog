@@ -48,6 +48,7 @@ export default defineConfig({
     // to rendering one route at a time, which makes local and Netlify deploys take
     // prohibitively long.
     concurrency: 8,
+    inlineStylesheets: "always",
   },
   prefetch: {
     prefetchAll: false,
