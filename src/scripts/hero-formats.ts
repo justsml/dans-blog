@@ -10,7 +10,7 @@ const root = process.cwd();
 const postsRoot = resolve(root, "src/content/posts");
 const write = process.argv.includes("--write");
 const sourceOverrides: Record<string, string> = {
-  // Corrected composition retains llm://api.openai.com/gpt-5.2?cache=true in full.
+  // Corrected composition retains llm://openai/gpt-5.2?cache=true on one line.
   "2026-01-30--llm-connection-strings": "square-fullsize.webp",
   "2026-01-26--securing-clawdbot-tailscale": "hero-full.webp",
   "2024-08-29--handling-international-numbers-and-currency": "currency-banner-pic.webp",
