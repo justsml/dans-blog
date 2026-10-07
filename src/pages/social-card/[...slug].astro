@@ -2,7 +2,7 @@
 import type { ArticlePost } from '../../types';
 import { Image } from 'astro:assets';
 import { PostCollections } from '../../shared/postsCache';
-import { isListedPost, isVisiblePost } from '../../shared/editorialRules';
+import { isListedPost, isRoutablePost } from '../../shared/editorialRules';
 import { getTextDirection, type Locale } from '../../shared/i18n';
 import '../../styles/tokens.css';
 import '../../styles/social-card.css';
@@ -25,7 +25,7 @@ export function getStaticPaths() {
         } as ArticlePost,
       },
     },
-    ...PostCollections._allPosts.filter(isVisiblePost).map(post => ({
+    ...PostCollections._allPosts.filter(isRoutablePost).map(post => ({
       params: { slug: post.slug },
       props: { post },
     })),

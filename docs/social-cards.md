@@ -7,7 +7,8 @@ the quiz title. Individual question captures include a compact quiz label,
 large question heading, readable code and answers, and a “Try the quiz” footer.
 They keep their natural height instead of cropping longer questions. The homepage features the three newest
 listed English posts. Hidden and private drafts never enter the production card
-manifest. Translations receive a card with their own title and text direction.
+manifest. Older draft-labelled posts that still have public routes are included
+in the capture inventory. Translations receive a card with their own title and text direction.
 
 Use a static build to avoid development reloads while writing image assets:
 
@@ -15,7 +16,7 @@ Use a static build to avoid development reloads while writing image assets:
 bun run build
 # Check for an existing preview server before starting one.
 bun run preview --port 4343
-SITE_URL=http://localhost:4343 bun run screenshots
+SITE_URL=http://localhost:4343 bun run screenshots --rss /social-card/capture-feed.json
 SITE_URL=http://localhost:4343 bun run social-cards
 bun run build
 ```
@@ -27,7 +28,8 @@ Run screenshots first: it refreshes desktop/mobile page previews, `main.webp`,
 and each quiz question. Social cards then replace the older cropped social
 images. The last build includes the new public files and refreshes metadata.
 
-`bun run social-cards --filter <slug>` supports a smaller capture pass. Cards are
+`bun run social-cards --filter <slug>` supports a smaller capture pass; `--missing` captures only cards whose JPEG
+is absent. Cards are
 1200 × 630 JPEGs in `public/social/`; English cards also refresh the existing
 `desktop-social.webp` and `mobile-social.webp` files beside each post. The home
 card refreshes `src/assets/social-banner.webp`, the site's default share image.

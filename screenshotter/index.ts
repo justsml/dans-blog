@@ -822,13 +822,15 @@ function filterFeedItems(items: RssishItem[], filter?: string) {
   if (!filter) return items;
 
   const originalCount = items.length;
-  const needle = filter.toLowerCase();
+  const needles = filter.toLowerCase().split(",");
   const filteredItems = items.filter((item) => {
     const haystack = [item.slug, item.title, ...(item.categories ?? [])]
       .filter((value): value is string => typeof value === "string")
       .map((value) => value.toLowerCase());
 
-    return haystack.some((value) => value.includes(needle));
+    return needles.some((needle) =>
+      haystack.some((value) => value.includes(needle)),
+    );
   });
 
   log(

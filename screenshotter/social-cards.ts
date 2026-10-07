@@ -1,7 +1,9 @@
 import { chromium } from "playwright";
 import { mkdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import sharp from "sharp";
+import { applyScreenshotMode } from "../src/components/Screenshots/screenshotMode";
 
 const site = process.env.SITE_URL ?? "http://localhost:4242";
 const filterIndex = process.argv.indexOf("--filter");
@@ -14,7 +16,13 @@ const items = (
     sourceDir?: string;
     locale?: string;
   }[]
-).filter((item) => !filter || item.slug.includes(filter));
+)
+  .filter((item) => !filter || item.slug.includes(filter))
+  .filter(
+    (item) =>
+      !process.argv.includes("--missing") ||
+      !existsSync(join("public/social", `${item.slug}.jpg`)),
+  );
 const browser = await chromium.launch();
 let next = 0;
 try {
@@ -109,10 +117,43 @@ try {
             );
           }
         }
-        if (slug === "home")
-          await sharp(capture)
+        if (slug === "home") {
+          const homeCard = await sharp(capture)
             .webp({ quality: 92 })
-            .toFile("src/assets/social-banner.webp");
+            .toBuffer();
+          await Bun.write("src/assets/social-banner.webp", homeCard);
+          for (const name of ["desktop-social.webp", "mobile-social.webp"]) {
+            await Bun.write(join("src/content/posts", name), homeCard);
+          }
+          for (const dimension of [
+            { name: "desktop", width: 800, height: 720 },
+            { name: "mobile", width: 480, height: 960 },
+          ]) {
+            await page.setViewportSize({
+              width: dimension.width,
+              height: dimension.height,
+            });
+            await page.goto(site);
+            await applyScreenshotMode(page, `${dimension.name}-shot`);
+            await page.evaluate(async () => {
+              await document.fonts.ready;
+              await Promise.all(
+                Array.from(document.images).map((image) => {
+                  image.loading = "eager";
+                  return image.decode().catch(() => undefined);
+                }),
+              );
+            });
+            const preview = await sharp(await page.screenshot())
+              .webp({ quality: 90 })
+              .toBuffer();
+            await Bun.write(
+              join("src/content/posts", `${dimension.name}.webp`),
+              preview,
+            );
+          }
+          await page.setViewportSize({ width: 1200, height: 630 });
+        }
         console.log(`${index + 1}/${items.length} ${output}`);
       }
       await page.close();

@@ -21,7 +21,7 @@ Ask an agent to make a slow image grid scroll faster and it already knows the an
 
 `content-visibility: auto`, so the browser skips off-screen cards. `will-change: transform`, so each image gets its own compositor layer. Those are the two tricks everyone writes about, so those are the two the agent reaches for first.
 
-We tried both on [Emoji Brain](https://github.com/justsml/emoji-brain), a dense grid of selectable stickers where some of them dance. Broader containment tripled the p95 frame gap during rapid scroll reversals. Layer promotion on every image made the software renderer slower. Both changes sounded plausible, and both came with confident explanations. Neither came from looking at where the time went.
+We tried both on [Emoji Brain](https://adorbs.fun/), a dense grid of selectable stickers where some of them dance. Broader containment tripled the p95 frame gap during rapid scroll reversals. Layer promotion on every image made the software renderer slower. Both changes sounded plausible, and both came with confident explanations. Neither came from looking at where the time went.
 
 The fix that worked came from a trace. Raster dominated the scroll. 92 of the 402 stickers were animated WebPs, and an animated image invalidates its compositor tile on every frame. With dozens on screen, the grid could never keep a cached raster. Drawing a still first frame until hover cut raster time from 1,859 ms to 844 ms, and the payload for those 92 stickers dropped from 5.45 MB to 0.20 MB.
 

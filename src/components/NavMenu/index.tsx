@@ -380,7 +380,7 @@ const NavMenu = ({
                 An open source workbench for AI-assisted security research.
               </ListItem>
               <ListItem
-                href="https://emoji-brain.vercel.app/"
+                href="https://adorbs.fun/"
                 title="Emoji Explorer"
               >
                 Browse 350+ upscaled emoji and stickers, then export them to Slack.

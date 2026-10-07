@@ -1,0 +1,85 @@
+/* Applied only to individual question captures; keep the interactive quiz unchanged. */
+body.screenshot-mode .challenge {
+  width: 1000px !important;
+  max-width: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  background: var(--paper-sheet) !important;
+  box-shadow: none !important;
+}
+body.screenshot-mode .challenge .capture-context {
+  padding: 20px 32px;
+  color: var(--paper-muted);
+  border-top: 6px solid var(--paper-accent);
+  font: 22px/1.3 var(--paper-sans);
+}
+body.screenshot-mode .challenge .quiz-header {
+  padding: 22px 32px;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+}
+body.screenshot-mode .challenge .quiz-header .quiz-question-count {
+  font-size: 22px;
+  white-space: nowrap;
+}
+body.screenshot-mode .challenge .quiz-header .quiz-title {
+  font: 38px/1.15 var(--paper-serif);
+  opacity: 1;
+  text-align: start;
+}
+body.screenshot-mode .challenge .quiz-question {
+  padding: 26px 32px 10px;
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.45;
+}
+body.screenshot-mode .challenge .quiz-question :is(p, .question) {
+  font-size: inherit;
+}
+body.screenshot-mode .challenge .quiz-question :is(pre, code) {
+  font-size: 24px !important;
+  line-height: 1.5 !important;
+}
+body.screenshot-mode .challenge .quiz-question pre {
+  white-space: pre-wrap !important;
+  overflow-wrap: anywhere;
+}
+body.screenshot-mode .challenge .quiz-options {
+  padding: 10px 32px 28px;
+  gap: 12px;
+}
+body.screenshot-mode .challenge .option {
+  font-size: 25px;
+  line-height: 1.35;
+  padding: 15px 18px;
+  border-radius: 4px;
+}
+body.screenshot-mode .challenge .option :is(label, code) {
+  font-size: inherit;
+}
+body.screenshot-mode .challenge .quiz-hint-toggle {
+  display: none !important;
+}
+body.screenshot-mode .challenge .capture-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-top: 1px solid var(--paper-line);
+  color: var(--paper-blue);
+  font: 22px/1.3 var(--paper-sans);
+}
+body.screenshot-mode .challenge .quiz-header {
+  justify-content: flex-start;
+}
+body.screenshot-mode .challenge .quiz-header .quiz-title {
+  flex: 1;
+  margin: 0;
+}
+body.screenshot-mode .challenge .quiz-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+body.screenshot-mode .challenge.has-long-options .quiz-options {
+  grid-template-columns: 1fr !important;
+}
