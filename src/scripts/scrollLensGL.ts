@@ -13,7 +13,9 @@ const MAX_WIDTH = 720;
 const INTRO_SPEED = 0.5;
 const INTRO_DECAY_MS = 1400;
 const SETTLE_MS = 4500;
-const IDLE_SPEED = 0.03;
+const MAX_SCROLL_SPEED = 3;
+// At rest the ribbons keep drifting at 2.5% of their fastest scroll-driven speed: slow, but visibly alive.
+const IDLE_SPEED = MAX_SCROLL_SPEED * 0.025;
 // The idle drift is too slow to need 60fps; ~11fps keeps it smooth for a fraction of the work.
 const IDLE_FRAME_MS = 90;
 const FADE_MS = 1400;
@@ -280,7 +282,7 @@ export async function start() {
     lastFrame = now;
     const velocity = (scrollY - lastY) / Math.max(dt, 0.001);
     lastY = scrollY;
-    const target = Math.max(-3, Math.min(3, velocity / 1600));
+    const target = Math.max(-MAX_SCROLL_SPEED, Math.min(MAX_SCROLL_SPEED, velocity / 1600));
     // Pick up quickly when the reader scrolls, coast down slowly when they stop.
     const tau = Math.abs(target) > Math.abs(scrollSpeed) ? 0.15 : 0.6;
     scrollSpeed += (target - scrollSpeed) * (1 - Math.exp(-dt / tau));
