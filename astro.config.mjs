@@ -74,6 +74,11 @@ export default defineConfig({
     build: {
       assetsInlineLimit: 2048, // 2kb - default is 4096
     },
+    // Dev only. Quiz islands hydrate lazily, so Vite used to discover React mid-session, re-optimize, and
+    // leave open pages importing two copies of React ("_jsxDEV is not a function"). Pre-bundle it up front.
+    optimizeDeps: {
+      include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "react/jsx-dev-runtime"],
+    },
   },
   // experimental: {
   //   contentIntellisense: true,
