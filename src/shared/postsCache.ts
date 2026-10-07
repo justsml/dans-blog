@@ -333,6 +333,7 @@ export const PostCollections = {
     const popularPosts = [
       "llm-connection-strings",
       "announcing-exploithunter-app",
+      "llm-evals-are-broken",
       "you-may-not-need-axios",
       "you-might-not-need-algolia",
       "ai-sdk-math-tool",
