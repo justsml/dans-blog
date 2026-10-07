@@ -19,3 +19,15 @@ Final files live beside `src/content/posts/2026-01-30--llm-connection-strings/in
 Final exact text: `llm://openai/gpt-5.2?cache=true`, on one line.
 
 Applied separately to the square and landscape photographs with built-in imagegen: Edit the central card's handwriting. Replace the current two lines with this EXACT text ON ONE SINGLE LINE: `llm://openai/gpt-5.2?cache=true`. No line break or wrapping. Use exactly the short provider name `openai`, model `gpt-5.2`, scheme `llm://` with two slashes, and query `?cache=true`. Center the entire single line on the card, adjust size for comfortable padding and clear readability. Preserve all desk objects, note positions, card, lighting, palette, photographic style and original framing. The central card contains no other text.
+
+## GPT-7 Astra, superseded user correction
+
+Final exact text: `llm://openai/gpt-7-astra?cache=true`, on one line.
+
+Applied separately to the square and landscape photographs with built-in imagegen: Edit ONLY the handwriting on the central card. Put the entire exact replacement string on ONE SINGLE unbroken LINE, no wrapping. Two forward slashes after `llm:`, provider `openai`, model `gpt-7-astra`, query `?cache=true`. Adjust lettering size minimally if needed so all characters fit within the card with comfortable padding. Preserve the card, composition, all other objects, desk, notes, lighting, colors, handwriting style and original framing. No other text on the central card and no extra punctuation.
+
+## GPT-7, final user correction
+
+Final exact text: `llm://openai/gpt-7?cache=true`, on one line.
+
+Applied separately to the square and landscape photographs with built-in imagegen: Edit ONLY the handwriting on the central card. Put the entire exact replacement string on ONE SINGLE unbroken LINE, no wrapping. Two forward slashes after `llm:`, provider `openai`, model `gpt-7`, query `?cache=true`. Center the lettering on the card with comfortable padding. Preserve the card, composition, all other objects, desk, notes, lighting, colors, handwriting style and original framing. No other text on the central card and no extra punctuation. Astra generations were superseded and were not installed.
