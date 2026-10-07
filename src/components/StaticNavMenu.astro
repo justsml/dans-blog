@@ -38,7 +38,6 @@ const { categories, popularPosts, recentPosts, locale = DEFAULT_LOCALE } = Astro
 const copy = getUiCopy(locale);
 const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 
-// Newest quizzes fill the tile so it matches the Categories panel beside it.
 const quizPosts = PostCollections.getPostsByCategory("Quiz", locale)
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
   .slice(0, 5);
@@ -78,16 +77,20 @@ function getPostPath(post: NavPost) {
           <ul class="List one">
             <li class="item-quizzes">
               <div class="Callout nav-tile-quiz">
-                <div class="CalloutHeading">{copy.nav.quizzes}</div>
+                <a href={pagePath("/challenges/")} class="CalloutHeading">{copy.nav.quizzes} <span aria-hidden="true">→</span></a>
                 <div class="CalloutText">
                   {
-                    quizPosts.map((post) => (
-                      <a title={post.data.subTitle ?? post.data.title} href={getPostPath(post)} class="CalloutItem">
-                        {post.data.title.replace(/^Quiz:\s*/i, "")}
-                      </a>
-                    ))
+                    quizPosts.map((post) => {
+                      const { title, subTitle, modified, date } = post.data;
+                      const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
+                      return (
+                        <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
+                          <span class="nav-post-title">{title.replace(/^Quiz:\s*/i, "")}</span>
+                          <sup>{modifiedAgo} ago</sup>
+                        </a>
+                      );
+                    })
                   }
-                  <a href={pagePath("/challenges/")} class="CalloutItem nav-tile-more">{copy.nav.quizzesText} →</a>
                 </div>
               </div>
             </li>
@@ -121,7 +124,7 @@ function getPostPath(post: NavPost) {
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
                       return (
                         <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
-                          {title}
+                          <span class="nav-post-title">{title}</span>
                           <sup>{modifiedAgo} ago</sup>
                         </a>
                       );
@@ -133,7 +136,7 @@ function getPostPath(post: NavPost) {
 
             <li class="item-recent">
               <div class="Callout neon-bg-4">
-                <div class="CalloutHeading">{copy.nav.recent}</div>
+                <a href={pagePath("/")} class="CalloutHeading">{copy.nav.recent} <span aria-hidden="true">→</span></a>
                 <div class="CalloutText">
                   {
                     recentPosts.map((post) => {
