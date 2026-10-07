@@ -33,3 +33,11 @@ If artwork is produced: wide.webp 1600x900, square.webp 800x800, desktop-social.
 ## Revision, October 7, 2026
 
 Rewritten for coherence. The old opening (a benchmark that jumped to the bottom) argued for better workloads, not profilers, so the title's thesis never landed. New spine: benchmark = scoreboard, profile = map; agents without a map optimize from folklore (`content-visibility`, `will-change`, both rejected), while the real win came from a trace (animated WebPs invalidating tiles; raster 1,859 → 844 ms, from emoji-brain commit 9ab1f62). The export+search workload example was replaced with the actual scroll workload, and the invalid first baseline (unsettled Home/End scroll) is now the "can't be fooled" example. The tool catalog was condensed into one question → tool table plus the CPU-idle → waits pivot. Numbers verified against `docs/performance/selection-scrolling.md` and commit messages; no new measurements were run.
+
+## Flow revision, October 7, 2026
+
+Rewritten for fluid prose and a sharper thesis: an agent with the right instruments and an ungameable goal makes bespoke performance tuning accessible; the bar becomes knowing what to ask for and which tools to connect. Three draft → cold-read critique → revise loops plus a final read. Renderer finding moved into the browser section; each tool section now ends with an instruction for the agent. Claims tightened: `will-change` regression is scoped to SwiftShader runs, `content-visibility` result is p95 not worst-case, and agent-speed claims say "a few sessions".
+
+## Publication, October 7, 2026
+
+Selected for publication over the longer companion draft because the profiler thesis, measured example, and practical instructions form a clearer article. Removed the four private visibility flags and the related link to the still-private companion. Refreshed desktop/mobile previews, the article social card, and the homepage banner. Production build, content validation, and type checking passed; browser rendering checked at desktop and 375px. Historical figures checked against the Emoji Brain experiment documentation and commit 9ab1f62; no new performance measurements were run.
