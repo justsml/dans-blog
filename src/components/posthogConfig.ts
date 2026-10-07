@@ -3,7 +3,7 @@ import type { PostHogConfig } from "posthog-js/dist/module.no-external";
 export const POSTHOG_TOKEN = "phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9";
 
 export const POSTHOG_CONFIG = {
-  api_host: "https://us.i.posthog.com",
+  api_host: "https://site.danlevy.net",
   defaults: "2026-01-30",
   autocapture: false,
   capture_pageview: true,
