@@ -11,6 +11,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import pagefind from "astro-pagefind";
 import { rehypeExternalArticleLinks } from "./src/shared/rehypeExternalArticleLinks.mjs";
+import { rehypeDemoteH1 } from "./src/shared/rehypeDemoteH1.mjs";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -65,7 +66,7 @@ export default defineConfig({
   markdown: {
     // remarkPlugins: [remarkMermaid],
     processor: unified({
-      rehypePlugins: [[rehypeExternalArticleLinks, { site: siteUrl }]],
+      rehypePlugins: [[rehypeExternalArticleLinks, { site: siteUrl }], rehypeDemoteH1],
     }),
   },
   vite: {
@@ -121,8 +122,10 @@ export default defineConfig({
         const isIgnoredPath = ignorePaths.every((path) => {
           return !page.includes(path);
         });
+        // Consulting copy is English-only; locale copies canonicalise to it, so only the English URLs are listed.
+        const isLocaleConsulting = /\/[a-z]{2}\/consulting\//.test(new URL(page).pathname);
 
-        return isIgnoredPath;
+        return isIgnoredPath && !isLocaleConsulting;
       },
     }),
     // partytown(),

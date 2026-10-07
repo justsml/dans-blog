@@ -67,12 +67,15 @@ const serviceVisuals: Record<string, { accent: string; image: ImageMetadata }> =
 const serviceVisual = serviceVisuals[service.slug] ?? serviceVisuals["ai-consulting"];
 ---
 
+{/* English in every locale: one canonical page, no hreflang twins. */}
 <Layout
   frontmatter={{
     title: service.metaTitle,
     subTitle: service.description,
   }}
   locale={locale}
+  canonicalPath={`/consulting/${service.slug}/`}
+  alternates={[]}
   pagefindBody
 >
   <section class="service-hero full-section">

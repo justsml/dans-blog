@@ -143,7 +143,8 @@ const fitSignals = [
 ];
 ---
 
-<Layout frontmatter={{ title, subTitle: description }} locale={locale} pagefindBody>
+{/* The copy is English in every locale, so each copy canonicalises to /consulting/ with no hreflang twins. */}
+<Layout frontmatter={{ title, subTitle: description }} locale={locale} canonicalPath="/consulting/" alternates={[]} pagefindBody>
   <section class="consulting-hero full-section">
     <div class="consulting-shell hero-grid">
       <div class="hero-copy">
