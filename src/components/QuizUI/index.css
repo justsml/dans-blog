@@ -1656,3 +1656,11 @@ body .challenge .expressive-code .copy { position:absolute; inset-block-start:.3
   body .challenge .quiz-options { padding:.5rem .75rem 1rem; }
   body .challenge.challenge-modern { --ec-codeFontSize:.78rem; }
 }
+/* An open hint takes the whole row under its answer, rather than squeezing in beside the label. */
+body .challenge .option { flex-wrap:wrap; }
+body .challenge .option:has(.hint-tooltip) { grid-column:1 / -1; }
+body .challenge .option .hint-tooltip { flex-basis:100%; inline-size:100%; margin-block:.6rem .1rem; padding:.75rem 1rem; font-size:.9rem; line-height:1.45; }
+body .challenge .option .hint-tooltip h4 { margin:0 0 .25rem; font-size:.95rem; }
+body .challenge .option .hint-tooltip p { margin:0; }
+body .challenge .option .hint-tooltip :is(.buttons,.hint-buttons,div:has(> button)) { display:flex; flex-wrap:wrap; gap:.5rem; }
+body .challenge .option .hint-tooltip button { margin-block-start:.6rem; min-block-size:32px; padding:.35rem .75rem; white-space:nowrap; }

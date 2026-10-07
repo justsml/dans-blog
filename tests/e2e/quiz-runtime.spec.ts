@@ -65,16 +65,23 @@ test("answers from independently hydrated questions survive reload", async ({ pa
   await page.keyboard.press("Enter");
   await expect(page.locator(".quiz-score-bar-value")).toHaveText("1/9");
   await page.locator(".quiz-dot").nth(2).click();
+  await expect(page.locator(".quiz-dot").nth(2)).toHaveClass(/active/);
   const third = page.locator("#qq-3");
   await third.locator(".option").first().focus();
   await page.keyboard.press("Enter");
   await expect(page.locator(".quiz-score-bar-value")).toHaveText("2/9");
+  // A press during the slide from the previous answer queues until that slide finishes.
   await page.locator(".quiz-dot").nth(1).click();
+  await expect(page.locator(".quiz-dot").nth(1)).toHaveClass(/active/);
   await page.locator("#qq-2 .option").first().focus();
   await page.keyboard.press("Enter");
   await expect(page.locator("#qq-2")).toHaveAttribute("data-question-correct", "false");
   await page.reload();
   await expect(page.locator(".quiz-score-bar-value")).toHaveText("2/9", { timeout: 15000 });
+  // Reloading resumes at the first unanswered question; the missed one keeps its answer when revisited.
+  await expect(page.locator(".quiz-dot").nth(3)).toHaveClass(/active/);
+  await page.locator(".quiz-dot").nth(1).click();
+  await expect(page.locator(".quiz-dot").nth(1)).toHaveClass(/active/);
   await expect(page.locator("#qq-2")).toHaveAttribute("data-question-correct", "false");
 });
 

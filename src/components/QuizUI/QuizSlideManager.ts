@@ -40,6 +40,8 @@ export function initQuizSlideManager(
   const totalQuestions = islands.length;
   let currentIndex = 0;
   let isTransitioning = false;
+  // A dot or arrow pressed mid-slide is queued rather than dropped; the latest press wins.
+  let queuedIndex: number | null = null;
   let completionCardShown = false;
   let confettiShown = false;
   let totalAttemptCount = 0;
@@ -508,8 +510,11 @@ export function initQuizSlideManager(
 
     // --- Transition ---
     const goToQuestion = (targetIndex: number, direction?: "next" | "prev") => {
+      if (isTransitioning && targetIndex >= 0 && targetIndex < totalQuestions) {
+        queuedIndex = targetIndex;
+        return;
+      }
       if (
-        isTransitioning ||
         targetIndex === currentIndex ||
         targetIndex < 0 ||
         targetIndex >= totalQuestions
@@ -573,6 +578,11 @@ export function initQuizSlideManager(
         updateProgress();
         updateHash();
         quizSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        if (queuedIndex != null) {
+          const queued = queuedIndex;
+          queuedIndex = null;
+          goToQuestion(queued);
+        }
       };
 
       if (prefersReducedMotion) {
