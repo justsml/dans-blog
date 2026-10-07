@@ -1,5 +1,5 @@
 ---
-social_image: ./desktop-social.webp
+social_image: ./hero-paper-v2-wide.webp
 title: "Docker === Love"
 subTitle: Docker can do :allthethings:!
 date: 2015-02-26
@@ -8,11 +8,12 @@ category: DevOps
 subCategory: docker
 tags: [docker, devops, patterns]
 related: [docker-server-setup-notes, docker-rocks, docker-security-tips-for-self-hosting]
-cover: guillaume-bolduc-259596-unsplash.webp
-cover_mobile: ./hero-responsive-square.webp
-cover_icon: ./hero-responsive-icon-200.webp
-cover_full_width: ./hero-responsive-wide.webp
+cover: ./hero-paper-v2-wide.webp
+cover_mobile: ./hero-paper-v2-square.webp
+cover_icon: ./hero-paper-v2-icon-200.webp
+cover_full_width: ./hero-paper-v2-wide.webp
 cover_mobile_hero: true
+cover_alt: "Rows of mustard, teal, navy and oxblood shipping-container doors crafted from layered paper."
 ---
 
 ## Docker Can Do Everything!\*
