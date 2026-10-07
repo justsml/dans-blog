@@ -31,35 +31,61 @@ try {
           new URL(`/social-card/${slug}/`, site).toString(),
         );
         if (!result?.ok()) throw new Error(`${slug}: ${result?.status()}`);
+        await page.addStyleTag({
+          content: await Bun.file(
+            new URL("../src/styles/social-card.css", import.meta.url),
+          ).text(),
+        });
         await page.evaluate(async () => {
           await document.fonts.ready;
           await Promise.all(
             Array.from(document.images).map((image) => image.decode()),
           );
         });
-        const overflow = await page.evaluate(() => {
-          const feature = document.querySelector(".feature");
-          const copy = document.querySelector(".copy");
-          if (!feature || !copy) return false;
-          return (
-            copy.getBoundingClientRect().height >
-            feature.getBoundingClientRect().height - 48
-          );
+        await page.evaluate(() => {
+          const feature = document.querySelector<HTMLElement>(".feature");
+          const copy = document.querySelector<HTMLElement>(".copy");
+          const title = copy?.querySelector<HTMLElement>("h1");
+          const sheet = document.querySelector<HTMLElement>(".quiz-sheet");
+          const question = sheet?.querySelector<HTMLElement>("h2");
+          const prompt = sheet?.querySelector<HTMLElement>("p");
+          if (sheet && question && prompt) {
+            let questionSize = parseFloat(getComputedStyle(question).fontSize);
+            while (
+              prompt.getBoundingClientRect().bottom >
+                sheet.getBoundingClientRect().bottom - 18 &&
+              questionSize > 18
+            ) {
+              question.style.fontSize = `${--questionSize}px`;
+            }
+            if (
+              prompt.getBoundingClientRect().bottom >
+              sheet.getBoundingClientRect().bottom - 18
+            )
+              throw new Error("Quiz preview does not fit");
+          }
+          if (!feature || !copy || !title) return;
+          let size = parseFloat(getComputedStyle(title).fontSize);
+          while (
+            copy.getBoundingClientRect().height > feature.clientHeight - 48 &&
+            size > 32
+          ) {
+            title.style.fontSize = `${--size}px`;
+          }
+          if (copy.getBoundingClientRect().height > feature.clientHeight - 48) {
+            throw new Error("Social card title does not fit");
+          }
         });
-        if (overflow)
-          await page.addStyleTag({
-            content:
-              ".copy h1{font-size:42px!important}.dek{font-size:20px!important}",
-          });
-        const output = join("public/social", `${slug}.png`);
+        const output = join("public/social", `${slug}.jpg`);
         await mkdir(dirname(output), { recursive: true });
-        const png = await sharp(await page.locator(".social-card").screenshot())
-          .png({ compressionLevel: 9 })
+        const capture = await page.locator(".social-card").screenshot();
+        const encoded = await sharp(capture)
+          .jpeg({ quality: 92, mozjpeg: true })
           .toBuffer();
-        await Bun.write(output, png);
+        await Bun.write(output, encoded);
         const item = items[index];
         if (item.sourceDir && item.locale === "en") {
-          const webp = await sharp(png).webp({ quality: 90 }).toBuffer();
+          const webp = await sharp(capture).webp({ quality: 90 }).toBuffer();
           for (const name of ["desktop-social.webp", "mobile-social.webp"]) {
             await Bun.write(
               join("src/content/posts", item.sourceDir, name),
@@ -71,13 +97,20 @@ try {
           await mkdir("public/previews/open-source-journal", {
             recursive: true,
           });
-          for (const name of ["desktop-social.webp", "mobile-social.webp"])
-            await sharp(png)
-              .webp({ quality: 90 })
-              .toFile(join("public/previews/open-source-journal", name));
+          for (const name of ["desktop-social.webp", "mobile-social.webp"]) {
+            const webp = await sharp(capture).webp({ quality: 90 }).toBuffer();
+            await Bun.write(
+              join("public/previews/open-source-journal", name),
+              webp,
+            );
+            await Bun.write(
+              join("src/content/posts/open-source-journal", name),
+              webp,
+            );
+          }
         }
         if (slug === "home")
-          await sharp(png)
+          await sharp(capture)
             .webp({ quality: 92 })
             .toFile("src/assets/social-banner.webp");
         console.log(`${index + 1}/${items.length} ${output}`);

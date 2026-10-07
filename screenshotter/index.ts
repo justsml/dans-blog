@@ -1,5 +1,6 @@
 import { copyFile, mkdir, rm } from "fs/promises";
-import { existsSync } from "node:fs";
+import { parseQuiz } from "../src/scripts/i18n/quiz-parser";
+import { existsSync, readFileSync } from "node:fs";
 import path, { dirname, join } from "path";
 import getSiteRss, { type RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
@@ -38,6 +39,7 @@ type CliOptions = {
   filter?: string;
   limit?: number;
   retries: number;
+  questionsOnly: boolean;
   rssPath: string;
   siteUrl: string;
 };
@@ -100,9 +102,12 @@ async function main() {
       cliOptions.concurrency,
       async (item, index) => {
         log(`(${index + 1}/${items.length}) ${item.slug}: ${item.title}`);
-        await generateImages(buildArgs(item, cliOptions.siteUrl), {
-          retries: cliOptions.retries,
-        });
+        await generateImages(
+          buildArgs(item, cliOptions.siteUrl, cliOptions.questionsOnly),
+          {
+            retries: cliOptions.retries,
+          },
+        );
       },
     );
   } finally {
@@ -110,7 +115,11 @@ async function main() {
   }
 }
 
-function buildArgs(rssItem: RssishItem, siteUrlPrefix: string): ScreenshotTask {
+function buildArgs(
+  rssItem: RssishItem,
+  siteUrlPrefix: string,
+  questionsOnly = false,
+): ScreenshotTask {
   const { slug, categories } = rssItem;
   const link = new URL(rssItem.link ?? `/${slug}/`, siteUrlPrefix).toString();
   const sourceDir = getSourceDir(rssItem.sourcePath);
@@ -139,22 +148,41 @@ function buildArgs(rssItem: RssishItem, siteUrlPrefix: string): ScreenshotTask {
   return {
     [`${link}`]: {
       selectorPathMap,
-      sizes: [
-        {
-          fileName: join(contentPath, "desktop.jpg"),
-          width: 800,
-          height: 720,
-          classModifier: "desktop-shot",
-          postProcess: "resizeAndCrop",
-        },
-        {
-          fileName: join(contentPath, "mobile.jpg"),
-          width: 480,
-          height: 960,
-          classModifier: "mobile-shot",
-          postProcess: "resizeAndCrop",
-        },
-      ],
+      quizTitle: isQuiz ? rssItem.title : undefined,
+      questionTitles:
+        isQuiz && sourceDir
+          ? Object.fromEntries(
+              parseQuiz(
+                readFileSync(
+                  path.join(
+                    process.cwd(),
+                    "src/content/posts",
+                    sourceDir,
+                    "index.mdx",
+                  ),
+                  "utf8",
+                ),
+              ).challenges.map((q) => [`#qq-${q.index + 1}`, q.title]),
+            )
+          : undefined,
+      sizes: questionsOnly
+        ? undefined
+        : [
+            {
+              fileName: join(contentPath, "desktop.jpg"),
+              width: 800,
+              height: 720,
+              classModifier: "desktop-shot",
+              postProcess: "resizeAndCrop",
+            },
+            {
+              fileName: join(contentPath, "mobile.jpg"),
+              width: 480,
+              height: 960,
+              classModifier: "mobile-shot",
+              postProcess: "resizeAndCrop",
+            },
+          ],
       delayMs: DEFAULT_DELAY_MS,
     },
   };
@@ -162,6 +190,8 @@ function buildArgs(rssItem: RssishItem, siteUrlPrefix: string): ScreenshotTask {
 
 type ScreenshotTask = Record<string, ScreenshotOptions>;
 type ScreenshotOptions = {
+  quizTitle?: string;
+  questionTitles?: Record<string, string>;
   selectorPathMap?: Record<string, string>;
   sizes?: Dimension[];
   scrollTo?: string;
@@ -294,6 +324,8 @@ function isRetryableScreenshotError(error: unknown) {
     message.includes("execution context was destroyed") ||
     message.includes("navigation failed because page was closed") ||
     message.includes("net::err_") ||
+    message.includes("element is not attached") ||
+    message.includes("node is either not visible") ||
     message.includes("timeout")
   );
 }
@@ -424,6 +456,14 @@ async function generateImagesForUrl(url: string, options: ScreenshotOptions) {
         });
 
         const outputFile = await takeScreenshot(page, newFile);
+        if (path.basename(dirname(outputFile)) === "open-source-journal") {
+          const mirror = path.join(
+            process.cwd(),
+            "public/previews/open-source-journal",
+            path.basename(outputFile),
+          );
+          if (mirror !== outputFile) await copyFile(outputFile, mirror);
+        }
         if (classModifier === "desktop-shot") {
           const sourceDir = path.relative(
             path.join(process.cwd(), "src/content/posts"),
@@ -486,21 +526,22 @@ async function generateImagesForUrl(url: string, options: ScreenshotOptions) {
         const newFile = toAbsolutePath(fileName);
         log(`Screenshot for ${selector}: ${newFile}`);
         await applyScreenshotModeSafely(page);
-        const element = await prepareElementScreenshot(page, selector).catch(
-          (error) => {
-            if (isRetryableScreenshotError(error)) throw error;
-            console.error(
-              `Error selecting element ${selector}: ${getErrorMessage(error)}`,
-            );
-            return null;
-          },
-        );
+        const element = await prepareElementScreenshot(page, selector, {
+          quizTitle: options.quizTitle,
+          questionTitle: options.questionTitles?.[selector],
+        }).catch((error) => {
+          if (isRetryableScreenshotError(error)) throw error;
+          console.error(
+            `Error selecting element ${selector}: ${getErrorMessage(error)}`,
+          );
+          return null;
+        });
 
         if (!element) {
           console.warn(
             `Element with selector '${selector}' not found. Skipping.`,
           );
-          continue;
+          throw new Error(`Missing quiz question: ${selector}`);
         }
 
         await page.waitForTimeout(delayMs ?? 1000);
@@ -518,6 +559,7 @@ async function generateImagesForUrl(url: string, options: ScreenshotOptions) {
             console.error(
               `Error creating screenshot ${newFile}: ${getErrorMessage(error)}`,
             );
+            throw error;
           });
       }
     }
@@ -526,102 +568,156 @@ async function generateImagesForUrl(url: string, options: ScreenshotOptions) {
   }
 }
 
-async function prepareElementScreenshot(page: Page, selector: string) {
+async function prepareElementScreenshot(
+  page: Page,
+  selector: string,
+  context: { quizTitle?: string; questionTitle?: string },
+) {
   const existingElement = await page.$(selector);
   if (!existingElement) return null;
 
+  // Hydrate the original SSR markup before adding capture-only headings and branding.
+  // Mutating it first can trigger React's hydration recovery and detach the card.
   await page.evaluate((selector) => {
     const element = document.querySelector<HTMLElement>(selector);
-    if (!element) return;
-
-    document
-      .querySelectorAll<HTMLElement>(
-        ".quiz-nav-bar, .quiz-score-bar, .quiz-completion-card",
-      )
-      .forEach((quizChrome) => {
-        quizChrome.style.setProperty("display", "none", "important");
-      });
-
-    const island = element.closest<HTMLElement>("astro-island");
-    const quizUI = island?.closest<HTMLElement>(".quiz-ui");
-
-    if (island && quizUI) {
-      quizUI.classList.add("quiz-slides-active");
-
-      quizUI
-        .querySelectorAll<HTMLElement>("astro-island")
-        .forEach((candidateIsland) => {
-          const containsChallenge = Boolean(
-            candidateIsland.querySelector(".challenge"),
-          );
-          if (!containsChallenge) return;
-
-          if (candidateIsland === island) {
-            candidateIsland.classList.add("quiz-slide", "quiz-slide--active");
-            candidateIsland.classList.remove("quiz-slide--hidden");
-            candidateIsland.style.setProperty("display", "block", "important");
-            candidateIsland.style.setProperty("position", "relative");
-            candidateIsland.style.setProperty("width", "100%");
-            candidateIsland.style.setProperty("height", "auto");
-            candidateIsland.style.setProperty("overflow", "visible");
-            candidateIsland.style.setProperty("opacity", "1");
-            candidateIsland.style.setProperty("pointer-events", "auto");
-            candidateIsland.style.removeProperty("clip");
-            candidateIsland.style.removeProperty("transform");
-            candidateIsland.style.removeProperty("filter");
-          } else {
-            candidateIsland.classList.add("quiz-slide", "quiz-slide--hidden");
-            candidateIsland.classList.remove("quiz-slide--active");
-            candidateIsland.style.setProperty("display", "none", "important");
-          }
-        });
+    const island = element?.closest<HTMLElement>("astro-island");
+    if (island) {
+      island.classList.remove("quiz-slide--hidden");
+      island.style.setProperty("display", "block", "important");
+      island.style.setProperty("position", "relative", "important");
     }
-
-    element.classList.remove(
-      "challenge-enter",
-      "answer-correct-pulse",
-      "answer-incorrect-shake",
-      "pulse",
-      "shake",
-    );
-    element.style.setProperty("opacity", "1");
-    element.style.removeProperty("transform");
-    element.style.removeProperty("filter");
-
-    const panel = element.querySelector<HTMLElement>(".quiz-body-panel");
-    const options = element.querySelector<HTMLElement>(".quiz-options");
-    const explanation = element.querySelector<HTMLElement>(".explanation");
-
-    if (panel && options) {
-      panel.classList.remove("card-flip");
-      panel.style.setProperty("overflow", "visible", "important");
-      panel.style.setProperty("transform-style", "flat", "important");
-
-      options.style.setProperty("display", "grid", "important");
-      options.style.setProperty("position", "relative", "important");
-      options.style.setProperty("visibility", "visible", "important");
-      options.style.setProperty("opacity", "1", "important");
-      options.style.setProperty("transform", "none", "important");
-      options.style.setProperty("height", "auto", "important");
-
-      if (explanation) {
-        explanation.style.setProperty("display", "none", "important");
-        explanation.style.setProperty("visibility", "hidden", "important");
-      }
-
-      const optionsHeight = options.scrollHeight;
-      if (optionsHeight > 0) {
-        panel.style.setProperty("height", `${optionsHeight}px`, "important");
-        panel.style.setProperty(
-          "min-height",
-          `${optionsHeight}px`,
-          "important",
-        );
-      }
-    }
-
-    element.scrollIntoView({ block: "center", inline: "center" });
+    element?.scrollIntoView({ block: "center" });
   }, selector);
+  await page.waitForFunction(
+    (selector) => {
+      const element = document.querySelector(selector);
+      return element && !element.closest("astro-island")?.hasAttribute("ssr");
+    },
+    selector,
+    { timeout: NAVIGATION_TIMEOUT_MS },
+  );
+
+  await page.addStyleTag({
+    content: await Bun.file(
+      new URL("./question-card.css", import.meta.url),
+    ).text(),
+  });
+  await page.evaluate(
+    ({ selector, context }) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      if (!element) return;
+      if (!element.querySelector(".capture-context")) {
+        const header = document.createElement("div");
+        header.className = "capture-context";
+        header.textContent = context.quizTitle ?? document.title;
+        element.prepend(header);
+        const footer = document.createElement("div");
+        footer.className = "capture-footer";
+        for (const text of ["danlevy.net", "Try the quiz ↗"]) {
+          const part = document.createElement("span");
+          part.textContent = text;
+          footer.append(part);
+        }
+        element.append(footer);
+      }
+      const heading = element.querySelector<HTMLElement>(".quiz-title");
+      if (heading && context.questionTitle)
+        heading.textContent = context.questionTitle;
+
+      document
+        .querySelectorAll<HTMLElement>(
+          ".quiz-nav-bar, .quiz-score-bar, .quiz-completion-card",
+        )
+        .forEach((quizChrome) => {
+          quizChrome.style.setProperty("display", "none", "important");
+        });
+
+      const island = element.closest<HTMLElement>("astro-island");
+      const quizUI = island?.closest<HTMLElement>(".quiz-ui");
+
+      if (island && quizUI) {
+        quizUI.classList.add("quiz-slides-active");
+
+        quizUI
+          .querySelectorAll<HTMLElement>("astro-island")
+          .forEach((candidateIsland) => {
+            const containsChallenge = Boolean(
+              candidateIsland.querySelector(".challenge"),
+            );
+            if (!containsChallenge) return;
+
+            if (candidateIsland === island) {
+              candidateIsland.classList.add("quiz-slide", "quiz-slide--active");
+              candidateIsland.classList.remove("quiz-slide--hidden");
+              candidateIsland.style.setProperty(
+                "display",
+                "block",
+                "important",
+              );
+              candidateIsland.style.setProperty("position", "relative");
+              candidateIsland.style.setProperty("width", "100%");
+              candidateIsland.style.setProperty("height", "auto");
+              candidateIsland.style.setProperty("overflow", "visible");
+              candidateIsland.style.setProperty("opacity", "1");
+              candidateIsland.style.setProperty("pointer-events", "auto");
+              candidateIsland.style.removeProperty("clip");
+              candidateIsland.style.removeProperty("transform");
+              candidateIsland.style.removeProperty("filter");
+            } else {
+              candidateIsland.classList.add("quiz-slide", "quiz-slide--hidden");
+              candidateIsland.classList.remove("quiz-slide--active");
+              candidateIsland.style.setProperty("display", "none", "important");
+            }
+          });
+      }
+
+      element.classList.remove(
+        "challenge-enter",
+        "answer-correct-pulse",
+        "answer-incorrect-shake",
+        "pulse",
+        "shake",
+      );
+      element.style.setProperty("opacity", "1");
+      element.style.removeProperty("transform");
+      element.style.removeProperty("filter");
+
+      const panel = element.querySelector<HTMLElement>(".quiz-body-panel");
+      const options = element.querySelector<HTMLElement>(".quiz-options");
+      const explanation = element.querySelector<HTMLElement>(".explanation");
+
+      if (panel && options) {
+        panel.classList.remove("card-flip");
+        panel.style.setProperty("overflow", "visible", "important");
+        panel.style.setProperty("transform-style", "flat", "important");
+
+        options.style.setProperty("display", "grid", "important");
+        options.style.setProperty("position", "relative", "important");
+        options.style.setProperty("visibility", "visible", "important");
+        options.style.setProperty("opacity", "1", "important");
+        options.style.setProperty("transform", "none", "important");
+        options.style.setProperty("height", "auto", "important");
+
+        if (explanation) {
+          explanation.style.setProperty("display", "none", "important");
+          explanation.style.setProperty("visibility", "hidden", "important");
+        }
+
+        const optionsHeight = options.scrollHeight;
+        if (optionsHeight > 0) {
+          panel.style.setProperty("height", `${optionsHeight}px`, "important");
+          panel.style.setProperty(
+            "min-height",
+            `${optionsHeight}px`,
+            "important",
+          );
+        }
+      }
+
+      element.scrollIntoView({ block: "center", inline: "center" });
+    },
+    { selector, context },
+  );
 
   await page.waitForFunction(
     (selector) => {
@@ -690,6 +786,7 @@ function parseCliOptions(args: string[]): CliOptions {
   }
 
   return {
+    questionsOnly: hasArg(args, "questions-only"),
     after: parseDateArg(getArgValue(args, "after"), "--after"),
     before: parseDateArg(getArgValue(args, "before"), "--before"),
     between: parseBetweenArg(getArgValue(args, "between")),
@@ -957,6 +1054,7 @@ Options:
   --after <date>      Screenshot posts published on or after YYYY-MM-DD.
   --before <date>     Screenshot posts published on or before YYYY-MM-DD.
   --between <range>   Screenshot posts in an inclusive range: YYYY-MM-DD..YYYY-MM-DD.
+  --questions-only   Capture individual questions without replacing page or social images.
   --concurrency <n>   Number of posts to screenshot in parallel, 1-8. Defaults to ${DEFAULT_CONCURRENCY}.
   --limit <number>    Limit the number of matched posts, useful for smoke tests.
   --retries <number>  Retry transient screenshot failures with exponential backoff. Defaults to ${DEFAULT_RETRIES}.

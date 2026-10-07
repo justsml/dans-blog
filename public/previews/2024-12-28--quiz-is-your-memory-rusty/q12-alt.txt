@@ -1,4 +1,4 @@
-# 12. RefCell
+# 12. RefCells and Threading
 
 What’s the key difference between RefCell and RwLock in Rust?
 
@@ -21,7 +21,7 @@ let locked = shared.write().unwrap();
 1. RefCell is used for mutable borrows, Rw for immutable
 2. Rw is used for mutable borrows, RefCell for immutable
 3. RefCell and Rw are used for the same purpose
-4. RefCell is only used for single-threaded environments
+4. RefCell is not Sync and RwLock supports synchronized sharing
 5. Rw is only used for multi-threaded environments
 
 [credit](https://danlevy.net/)

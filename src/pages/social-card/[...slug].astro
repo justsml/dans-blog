@@ -6,22 +6,122 @@ import { isListedPost, isVisiblePost } from '../../shared/editorialRules';
 import { getTextDirection, type Locale } from '../../shared/i18n';
 import '../../styles/tokens.css';
 import '../../styles/social-card.css';
+
 export function getStaticPaths() {
- return [{params:{slug:'home'},props:{post:null}}, {params:{slug:'open-source-journal'},props:{post:{slug:'open-source-journal',locale:'en',data:{title:'Open Source Journal',category:'Code',subTitle:'Open-source projects, fixes, and contributions.'},body:''} as ArticlePost}}, ...PostCollections._allPosts.filter(isVisiblePost).map(post=>({params:{slug:post.slug},props:{post}}))];
+  return [
+    { params: { slug: 'home' }, props: { post: null } },
+    {
+      params: { slug: 'open-source-journal' },
+      props: {
+        post: {
+          slug: 'open-source-journal',
+          locale: 'en',
+          data: {
+            title: 'Open Source Journal',
+            category: 'Code',
+            subTitle: 'Open-source projects, fixes, and contributions.',
+          },
+          body: '',
+        } as ArticlePost,
+      },
+    },
+    ...PostCollections._allPosts.filter(isVisiblePost).map(post => ({
+      params: { slug: post.slug },
+      props: { post },
+    })),
+  ];
 }
-const {post}=Astro.props;
-const recent=PostCollections._posts.filter(isListedPost).slice(0,3);
-const quiz=post?.data.category==='Quiz';
-const clean=(text='')=>text.replace(/<[^>]*>/g,'').replace(/`/g,'');
-const title=clean(post?.data.title);
-const art=post?.data.cover_mobile??post?.data.cover_full_width??post?.data.cover;
-const questionCount=post?.body?.match(/<Challenge\b/g)?.length??0;
-const firstQuestion=clean(post?.body?.match(/<Challenge\b[\s\S]*?\btitle=(?:"([^"]+)"|'([^']+)')/)?.slice(1).find(Boolean)??'Put your knowledge to the test.');
-const fontSize=title.length>105?48:title.length>75?54:title.length>48?62:72;
+
+const { post } = Astro.props;
+const recent = PostCollections._posts.filter(isListedPost).slice(0, 3);
+const quiz = post?.data.category === 'Quiz';
+const clean = (text = '') => text.replace(/<[^>]*>/g, '').replace(/`/g, '');
+const title = clean(post?.data.title);
+const art = post?.data.cover_mobile ?? post?.data.cover_full_width ?? post?.data.cover;
+const questionCount = post?.body?.match(/<Challenge\b/g)?.length ?? 0;
+const firstQuestion = clean(
+  post?.body?.match(/<Challenge\b[\s\S]*?\btitle=(?:"([^"]+)"|'([^']+)')/)
+    ?.slice(1).find(Boolean) ?? 'Put your knowledge to the test.',
+);
+const fontSize = title.length > 105 ? 48 : title.length > 75 ? 54 : title.length > 48 ? 62 : 72;
+const locale = (post?.locale ?? 'en') as Locale;
 ---
-<html lang={post?.locale??'en'} dir={getTextDirection((post?.locale??'en') as Locale)}><head><meta charset="utf-8"/><meta name="robots" content="noindex,follow"/><title>{post?title:'Dan Levy — Field notes'}</title></head><body data-pagefind-ignore="all">
-<main class:list={['social-card',{home:!post,quiz}]}>
-<header><span class="brand">Dan Levy<span class="brand-dot">.</span></span><span class="edition">{!post?'FIELD NOTES':quiz?'THE QUIZ COLLECTION':'FIELD NOTES / '+post.data.category.toUpperCase()}</span></header>
-{post?<section class="feature"><div class="copy"><span class="kicker">{quiz?`${questionCount} QUESTIONS · HOW MUCH DO YOU KNOW?`:'IDEAS, CODE & LESSONS FROM THE FIELD'}</span><h1 style={`font-size:${fontSize}px`}>{title}</h1>{post.data.subTitle&&<p class="dek">{clean(post.data.subTitle)}</p>}</div><div class="visual">{quiz?<div class="quiz-sheet"><span class="sheet-label">A QUESTION FOR YOU</span><h2>{firstQuestion}</h2><div class="answer"><span>A</span><i></i></div><div class="answer"><span>B</span><i></i></div><div class="answer"><span>C</span><i></i></div><p>Think it through. Then try it.</p><span class="quiz-mark">?</span></div>:art&&typeof art==='object'?<Image src={art} width={500} height={450} fit="cover" loading="eager" alt=""/>:<div class="type-art"><span>{post.data.category}</span><b>{'{ '}<em>ideas</em>{' }'}</b><p>Notes from where<br/>the docs run out.</p></div>}</div></section>:<section class="home-content"><div class="home-intro"><span class="kicker">CODE. CURIOSITY. SCAR TISSUE.</span><h1>Notes from where<br/>the docs run out.</h1><p>AI systems, JavaScript, security,<br/>and lessons worth keeping.</p></div><div class="recent">{recent.map((article,index)=>{const cover=article.data.cover_full_width??article.data.cover_mobile??article.data.cover;return <article><span class="number">0{index+1}</span><div><span class="recent-category">{article.data.category}</span><h2>{clean(article.data.title)}</h2></div>{cover&&typeof cover==='object'&&<Image src={cover} width={180} height={110} fit="cover" loading="eager" alt=""/>}</article>;})}</div></section>}
-<footer><span>danlevy.net</span><span>{quiz?'TAKE THE QUIZ ↗':post?'READ THE ARTICLE ↗':'INDEPENDENT THINKING. PRACTICAL ENGINEERING.'}</span></footer>
-</main></body></html>
+
+<html lang={locale} dir={getTextDirection(locale)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex,follow" />
+    <title>{post ? title : 'Dan Levy — Field notes'}</title>
+  </head>
+  <body data-pagefind-ignore="all">
+    <main class:list={['social-card', { home: !post, quiz }]}>
+      <header>
+        <span class="brand">Dan Levy<span class="brand-dot">.</span></span>
+        <span class="edition">{
+          !post ? 'FIELD NOTES' : quiz ? 'THE QUIZ COLLECTION' : 'FIELD NOTES / ' + post.data.category.toUpperCase()
+        }</span>
+      </header>
+      {post ? (
+        <section class="feature">
+          <div class="copy">
+            <span class="kicker">{
+              quiz ? `${questionCount} QUESTIONS · HOW MUCH DO YOU KNOW?` : 'IDEAS, CODE & LESSONS FROM THE FIELD'
+            }</span>
+            <h1 style={`font-size:${fontSize}px`}>{title}</h1>
+            {post.data.subTitle && <p class="dek">{clean(post.data.subTitle)}</p>}
+          </div>
+          <div class="visual">
+            {quiz ? (
+              <div class="quiz-sheet">
+                <span class="sheet-label">A QUESTION FOR YOU</span>
+                <h2>{firstQuestion}</h2>
+                <div class="answer"><span>A</span><i></i></div>
+                <div class="answer"><span>B</span><i></i></div>
+                <div class="answer"><span>C</span><i></i></div>
+                <p>Think it through. Then try it.</p>
+                <span class="quiz-mark">?</span>
+              </div>
+            ) : art && typeof art === 'object' ? (
+              <Image src={art} width={500} height={450} fit="cover" loading="eager" alt="" />
+            ) : (
+              <div class="type-art">
+                <span>{post.data.category}</span>
+                <b>{'{ '}<em>ideas</em>{' }'}</b>
+                <p>Notes from where<br />the docs run out.</p>
+              </div>
+            )}
+          </div>
+        </section>
+      ) : (
+        <section class="home-content">
+          <div class="home-intro">
+            <span class="kicker">CODE. CURIOSITY. SCAR TISSUE.</span>
+            <h1>Notes from where<br />the docs run out.</h1>
+            <p>AI systems, JavaScript, security,<br />and lessons worth keeping.</p>
+          </div>
+          <div class="recent">
+            {recent.map((article, index) => {
+              const cover = article.data.cover_full_width ?? article.data.cover_mobile ?? article.data.cover;
+              return (
+                <article>
+                  <span class="number">0{index + 1}</span>
+                  <div>
+                    <span class="recent-category">{article.data.category}</span>
+                    <h2>{clean(article.data.title)}</h2>
+                  </div>
+                  {cover && typeof cover === 'object' && (
+                    <Image src={cover} width={180} height={110} fit="cover" loading="eager" alt="" />
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      )}
+      <footer>
+        <span>danlevy.net</span>
+        <span>{quiz ? 'TAKE THE QUIZ ↗' : post ? 'READ THE ARTICLE ↗' : 'INDEPENDENT THINKING. PRACTICAL ENGINEERING.'}</span>
+      </footer>
+    </main>
+  </body>
+</html>

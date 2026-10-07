@@ -1,26 +1,26 @@
-# 18. Advanced Patterns
+# 18. Zero-Cost Abstractions
 
-How does the performance of these two implementations compare?
+With optimization enabled, what can Rust’s zero-cost iterator abstractions achieve in these two implementations?
 
-// Implementation A: Iterator
-fn sum_iterator(v: &[i32]) -> i32 {
-    v.iter().fold(0, |acc, &x| acc + x)
-}
+      // Implementation A: Iterator
+      fn sum_iterator(v: &[i32]) -> i32 {
+          v.iter().fold(0, |acc, &x| acc + x)
+      }
 
 
-// Implementation B: Raw loop
-fn sum_loop(v: &[i32]) -> i32 {
-    let mut sum = 0;
-    for i in 0..v.len() {
-        sum += v[i];
-    }
-    sum
-}
+      // Implementation B: Raw loop
+      fn sum_loop(v: &[i32]) -> i32 {
+          let mut sum = 0;
+          for i in 0..v.len() {
+              sum += v[i];
+          }
+          sum
+      }
 ------
 
 1. Runtime overhead from Iterator
-2. Same performance as raw loop
+2. Iterator code can be as efficient as a manual loop
 3. Slower but more readable
-4. Depends on optimization level
+4. Iterators cannot be optimized
 
 [credit](https://danlevy.net/)

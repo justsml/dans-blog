@@ -89,10 +89,6 @@ h1 {
   line-height: 1.35;
   color: var(--paper-muted);
   margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 .visual {
   height: 100%;
@@ -265,4 +261,37 @@ footer span:first-child {
   height: 100px;
   object-fit: cover;
   border: 5px solid var(--paper-desk);
+}
+
+/* Quiz titles provide context; the question is the focal point. */
+.quiz .feature {
+  grid-template-columns: 0.85fr 1.4fr;
+  gap: 28px;
+}
+.quiz .copy h1 {
+  font-size: 44px !important;
+  letter-spacing: -1px;
+}
+.quiz .dek {
+  font-size: 22px;
+}
+.quiz .visual {
+  max-height: 410px;
+}
+.quiz .quiz-sheet h2 {
+  font-size: 42px;
+  max-width: none;
+}
+.quiz .answer {
+  padding: 13px;
+  width: 94%;
+}
+.quiz .answer span {
+  font-size: 22px;
+}
+.quiz .sheet-label {
+  font-size: 16px;
+}
+.quiz .quiz-sheet p {
+  font-size: 22px;
 }

@@ -1,10 +1,7 @@
-# 4. Type Checking Tricks
+# 4. Cross-Frame instanceof
 
-What happens with instanceof Error across iframes?
+Assume iframeError was created in a same-origin iframe and passed to its parent window.
 
-// In iframe:
-const iframeError = new Error('test');
-// In parent window:
 console.log(iframeError instanceof Error);
 ------
 
