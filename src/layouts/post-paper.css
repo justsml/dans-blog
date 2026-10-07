@@ -19,10 +19,12 @@
 .post-page .banner-wrapper img,.post-page .hero-image-wrapper img { inline-size:100%; block-size:auto; max-block-size:none; object-fit:contain; display:block; opacity:1; filter:none; transform:none; margin:0; border:0; }
 .post-page .hero-credit { color:var(--paper-muted); padding:.6rem var(--sheet-pad) 0; font-size:.75rem; line-height:1.5; text-align:end; margin:0; }
 .post-page .hero-credit a { color:inherit; text-decoration:underline; }
-.post-page .comments-wrapper { background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); margin:2rem auto; padding:1.5rem; max-inline-size:900px; inline-size:calc(100% - 2rem); }
+.post-page .comments-wrapper { background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); margin:2rem auto; padding:clamp(.75rem,2vw,1.5rem); max-inline-size:1180px; inline-size:calc(100% - 3rem); }
+/* Utterances injects a 760px cap; let its frame use the available sheet width. */
+.post-page .comments-wrapper :is(.post-comments,.utterances,iframe.utterances-frame) { inline-size:100%; max-inline-size:none; }
 .post-page .loading-msg { color:var(--paper-muted); font-size:.9rem; }
 .post-page .share-counters { color:var(--paper-muted); margin-block:1.5rem; }
-@media(max-width:700px) { .post-page main.article { max-inline-size:calc(100% - 2rem); } }
+@media(max-width:700px) { .post-page main.article { max-inline-size:calc(100% - 2rem); } .post-page .comments-wrapper { inline-size:calc(100% - 2rem); } }
 @media(max-width:600px) { .post-page main.article { margin:1rem auto 2rem; --sheet-pad:1rem; padding:1.25rem var(--sheet-pad); } }
 @media print { .post-page main.article { box-shadow:none; border:0; padding:0; margin:0; } .post-page .comments-wrapper { display:none; } }
 .post-page .share-counters { flex-wrap:wrap; max-inline-size:100%; align-items:center; justify-content:center; gap:.5rem; }

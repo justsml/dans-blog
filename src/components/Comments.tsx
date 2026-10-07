@@ -62,7 +62,7 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
       ref={ref}
       id="post-comments"
       style={{position: "relative"}}
-      className="post-comments utterances-frame relative"
+      className="post-comments relative"
       // style={{
       //   maxHeight: "70vh",
       //   overflowY: "auto",
