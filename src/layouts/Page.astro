@@ -25,6 +25,8 @@ const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
 type Props = {
   title?: string;
   subTitle?: string;
+  /** Meta description when it should differ from the visible subtitle. */
+  description?: string;
   frontmatter?: Record<string, any>;
   socialImage?: string | ImageMetadata;
   className?: string;
@@ -65,7 +67,7 @@ function getPagefindSection(path: string) {
   <head>
       <BaseHead
         title={title}
-        description={`${subTitle}`}
+        description={Astro.props.description ?? `${subTitle}`}
         image={socialBanner}
         canonicalPath={canonicalPath}
         alternates={alternates}

@@ -5,6 +5,7 @@ import { PostCollections } from "../shared/postsCache";
 import { writeRedirectManifest } from "../scripts/redirectManager";
 import type { Locale } from "../shared/i18n";
 import { getReadingTimeMinutes } from "../shared/readingTime";
+import { postMetaDescription } from "../shared/metaDescription";
 
 export async function getStaticPaths() {
   const paths = PostCollections.getStaticPaths();
@@ -41,6 +42,7 @@ const tocReadingTimeMinutes = Math.max(readingTimeMinutes, getReadingTimeMinutes
   frontmatter={{ ...post.data }}
   readingTimeMinutes={readingTimeMinutes}
   tocReadingTimeMinutes={tocReadingTimeMinutes}
+  metaDescription={postMetaDescription(post.data.subTitle, post.body)}
   headings={headings}
 >
   <Content />

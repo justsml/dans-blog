@@ -24,7 +24,8 @@ const categoryImageSizes = categoryPosts.length === 1
     : "(max-width: 744px) calc(100vw - 6rem), (max-width: 1088px) calc((100vw - 7.5rem) / 2), (max-width: 1212px) calc((100vw - 9rem) / 3), 352px";
 const posts = await Promise.all(categoryPosts.map(post => optimizeArticleCardImage(post, false, {sizes: categoryImageSizes, maxWidth: categoryPosts.length <= 2 ? 1600 : 960})));
 
-// console.log("category.astro.props", Astro.props);
+// A unique, localized snippet per category: its count and newest titles, rather than the site tagline.
+const description = `${copy.category.pageTitle(category)}. ${copy.category.found(count)}: ${categoryPosts.slice(0, 3).map(post => post.data.title).join(" · ")}`;
 ---
 
 <style>
@@ -38,7 +39,7 @@ const posts = await Promise.all(categoryPosts.map(post => optimizeArticleCardIma
 
 </style>
 
-<Page title={copy.category.pageTitle(category)} locale={locale}>
+<Page title={copy.category.pageTitle(category)} description={description} locale={locale}>
   <div class="path-display">
     <h3>
       <a class="category-breadcrumb" href={getLocalizedPagePath("/category/", locale)}>{copy.category.breadcrumb}</a>

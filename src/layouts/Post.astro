@@ -40,6 +40,8 @@ type Props = {
   isTranslation?: boolean;
   readingTimeMinutes?: number;
   tocReadingTimeMinutes?: number;
+  /** Subtitle plus the article's opening prose, for meta and JSON-LD descriptions. */
+  metaDescription?: string;
   headings?: ArticleHeading[];
 
   frontmatter?: {
@@ -86,6 +88,7 @@ const {
 } = Astro.props.frontmatter! || Astro.props;
 
 const slug = Astro.props.slug;
+const metaDescription = Astro.props.metaDescription || subTitle || "";
 const isPreviewOnlyPost = isContentPreviewBuild() &&
   !isListedPostData(Astro.props.frontmatter);
 const baseSlug = Astro.props.baseSlug ?? slug.replace(/^[a-z]{2}\//, "");
@@ -223,7 +226,7 @@ const shouldCropMobileBanner =
   <head>
     <BaseHead
       title={title}
-      description={`${subTitle}`}
+      description={metaDescription}
       image={coverUrl}
       canonicalPath={canonicalPath}
       alternates={alternates}
@@ -236,12 +239,13 @@ const shouldCropMobileBanner =
     <meta data-pagefind-meta="section[content]" content={pagefindSection} />
     <PostLinkedData
       title={title}
-      description={subTitle!}
+      description={metaDescription}
       date={pubTime}
       modified={modTime}
       slug={slug}
       locale={htmlLang}
       tags={Astro.props.frontmatter?.tags?.join(", ") ?? ""}
+      canonicalPath={canonicalPath}
       imageUrl={coverUrl}
     />
     {
