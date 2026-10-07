@@ -16,6 +16,7 @@ import CategoryLink from "../components/CategoryLink.astro";
 import { ShareCounters } from "../components/ShareCounters";
 import PostLinkedData from "../components/Seo/PostLinkedData.astro";
 import ConsultingCTA from "../components/ConsultingCTA.astro";
+import { heroPalette, paletteStyle } from "../shared/heroPalette";
 import "./post-paper.css";
 import { PostCollections } from "../shared/postsCache";
 import { isContentPreviewBuild } from "../shared/contentPreview";
@@ -210,6 +211,9 @@ const ambientHero = _heroSrc
   ? await getImage({ src: _heroSrc, width: 48, format: "webp", quality: 60 }).catch(() => null)
   : null;
 
+// The hero's palette as CSS custom properties, so the background has its colours at first paint.
+const heroColors = _heroSrc ? await heroPalette(_heroSrc) : null;
+
 const shouldCropMobileBanner =
   isImageMetadata(cover_full_width) &&
   cover_full_width.width / cover_full_width.height < 2.4;
@@ -285,6 +289,7 @@ const shouldCropMobileBanner =
       languageOptions={languageOptions}
     />
     {ambientHero && <div class="post-ambient" aria-hidden="true" style={`--ambient-image: url("${ambientHero.src}")`} />}
+    <div class="hero-beam" aria-hidden="true" style={paletteStyle(heroColors)}><div class="hero-beam-move"><i></i><i></i></div></div>
     <div class:list={["article-reading-layout", { "has-toc": showToc }]}>
     <main
       data-pagefind-body

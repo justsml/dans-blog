@@ -55,3 +55,25 @@
 @keyframes ambient-drift { to { translate:0 -22vh; scale:1.5; rotate:5deg; } }
 /* One pass across the first screen of scrolling, starting and ending off-panel. */
 @keyframes glass-sheen { from { translate:0 -60%; } to { translate:0 60%; } }
+
+/* Prism beam: the CSS stand-in for the WebGL lens (scripts/scrollLensGL.ts). Two diagonal bands in the hero's
+   build-time palette (shared/heroPalette.ts) and a thin spectral edge, painted once at first paint. Only
+   transform animates, so software renderers stay cheap. It fades out once the lens is drawing. */
+.hero-beam { position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; contain:strict; opacity:.6; transition:opacity 1.6s ease-out;
+  --beam-1:var(--hero-1,var(--paper-accent)); --beam-2:var(--hero-2,var(--paper-blue)); --beam-3:var(--hero-3,var(--paper-accent)); }
+:root[data-theme=dark] .hero-beam { opacity:.46; --beam-1:color-mix(in oklab,var(--hero-1,var(--paper-accent)) 70%,#fff); --beam-2:color-mix(in oklab,var(--hero-2,var(--paper-blue)) 70%,#fff); --beam-3:color-mix(in oklab,var(--hero-3,var(--paper-accent)) 70%,#fff); }
+:root:has(.scroll-lens.is-ready) .hero-beam { opacity:0; }
+.hero-beam-move { position:absolute; inset:0; }
+.hero-beam i { position:absolute; inset:-40% -60%; rotate:-14deg; will-change:transform; animation:beam-sway 70s ease-in-out infinite alternate;
+  background:linear-gradient(100deg, transparent 32%, color-mix(in oklab,var(--beam-1) 55%,transparent) 42%, color-mix(in oklab,var(--beam-2) 45%,transparent) 50%, color-mix(in oklab,var(--beam-3) 35%,transparent) 58%, transparent 68%); }
+.hero-beam i + i { opacity:.7; animation-duration:90s; animation-direction:alternate-reverse;
+  background:linear-gradient(100deg, transparent 47%, rgb(255 90 120 / .18) 48.5%, rgb(255 210 120 / .16) 49.5%, rgb(120 220 160 / .14) 50.5%, rgb(90 170 255 / .18) 51.5%, transparent 53%); }
+@keyframes beam-sway { from { transform:translateX(-8%); } to { transform:translateX(8%); } }
+@keyframes beam-sweep { to { transform:translateX(-35vw); } }
+@supports (animation-timeline: scroll()) {
+  /* The sweep moves the inner layer: moving the fixed, clipped box would drag its edge into view. */
+  .hero-beam-move { animation:beam-sweep linear both; }
+  :root .hero-beam-move { animation-timeline:scroll(root); }
+}
+@media (prefers-reduced-motion: reduce) { .hero-beam i, .hero-beam-move { animation:none; } }
+@media print { .hero-beam { display:none; } }
