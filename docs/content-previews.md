@@ -28,3 +28,7 @@ Normal production builds generate neither hidden/unpublished article routes nor
 the `/preview/` review page. This change does not deploy or publish anything by
 itself: commit the article and preview changes to the PR to include them in its
 next Deploy Preview.
+
+When a preview build has no GitHub token, the open-source journal shows repository
+links in place of live contribution statistics. This keeps article review builds
+independent of GitHub authentication; production retains its existing data policy.

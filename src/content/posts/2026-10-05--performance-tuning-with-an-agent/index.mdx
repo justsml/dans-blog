@@ -233,7 +233,26 @@ Report what improved, what regressed, and what
   is still unmeasured.
 ```
 
-Keep a ledger beside the artifacts that records the commit, workload, hypothesis, settings, commands, result, and decision for every experiment. Feed the agent JSON or CSV, and keep the original traces where a human can open them.
+Keep a ledger beside the artifacts, as a file the next session can read. Each entry records the commit, workload, hypothesis, settings, results, and decision for one experiment. Here is the `content-visibility` experiment as it would have looked before the edit:
+
+```json
+{
+  "revision": "<commit SHA>",
+  "workload": "slow wheel, reversals, jumps",
+  "hypothesis": "contain selected cards too",
+  "environment": {
+    "cpuSlowdown": 2,
+    "viewport": "1440x1000",
+    "renderer": "<recorded GPU status>"
+  },
+  "baselineReports": [],
+  "candidateReports": [],
+  "correctnessPassed": null,
+  "decision": "pending"
+}
+```
+
+The empty report lists say the experiment hasn't earned a conclusion yet, and the harness fills them in rather than the agent. The agent writes the hypothesis and explains the result, and the saved reports let you check that explanation. This entry ended as `"decision": "rejected"`. Feed the agent JSON or CSV like this, and keep the original traces where a human can open them.
 
 You don't need to become a performance specialist to do any of this. You need to describe the work that matters, connect instruments that can see it, and let the agent do the patient part. That used to take a consultant. Now it takes knowing what to ask for and which tools to connect.
 
