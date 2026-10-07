@@ -2,9 +2,15 @@
 .top-header { position:relative; z-index:50; padding-block:.75rem 0; background:transparent; color:var(--paper-ink); }
 .top-header .header-nav { display:flex; align-items:center; justify-content:space-between; gap:1.5rem; width:min(1180px,calc(100% - 3rem)); margin-inline:auto; grid-column:1 / -1; padding:0; border-block-end:1px solid var(--paper-line); padding-block-end:.75rem; }
 .top-header h2 { margin:0; font-size:1rem; flex-shrink:0; }
-.top-header .paper-wordmark { display:flex; align-items:center; gap:.75rem; color:var(--paper-ink); text-decoration:none; }
-.paper-wordmark img { border-radius:50%; width:42px; height:42px; border:1px solid var(--paper-line); }
-.paper-wordmark span { font: 600 1.65rem/1.1 var(--paper-serif); letter-spacing:-.04em; }
+.top-header { --header-halo: 0 0 .3em var(--paper-desk), 0 0 .9em color-mix(in srgb, var(--paper-desk) 80%, transparent); }
+.top-header .paper-wordmark { display:flex; align-items:center; gap:.8rem; color:var(--paper-ink); text-decoration:none; }
+.paper-wordmark img { border-radius:50%; width:42px; height:42px; border:2px solid var(--paper-desk); box-shadow:0 0 0 1.5px var(--paper-accent); transition:box-shadow 180ms ease; }
+.paper-wordmark span { color:var(--paper-ink); font: 400 1.75rem/1 var(--paper-serif); letter-spacing:-.02em; text-shadow:var(--header-halo); text-decoration:underline; text-decoration-color:transparent; text-decoration-thickness:1.5px; text-underline-offset:.22em; transition:color 180ms ease, text-decoration-color 180ms ease; }
+.paper-wordmark:hover span, .paper-wordmark:focus-visible span { color:var(--paper-accent); text-decoration-color:currentColor; }
+.paper-wordmark:hover img, .paper-wordmark:focus-visible img { box-shadow:0 0 0 2.5px var(--paper-accent); }
+.paper-wordmark:focus-visible { outline:2px solid var(--paper-accent); outline-offset:.4rem; border-radius:.25rem; }
+.top-header .nav-box { text-shadow:var(--header-halo); }
+@media (prefers-reduced-motion: reduce) { .paper-wordmark img, .paper-wordmark span { transition:none; } }
 .nav-box { min-width:0; }
 .header-language-menu { position:relative; }
 .header-language-trigger { display:flex; align-items:center; gap:.3rem; min-height:44px; padding:.65rem; font-size:.78rem; cursor:pointer; list-style:none; color:var(--paper-muted); }
