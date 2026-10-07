@@ -7,7 +7,7 @@
     "url": "https://github.com/justsml/dans-blog"
   },
   "scripts": {
-    "deploy": "netlify build && netlify deploy --prod",
+    "deploy": "bun run build && netlify deploy --prod --no-build --dir=dist",
     "webp-images": "bash -c 'source ./src/scripts/webp-image-conversion-cmds.sh && convert_and_cleanup_images \"$@\"' --",
     "fix-quizzes": "bun ./src/scripts/quiz-utils/update-quizzes.ts",
     "i18n:translate:candidates": "bun ./src/scripts/i18n/translate-candidates.ts",
