@@ -30,7 +30,7 @@ export function EditOnGitHubLink({
       target="_blank"
       rel="noopener noreferrer"
     >
-      <span style={{color: 'var(--muted)'}}>Edit on GitHub</span>
+      <span style={{color: 'var(--paper-muted)'}}>Edit on GitHub</span>
       <img
         className="icon"
         src="/icons/github.svg"

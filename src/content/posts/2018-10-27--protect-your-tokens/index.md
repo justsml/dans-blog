@@ -8,8 +8,10 @@ tags: [tokens, api-keys, secrets, security, nodejs, json-web-tokens]
 category: Guides
 subCategory: security
 cover: dayne-topkin-78982-unsplash.webp
-cover_mobile: w300_dayne-topkin-78982-unsplash.webp
-cover_icon: icon_dayne-topkin-78982-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## When to protect your tokens?

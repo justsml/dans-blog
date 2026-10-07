@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import avatar from "../assets/avatar-256.webp";
+import { getLabPosts } from "./posts";
+import { slugify } from "../shared/pathHelpers";
+import { getLocalizedPostPath } from "../shared/i18n";
+const posts = getLabPosts();
+const popular = [...posts].sort((a, b) => (b.data.popularity ?? 0) - (a.data.popularity ?? 0)).slice(0, 3);
+const categories = [...new Set(posts.map((post) => post.data.category))].map((name) => ({ name, count: posts.filter((post) => post.data.category === name).length })).sort((a, b) => b.count - a.count).slice(0, 6);
+const projects = [
+  { name: "DataAnalyzer.app", href: "https://dataanalyzer.app/", description: "Code + schema generation for JSON and CSV." },
+  { name: "Functional Promises", href: "https://fpromises.io/", description: "A fluent API around native JavaScript promises." },
+  { name: "Streaming Image Proxy", href: "https://github.com/justsml/node-streaming-image-proxy", description: "Image resizing and streaming for Node.js." },
+  { name: "Fact Service", href: "https://github.com/justsml/fact-service", description: "A key-value service with database adapters." },
+  { name: "Modern App Starter", href: "https://github.com/justsml/modern-app-template", description: "TypeScript, Vite, React, and Tailwind." },
+];
+---
+<footer class="editorial-footer" id="explore">
+  <div class="footer-intro"><div><p class="eyebrow">Elsewhere in the notebook</p><h2>Code. Systems.<br />A few rabbit holes.</h2></div><a href="/about/" class="footer-profile"><Image src={avatar} alt="Dan Levy" width={72} height={72} /><span><strong>Dan Levy</strong><span>Coder · Leader<br />Thinker · Tinkerer</span></span></a></div>
+  <div class="footer-columns">
+    <section><h3>Explore</h3><a href="/challenges/" class="footer-callout">Try a quiz <span>↗</span><small>Come for a challenge. Leave with a better mental model.</small></a><div class="footer-categories">{categories.map(({ name, count }) => <a href={`/category/${slugify(name)}/`}>{name}<span>{count}</span></a>)}</div><a href="/pages/1-date-desc.html">All articles ↗</a></section>
+    <section><h3>Reader favorites</h3>{popular.map((post) => <a class="footer-post" href={getLocalizedPostPath(post.baseSlug ?? post.slug)}>{post.data.title}<small>{post.data.category}</small></a>)}</section>
+    <section><h3>Projects & experiments</h3><a class="footer-post" href="/open-source-journal/">Open source journal<small>Follow the commits, fixes, and experiments.</small></a>{projects.map((project) => <a class="footer-project" href={project.href}>{project.name}<small>{project.description}</small></a>)}</section>
+    <section><h3>Say hello</h3><a href="/consulting/">Build better AI systems ↗</a><a href="/contact/">Contact form ↗</a><a href="https://github.com/justsml" rel="me">GitHub / justsml ↗</a><a href="https://x.com/justsml" rel="me">Twitter / X ↗</a><a href="https://linkedin.com/in/realdaniellevy" rel="me">LinkedIn ↗</a><a href="/docs/resume.pdf">Résumé ↗</a><a href="/about/">About Dan ↗</a></section>
+  </div>
+  <div class="footer-colophon"><a class="footer-brand" href="/">DanLevy.net</a><p>Come for the code, stay for the cats.</p><a href="#main">Back to the top ↑</a></div>
+</footer>

@@ -7,9 +7,11 @@ tags: [promises, javascript, errors, programming]
 category: Code
 subCategory: promises
 cover: ../lennart-heim-766366-unsplash.webp
-cover_mobile: ../w300_lennart-heim-766366-unsplash.webp
-cover_icon: ../icon_lennart-heim-766366-unsplash.webp
-sourceHash: "b65379daa16b"
+cover_mobile: ../hero-responsive-square.webp
+cover_icon: ../hero-responsive-icon-200.webp
+sourceHash: "641f2d2ae8ad"
+cover_full_width: ../hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Le Promise di JavaScript sono rotte?
@@ -133,7 +135,7 @@ Promise.resolve(42)
     return 99
   })
   .then(num => num + 1)
-  .then(console.log) // expected output: 100
+  .then(console.log) // expected: 100
 ```
 
 **La sequenza è ciò che è importante da comprendere.**
@@ -167,7 +169,7 @@ Promise.resolve(10)          // 10
   .then(x => x / 4)          // 5
   .then(x => x * x)          // 25
   .then(x => x.toFixed(2))   // "25.00"
-  .then(x => console.log(x)) // expected output: "25.00"
+  .then(x => console.log(x)) // expected: "25.00"
 ```
 
 
@@ -179,7 +181,7 @@ Promise.resolve(10) // 10
   .then(quarter)    // 5
   .then(square)     // 25
   .then(format)     // "25.00"
-  .then(log)        // expected output: "25.00"
+  .then(log)        // expected: "25.00"
 
 const double = x => x * 2
 const quarter = x => x / 4
@@ -220,7 +222,7 @@ Puoi usarle come ti serve:
 const result = format(square(quarter(double(10))))
 
 log(result)
-// expected output: "25.00"
+// expected: "25.00"
 ```
 
 

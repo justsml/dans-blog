@@ -8,8 +8,10 @@ tags: [engineering,typescript,composition,types]
 category: Guides
 subCategory: TypeScript
 cover: gorilla-types_dall-e.webp
-cover_mobile: w300_gorilla-types_dall-e.webp
-cover_icon: icon_gorilla-types_dall-e.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Guerrilla Types in TypeScript

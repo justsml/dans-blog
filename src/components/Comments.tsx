@@ -17,7 +17,7 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
       script.setAttribute("repo", "justsml/dans-blog");
       script.setAttribute("issue-term", path || "pathname");
       script.setAttribute("label", "💬 comment");
-      script.setAttribute("theme", "icy-dark");
+      script.setAttribute("theme", document.documentElement.dataset.theme === "dark" ? "github-dark" : "github-light");
       script.setAttribute("crossorigin", "anonymous");
 
       script.onload = () => {
@@ -28,7 +28,14 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
 
       const comment = ref.current;
       if (comment) comment.appendChild(script);
+      const updateTheme = () => {
+        const frame = comment?.querySelector<HTMLIFrameElement>("iframe.utterances-frame");
+        frame?.contentWindow?.postMessage({ type: "set-theme", theme: document.documentElement.dataset.theme === "dark" ? "github-dark" : "github-light" }, "https://utteranc.es");
+      };
+      const observer = new MutationObserver(updateTheme);
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
       return () => {
+        observer.disconnect();
         const comment = ref.current;
         try {
           if (comment && comment.contains(script)) comment.removeChild(script);

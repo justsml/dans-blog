@@ -1,0 +1,32 @@
+---
+import { Image } from "astro:assets";
+import Layout from "./Layout.astro";
+import type { Design } from "./designs";
+import { previewPostHref } from "./designs";
+import type { ArticlePost } from "../types";
+import { getReadingTimeMinutes } from "../shared/readingTime";
+import { getLabSample } from "./posts";
+interface Props { design: Design; post: ArticlePost; headings: Array<{ depth: number; slug: string; text: string }> }
+const { design, post, headings } = Astro.props;
+const slug = post.baseSlug ?? post.slug;
+const transitionKey = `lab-${slug}`;
+const image = post.data.cover_full_width ?? post.data.cover_mobile;
+const others = getLabSample().filter((item) => item.id !== post.id).slice(0, 2);
+---
+<Layout design={design} title={post.data.title} article>
+  <article class="reading-page">
+    <header class="reading-header">
+      <a class="back-notes" href={`/designs/${design}/`}>← Back to field notes</a>
+      <p class="eyebrow">{post.data.category} <span> / {getReadingTimeMinutes(post.body)} min read</span></p>
+      <h1 transition:name={`${transitionKey}-title`}>{post.data.title}</h1>
+      <p class="reading-dek">{post.data.subTitle.replace(/`/g, "").replace(/<[^>]*>/g, "")}</p>
+      <div class="reading-byline">By Dan Levy <span>·</span> <time datetime={new Date(post.data.date).toISOString()}>{new Date(post.data.date).toLocaleDateString("en-US", { dateStyle: "long", timeZone: "UTC" })}</time></div>
+    </header>
+    {image && <figure class="reading-hero"><div transition:name={`${transitionKey}-image`}>{typeof image === "string" ? <img src={image} alt={post.data.cover_alt ?? ""} /> : <Image src={image} alt={post.data.cover_alt ?? ""} width={1280} loading="eager" format="webp" />}</div>{post.data.cover_credit && <figcaption set:html={post.data.cover_credit} />}</figure>}
+    <div class="reading-layout">
+      <aside class="reading-toc"><p class="eyebrow">In this note</p><nav aria-label="Table of contents">{headings.filter((heading) => heading.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}</nav><a class="original-post" href={`/${slug}/`}>Open current site version ↗</a></aside>
+      <div class="reading-body"><slot /></div>
+    </div>
+    <nav class="reading-next" aria-label="More field notes"><p class="eyebrow">Keep the thread going</p>{others.map((item) => <a href={previewPostHref(design, item.baseSlug ?? item.slug)}>{item.data.title}<span>→</span></a>)}</nav>
+  </article>
+</Layout>

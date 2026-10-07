@@ -8,8 +8,10 @@ category: AI
 subCategory: machine-learning
 tags: [artificial-intelligence, ai, self-driving-cars, fails]
 cover: sandy-millar-749381-unsplash.webp
-cover_mobile: w300_sandy-millar-749381-unsplash.webp
-cover_icon: icon_sandy-millar-749381-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Robotic Cars: More or Less Crashes?

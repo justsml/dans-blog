@@ -1,0 +1,81 @@
+/* A calm, unrotated reading sheet. All hero variants share one media frame. */
+/* The sheet shares the header's measure (Header.css), so its edges line up with the logo and the nav. */
+.post-page main.article { background:var(--paper-sheet); color:var(--paper-ink); box-shadow:var(--paper-shadow); border-block-start:5px solid var(--paper-blue); max-inline-size:min(1180px,calc(100% - 3rem)); margin:1.5rem auto 3rem; --sheet-pad:clamp(1.25rem,5vw,4.5rem); padding:clamp(1.25rem,3vw,2.75rem) var(--sheet-pad) var(--sheet-pad); --padding-inline:0rem; --content-max-width:720px; --breakout-max-width:820px; font-size:clamp(1.0625rem,.98rem + .3vw,1.2rem); line-height:1.72; }
+/* Breakouts use the space left around the reading column, rather than taking another fixed inset. */
+.post-page main.article { grid-template-columns:[full-width-start breakout-start] minmax(0,1fr) [content-start] minmax(0,min(100%,var(--content-max-width))) [content-end] minmax(0,1fr) [breakout-end full-width-end]; }
+.post-page main.article > h1.p-name { font-family:var(--paper-serif,Georgia,serif); font-weight:500; color:var(--paper-ink); font-size:clamp(2.2rem,5vw,4.2rem); line-height:1.1; letter-spacing:-.04em; margin-block:0 1rem; max-inline-size:100%; overflow-wrap:anywhere; mix-blend-mode:multiply; text-shadow:0 1px 1px var(--paper-sheet); filter:drop-shadow(0 0 1px var(--paper-sheet)); }
+:root[data-theme=dark] .post-page main.article > h1.p-name, :root.dark .post-page main.article > h1.p-name { mix-blend-mode:screen; }
+@media (forced-colors:active) { .post-page main.article > h1.p-name { mix-blend-mode:normal; filter:none; text-shadow:none; } }
+.post-page main.article > h1.p-name::after { content:none; }
+.post-page main.article > .dek { color:var(--paper-muted); font-size:clamp(1.15rem,2vw,1.5rem); line-height:1.6; margin-block:0 1.5rem; }
+.post-page .post-meta { color:var(--paper-muted); font-size:.8rem; line-height:1.7; gap:.45rem .8rem; display:flex; flex-wrap:wrap; align-items:center; }
+.post-page .post-meta > * + *::before { content:none; }
+.post-page .translation-note { flex-basis:100%; margin-block:.5rem 0; font-size:.85rem; }
+.post-page .draft-notice { padding:1rem; background:var(--paper-desk); border-inline-start:3px solid var(--paper-accent); color:var(--paper-ink); font-size:.9rem; margin-block:1rem; }
+.post-page .post-language-links { color:var(--paper-muted); font-size:.82rem; line-height:1.6; margin-block:0 .75rem; }
+/* Hero bleeds to the sheet edges: one frame, not a card inside a card. */
+.post-page main.article .banner-wrapper,.post-page main.article .hero-image { grid-column:full-width; display:block; inline-size:auto; margin:1.75rem calc(-1 * var(--sheet-pad)) 2.5rem; padding:0; background:none; box-shadow:none; position:relative; }
+.post-page .hero-image-wrapper { position:relative; }
+.post-page .banner-wrapper img,.post-page .hero-image-wrapper img { inline-size:100%; block-size:auto; max-block-size:none; object-fit:contain; display:block; opacity:1; filter:none; transform:none; margin:0; border:0; }
+.post-page .hero-credit { color:var(--paper-muted); padding:.6rem var(--sheet-pad) 0; font-size:.75rem; line-height:1.5; text-align:end; margin:0; }
+.post-page .hero-credit a { color:inherit; text-decoration:underline; }
+.post-page .comments-wrapper { background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); margin:2rem auto; padding:1.5rem; max-inline-size:900px; inline-size:calc(100% - 2rem); }
+.post-page .loading-msg { color:var(--paper-muted); font-size:.9rem; }
+.post-page .share-counters { color:var(--paper-muted); margin-block:1.5rem; }
+@media(max-width:700px) { .post-page main.article { max-inline-size:calc(100% - 2rem); } }
+@media(max-width:600px) { .post-page main.article { margin:1rem auto 2rem; --sheet-pad:1rem; padding:1.25rem var(--sheet-pad); } }
+@media print { .post-page main.article { box-shadow:none; border:0; padding:0; margin:0; } .post-page .comments-wrapper { display:none; } }
+.post-page .share-counters { flex-wrap:wrap; max-inline-size:100%; align-items:center; justify-content:center; gap:.5rem; }
+.post-page .share-counters h4 { font-size:1rem; margin:0; }
+
+/* Ambient light from the hero: a 48px image blurred behind the page, fading out down the first screen. */
+.post-ambient { position:fixed; inset:0 0 auto; block-size:100vh; z-index:-1; pointer-events:none; background:var(--ambient-image) center 35% / cover no-repeat; filter:blur(64px) saturate(1.6); opacity:.5; scale:1.25; mask-image:linear-gradient(#000 0 30%, transparent 85%); contain:strict; view-transition-name:post-ambient; animation:ambient-in 900ms ease-out both; }
+@keyframes ambient-in { from { opacity:0; } }
+:root[data-theme=dark] .post-ambient { opacity:.38; }
+/* Liquid glass for the floating contents: frosted over the ambient light, lit along the top edge. */
+.post-page .article-toc-sidebar .article-toc { background:linear-gradient(160deg, rgb(255 255 255 / .38), rgb(255 255 255 / .06) 45%), color-mix(in oklab, var(--paper-sheet) 50%, transparent); -webkit-backdrop-filter:blur(18px) saturate(1.7); backdrop-filter:blur(18px) saturate(1.7); border:1px solid color-mix(in oklab, var(--paper-ink) 12%, transparent); border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(0 0 0 / .04), 0 14px 32px -16px rgb(0 0 0 / .3); padding:1.1rem 1.2rem; }
+:root[data-theme=dark] .post-page .article-toc-sidebar .article-toc { background:linear-gradient(160deg, rgb(255 255 255 / .1), rgb(255 255 255 / .02) 45%), color-mix(in oklab, var(--paper-sheet) 45%, transparent); box-shadow:inset 0 1px 0 rgb(255 255 255 / .14), 0 14px 32px -16px rgb(0 0 0 / .6); }
+
+/* Scroll depth: the background and glass move; the hero stays put. Browsers without scroll timelines keep the static look. */
+.post-page .article-toc-sidebar .article-toc { position:relative; isolation:isolate; overflow:clip; }
+.post-page .article-toc-sidebar .article-toc::before { content:""; position:absolute; inset:-60% -30%; z-index:-1; pointer-events:none; background:linear-gradient(115deg, transparent 34%, rgb(255 255 255 / .2) 47%, rgb(255 255 255 / .05) 55%, transparent 66%); }
+:root[data-theme=dark] .post-page .article-toc-sidebar .article-toc::before { background:linear-gradient(115deg, transparent 34%, rgb(255 255 255 / .06) 47%, rgb(255 255 255 / .015) 55%, transparent 66%); }
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Ambient light lags the page, swelling and turning as it rises. */
+    .post-ambient { animation:ambient-in 900ms ease-out both, ambient-drift linear both; }
+    /* Glass catches the light: a sheen sweeps the contents panel with the page. */
+    .post-page .article-toc-sidebar .article-toc::before { animation:glass-sheen linear both; }
+    /* Timelines live in separate :root rules: minifiers fold same-rule longhands into the animation shorthand,
+       where browsers reject a timeline and drop the whole declaration. */
+    :root .post-ambient { animation-timeline:auto, scroll(root); animation-range:normal, 0 140vh; }
+    :root .post-page .article-toc-sidebar .article-toc::before { animation-timeline:scroll(root); animation-range:0 100vh; }
+  }
+}
+@keyframes ambient-drift { to { translate:0 -22vh; scale:1.5; rotate:5deg; } }
+/* One pass across the first screen of scrolling, starting and ending off-panel. */
+@keyframes glass-sheen { from { translate:0 -60%; } to { translate:0 60%; } }
+
+/* Prism beam: the CSS stand-in for the WebGL lens (scripts/scrollLensGL.ts). Two diagonal bands in the hero's
+   build-time palette (shared/heroPalette.ts) and a thin spectral edge, painted once at first paint. Only
+   transform animates, so software renderers stay cheap. It fades out once the lens is drawing. */
+/* Fades up on arrival. Fill is `backwards` only, so once it ends the opacity transition below can still hand off to the lens. */
+.hero-beam { position:fixed; inset:0; z-index:-1; pointer-events:none; overflow:hidden; contain:strict; opacity:.6; transition:opacity 1.6s ease-out; animation:beam-in 1.4s cubic-bezier(.33,1,.68,1) backwards;
+  --beam-1:var(--hero-1,var(--paper-accent)); --beam-2:var(--hero-2,var(--paper-blue)); --beam-3:var(--hero-3,var(--paper-accent)); }
+:root[data-theme=dark] .hero-beam { opacity:.46; --beam-1:color-mix(in oklab,var(--hero-1,var(--paper-accent)) 70%,#fff); --beam-2:color-mix(in oklab,var(--hero-2,var(--paper-blue)) 70%,#fff); --beam-3:color-mix(in oklab,var(--hero-3,var(--paper-accent)) 70%,#fff); }
+:root:has(.scroll-lens.is-ready) .hero-beam { opacity:0; }
+.hero-beam-move { position:absolute; inset:0; }
+.hero-beam i { position:absolute; inset:-40% -60%; rotate:-14deg; will-change:transform; animation:beam-sway 70s ease-in-out infinite alternate;
+  background:linear-gradient(100deg, transparent 32%, color-mix(in oklab,var(--beam-1) 55%,transparent) 42%, color-mix(in oklab,var(--beam-2) 45%,transparent) 50%, color-mix(in oklab,var(--beam-3) 35%,transparent) 58%, transparent 68%); }
+.hero-beam i + i { opacity:.7; animation-duration:90s; animation-direction:alternate-reverse;
+  background:linear-gradient(100deg, transparent 47%, rgb(255 90 120 / .18) 48.5%, rgb(255 210 120 / .16) 49.5%, rgb(120 220 160 / .14) 50.5%, rgb(90 170 255 / .18) 51.5%, transparent 53%); }
+@keyframes beam-in { from { opacity:0; } }
+@keyframes beam-sway { from { transform:translateX(-8%); } to { transform:translateX(8%); } }
+@keyframes beam-sweep { to { transform:translateX(-35vw); } }
+@supports (animation-timeline: scroll()) {
+  /* The sweep moves the inner layer: moving the fixed, clipped box would drag its edge into view. */
+  .hero-beam-move { animation:beam-sweep linear both; }
+  :root .hero-beam-move { animation-timeline:scroll(root); }
+}
+@media (prefers-reduced-motion: reduce) { .hero-beam i, .hero-beam-move { animation:none; } }
+@media print { .hero-beam { display:none; } }

@@ -7,11 +7,26 @@ const publicKey = process.env.LANGFUSE_PUBLIC_KEY;
 const secretKey = process.env.LANGFUSE_SECRET_KEY;
 const baseUrl = process.env.LANGFUSE_BASE_URL ?? process.env.LANGFUSE_HOST;
 
-export const langfuseEnabled =
+// `bun test` auto-loads .env, so real credentials would otherwise export test spans to Langfuse.
+// Under test, only a local stub (127.0.0.1/localhost) may receive exports.
+const isTestRun = process.env.NODE_ENV === "test";
+const targetsLocalStub = /^https?:\/\/(127\.0\.0\.1|localhost)(:|\/|$)/.test(baseUrl ?? "");
+
+export let langfuseEnabled =
   publicKey != null &&
   publicKey !== "" &&
   secretKey != null &&
-  secretKey !== "";
+  secretKey !== "" &&
+  (!isTestRun || targetsLocalStub);
+
+/**
+ * Test hook: toggles the gate that withLangfuseTelemetry and the score helpers read, without starting
+ * an exporter. ES module importers see the live value, so test results no longer depend on which
+ * file imported this module first.
+ */
+export function setLangfuseEnabled(enabled: boolean) {
+  langfuseEnabled = enabled;
+}
 
 let spanProcessor: LangfuseSpanProcessor | undefined;
 if (langfuseEnabled) {

@@ -2,6 +2,10 @@
 import { slugify } from "@/shared/pathHelpers";
 import { getComputedDates } from "@/shared/dateUtils";
 import avatarImage from "@/assets/avatar-256.webp";
+import docSlurpImage from "@/assets/projects/docslurp.webp";
+import emojiExplorerImage from "@/assets/projects/emoji-explorer.webp";
+import exploitHunterImage from "@/assets/projects/exploithunter.webp";
+import { Image } from "astro:assets";
 import {
   DEFAULT_LOCALE,
   getLocalizedPagePath,
@@ -34,6 +38,17 @@ const { categories, popularPosts, recentPosts, locale = DEFAULT_LOCALE } = Astro
 const copy = getUiCopy(locale);
 const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 
+const quizPosts = PostCollections.getPostsByCategory("Quiz", locale)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .slice(0, 5);
+
+// Flagship projects lead the Projects menu with artwork; the rest stay a compact list.
+const featuredProjects = [
+  { name: "ExploitHunter.app", href: "https://exploithunter.app/", image: exploitHunterImage, alt: "ExploitHunter asking for approval before an agent runs an HTTP probe", text: "An open source workbench for AI-assisted security research: scope, approvals, tools, and evidence in one project." },
+  { name: "Emoji Explorer", href: "https://emoji-brain.vercel.app/", image: emojiExplorerImage, alt: "Emoji Explorer's grid of custom emoji stickers", text: "Browse 350+ upscaled emoji and stickers, pick favorites, and export them to Slack in one paste." },
+  { name: "DocSlurp.io", href: "https://docslurp.io/", image: docSlurpImage, alt: "DocSlurp's home page: Your documents. Ready for your application.", text: "White-label document ingestion: upload PDFs, Office files, and media, then search with cited answers via REST, SDK, or chat." },
+];
+
 function getPostPath(post: NavPost) {
   return PostCollections.getLocalizedPostHref(post.baseSlug ?? post.slug, locale);
 }
@@ -42,7 +57,7 @@ function getPostPath(post: NavPost) {
 <nav class="NavigationMenuRoot static-nav" aria-label={copy.nav.primaryLabel}>
   <ul class="NavigationMenuList">
     <li class="searchToggle">
-      <button title={copy.nav.searchTitle} type="button" class="btnSearchToggle" aria-label={copy.nav.searchLabel}>
+      <button title={copy.nav.searchTitle} type="button" class="btnSearchToggle" aria-controls="site-search-panel" aria-expanded="false" aria-label={copy.nav.searchLabel}>
         <svg aria-hidden="true" viewBox="0 0 15 15" width="18" height="18">
           <path
             d="M10 6.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-.85 3.35a4.5 4.5 0 1 1 .7-.7l2.5 2.5a.5.5 0 0 1-.7.7l-2.5-2.5Z"
@@ -61,10 +76,23 @@ function getPostPath(post: NavPost) {
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List one">
             <li class="item-quizzes">
-              <a href={pagePath("/challenges/")} class="Callout CalloutItem nav-tile-quiz">
-                <div class="CalloutHeading">{copy.nav.quizzes}</div>
-                <p class="CalloutText">{copy.nav.quizzesText}</p>
-              </a>
+              <div class="Callout nav-tile-quiz">
+                <a href={pagePath("/challenges/")} class="CalloutHeading">{copy.nav.quizzes} <span aria-hidden="true">→</span></a>
+                <div class="CalloutText">
+                  {
+                    quizPosts.map((post) => {
+                      const { title, subTitle, modified, date } = post.data;
+                      const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
+                      return (
+                        <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
+                          <span class="nav-post-title">{title.replace(/^Quiz:\s*/i, "")}</span>
+                          <sup>{modifiedAgo} ago</sup>
+                        </a>
+                      );
+                    })
+                  }
+                </div>
+              </div>
             </li>
 
             <li class="item-categories">
@@ -96,7 +124,7 @@ function getPostPath(post: NavPost) {
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
                       return (
                         <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
-                          {title}
+                          <span class="nav-post-title">{title}</span>
                           <sup>{modifiedAgo} ago</sup>
                         </a>
                       );
@@ -108,7 +136,7 @@ function getPostPath(post: NavPost) {
 
             <li class="item-recent">
               <div class="Callout neon-bg-4">
-                <div class="CalloutHeading">{copy.nav.recent}</div>
+                <a href={pagePath("/")} class="CalloutHeading">{copy.nav.recent} <span aria-hidden="true">→</span></a>
                 <div class="CalloutText">
                   {
                     recentPosts.map((post) => {
@@ -116,7 +144,7 @@ function getPostPath(post: NavPost) {
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
                       return (
                         <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
-                          {title}
+                          <span class="nav-post-title">{title}</span>
                           <sup>{modifiedAgo} ago</sup>
                         </a>
                       );
@@ -137,18 +165,29 @@ function getPostPath(post: NavPost) {
         </summary>
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List two">
+            {
+              featuredProjects.map((project) => (
+                <li class="featured-project">
+                  <a class="Callout FeaturedProject" href={project.href} target="_blank" rel="noopener">
+                    <Image src={project.image} alt={project.alt} width={480} quality={72} format="webp" loading="lazy" class="FeaturedProjectImage" />
+                    <div class="CalloutHeading">{project.name} <span aria-hidden="true">↗</span></div>
+                    <p class="CalloutText">{project.text}</p>
+                  </a>
+                </li>
+              ))
+            }
             <li class="panel-projects">
-              <a class="Callout neon-bg-2" href="https://github.com/justsml" target="_blank">
+              <a class="Callout neon-bg-2" href="https://github.com/justsml" target="_blank" rel="noopener">
                 <div class="CalloutHeading">{copy.nav.demosTitle}</div>
                 <p class="CalloutText">{copy.nav.demosText}</p>
               </a>
             </li>
             <li><a class="ListItemLink" href={pagePath("/open-source-journal/")}><div class="ListItemHeading">{copy.nav.openSourceJournal}</div><p class="ListItemText">{copy.nav.openSourceJournalText}</p></a></li>
-            <li><a class="ListItemLink" href="https://dataanalyzer.app/"><div class="ListItemHeading">DataAnalyzer.app</div><p class="ListItemText">A code + schema generator for JSON or CSV input.</p></a></li>
-            <li><a class="ListItemLink" href="https://fpromises.io/"><div class="ListItemHeading">Functional Promises</div><p class="ListItemText">A functional and fluent API built around native JavaScript promises.</p></a></li>
-            <li><a class="ListItemLink" href="https://github.com/justsml/node-streaming-image-proxy"><div class="ListItemHeading">Node Streaming Image Proxy</div><p class="ListItemText">High performance image resizing and streaming proxy for Node.js.</p></a></li>
-            <li><a class="ListItemLink" href="https://github.com/justsml/fact-service"><div class="ListItemHeading">Fact Service</div><p class="ListItemText">A powerful key-value service with several database adapters.</p></a></li>
-            <li><a class="ListItemLink" href="https://github.com/justsml/modern-app-template"><div class="ListItemHeading">Modern App Starter Base</div><p class="ListItemText">A modern app starter using TS, Vite, React, Tailwind CSS, and more.</p></a></li>
+            <li><a class="ListItemLink" href="https://dataanalyzer.app/" target="_blank" rel="noopener noreferrer"><div class="ListItemHeading">DataAnalyzer.app</div><p class="ListItemText">A code + schema generator for JSON or CSV input.</p></a></li>
+            <li><a class="ListItemLink" href="https://fpromises.io/" target="_blank" rel="noopener noreferrer"><div class="ListItemHeading">Functional Promises</div><p class="ListItemText">A functional and fluent API built around native JavaScript promises.</p></a></li>
+            <li><a class="ListItemLink" href="https://github.com/justsml/node-streaming-image-proxy" target="_blank" rel="noopener noreferrer"><div class="ListItemHeading">Node Streaming Image Proxy</div><p class="ListItemText">High performance image resizing and streaming proxy for Node.js.</p></a></li>
+            <li><a class="ListItemLink" href="https://github.com/justsml/fact-service" target="_blank" rel="noopener noreferrer"><div class="ListItemHeading">Fact Service</div><p class="ListItemText">A powerful key-value service with several database adapters.</p></a></li>
+            <li><a class="ListItemLink" href="https://github.com/justsml/modern-app-template" target="_blank" rel="noopener noreferrer"><div class="ListItemHeading">Modern App Starter Base</div><p class="ListItemText">A modern app starter using TS, Vite, React, Tailwind CSS, and more.</p></a></li>
           </ul>
         </div>
       </details>
@@ -167,6 +206,7 @@ function getPostPath(post: NavPost) {
                   <img src={avatarImage.src} alt="Dan Levy" width={avatarImage.width} height={avatarImage.height} loading="lazy" decoding="async" class="u-photo p" />
                 </a>
                 <div class="CalloutHeading">Dan Levy</div>
+                <p class="about-role">CTO &amp; Co-founder, <a href="https://17thstreetlabs.com/" target="_blank" rel="noopener">17th Street Labs</a></p>
                 <p class="CalloutText" set:html={copy.nav.aboutText} />
               </div>
             </li>
@@ -193,114 +233,67 @@ function getPostPath(post: NavPost) {
 </nav>
 
 <script>
-  const navRoot = document.querySelector(".static-nav");
-  const searchButton = navRoot?.querySelector(".btnSearchToggle");
-  const menus: HTMLDetailsElement[] = navRoot ? Array.from(navRoot.querySelectorAll("details.static-nav-menu")) : [];
-  let closeTimer = 0;
+  let listeners: AbortController | undefined;
   let hoverTimer = 0;
-  let stickyMenu: HTMLDetailsElement | null = null;
-  let searchRuntimeReady = false;
-
-  const closeMenus = (except: HTMLDetailsElement | null = null) => {
+  let closeTimer = 0;
+  function initializeNavigation() {
+    listeners?.abort();
     window.clearTimeout(hoverTimer);
     window.clearTimeout(closeTimer);
-    if (!except || stickyMenu !== except) stickyMenu = null;
-    menus.forEach((details) => {
-      if (details !== except) details.removeAttribute("open");
-    });
-  };
-
-  const openMenu = (details: HTMLDetailsElement, sticky = false) => {
-    window.clearTimeout(hoverTimer);
-    window.clearTimeout(closeTimer);
-    document.dispatchEvent(new CustomEvent("closeSearchPanel"));
-    stickyMenu = sticky ? details : null;
-    details.setAttribute("open", "");
-    closeMenus(details);
-  };
-
-  const closePreviewMenu = () => {
-    if (stickyMenu) return;
-    closeMenus();
-  };
-
-  navRoot?.addEventListener("toggle", (event) => {
-    const current = event.target;
-    if (!(current instanceof HTMLDetailsElement) || !current.open) return;
-    closeMenus(current);
-  }, true);
-
-  menus.forEach((details) => {
-    const summary = details.querySelector("summary");
-
-    summary?.addEventListener("click", (event) => {
-      event.preventDefault();
-      openMenu(details, true);
-    });
-
-    details.addEventListener("pointerenter", (event) => {
-      if (!(event instanceof PointerEvent)) return;
-      if (event.pointerType === "touch") return;
+    listeners = new AbortController();
+    const { signal } = listeners;
+    const root = document.querySelector(".static-nav");
+    if (!root) return;
+    const menus = Array.from(root.querySelectorAll<HTMLDetailsElement>("details.static-nav-menu"));
+    let pinned: HTMLDetailsElement | null = null;
+    const closeMenus = (except: HTMLDetailsElement | null = null) => {
       window.clearTimeout(hoverTimer);
-      hoverTimer = window.setTimeout(() => {
-        if (details.matches(":hover")) {
-          openMenu(details, false);
-        }
-      }, 160);
-    });
-
-    details.addEventListener("pointerleave", (event) => {
-      if (!(event instanceof PointerEvent)) return;
-      if (event.pointerType === "touch") return;
-      window.clearTimeout(hoverTimer);
-      if (stickyMenu) return;
-      if (event.relatedTarget instanceof Element && event.relatedTarget.closest(".static-nav")) return;
       window.clearTimeout(closeTimer);
-      closeTimer = window.setTimeout(() => {
-        if (!details.matches(":focus-within")) details.removeAttribute("open");
-      }, 120);
+      if (pinned !== except) pinned = null;
+      menus.forEach((menu) => { if (menu !== except) menu.open = false; });
+    };
+    const openMenu = (menu: HTMLDetailsElement, pin = false) => {
+      document.dispatchEvent(new CustomEvent("closeNavPanels"));
+      document.dispatchEvent(new CustomEvent("closeSearchPanel"));
+      closeMenus(menu);
+      menu.open = true;
+      pinned = pin ? menu : null;
+    };
+    menus.forEach((menu) => {
+      menu.querySelector("summary")?.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (menu.open && pinned === menu) closeMenus();
+        else openMenu(menu, true);
+      }, { signal });
+      menu.addEventListener("pointerenter", (event) => {
+        if (!(event instanceof PointerEvent) || event.pointerType === "touch" || pinned) return;
+        window.clearTimeout(hoverTimer);
+        window.clearTimeout(closeTimer);
+        hoverTimer = window.setTimeout(() => { if (menu.matches(":hover")) openMenu(menu); }, 160);
+      }, { signal });
+      menu.addEventListener("pointerleave", (event) => {
+        if (!(event instanceof PointerEvent) || event.pointerType === "touch" || pinned) return;
+        window.clearTimeout(hoverTimer);
+        closeTimer = window.setTimeout(() => { if (!menu.matches(":focus-within")) menu.open = false; }, 150);
+      }, { signal });
     });
-
-    details.addEventListener("focusin", () => {
-      if (details.matches(":hover")) return;
-      openMenu(details, false);
-    });
-  });
-
-  navRoot?.addEventListener("pointerleave", (event) => {
-    if (!(event instanceof PointerEvent)) return;
-    if (event.pointerType === "touch") return;
-    window.clearTimeout(hoverTimer);
-    if (stickyMenu) return;
-    if (event.relatedTarget instanceof Element && event.relatedTarget.closest(".static-nav")) return;
-    window.clearTimeout(closeTimer);
-    closeTimer = window.setTimeout(closePreviewMenu, 140);
-  });
-
-  document.addEventListener("click", (event) => {
-    const target = event.target;
-    if (!(target instanceof Element) || target.closest(".static-nav")) return;
-    closeMenus();
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    closeMenus();
-  });
-
-  document.addEventListener("closeNavPanels", () => {
-    closeMenus();
-  });
-
-  searchButton?.addEventListener("click", async (event) => {
-    event.preventDefault();
-    stickyMenu = null;
-    closeMenus();
-    const { installSearchPanelDismissal, toggleSearchPanel } = await import("./SearchUI/searchPanelRuntime");
-    if (!searchRuntimeReady) {
+    document.addEventListener("click", (event) => {
+      if (event.target instanceof Element && !event.target.closest(".static-nav")) closeMenus();
+    }, { signal });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      const open = menus.find((menu) => menu.open);
+      closeMenus();
+      open?.querySelector<HTMLElement>("summary")?.focus();
+    }, { signal });
+    document.addEventListener("closeNavPanels", () => closeMenus(), { signal });
+    root.querySelector(".btnSearchToggle")?.addEventListener("click", async () => {
+      closeMenus();
+      const { installSearchPanelDismissal, toggleSearchPanel } = await import("./SearchUI/searchPanelRuntime");
       installSearchPanelDismissal();
-      searchRuntimeReady = true;
-    }
-    await toggleSearchPanel({ dispatchCloseNavPanels: false });
-  });
+      await toggleSearchPanel({ dispatchCloseNavPanels: true });
+    }, { signal });
+  }
+  initializeNavigation();
+  document.addEventListener("astro:page-load", initializeNavigation);
 </script>

@@ -8,8 +8,10 @@ tags: [collaborative-culture,culture,teams,growth,personal-development]
 category: Leadership
 subCategory: culture
 cover: pexels-photo-3184431--cropped.webp
-cover_mobile: w300_pexels-photo-3184431--cropped.webp
-cover_icon: icon_pexels-photo-3184431--cropped.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## What is *Collaborative Culture*?

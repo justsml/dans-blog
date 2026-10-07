@@ -1,0 +1,29 @@
+---
+import type { Locale } from "../shared/i18n";
+const { locale = "en" } = Astro.props as { locale?: Locale };
+const labels: Record<string, string[]> = {
+  en: ["Color theme", "System", "Light", "Dark"], es: ["Tema de color", "Sistema", "Claro", "Oscuro"],
+  hi: ["रंग थीम", "सिस्टम", "हल्का", "गहरा"], ja: ["配色", "システム", "ライト", "ダーク"],
+  ru: ["Цветовая тема", "Система", "Светлая", "Тёмная"], de: ["Farbschema", "System", "Hell", "Dunkel"],
+  fr: ["Thème", "Système", "Clair", "Sombre"], it: ["Tema", "Sistema", "Chiaro", "Scuro"],
+  ar: ["نمط الألوان", "النظام", "فاتح", "داكن"], he: ["ערכת צבעים", "מערכת", "בהיר", "כהה"], zh: ["配色", "系统", "浅色", "深色"],
+};
+const [label, system, light, dark] = labels[locale] ?? labels.en;
+---
+<label class="paper-theme-picker" title={label}>
+  <svg class="paper-theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg>
+  <svg class="paper-theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.5 14.2A9 9 0 0 1 9.8 3.5 9 9 0 1 0 20.5 14.2Z"/></svg>
+  <svg class="paper-theme-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m3 4.5 3 3 3-3"/></svg>
+  <select data-paper-theme-select aria-label={label}><option value="system">{system}</option><option value="light">{light}</option><option value="dark">{dark}</option></select>
+</label>
+<style>
+  .paper-theme-picker { position: relative; display: flex; align-items: center; justify-content: center; gap: 5px; min-width: 44px; min-height: 44px; color: var(--paper-ink); border-radius: 4px; }
+  .paper-theme-picker > svg { width: 19px; height: 19px; }
+  .paper-theme-picker > .paper-theme-chevron { width: 10px; height: 10px; }
+  .paper-theme-picker > .paper-theme-moon { display: none; }
+  :global(:root[data-theme=dark]) .paper-theme-sun { display: none; }
+  :global(:root[data-theme=dark]) .paper-theme-moon { display: block; }
+  .paper-theme-picker select { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; opacity: 0; cursor: pointer; }
+  .paper-theme-picker:focus-within { outline: 2px solid var(--paper-accent); outline-offset: 3px; }
+  .paper-theme-picker:hover { background: var(--paper-sheet); }
+</style>

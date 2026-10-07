@@ -1,5 +1,99 @@
 # DanLevy.net visual language
 
+## Current direction: Paper atelier (2026-10-05)
+
+The site uses professional paper cut-outs, but cover art needs a wider range.
+Treat paper as a medium with expressive possibilities: cut photographic collage,
+torn and folded stock, printmaking, oversized sculpture, strong silhouettes,
+quiet scenes, and selective surrealism. Mature means deliberate composition and
+material intelligence, not beige minimalism.
+
+**User correction:** the initial eight images were far too conforming. Do not
+repeat the ivory architectural model + blue/terracotta accent + shallow studio
+camera formula. Nor should every article become a miniature mechanism. Vary
+palette, camera, scale, density, light, and image-making mode across a batch.
+The second correction also rejected repetitive flat cut-outs on solid colored
+fields. Color changes alone do not create range. Include environmental scenes,
+atmospheric photography, natural subjects, gestural prints, and compositions
+with different depth and density. Avoid repeating hands, parcels, stitching,
+thread, and repaired tears across several neighboring covers. Inspect the batch
+as a contact sheet before presenting it; preserve a few quiet graphic plates
+among more expansive images rather than enforcing one treatment everywhere.
+A dramatic ink-black plate, moss/cobalt collage, or saffron paper composition
+can belong beside the same site typography. Artwork need not match UI tokens.
+
+Choose a metaphor from the article's tension and consequence, including human,
+natural, narrative, or gestural ideas. Literal gates, trays, and keyed apertures
+are occasional options rather than the visual vocabulary of the whole blog.
+Avoid baked-in labels, fake code, generated diagrams that imply measured
+results, and incidental brand marks. Physical interlayer shadows belong in the
+art; outer card framing and title typography belong in HTML/CSS.
+
+Existing restrained object photography remains compatible and should not be
+regenerated just to force every post into paper. Keep real explanatory diagrams
+and screenshots in the body. Use the regeneration queue in
+`docs/design/paper-atelier-image-regeneration.md` to prioritize mismatches.
+
+### Compatible foundation: Warm Editorial (2026-10-02)
+
+The homepage exploration selected a quieter editorial image aesthetic. Default to a believable photograph of a carefully composed object or small physical system, rather than a busy miniature world, saturated illustration, or a rendered dashboard. Use the Warm Editorial mockups in `output/design-mockups/2026-10-02/` as mood references, not sources of factual copy or a template to reproduce. Their generated slogans and labels are not part of the approved image language.
+
+The desired feeling is an independent technical journal: observant, tactile, intelligent, and a little wry. The current AI-hiring bridge and LLM-judge measurement apparatus are useful source examples. Keep the physical metaphor while reducing prop count and visual noise.
+
+### Photographic lane (one option among several)
+
+- One subject, one mechanism, one readable consequence. A load on a bridge, an instrument calibrating a measurement, a gate dividing routes, or ordered drawers holding evidence should communicate without a legend.
+- Real-feeling wood, paper, stone, oxidized steel, brass, glass, and enamel. Show subtle wear and construction detail, not gratuitous grime or perfect plastic.
+- Warm ivory, putty, charcoal, muted green, tobacco, and small rust/terracotta accents. Choose colors because of the objects; avoid blanket sepia, monochrome nostalgia, candy palettes, and neon.
+- Broad directional light with gentle falloff and legible shadows. Use a neutral studio or quiet workshop backdrop, with depth of field that keeps the mechanism sharp.
+- Prefer a straight-on, shallow three-quarter, or overhead view. Avoid dramatic wide-angle distortion, hyper-shallow focus, smoke, and cinematic darkness that hides the point.
+- Give objects breathing room. Aim for one dominant silhouette and two or three meaningful supporting objects. Negative space is compositional; do not reserve a giant empty area for a baked-in title.
+- Wit comes from a physical tension: an unexpectedly small support carrying a load, a calibration tool judging its own readings, or an orderly system revealing a bottleneck. No pasted-on cat mascots unless the article earns them.
+
+### Resolution and delivery
+
+Preserve native high-resolution sources beside the post. Request a 2048px square
+when the generator supports it, record the actual output dimensions, and never
+upscale a smaller generation merely to report a larger file. A fresh square of
+at least 1200px is suitable as a mobile hero master; tiny icons are derivatives.
+
+Use `cover_full_width` for the landscape hero and landscape cards, `cover_mobile`
+for the separately recomposed square, and a 200px derivative in `cover_icon` for
+search/compact previews. Set `cover_mobile_hero: true` to opt into mobile hero art
+direction; legacy thumbnails under 200px remain card-only. For existing artwork, native 400–600px square recuts are valid mobile hero sources when explicitly approved; never upscale, and preserve detailed explanatory landscape art when a square would lose its meaning. Update shared localized image references together.
+Remove credits belonging to replaced artwork while preserving body-image credit.
+
+Use Astro's build-time `astro:assets` pipeline to create width variants. Match
+`sizes` to the actual layout, supply intrinsic dimensions, and use native
+`picture`/`source` art direction for square mobile versus wide desktop heroes.
+Preload only the above-the-fold hero with matching media, srcset, and sizes;
+lazy-load supporting cards and footer images. Verify selected `currentSrc`,
+decoded size, and transfer size on mobile and desktop, including high-DPR
+displays. Preserve quiz lazy hydration and the existing bounded paging cache.
+
+### Pairing with the design
+
+Images are rectangular editorial plates with clean edges. Do not bake shadows, rounded cards, gradients, borders, title typography, or UI into the asset. The layout owns those treatments. Use the same image on light and dark themes; retain detail at both extremes and make the subject distinct from its backdrop. Do not invert or darken photographs for dark mode.
+
+For wide heroes, preserve the mechanism in 16:9 and a shallow 2.25:1 crop. For square thumbnails, recompose around its defining relationship rather than shrinking the whole set. Check at 200px and 96px, and on both ivory and warm charcoal. A dark corner is fine; a black object disappearing into black is not.
+
+### Prompt example
+
+```text
+Editorial object photograph for a technical essay about evaluating AI judgment.
+A small mechanical balance on a warm limestone workbench, with a precisely
+machined reference weight on one side and several inconsistent weights on the
+other. The difference in balance is immediately visible. Restrained brass,
+oxidized steel, and pale paper; one muted rust accent. Gentle directional window
+light, readable shadows, quiet neutral background, sharp mechanism, subtle wear.
+Shallow three-quarter view with generous breathing room and a strong silhouette.
+The scene must read at thumbnail size and support both wide and square versions.
+No words, handwritten notes, inscriptions, labels, logos, fake code, interface,
+neon, decorative circuitry, or extra symbolic props. No baked-in title or border.
+```
+
+Diagrams, infographics, and screenshots still belong in the article when they teach a mechanism precisely. Keep labels in editable SVG/HTML or real captured UI; they are not the default cover-art style.
+
 ## What the current imagery does well
 
 Recent image families turn software behavior into physical systems. Model routing becomes a rail yard, marble run, kitchen pass, board game, or harbor. Reasoning effort becomes a test rig, amplifier, switchboard, or instrument panel. Connection strings become tagged wires, drawers, a workbench, or a notebook diagram.

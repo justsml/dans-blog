@@ -9,11 +9,12 @@ subCategory: AI Infrastructure
 popularity: 0.8
 cover_full_width: ./wide.webp
 cover_mobile: ./square.webp
-cover_icon: ./square.webp
+cover_icon: ./hero-responsive-icon-200.webp
 related:
   - llm-evals-are-broken
   - dont-fear-the-model-router
   - less-effort-please
+cover_mobile_hero: true
 ---
 
 Your LLM judge just scored 94%.
@@ -49,17 +50,17 @@ That is the whole idea. The details matter, but the loop is not complicated.
   <desc id="judge-loop-desc">Run a baseline repeatedly, analyze variance, change one prompt or configuration variable, validate the result, and repeat only when measurements improve.</desc>
   <defs>
     <marker id="judge-arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L0,6 L9,3 z" fill="#67e8f9"/>
+      <path d="M0,0 L0,6 L9,3 z" fill="var(--paper-blue)"/>
     </marker>
     <style>{`
-      .jl-bg { fill: #081018; }
-      .jl-card { fill: #111c2b; stroke: #334155; stroke-width: 2; }
-      .jl-card-active { fill: #211528; stroke: #f472b6; stroke-width: 2; }
-      .jl-step { font: 800 14px ui-monospace, SFMono-Regular, Menlo, monospace; fill: #f472b6; }
-      .jl-title { font: 800 23px ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; }
-      .jl-body { font: 500 16px ui-sans-serif, system-ui, sans-serif; fill: #cbd5e1; }
-      .jl-line { fill: none; stroke: #67e8f9; stroke-width: 4; marker-end: url(#judge-arrow); }
-      .jl-return { fill: none; stroke: #f472b6; stroke-width: 3; stroke-dasharray: 8 8; marker-end: url(#judge-arrow); }
+      .jl-bg { fill: var(--paper-desk); }
+      .jl-card { fill: var(--paper-sheet); stroke: var(--paper-muted); stroke-width: 2; }
+      .jl-card-active { fill: var(--paper-raised); stroke: var(--paper-accent); stroke-width: 2; }
+      .jl-step { font: 800 14px ui-monospace, SFMono-Regular, Menlo, monospace; fill: var(--paper-accent); }
+      .jl-title { font: 600 23px ui-sans-serif, system-ui, sans-serif; fill: var(--paper-ink); }
+      .jl-body { font: 500 16px ui-sans-serif, system-ui, sans-serif; fill: var(--paper-muted); }
+      .jl-line { fill: none; stroke: var(--paper-blue); stroke-width: 4; marker-end: url(#judge-arrow); }
+      .jl-return { fill: none; stroke: var(--paper-accent); stroke-width: 3; stroke-dasharray: 8 8; marker-end: url(#judge-arrow); }
     `}</style>
   </defs>
   <rect class="jl-bg" width="1200" height="430" rx="18"/>

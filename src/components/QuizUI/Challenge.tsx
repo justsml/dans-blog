@@ -171,7 +171,26 @@ export default function Challenge({
     }, duration);
   };
 
-  const handleAnswer = (option: Option) => {
+  // A wrong pick wobbles in place; restarting the class replays it on repeat clicks.
+  const wobble = (element: HTMLElement) => {
+    element.classList.remove("option-wobble");
+    void element.offsetWidth;
+    element.classList.add("option-wobble");
+    element.addEventListener("animationend", () => element.classList.remove("option-wobble"), { once: true });
+  };
+
+  // Played inline: this answer re-renders the card's className, which would wipe a class added here.
+  // Important, to outrank the stylesheet's `animation: none !important` on modern cards.
+  const flashIncorrect = () => {
+    const card = challengeRef.current;
+    if (!card || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    card.style.removeProperty("animation");
+    void card.offsetWidth;
+    card.style.setProperty("animation", "quiz-incorrect-flash .65s ease-out both", "important");
+    card.addEventListener("animationend", () => card.style.removeProperty("animation"), { once: true });
+  };
+
+  const handleAnswer = (option: Option, control?: HTMLElement) => {
     if (!quizProgressRef.current) {
       quizProgressRef.current = createQuizProgress(
         getPathname(),
@@ -200,7 +219,8 @@ export default function Challenge({
     } else {
       setChallengeClass("incorrect");
       setIsCorrect(false);
-      replayAnimation("answer-incorrect-shake", 520);
+      flashIncorrect();
+      if (control) wobble(control);
       if (ignoreHintBy > 0) {
         setIgnoreHintBy(ignoreHintBy - 1);
       }
@@ -228,8 +248,18 @@ export default function Challenge({
   };
 
   useEffect(() => {
+    // The options grid stretches to the panel's height, so its scrollHeight would echo the panel back
+    // (pinning it at the pre-measure fallback); measure the options themselves instead.
+    const contentHeight = (panel: HTMLElement | null) => {
+      const first = panel?.firstElementChild;
+      const last = panel?.lastElementChild;
+      if (!panel || !first || !last) return 0;
+      const style = getComputedStyle(panel);
+      return Math.ceil(last.getBoundingClientRect().bottom - first.getBoundingClientRect().top
+        + parseFloat(style.paddingTop) + parseFloat(style.paddingBottom));
+    };
     const syncPanelHeight = () => {
-      const optionHeight = optionsPanelRef.current?.scrollHeight ?? 0;
+      const optionHeight = contentHeight(optionsPanelRef.current);
       const explanationHeight = explanationContentRef.current?.scrollHeight ?? explanationPanelRef.current?.scrollHeight ?? 0;
       const fallbackHeight = SCREENSHOT_SCALE * 70 * options.length;
 
@@ -240,11 +270,9 @@ export default function Challenge({
         );
       }
 
-      const nextHeight = Math.max(
-        tallestOptionsHeightRef.current,
-        explanationHeight,
-        fallbackHeight,
-      );
+      // Size to the face that is showing, so a long explanation doesn't pad every question while hidden.
+      const showing = showExplanation ? explanationHeight : tallestOptionsHeightRef.current;
+      const nextHeight = showing > 0 ? showing : fallbackHeight;
 
       if (nextHeight > 0) {
         setPanelHeight(nextHeight);
@@ -324,6 +352,10 @@ export default function Challenge({
     );
   }
 
+  // Short answers sit two-up, tiny ones (units, keywords) pack tighter; one long answer puts them all in a
+  // single column so none wraps awkwardly.
+  const hasLongOptions = options.some((option) => option.text.length > 48);
+  const hasTinyOptions = options.every((option) => option.text.length <= 10);
   const _options = options
     .map((option) => {
       const isCurrentOptionCorrectAnswer = Boolean(isCorrect && option.isAnswer);
@@ -342,11 +374,11 @@ export default function Challenge({
             },
             "mx-auto",
           )}
-          onClick={() => !isCorrect && handleAnswer(option)}
+          onClick={(event) => !isCorrect && handleAnswer(option, event.currentTarget)}
           onKeyDown={(event) => {
             if (event.target === event.currentTarget && (event.key === "Enter" || event.key === " ") && !isCorrect) {
               event.preventDefault();
-              handleAnswer(option);
+              handleAnswer(option, event.currentTarget);
             }
           }}
         >
@@ -370,7 +402,7 @@ export default function Challenge({
   return (
     <div
       id={`qq-${sequenceNum}`}
-      className={classList("challenge challenge-modern", challengeClass)}
+      className={classList("challenge challenge-modern", challengeClass, { "has-long-options": hasLongOptions, "has-tiny-options": hasTinyOptions })}
       ref={challengeRef}
       data-answer-count={tries}
       data-question-correct={isCorrect}

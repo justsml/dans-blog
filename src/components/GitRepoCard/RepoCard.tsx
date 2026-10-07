@@ -1,11 +1,6 @@
 import React from "react";
-// import { useState } from "react";
-import type {
-  Contribution,
-  ContributionTag,
-  UserPullRequestData,
-} from "../../types.ts";
-import clsx from "clsx";
+import { GitPullRequest, Star } from "lucide-react";
+import type { Contribution, ContributionTag, UserPullRequestData } from "../../types.ts";
 import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
 
 const TAG_CONFIG: Record<
@@ -23,179 +18,44 @@ const TAG_CONFIG: Record<
   Rust: { iconClass: "tech-icon-rust", color: "#9a3412" },
   Ruby: { iconClass: "tech-icon-ruby", color: "#be123c" },
 };
-// import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
-// import { Button } from "../ui/button.tsx";
-
-// const githubSearch = new GithubSearch({
-//   per_page: 40,
-// });
-
-export const RepoCard = ({
-  contribution: c,
-  defaultPullData: pr,
-  // author,
-}: {
+export const RepoCard = ({ contribution: c, defaultPullData: pr }: {
   author: string;
   contribution: Contribution;
   defaultPullData?: UserPullRequestData;
 }) => {
-  const { repo } = c;
-
-  // const [contributions, setContributions] = useState(null);
-  const prList = pr?.pullRequests ?? [];
-
-  // const [showNotes, setShowNotes] = useState(false);
-  // // Client side
-  // const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(
-  //   pr,
-  // );
-
-  const repoData: UserPullRequestData | undefined = pr;
-
-  if (!repoData) {
-    return <div>Loading...</div>;
-  }
-
-  const latestPullTimestamp = Math.max(
-    0,
-    ...prList.map((pull) =>
-      new Date(pull.mergedAt ?? pull.createdAt).getTime(),
-    ),
-  );
-  const latestPullDate =
-    latestPullTimestamp > 0
-      ? new Date(latestPullTimestamp).toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        })
-      : "No PR date";
-  const hasNotes = Boolean(c.notes?.trim());
-
+  if (!pr) return null;
+  const pulls = pr.pullRequests ?? [];
+  const latest = Math.max(0, ...pulls.map(p => new Date(p.mergedAt ?? p.createdAt).getTime()));
+  const date = latest ? new Date(latest).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : null;
   return (
-    <section
-      className={clsx("repo-card", "h-card", { "has-notes": hasNotes })}
-      data-pull-count={prList?.length}
-      data-star-count={pr?.repository.stars}
-      data-last-pr-date={latestPullTimestamp}
-      data-open-issues={pr?.repository.openIssues}
-      data-watchers={pr?.repository.watchers}
-      data-forks={pr?.repository.forks}
-      data-primary-language={pr?.repository.primaryLanguage}
-      data-repo-name={pr?.repository.name}
-      data-repo-description={pr?.repository.description}
-      data-repo-owner={pr?.repository.owner}
-      data-additions={pr?.pullStats.additions}
-      data-deletions={pr?.pullStats.deletions}
-      data-tags={(c.tags ?? []).join(",")}
-    >
-      <div className="repo-card-github-header">
-        <h2 style={styles.repoName} className="repo-name">
-          <span className="gh-icon icon-github-octocat w-2 h-2"></span>
-          <a
-            href={`https://github.com/${repo}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            title={c.renamed ? `MOVED: ${c.renamed}` : repo}
-            // style={styles.link}
-            className="p-org"
-          >
-            {repo}
-          </a>
+    <article className="repo-card h-card" data-tags={(c.tags ?? []).join(",")}
+      data-star-count={pr.repository.stars} data-last-pr-date={latest}>
+      <header className="repo-card-github-header">
+        <h2 className="repo-name"><GitPullRequest size={20} aria-hidden="true" />
+          <a className="p-org" href={`https://github.com/${c.renamed ?? c.repo}`} target="_blank" rel="noopener noreferrer">{c.repo}</a>
         </h2>
-        <section className="corner-stats">
-          <aside title="Stars" className="stat">
-            <span className="gh-icon icon-github-star"></span>
-            {pr?.repository.stars.toLocaleString()}
-          </aside>
-          <aside title="Last PR date" className="stat last-pr-stat">
-            {latestPullDate}
-          </aside>
-        </section>
-      </div>
-
-      <div className="repo-card-body-flip">
-        <div className="repo-card-body-face repo-card-body-front">
-          <p className="s-description repo-inner-card description">
-            {c.description_override ?? `[could not load description for ${repo}]`}
-          </p>
-          {c.tags && c.tags.length > 0 && (
-            <div className="tech-tags">
-              {c.tags.map((tag) => {
-                const cfg = TAG_CONFIG[tag];
-                if (!cfg) return null;
-                return (
-                  <span
-                    key={tag}
-                    title={tag}
-                    className="tech-tag"
-                    style={{ "--tag-color": cfg.color } as React.CSSProperties}
-                  >
-                    <span className={`tech-tag-icon ${cfg.iconClass}`} />
-                    <span className="tech-tag-label">{tag}</span>
-                  </span>
-                );
-              })}
-            </div>
-          )}
+        <div className="corner-stats">
+          <span><Star size={14} aria-hidden="true" /> {pr.repository.stars.toLocaleString()} stars</span>
+          {date && <span>Last PR <time dateTime={new Date(latest).toISOString()}>{date}</time></span>}
         </div>
-        {hasNotes && (
-          <div className="repo-card-body-face repo-card-body-back">
-            <p className="repo-card-back-label">Contribution notes</p>
-            <div
-              className="dan-notes"
-              dangerouslySetInnerHTML={{ __html: c.notes }}
-            />
-          </div>
-        )}
-      </div>
-
-      <div className="s-stats repo-stats">
-        <span className="s-stat pull-requests-list">
-          <span className="gh-icon icon-github-pull-request"></span>
-          {prList?.length >= 2 ? prList?.length + " PRs" : "PR"}:{" "}
-          {prList?.map((pr) => {
-            return (
-              <a
-                key={pr.number}
-                href={pr.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={pr.title}
-              >
-                <code>#{pr.number}</code>
-              </a>
-            );
-          })}
+      </header>
+      <p className="s-description description">{c.description_override ?? pr.repository.description}</p>
+      <div className="tech-tags">{(c.tags ?? []).map(tag => (
+        <span className="tech-tag" key={tag} style={{ "--tag-color": TAG_CONFIG[tag].color } as React.CSSProperties}>
+          <span className={`tech-tag-icon ${TAG_CONFIG[tag].iconClass}`} aria-hidden="true" />{tag}
         </span>
-        {/* <span style={styles.stat}>
-          <span className="gh-icon icon-github-issue"></span>
-          {pr?.repository.openIssues.toLocaleString()}
-        </span>
-        <span style={styles.stat}>
-          <span className="gh-icon icon-github-eye"></span>
-          {pr?.repository.watchers.toLocaleString()}
-        </span> */}
-      </div>
-      <div className="s-stats pr-diff-stats">
-        <LineChangeIndicator
-          additions={pr?.pullStats.additions}
-          deletions={pr?.pullStats.deletions}
-        />
-      </div>
-    </section>
+      ))}</div>
+      {c.notes?.trim() && <details className="repo-notes">
+        <summary>Contribution notes</summary>
+        <div className="dan-notes" dangerouslySetInnerHTML={{ __html: c.notes }} />
+      </details>}
+      <details className="repo-pulls">
+        <summary>{pulls.length.toLocaleString()} pull {pulls.length === 1 ? "request" : "requests"}</summary>
+        <div className="pull-requests-list">{pulls.map(p => (
+          <a key={p.number} href={p.url} target="_blank" rel="noopener noreferrer" title={p.title}>#{p.number}<span>{p.title}</span></a>
+        ))}</div>
+      </details>
+      <footer className="pr-diff-stats"><span>Lines changed</span><LineChangeIndicator additions={pr.pullStats.additions} deletions={pr.pullStats.deletions} /></footer>
+    </article>
   );
-};
-
-const styles = {
-  repoName: {
-    fontSize: "1.32rem",
-    fontWeight: "300",
-    margin: "0",
-  },
-  icon: {
-    marginRight: "4px",
-    width: "16px",
-    height: "16px",
-  },
 };

@@ -7,7 +7,7 @@
     "url": "https://github.com/justsml/dans-blog"
   },
   "scripts": {
-    "deploy": "netlify build && netlify deploy --prod",
+    "deploy": "bun run build && netlify deploy --prod --no-build --dir=dist",
     "webp-images": "bash -c 'source ./src/scripts/webp-image-conversion-cmds.sh && convert_and_cleanup_images \"$@\"' --",
     "fix-quizzes": "bun ./src/scripts/quiz-utils/update-quizzes.ts",
     "i18n:translate:candidates": "bun ./src/scripts/i18n/translate-candidates.ts",
@@ -46,7 +46,7 @@
     "dev": "astro check && astro dev",
     "start": "astro check && astro dev",
     "check": "astro check",
-    "build": "unset GITHUB_TOKEN && NODE_OPTIONS=--max-old-space-size=8192 bun --env-file=.env astro build",
+    "build": "if [ -f .env ]; then unset GITHUB_TOKEN; fi; NODE_OPTIONS=--max-old-space-size=8192 bun --env-file=.env astro build",
     "rebuild": "astro build --force",
     "preview": "astro preview",
     "astro": "astro",
@@ -148,6 +148,8 @@
     "@octokit/graphql": "^9.0.5",
     "@octokit/rest": "^22.0.1",
     "@octokit/types": "^18.0.0",
+    "@opentelemetry/api": "1.9.0",
+    "@opentelemetry/context-async-hooks": "2.11.0",
     "@playwright/test": "^1.63.0",
     "@react-three/fiber": "^9.7.0",
     "@remotion/cli": "^4.0.527",

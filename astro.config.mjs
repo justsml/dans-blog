@@ -11,6 +11,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import pagefind from "astro-pagefind";
 import { rehypeExternalArticleLinks } from "./src/shared/rehypeExternalArticleLinks.mjs";
+import { rehypeDemoteH1 } from "./src/shared/rehypeDemoteH1.mjs";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -48,6 +49,7 @@ export default defineConfig({
     // to rendering one route at a time, which makes local and Netlify deploys take
     // prohibitively long.
     concurrency: 8,
+    inlineStylesheets: "always",
   },
   prefetch: {
     prefetchAll: false,
@@ -64,13 +66,18 @@ export default defineConfig({
   markdown: {
     // remarkPlugins: [remarkMermaid],
     processor: unified({
-      rehypePlugins: [[rehypeExternalArticleLinks, { site: siteUrl }]],
+      rehypePlugins: [[rehypeExternalArticleLinks, { site: siteUrl }], rehypeDemoteH1],
     }),
   },
   vite: {
     plugins: [tailwindcss()],
     build: {
       assetsInlineLimit: 2048, // 2kb - default is 4096
+    },
+    // Dev only. Quiz islands hydrate lazily, so Vite used to discover React mid-session, re-optimize, and
+    // leave open pages importing two copies of React ("_jsxDEV is not a function"). Pre-bundle it up front.
+    optimizeDeps: {
+      include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "react/jsx-dev-runtime"],
     },
   },
   // experimental: {
@@ -120,8 +127,10 @@ export default defineConfig({
         const isIgnoredPath = ignorePaths.every((path) => {
           return !page.includes(path);
         });
+        // Consulting copy is English-only; locale copies canonicalise to it, so only the English URLs are listed.
+        const isLocaleConsulting = /\/[a-z]{2}\/consulting\//.test(new URL(page).pathname);
 
-        return isIgnoredPath;
+        return isIgnoredPath && !isLocaleConsulting;
       },
     }),
     // partytown(),

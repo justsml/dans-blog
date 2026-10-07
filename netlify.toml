@@ -1,0 +1,8 @@
+# Build command, publish directory, and environment stay in the Netlify UI.
+# This file only adds the production gate below.
+
+[build]
+  # Production ships manually (`bun run build && netlify deploy --prod --no-build --dir=dist`),
+  # so pushes and merges to main must not publish. Exit 0 skips a git-triggered build;
+  # exit 1 builds. Deploy previews and branch deploys still build automatically.
+  ignore = "if [ \"$CONTEXT\" = \"production\" ]; then echo 'Production deploys are manual; skipping.'; exit 0; fi; exit 1"

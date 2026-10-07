@@ -1,0 +1,84 @@
+/* Paper atelier: a complete design direction, independent of the surface picker. */
+body.warm-paper {
+  --paper: #e8e3d9; --panel: #f8f4ec; --ink: #262b2b; --muted: #62655f;
+  --accent: #96492f; --line: #ccc6bb; --cut-blue: #314f5b;
+  --cut-rust: #bb6548; --cut-stock: #f5eee0; --cut-shadow: #242b292b;
+  background-image: none;
+}
+:root[data-theme=dark] body.warm-paper {
+  --paper: #202725; --panel: #2c3430; --ink: #f1eee5; --muted: #b9bcb0;
+  --accent: #df9875; --line: #475048; --cut-blue: #3a5b68;
+  --cut-rust: #ad654c; --cut-stock: #c4c3ae; --cut-shadow: #00000065;
+}
+:root[data-surface=none] body.warm-paper::before { display: block; background-image: url('./textures/paper.svg'); opacity: .1; }
+:root[data-theme=dark][data-surface=none] body.warm-paper::before { opacity: .045; }
+.warm-paper .site-shell { max-width: 1220px; }
+.warm-paper .wordmark { font-size: 32px; }
+.warm-paper .site-header { border-bottom: 0; }
+.warm-paper .hero { gap: 64px; padding: 38px 0 76px; }
+.warm-paper .hero h1 { font-size: clamp(43px, 4.8vw, 67px); letter-spacing: -2px; }
+.warm-paper .hero-intro { font-size: 19px; max-width: 440px; }
+.warm-paper .eyebrow { letter-spacing: 2.3px; }
+.paper-art { min-width: 0; }
+.paper-stage { position: relative; height: 460px; isolation: isolate; background: var(--panel); box-shadow: 0 1px 1px var(--cut-shadow), 6px 12px 28px var(--cut-shadow); }
+.paper-stage > div:not(.paper-caption) { position: absolute; background-image: url('./textures/paper.svg'); background-blend-mode: soft-light; box-shadow: 3px 5px 7px var(--cut-shadow), inset 0 1px 0 #ffffff30; }
+.paper-mount { inset: 7% 8% 14%; background-color: var(--cut-stock); transform: rotate(-4deg); }
+.paper-disc { width: 44%; aspect-ratio: 1; top: 9%; right: 9%; border-radius: 50%; background-color: var(--cut-rust); }
+.paper-arch { width: 46%; height: 70%; left: 15%; top: 13%; border-radius: 140px 140px 0 0; background-color: var(--cut-blue); }
+.paper-inner { width: 22%; height: 51%; left: 27%; top: 32%; border-radius: 90px 90px 0 0; background-color: var(--cut-stock); }
+.paper-step { background-color: var(--cut-stock); }
+.paper-step-back { width: 45%; height: 20%; left: 40%; bottom: 20%; transform: rotate(-4deg); }
+.paper-step-front { width: 62%; height: 15%; left: 24%; bottom: 12%; transform: rotate(2deg); }
+.paper-caption { position: absolute; inset: auto 7% 4%; display: flex; justify-content: space-between; gap: 12px; font-size: 8px; letter-spacing: 1.6px; color: var(--muted); }
+.paper-art figcaption { margin-top: 16px; font: italic 14px Georgia, serif; color: var(--muted); }
+.warm-paper .section-heading { border-top: 0; padding-top: 0; }
+.warm-paper .section-heading h2 { font-size: 32px; }
+.warm-paper .filter-row button { border-radius: 2px; background: var(--panel); }
+.warm-paper .filter-row button[aria-pressed=true] { background: var(--ink); }
+.warm-paper .article-grid { gap: 30px; }
+.warm-paper .note { position: relative; padding: 0; border: 0; background: var(--panel); box-shadow: 0 1px 1px var(--cut-shadow), 3px 5px 10px var(--cut-shadow); }
+.warm-paper .note::before { content: ''; position: absolute; inset: 0; background: var(--panel); border: 1px solid var(--line); transform: translate(4px, 4px); z-index: -1; }
+.warm-paper .note-link { display: flex; flex-direction: column; gap: 0; padding: 14px; }
+.warm-paper .note-image img { aspect-ratio: 1.8; }
+.warm-paper .note-copy { padding: 22px 12px 14px; flex: 1; }
+.warm-paper .note h2 { font-size: 29px; line-height: 1.15; }
+.warm-paper .note-index { display: inline; }
+.warm-paper .note-feature { grid-column: 1 / -1; }
+.warm-paper .note-feature .note-link { display: grid; grid-template-columns: 1.05fr 1fr; gap: 26px; }
+.warm-paper .note-feature .note-image { height: 100%; }
+.warm-paper .note-feature .note-image img { min-height: 310px; }
+.warm-paper .note-feature h2 { font-size: 38px; }
+.warm-paper .archive-link { padding: 24px; background: var(--panel); border: 0; box-shadow: 2px 3px 6px var(--cut-shadow); }
+.warm-paper .site-footer { border-top: 0; }
+.warm-paper .footer-intro { border-top: 1px solid var(--line); padding-top: 40px; }
+/* A single unrotated reading sheet; decoration never enters the prose. */
+.warm-paper .reading-page { margin-top: 24px; padding: 42px 42px 52px; background: var(--panel); box-shadow: 0 1px 1px var(--cut-shadow), 5px 8px 22px var(--cut-shadow); border-top: 5px solid var(--cut-blue); }
+.warm-paper .reading-header { margin-top: 0; }
+.warm-paper .reading-header .eyebrow { display: inline-block; background: var(--paper); padding: 8px 12px; margin-bottom: 20px; }
+.warm-paper .reading-header .back-notes { display: block; }
+.warm-paper .reading-hero { padding: 10px; background: var(--paper); box-shadow: 2px 3px 7px var(--cut-shadow); }
+.warm-paper .reading-layout { grid-template-columns: 175px minmax(0, 690px); gap: 40px; }
+@media (max-width: 1050px) {
+  .warm-paper .hero { gap: 32px; }
+  .paper-stage { height: 380px; }
+  .warm-paper .note-feature h2 { font-size: 32px; }
+  .warm-paper .reading-page { padding: 30px; }
+  .warm-paper .reading-layout { grid-template-columns: 150px minmax(0, 1fr); gap: 28px; }
+}
+@media (max-width: 760px) {
+  .warm-paper .hero { grid-template-columns: 1fr; padding: 22px 0 44px; gap: 30px; }
+  .warm-paper .hero h1 { font-size: 44px; }
+  .paper-stage { height: 340px; }
+  .paper-caption { font-size: 7px; letter-spacing: 1px; }
+  .warm-paper .article-grid { grid-template-columns: 1fr; gap: 24px; }
+  .warm-paper .note-feature .note-link { display: flex; gap: 0; }
+  .warm-paper .note-feature .note-image img { min-height: 0; }
+  .warm-paper .note h2, .warm-paper .note-feature h2 { font-size: 27px; }
+  .warm-paper .note-copy { padding: 18px 8px 10px; }
+  .warm-paper .section-heading h2 { font-size: 27px; }
+  .warm-paper .reading-page { padding: 24px 18px 30px; margin-top: 14px; }
+  .warm-paper .reading-header h1 { font-size: 37px; letter-spacing: -1.3px; }
+  .warm-paper .reading-dek { font-size: 19px; }
+  .warm-paper .reading-layout { grid-template-columns: minmax(0, 1fr); }
+  .warm-paper .reading-body { font-size: 18px; }
+}

@@ -7,10 +7,13 @@ tags: [postgres, postgresql, full-text-search, trigrams, pg_trgm, databases, sea
 category: Code
 subCategory: Databases
 popularity: 0.8
-social_image: ./desktop-social.webp
-cover_full_width: ./wide.webp
-cover_mobile: ./square.webp
-cover_icon: ./square.webp
+social_image: "./paper-editorial-v5-retrieval-landscape.webp"
+cover_full_width: ./paper-editorial-v5-retrieval-landscape.webp
+cover_mobile: ./paper-editorial-v5-retrieval-landscape-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover: "./paper-editorial-v5-retrieval-landscape.webp"
+cover_mobile_hero: true
+cover_alt: "A woodcut alpine landscape combines layered mountain strata, similar marked stones and one square vermilion stone at the end of a red path."
 ---
 
 Most teams use one Postgres search tool. Teams that know all three ship better search with less complexity — and avoid the costly detour to a dedicated search service they didn't need yet.
@@ -35,24 +38,24 @@ The choice isn't about sophistication. It's about matching the tool to the shape
   <desc id="stm-desc">A comparison of pg_trgm, full-text search, pgvector, and hybrid search by input shape and query intent.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.14"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.14"/>
     </filter>
     <linearGradient id="header" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="1" stop-color="#25324a"/>
+      <stop offset="0" stop-color="var(--paper-ink)"/>
+      <stop offset="1" stop-color="var(--paper-blue)"/>
     </linearGradient>
     <style>{`
-      .stm-bg { fill: #f7f3ea; }
-      .stm-card { fill: #fffdf8; stroke: #d9cdb6; stroke-width: 2; filter: url(#shadow); }
-      .stm-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
-      .stm-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
-      .stm-label { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .08em; text-transform: uppercase; fill: #ffffff; }
-      .stm-tool { font: 800 27px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
-      .stm-body { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
-      .stm-small { font: 600 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
-      .stm-axis { font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; letter-spacing: .06em; text-transform: uppercase; }
-      .stm-chip { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
-      .stm-line { stroke: #9ca3af; stroke-width: 2; stroke-dasharray: 8 8; }
+      .stm-bg { fill: var(--paper-desk); }
+      .stm-card { fill: var(--paper-sheet); stroke: var(--paper-line); stroke-width: 2; filter: url(#shadow); }
+      .stm-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-ink); }
+      .stm-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-muted); }
+      .stm-label { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .08em; text-transform: uppercase; fill: var(--paper-on-blue); }
+      .stm-tool { font: 800 27px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-ink); }
+      .stm-body { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-muted); }
+      .stm-small { font: 600 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-muted); }
+      .stm-axis { font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-ink); letter-spacing: .06em; text-transform: uppercase; }
+      .stm-chip { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-on-blue); }
+      .stm-line { stroke: var(--paper-line); stroke-width: 2; stroke-dasharray: 8 8; }
     `}</style>
   </defs>
 
@@ -69,7 +72,7 @@ The choice isn't about sophistication. It's about matching the tool to the shape
   <text class="stm-axis" x="78" y="628" transform="rotate(-90 78 628)">Long prose / chunks</text>
 
   <rect class="stm-card" x="112" y="168" width="408" height="186" rx="20"/>
-  <rect x="136" y="192" width="100" height="28" rx="14" fill="#f59e0b"/>
+  <rect x="136" y="192" width="100" height="28" rx="14" fill="var(--paper-warning)"/>
   <text class="stm-label" x="154" y="212">fuzzy</text>
   <text class="stm-tool" x="136" y="256">pg_trgm</text>
   <text class="stm-body" x="136" y="294">Names, addresses, titles, typos,</text>
@@ -77,7 +80,7 @@ The choice isn't about sophistication. It's about matching the tool to the shape
   <text class="stm-small" x="136" y="344">Orthographic similarity: spelling distance.</text>
 
   <rect class="stm-card" x="600" y="168" width="408" height="186" rx="20"/>
-  <rect x="624" y="192" width="116" height="28" rx="14" fill="#22c55e"/>
+  <rect x="624" y="192" width="116" height="28" rx="14" fill="var(--paper-success)"/>
   <text class="stm-label" x="644" y="212">similar</text>
   <text class="stm-tool" x="624" y="256">pgvector</text>
   <text class="stm-body" x="624" y="294">Related items, duplicate tickets,</text>
@@ -85,7 +88,7 @@ The choice isn't about sophistication. It's about matching the tool to the shape
   <text class="stm-small" x="624" y="344">Embedding similarity: meaning distance.</text>
 
   <rect class="stm-card" x="112" y="436" width="408" height="186" rx="20"/>
-  <rect x="136" y="460" width="102" height="28" rx="14" fill="#38bdf8"/>
+  <rect x="136" y="460" width="102" height="28" rx="14" fill="var(--paper-blue)"/>
   <text class="stm-label" x="158" y="480">lexical</text>
   <text class="stm-tool" x="136" y="524">Full-text search</text>
   <text class="stm-body" x="136" y="562">Articles, docs, logs, support content</text>
@@ -93,7 +96,7 @@ The choice isn't about sophistication. It's about matching the tool to the shape
   <text class="stm-small" x="136" y="612">Lexemes, stemming, ranking, boolean filters.</text>
 
   <rect class="stm-card" x="600" y="436" width="408" height="186" rx="20"/>
-  <rect x="624" y="460" width="102" height="28" rx="14" fill="#f472b6"/>
+  <rect x="624" y="460" width="102" height="28" rx="14" fill="var(--paper-accent)"/>
   <text class="stm-label" x="645" y="480">hybrid</text>
   <text class="stm-tool" x="624" y="524">FTS + pgvector</text>
   <text class="stm-body" x="624" y="562">Technical docs and RAG where users ask</text>
@@ -369,27 +372,27 @@ RRF scores each result as `1 / (60 + rank)` in each list and sums across lists. 
   <desc id="rrf-desc">A query fans out to full-text search and vector search, each produces ranks, and Reciprocal Rank Fusion combines them into one result list.</desc>
   <defs>
     <marker id="rrf-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+      <path d="M2,2 L10,6 L2,10 Z" fill="var(--paper-muted)"/>
     </marker>
     <filter id="rrf-shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#0f172a" flood-opacity="0.13"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#000" flood-opacity="0.13"/>
     </filter>
     <style>{`
-      .rrf-bg { fill: #f8fafc; }
-      .rrf-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
-      .rrf-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
-      .rrf-box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; filter: url(#rrf-shadow); }
-      .rrf-query { fill: #fff7ed; stroke: #fdba74; }
-      .rrf-fts { fill: #eff6ff; stroke: #60a5fa; }
-      .rrf-vector { fill: #f0fdf4; stroke: #86efac; }
-      .rrf-merge { fill: #fdf2f8; stroke: #f9a8d4; }
-      .rrf-result { fill: #ecfeff; stroke: #67e8f9; }
-      .rrf-head { font: 800 24px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
-      .rrf-body { font: 550 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
-      .rrf-mono { font: 800 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #0f172a; }
-      .rrf-rank { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
-      .rrf-arrow-line { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#rrf-arrow); }
-      .rrf-thin { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#rrf-arrow); }
+      .rrf-bg { fill: var(--paper-desk); }
+      .rrf-title-text { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-ink); }
+      .rrf-subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-muted); }
+      .rrf-box { fill: var(--paper-sheet); stroke: var(--paper-line); stroke-width: 2; filter: url(#rrf-shadow); }
+      .rrf-query { fill: var(--paper-sheet); stroke: var(--paper-accent); }
+      .rrf-fts { fill: var(--paper-sheet); stroke: var(--paper-blue); }
+      .rrf-vector { fill: var(--paper-sheet); stroke: var(--paper-success); }
+      .rrf-merge { fill: var(--paper-sheet); stroke: var(--paper-accent); }
+      .rrf-result { fill: var(--paper-sheet); stroke: var(--paper-blue); }
+      .rrf-head { font: 800 24px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-ink); }
+      .rrf-body { font: 550 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-muted); }
+      .rrf-mono { font: 800 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: var(--paper-ink); }
+      .rrf-rank { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: var(--paper-muted); }
+      .rrf-arrow-line { stroke: var(--paper-muted); stroke-width: 3; fill: none; marker-end: url(#rrf-arrow); }
+      .rrf-thin { stroke: var(--paper-muted); stroke-width: 2; fill: none; marker-end: url(#rrf-arrow); }
     `}</style>
   </defs>
 

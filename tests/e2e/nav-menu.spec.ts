@@ -9,7 +9,7 @@ test.describe('Navigation Menu', () => {
     ['quizzes', /^\/challenges\/$/],
     ['categories', /^\/category\/[^/]+\/$/],
     ['popular', /^\/[^/]+\/$/],
-    ['recent', /^\/[^/]+\/$/],
+    ['recent', /^\/$/],
   ] as const) {
     test(`Articles ${section} link opens its destination`, async ({ page }) => {
       const nav = page.locator('nav.static-nav');
@@ -17,12 +17,8 @@ test.describe('Navigation Menu', () => {
       const link = nav.locator(`.item-${section}`).getByRole('link').first();
       const href = await link.getAttribute('href');
       expect(href).toMatch(path);
-      const [response] = await Promise.all([
-        page.waitForResponse(response =>
-          response.request().isNavigationRequest() && response.frame() === page.mainFrame()),
-        link.click(),
-      ]);
-      expect(response?.ok()).toBe(true);
+      expect((await page.request.get(href!)).ok()).toBe(true);
+      await link.click();
       await expect(page).toHaveURL(new URL(href!, page.url()).href);
       await expect(page.locator('main')).toBeVisible();
     });
@@ -35,12 +31,8 @@ test.describe('Navigation Menu', () => {
     test(`${menu} link opens ${destination}`, async ({ page }) => {
       const nav = page.locator('nav.static-nav');
       await nav.locator('summary').filter({ hasText: new RegExp(`^${menu}`) }).click();
-      const [response] = await Promise.all([
-        page.waitForResponse(response =>
-          response.request().isNavigationRequest() && response.frame() === page.mainFrame()),
-        nav.getByRole('link', { name: linkName }).click(),
-      ]);
-      expect(response?.ok()).toBe(true);
+      expect((await page.request.get(destination)).ok()).toBe(true);
+      await nav.getByRole('link', { name: linkName }).click();
       await expect(page).toHaveURL(new URL(destination, page.url()).href);
       await expect(page.locator('main')).toBeVisible();
     });

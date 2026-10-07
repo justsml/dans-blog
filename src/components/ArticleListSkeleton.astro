@@ -1,20 +1,19 @@
 ---
-type Props = {
-  nextUrl?: string | null;
-};
-
-const { nextUrl } = Astro.props as Props;
+import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
+import { getArticlePagingCopy } from "../shared/articlePagingCopy";
+type Props = { nextUrl?: string | null; locale?: Locale };
+const { nextUrl, locale = DEFAULT_LOCALE } = Astro.props as Props;
+const copy = getArticlePagingCopy(locale);
 ---
-
-{
-  nextUrl && (
-    <div
-      class="article-list-loader"
-      hx-get={nextUrl}
-      hx-trigger="click"
-      hx-swap="outerHTML"
-    >
-      <button class="article-list-loader__button" type="button">More posts</button>
-    </div>
-  )
-}
+{nextUrl ? (
+  <div class="article-list-loader" hx-get={nextUrl} hx-trigger="intersect once, click" hx-swap="outerHTML"
+    hx-sync="this:drop" hx-disabled-elt="find button" hx-request='{"timeout":15000}'
+    data-loading={copy.loading} data-retry={copy.retry} data-failure={copy.failure} data-announcement={copy.announcement}>
+    <button class="article-list-loader__button" type="button">
+      <span class="article-list-loader__idle">{copy.idle}</span>
+      <span class="article-list-loader__loading">{copy.loading}</span>
+    </button>
+    <p class="article-list-loader__error" role="alert" hidden></p>
+  </div>
+) : <p class="article-list-end">{copy.end}</p>}
+<script>import "../scripts/articlePaging";</script>

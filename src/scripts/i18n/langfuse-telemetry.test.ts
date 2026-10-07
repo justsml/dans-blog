@@ -1,4 +1,6 @@
-import { test, expect } from "bun:test";
+import { afterAll, beforeAll, test, expect } from "bun:test";
+import { context } from "@opentelemetry/api";
+import { AsyncLocalStorageContextManager } from "@opentelemetry/context-async-hooks";
 import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
 import {
   InMemorySpanExporter,
@@ -23,12 +25,21 @@ const mockModel = () =>
     },
   });
 
-// langfuse.ts reads credentials at import time. Per-call `integrations` below
-// replace the global Langfuse one, so nothing is ever exported to this host.
-process.env.LANGFUSE_PUBLIC_KEY = "pk-test";
-process.env.LANGFUSE_SECRET_KEY = "sk-test";
-process.env.LANGFUSE_BASE_URL = "http://127.0.0.1:9";
-const { withLangfuseTelemetry } = await import("./langfuse.ts");
+// Enable the gate explicitly: under `bun test` langfuse.ts never starts a real exporter, and other test
+// files may import it first. Every call below passes its own in-memory integration, and the score
+// upload goes through a stubbed fetch, so nothing leaves the process.
+const { setLangfuseEnabled, withLangfuseTelemetry } = await import("./langfuse.ts");
+// Parenting generations under an eval needs async context propagation, which the real SDK would register.
+const contextManager = new AsyncLocalStorageContextManager();
+beforeAll(() => {
+  setLangfuseEnabled(true);
+  context.setGlobalContextManager(contextManager.enable());
+});
+afterAll(() => {
+  setLangfuseEnabled(false);
+  contextManager.disable();
+  context.disable();
+});
 
 test("metadata reaches the Langfuse observation through runtimeContext", async () => {
   const exporter = new InMemorySpanExporter();
@@ -89,6 +100,13 @@ test("an eval parents its generations, stamps its metadata on them, and posts sc
   setLangfuseTracerProvider(provider);
   const { withLangfuseEval } = await import("./langfuse-scores.ts");
   const ingested: any[] = [];
+  // Score upload reads credentials per call; use fakes so the test never depends on .env or the network.
+  const savedEnv = { ...process.env };
+  Object.assign(process.env, {
+    LANGFUSE_PUBLIC_KEY: "pk-test",
+    LANGFUSE_SECRET_KEY: "sk-test",
+    LANGFUSE_BASE_URL: "http://127.0.0.1:9",
+  });
   const realFetch = globalThis.fetch;
   globalThis.fetch = (async (_url: string, init: RequestInit) => {
     ingested.push(...JSON.parse(String(init.body)).batch);
@@ -117,6 +135,10 @@ test("an eval parents its generations, stamps its metadata on them, and posts sc
   } finally {
     globalThis.fetch = realFetch;
     setLangfuseTracerProvider(null);
+    for (const key of ["LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "LANGFUSE_BASE_URL"]) {
+      if (savedEnv[key] === undefined) delete process.env[key];
+      else process.env[key] = savedEnv[key];
+    }
   }
   await provider.forceFlush();
 

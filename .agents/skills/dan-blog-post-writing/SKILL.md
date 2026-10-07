@@ -27,6 +27,7 @@ When working inside `/Users/dan/code/oss/dans-blog`, sample 2-5 nearby posts bef
 4. Build the article around one strong thesis, a practical map, concrete examples, and a useful ending. Avoid generic thought-leadership filler.
 5. Tune the technical depth deliberately: decide whether the piece should be conceptual, practitioner-level, or implementation-heavy, then adjust code, diagrams, asides, and prerequisites to match.
 6. Use the frontmatter, taxonomy, image, and caption conventions from `references/frontmatter-images.md`.
+   For new cover art, follow the Warm Editorial direction in `../blog-hero-images/references/visual-language.md`: restrained photographic physical metaphors, tactile materials, one clear mechanism, and no baked-in language. Keep diagrams and screenshots as instructional figures when needed.
 7. If editing files, create or update the MDX and image references in the post directory. Do not edit `public/_redirects` manually.
 8. Validate when practical with `bun run check` or `bun run build` for broad changes. Use `bun`, never npm or yarn.
 

@@ -9,8 +9,10 @@ subCategory: promises
 tags: [promises, async, javascript, composition]
 related: [promise-gotchas, visualizing-promises, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
 cover: joe-yates-480485-unsplash.webp
-cover_mobile: w300_joe-yates-480485-unsplash.webp
-cover_icon: icon_joe-yates-480485-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Promises... What's their deal?

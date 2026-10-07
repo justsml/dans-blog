@@ -38,13 +38,15 @@ export async function openSearchPanel({
   }
 
   positionSearchPanel(searchPanel);
+  searchPanel.inert = false;
   searchPanel.classList.remove(COLLAPSED_CLASS);
+  document.querySelectorAll(SEARCH_BUTTON_SELECTOR).forEach(button => button.setAttribute("aria-expanded", "true"));
   document.body.classList.add(SEARCH_PANEL_OPEN_CLASS);
   const isSearchReady = await ensurePagefindInitialized();
-  if (isSearchReady) {
+  if (isSearchReady && isSearchPanelOpen()) {
     restoreSearchPanelQuery(searchPanel);
     installSearchQueryPersistence(searchPanel);
-    installSearchClearAndClose(searchPanel);
+    installSearchClear(searchPanel);
     focusSearchPanelInput(searchPanel);
   }
   return true;
@@ -54,7 +56,11 @@ export function closeSearchPanel() {
   const searchPanel = getSearchPanelElement();
   if (!searchPanel) return false;
 
+  const restoreFocus = searchPanel.contains(document.activeElement);
+  searchPanel.inert = true;
   searchPanel.classList.add(COLLAPSED_CLASS);
+  document.querySelectorAll(SEARCH_BUTTON_SELECTOR).forEach(button => button.setAttribute("aria-expanded", "false"));
+  if (restoreFocus) document.querySelector<HTMLButtonElement>(SEARCH_BUTTON_SELECTOR)?.focus({ preventScroll: true });
   document.body.classList.remove(SEARCH_PANEL_OPEN_CLASS);
   return true;
 }
@@ -70,17 +76,19 @@ export function installSearchPanelDismissal() {
 
   const abortController = new AbortController();
 
-  window.addEventListener("resize", () => {
-    const searchPanel = getSearchPanelElement();
-    if (searchPanel && !searchPanel.classList.contains(COLLAPSED_CLASS)) {
-      positionSearchPanel(searchPanel);
-    }
-  }, { passive: true, signal: abortController.signal });
+  const reposition = () => {
+    const panel = getSearchPanelElement();
+    if (panel && isSearchPanelOpen()) positionSearchPanel(panel);
+  };
+  window.addEventListener("resize", reposition, { passive: true, signal: abortController.signal });
+  window.visualViewport?.addEventListener("resize", reposition, { passive: true, signal: abortController.signal });
+  window.visualViewport?.addEventListener("scroll", reposition, { passive: true, signal: abortController.signal });
 
   document.addEventListener(
     "click",
     (event) => {
-      setTimeout(() => closeSearchPanelFromOutsideClick(event), 10);
+      if ((event.target as Element | null)?.closest(".search-panel-close")) closeSearchPanel();
+      else setTimeout(() => closeSearchPanelFromOutsideClick(event), 10);
     },
     { signal: abortController.signal },
   );
@@ -109,7 +117,7 @@ function closeSearchPanelFromOutsideClick(event: MouseEvent) {
   const searchPanel = getSearchPanelElement();
   if (!searchPanel || searchPanel.classList.contains(COLLAPSED_CLASS)) return;
 
-  const searchContainer = searchPanel.querySelector(".pagefind-ui");
+  const searchContainer = searchPanel;
   const target = event.target as HTMLElement | null;
   if (!target || !searchContainer || searchContainer.contains(target)) return;
   if (target.closest(SEARCH_BUTTON_SELECTOR) || target.closest(NAV_MENU_SELECTOR)) {
@@ -132,13 +140,17 @@ function positionSearchPanel(searchPanel: HTMLElement) {
   const menuRoot = document.querySelector<HTMLElement>(NAV_MENU_SELECTOR);
   const menuBox = menuRoot?.getBoundingClientRect();
   const viewportWidth = document.documentElement.clientWidth;
-  const top = Math.max(44, Math.round(menuBox?.bottom ?? 92));
-  const rightGap = Math.max(0, Math.round(viewportWidth - (menuBox?.right ?? viewportWidth - 16)));
-  const navWidth = Math.max(320, Math.round(menuBox?.width ?? 544));
-  const width = Math.min(544, navWidth, viewportWidth - rightGap);
+  const viewport = window.visualViewport;
+  const offset = viewport?.offsetTop ?? 0;
+  const mobile = viewportWidth <= 700;
+  const top = mobile ? Math.max(offset + 8, Math.min(Math.round(menuBox?.bottom ?? 64), offset + 72)) : Math.max(44, Math.round(menuBox?.bottom ?? 92));
+  const rightGap = mobile ? 8 : Math.max(16, Math.round(viewportWidth - (menuBox?.right ?? viewportWidth - 16)));
+  const width = mobile ? viewportWidth - 16 : Math.min(544, Math.max(320, Math.round(menuBox?.width ?? 544)), viewportWidth - rightGap - 16);
+  const height = Math.max(120, (viewport?.height ?? window.innerHeight) + offset - top - 8);
   searchPanel.style.setProperty("--search-panel-top", `${top}px`);
   searchPanel.style.setProperty("--search-panel-right-gap", `${rightGap}px`);
   searchPanel.style.setProperty("--search-panel-width", `${width}px`);
+  searchPanel.style.setProperty("--search-panel-height", `${height}px`);
 }
 
 function installSearchQueryPersistence(searchPanel: HTMLElement) {
@@ -172,8 +184,8 @@ function restoreSearchPanelQuery(searchPanel: HTMLElement) {
   }, 0);
 }
 
-function installSearchClearAndClose(searchPanel: HTMLElement) {
-  if (searchPanel.dataset.clearAndCloseReady === "true") return;
+function installSearchClear(searchPanel: HTMLElement) {
+  if (searchPanel.dataset.clearReady === "true") return;
 
   searchPanel.addEventListener("click", (event) => {
     const target = event.target as HTMLElement | null;
@@ -181,10 +193,10 @@ function installSearchClearAndClose(searchPanel: HTMLElement) {
     if (!clearButton) return;
 
     clearSearchQuery(searchPanel);
-    setTimeout(() => closeSearchPanel(), 0);
+    focusSearchPanelInput(searchPanel);
   });
 
-  searchPanel.dataset.clearAndCloseReady = "true";
+  searchPanel.dataset.clearReady = "true";
 }
 
 function clearSearchQuery(searchPanel: HTMLElement) {

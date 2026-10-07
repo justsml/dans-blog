@@ -8,9 +8,11 @@ category: Code
 subCategory: angularjs
 tags: [angularjs, development, performance, programming]
 cover: sharon-mccutcheon-522851-unsplash.webp
-cover_mobile: w300_sharon-mccutcheon-522851-unsplash.webp
-cover_icon: icon_sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
 
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## AngularJS CAN BE Fun!

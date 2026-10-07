@@ -7,11 +7,14 @@ import {
   type ArchiveStaticPath,
   type ArchiveRouteProps,
 } from "../../shared/archivePagination";
+import { getWidePosts } from "../../shared/pagination";
 import { ArticleCard } from "../../components/ArticleCard";
 import ArticleListSkeleton from "../../components/ArticleListSkeleton.astro";
 import { PaginateFunction } from "astro";
 import { DEFAULT_LOCALE, type Locale } from "../../shared/i18n";
 // import { RefreshCw } from "lucide-react";
+
+import { optimizeArticleCardImage } from "../../shared/articleImages";
 
 export const partial = true;
 
@@ -50,12 +53,14 @@ const nextUrl = getArchiveNextUrl({
   pageUrlSuffix,
 });
 
+const wideSlugs = new Set([...getWidePosts(data.map(({ props }: any) => props as ArticlePost))].map((post) => post.slug));
+const optimizedPosts = await Promise.all(data.map(({ props }: any) => optimizeArticleCardImage(props as ArticlePost, false, { wide: wideSlugs.has(props.slug) })));
 ---
 
 {
-  data.map(({ props }: any) => (
-    <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
+  optimizedPosts.map((props) => (
+    <ArticleCard article={props as ArticlePost} width={200} locale={locale} className={wideSlugs.has(props.slug) ? "article-card--wide" : undefined} />
   ))
 }
 
-<ArticleListSkeleton nextUrl={nextUrl} />
+<ArticleListSkeleton nextUrl={nextUrl} locale={locale} />

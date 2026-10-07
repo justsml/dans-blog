@@ -8,8 +8,10 @@ tags: [engineering,git,rebase,merge]
 category: Thoughts
 subCategory: Git
 cover: casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
-cover_mobile: w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
-cover_icon: icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Deathmatch: Git Rebase vs. (Squash) Merge!

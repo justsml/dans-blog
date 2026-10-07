@@ -44,145 +44,32 @@
 </section>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form.subscribe-form');
-    form?.addEventListener('submit', function (event) {
-      event.preventDefault();
-      console.log('Form submitted', event.target);
+  let subscriptionListeners: AbortController | undefined;
+  function initializeSubscriptions() {
+    subscriptionListeners?.abort();
+    subscriptionListeners = new AbortController();
+    const { signal } = subscriptionListeners;
+    document.querySelectorAll<HTMLFormElement>("form.subscribe-form").forEach(form => {
+      // Ghost Portal owns submission. Suppress a native page request while its
+      // asynchronous script initializes, without stopping delegated handlers.
+      form.addEventListener("submit", event => event.preventDefault(), { signal });
     });
-  });
+  }
+  initializeSubscriptions();
+  document.addEventListener("astro:page-load", initializeSubscriptions);
+  document.addEventListener("astro:before-swap", () => subscriptionListeners?.abort());
 </script>
 <style id="subscribe-form-styles">
-  .subscribe-form {
-    position: relative;
-  }
-
-  .subscribe-form > div {
-    max-width: 72rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-
-  @media (min-width: 640px) {
-    .subscribe-form > div {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
-
-  .subscribe-form > div > div > div {
-    max-width: 48rem;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    padding: 1.5rem;
-    border-radius: 0.375rem;
-    box-shadow:
-      0 20px 25px -5px rgba(0, 0, 0, 0.1),
-      0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .subscribe-form > div > div > div {
-      box-shadow: none;
-    }
-  }
-
-  .subscribe-form h2 {
-    font-size: 2.25rem;
-    line-height: 2.5rem;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.025em;
-    margin-bottom: 1rem;
-    font-family: var(--font-heading, inherit);
-  }
-
-  .subscribe-form p {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-    color: #4b5563;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .subscribe-form p {
-      color: #94a3b8;
-    }
-  }
-
-  .subscribe-form > div > div > div > div {
-    margin-top: 1.5rem;
-  }
-
-  .subscribe-form form {
-    text-align: center;
-  }
-
-  .subscribe-form input[data-members-email] {
-    margin-top: 0.25rem;
-    display: block;
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    background-color: white;
-    border: 1px solid #cbd5e1;
-    border-radius: 0.375rem;
-    font-size: 0.875rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .subscribe-form input[data-members-email]::placeholder {
-      color: #334155;
-    }
-
-    .subscribe-form input[data-members-email] {
-      color: #0f172a;
-    }
-  }
-
-  .subscribe-form input[data-members-email]:focus {
-    outline: none;
-    border-color: #0ea5e9;
-    box-shadow: 0 0 0 1px #0ea5e9;
-  }
-
-  .subscribe-form button[type="submit"] {
-    margin-top: 0.75rem;
-    margin-bottom: 1rem;
-    padding: 0.5rem 1rem;
-    color: white;
-    background-color: var(--color-primary-600);
-    border-radius: 0.375rem;
-    border-width: 2.5px;
-    border-style: solid;
-    
-    font-weight: 500;
-  }
-
-  .subscribe-form button[type="submit"]:hover {
-    background-color: var(--color-primary-800);
-  }
-
-  @media (min-width: 640px) {
-    .subscribe-form button[type="submit"] {
-      margin-bottom: 0;
-    }
-  }
-
-  /* Feedback styles */
-  .subscribe-form form .feedback {
-    display: none;
-    align-self: center;
-  }
-
-  .subscribe-form form.success input,
-  .subscribe-form form.success button {
-    display: none !important;
-  }
-
-  .subscribe-form form.success .feedback {
-    display: unset;
-  }
+  .subscribe-form { position:relative; }
+  .subscribe-form > div { max-inline-size:48rem; margin-inline:auto; }
+  .subscribe-form > div > div > div { padding:1.5rem; background:var(--paper-sheet); border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); text-align:center; }
+  .subscribe-form h2 { color:var(--paper-ink); font:500 1.8rem/1.2 var(--paper-serif,Georgia,serif); margin-block:0 1rem; }
+  .subscribe-form p { color:var(--paper-muted); font-size:1rem; line-height:1.6; }
+  .subscribe-form input[data-members-email] { display:block; inline-size:100%; min-block-size:44px; padding:.75rem; background:var(--paper-sheet); color:var(--paper-ink); border:1px solid var(--paper-line); border-radius:1px; font:inherit; }
+  .subscribe-form input[data-members-email]::placeholder { color:var(--paper-muted); }
+  .subscribe-form input[data-members-email]:focus-visible,.subscribe-form button:focus-visible { outline:2px solid var(--paper-accent); outline-offset:3px; }
+  .subscribe-form button[type="submit"] { margin-block:1rem 0; min-block-size:44px; padding:.75rem 1.5rem; color:var(--paper-on-blue,#fff); background:var(--paper-blue); border:1px solid var(--paper-blue); border-radius:1px; font:inherit; cursor:pointer; }
+  .subscribe-form form .feedback { display:none; color:var(--paper-success); font-size:.95rem; }
+  .subscribe-form form.success input,.subscribe-form form.success button { display:none!important; }
+  .subscribe-form form.success .feedback { display:block; }
 </style>

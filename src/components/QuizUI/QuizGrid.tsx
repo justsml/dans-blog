@@ -57,7 +57,7 @@ export const QuizGrid = ({
           .map((props, index) => (
             <QuizCard
               key={index}
-              className="tilt-effect"
+              className="paper-quiz-card"
               article={props}
             />
           ))}

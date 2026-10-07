@@ -120,13 +120,13 @@ When images are needed and image-generation tools are available:
 1. Offer or create at least 3 concept variants before committing to a direction.
 2. Generate the winning concept in wide, square, and social crops.
 3. Avoid text baked into images unless the user explicitly asks. Blog titles should remain HTML text, not image text.
-4. Prefer editorial, diagrammatic, or surreal technical visuals over generic stock-photo people at laptops.
+4. Default to Warm Editorial object photography: one physical mechanism, tactile materials, neutral backdrop, gentle directional light, and a restrained palette. Read `../../blog-hero-images/references/visual-language.md` for the full art direction. Avoid generic stock-photo people at laptops and busy illustrated worlds. Use diagrams as instructional figures rather than default covers.
 5. Keep enough negative space for crops. The subject should survive both 16:9 and square.
 6. Convert final assets to WebP and store them beside `index.mdx`.
 
 ## Concept Variants To Offer
 
-Offer variants like these, adapted to the topic:
+For covers, offer distinct physical metaphors in the refined photographic style: a test fixture, a quiet evidence still life, a small load-bearing system, or a sorting/gating mechanism. Color swaps are not new concepts. At least one must remain legible at 96px. Use the following lanes for in-article figures or when the user specifically requests an illustrated cover:
 
 - **Diagrammatic map**: clean technical map, layers, arrows, labeled conceptual objects, useful when the post explains an ecosystem.
 - **Editorial metaphor**: one memorable visual metaphor, useful for opinion pieces and warnings.
@@ -174,11 +174,13 @@ Caption rules:
 Image prompts should be specific and art-directable:
 
 ```text
-Editorial technical illustration for an article about [topic]. Show [central metaphor]
-with [specific technical objects]. Mood: sharp, modern, slightly wry, not cute.
-Style: high-detail digital editorial illustration, crisp lighting, strong composition,
-deep but balanced color palette, no text, no logos, no UI screenshots.
-Composition must work as 16:9 and square crops with the subject centered but not cramped.
+Refined editorial object photograph for an article about [topic]. Show [one
+physical mechanism and a visible consequence] using [two or three meaningful
+objects]. Tactile [materials], warm neutral backdrop, directional natural light,
+readable shadows, restrained color with one purposeful accent. Quiet, observant,
+slightly wry. No inscriptions, labels, slogans, logos, fake UI, or baked-in title.
+Preserve the mechanism in 16:9 and a shallow 2.25:1 feature. Generate a separately
+recomposed square with the same objects, materials, palette, and light.
 ```
 
 Avoid:
@@ -188,3 +190,10 @@ Avoid:
 - brand logos without permission
 - tiny text labels that will not survive crop or compression
 - overly dark, blurry, atmospheric images where the idea is hard to read
+
+Check images at 200px and 96px on both ivory and warm charcoal. Keep essential
+objects away from crop edges. Never apply a dark-mode filter or gradient to the
+photograph; contrast belongs in the scene and the surrounding layout. Write
+accurate `cover_alt` and use `cover_credit` only for actual attribution. Generated
+mockup labels, quotations, and metadata are illustrative and must not become
+published copy or image inscriptions.

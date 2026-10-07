@@ -1,12 +1,17 @@
 ---
 import Page from "../layouts/Page.astro";
 ---
-
-<Page>
-  
-  <h1>Page not found</h1>
-  <p>Sorry, we couldn't find the page you were looking for.</p>
-  <p>Try going <a href="/">home</a>.</p>
-
-  
+<Page title="Page not found | Dan Levy" subTitle="The page you were looking for could not be found." className="article">
+  <section class="missing-sheet">
+    <p class="missing-kicker">404 / A missing page</p>
+    <h1>Page not found</h1>
+    <p>Sorry, we couldn't find the page you were looking for.</p>
+    <p>Try going <a href="/">home</a>.</p>
+  </section>
 </Page>
+<style>
+.missing-sheet { padding:clamp(1.5rem,5vw,3.5rem); background:var(--paper-sheet); border:1px solid var(--paper-line); border-block-start:4px solid var(--paper-accent); box-shadow:var(--paper-shadow); }
+.missing-kicker { color:var(--paper-accent); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; }
+.missing-sheet h1 { margin-block:.75rem 1.5rem; }
+.missing-sheet p { color:var(--paper-muted); line-height:1.7; }
+</style>

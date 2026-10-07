@@ -44,14 +44,14 @@ export const ArticleCard = ({
     day: "numeric",
   });
 
-  const icon = cover_mobile;
+  const icon = article.cardImage ?? cover_mobile;
   const popularity = article.data.popularity ?? 0;
   // console.log(cover_icon);
   const image =
     typeof icon === "string" ? (
       <img
         src={icon}
-        alt={title}
+        alt={article.data.cover_alt || title}
         loading="lazy"
         decoding="async"
         width={width}
@@ -61,8 +61,11 @@ export const ArticleCard = ({
       icon && (
         <img
           src={icon.src}
-          alt={title}
-          loading="lazy"
+          srcSet={article.cardImage?.srcSet}
+          sizes={article.cardImage?.sizes}
+          alt={article.data.cover_alt || title}
+          loading={article.cardImage?.priority ? "eager" : "lazy"}
+          fetchPriority={article.cardImage?.priority ? "high" : undefined}
           decoding="async"
           width={icon.width}
           height={icon.height}
@@ -82,7 +85,6 @@ export const ArticleCard = ({
       : !isTile && popularity >= 0.7
         ? " article-card--popular"
         : "";
-  const viewTransitionName = `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`;
   const hrefLocale = article.locale === locale ? locale : DEFAULT_LOCALE;
 
   return (
@@ -101,11 +103,11 @@ export const ArticleCard = ({
       {...htmxArgs}
     >
       {isTile ? (
-        <h4 style={{ viewTransitionName }} className="post-title">
+        <h4 className="post-title">
           {title}
         </h4>
       ) : (
-        <h2 style={{ viewTransitionName }} className="post-title">
+        <h2 className="post-title">
           {title}
         </h2>
       )}

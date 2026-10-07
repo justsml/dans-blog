@@ -1,0 +1,10 @@
+---
+import { surfaces } from "./surfaces";
+interface Props { article: boolean }
+const { article } = Astro.props;
+---
+<aside class="surface-toolbar" aria-label="Background experiments">
+  <label>Background <select id="surface-select" aria-label="Background treatment"><option value="none">Plain paper</option>{surfaces.map((surface) => <option value={surface.id}>{surface.name}</option>)}</select></label>
+  <p id="surface-description" aria-live="polite">{article ? surfaces[0].article : surfaces[0].home}</p>
+  <span class="surface-context">{article ? "Quiet article treatment" : "Homepage treatment"}</span>
+</aside>

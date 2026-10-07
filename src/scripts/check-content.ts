@@ -321,7 +321,10 @@ function checkAbsoluteInternalLinks(post: PostFile) {
 }
 
 function checkMarkdownInsideJsx(post: PostFile) {
-  const lines = post.body.replace(/\{\/\*[\s\S]*?\*\/}/g, "").split(/\r?\n/);
+  // Blank comments but keep their newlines, so line numbers still match the file.
+  const lines = post.body
+    .replace(/\{\/\*[\s\S]*?\*\/}/g, (comment) => comment.replace(/[^\n]/g, ""))
+    .split(/\r?\n/);
   const jsxStack: string[] = [];
   let componentStartLine = 0;
   let firstComponentStartLine = 0;
@@ -338,7 +341,7 @@ function checkMarkdownInsideJsx(post: PostFile) {
       !/\/\>\s*$/.test(trimmed)
     ) {
       jsxStack.push(openingComponent[1]);
-      componentStartLine = index + 1;
+      componentStartLine = index + 1 + post.bodyLineOffset;
       firstComponentStartLine ||= componentStartLine;
     }
 
@@ -348,7 +351,7 @@ function checkMarkdownInsideJsx(post: PostFile) {
       !trimmed.startsWith("{") &&
       /^(#{1,6}\s|\*\*[^*]+\*\*|_[^_]+_|\[[^\]]+\]\([^)]+\)|`[^`]+`)/.test(trimmed)
     ) {
-      matches.push(index + 1);
+      matches.push(index + 1 + post.bodyLineOffset);
     }
 
     if (jsxStack.length > 0 && /^<\/[A-Z][\w.:]*>/.test(trimmed)) {

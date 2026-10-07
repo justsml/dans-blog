@@ -10,6 +10,8 @@ type Props = {
   slug: string;
   tags: string;
   imageUrl?: string | ImageMetadata;
+  /** The page's canonical path, so `url` and `@id` match <link rel="canonical"> exactly. */
+  canonicalPath?: string;
 };
 
 let {
@@ -21,9 +23,14 @@ let {
   slug,
   tags,
   imageUrl,
+  canonicalPath,
 } = Astro.props as Props;
 
-imageUrl = typeof imageUrl === "string" ? imageUrl : (imageUrl?.src ?? "");
+// Structured data wants absolute URLs; built image paths are site-relative.
+const site = Astro.site ?? new URL("https://danlevy.net");
+const imagePath = typeof imageUrl === "string" ? imageUrl : (imageUrl?.src ?? "");
+const image = imagePath ? new URL(imagePath, site).href : undefined;
+const url = new URL(canonicalPath ?? `/${slug}/`, site).href;
 
 let schema = {
   "@context": "https://schema.org/",
@@ -35,9 +42,11 @@ let schema = {
   dateCreated: date,
   dateModified: modified,
   description: description,
-  url: `https://danlevy.net/${slug}`,
+  url,
+  mainEntityOfPage: { "@type": "WebPage", "@id": url },
+  publisher: { "@type": "Person", name: SiteAuthors.justsml.name, url: SiteAuthors.justsml.url },
   inLanguage: locale,
-  image: imageUrl,
+  image,
   keywords: tags,
 };
 

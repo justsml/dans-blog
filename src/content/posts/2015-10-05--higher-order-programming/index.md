@@ -8,8 +8,10 @@ category: Code
 subCategory: programming
 tags: [programming, patterns, models, source-code, organization]
 cover: susan-holt-simpson-799094-unsplash.webp
-cover_mobile: w300_susan-holt-simpson-799094-unsplash.webp
-cover_icon: icon_susan-holt-simpson-799094-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Exploring Array- and Set-based Pipeline Techniques

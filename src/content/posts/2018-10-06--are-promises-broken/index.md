@@ -9,8 +9,10 @@ tags: [promises, javascript, errors, programming]
 category: Code
 subCategory: promises
 cover: lennart-heim-766366-unsplash.webp
-cover_mobile: w300_lennart-heim-766366-unsplash.webp
-cover_icon: icon_lennart-heim-766366-unsplash.webp
+cover_mobile: ./hero-responsive-square.webp
+cover_icon: ./hero-responsive-icon-200.webp
+cover_full_width: ./hero-responsive-wide.webp
+cover_mobile_hero: true
 ---
 
 ## Are JavaScript Promises Broken?
@@ -83,7 +85,7 @@ Promise.resolve(10)  // 10
 JavaScript has an interesting behavior around errors (which applys to asynchronous **and** synchronous code.)
 
 <a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>see example in repl.it: `throwing errors in javascript`</i>]</a>
-<img alt="throwing errors in javascript" src="throwing-errors-in-javascript.webp" />
+![throwing errors in javascript](./throwing-errors-in-javascript.webp)
 
 
 In order to **get useful details about the line number** and call stack, you must use `Error` instances. Throwing strings does not work like in Python or Ruby. 
@@ -134,7 +136,7 @@ Promise.resolve(42)
     return 99
   })
   .then(num => num + 1)
-  .then(console.log) // expected output: 100
+  .then(console.log) // expected: 100
 ```
 
 **The sequence is what's important to understand.**
@@ -168,7 +170,7 @@ Promise.resolve(10)          // 10
   .then(x => x / 4)          // 5
   .then(x => x * x)          // 25
   .then(x => x.toFixed(2))   // "25.00"
-  .then(x => console.log(x)) // expected output: "25.00"
+  .then(x => console.log(x)) // expected: "25.00"
 ```
 
 
@@ -180,7 +182,7 @@ Promise.resolve(10) // 10
   .then(quarter)    // 5
   .then(square)     // 25
   .then(format)     // "25.00"
-  .then(log)        // expected output: "25.00"
+  .then(log)        // expected: "25.00"
 
 const double = x => x * 2
 const quarter = x => x / 4
@@ -221,7 +223,7 @@ You could use them however you need:
 const result = format(square(quarter(double(10))))
 
 log(result)
-// expected output: "25.00"
+// expected: "25.00"
 ```
 
 

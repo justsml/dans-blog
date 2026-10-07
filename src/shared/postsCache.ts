@@ -321,7 +321,7 @@ export const PostCollections = {
     );
   },
 
-  /** Popular posts according to google analytics. 2024/Q2 */
+  /** Editorially curated popular articles, seeded from historical analytics. */
   getPopularPosts(locale: Locale = DEFAULT_LOCALE) {
     // "one-weird-trick-to-speed-up-feature-teams",
     // "js-quiz-14-date-time-questions-test-your-knowledge",
@@ -332,6 +332,7 @@ export const PostCollections = {
     // "quiz-destructuring-delights",
     const popularPosts = [
       "llm-connection-strings",
+      "announcing-exploithunter-app",
       "you-may-not-need-axios",
       "you-might-not-need-algolia",
       "ai-sdk-math-tool",

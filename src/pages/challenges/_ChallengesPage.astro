@@ -26,6 +26,7 @@ const copy = getUiCopy(locale);
 
 <Page
   locale={locale}
+  className="challenges-page"
   frontmatter={{
     title: copy.challenges.title,
     subTitle: copy.challenges.subTitle(totalQuizzes, totalQuestionCount),
@@ -50,3 +51,14 @@ const copy = getUiCopy(locale);
   <div class="fun-fact"><div class="top-text">{copy.challenges.factThree}</div></div>
 </section>
 </Page>
+
+<style>
+section.full-width { grid-column:content; padding:0; }
+section.full-width:first-child { padding-block:1.5rem 0; }
+h1 { font-size:clamp(2.5rem,6vw,4.5rem); margin-block:0 1rem; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:2rem; padding:0; margin-block-end:2rem; }
+.top-text { font-size:1rem; line-height:1.7; color:var(--paper-muted); }
+.fun-facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; padding:0; margin-block-start:2.5rem; }
+.fun-fact { background:var(--paper-sheet); padding:1.5rem; border:1px solid var(--paper-line); box-shadow:var(--paper-shadow); }
+@media(max-width:700px) { .two-col,.fun-facts { grid-template-columns:1fr; gap:1rem; } }
+</style>
