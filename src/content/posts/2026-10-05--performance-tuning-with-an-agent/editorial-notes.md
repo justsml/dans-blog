@@ -29,3 +29,7 @@ If artwork is produced: wide.webp 1600x900, square.webp 800x800, desktop-social.
 - `git diff --check` passed.
 - Original article SHA-256 stayed `43e1ae00b14d146dd7235edd1f0d41c2bef69e70633e26ea86fd5c51ca7d82a3`.
 - Full site build and live browser rendering were not run. Draft remains excluded from published routes.
+
+## Revision, October 7, 2026
+
+Rewritten for coherence. The old opening (a benchmark that jumped to the bottom) argued for better workloads, not profilers, so the title's thesis never landed. New spine: benchmark = scoreboard, profile = map; agents without a map optimize from folklore (`content-visibility`, `will-change`, both rejected), while the real win came from a trace (animated WebPs invalidating tiles; raster 1,859 → 844 ms, from emoji-brain commit 9ab1f62). The export+search workload example was replaced with the actual scroll workload, and the invalid first baseline (unsettled Home/End scroll) is now the "can't be fooled" example. The tool catalog was condensed into one question → tool table plus the CPU-idle → waits pivot. Numbers verified against `docs/performance/selection-scrolling.md` and commit messages; no new measurements were run.
