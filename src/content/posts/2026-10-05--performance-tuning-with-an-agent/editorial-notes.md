@@ -41,3 +41,9 @@ Selected the instrument bench: a cream conveyor with wooden workload tiles accum
 Wide prompt: miniature performance test bench, workload tiles bunching at measuring gate, instrument arm probing gate, connected chart recorder with stacked profile; few mechanically plausible objects, clear bottleneck, warm off-white/charcoal/brass/teal/terracotta palette, no text or generic AI imagery.
 
 Square prompt: preserve the referenced bench and materials, recompose around gate/probe in top half and profile recorder in bottom half, shorten conveyor, one strong central silhouette, no new narrative elements or labels.
+
+## Revision, October 7, 2026
+
+Rewritten for coherence. The old opening (a benchmark that jumped to the bottom) argued for better workloads, not profilers, so the title's thesis never landed. New spine: benchmark = scoreboard, profile = map; agents without a map optimize from folklore (`content-visibility`, `will-change`, both rejected), while the real win came from a trace (animated WebPs invalidating tiles; raster 1,859 → 844 ms, from emoji-brain commit 9ab1f62). The export+search workload example was replaced with the actual scroll workload, and the invalid first baseline (unsettled Home/End scroll) is now the "can't be fooled" example. The tool catalog was condensed into one question → tool table plus the CPU-idle → waits pivot. Numbers verified against `docs/performance/selection-scrolling.md` and commit messages; no new measurements were run.
+
+On merge into PR 201, the ledger JSON example was kept and rewritten around the real containment experiment so it matches the scroll workload used everywhere else.
