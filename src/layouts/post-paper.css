@@ -34,28 +34,22 @@
 .post-page .article-toc-sidebar .article-toc { background:linear-gradient(160deg, rgb(255 255 255 / .38), rgb(255 255 255 / .06) 45%), color-mix(in oklab, var(--paper-sheet) 50%, transparent); -webkit-backdrop-filter:blur(18px) saturate(1.7); backdrop-filter:blur(18px) saturate(1.7); border:1px solid color-mix(in oklab, var(--paper-ink) 12%, transparent); border-radius:16px; box-shadow:inset 0 1px 0 rgb(255 255 255 / .6), inset 0 -1px 0 rgb(0 0 0 / .04), 0 14px 32px -16px rgb(0 0 0 / .3); padding:1.1rem 1.2rem; }
 :root[data-theme=dark] .post-page .article-toc-sidebar .article-toc { background:linear-gradient(160deg, rgb(255 255 255 / .1), rgb(255 255 255 / .02) 45%), color-mix(in oklab, var(--paper-sheet) 45%, transparent); box-shadow:inset 0 1px 0 rgb(255 255 255 / .14), 0 14px 32px -16px rgb(0 0 0 / .6); }
 
-/* Scroll depth. Layers move at different speeds; browsers without scroll timelines keep the static look. */
+/* Scroll depth: the background and glass move; the hero stays put. Browsers without scroll timelines keep the static look. */
 .post-page .article-toc-sidebar .article-toc { position:relative; isolation:isolate; overflow:clip; }
 .post-page .article-toc-sidebar .article-toc::before { content:""; position:absolute; inset:-60% -30%; z-index:-1; pointer-events:none; background:linear-gradient(115deg, transparent 34%, rgb(255 255 255 / .2) 47%, rgb(255 255 255 / .05) 55%, transparent 66%); }
 :root[data-theme=dark] .post-page .article-toc-sidebar .article-toc::before { background:linear-gradient(115deg, transparent 34%, rgb(255 255 255 / .06) 47%, rgb(255 255 255 / .015) 55%, transparent 66%); }
-/* clip, not hidden: hidden would make the frame a scroll container and stall the hero's view() timeline. */
-.post-page main.article :is(.banner-wrapper, .hero-image-wrapper) { overflow:clip; }
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* Ambient light lags the page, swelling and turning as it rises: the far layer. */
+    /* Ambient light lags the page, swelling and turning as it rises. */
     .post-ambient { animation:ambient-in 900ms ease-out both, ambient-drift linear both; }
-    /* Hero sinks into its frame as it leaves: the middle layer. Scale covers the gap the drift opens. */
-    .post-page main.article .u-photo { animation:hero-depth linear both; }
-    /* Glass catches the light: a sheen sweeps the contents panel with the page: the near layer. */
+    /* Glass catches the light: a sheen sweeps the contents panel with the page. */
     .post-page .article-toc-sidebar .article-toc::before { animation:glass-sheen linear both; }
     /* Timelines live in separate :root rules: minifiers fold same-rule longhands into the animation shorthand,
        where browsers reject a timeline and drop the whole declaration. */
     :root .post-ambient { animation-timeline:auto, scroll(root); animation-range:normal, 0 140vh; }
-    :root .post-page main.article .u-photo { animation-timeline:view(); animation-range:exit; }
     :root .post-page .article-toc-sidebar .article-toc::before { animation-timeline:scroll(root); animation-range:0 100vh; }
   }
 }
 @keyframes ambient-drift { to { translate:0 -22vh; scale:1.5; rotate:5deg; } }
-@keyframes hero-depth { to { transform:translateY(12%) scale(1.25); } }
 /* One pass across the first screen of scrolling, starting and ending off-panel. */
 @keyframes glass-sheen { from { translate:0 -60%; } to { translate:0 60%; } }

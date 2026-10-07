@@ -90,19 +90,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 </script>
 <script>import "../scripts/siteTheme";</script>
 <script>import "../scripts/sharedTransitions";</script>
-<script is:inline>
-  // Not data-astro-rerun: ClientRouter swaps <html> attributes on navigation, so only a real first load keeps this class.
-  try { if (!sessionStorage.getItem("paper-glow")) { document.documentElement.classList.add("paper-first-load"); sessionStorage.setItem("paper-glow", "1"); } } catch {}
-</script>
-<style is:inline>
-  /* Inlined so the glow paints with the first frame instead of waiting for the bundled stylesheet. */
-  body::after { content: ""; position: fixed; z-index: -1; pointer-events: none; inset: 0 auto auto 50%; inline-size: max(120vw, 1100px); aspect-ratio: 1; translate: -50% -35%; border-radius: 50%; background: conic-gradient(from 0deg, var(--paper-glow-a), transparent 22%, var(--paper-glow-b) 45%, transparent 68%, var(--paper-glow-a) 88%, var(--paper-glow-a)); filter: blur(64px); mask-image: radial-gradient(closest-side, #000 55%, transparent); animation: paper-glow-swirl 120s linear infinite; }
-  .paper-first-load body::after { animation: paper-glow-rise 900ms cubic-bezier(.55, 0, 1, .45) backwards, paper-glow-swirl 120s linear infinite; }
-  @keyframes paper-glow-rise { from { translate: -50% -15%; opacity: 0; } }
-  @keyframes paper-glow-swirl { to { rotate: 1turn; } }
-  @media (prefers-reduced-motion: reduce) { body::after { animation: none !important; } }
-  @media print { body::after { display: none; } }
-</style>
+<script>import "../scripts/scrollLens";</script>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
 <link

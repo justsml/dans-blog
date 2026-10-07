@@ -10,6 +10,9 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-padding-block-start: 6rem; }
 body { margin: 0; isolation: isolate; background: var(--paper-desk); color: var(--paper-ink); font: 1.0625rem/1.65 var(--paper-sans); overflow-wrap: break-word; }
+/* Background lens (scripts/scrollLensGL.ts): a low-res WebGL canvas upscaled under the page, faded in once drawn. */
+.scroll-lens { position: fixed; inset: 0; z-index: -1; inline-size: 100%; block-size: 100%; pointer-events: none; opacity: 0; transition: opacity 1.6s ease-out; contain: strict; }
+.scroll-lens.is-ready { opacity: 1; }
 h1, h2, h3, h4, h5, h6 { color: var(--paper-ink); font-family: var(--paper-serif); font-weight: 400; line-height: 1.18; letter-spacing: -.025em; text-wrap: balance; }
 h1 { font-size: var(--fs-900); }
 h2 { font-size: var(--fs-700); }
@@ -90,7 +93,7 @@ main .info svg { width: 1.25rem; height: 1.25rem; }
 @keyframes vt-sink { to { opacity: 0; transform: translateY(28px) scale(.985); } }
 @keyframes vt-rise { from { opacity: 0; transform: translateY(-10px) scale(1.01); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
-@media print { body { background: white; color: #222; } body::before, body::after { display: none; } .top-header, .site-footer, .searchBar, .paper-theme-picker { display: none !important; } a { color: inherit; } }
+@media print { body { background: white; color: #222; } .scroll-lens { display: none; } .top-header, .site-footer, .searchBar, .paper-theme-picker { display: none !important; } a { color: inherit; } }
 /* Keep quiz screenshot tooling's intentional isolated-question presentation. */
 .screenshot-mode .quiz-ui :is(astro-island, astro-slot) { margin: 150vh auto; }
 .screenshot-mode .challenge { z-index: 100; margin-block: 180rem !important; }
