@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">The odds of a swarm</title>
+  <desc id="desc">Chart of 1 − (1 − p)^n showing that many cheap low-probability attempts sum to high overall success odds, with labeled combinations such as p equal to 1 percent over 100 attempts reaching 63 percent.</desc>
+  <defs>
+    <linearGradient id="rule" x1="0" x2="1"><stop stop-color="#00f5ee"/><stop offset=".5" stop-color="#b8ff5f"/><stop offset="1" stop-color="#ff6b9d"/></linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>text{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f7fbff}.title{font-size:38px;font-weight:820}.sub{font-size:17px;fill:#a7bbc6}.axis{font-size:13px;fill:#a7bbc6;font-variant-numeric:tabular-nums}.curve{fill:none;stroke-width:4;stroke-linecap:round}.land{font-size:14.5px;font-weight:820}.line{font-size:13.5px;fill:#9fb3be}.note{font-size:13.5px;fill:#91a7b2}.grid{stroke:#29404b;stroke-width:1;stroke-dasharray:3 8;shape-rendering:crispEdges}.cyan{fill:#00f5ee}.lime{fill:#b8ff5f}.pink{fill:#ff6b9d}</style>
+  </defs>
+  <rect width="1600" height="900" rx="24" fill="#05080b"/><rect x="32" y="28" width="1536" height="844" rx="20" fill="#0a1015" stroke="#20303a"/><rect x="32" y="28" width="1536" height="4" rx="2" fill="url(#rule)"/>
+  <text class="title" x="72" y="88">The odds of a swarm</text><text class="sub" x="72" y="120">P(at least one attempt succeeds) = 1 − (1 − p)^n · individually unlikely, collectively near-certain</text>
+  <g>
+    <rect x="630" y="200" width="250" height="308" fill="#ff6b9d" opacity=".06"/>
+    <text class="land" x="646" y="226" fill="#ff6b9d">MOST SWARMS LIVE HERE</text>
+    <line class="grid" x1="130" y1="200" x2="880" y2="200"/><line class="grid" x1="130" y1="325" x2="880" y2="325"/><line class="grid" x1="130" y1="450" x2="880" y2="450"/><line class="grid" x1="130" y1="575" x2="880" y2="575"/>
+    <line x1="130" y1="200" x2="130" y2="700" stroke="#526872"/><line x1="130" y1="700" x2="880" y2="700" stroke="#526872"/>
+    <g class="axis" text-anchor="end"><text x="118" y="205">100%</text><text x="118" y="330">75%</text><text x="118" y="455">50%</text><text x="118" y="580">25%</text><text x="118" y="705">0</text></g>
+    <g class="axis" text-anchor="middle"><text x="130" y="726">1</text><text x="380" y="726">10</text><text x="630" y="726">100</text><text x="749" y="726">300</text><text x="880" y="726">1000</text></g>
+    <text class="axis" x="505" y="764" text-anchor="middle" font-weight="800">NUMBER OF ATTEMPTS · LOG SCALE</text><text class="axis" transform="translate(96 450) rotate(-90)" text-anchor="middle" font-weight="800">P(≥1 SUCCESS)</text>
+    <path class="curve" stroke="#00f5ee" d="M130 695 C 300 686, 500 620, 630 383 C 690 270, 720 240, 749 224.5 C 790 208, 840 201, 880 200"/>
+    <path class="curve" stroke="#b8ff5f" d="M130 697 C 320 690, 520 646, 630 503 C 680 440, 720 350, 749 310.5 C 790 250, 840 212, 880 203.5"/>
+    <path class="curve" stroke="#ff6b9d" d="M130 699 C 330 696, 520 678, 630 652.5 C 700 630, 720 600, 749 570.5 C 800 500, 840 440, 880 384"/>
+    <circle class="cyan" cx="630" cy="383" r="9" filter="url(#glow)"/>
+    <circle class="lime" cx="749" cy="310" r="9" filter="url(#glow)"/>
+    <circle class="pink" cx="880" cy="384" r="9" filter="url(#glow)"/>
+    <g transform="translate(430 300)"><rect width="230" height="60" rx="10" fill="#0d171d" stroke="#00f5ee" stroke-opacity=".6"/><text class="land" x="14" y="24" fill="#b8fff5">p = 1% · n = 100 → 63%</text><text class="line" x="14" y="46">100 tries at 1-in-100 odds</text></g>
+    <g transform="translate(610 150)"><rect width="236" height="60" rx="10" fill="#0d171d" stroke="#b8ff5f" stroke-opacity=".6"/><text class="land" x="14" y="24" fill="#dfffc0">p = 0.5% · n = 300 → 78%</text><text class="line" x="14" y="46">30 targets is the pilot program</text></g>
+    <g transform="translate(690 560)"><rect width="238" height="60" rx="10" fill="#0d171d" stroke="#ff6b9d" stroke-opacity=".6"/><text class="land" x="14" y="24" fill="#ffc2d5">p = 0.1% · n = 1000 → 63%</text><text class="line" x="14" y="46">a thousand almost-certain failures</text></g>
+    <g transform="translate(150 560)"><text class="land" fill="#b8fff5">p = 1%</text></g>
+    <g transform="translate(220 592)"><text class="land" fill="#dfffc0">p = 0.5%</text></g>
+    <g transform="translate(290 624)"><text class="land" fill="#ffc2d5">p = 0.1%</text></g>
+  </g>
+  <g transform="translate(950 156)">
+    <rect width="570" height="560" rx="16" fill="#0d171d" stroke="#2a3c47"/>
+    <text x="24" y="36" font-size="14" font-weight="850" fill="#b5c8d1">THE ASYMMETRY</text>
+    <g transform="translate(24 70)"><rect width="522" height="64" rx="12" fill="#0a1015" stroke="#00f5ee" stroke-opacity=".5"/><text class="land" x="20" y="28" fill="#b8fff5">P(≥1 success) = 1 − (1 − p)^n</text><text class="line" x="20" y="52">failure is per-attempt; success is per-swarm</text></g>
+    <g transform="translate(24 154)"><rect width="522" height="104" rx="12" fill="#0a1015" stroke="#29404b"/><text class="land" x="20" y="30" fill="#f7fbff">Swarm cost per attempt</text><text class="big" x="20" y="66" fill="#dfffc0">≈ $0</text><text class="line" x="240" y="66">automated · stolen compute · no human triage</text></g>
+    <g transform="translate(24 278)"><rect width="522" height="104" rx="12" fill="#0a1015" stroke="#ff6b9d" stroke-opacity=".55"/><text class="land" x="20" y="30" fill="#ffc2d5">Defender cost per attempt</text><text class="big" x="20" y="66" fill="#ff6b9d">1 human</text><text class="line" x="240" y="66">reading a triage queue, every time</text></g>
+    <g transform="translate(24 402)"><rect width="522" height="134" rx="12" fill="#101c18" stroke="#b8ff5f" stroke-opacity=".4"/><text class="land" x="20" y="32" fill="#dfffc0">What moves the odds:</text><text class="line" x="20" y="60">capability raises p (longer tasks, fewer failures)</text><text class="line" x="20" y="84">orchestration raises n (one run, many targets)</text><text class="line" x="20" y="108">both curves are compounding — in the attacker's</text><text class="line" x="20" y="130">favor, by default</text></g>
+  </g>
+  <g transform="translate(72 772)"><rect width="1456" height="66" rx="14" fill="#0d171d" stroke="#2a3c47"/><text x="22" y="28" font-size="15" font-weight="820" fill="#dfffc0">The swarm doesn't need to be good. It needs to be many.</text><text class="note" x="22" y="50">Illustrative math assuming independent attempts — which is generous to the defender. Every low-probability attempt is cheaper than the human it creates work for.</text></g>
+  <text class="note" x="72" y="876">No Fate But What We Bill · figure 3 · 1 − (1 − p)^n</text>
+</svg>
