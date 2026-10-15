@@ -9,14 +9,14 @@ import "./GitContribution.css";
 import { cx } from "class-variance-authority";
 import { Contribution, UserPullRequestData } from "../../types.ts";
 
-const { GITHUB_TOKEN } = process.env;
+const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
 
 type Props = {
   className?: string;
 };
 
-if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
-  throw new Error("GITHUB_TOKEN is required to fetch GitHub data");
+if (!githubToken)
+  throw new Error("GITHUB_TOKEN or GH_TOKEN is required to fetch GitHub data");
 
 const log = makeLogs("ossContributions");
 

@@ -107,7 +107,7 @@ export async function fetchUserPullRequests(
     name,
     searchQuery,
     headers: {
-      authorization: `token ${process.env.GITHUB_TOKEN}`,
+      authorization: `token ${process.env.GITHUB_TOKEN || process.env.GH_TOKEN}`,
     },
   })) as unknown;
 

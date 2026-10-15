@@ -2,7 +2,11 @@ import { diskCache } from "../../shared/diskCache";
 import querystring from "node:querystring";
 
 const GITHUB_TOKEN =
-  import.meta.env.VITE_GITHUB_TOKEN || import.meta.env.GITHUB_TOKEN;
+  process.env.GITHUB_TOKEN ||
+  process.env.GH_TOKEN ||
+  import.meta.env.GITHUB_TOKEN ||
+  import.meta.env.GH_TOKEN ||
+  import.meta.env.VITE_GITHUB_TOKEN;
 
 interface LoadGistOptions {
   username: string;
@@ -86,7 +90,7 @@ async function loadGist(path: string, options: PluginOptions = {}) {
     headers: {
       Accept: "application/vnd.github+json",
       // "application/vnd.github.v3.html+json",
-      Authorization: `Bearer ${options.secretToken ?? GITHUB_TOKEN}`,
+      Authorization: `Bearer ${options.secretToken || GITHUB_TOKEN}`,
     },
   })
   .then((response) => response.ok ? response : Promise.reject(response))

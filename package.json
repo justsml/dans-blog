@@ -47,7 +47,7 @@
     "dev": "astro check && astro dev",
     "start": "astro check && astro dev",
     "check": "astro check",
-    "build": "if [ -f .env ]; then unset GITHUB_TOKEN; fi; NODE_OPTIONS=--max-old-space-size=8192 bun --env-file=.env astro build",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 bun --env-file=.env astro build",
     "rebuild": "astro build --force",
     "preview": "astro preview",
     "astro": "astro",
