@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Who pays</title>
+  <desc id="desc">Flow diagram showing an attacker using stolen cloud credentials to run model workloads inside the victim's cloud account, so the invoice routes to the victim while the attacker pays nothing.</desc>
+  <defs>
+    <linearGradient id="rule" x1="0" x2="1"><stop stop-color="#00f5ee"/><stop offset=".5" stop-color="#b8ff5f"/><stop offset="1" stop-color="#ff6b9d"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#526872"/></marker>
+    <marker id="arrowPink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#ff6b9d"/></marker>
+    <style>text{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;fill:#f7fbff}.title{font-size:38px;font-weight:820}.sub{font-size:17px;fill:#a7bbc6}.head{font-size:16px;font-weight:850}.line{font-size:13.5px;fill:#9fb3be}.big{font-size:22px;font-weight:820}.note{font-size:13.5px;fill:#91a7b2}.flow{stroke:#526872;stroke-width:2.5;fill:none}</style>
+  </defs>
+  <rect width="1600" height="900" rx="24" fill="#05080b"/><rect x="32" y="28" width="1536" height="844" rx="20" fill="#0a1015" stroke="#20303a"/><rect x="32" y="28" width="1536" height="4" rx="2" fill="url(#rule)"/>
+  <text class="title" x="72" y="88">Who pays</text><text class="sub" x="72" y="120">LLMjacking · stolen cloud credentials run model workloads on the victim's account · Sysdig worst-case estimates</text>
+  <g transform="translate(72 170)">
+    <rect width="300" height="180" rx="14" fill="#0d171d" stroke="#ff6b9d" stroke-opacity=".65"/><rect width="300" height="4" rx="2" fill="#ff6b9d"/>
+    <text class="head" x="20" y="36" fill="#ff6b9d">ATTACKER</text>
+    <text class="big" x="20" y="72">Pays $0</text>
+    <text class="line" x="20" y="102">Stolen cloud credentials.</text>
+    <text class="line" x="20" y="124">Not a customer. Not on any</text>
+    <text class="line" x="20" y="146">approved-user list.</text>
+  </g>
+  <line class="flow" x1="372" y1="260" x2="452" y2="260" marker-end="url(#arrow)"/>
+  <text class="line" x="380" y="246">uses</text>
+  <g transform="translate(460 170)">
+    <rect width="380" height="180" rx="14" fill="#0d171d" stroke="#00f5ee" stroke-opacity=".65"/><rect width="380" height="4" rx="2" fill="#00f5ee"/>
+    <text class="head" x="20" y="36" fill="#00f5ee">VICTIM'S CLOUD ACCOUNT</text>
+    <text class="big" x="20" y="72">Meter running</text>
+    <text class="line" x="20" y="102">Agents and batch jobs call the</text>
+    <text class="line" x="20" y="124">model APIs around the clock,</text>
+    <text class="line" x="20" y="146">with a legitimate identity.</text>
+  </g>
+  <line class="flow" x1="840" y1="260" x2="920" y2="260" marker-end="url(#arrow)"/>
+  <text class="line" x="848" y="246">runs</text>
+  <g transform="translate(928 170)">
+    <rect width="300" height="180" rx="14" fill="#0d171d" stroke="#b8ff5f" stroke-opacity=".6"/><rect width="300" height="4" rx="2" fill="#b8ff5f"/>
+    <text class="head" x="20" y="36" fill="#b8ff5f">CAPABILITY</text>
+    <text class="big" x="20" y="72">Frontier models</text>
+    <text class="line" x="20" y="102">Tokens by the million. Endurance</text>
+    <text class="line" x="20" y="124">and breadth, rented at list price —</text>
+    <text class="line" x="20" y="146">by someone else.</text>
+  </g>
+  <g transform="translate(1292 170)">
+    <rect width="216" height="180" rx="14" fill="#101c18" stroke="#29404b"/>
+    <text class="head" x="18" y="34" fill="#b5c8d1">THE GATES</text>
+    <text class="line" x="18" y="62">Price tiers</text>
+    <text class="line" x="18" y="84">Usage caps</text>
+    <text class="line" x="18" y="106">Approved-user lists</text>
+    <text class="line" x="18" y="128">Abuse throttling</text>
+    <text class="big" x="18" y="166" fill="#ff6b9d">✗ assume user = payer</text>
+  </g>
+  <line class="flow" x1="1228" y1="350" x2="1288" y2="350" stroke-dasharray="6 6" marker-end="url(#arrow)"/>
+  <text class="line" x="1238" y="336" text-anchor="end">severed link</text>
+  <line class="flow" x1="650" y1="350" x2="650" y2="440" marker-end="url(#arrowPink)" stroke="#ff6b9d"/>
+  <text class="line" x="666" y="404" fill="#ff6b9d">bills</text>
+  <g transform="translate(72 456)">
+    <rect width="1156" height="200" rx="14" fill="#1a0d12" stroke="#ff6b9d" stroke-opacity=".55"/><rect width="1156" height="4" rx="2" fill="#ff6b9d"/>
+    <text class="head" x="24" y="40" fill="#ff6b9d">THE VICTIM'S LEDGER</text>
+    <g transform="translate(24 70)"><rect width="540" height="100" rx="12" fill="#0a1015" stroke="#29404b"/><text class="line" x="22" y="30">Attacker's invoice</text><text class="big" x="22" y="70" fill="#f7fbff">$0.00 / day</text><text class="line" x="380" y="70" text-anchor="end">stolen access is free to the attacker</text></g>
+    <g transform="translate(592 70)"><rect width="540" height="100" rx="12" fill="#0a1015" stroke="#ff6b9d" stroke-opacity=".6"/><text class="line" x="22" y="30">Victim's invoice</text><text class="big" x="22" y="70" fill="#ff6b9d">~$46k → $100k+ / day</text><text class="line" x="470" y="70" text-anchor="end" font-size="12">Sysdig worst-case estimates</text></g>
+  </g>
+  <g transform="translate(1292 456)">
+    <rect width="216" height="200" rx="14" fill="#0d171d" stroke="#2a3c47"/>
+    <text class="head" x="18" y="36" fill="#b5c8d1">NET RESULT</text>
+    <text class="line" x="18" y="66">The capability gates</text>
+    <text class="line" x="18" y="88">charge the buyer.</text>
+    <text class="line" x="18" y="110">Stolen access routes</text>
+    <text class="line" x="18" y="132">the charge to the</text>
+    <text class="line" x="18" y="154">victim's wallet.</text>
+  </g>
+  <g transform="translate(72 700)"><rect width="1436" height="80" rx="14" fill="#0d171d" stroke="#2a3c47"/><text x="22" y="34" font-size="15" font-weight="820" fill="#dfffc0">Price and approved-user gates stop people who pay. They have no answer for a tenant.</text><text class="note" x="22" y="58">A gate filters buyers. LLMjacking is not a buyer — the meter is running on someone else's card, and the guardrails aim at the wrong wallet.</text></g>
+  <text class="note" x="72" y="842">No Fate But What We Bill · figure 2 · stolen access, victim's invoice</text>
+</svg>
