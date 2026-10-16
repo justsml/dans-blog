@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 0d4105506ad1f3f0ae0b7267eec6b3a9358e0cc0
-- Selected model: openrouter/google/gemini-3.8-flash
-- Judge model: openrouter/google/gemini-3.8-flash
-- Confidence: high (0.884)
+- Selected candidate: d86b146ba4dd328fc1ae23d3cd0e287ffc0c6c84
+- Selected model: openrouter/openai/gpt-6.1-sol
+- Judge model: openrouter/anthropic/claude-haiku-5.5
+- Confidence: low (0.305)
 
-0d4105506ad1f3f0ae0b7267eec6b3a9358e0cc0 is chosen because of its exceptional translation quality, natural and idiomatic Chinese phrasing, and accurate MDX preservation. In contrast, c0e435ec8cd91744ce361a05966733f312ea579a corrupted an asset path (`../images/capability-curves.svg` instead of `../capability-curves.svg`), left terms like 'terminator' uncapitalized/untranslated in spoken dialogue, and mistakenly translated the H2 heading 'No fate but what we make' to '算力不息，扣费不止', creating a redundant heading title and losing the thematic parallel with Sarah Connor's iconic quote.
+d86b146 keeps the English structure (figures, code fence, footer) intact, uses correct locale-depth asset paths for the selected candidate, and gives the most natural, direct Chinese voice that matches Dan's style. Its headline and subtitle localization is tighter than the 'current' version, and its prose stays well within the length band. The other candidates are close, but this one best balances MDX fidelity with idiomatic phrasing and avoids the leftover English figcaption in glm's version.

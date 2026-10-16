@@ -1,26 +1,33 @@
 {
-  "selectedCommit": "0d4105506ad1f3f0ae0b7267eec6b3a9358e0cc0",
-  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "selectedCommit": "d86b146ba4dd328fc1ae23d3cd0e287ffc0c6c84",
+  "selectedModel": "openrouter/openai/gpt-6.1-sol",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 96,
-    "coherence": 95,
-    "relevance": 98,
-    "translationQuality": 96,
-    "mdxPreservation": 98,
-    "culturalAdaptation": 95,
-    "languagePurity": 98
+    "readability": 88,
+    "technicalAccuracy": 92,
+    "coherence": 90,
+    "relevance": 92,
+    "translationQuality": 90,
+    "mdxPreservation": 86,
+    "culturalAdaptation": 89,
+    "languagePurity": 93
   },
-  "suggestions": [],
-  "rationale": "0d4105506ad1f3f0ae0b7267eec6b3a9358e0cc0 is chosen because of its exceptional translation quality, natural and idiomatic Chinese phrasing, and accurate MDX preservation. In contrast, c0e435ec8cd91744ce361a05966733f312ea579a corrupted an asset path (`../images/capability-curves.svg` instead of `../capability-curves.svg`), left terms like 'terminator' uncapitalized/untranslated in spoken dialogue, and mistakenly translated the H2 heading 'No fate but what we make' to '算力不息，扣费不止', creating a redundant heading title and losing the thematic parallel with Sarah Connor's iconic quote.",
-  "confidence": "high",
-  "confidenceScore": 0.884,
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "<figcaption>概念示意，非实测数据：耐力（单个智能体工作时长）和广度（单个编排器运行的智能体数量）各自独立复利增长。真正的威胁就存在于二者的乘积之中。</figcaption>",
+      "replacement": "<figcaption>概念示意，非实测数据：耐力（单个智能体工作时长）和广度（单个编排器运行的智能体数量）各自独立复利增长。真正的威胁就存在于二者的乘积之中。</figcaption>",
+      "reason": "Placeholder check only; no change needed for the selected candidate's figure captions, which must be kept as-is for structural parity."
+    }
+  ],
+  "rationale": "d86b146 keeps the English structure (figures, code fence, footer) intact, uses correct locale-depth asset paths for the selected candidate, and gives the most natural, direct Chinese voice that matches Dan's style. Its headline and subtitle localization is tighter than the 'current' version, and its prose stays well within the length band. The other candidates are close, but this one best balances MDX fidelity with idiomatic phrasing and avoids the leftover English figcaption in glm's version.",
+  "confidence": "low",
+  "confidenceScore": 0.305,
   "confidenceSignals": [
-    "no high/medium issues",
+    "1 high and 0 medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 0,
+    "high": 1,
     "medium": 0,
     "low": 0
   },
@@ -28,9 +35,24 @@
   "locale": "zh",
   "candidateCommits": [
     "0d4105506ad1f3f0ae0b7267eec6b3a9358e0cc0",
-    "c0e435ec8cd91744ce361a05966733f312ea579a"
+    "c0e435ec8cd91744ce361a05966733f312ea579a",
+    "c9dec075c4f9b605cf16886e7b86a75bcc3a43ae",
+    "7b0822561ffa65a022ae373c60811f82c61efdd2",
+    "19997e60cd7663513cc888b1fbca0ca5b141df0d",
+    "d86b146ba4dd328fc1ae23d3cd0e287ffc0c6c84",
+    "78ea21dfd6722b137f42d87ab94a6f712f9662c7"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "<figcaption>概念示意，非实测数据：耐力（单个智能体工作时长）和广度（单个编排器运行的智能体数量）各自独立复利增长。真正的威胁就存在于二者的乘积之中。</figcaption>",
+      "replacement": "<figcaption>概念示意，非实测数据：耐力（单个智能体工作时长）和广度（单个编排器运行的智能体数量）各自独立复利增长。真正的威胁就存在于二者的乘积之中。</figcaption>",
+      "reason": "Placeholder check only; no change needed for the selected candidate's figure captions, which must be kept as-is for structural parity.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
