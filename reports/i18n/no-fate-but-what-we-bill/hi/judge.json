@@ -1,0 +1,68 @@
+{
+  "selectedCommit": "031a30c74c01636c7b1df48fca519e5fd0860dcc",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 94,
+    "languagePurity": 94
+  },
+  "suggestions": [],
+  "rationale": "Pass 1 applied fixes for the relative image paths cleanly. All image sources now correctly point to '../*.svg' without malformed relative prefixes, code blocks and frontmatter match the source specification, and the Hindi translation faithfully reproduces Dan's voice and technical nuance without further high/medium-priority issues.",
+  "confidence": "high",
+  "confidenceScore": 0.879,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "hi",
+  "candidateCommits": [
+    "031a30c74c01636c7b1df48fca519e5fd0860dcc",
+    "41190e136adca42e58c0b40e4ea7ddac0de26211"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "src=\".././who-pays.svg\"",
+      "replacement": "src=\"../who-pays.svg\"",
+      "reason": "Fix malformed relative image path '.././' to standard '../'",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "src=\".././swarm-odds.svg\"",
+      "replacement": "src=\"../swarm-odds.svg\"",
+      "reason": "Fix malformed relative image path '.././' to standard '../'",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "src=\".././defense-layers.svg\"",
+      "replacement": "src=\"../defense-layers.svg\"",
+      "reason": "Fix malformed relative image path '.././' to standard '../'",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale hi --skip-global",
+    "output": ""
+  }
+}
