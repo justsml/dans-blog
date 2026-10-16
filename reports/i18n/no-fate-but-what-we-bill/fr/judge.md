@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: f0a97575793805a0ba6c3daaf3e3d9a4f8be15b5
-- Selected model: openrouter/google/gemini-3.8-flash
-- Judge model: openrouter/google/gemini-3.8-flash
-- Confidence: high (0.888)
+- Selected candidate: e443ee5e2912ee41b292496d7e9731314dc0eda9
+- Selected model: openrouter/openai/gpt-6.1-sol
+- Judge model: openrouter/anthropic/claude-haiku-5.5
+- Confidence: low (0.286)
 
-The pre-publish fixes pass 1 successfully applied the localization of the mathematical text block. Asset paths (../capability-curves.svg, etc.) correctly match the subfolder structure, frontmatter and markdown structure are fully preserved, and the tone matches Dan's direct, punchy style.
+Candidate e443ee5 has the most natural and direct French, keeps Dan's voice intact, and renders the technical argument (LLMjacking, GTG-1002, swarm probability math) faithfully. Its main pre-publish defect is the untranslated English phrasing and decimal formatting inside the probability code block, which is a concrete language-purity fix. The other candidates have larger purity problems, such as untranslated English paragraphs and figure alt text in 6faa4c7 and looser phrasing in 52ea83a, so e443ee5 remains the best selection.
