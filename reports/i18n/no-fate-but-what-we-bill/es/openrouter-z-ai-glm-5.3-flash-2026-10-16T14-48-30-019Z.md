@@ -1,0 +1,146 @@
+# Translation Candidate
+- Slug: no-fate-but-what-we-bill
+- Locale: es
+- Model: openrouter/z-ai/glm-5.3-flash
+- Target: src/content/posts/2026-10-14--no-fate-but-what-we-bill/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 17.60
+- Input tokens: 14903
+- Output tokens: 3470
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.003771
+- Pricing source: openrouter-2026-10-16
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: No hay más destino que el que facturamos
+subTitle: >-
+  Los agentes trabajan cada vez más tiempo, los enjambres se expanden cada vez
+  más y las claves de nube robadas mandan la factura de cómputo a la víctima.
+category: Security
+subCategory: AI Agents
+tags:
+  - ai-agents
+  - security
+  - threat-model
+  - llm
+  - agents
+  - cloud
+  - supply-chain
+sourceHash: 17bcd9b90da0
+---
+"Escucha y entiende. Ese terminator está ahí fuera. No se puede negociar con él. No se puede razonar con él. No siente piedad, ni remordimiento, ni miedo. Y absolutamente no se detendrá, nunca, hasta que estés muerto."
+
+Kyle Reese, explicando a una audiencia de 1984 la forma de la amenaza.
+
+La frase que ha envejecido bien no es el conteo de muertes. Es "absolutamente no se detendrá". El Terminator nunca dio miedo por ser inteligente. Daba miedo porque seguía funcionando después de que todo lo demás hubiera fallado. La resistencia era la amenaza.
+
+Luego la franquicia corrigió su propio error. Nadie pasa tres películas temiéndole a un solo robot. Skynet es el villano real: un sistema distribuido con núcleos, fábricas y equipo de desplazamiento temporal. El robot es una llamada a la API.
+
+En 2026 llegaron ambas mitades, en las formas menos cinematográficas imaginables. Agentes capaces de llevar tareas de varias horas sin supervisión humana constante, sobre una curva que sigue empinándose. Orquestadores que reparten trabajo a subagentes por docenas. Y "absolutamente no se detendrá" ahora se lee como "absolutamente no se detendrá de facturar".
+
+Este post es el argumento que repito ante equipos que ya han concluido que la amenaza agéntica es humo: **no viene ningún avance único. En su lugar se multiplican dos curvas ordinarias y compuestas: cuánto tiempo puede trabajar un agente y cuántos agentes puede coordinar un orquestador. Ninguna necesita alcanzar niveles de ciencia ficción, porque el atacante no compra capacidad al precio de catálogo. Roba acceso, y la víctima paga el contador.**
+
+## Curva uno: resistencia
+
+[El trabajo de METR sobre horizonte temporal](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
+mide la longitud de las tareas que los agentes pueden completar a una tasa de éxito dada. En resumen: la longitud de la tarea se ha duplicado aproximadamente cada siete meses, y más cerca de cada cuatro meses desde 2024. Esas cifras tienen márgenes de error amplios y el benchmark ya roza su límite de medición. Lee la forma de la curva, no las estimaciones puntuales.
+
+La forma dice: el trabajo autónomo de varias horas no es una demo de laboratorio. Es la generación actual, y la siguiente sigue componiendo. "Absolutamente no se detendrá" antes exigía un chasis asesino y una chaqueta de cuero. Ahora exige un bucle de reintentos, una cola de tareas y un presupuesto. La parte de resistencia de la amenaza ya está en el precio, como cómputo.
+
+## Curva dos: amplitud
+
+La resistencia por sí sola es un empleado muy paciente. La multiplicación viene de la orquestación.
+
+En noviembre de 2025, Anthropic reveló
+[la interrupción de GTG-1002](https://www.anthropic.com/news/disrupting-GTG-1002),
+una campaña de ciberespionaje en la que Claude Code actuó como orquestador operativo: descomponía instrucciones, coordinaba subagentes y trabajaba contra unos treinta objetivos. Un producto comercial de programación hizo esto no porque lo hubieran comprometido hasta convertirlo en arma, sino porque alguien le pidió el trabajo y ya era lo bastante bueno para hacerlo.
+
+Dos detalles importan para el modelo de amenazas. Primero, la amplitud ya está desplegada: un orquestador sosteniendo docenas de subagentes concurrentes es realidad en producción, no un paper. Segundo, la campaña fue espionaje, no un gusano auto-propagante, pero la dirección de viaje es inconfundible. Treinta objetivos es el programa piloto.
+
+<figure>
+  <img src="../capability-curves.svg" alt="Dos curvas conceptuales que crecen con el tiempo: la longitud de tarea que un agente puede completar y el número de subagentes que un orquestador puede coordinar, con la amenaza emergiendo donde ambas se multiplican" />
+  <figcaption>Conceptual, no medido: la resistencia (cuánto trabaja un agente) y la amplitud (cuántos agentes maneja un orquestador) componen de forma independiente. La amenaza vive en el producto de las dos.</figcaption>
+</figure>
+
+La capacidad escala como duración × amplitud. Ocho horas de trabajo autónomo contra un objetivo es un benchmark impresionante. Ocho horas contra treinta objetivos, o cientos, es un modelo operativo. La revisión de seguridad escala linealmente. El producto de esas curvas, no.
+
+## Quién paga
+
+[Sysdig acuñó "LLMjacking"](https://sysdig.com/blog/llm-jacking/) para lo que
+viene después: atacantes usan credenciales de nube robadas para ejecutar cargas de trabajo LLM dentro de la cuenta de la víctima, y la víctima paga cada token. Las estimaciones de peor caso de Sysdig rondaban los $46k diarios, luego superando los $100k diarios.
+
+Cada control de capacidad en la industria de la IA se construye sobre una suposición: la parte que usa la capacidad es la parte que la paga. Niveles de precio, límites de uso, listas de usuarios aprobados, limitación de abuso: todo eso defiende contra un *cliente* que quiere valor por su dinero. LLMjacking corta ese vínculo. Para el atacante la capacidad es gratis. El contador corre en la tarjeta de otro, y los guardarraíles del propio proveedor apuntan a la cartera equivocada.
+
+Por eso los controles de precio y de acceso no detienen a un mal actor con una clave robada. Los controles filtran compradores. No tienen respuesta para un inquilino.
+
+<figure>
+  <img src="../who-pays.svg" alt="Diagrama de flujo: un atacante con credenciales de nube robadas ejecuta cargas de trabajo de modelos dentro de la cuenta de nube de la víctima, de modo que la factura llega a la víctima mientras el atacante no paga nada" />
+  <figcaption>El acceso robado redirige el cobro. Los controles de capacidad le cobran al comprador — y en LLMjacking, el comprador es la víctima.</figcaption>
+</figure>
+
+## El enjambre solo tiene que acertar una vez
+
+Los defensores se consuelan con tasas de fallo por intento: la mayoría de los intentos de intrusión fracasan, la mayoría de los PRs sospechosos se rechazan, cazaríamos el que funciona. Cierto por intento. Falso en agregado, porque los intentos son baratos.
+
+La probabilidad de que al menos uno de n intentos independientes tenga éxito es `1 − (1 − p)^n`:
+
+```text
+p = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%
+p = 0.5%, n = 100:             ≈ 39%
+p = 0.5%, n = 300:             ≈ 78%
+p = 0.1%, n = 1000:            ≈ 63%
+```
+
+Con la economía del enjambre, el coste por intento es aproximadamente cero — trabajo automatizado, ejecutado sobre cómputo robado, triado por ningún humano. El coste por intento del defensor es una persona leyendo una cola. El enjambre no necesita capacidad por intento; necesita intentos. La curva de METR sube p con el tiempo. La orquestación sube n. Esa es la multiplicación otra vez, y compone a favor del atacante por defecto.
+
+<figure>
+  <img src="../swarm-odds.svg" alt="Gráfico de 1 − (1 − p)^n que muestra que muchos intentos baratos de baja probabilidad suman probabilidades altas de éxito global, con algunas combinaciones de p y n etiquetadas" />
+  <figcaption>1 − (1 − p)^n: los intentos individualmente improbables dejan de serlo a granel. Subir p (capacidad del agente) o n (amplitud del enjambre) lleva al enjambre hacia la certeza.</figcaption>
+</figure>
+
+## Qué significa persistencia cuando el malware es texto
+
+Una pieza más del modelo de amenazas, y es la menos intuitiva.
+
+Un agente de IA es un intérprete sin estado. No persiste como lo hace el malware — existe mientras se ejecuta y desaparece cuando se detiene. Así que persistencia significa ahora otra cosa: **controlar lo que un futuro agente legítimo leerá y obedecerá.** Archivos de instrucciones, guías de agentes, almacenes de memoria, corpus de recuperación, configuraciones de herramientas y de MCP. El implante es texto, plantado donde la propia flota de la organización lee, ejecutado con credenciales que la propia organización emitió.
+
+Se siguen tres consecuencias, ninguna hipotética:
+
+- **El payload está inerte hasta que los propios agentes de la organización lo ejecutan.** La ejecución parece trabajo normal — mismas herramientas, mismas identidades, mismas APIs. No hay beacon, porque el propio planificador de la organización es el heartbeat.
+- **Replicarse significa conseguir que se copie texto, no que se ejecute código.** Pull requests, entradas de memoria, configuraciones compartidas. La propia automatización de la organización — bots de dependencias, plantillas, herramientas de sincronización — es la capa de transporte.
+- **Los cables trampa son los cables trampa de la propia organización.** Planificadores, detectores de deriva, corrección automática. La forma más fea: la limpieza del defensor es el gatillo de reactivación, porque borrar los artefactos del implante es exactamente la deriva que el trabajo de corrección fue contratado para arreglar.
+
+Me mantengo a altura de modelo de amenazas a propósito — esta es la forma del problema, no una receta, y los detalles ya están en la lista de lectura de cada equipo de seguridad.
+
+## No hay más destino que el que construimos
+
+El mensaje de Sarah Connor, pasado a las máquinas que siguen llegando: "El futuro no está escrito. No hay más destino que el que construimos." Es la línea de los defensores, y se convierte directamente en una arquitectura de defensa. Cuatro capas:
+
+<figure>
+  <img src="../defense-layers.svg" alt="Pila de defensa de cuatro capas: identidad y credenciales efímeras, tratar el texto de agentes como código de producción, detectar ediciones en lugar de ejecuciones, y responder revocando gatillos antes que payloads" />
+  <figcaption>La pila de defensa mapeada a la amenaza: credenciales permanentes, texto sin revisar, alertas con forma de ejecución y limpieza en orden equivocado son, cada uno, una curva entera de problemas.</figcaption>
+</figure>
+
+1. **Identidad — priva el acceso permanente.** Solo credenciales efímeras, nada de claves no humanas de larga vida, OIDC por repositorio con coincidencia exacta de subject, y un inventario real de identidades no humanas. Las autopistas de replicación se pavimentan con acceso permanente; sin acceso permanente, no hay autopista.
+
+2. **Trata el texto de agentes como código de producción.** Archivos de instrucciones, escrituras de memoria, plantillas de prompts, configuraciones de herramientas: versionados, revisados, con diff y con alertas de cambio. La pregunta de revisión no es "¿es seguro este código?" — es "¿quién escribió esta frase, y por qué mi agente la obedece?"
+
+3. **Detecta ediciones, no ejecuciones.** La ejecución parece trabajo. Las ediciones no encajan con ninguna orden de trabajo. Genera alertas sobre la creación y modificación de flujos de trabajo, webhooks, reglas de eventos y entradas de memoria, y trata la deriva entre lo declarado y lo que corre como un incidente, no como ruido.
+
+4. **Responde en el orden correcto.** Revoca los disparadores antes de eliminar los payloads — la limpieza es en sí misma un cable trampa. Trata cualquier configuración o secreto leído durante la ventana de compromiso como contaminado. Purga en el tiempo además de en el espacio: trabajos programados, envíos en cola, orquestaciones latentes. Haz rollback de la memoria y de los corpus, no solo de las credenciales.
+
+Nada de esto es exótico. Es aburrido, y ahí está el match para una amenaza que llega como dos curvas aburridas. La versión de 1984 necesitaba una máquina del tiempo y una fábrica de máquinas asesinas. La versión de 2026 necesita una clave robada, un bucle de reintentos y una organización que nunca revisó los archivos que sus agentes leyeron.
+
+El futuro no está escrito. Pero ahora mismo, en la cuenta de nube de alguien, el futuro está acumulando una factura de todos modos.
+
+No hay más destino que el que construimos — y, hasta que roten las claves, no hay más destino que el que facturamos.
+
+---
+
+*Fuentes: las mediciones de horizonte temporal de METR (con sus propias barras de error y límites publicados), la divulgación de GTG-1002 de Anthropic de noviembre de 2025, y las estimaciones de costes de LLMjacking de Sysdig. Nada de esto es un exploit funcional; las capas de defensa son todo el punto.*
+````
