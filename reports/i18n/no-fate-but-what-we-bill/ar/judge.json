@@ -1,0 +1,40 @@
+{
+  "selectedCommit": "3be60a69a136b33fa73d3ab480c28aa00117fe73",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 96,
+    "relevance": 95,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 94,
+    "languagePurity": 98
+  },
+  "suggestions": [],
+  "rationale": "Candidate 3be60a69a136b33fa73d3ab480c28aa00117fe73 (Gemini 3.8 Flash) is significantly superior. The alternative candidate (08ccbbd72ce1bb77a2646347ada9cbe3a727a854) suffered from severe quality issues: it emptied the frontmatter subtitle completely (`subTitle: ''`), left untranslated English phrases inline ('carrying multi-hour tasks بدون babysitting بشرية', 'dozens من الوكلاء', 'كمincident', alt text in English), corrupted Chinese characters leaked into the prose ('الم排وء', 'وكشف Anthropic... 以及'), and mistranslated the heading 'No fate but what we make' to 'لا مصير سوى ما نحاسب عليه'. Candidate 3be60a69 preserves frontmatter, asset paths, and structure cleanly, while producing fluent, idiomatic Arabic.",
+  "confidence": "high",
+  "confidenceScore": 0.881,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "ar",
+  "candidateCommits": [
+    "3be60a69a136b33fa73d3ab480c28aa00117fe73",
+    "08ccbbd72ce1bb77a2646347ada9cbe3a727a854"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale ar --skip-global",
+    "output": ""
+  }
+}
