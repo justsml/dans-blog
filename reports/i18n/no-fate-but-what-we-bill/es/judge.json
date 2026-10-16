@@ -1,0 +1,50 @@
+{
+  "selectedCommit": "819f558752c82341ee5c14074a1af61fcde1824d",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 98,
+    "technicalAccuracy": 99,
+    "coherence": 98,
+    "relevance": 99,
+    "translationQuality": 98,
+    "mdxPreservation": 100,
+    "culturalAdaptation": 97,
+    "languagePurity": 99
+  },
+  "suggestions": [],
+  "rationale": "The pre-publish fix successfully applied the localization of the text block ('por intento'). All MDX tags, relative image paths, frontmatter schema, and structure match the English source cleanly and accurately without remaining issues.",
+  "confidence": "high",
+  "confidenceScore": 0.893,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "es",
+  "candidateCommits": [
+    "819f558752c82341ee5c14074a1af61fcde1824d",
+    "1972c047a5e309ee73d7b37aa78d8e8add601106"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "```text\np = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%\np = 0.5%, n = 100:             ≈ 39%\np = 0.5%, n = 300:             ≈ 78%\np = 0.1%, n = 1000:            ≈ 63%\n```",
+      "replacement": "```text\np = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63%\np = 0.5 %, n = 100:            ≈ 39%\np = 0.5 %, n = 300:            ≈ 78%\np = 0.1 %, n = 1000:           ≈ 63%\n```",
+      "reason": "Translate 'per attempt' inside the text diagram to Spanish 'por intento' for consistency with Spanish prose.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale es --skip-global",
+    "output": ""
+  }
+}
