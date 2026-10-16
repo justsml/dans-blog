@@ -1,26 +1,39 @@
 {
-  "selectedCommit": "dca0218139fb79bb108507fd0bfd623aa45f2cfd",
-  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "selectedCommit": "37796b3d85bc68097f9276add40430bf551affac",
+  "selectedModel": "openrouter/openai/gpt-6.1-sol",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 96,
-    "coherence": 96,
-    "relevance": 98,
-    "translationQuality": 96,
-    "mdxPreservation": 98,
-    "culturalAdaptation": 95,
-    "languagePurity": 98
+    "readability": 90,
+    "technicalAccuracy": 92,
+    "coherence": 90,
+    "relevance": 92,
+    "translationQuality": 90,
+    "mdxPreservation": 72,
+    "culturalAdaptation": 88,
+    "languagePurity": 94
   },
-  "suggestions": [],
-  "rationale": "Candidate dca0218139fb79bb108507fd0bfd623aa45f2cfd is an exceptional, fluent translation that captures Dan's direct tone and punchy security framing while maintaining pristine MDX syntax and relative image paths (../). In contrast, candidate 7d3ce88b4c6e6818f318338d68675b4622ca4f5c suffers from severe language pollution with Russian words ('робот', 'десяток', 'длительность', 'лаборатор', 'десятки', 'уже'), Korean text ('처맞고 있다', '이미', '대부분'), Chinese terms ('标的是', '滥用', '自有', '是谁', '此刻'), missing subTitle, and unlocalized alt text.",
-  "confidence": "high",
-  "confidenceScore": 0.884,
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Locale images must use a single ../ at locale depth; the malformed \".././\" prefix breaks the inherited asset path and should match the other figures."
+    },
+    {
+      "priority": "high",
+      "match": "alt=\"フロー図：盗んだクラウド認証情報を持つ攻撃者が被害者のクラウドアカウント内でモデルのワークロードを実行し、攻撃者は何も払わず、請求書は被害者に届く\"",
+      "replacement": "alt=\"フロー図：盗まれたクラウド認証情報を持つ攻撃者が被害者のクラウドアカウント内でモデルワークロードを実行し、攻撃者は何も払わず、請求書は被害者に届く\"",
+      "reason": "Alt text should use the same terminology as the body prose (stolen credentials, model workloads) for consistency with the surrounding translation."
+    }
+  ],
+  "rationale": "gpt-6.1-sol has the most natural, direct Japanese prose closest to Dan's voice, with strong cultural adaptation and no language leakage. Its remaining issues are a malformed image path (high priority, must fix before publish) and a minor alt-text terminology inconsistency. Other candidates are more literal or have weaker phrasing, so this candidate remains the best selection after applying the fixes.",
+  "confidence": "low",
+  "confidenceScore": 0.298,
   "confidenceSignals": [
-    "no high/medium issues",
+    "2 high and 0 medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 0,
+    "high": 2,
     "medium": 0,
     "low": 0
   },
@@ -28,9 +41,60 @@
   "locale": "ja",
   "candidateCommits": [
     "dca0218139fb79bb108507fd0bfd623aa45f2cfd",
-    "7d3ce88b4c6e6818f318338d68675b4622ca4f5c"
+    "7d3ce88b4c6e6818f318338d68675b4622ca4f5c",
+    "ce8fa4da9d69b8489ad248f6a88506ad75e925dc",
+    "3c72476bafe614fa9930b27664dfbd5375b3767e",
+    "76263a92340dadacfe20152bd76cc605da8f4087",
+    "0a3dd653f0e17c17f5508a9efbec7ec1303a91af",
+    "37796b3d85bc68097f9276add40430bf551affac"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Locale images must start with ../ at locale depth; the leading \".././\" is a malformed path and should be a plain ../ path matching the other figures.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "  <img src=\"../who-pays.svg\" alt=\"フロー図：盗んだクラウド認証情報を持つ攻撃者が被害者のクラウドアカウント内でモデルのワークロードを実行し、攻撃者は何も払わず、請求書は被害者に届く\" />",
+      "replacement": "  <img src=\"../who-pays.svg\" alt=\"フロー図：盗まれたクラウド認証情報を持つ攻撃者が被害者のクラウドアカウント内でモデルワークロードを実行し、攻撃者は何も払わず、請求書は被害者に届く\" />",
+      "reason": "Minor alt-text consistency fix; the path itself is correct, but the translation of the alt text should match the terminology used elsewhere.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<figure>\n  <img src=\"../swarm-odds.svg\"",
+      "replacement": "<figure>\n  <img src=\"../swarm-odds.svg\"",
+      "reason": "Retained as-is; the swarm-odds image path is correct. Only the capability-curves path needs fixing.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Locale images must use a single ../ at locale depth; the malformed \".././\" prefix breaks the inherited asset path and should match the other figures.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "alt=\"フロー図：盗んだクラウド認証情報を持つ攻撃者が被害者のクラウドアカウント内でモデルのワークロードを実行し、攻撃者は何も払わず、請求書は被害者に届く\"",
+      "replacement": "alt=\"フロー図：盗まれたクラウド認証情報を持つ攻撃者が被害者のクラウドアカウント内でモデルワークロードを実行し、攻撃者は何も払わず、請求書は被害者に届く\"",
+      "reason": "Alt text should use the same terminology as the body prose (stolen credentials, model workloads) for consistency with the surrounding translation.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
