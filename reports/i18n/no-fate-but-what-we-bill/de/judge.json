@@ -1,0 +1,90 @@
+{
+  "selectedCommit": "5490c757010317b7efad668e5adb28fef46bb5e5",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 96,
+    "technicalAccuracy": 96,
+    "coherence": 96,
+    "relevance": 96,
+    "translationQuality": 96,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 95,
+    "languagePurity": 96
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "operativer orchestrator agierte",
+      "replacement": "operativer Orchestrator agierte",
+      "reason": "Capitalize the German noun 'Orchestrator'."
+    },
+    {
+      "priority": "medium",
+      "match": "als compute.",
+      "replacement": "als Compute.",
+      "reason": "Capitalize the German noun 'Compute'."
+    }
+  ],
+  "rationale": "Candidate 5490c757010317b7efad668e5adb28fef46bb5e5 is faithful and idiomatic with correct MDX structure and relative asset paths. Capitalizing uncapitalized loan nouns improves German grammar purity.",
+  "confidence": "low",
+  "confidenceScore": 0.483,
+  "confidenceSignals": [
+    "0 high and 2 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 2,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "de",
+  "candidateCommits": [
+    "5490c757010317b7efad668e5adb28fef46bb5e5",
+    "2aade359128549e58cca2634b5d3d4c0de8dc99f"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "wie lange ein agent arbeiten kann, und wie viele Agenten ein orchestrator koordinieren kann.",
+      "replacement": "wie lange ein Agent arbeiten kann, und wie viele Agenten ein Orchestrator koordinieren kann.",
+      "reason": "Capitalize German nouns 'Agent' and 'Orchestrator'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Ausdauer (wie lange ein agent arbeitet) und Breite (wie viele Agenten ein orchestrator betreibt)",
+      "replacement": "Ausdauer (wie lange ein Agent arbeitet) und Breite (wie viele Agenten ein Orchestrator betreibt)",
+      "reason": "Capitalize German nouns 'Agent' and 'Orchestrator'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Operativer orchestrator agierte",
+      "replacement": "operativer Orchestrator agierte",
+      "reason": "Capitalize German noun 'Orchestrator'.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Ein orchestrator, der Dutzende parallele Sub-Agenten steuert",
+      "replacement": "Ein Orchestrator, der Dutzende parallele Sub-Agenten steuert",
+      "reason": "Capitalize German noun 'Orchestrator'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale de --skip-global",
+    "output": ""
+  }
+}
