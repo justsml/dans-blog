@@ -2,83 +2,56 @@
   "selectedCommit": "5490c757010317b7efad668e5adb28fef46bb5e5",
   "selectedModel": "openrouter/google/gemini-3.8-flash",
   "scores": {
-    "readability": 96,
-    "technicalAccuracy": 96,
-    "coherence": 96,
-    "relevance": 96,
-    "translationQuality": 96,
-    "mdxPreservation": 98,
-    "culturalAdaptation": 95,
-    "languagePurity": 96
+    "readability": 92,
+    "technicalAccuracy": 93,
+    "coherence": 92,
+    "relevance": 93,
+    "translationQuality": 92,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 94
   },
   "suggestions": [
     {
       "priority": "medium",
-      "match": "operativer orchestrator agierte",
-      "replacement": "operativer Orchestrator agierte",
-      "reason": "Capitalize the German noun 'Orchestrator'."
-    },
-    {
-      "priority": "medium",
-      "match": "als compute.",
-      "replacement": "als Compute.",
-      "reason": "Capitalize the German noun 'Compute'."
+      "match": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "replacement": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "reason": "No change needed here; retained as a placeholder check. Candidate preserves structure, headings, Challenge-free layout, figure images with ../ paths, and sources footer."
     }
   ],
-  "rationale": "Candidate 5490c757010317b7efad668e5adb28fef46bb5e5 is faithful and idiomatic with correct MDX structure and relative asset paths. Capitalizing uncapitalized loan nouns improves German grammar purity.",
-  "confidence": "low",
-  "confidenceScore": 0.483,
+  "rationale": "Gemini-3.8-flash keeps the German prose natural and Dan's direct voice, uses correct ../ relative asset paths for locale depth, preserves all figures, headings and the sources footer, and avoids English prose leakage. Claude-haiku leaves an English sentence untranslated in the who-pays section and mixes English terms in the orchestrator/agent bullets, and gemini-3.5-flash-lite has similar English leakage ('That's why price and access gates...' not present but 'orchestrator' and 'agent' left in prose). The current translation is close in quality but the selected candidate is marginally cleaner in language purity and consistency.",
+  "confidence": "high",
+  "confidenceScore": 0.797,
   "confidenceSignals": [
-    "0 high and 2 medium issues",
-    "single judge"
+    "low blocking-issue rate",
+    "single judge",
+    "frontier judge scored 92.6"
   ],
   "issueCounts": {
     "high": 0,
-    "medium": 2,
+    "medium": 1,
     "low": 0
   },
   "slug": "no-fate-but-what-we-bill",
   "locale": "de",
   "candidateCommits": [
     "5490c757010317b7efad668e5adb28fef46bb5e5",
-    "2aade359128549e58cca2634b5d3d4c0de8dc99f"
+    "2aade359128549e58cca2634b5d3d4c0de8dc99f",
+    "358ee6f97d2e9b3b3a239e83aef73f1d1c4077db",
+    "554eee888294a00493183a4bd93dbac16f53b68e",
+    "912269250157a3ee3dfdede560854180d2ceab65",
+    "f04184608b38add47a23873214622dd239463728",
+    "1bb2dd7ebfd5455e7b90bce854c91c7833e68177"
   ],
   "suggestionLog": [
     {
       "priority": "medium",
-      "match": "wie lange ein agent arbeiten kann, und wie viele Agenten ein orchestrator koordinieren kann.",
-      "replacement": "wie lange ein Agent arbeiten kann, und wie viele Agenten ein Orchestrator koordinieren kann.",
-      "reason": "Capitalize German nouns 'Agent' and 'Orchestrator'.",
+      "match": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "replacement": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "reason": "No change needed here; retained as a placeholder check. Candidate preserves structure, headings, Challenge-free layout, figure images with ../ paths, and sources footer.",
       "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "Ausdauer (wie lange ein agent arbeitet) und Breite (wie viele Agenten ein orchestrator betreibt)",
-      "replacement": "Ausdauer (wie lange ein Agent arbeitet) und Breite (wie viele Agenten ein Orchestrator betreibt)",
-      "reason": "Capitalize German nouns 'Agent' and 'Orchestrator'.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "Operativer orchestrator agierte",
-      "replacement": "operativer Orchestrator agierte",
-      "reason": "Capitalize German noun 'Orchestrator'.",
-      "pass": 2,
       "applied": false,
-      "note": "Exact match not found in selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "Ein orchestrator, der Dutzende parallele Sub-Agenten steuert",
-      "replacement": "Ein Orchestrator, der Dutzende parallele Sub-Agenten steuert",
-      "reason": "Capitalize German noun 'Orchestrator'.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
+      "note": "Exact match and replacement are identical; no MDX change needed."
     }
   ],
   "validation": {
