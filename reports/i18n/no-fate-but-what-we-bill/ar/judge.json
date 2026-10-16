@@ -2,25 +2,38 @@
   "selectedCommit": "3be60a69a136b33fa73d3ab480c28aa00117fe73",
   "selectedModel": "openrouter/google/gemini-3.8-flash",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 96,
-    "coherence": 96,
-    "relevance": 95,
-    "translationQuality": 95,
-    "mdxPreservation": 98,
-    "culturalAdaptation": 94,
-    "languagePurity": 98
+    "readability": 8,
+    "technicalAccuracy": 8,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 8,
+    "mdxPreservation": 10,
+    "culturalAdaptation": 8,
+    "languagePurity": 9
   },
-  "suggestions": [],
-  "rationale": "Candidate 3be60a69a136b33fa73d3ab480c28aa00117fe73 (Gemini 3.8 Flash) is significantly superior. The alternative candidate (08ccbbd72ce1bb77a2646347ada9cbe3a727a854) suffered from severe quality issues: it emptied the frontmatter subtitle completely (`subTitle: ''`), left untranslated English phrases inline ('carrying multi-hour tasks بدون babysitting بشرية', 'dozens من الوكلاء', 'كمincident', alt text in English), corrupted Chinese characters leaked into the prose ('الم排وء', 'وكشف Anthropic... 以及'), and mistranslated the heading 'No fate but what we make' to 'لا مصير سوى ما نحاسب عليه'. Candidate 3be60a69 preserves frontmatter, asset paths, and structure cleanly, while producing fluent, idiomatic Arabic.",
-  "confidence": "high",
-  "confidenceScore": 0.881,
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "بسعر التكلفة المذكور في القائمة",
+      "replacement": "بالسعر المعلن",
+      "reason": "“List price” means the advertised price, not cost price. This distinction supports the article's central economic argument."
+    },
+    {
+      "priority": "high",
+      "match": "استدعاء برمجية واجهة (API call)",
+      "replacement": "استدعاء لواجهة برمجة التطبيقات (API)",
+      "reason": "The existing phrase misrenders API call; the replacement uses the correct Arabic technical term."
+    }
+  ],
+  "rationale": "Best of the supplied candidate texts: it translates all image alternative text, preserves the final heading's original meaning, and uses parent-directory asset paths appropriate to the Arabic subdirectory. It retains all six H2 headings, no headings at other levels, four images, and the unchanged text code block; there are no same-page heading links or quiz/Challenge elements to validate. The other supplied candidate leaves three alt attributes in English and mistranslates the final heading. No judge reports or contents for the other listed commits were included, so this decision is limited to the supplied texts.",
+  "confidence": "low",
+  "confidenceScore": 0.288,
   "confidenceSignals": [
-    "no high/medium issues",
+    "2 high and 0 medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 0,
+    "high": 2,
     "medium": 0,
     "low": 0
   },
@@ -28,9 +41,78 @@
   "locale": "ar",
   "candidateCommits": [
     "3be60a69a136b33fa73d3ab480c28aa00117fe73",
-    "08ccbbd72ce1bb77a2646347ada9cbe3a727a854"
+    "08ccbbd72ce1bb77a2646347ada9cbe3a727a854",
+    "f481052fead12d9c4c65007e5a44e58a3f7ef597",
+    "102649bfb3763b1c44fd6ed52927cf7cacded865",
+    "4022746c8c9fdcdea33bd8a75542c4fddbdad0f0",
+    "70f5171a5bde069aa39aa9d3da679d3b782555ef",
+    "6e097373f9f5a397999b82e9adb13f6cd38bd6c4"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "<img src=\"../capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Image path is already correctly prefixed with ../; retained as a check that the locale-relative asset path must start with ../ (no change needed).",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "medium",
+      "match": "لا مصير سوى ما نصنعه، ولا مصير، ما دامت المفاتيح لم تُدوَّر، سوى ما نحاسب عليه.",
+      "replacement": "لا مصير سوى ما نصنعه — وحتى تُدوَّر المفاتيح، لا مصير سوى ما نحاسب عليه.",
+      "reason": "The closing line in the English is a clean two-part aphorism; the current Arabic adds an awkward comma-separated aside that weakens the cadence of Dan's direct voice.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\"../capability-curves.svg\"",
+      "replacement": "<img src=\"./capability-curves.svg\"",
+      "reason": "The locale file lives at ar/index.mdx, so the image asset is in the same directory as the English source's sibling assets; a `../` prefix points one level too high and breaks the image. The English source uses `./capability-curves.svg`, and the locale file sits one folder deeper, so the relative path must resolve to the post's asset folder rather than its parent. Verify against the locale's actual asset location before publishing.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\"../who-pays.svg\"",
+      "replacement": "<img src=\"./who-pays.svg\"",
+      "reason": "Same relative-path problem as the other figure assets: the English source references `./who-pays.svg` from the post root, and the Arabic file must use the same asset resolution rules for the locale folder.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\"../swarm-odds.svg\"",
+      "replacement": "<img src=\"./swarm-odds.svg\"",
+      "reason": "Same relative-path problem; English uses `./swarm-odds.svg`, and an upward `../` reference breaks the figure asset.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\"../defense-layers.svg\"",
+      "replacement": "<img src=\"./defense-layers.svg\"",
+      "reason": "Same relative-path problem; English uses `./defense-layers.svg`, and the locale copy should reference the same asset path.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "لا مصير سوى ما نصنعه، ولا مصير، ما دامت المفاتيح لم تُدوَّر، سوى ما نحاسب عليه.",
+      "replacement": "لا مصير سوى ما نصنعه — وحتى تُدوَّر المفاتيح، لا مصير سوى ما نحاسب عليه.",
+      "reason": "The English closing is a clean two-part aphorism; the current Arabic inserts an awkward comma-separated aside that breaks the cadence of Dan's direct voice.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",
