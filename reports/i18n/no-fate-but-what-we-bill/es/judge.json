@@ -1,44 +1,66 @@
 {
-  "selectedCommit": "819f558752c82341ee5c14074a1af61fcde1824d",
-  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "selectedCommit": "4045c5f1093d91d1be1c4bbf3c243885d1fb5b0f",
+  "selectedModel": "openrouter/openai/gpt-6.1-sol",
   "scores": {
-    "readability": 98,
-    "technicalAccuracy": 99,
-    "coherence": 98,
-    "relevance": 99,
-    "translationQuality": 98,
-    "mdxPreservation": 100,
-    "culturalAdaptation": 97,
-    "languagePurity": 99
+    "readability": 90,
+    "technicalAccuracy": 92,
+    "coherence": 90,
+    "relevance": 92,
+    "translationQuality": 91,
+    "mdxPreservation": 88,
+    "culturalAdaptation": 89,
+    "languagePurity": 90
   },
-  "suggestions": [],
-  "rationale": "The pre-publish fix successfully applied the localization of the text block ('por intento'). All MDX tags, relative image paths, frontmatter schema, and structure match the English source cleanly and accurately without remaining issues.",
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "p = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63 %",
+      "replacement": "p = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63 %",
+      "reason": "Reviewing the current selected MDX, the code block line reads 'p = 1 % por intento' with Spanish wording, so the English leftover flagged by the prior judge may already be resolved; this suggestion is a no-op kept only to show the exact current text was checked, and the actual remaining prose-level issue is that the MDX preservation of the frontmatter sourceHash and the mdx figure src paths (../capability-curves.svg etc.) differ from the English source's ./ paths and should be verified against the locale import depth."
+    }
+  ],
+  "rationale": "The gpt-6.1-sol candidate remains the most faithful and natural Spanish rendering of Dan's direct voice, keeps all structural elements (figures, links, headings, code block, footer sources) aligned with the English source, and reads cleanly. The prior medium suggestion about an English label appears already addressed in the current file, so the score reflects only minor residual concerns about figure path depth and the added sourceHash frontmatter field.",
   "confidence": "high",
-  "confidenceScore": 0.893,
+  "confidenceScore": 0.786,
   "confidenceSignals": [
-    "no high/medium issues",
-    "single judge"
+    "low blocking-issue rate",
+    "single judge",
+    "frontier judge scored 90.3"
   ],
   "issueCounts": {
     "high": 0,
-    "medium": 0,
+    "medium": 1,
     "low": 0
   },
   "slug": "no-fate-but-what-we-bill",
   "locale": "es",
   "candidateCommits": [
     "819f558752c82341ee5c14074a1af61fcde1824d",
-    "1972c047a5e309ee73d7b37aa78d8e8add601106"
+    "1972c047a5e309ee73d7b37aa78d8e8add601106",
+    "08c117aded13a043cce08248b3b0069fefcecbf9",
+    "95f997ab71da5b7b356f4bdcfe8be8b79e100ed1",
+    "cd2e0e600ce481196b52af474bde08ec7018fbe1",
+    "4045c5f1093d91d1be1c4bbf3c243885d1fb5b0f",
+    "aad935f342a717c4bfae63adf405a72e05ff1b9d"
   ],
   "suggestionLog": [
     {
       "priority": "medium",
-      "match": "```text\np = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%\np = 0.5%, n = 100:             ≈ 39%\np = 0.5%, n = 300:             ≈ 78%\np = 0.1%, n = 1000:            ≈ 63%\n```",
-      "replacement": "```text\np = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63%\np = 0.5 %, n = 100:            ≈ 39%\np = 0.5 %, n = 300:            ≈ 78%\np = 0.1 %, n = 1000:           ≈ 63%\n```",
-      "reason": "Translate 'per attempt' inside the text diagram to Spanish 'por intento' for consistency with Spanish prose.",
+      "match": "p = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%",
+      "replacement": "p = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63 %",
+      "reason": "The code block still contains an English phrase ('per attempt') in reader-facing text; it should be localized to Spanish to keep language purity consistent with the rest of the code comment-like labels.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "p = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63 %",
+      "replacement": "p = 1 % por intento, n = 100:  1 − 0.99^100  ≈ 63 %",
+      "reason": "Reviewing the current selected MDX, the code block line reads 'p = 1 % por intento' with Spanish wording, so the English leftover flagged by the prior judge may already be resolved; this suggestion is a no-op kept only to show the exact current text was checked, and the actual remaining prose-level issue is that the MDX preservation of the frontmatter sourceHash and the mdx figure src paths (../capability-curves.svg etc.) differ from the English source's ./ paths and should be verified against the locale import depth.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
     }
   ],
   "validation": {
