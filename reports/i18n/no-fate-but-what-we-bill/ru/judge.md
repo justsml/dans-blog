@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 52db3d8e5179126c97c6848bd1ffede6b8f1b74b
-- Selected model: openrouter/google/gemini-3.8-flash
-- Judge model: openrouter/google/gemini-3.8-flash
-- Confidence: high (0.883)
+- Selected candidate: 8a40bb04e431e50a69373edc920cbaac3bfb0ec3
+- Selected model: openrouter/openai/gpt-6.1-sol
+- Judge model: openrouter/anthropic/claude-haiku-5.5
+- Confidence: high (0.788)
 
-Candidate 52db3d8e is significantly superior. In 5cb0ea72, the subtitle frontmatter was cut off mid-sentence ('ключи выставляют счёт за'), image paths mistakenly added an unneeded '../img/' prefix that would break rendering, and prose contained typos such as 'самоп распространяющимся'. Candidate 52db3d8e preserved proper image relative paths (../filename.svg), provided complete frontmatter, and delivered an exceptionally natural, precise translation capturing Dan's distinctive tone.
+The gpt-6.1-sol candidate keeps the MDX structure, figures, code block, and heading-free layout of the English source, with natural Russian prose, consistent direct voice, and no leaked instructions or English prose. Its subtitle, figure paths, and frontmatter are well localized, and it preserves the key argument about compounding curves and LLMjacking. It edges out the others on fluency and phrasing of the technical sections without introducing structural drift.
