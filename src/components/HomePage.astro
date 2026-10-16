@@ -9,7 +9,7 @@ import ArticleListSkeleton from "./ArticleListSkeleton.astro";
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { getWidePosts, pageSize } from "../shared/pagination";
-import { getListedArchivePosts, sortArchivePosts } from "../shared/archivePagination";
+import { sortArchivePosts } from "../shared/archivePagination";
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -22,7 +22,7 @@ const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
 const copy = getUiCopy(locale);
 
 let posts = sortArchivePosts(
-  getListedArchivePosts(PostCollections.getPostsForLocale(locale)),
+  PostCollections.getHomePostsForLocale(locale),
   { field: "date", direction: "desc" },
 ).map((p) =>
   omit(p as ArticlePost, [
@@ -30,8 +30,7 @@ let posts = sortArchivePosts(
     "data.cover",
     "data.cover_icon",
   ])
-)
-.filter((p) => !p.data?.unlisted && !p.data?.hidden) as ArticlePost[];
+) as ArticlePost[];
 
 const hasMorePosts = posts.length > pageSize;
 const defaultNextUrl = hasMorePosts

@@ -6,11 +6,9 @@ import {
   getVisibilityWarnings,
   isCategoryListExcluded,
   isEditorialCategory,
-  isFeedPostData,
+  isDraftPostData,
   isKebabCaseTag,
-  isListedPostData,
-  isRoutablePostData,
-  isVisiblePostData,
+  isPublishedPostData,
   normalizePostFlag,
   shouldCountPostCategory,
 } from "./editorialRules";
@@ -50,24 +48,24 @@ describe("editorial rules", () => {
     expect(normalizePostFlag("sometimes")).toBeUndefined();
   });
 
-  test("keeps routing, visibility, list, and feed inclusion rules explicit", () => {
-    expect(isRoutablePostData({ draft: true })).toBe(true);
-    expect(isVisiblePostData({ draft: true })).toBe(false);
-    expect(isVisiblePostData({ hidden: true })).toBe(false);
-    expect(isListedPostData({ unlisted: true })).toBe(false);
-    expect(isFeedPostData({ unlisted: true })).toBe(true);
+  test("uses draft as the only visibility flag", () => {
+    expect(isDraftPostData({ draft: true })).toBe(true);
+    expect(isDraftPostData({ draft: "yes" })).toBe(true);
+    expect(isDraftPostData({})).toBe(false);
+    expect(isPublishedPostData({ draft: false })).toBe(true);
+    expect(isPublishedPostData({ draft: true })).toBe(false);
   });
 
   test("applies category counting and visibility warnings in one place", () => {
     expect(shouldCountPostCategory({ category: "Code" })).toBe(true);
     expect(shouldCountPostCategory({ category: "Quiz" })).toBe(false);
-    expect(shouldCountPostCategory({ category: "Code", unlisted: true })).toBe(false);
+    expect(shouldCountPostCategory({ category: "Code", draft: true })).toBe(false);
 
-    expect(getVisibilityWarnings({ publish: true, hidden: true })).toEqual([
-      "publish:true is paired with hidden:true",
-    ]);
-    expect(getVisibilityWarnings({ publish: false })).toEqual([
-      "publish:false should usually be paired with draft:true or hidden:true",
+    expect(getVisibilityWarnings({ draft: true })).toEqual([]);
+    expect(getVisibilityWarnings({ publish: false, hidden: true, unlisted: false })).toEqual([
+      "publish is no longer supported; use draft:true to keep a post unpublished",
+      "hidden is no longer supported; use draft:true to keep a post unpublished",
+      "unlisted is no longer supported; use draft:true to keep a post unpublished",
     ]);
   });
 });

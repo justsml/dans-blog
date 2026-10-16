@@ -24,9 +24,6 @@ tags: [ai, llm, typescript, production]
 category: AI
 subCategory: Engineering
 draft: true
-unlisted: true
-hidden: true
-publish: false
 popularity: 0.8
 social_image: ./desktop-social.webp
 cover_full_width: ./wide.webp
@@ -35,7 +32,7 @@ cover_icon: ./square.webp
 ---
 ```
 
-Older posts vary, but new technical drafts should usually include the draft/unlisted/hidden/publish flags unless the user explicitly asks to publish.
+Older posts vary, but new technical drafts should usually include `draft: true` unless the user explicitly asks to publish.
 
 Use `redirects` in frontmatter for old URLs. Never edit `public/_redirects` manually.
 

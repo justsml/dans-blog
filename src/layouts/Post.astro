@@ -21,8 +21,6 @@ import ConsultingCTA from "../components/ConsultingCTA.astro";
 import { heroPalette, paletteStyle } from "../shared/heroPalette";
 import "./post-paper.css";
 import { PostCollections } from "../shared/postsCache";
-import { isContentPreviewBuild } from "../shared/contentPreview";
-import { isListedPostData } from "../shared/editorialRules";
 import {
   DEFAULT_LOCALE,
   LOCALE_DISCLOSURE,
@@ -64,9 +62,6 @@ type Props = {
     category?: string;
     related?: string[];
     draft?: boolean;
-    hidden?: boolean;
-    publish?: boolean;
-    unlisted?: boolean;
   };
 };
 
@@ -91,8 +86,6 @@ const {
 
 const slug = Astro.props.slug;
 const metaDescription = Astro.props.metaDescription || subTitle || "";
-const isPreviewOnlyPost = isContentPreviewBuild() &&
-  !isListedPostData(Astro.props.frontmatter);
 const baseSlug = Astro.props.baseSlug ?? slug.replace(/^[a-z]{2}\//, "");
 const locale = Astro.props.locale ?? DEFAULT_LOCALE;
 const isTranslation = Astro.props.isTranslation === true;
@@ -331,9 +324,9 @@ const shouldCropMobileBanner =
       }
 
       {
-        (draft || isPreviewOnlyPost) && (
+        draft && (
           <aside class="draft-notice" data-pagefind-ignore="all">
-            <strong>{isPreviewOnlyPost ? "Editorial preview." : "Draft post."}</strong>{" "}
+            <strong>Draft post.</strong>{" "}
             This page is a work in progress and may change.
           </aside>
         )

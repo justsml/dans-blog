@@ -10,15 +10,9 @@ describe("content preview build policy", () => {
     expect(isContentPreviewBuild({})).toBe(false);
   });
 
-  test("generates private article routes only for content previews", () => {
-    const privatePost = { data: { publish: false, hidden: true, draft: true, unlisted: true } };
-    expect(isPostRoutableInBuild(privatePost, true)).toBe(true);
-    expect(isPostRoutableInBuild(privatePost, false)).toBe(false);
-    expect(privatePost.data.publish).toBe(false);
-    expect(isPostRoutableInBuild({ data: { hidden: true } }, false)).toBe(false);
-    expect(isPostRoutableInBuild({ data: { publish: false } }, false)).toBe(false);
+  test("generates draft article routes only for content previews", () => {
+    expect(isPostRoutableInBuild({ data: { draft: true } }, true)).toBe(true);
+    expect(isPostRoutableInBuild({ data: { draft: true } }, false)).toBe(false);
     expect(isPostRoutableInBuild({ data: {} }, false)).toBe(true);
-    // Preserve existing directly routable draft/unlisted behavior.
-    expect(isPostRoutableInBuild({ data: { draft: true, unlisted: true } }, false)).toBe(true);
   });
 });

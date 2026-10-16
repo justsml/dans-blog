@@ -39,7 +39,6 @@ test("discovers source posts and normalizes date-prefixed slugs", () => {
   writePost(repoRoot, "plain-slug", "index.md", [
     "---",
     "draft: true",
-    "hidden: true",
     "---",
     "",
     "Body",
@@ -59,14 +58,12 @@ test("discovers source posts and normalizes date-prefixed slugs", () => {
     date: "2026-05-13",
     directory: "2026-05-13--hello-world",
     isDraft: false,
-    isHidden: false,
     popularity: 0.8,
     title: "Hello World",
   });
   expect(posts[1]).toMatchObject({
     category: "Uncategorized",
     isDraft: true,
-    isHidden: true,
     title: "plain-slug",
   });
 });

@@ -89,7 +89,7 @@ import {
   type ActiveLocale,
 } from "../../shared/i18n.ts";
 import {
-  isVisiblePostData,
+  isPublishedPostData,
   type PostVisibilityData,
 } from "../../shared/postVisibility.ts";
 import {
@@ -1348,8 +1348,7 @@ function loadPublishedPosts() {
       try {
         const source = readFileSync(sourcePath, "utf8");
         const { data } = matter(source);
-        if (!isVisiblePostData(data as PostVisibilityData)) return [];
-        if (data.unlisted === true) return [];
+        if (!isPublishedPostData(data as PostVisibilityData)) return [];
         const dateMs = parsePostDateMs(data, join(POSTS_DIR, e.name));
         if (!Number.isFinite(dateMs) || dateMs > Date.now()) return [];
         return [

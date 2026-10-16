@@ -65,13 +65,13 @@ const POPULAR_SLUGS = new Set([
 
 const options = parseArgs();
 const selectedLocales = filterActiveLocales(parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]));
-const shouldIncludeHidden = options["include-hidden"] === true;
+const shouldIncludeDrafts = options["include-drafts"] === true;
 const shouldMissingOnly = options["missing-only"] === true;
 const shouldJson = options.json === true;
 const outputPath = optionalString(options, "output") ?? DEFAULT_OUTPUT_PATH;
 
 const posts = collectCoverage()
-  .filter((post) => shouldIncludeHidden || (!post.isHidden && !post.isDraft))
+  .filter((post) => shouldIncludeDrafts || !post.isDraft)
   .sort(sortByPriority);
 
 const summary = summarize(posts);

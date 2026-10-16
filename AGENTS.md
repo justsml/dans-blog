@@ -73,8 +73,7 @@ src/content/posts/YYYY-MM-DD--slug-name/
 
 - `redirects: string[]` - Old URLs to redirect here (auto-generates Netlify `_redirects` file)
 - `category: string` - Controlled primary category from `src/content.config.ts`
-- `draft: boolean` - Hide from build
-- `unlisted: boolean` - Accessible via URL but hidden from lists
+- `draft: boolean` - Only built on preview builds (see below)
 - `related: string[]` - Related post slugs
 - `popularity: number` - 0-1 score for sorting
 - `cover_credit: string` - Optional HTML credit rendered below hero imagery
@@ -88,10 +87,11 @@ Run `bun run content:check` after adding posts, changing categories, changing vi
 
 Visibility helpers live in `src/shared/postVisibility.ts`.
 
-- Published/indexed: omit visibility flags or set `publish: true`.
-- Unlisted: set `unlisted: true` for URL-accessible posts hidden from lists.
-- Draft/private: set `publish: false`, `draft: true`, `hidden: true`, and `unlisted: true`.
-- Archived/legacy-but-routable: keep `publish: true` and add historical framing in the post body instead of hiding the post.
+`draft` is the only visibility flag; `publish`, `hidden`, and `unlisted` are retired and `bun run content:check` warns on them.
+
+- Published: omit `draft` or set `draft: false`.
+- Draft: set `draft: true`. Production builds skip drafts entirely (no route, lists, feeds, or sitemap entry). Content preview builds (Netlify `deploy-preview` or `BLOG_CONTENT_PREVIEW=1`) build drafts with a draft notice and show them on the home page and `/preview/`.
+- Archived/legacy: keep the post published and add historical framing in the post body instead of hiding it.
 
 ### PostCollections: Central Data Source
 

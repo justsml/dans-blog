@@ -1,7 +1,6 @@
 ---
 social_image: ./desktop-social.webp
 title: Broken Promises?
-unlisted: true
 subTitle: Dropping errors, losing results...
 date: 2018-10-06
 modified: 2024-12-11

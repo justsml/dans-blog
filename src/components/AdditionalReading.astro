@@ -65,7 +65,7 @@ function getRelatedArticles(
   
   // Score posts based on relevance
   const scoredPosts = posts
-    .filter((p) => p.slug !== currentSlug && !excludeSlugs.includes(p.slug) && !currentSlugs.includes(p.slug) && !p.data.draft && !p.data.hidden)
+    .filter((p) => p.slug !== currentSlug && !excludeSlugs.includes(p.slug) && !currentSlugs.includes(p.slug))
     .map((p) => {
       let score = 0;
       if (category && p.data.category === category) score += 3;
@@ -118,8 +118,7 @@ function addRandomArticleSlugs(slugs: string[], limit: number) {
     if (
       !slugs.includes(randomSlug) && 
       _post && 
-      !_post.data.draft && 
-      !_post.data.hidden
+      !_post.data.draft
     ) {
         // Also ensure we don't accidentally pick the current page if it wasn't in excludeSlugs for some reason
         if (currentSlug && randomSlug === currentSlug) continue;

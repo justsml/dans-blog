@@ -49,8 +49,9 @@ src/content/posts/YYYY-MM-DD--slug-name/
 **Critical frontmatter fields**:
 - `redirects: string[]` - Old URLs to redirect here (auto-generates Netlify `_redirects` file)
 - `category: string` - Primary category (e.g., "JavaScript", "Quiz", "Security")
-- `draft: boolean` - Hide from build
-- `unlisted: boolean` - Accessible via URL but hidden from lists
+- `draft: boolean` - The only visibility flag. Drafts are skipped in production builds and only built
+  (and shown on the home page) in content previews (Netlify `deploy-preview` or `BLOG_CONTENT_PREVIEW=1`).
+  `publish`, `hidden`, and `unlisted` are retired.
 - `related: string[]` - Related post slugs
 - `popularity: number` - 0-1 score for sorting
 
@@ -74,7 +75,7 @@ PostCollections.getCategoryCounts()
 PostCollections.getTagCounts()
 ```
 
-This singleton provides consistent filtering (removes hidden posts), sorting, and slug normalization.
+This singleton provides consistent filtering (removes drafts), sorting, and slug normalization.
 
 ### Routing
 
@@ -251,4 +252,4 @@ playwright.config.ts         # E2E tests
 - **Redirects not working**: Inspect `public/_redirects` after build
 - **Quiz state issues**: Clear localStorage or use `QuestionStore._clearAllQuizData()`
 - **Images not optimizing**: Verify WebP format, run `bun run webp-images`
-- **Build fails**: Check for hidden posts with invalid frontmatter
+- **Build fails**: Check for draft posts with invalid frontmatter

@@ -1,4 +1,4 @@
-import { isRoutablePostData, type PostVisibilityData } from "./editorialRules";
+import { isPublishedPostData, type PostVisibilityData } from "./editorialRules";
 
 type BuildEnvironment = Record<string, string | undefined>;
 
@@ -12,5 +12,5 @@ export function isPostRoutableInBuild(
   post: { data?: PostVisibilityData | null },
   preview = isContentPreviewBuild(),
 ) {
-  return preview || isRoutablePostData(post.data);
+  return preview || isPublishedPostData(post.data);
 }

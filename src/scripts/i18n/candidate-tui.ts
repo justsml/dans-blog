@@ -125,7 +125,6 @@ const fixedExpectedCandidates = explicitExpectedCandidates ?? 2;
 const selectedLocales = parseLocales();
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const shouldIncludeDrafts = options["include-drafts"] === true;
-const shouldIncludeHidden = options["include-hidden"] === true;
 const shouldIncompleteOnly = options["incomplete-only"] === true;
 const shouldOnlyModified = options["only-modified"] === true;
 const shouldMarkdown = options.markdown === true || options["no-tui"] === true;
@@ -618,7 +617,6 @@ function fitCell(value: string, width: number) {
 
 function collectRows(): ArticleRow[] {
   return collectSourcePosts()
-    .filter((post) => shouldIncludeHidden || !post.isHidden)
     .filter((post) => shouldIncludeDrafts || !post.isDraft)
     .filter((post) => selectedSlugs.size === 0 || selectedSlugs.has(post.slug) || selectedSlugs.has(post.directory))
     .filter((post) =>

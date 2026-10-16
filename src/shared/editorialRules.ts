@@ -18,9 +18,6 @@ export const EDITORIAL_CATEGORIES = [
 export type EditorialCategory = (typeof EDITORIAL_CATEGORIES)[number];
 
 export type PostVisibilityData = {
-  publish?: boolean | number | string | null;
-  hidden?: boolean | number | string | null;
-  unlisted?: boolean | number | string | null;
   draft?: boolean | number | string | null;
 };
 
@@ -105,78 +102,35 @@ export function isCategoryListExcluded(category?: string | null) {
   return typeof category === "string" && categoryListExclusionSet.has(category);
 }
 
+/** Drafts are built only for content previews, never listed, fed, or mapped. */
+export function isDraftPostData(data?: PostVisibilityData | null) {
+  return normalizePostFlag(data?.draft) === true;
+}
+
 export function isPublishedPostData(data?: PostVisibilityData | null) {
-  return normalizePostFlag(data?.publish) !== false;
+  return !isDraftPostData(data);
 }
 
-export function isRoutablePostData(data?: PostVisibilityData | null) {
-  return (
-    isPublishedPostData(data) &&
-    normalizePostFlag(data?.hidden) !== true
-  );
-}
-
-export function isVisiblePostData(data?: PostVisibilityData | null) {
-  return (
-    isRoutablePostData(data) &&
-    normalizePostFlag(data?.draft) !== true
-  );
-}
-
-export function isListedPostData(data?: PostVisibilityData | null) {
-  return (
-    isVisiblePostData(data) &&
-    normalizePostFlag(data?.unlisted) !== true
-  );
-}
-
-export function isFeedPostData(data?: PostVisibilityData | null) {
-  return isVisiblePostData(data);
-}
+export const isDraftPost = <TPost extends PostWithData>(
+  post?: TPost | null,
+) => isDraftPostData(post?.data);
 
 export const isPublishedPost = <TPost extends PostWithData>(
   post?: TPost | null,
 ) => isPublishedPostData(post?.data);
 
-export const isRoutablePost = <TPost extends PostWithData>(
-  post?: TPost | null,
-) => isRoutablePostData(post?.data);
-
-export const isVisiblePost = <TPost extends PostWithData>(
-  post?: TPost | null,
-) => isVisiblePostData(post?.data);
-
-export const isListedPost = <TPost extends PostWithData>(
-  post?: TPost | null,
-) => isListedPostData(post?.data);
-
-export const isFeedPost = <TPost extends PostWithData>(
-  post?: TPost | null,
-) => isFeedPostData(post?.data);
-
 export function shouldCountPostCategory(data?: (PostVisibilityData & {
   category?: string | null;
 }) | null) {
-  return isListedPostData(data) && !isCategoryListExcluded(data?.category);
+  return isPublishedPostData(data) && !isCategoryListExcluded(data?.category);
 }
 
-export function getVisibilityWarnings(data: PostVisibilityData) {
-  const warnings: string[] = [];
-  const publish = normalizePostFlag(data.publish);
-  const draft = normalizePostFlag(data.draft);
-  const hidden = normalizePostFlag(data.hidden);
+const RETIRED_VISIBILITY_FIELDS = ["publish", "hidden", "unlisted"] as const;
 
-  if (publish === true && hidden === true) {
-    warnings.push("publish:true is paired with hidden:true");
-  }
-
-  if (publish === false && draft !== true && hidden !== true) {
-    warnings.push(
-      "publish:false should usually be paired with draft:true or hidden:true",
-    );
-  }
-
-  return warnings;
+export function getVisibilityWarnings(data: Record<string, unknown>) {
+  return RETIRED_VISIBILITY_FIELDS
+    .filter((field) => field in data)
+    .map((field) => `${field} is no longer supported; use draft:true to keep a post unpublished`);
 }
 
 export function normalizePostFlag(

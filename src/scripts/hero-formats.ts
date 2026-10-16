@@ -43,7 +43,7 @@ for (const entry of await readdir(postsRoot, { withFileTypes: true })) {
   const { data } = matter(text);
   const wideRef = data.cover_full_width ?? data.cover;
   if (!wideRef) {
-    records.push({ slug: entry.name, status: "no assigned artwork", published: data.publish !== false && !data.hidden && !data.draft });
+    records.push({ slug: entry.name, status: "no assigned artwork", published: !data.draft });
     continue;
   }
   const original = resolve(dir, wideRef);
@@ -105,7 +105,7 @@ for (const entry of await readdir(postsRoot, { withFileTypes: true })) {
   }
   const wm = await metadata(write ? wide : original);
   const sm = await metadata(write ? square : squareSource!);
-  records.push({ slug: entry.name, published: data.publish !== false && !data.hidden && !data.draft, status: "paired", wide: local(wide), wideSize: `${wm.width}x${wm.height}`, square: local(square), squareSize: `${sm.width}x${sm.height}`, squareSource: local(squareSource!), squareMethod, icon: local(icon!), mobileHero, changedFiles });
+  records.push({ slug: entry.name, published: !data.draft, status: "paired", wide: local(wide), wideSize: `${wm.width}x${wm.height}`, square: local(square), squareSize: `${sm.width}x${sm.height}`, squareSource: local(squareSource!), squareMethod, icon: local(icon!), mobileHero, changedFiles });
 }
 await writeFile(resolve(reportDir, write ? "manifest.json" : "audit.json"), JSON.stringify(records, null, 2) + "\n");
 console.log(JSON.stringify({ mode: write ? "write" : "audit", articles: records.length, paired: records.filter(r => r.status === "paired").length, publishedPaired: records.filter(r => r.published && r.status === "paired").length, unassigned: records.filter(r => r.status !== "paired"), changedFiles: records.reduce((n, r) => n + Number(r.changedFiles ?? 0), 0) }, null, 2));

@@ -15,12 +15,8 @@ export const posts = defineCollection({
       /** To override utteranc.es lookup string */
       commentsKeyOverride: z.string().optional(),
       
-      publish: z.boolean().optional().default(true),
+      /** Drafts are built only for content previews. */
       draft: z.boolean().optional(),
-      /** unlisted omits in post lists */
-      unlisted: z.coerce.boolean().optional(),
-
-      hidden: z.coerce.boolean().optional(),
 
       date: z.coerce.string().optional(),
       modified: z.coerce.string().optional(),
