@@ -1,26 +1,51 @@
 {
-  "selectedCommit": "e756c489d12ceab44def7235391d6cf8a96c9c62",
-  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "selectedCommit": "7ff4d2024f2f2e13028ee1ef7a717747cc2b7b9e",
+  "selectedModel": "openrouter/openai/gpt-6.1-sol",
   "scores": {
-    "readability": 95,
-    "technicalAccuracy": 96,
-    "coherence": 95,
-    "relevance": 96,
-    "translationQuality": 95,
-    "mdxPreservation": 98,
-    "culturalAdaptation": 94,
-    "languagePurity": 96
+    "readability": 88,
+    "technicalAccuracy": 90,
+    "coherence": 88,
+    "relevance": 90,
+    "translationQuality": 88,
+    "mdxPreservation": 88,
+    "culturalAdaptation": 87,
+    "languagePurity": 92
   },
-  "suggestions": [],
-  "rationale": "Candidate e756c489d12ceab44def7235391d6cf8a96c9c62 is structurally intact, faithful, and natural. The image asset paths have already been corrected to '../' without malformed '.././' segments, headings and figures match English 1:1, and technical phrasing is well localized. No further medium or high priority fixes are required.",
-  "confidence": "high",
-  "confidenceScore": 0.88,
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Locale files live one folder deeper; the inherited asset path must be ../ from the he/ folder, and the leading '.././' form deviates from the convention used by the other figures."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././who-pays.svg\"",
+      "replacement": "<img src=\"../who-pays.svg\"",
+      "reason": "Same inherited asset path issue; the image must resolve as ../who-pays.svg from the locale folder, matching the other figures."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././swarm-odds.svg\"",
+      "replacement": "<img src=\"../swarm-odds.svg\"",
+      "reason": "Same inherited asset path issue; the local image must resolve as ../swarm-odds.svg from the locale folder."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././defense-layers.svg\"",
+      "replacement": "<img src=\"../defense-layers.svg\"",
+      "reason": "Same inherited asset path issue; the local image must resolve as ../defense-layers.svg from the locale folder."
+    }
+  ],
+  "rationale": "The selected candidate is the most natural and direct Hebrew rendering, keeps Dan's voice and the threat-model argument intact, preserves the figure, code, and link structure and the heading count, and has the cleanest language purity. Its main defect is inconsistent relative asset paths across figures, which the exact replacements fix. Note: the who-pays figure path also carries the leading '.././' form and is included as a fix, consistent with the other figures.",
+  "confidence": "low",
+  "confidenceScore": 0.3,
   "confidenceSignals": [
-    "no high/medium issues",
+    "4 high and 0 medium issues",
     "single judge"
   ],
   "issueCounts": {
-    "high": 0,
+    "high": 4,
     "medium": 0,
     "low": 0
   },
@@ -28,17 +53,85 @@
   "locale": "he",
   "candidateCommits": [
     "e756c489d12ceab44def7235391d6cf8a96c9c62",
-    "0908f2a558d92ecfc0c7ba71bbeee7fcc8e1536b"
+    "0908f2a558d92ecfc0c7ba71bbeee7fcc8e1536b",
+    "fd296d6034057e276ff5f5780957f94deeff7273",
+    "7ff4d2024f2f2e13028ee1ef7a717747cc2b7b9e",
+    "4a6c731a328973ce74983854bb538aae25f14126",
+    "fdef9c41ab2487dd2eaccd61ce376be24253e79a",
+    "45c96f749fb690ac4727b7d76a7a3e48bab0b49b"
   ],
   "suggestionLog": [
     {
       "priority": "high",
       "match": "<img src=\".././capability-curves.svg\"",
       "replacement": "<img src=\"../capability-curves.svg\"",
-      "reason": "Clean up the malformed path segment '.././' into standard '../'.",
+      "reason": "Locale files live one folder deeper; the image path must start with ../ from the locale folder, and a leading '.././' form deviates from the required inherited relative path convention used elsewhere in the file.",
       "pass": 1,
       "applied": true,
       "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\" alt=\"שתי עקומות מושגיות",
+      "replacement": "<img src=\"../capability-curves.svg\" alt=\"שתי עקומות מושגיות",
+      "reason": "Normalize the inherited local asset path to the same ../ form used by the other figures so the asset resolves consistently from the he/ folder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././swarm-odds.svg\"",
+      "replacement": "<img src=\"../swarm-odds.svg\"",
+      "reason": "Same inherited asset path issue; the local image must resolve as ../swarm-odds.svg from the locale folder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././defense-layers.svg\"",
+      "replacement": "<img src=\"../defense-layers.svg\"",
+      "reason": "Same inherited asset path issue; the local image must resolve as ../defense-layers.svg from the locale folder.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Locale files live one folder deeper; the inherited asset path must be ../ from the he/ folder, and the leading '.././' form deviates from the convention used by the other figures.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././who-pays.svg\"",
+      "replacement": "<img src=\"../who-pays.svg\"",
+      "reason": "Same inherited asset path issue; the image must resolve as ../who-pays.svg from the locale folder, matching the other figures.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././swarm-odds.svg\"",
+      "replacement": "<img src=\"../swarm-odds.svg\"",
+      "reason": "Same inherited asset path issue; the local image must resolve as ../swarm-odds.svg from the locale folder.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././defense-layers.svg\"",
+      "replacement": "<img src=\"../defense-layers.svg\"",
+      "reason": "Same inherited asset path issue; the local image must resolve as ../defense-layers.svg from the locale folder.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {
