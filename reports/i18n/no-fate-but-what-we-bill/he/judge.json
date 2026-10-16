@@ -1,0 +1,50 @@
+{
+  "selectedCommit": "e756c489d12ceab44def7235391d6cf8a96c9c62",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 95,
+    "technicalAccuracy": 96,
+    "coherence": 95,
+    "relevance": 96,
+    "translationQuality": 95,
+    "mdxPreservation": 98,
+    "culturalAdaptation": 94,
+    "languagePurity": 96
+  },
+  "suggestions": [],
+  "rationale": "Candidate e756c489d12ceab44def7235391d6cf8a96c9c62 is structurally intact, faithful, and natural. The image asset paths have already been corrected to '../' without malformed '.././' segments, headings and figures match English 1:1, and technical phrasing is well localized. No further medium or high priority fixes are required.",
+  "confidence": "high",
+  "confidenceScore": 0.88,
+  "confidenceSignals": [
+    "no high/medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "he",
+  "candidateCommits": [
+    "e756c489d12ceab44def7235391d6cf8a96c9c62",
+    "0908f2a558d92ecfc0c7ba71bbeee7fcc8e1536b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "Clean up the malformed path segment '.././' into standard '../'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale he --skip-global",
+    "output": ""
+  }
+}
