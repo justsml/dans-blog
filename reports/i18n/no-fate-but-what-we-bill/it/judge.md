@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: c6230c8fbd7f66fd641e8c18ef3956494c2c6242
-- Selected model: openrouter/google/gemini-3.8-flash
-- Judge model: openrouter/google/gemini-3.8-flash
-- Confidence: high (0.883)
+- Selected candidate: 15187847ce2b187adca90cc6af006dc584c3a19f
+- Selected model: openrouter/openai/gpt-6.1-sol
+- Judge model: openrouter/anthropic/claude-haiku-5.5
+- Confidence: low (0.294)
 
-Candidate c6230c8fbd7f66fd641e8c18ef3956494c2c6242 is complete, accurate, and wonderfully translated into Italian with natural cadence and technical precision. In contrast, candidate e910e3476f5ea9d32ed40cfb15cbeb1103bb24a1 severely truncated the frontmatter (empty title, truncated subTitle: 'Gli agenti continuano a lavorare più') and used awkward asset paths ('.././who-pays.svg').
+Candidate 15187847 has the most natural and idiomatic Italian, the strongest cultural adaptation of the Terminator and bill-related punchlines, and the most faithful tone to Dan's direct voice. Its one structural defect is the malformed '.././' asset path on the capability-curves image, which must be corrected before publishing. Given that the fix is a single exact-string change, this candidate remains the preferred selection.
