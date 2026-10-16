@@ -3,6 +3,6 @@
 - Selected candidate: 0b0a3fa03ac51ad1b73fcdfe6520c4c3e4133b28
 - Selected model: openrouter/openai/gpt-6.1-sol
 - Judge model: openrouter/anthropic/claude-haiku-5.5
-- Confidence: high (0.930)
+- Confidence: medium (0.707)
 
-Candidate 0b0a3fa0 has the most natural Hindi prose with Dan's direct voice preserved, keeps the title localized, and matches the English structure of figures, headings, code block, and footer. Its heading and link structure matches the English source closely. Candidate 031a30c7 is nearly identical in content but has a suspicious relative asset path change (.././) that is less clean; candidate 8d92 is a bit more loose in translation and drops some nuance. The chosen candidate is best overall for translation quality and MDX preservation.
+The selected candidate (0b0a3fa) keeps the MDX structure intact: same heading levels, same figure/img blocks, same code fence for the probability block, and the frontmatter is fully localized. Its prose is consistent Hindi with minimal English leakage and a readable, direct voice that matches Dan's style. The Sarah Connor and 'no fate' lines are rendered naturally, and the closing line preserves the wordplay. It is the most conservative and accurate of the four, while 031a30 has mixed English phrasing in the closing and 8d9237 has more English-ish fragments in headings and prose.

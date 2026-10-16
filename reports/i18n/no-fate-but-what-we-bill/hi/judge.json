@@ -2,27 +2,39 @@
   "selectedCommit": "0b0a3fa03ac51ad1b73fcdfe6520c4c3e4133b28",
   "selectedModel": "openrouter/openai/gpt-6.1-sol",
   "scores": {
-    "readability": 90,
-    "technicalAccuracy": 90,
-    "coherence": 90,
-    "relevance": 90,
-    "translationQuality": 90,
-    "mdxPreservation": 85,
-    "culturalAdaptation": 88,
-    "languagePurity": 88
+    "readability": 8,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 8,
+    "mdxPreservation": 10,
+    "culturalAdaptation": 8,
+    "languagePurity": 6
   },
-  "suggestions": [],
-  "rationale": "Candidate 0b0a3fa0 has the most natural Hindi prose with Dan's direct voice preserved, keeps the title localized, and matches the English structure of figures, headings, code block, and footer. Its heading and link structure matches the English source closely. Candidate 031a30c7 is nearly identical in content but has a suspicious relative asset path change (.././) that is less clean; candidate 8d92 is a bit more loose in translation and drops some nuance. The chosen candidate is best overall for translation quality and MDX preservation.",
-  "confidence": "high",
-  "confidenceScore": 0.93,
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "एजेंट्स ज़्यादा देर तक काम करते हैं, swarm का दायरा फैलता जाता है, और चोरी हुई\n  क्लाउड कुंजियों से compute का बिल पीड़ित के खाते में जाता है।",
+      "replacement": "एजेंट्स ज़्यादा देर तक काम करते हैं, एजेंटों के झुंड का दायरा फैलता जाता है, और चोरी हुई\n  क्लाउड कुंजियों से कंप्यूटिंग का बिल पीड़ित के खाते में जाता है।",
+      "reason": "Remove unnecessary English code-switching from the prominent reader-facing subtitle while preserving its meaning."
+    },
+    {
+      "priority": "medium",
+      "match": "किस्मत वही जो हम बनाएं — और, जब तक चाबियां रोटेट नहीं होतीं,\nकिस्मत वही जिसका बिल हम चुकाएं।",
+      "replacement": "किस्मत वही जो हम बनाएं — और, जब तक चाबियां रोटेट नहीं होतीं,\nकिस्मत वही जिसका बिल हम बनाएं।",
+      "reason": "The source says 'what we bill,' not 'what we pay.' This restores the closing billing wordplay and its consistency with the translated title."
+    }
+  ],
+  "rationale": "The strongest of the supplied translations for readability and semantic fidelity, although unnecessary English terminology remains a localization weakness. It preserves all six H2 headings, zero headings at other levels, four images and figure captions, and the unchanged text code block; its relative asset paths resolve correctly. There are no same-page heading links, quizzes, Challenges, tables, blockquotes, component imports, or answer flags requiring reconciliation. The Gemini candidate has additional mistranslations and an untranslated closing line; the Haiku candidate retains substantially more English and incorrectly implies that the curves' product does not grow. Only three candidate bodies were supplied, and neither judge report was included, so this selection is based on direct comparison of the available MDX.",
+  "confidence": "low",
+  "confidenceScore": 0.277,
   "confidenceSignals": [
-    "no high/medium issues",
-    "single judge",
-    "frontier judge scored 88.9"
+    "1 high and 1 medium issues",
+    "single judge"
   ],
   "issueCounts": {
-    "high": 0,
-    "medium": 0,
+    "high": 1,
+    "medium": 1,
     "low": 0
   },
   "slug": "no-fate-but-what-we-bill",
@@ -36,7 +48,17 @@
     "8d9237921ebadb7732c94d6170426ac3ab773a9e",
     "0b0a3fa03ac51ad1b73fcdfe6520c4c3e4133b28"
   ],
-  "suggestionLog": [],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "<img src=\"../capability-curves.svg\"",
+      "replacement": "<img src=\".././capability-curves.svg\"",
+      "reason": "The selected candidate uses the same asset depth as the current file; the `.././` form is not a clean locale-relative path and the `../` prefix is the expected form for the locale folder. Keep `../` consistent across all image sources.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
   "validation": {
     "ok": true,
     "scope": "local",

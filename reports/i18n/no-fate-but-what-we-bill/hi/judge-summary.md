@@ -4,64 +4,77 @@
 - Locale: hi
 - Judge model: openrouter/anthropic/claude-haiku-5.5
 - Second judge model: openrouter/openai/gpt-6.1-sol
-- Escalation judge model: not run
+- Escalation judge model: openrouter/openai/gpt-6.1-sol
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-- Confidence: medium (0.657)
-- Confidence signals: 0 high and 3 medium issues; judges agree within 5.1 points; frontier judge scored 88.9
-- High/medium/low issue counts: 0/3/0
+- Confidence: low (0.097)
+- Confidence signals: 1 high and 1 medium issues; judge disagreement detected (range 12.0)
+- High/medium/low issue counts: 1/1/0
 
 ## Batch Judge Telemetry
 ### Round 1, Batch 1
-- Runtime seconds: 4.42
-- Input tokens: 35133
-- Output tokens: 662
+- Runtime seconds: 5.00
+- Input tokens: 34728
+- Output tokens: 804
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.003844
-- Estimated cost: $0.003844
+- OpenRouter cost credits: 0.003875
+- Estimated cost: $0.003875
 
 ### Round 1, Batch 2
-- Runtime seconds: 4.73
-- Input tokens: 35225
-- Output tokens: 831
+- Runtime seconds: 5.85
+- Input tokens: 34820
+- Output tokens: 1163
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.003938
-- Estimated cost: $0.003938
+- OpenRouter cost credits: 0.004064
+- Estimated cost: $0.004064
 
 ### Round 1, Batch 3
-- Runtime seconds: 4.75
-- Input tokens: 22777
-- Output tokens: 851
+- Runtime seconds: 4.46
+- Input tokens: 22372
+- Output tokens: 757
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.002703
-- Estimated cost: $0.002703
+- OpenRouter cost credits: 0.002616
+- Estimated cost: $0.002616
 
 ## Primary Judge Telemetry
 - Runtime seconds: 3.40
-- Input tokens: 37386
-- Output tokens: 338
+- Input tokens: 36981
+- Output tokens: 491
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.003908
-- Estimated cost: $0.003908
+- OpenRouter cost credits: 0.003944
+- Estimated cost: $0.003944
+
+## Judge Suggestions
+1. Pass 1: logged medium priority suggestion. Match: "<img src=\"../capability-curves.svg\"" Replacement: "<img src=\".././capability-curves.svg\"" Reason: The selected candidate uses the same asset depth as the current file; the `.././` form is not a clean locale-relative path and the `../` prefix is the expected form for the locale folder. Keep `../` consistent across all image sources. Note: Exact match not found in selected MDX.
 
 ## Second Judge Telemetry
-- Runtime seconds: 9.55
-- Input tokens: 7693
-- Output tokens: 439
+- Runtime seconds: 13.73
+- Input tokens: 7705
+- Output tokens: 594
 - Thinking tokens: unknown
 - Cached input tokens: 0
-- Cache write tokens: 7690
+- Cache write tokens: 7702
+- OpenRouter cost credits: 0.000000
+- Estimated cost: $0.000000
+
+## Escalation Judge Telemetry
+- Runtime seconds: 12.02
+- Input tokens: 18731
+- Output tokens: 575
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 18728
 - OpenRouter cost credits: 0.000000
 - Estimated cost: $0.000000
 
