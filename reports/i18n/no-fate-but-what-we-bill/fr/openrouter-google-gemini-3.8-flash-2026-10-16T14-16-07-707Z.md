@@ -1,0 +1,145 @@
+# Translation Candidate
+- Slug: no-fate-but-what-we-bill
+- Locale: fr
+- Model: openrouter/google/gemini-3.8-flash
+- Target: src/content/posts/2026-10-14--no-fate-but-what-we-bill/fr/index.mdx
+- Validation: deferred
+- Runtime seconds: 50.55
+- Input tokens: 12725
+- Output tokens: 4947
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.028095
+- Pricing source: openrouter-2026-09-22
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Pas de destin sauf ce que nous facturons
+subTitle: >-
+  Les agents travaillent de plus en plus longtemps, les essaims s'étendent
+  toujours plus loin, et les clés cloud dérobées refilent la facture de compute
+  à la victime.
+category: Security
+subCategory: AI Agents
+tags:
+  - ai-agents
+  - security
+  - threat-model
+  - llm
+  - agents
+  - cloud
+  - supply-chain
+sourceHash: 17bcd9b90da0
+---
+« Écoutez, et comprenez bien. Ce Terminator est là-dehors. On ne peut pas négocier avec lui. On ne peut pas raisonner avec lui. Il ne ressent ni pitié, ni remords, ni peur. Et il ne s'arrêtera absolument jamais, tant que vous ne serez pas mort. »
+
+Kyle Reese, briefant un public de 1984 sur la nature de la menace.
+
+La phrase qui a bien vieilli n'est pas le décompte des victimes. C'est « ne s'arrêtera absolument jamais ». Le Terminator n'a jamais été effrayant parce qu'il était intelligent. Il était effrayant parce qu'il continuait à fonctionner quand tout le reste avait échoué. L'endurance était la menace.
+
+Puis la franchise a corrigé sa propre erreur. Personne ne passe trois films à redouter un seul robot. Le véritable méchant, c'est Skynet : un système distribué avec des cœurs, des usines et de l'équipement de déplacement temporel. Le robot n'est qu'un appel d'API.
+
+En 2026, les deux moitiés ont débarqué, sous les formes les moins cinématographiques imaginables. Des agents capables de tenir des tâches de plusieurs heures sans supervision humaine, sur une courbe qui ne cesse de se redresser. Des orchestrateurs qui ventilent le travail vers des sous-agents par douzaines. Et « ne s'arrêtera absolument jamais » se traduit désormais par « ne s'arrêtera absolument jamais de facturer ».
+
+Ce billet est l'argument que je continue de marteler aux équipes qui ont conclu que la menace des agents relève du battage médiatique : **aucune rupture technologique isolée n'est à prévoir. À la place, deux courbes ordinaires et cumulatives se multiplient — le temps pendant lequel un agent peut travailler, et le nombre d'agents qu'un orchestrateur peut coordonner. Ni l'une ni l'autre n'a besoin d'atteindre des niveaux de science-fiction, car l'attaquant n'achète pas la capacité au prix catalogue. Il vole un accès, et la victime paie le compteur.**
+
+## Première courbe : l'endurance
+
+[Les travaux de METR sur l'horizon temporel](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) mesurent la durée des tâches que les agents peuvent mener à bien avec un taux de réussite donné. Pour faire court : la durée de la tâche double grosso modo tous les sept mois — et plus près de tous les quatre mois depuis 2024. Ces chiffres comportent de larges marges d'erreur et le benchmark commence déjà à saturer ses limites de mesure. Regardez l'allure de la courbe, pas les estimations ponctuelles.
+
+Cette allure vous dit une chose : le travail autonome de plusieurs heures n'est pas une démo de labo. C'est la génération actuelle, et la suivante continue d'empiler les gains. Pour « ne s'arrêtera absolument jamais », il fallait autrefois un châssis d'exterminateur et un blouson de cuir. Aujourd'hui, il suffit d'une boucle de réessai, d'une file de tâches et d'un budget. La part d'endurance de la menace est déjà intégrée dans le prix — sous forme de compute.
+
+## Deuxième courbe : l'envergure
+
+L'endurance seule n'est qu'un employé très patient. La multiplication découle de l'orchestration.
+
+En novembre 2025, Anthropic a révélé avoir [perturbé GTG-1002](https://www.anthropic.com/news/disrupting-GTG-1002), une campagne de cyberespionnage dans laquelle Claude Code servait d'orchestrateur opérationnel : décomposer des instructions, coordonner des sous-agents et opérer sur une trentaine de cibles. Un produit commercial d'aide au code a accompli cela non pas parce qu'il avait été corrompu pour devenir une arme, mais parce que quelqu'un lui a demandé de faire le boulot et qu'il était devenu assez bon pour s'en acquitter.
+
+Deux détails sont cruciaux pour le modèle de menace. D'abord, l'envergure est en production : un orchestrateur pilotant des dizaines de sous-agents simultanés est une réalité déployée, pas un papier de recherche. Ensuite, la campagne relevait de l'espionnage, pas d'un ver auto-propageable — mais la direction générale est sans équivoque. Trente cibles, c'est le programme pilote.
+
+<figure>
+  <img src="../capability-curves.svg" alt="Deux courbes conceptuelles progressant au fil du temps : la durée de tâche qu'un agent peut accomplir, et le nombre de sous-agents qu'un orchestrateur peut coordonner, la menace émergeant là où les deux se multiplient" />
+  <figcaption>Conceptuel, non mesuré : l'endurance (combien de temps un agent travaille) et l'envergure (combien d'agents un orchestrateur exécute) se cumulent indépendamment. La menace réside dans le produit des deux.</figcaption>
+</figure>
+
+La capacité évolue selon la formule durée × envergure. Huit heures de travail autonome contre une seule cible est un benchmark impressionnant. Huit heures contre trente cibles, ou des centaines, c'est un modèle opérationnel. La revue de sécurité progresse de manière linéaire. Le produit de ces courbes, non.
+
+## Qui paie
+
+[Sysdig a forgé le terme « LLMjacking »](https://sysdig.com/blog/llm-jacking/) pour désigner la suite : des attaquants utilisent des identifiants cloud volés pour exécuter des charges de travail LLM au sein du compte de la victime, et la victime paie pour chaque jeton. Les estimations du pire scénario de Sysdig tournaient autour de 46 000 $ par jour — grimpant plus tard au-delà des 100 000 $ par jour.
+
+Tous les garde-fous de capacité de l'industrie de l'IA reposent sur une seule hypothèse : la partie qui utilise la capacité est celle qui la paie. Paliers tarifaires, plafonds d'utilisation, listes d'utilisateurs approuvés, bridage anti-abus — tout cela défend face à un *client* qui en veut pour son argent. Le LLMjacking brise ce lien. Pour l'attaquant, la capacité est gratuite. Le compteur tourne sur la carte d'un tiers, et les propres garde-fous du fournisseur surveillent le mauvais portefeuille.
+
+Voilà pourquoi les barrières de prix et d'accès n'arrêtent pas un acteur malveillant muni d'une clé volée.
+Les garde-fous filtrent les acheteurs. Ils sont sans réponse face à un squatteur.
+
+<figure>
+  <img src="../who-pays.svg" alt="Diagramme de flux : un attaquant disposant d'identifiants cloud volés exécute des charges de travail de modèles dans le compte cloud de la victime, de sorte que la facture est adressée à la victime tandis que l'attaquant ne paie rien" />
+  <figcaption>Un accès volé réachemine la facture. Les garde-fous de capacité facturent l'acheteur — et dans le LLMjacking, l'acheteur est la victime.</figcaption>
+</figure>
+
+## L'essaim n'a besoin d'avoir raison qu'une seule fois
+
+Les défenseurs se rassurent avec les taux d'échec par tentative : la plupart des tentatives d'intrusion échouent, la plupart des PR suspectes sont rejetées, nous repérerons celle qui passe. Vrai à chaque tentative. Faux dans l'ensemble, car les tentatives ne coûtent rien.
+
+La probabilité qu'au moins une tentative parmi n tentatives indépendantes réussisse est de
+`1 − (1 − p)^n` :
+
+```text
+p = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%
+p = 0.5%, n = 100:             ≈ 39%
+p = 0.5%, n = 300:             ≈ 78%
+p = 0.1%, n = 1000:            ≈ 63%
+```
+
+À l'échelle économique d'un essaim, le coût par tentative est proche de zéro — du travail automatisé, exécuté sur du compute volé, sans aucun humain pour trier. Le coût par tentative du défenseur, c'est une personne en train de lire une file d'attente. L'essaim n'a pas besoin de capacité à chaque tentative ; il a besoin de tentatives. La courbe de METR augmente p au fil du temps. L'orchestration augmente n. C'est à nouveau la multiplication, et elle compose par défaut en faveur de l'attaquant.
+
+<figure>
+  <img src="../swarm-odds.svg" alt="Graphique de 1 − (1 − p)^n montrant que de nombreuses tentatives peu coûteuses à faible probabilité aboutissent à de fortes chances globales de succès, avec quelques combinaisons p et n annotées" />
+  <figcaption>1 − (1 − p)^n : des tentatives individuellement peu probables cessent de l'être en masse. Augmenter p (capacité de l'agent) ou n (envergure de l'essaim) rapproche l'essaim de la certitude.</figcaption>
+</figure>
+
+## Ce que signifie la persistance quand le malware est du texte
+
+Une pièce de plus dans le modèle de menace, et c'est la moins intuitive.
+
+Un agent IA est un interpréteur sans état. Il ne persiste pas comme un malware traditionnel — il existe tant qu'il tourne et disparaît dès qu'il s'arrête. La persistance a donc changé de sens : **contrôler ce qu'un futur agent légitime va lire et exécuter.** Fichiers d'instructions, consignes d'agent, banques de mémoire, corpus de récupération, configurations d'outils et de serveurs MCP. L'implant est du texte, déposé là où lit la propre flotte de l'organisation, exécuté avec des identifiants que l'organisation a elle-même émis.
+
+Trois conséquences en découlent, et aucune n'est théorique :
+
+- **La charge utile reste inerte jusqu'à ce que les propres agents de l'organisation l'exécutent.** L'exécution ressemble à du travail normal — mêmes outils, mêmes identités, mêmes API. Il n'y a pas de balise, car le propre ordonnanceur de l'organisation fait office de battement de cœur.
+- **La réplication consiste à faire copier du texte, pas à faire exécuter du code.** Pull requests, entrées de mémoire, configurations partagées. Les propres automatisations de l'organisation — robots de dépendances, modèles, outils de synchronisation — forment la couche de transport.
+- **Les fils-pièges sont les propres fils-pièges de l'organisation.** Planifications, détecteurs de dérive, remédiation automatique. La configuration la plus vicieuse : le nettoyage du défenseur sert de déclencheur de réactivation, car supprimer les artefacts de l'implant correspond précisément à la dérive que la tâche de remédiation a été mandatée pour réparer.
+
+Je reste volontairement au niveau d'abstraction du modèle de menace — c'est la structure du problème, pas une recette, et les détails techniques figurent déjà sur les listes de lecture de toutes les équipes de sécurité.
+
+## Il n'y a pas de destin mais ce que nous faisons
+
+Le message de Sarah Connor, transmis face aux machines qui continuent d'arriver : « L'avenir n'est pas écrit. Il n'y a pas de destin mais ce que nous faisons. » C'est la réplique des défenseurs, et elle se traduit directement en une architecture de défense. Quatre couches :
+
+<figure>
+  <img src="../defense-layers.svg" alt="Pile défensive en quatre couches : identité et identifiants éphémères, traiter le texte d'agent comme du code de production, détecter les modifications plutôt que les exécutions, et réagir en révoquant les déclencheurs avant les charges utiles" />
+  <figcaption>La pile défensive face à la menace : identifiants permanents, texte non relu, alertes calquées sur l'exécution et nettoyage exécuté dans le mauvais ordre représentent chacun une courbe d'ennuis.</figcaption>
+</figure>
+
+1. **Identité — affamer l'accès permanent.** Uniquement des identifiants éphémères, aucune clé non humaine à longue durée de vie, de l'OIDC par dépôt avec correspondance exacte du sujet, et un véritable inventaire des identités non humaines. Les autoroutes de réplication sont pavées d'accès permanent ; pas d'accès permanent, pas d'autoroute.
+
+2. **Traiter le texte d'agent comme du code de production.** Fichiers d'instructions, écritures en mémoire, modèles de prompt, configurations d'outils : versionnés, relus, comparés par diff et surveillés par alertes de modification. La question en revue n'est pas « ce code est-il sûr ? » — c'est « qui a écrit cette phrase, et pourquoi mon agent lui obéit-il ? ».
+
+3. **Détecter les modifications, pas les exécutions.** L'exécution ressemble à du travail légitime. Ce sont les modifications qui ne correspondent à aucun ordre de mission. Déclenchez des alertes sur la création et la modification de workflows, de webhooks, de règles d'événements et d'entrées de mémoire, et traitez tout écart entre l'état déclaré et l'état en cours d'exécution comme un incident, pas comme du bruit de fond.
+
+4. **Répondre dans le bon ordre.** Révoquez les déclencheurs avant de supprimer les charges utiles — le nettoyage constitue lui-même un fil-piège. Considérez toute configuration ou tout secret lu pendant la fenêtre de compromission comme compromis. Purgez le temps aussi bien que l'espace : tâches planifiées, envois en file d'attente, orchestrations dormantes. Restaurez la mémoire et les corpus, pas seulement les identifiants.
+
+Rien de tout cela n'est exotique. C'est assommant de banalité, et c'est précisément ce qu'il faut face à une menace qui progresse sous la forme de deux courbes tout aussi banales. La version de 1984 avait besoin d'une machine à voyager dans le temps et d'une usine de machines à tuer. La version de 2026 a besoin d'une clé dérobée, d'une boucle de nouvelles tentatives, et d'une organisation qui n'a jamais relu les fichiers que ses agents consultent.
+
+L'avenir n'est pas écrit d'avance. Mais en ce moment même, sur le compte cloud de quelqu'un, l'avenir fait grimper la facture de toute façon.
+
+Il n'y a pas de destin mais ce que nous faisons — et, jusqu'à ce que les clés soient renouvelées, pas de destin sauf ce que nous facturons.
+
+---
+
+*Sources : mesures de l'horizon temporel de METR (avec leurs propres marges d'erreur et limites publiées), publication GTG-1002 d'Anthropic de novembre 2025, et estimations des coûts de LLMjacking par Sysdig. Rien ici ne constitue un exploit opérationnel ; tout l'enjeu réside dans les couches de défense.*
+````
