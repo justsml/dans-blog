@@ -4,104 +4,67 @@
 - Locale: ar
 - Judge model: openrouter/anthropic/claude-haiku-5.5
 - Second judge model: openrouter/openai/gpt-6.1-sol
-- Escalation judge model: openrouter/openai/gpt-6.1-sol
+- Escalation judge model: not run
 - Max candidate commits per judge call: 3
 - Fix pass limit: 2
 - Selected commit hint: judge selected
 - Validation: passed
 - Validation scope: local
-- Confidence: low (0.108)
-- Confidence signals: 2 high and 0 medium issues; judge disagreement detected (range 9.6)
-- High/medium/low issue counts: 2/0/0
+- Confidence: high (1.000)
+- Confidence signals: no high/medium issues; judges agree within 4.0 points; frontier judge scored 89.0
+- High/medium/low issue counts: 0/0/0
 
 ## Batch Judge Telemetry
 ### Round 1, Batch 1
-- Runtime seconds: 4.71
+- Runtime seconds: 4.19
 - Input tokens: 35551
-- Output tokens: 681
+- Output tokens: 614
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.003896
-- Estimated cost: $0.003896
+- OpenRouter cost credits: 0.003862
+- Estimated cost: $0.003862
 
 ### Round 1, Batch 2
-- Runtime seconds: 4.33
+- Runtime seconds: 3.20
 - Input tokens: 33964
-- Output tokens: 777
+- Output tokens: 440
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.003785
-- Estimated cost: $0.003785
+- OpenRouter cost credits: 0.003616
+- Estimated cost: $0.003616
 
 ### Round 1, Batch 3
-- Runtime seconds: 3.22
+- Runtime seconds: 3.41
 - Input tokens: 21770
-- Output tokens: 420
+- Output tokens: 452
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.002387
-- Estimated cost: $0.002387
+- OpenRouter cost credits: 0.002403
+- Estimated cost: $0.002403
 
 ## Primary Judge Telemetry
-- Runtime seconds: 4.00
+- Runtime seconds: 2.90
 - Input tokens: 28753
-- Output tokens: 656
+- Output tokens: 383
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- OpenRouter cost credits: 0.003203
-- Estimated cost: $0.003203
-
-## Pre-Publish Rescore Telemetry
-### Pass 1
-- Runtime seconds: 4.76
-- Input tokens: 17600
-- Output tokens: 996
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.002258
-- Estimated cost: $0.002258
-
-### Pass 2
-- Runtime seconds: 3.56
-- Input tokens: 17914
-- Output tokens: 724
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 0
-- OpenRouter cost credits: 0.002153
-- Estimated cost: $0.002153
+- OpenRouter cost credits: 0.003067
+- Estimated cost: $0.003067
 
 ## Judge Suggestions
-1. Pass 1: logged medium priority suggestion. Match: "<img src=\"../capability-curves.svg\"" Replacement: "<img src=\"../capability-curves.svg\"" Reason: Image path is already correctly prefixed with ../; retained as a check that the locale-relative asset path must start with ../ (no change needed). Note: Exact match and replacement are identical; no MDX change needed.
-2. Pass 1: applied medium priority suggestion. Match: "لا مصير سوى ما نصنعه، ولا مصير، ما دامت المفاتيح لم تُدوَّر، سوى ما نحاسب عليه." Replacement: "لا مصير سوى ما نصنعه — وحتى تُدوَّر المفاتيح، لا مصير سوى ما نحاسب عليه." Reason: The closing line in the English is a clean two-part aphorism; the current Arabic adds an awkward comma-separated aside that weakens the cadence of Dan's direct voice. Note: Applied exact replacement to selected MDX.
-3. Pass 2: applied high priority suggestion. Match: "<img src=\"../capability-curves.svg\"" Replacement: "<img src=\"./capability-curves.svg\"" Reason: The locale file lives at ar/index.mdx, so the image asset is in the same directory as the English source's sibling assets; a `../` prefix points one level too high and breaks the image. The English source uses `./capability-curves.svg`, and the locale file sits one folder deeper, so the relative path must resolve to the post's asset folder rather than its parent. Verify against the locale's actual asset location before publishing. Note: Applied exact replacement to selected MDX.
-4. Pass 2: applied high priority suggestion. Match: "<img src=\"../who-pays.svg\"" Replacement: "<img src=\"./who-pays.svg\"" Reason: Same relative-path problem as the other figure assets: the English source references `./who-pays.svg` from the post root, and the Arabic file must use the same asset resolution rules for the locale folder. Note: Applied exact replacement to selected MDX.
-5. Pass 2: applied high priority suggestion. Match: "<img src=\"../swarm-odds.svg\"" Replacement: "<img src=\"./swarm-odds.svg\"" Reason: Same relative-path problem; English uses `./swarm-odds.svg`, and an upward `../` reference breaks the figure asset. Note: Applied exact replacement to selected MDX.
-6. Pass 2: applied high priority suggestion. Match: "<img src=\"../defense-layers.svg\"" Replacement: "<img src=\"./defense-layers.svg\"" Reason: Same relative-path problem; English uses `./defense-layers.svg`, and the locale copy should reference the same asset path. Note: Applied exact replacement to selected MDX.
-7. Pass 2: logged medium priority suggestion. Match: "لا مصير سوى ما نصنعه، ولا مصير، ما دامت المفاتيح لم تُدوَّر، سوى ما نحاسب عليه." Replacement: "لا مصير سوى ما نصنعه — وحتى تُدوَّر المفاتيح، لا مصير سوى ما نحاسب عليه." Reason: The English closing is a clean two-part aphorism; the current Arabic inserts an awkward comma-separated aside that breaks the cadence of Dan's direct voice. Note: Exact match not found in selected MDX.
+1. Pass 1: logged medium priority suggestion. Match: "![" Replacement: "![" Reason: No change needed; placeholder retained to keep format. Candidate preserves figure/img structure and heading counts; the two-candidate comparison favors gemini on structural fidelity versus haiku's more literal rendering of the imperative line. Note: Exact match and replacement are identical; no MDX change needed.
 
 ## Second Judge Telemetry
-- Runtime seconds: 11.58
-- Input tokens: 7150
-- Output tokens: 663
+- Runtime seconds: 5.47
+- Input tokens: 7634
+- Output tokens: 220
 - Thinking tokens: unknown
 - Cached input tokens: 0
-- Cache write tokens: 7147
-- OpenRouter cost credits: 0.000000
-- Estimated cost: $0.000000
-
-## Escalation Judge Telemetry
-- Runtime seconds: 7.89
-- Input tokens: 14181
-- Output tokens: 365
-- Thinking tokens: unknown
-- Cached input tokens: 0
-- Cache write tokens: 14178
+- Cache write tokens: 7631
 - OpenRouter cost credits: 0.000000
 - Estimated cost: $0.000000
 

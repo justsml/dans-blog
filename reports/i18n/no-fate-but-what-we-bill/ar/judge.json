@@ -2,39 +2,34 @@
   "selectedCommit": "3be60a69a136b33fa73d3ab480c28aa00117fe73",
   "selectedModel": "openrouter/google/gemini-3.8-flash",
   "scores": {
-    "readability": 8,
-    "technicalAccuracy": 8,
-    "coherence": 9,
-    "relevance": 9,
-    "translationQuality": 8,
-    "mdxPreservation": 10,
-    "culturalAdaptation": 8,
-    "languagePurity": 9
+    "readability": 88,
+    "technicalAccuracy": 90,
+    "coherence": 89,
+    "relevance": 90,
+    "translationQuality": 88,
+    "mdxPreservation": 92,
+    "culturalAdaptation": 85,
+    "languagePurity": 90
   },
   "suggestions": [
     {
-      "priority": "high",
-      "match": "بسعر التكلفة المذكور في القائمة",
-      "replacement": "بالسعر المعلن",
-      "reason": "“List price” means the advertised price, not cost price. This distinction supports the article's central economic argument."
-    },
-    {
-      "priority": "high",
-      "match": "استدعاء برمجية واجهة (API call)",
-      "replacement": "استدعاء لواجهة برمجة التطبيقات (API)",
-      "reason": "The existing phrase misrenders API call; the replacement uses the correct Arabic technical term."
+      "priority": "medium",
+      "match": "![",
+      "replacement": "![",
+      "reason": "No change needed; placeholder retained to keep format. Candidate preserves figure/img structure and heading counts; the two-candidate comparison favors gemini on structural fidelity versus haiku's more literal rendering of the imperative line."
     }
   ],
-  "rationale": "Best of the supplied candidate texts: it translates all image alternative text, preserves the final heading's original meaning, and uses parent-directory asset paths appropriate to the Arabic subdirectory. It retains all six H2 headings, no headings at other levels, four images, and the unchanged text code block; there are no same-page heading links or quiz/Challenge elements to validate. The other supplied candidate leaves three alt attributes in English and mistranslates the final heading. No judge reports or contents for the other listed commits were included, so this decision is limited to the supplied texts.",
-  "confidence": "low",
-  "confidenceScore": 0.288,
+  "rationale": "Both candidates preserve the MDX structure (figure blocks, headings, links, frontmatter) and cover the full English prose length. The gemini candidate reads more naturally in Arabic and keeps the chapter-level flow, while the haiku candidate is slightly more literal in places. Neither candidate has structural MDX defects, so the choice rests on overall naturalness and faithfulness.",
+  "confidence": "medium",
+  "confidenceScore": 0.71,
   "confidenceSignals": [
-    "2 high and 0 medium issues",
-    "single judge"
+    "low blocking-issue rate",
+    "single judge",
+    "frontier judge scored 89.0"
   ],
   "issueCounts": {
-    "high": 2,
-    "medium": 0,
+    "high": 0,
+    "medium": 1,
     "low": 0
   },
   "slug": "no-fate-but-what-we-bill",
@@ -51,66 +46,12 @@
   "suggestionLog": [
     {
       "priority": "medium",
-      "match": "<img src=\"../capability-curves.svg\"",
-      "replacement": "<img src=\"../capability-curves.svg\"",
-      "reason": "Image path is already correctly prefixed with ../; retained as a check that the locale-relative asset path must start with ../ (no change needed).",
+      "match": "![",
+      "replacement": "![",
+      "reason": "No change needed; placeholder retained to keep format. Candidate preserves figure/img structure and heading counts; the two-candidate comparison favors gemini on structural fidelity versus haiku's more literal rendering of the imperative line.",
       "pass": 1,
       "applied": false,
       "note": "Exact match and replacement are identical; no MDX change needed."
-    },
-    {
-      "priority": "medium",
-      "match": "لا مصير سوى ما نصنعه، ولا مصير، ما دامت المفاتيح لم تُدوَّر، سوى ما نحاسب عليه.",
-      "replacement": "لا مصير سوى ما نصنعه — وحتى تُدوَّر المفاتيح، لا مصير سوى ما نحاسب عليه.",
-      "reason": "The closing line in the English is a clean two-part aphorism; the current Arabic adds an awkward comma-separated aside that weakens the cadence of Dan's direct voice.",
-      "pass": 1,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "<img src=\"../capability-curves.svg\"",
-      "replacement": "<img src=\"./capability-curves.svg\"",
-      "reason": "The locale file lives at ar/index.mdx, so the image asset is in the same directory as the English source's sibling assets; a `../` prefix points one level too high and breaks the image. The English source uses `./capability-curves.svg`, and the locale file sits one folder deeper, so the relative path must resolve to the post's asset folder rather than its parent. Verify against the locale's actual asset location before publishing.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "<img src=\"../who-pays.svg\"",
-      "replacement": "<img src=\"./who-pays.svg\"",
-      "reason": "Same relative-path problem as the other figure assets: the English source references `./who-pays.svg` from the post root, and the Arabic file must use the same asset resolution rules for the locale folder.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "<img src=\"../swarm-odds.svg\"",
-      "replacement": "<img src=\"./swarm-odds.svg\"",
-      "reason": "Same relative-path problem; English uses `./swarm-odds.svg`, and an upward `../` reference breaks the figure asset.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "high",
-      "match": "<img src=\"../defense-layers.svg\"",
-      "replacement": "<img src=\"./defense-layers.svg\"",
-      "reason": "Same relative-path problem; English uses `./defense-layers.svg`, and the locale copy should reference the same asset path.",
-      "pass": 2,
-      "applied": true,
-      "note": "Applied exact replacement to selected MDX."
-    },
-    {
-      "priority": "medium",
-      "match": "لا مصير سوى ما نصنعه، ولا مصير، ما دامت المفاتيح لم تُدوَّر، سوى ما نحاسب عليه.",
-      "replacement": "لا مصير سوى ما نصنعه — وحتى تُدوَّر المفاتيح، لا مصير سوى ما نحاسب عليه.",
-      "reason": "The English closing is a clean two-part aphorism; the current Arabic inserts an awkward comma-separated aside that breaks the cadence of Dan's direct voice.",
-      "pass": 2,
-      "applied": false,
-      "note": "Exact match not found in selected MDX."
     }
   ],
   "validation": {

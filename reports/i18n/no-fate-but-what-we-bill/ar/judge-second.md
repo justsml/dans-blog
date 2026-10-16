@@ -1,6 +1,6 @@
 # Translation Judge Pass
 
-- Selected candidate: 4022746c8c9fdcdea33bd8a75542c4fddbdad0f0
-- Selected model: openrouter/anthropic/claude-haiku-5.5
+- Selected candidate: 3be60a69a136b33fa73d3ab480c28aa00117fe73
+- Selected model: openrouter/google/gemini-3.8-flash
 
-Disagree with accepting this candidate unchanged: three English image descriptions and the mistranslated final heading require escalation. The supplied MDX otherwise preserves seven level-two headings, four figures, and the single code block, with no apparent unclosed tags or stale heading fragments. The primary report's asset-path warning does not match the supplied translation: its image paths already use ./, matching the English. No alternative candidate was inspected.
+Agree with the selected candidate. The translation preserves all six level-two headings, four figure blocks, the code block, links, and list structure. Inherited image paths correctly use ../, HTML tags are closed, and there are no stale heading fragments, leaked instructions, or untranslated prose sections. Some terminology and phrasing could be more idiomatic, but the central technical argument and defensive recommendations remain faithful. No escalation required.
