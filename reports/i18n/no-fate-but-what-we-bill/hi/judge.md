@@ -1,8 +1,8 @@
 # Translation Judge
 
-- Selected candidate: 031a30c74c01636c7b1df48fca519e5fd0860dcc
-- Selected model: openrouter/google/gemini-3.8-flash
-- Judge model: openrouter/google/gemini-3.8-flash
-- Confidence: high (0.879)
+- Selected candidate: 0b0a3fa03ac51ad1b73fcdfe6520c4c3e4133b28
+- Selected model: openrouter/openai/gpt-6.1-sol
+- Judge model: openrouter/anthropic/claude-haiku-5.5
+- Confidence: high (0.930)
 
-Pass 1 applied fixes for the relative image paths cleanly. All image sources now correctly point to '../*.svg' without malformed relative prefixes, code blocks and frontmatter match the source specification, and the Hindi translation faithfully reproduces Dan's voice and technical nuance without further high/medium-priority issues.
+Candidate 0b0a3fa0 has the most natural Hindi prose with Dan's direct voice preserved, keeps the title localized, and matches the English structure of figures, headings, code block, and footer. Its heading and link structure matches the English source closely. Candidate 031a30c7 is nearly identical in content but has a suspicious relative asset path change (.././) that is less clean; candidate 8d92 is a bit more loose in translation and drops some nuance. The chosen candidate is best overall for translation quality and MDX preservation.
