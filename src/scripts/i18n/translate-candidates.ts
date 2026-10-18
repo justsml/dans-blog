@@ -1,3 +1,4 @@
+import { isHaikuModel } from "./model-policy.ts";
 import { appendFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawn, type ChildProcess } from "node:child_process";
@@ -31,7 +32,7 @@ import {
   recordOutOfCreditIssue,
 } from "./out-of-credit.ts";
 import {
-  CHEAP_FAST_TRANSLATION_MODELS,
+  DEFAULT_TRANSLATION_MODELS,
   resolveCheapFastTranslationModels,
 } from "./model-presets.ts";
 
@@ -115,7 +116,7 @@ const TOKEN_FIELDS = [
 
 const options = parseArgs();
 const models = randomizeListOrder(validateCandidateModels(
-  resolveCheapFastTranslationModels(parseList(optionalString(options, "models"), [...CHEAP_FAST_TRANSLATION_MODELS])),
+  resolveCheapFastTranslationModels(parseList(optionalString(options, "models"), [...DEFAULT_TRANSLATION_MODELS])),
 ));
 const shouldValidateCandidates = options.validate === true || options["validate-candidates"] === true;
 const shouldRunFullCandidateValidation = options["full-validation"] === true;
@@ -832,12 +833,13 @@ function validateCandidateModels(models: string[]) {
       "openrouter/openai/gpt-5.6-luna",
       "openrouter/openai/gpt-6.1-sol",
     ].includes(model)) ||
-    model.startsWith("openrouter/anthropic/"),
+    // All Haiku models are allowed explicitly; larger Anthropic models stay out.
+    (model.startsWith("openrouter/anthropic/") && !isHaikuModel(model)),
   );
 
   if (forbiddenModels.length > 0) {
     throw new Error([
-      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro, gpt-5.6-luna, and gpt-6.1-sol (low). Anthropic and -fast variants are forbidden.",
+      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro, gpt-5.6-luna, and gpt-6.1-sol (low). Anthropic (except Haiku models) and -fast variants are forbidden.",
       `Forbidden model(s): ${forbiddenModels.join(", ")}`,
     ].join(" "));
   }

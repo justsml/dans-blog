@@ -9,6 +9,7 @@ export interface TokenCostEstimate {
 interface ModelPricing {
   inputPerMillionUsd: number;
   cachedInputPerMillionUsd?: number;
+  cacheWritePerMillionUsd?: number;
   outputPerMillionUsd: number;
   source: string;
 }
@@ -17,8 +18,9 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
   "openai/gpt-6.1-sol": {
     inputPerMillionUsd: 2,
     cachedInputPerMillionUsd: 0.1,
+    cacheWritePerMillionUsd: 2.5,
     outputPerMillionUsd: 10,
-    source: "openrouter-2026-10-02",
+    source: "openrouter-2026-10-16",
   },
   "openai/gpt-6-sol": {
     inputPerMillionUsd: 2,
@@ -39,10 +41,22 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     source: "openrouter-2026-09-22",
   },
   "deepseek/deepseek-v4.1-flash": {
-    inputPerMillionUsd: 0.015,
-    cachedInputPerMillionUsd: 0.015,
-    outputPerMillionUsd: 0.75,
-    source: "openrouter-2026-10-02",
+    inputPerMillionUsd: 0.15,
+    cachedInputPerMillionUsd: 0.003,
+    outputPerMillionUsd: 0.6,
+    source: "openrouter-2026-10-16",
+  },
+  "anthropic/claude-sonnet-5.5": {
+    inputPerMillionUsd: 2,
+    outputPerMillionUsd: 10,
+    source: "openrouter-2026-10-16",
+  },
+  "anthropic/claude-haiku-5.5": {
+    inputPerMillionUsd: 0.1,
+    cachedInputPerMillionUsd: 0.01,
+    cacheWritePerMillionUsd: 0.125,
+    outputPerMillionUsd: 0.5,
+    source: "openrouter-2026-10-16",
   },
   "openai/gpt-6-luna": {
     inputPerMillionUsd: 0.1,
@@ -135,10 +149,10 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     source: "openrouter-2026-09-13",
   },
   "google/gemini-3.8-flash": {
-    inputPerMillionUsd: 0.75,
-    cachedInputPerMillionUsd: 0.075,
-    outputPerMillionUsd: 3.75,
-    source: "openrouter-2026-09-22",
+    inputPerMillionUsd: 0.825,
+    cachedInputPerMillionUsd: 0.0825,
+    outputPerMillionUsd: 4.125,
+    source: "openrouter-2026-10-16",
   },
   "google/gemini-3.5-flash-lite": {
     inputPerMillionUsd: 0.3,
@@ -147,13 +161,14 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     source: "openrouter-2026-09-22",
   },
   "z-ai/glm-5.3-flash": {
-    inputPerMillionUsd: 0.15,
-    cachedInputPerMillionUsd: 0.05,
-    outputPerMillionUsd: 0.5,
-    source: "openrouter-2026-09-22",
+    inputPerMillionUsd: 0.0126,
+    cachedInputPerMillionUsd: 0.0125,
+    outputPerMillionUsd: 0.8288,
+    source: "openrouter-2026-10-16",
   },
   "minimax/minimax-m2.5": {
     inputPerMillionUsd: 0.27,
+    cachedInputPerMillionUsd: 0.03,
     outputPerMillionUsd: 0.95,
     source: "openrouter-2026-09-13",
   },
@@ -198,10 +213,14 @@ export function estimateTokenCost(
   inputTokens: number,
   outputTokens: number,
   cacheReadTokens = 0,
-  options: { providerCostUsd?: number } = {},
+  options: { providerCostUsd?: number; cacheWriteTokens?: number } = {},
 ): TokenCostEstimate {
   const normalizedId = normalizeOpenRouterModelId(modelId);
-  const pricing = MODEL_PRICING[normalizedId.startsWith("gpt-") ? `openai/${normalizedId}` : normalizedId];
+  const pricingId = normalizedId.startsWith("gpt-") ? `openai/${normalizedId}` : normalizedId;
+  // `:nitro`/`:floor`/`:free` select a provider route at the same list price;
+  // `:batch` is half price, so it keeps its own (absent) entry rather than
+  // silently pricing as the base model.
+  const pricing = MODEL_PRICING[pricingId] ?? MODEL_PRICING[pricingId.replace(/:(nitro|floor|free|online)$/, "")];
   const providerCostUsd = normalizeProviderCost(options.providerCostUsd);
   const providerEstimate = providerCostUsd == null
     ? undefined
@@ -228,10 +247,13 @@ export function estimateTokenCost(
     };
   }
 
-  const nonCachedInputTokens = Math.max(inputTokens - cacheReadTokens, 0);
+  // inputTokens is the AI SDK total (it already includes cache reads and writes).
+  const cacheWriteTokens = options.cacheWriteTokens ?? 0;
+  const nonCachedInputTokens = Math.max(inputTokens - cacheReadTokens - cacheWriteTokens, 0);
   const inputUsd =
     (nonCachedInputTokens / 1_000_000) * pricing.inputPerMillionUsd
-    + (cacheReadTokens / 1_000_000) * (pricing.cachedInputPerMillionUsd ?? pricing.inputPerMillionUsd);
+    + (cacheReadTokens / 1_000_000) * (pricing.cachedInputPerMillionUsd ?? pricing.inputPerMillionUsd)
+    + (cacheWriteTokens / 1_000_000) * (pricing.cacheWritePerMillionUsd ?? pricing.inputPerMillionUsd);
   const outputUsd = (outputTokens / 1_000_000) * pricing.outputPerMillionUsd;
   const localTotalUsd = inputUsd + outputUsd;
 
@@ -254,8 +276,9 @@ export function estimateTokenCost(
 }
 
 function normalizeProviderCost(value: number | undefined) {
-  // A reported cost of exactly 0 means the provider sent no usage accounting
-  // (first-party OpenAI does not), not that the call was free. Treat it as
-  // absent so we fall back to the local pricing table.
-  return typeof value === "number" && Number.isFinite(value) && value > 0 ? value : undefined;
+  // Provider-reported cost always wins over the price table, including an
+  // explicit 0 (free models). Callers pass undefined when no accounting was
+  // returned (first-party OpenAI sends none), and only then do we price locally.
+  // BYOK upstream charges are folded in upstream of here (effectiveOpenRouterCost).
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
 }

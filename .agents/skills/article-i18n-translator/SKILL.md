@@ -65,7 +65,7 @@ Recent high-throughput coverage runs used this focused cheap candidate pair:
 
 Use `openrouter/google/gemini-3.8-flash` as the current default merge/judge model unless the user asks otherwise. OpenRouter's catalog on 2026-09-04 listed Gemini 3.8 as the latest Flash model and Gemini 3.5 as the latest Flash Lite model.
 
-For higher-risk batches, add a second cheap judge explicitly with `--second-model`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-4.6` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
+For higher-risk batches, add a second cheap judge explicitly with `--second-model`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-5.5` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
 
 ## Standard Workflow
 

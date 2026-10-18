@@ -1,4 +1,5 @@
 import { estimateTokenCost } from "./translation-costs.ts";
+import { effectiveOpenRouterCost } from "./llm-telemetry.ts";
 export const numberOrUnknown = (v: unknown): number | undefined =>
   typeof v === "number" && Number.isFinite(v) && v >= 0 ? v : undefined;
 /** Langfuse usage buckets are disjoint. Totals must not repeat cached/reasoning tokens. */
@@ -85,7 +86,13 @@ export function sdkAccounting(event: {
   providerMetadata?: any;
 }) {
   const u = event.usage ?? {},
-    r = event.providerMetadata?.openrouter?.usage;
+    r = event.providerMetadata?.openrouter?.usage,
+    raw = u.raw;
+  const upstream = numberOrUnknown(
+    r?.costDetails?.upstreamInferenceCost ??
+      r?.cost_details?.upstream_inference_cost ??
+      raw?.cost_details?.upstream_inference_cost,
+  );
   const accounting = accountUsage(
     event.modelId.includes("/")
       ? event.modelId
@@ -97,12 +104,13 @@ export function sdkAccounting(event: {
       cacheWrite: numberOrUnknown(u.inputTokenDetails?.cacheWriteTokens),
       reasoning: numberOrUnknown(u.outputTokenDetails?.reasoningTokens),
     },
-    numberOrUnknown(r?.cost),
+    // A non-BYOK zero is a real zero (free models); BYOK zeros hide the upstream charge.
+    effectiveOpenRouterCost({
+      cost: numberOrUnknown(r?.cost ?? raw?.cost),
+      upstreamCost: upstream,
+      isByok: raw?.is_byok === true || r?.isByok === true,
+    }),
     "openrouter-reported",
-  );
-  const upstream = numberOrUnknown(
-    r?.costDetails?.upstreamInferenceCost ??
-      r?.cost_details?.upstream_inference_cost,
   );
   return {
     ...accounting,
@@ -112,7 +120,7 @@ export function sdkAccounting(event: {
         ? {
             upstreamInferenceCostUsd: upstream,
             upstreamCostNote:
-              "Raw completion field may repeat gateway cost on non-BYOK routes. Verify is_byok via generation lookup; not a reconciled provider invoice.",
+              "On non-BYOK routes this repeats the gateway cost; on BYOK routes (is_byok) it is added to the gateway fee. Not a reconciled provider invoice.",
           }
         : {}),
     },

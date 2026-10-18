@@ -1,3 +1,4 @@
+import { isHaikuModel } from "./model-policy.ts";
 import { join } from "node:path";
 import { readFileSync } from "node:fs";
 import { spawn } from "node:child_process";
@@ -21,13 +22,15 @@ import {
   writeTextFile,
 } from "./utils.ts";
 import {
-  CHEAP_FAST_TRANSLATION_MODELS,
+  DEFAULT_TRANSLATION_MODELS,
   resolveCheapFastTranslationModels,
 } from "./model-presets.ts";
 import { modelIdsMatch, normalizeModelId } from "./model-id.ts";
 
-const JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
-const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
+const JUDGE_MODEL = "openrouter/anthropic/claude-haiku-5.5";
+// A second, different-vendor judge is what lets confidence clear 0.96.
+const SECOND_JUDGE_MODEL = "openrouter/openai/gpt-6.1-sol";
+const ESCALATION_JUDGE_MODEL = "openrouter/openai/gpt-6.1-sol";
 const DEFAULT_TASK_CONCURRENCY = 8;
 
 type Task = {
@@ -41,7 +44,7 @@ const options = parseArgs();
 const selectedLocales = filterActiveLocales(parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES]));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const candidateModels = randomizeListOrder(validateCandidateModels(
-  resolveCheapFastTranslationModels(parseList(optionalString(options, "models"), [...CHEAP_FAST_TRANSLATION_MODELS])),
+  resolveCheapFastTranslationModels(parseList(optionalString(options, "models"), [...DEFAULT_TRANSLATION_MODELS])),
 ));
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 2);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
@@ -53,7 +56,7 @@ const candidateTaskConcurrency = optionalString(options, "candidate-task-concurr
 const quizConcurrency = optionalString(options, "quiz-concurrency");
 const challengeRetries = optionalString(options, "challenge-retries");
 const judgeModel = optionalString(options, "judge-model") ?? JUDGE_MODEL;
-const secondJudgeModel = optionalString(options, "second-judge-model");
+const secondJudgeModel = optionalString(options, "second-judge-model") ?? SECOND_JUDGE_MODEL;
 const escalationJudgeModel = optionalString(options, "escalate-model") ?? ESCALATION_JUDGE_MODEL;
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
@@ -366,12 +369,12 @@ function validateCandidateModels(models: string[]) {
       "openrouter/openai/gpt-5.6-luna",
       "openrouter/openai/gpt-6.1-sol",
     ].includes(model)) ||
-    model.startsWith("openrouter/anthropic/"),
+    (model.startsWith("openrouter/anthropic/") && !isHaikuModel(model)),
   );
 
   if (forbiddenModels.length > 0) {
     throw new Error([
-      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro, gpt-5.6-luna, and gpt-6.1-sol (low). Anthropic and -fast variants are forbidden.",
+      "Translation candidates must use cheap models; the allowed OpenAI candidates are gpt-oss-120b:nitro, gpt-5.6-luna, and gpt-6.1-sol (low). Anthropic (except Haiku models) and -fast variants are forbidden.",
       `Forbidden model(s): ${forbiddenModels.join(", ")}`,
     ].join(" "));
   }

@@ -9,3 +9,8 @@ export function assertAllowedModel(modelId: string, outputUsdPerToken?: number) 
     throw new Error(`Model prohibited by repository cost policy: ${modelId}`);
   }
 }
+
+/** Haiku models are explicitly allowed as cheap translation candidates and judges. */
+export function isHaikuModel(modelId: string) {
+  return /(?:^|\/)(?:~?anthropic\/)?claude-haiku/i.test(modelId.replace(/^llm:\/\//, '').replace(/^openrouter\//, ''));
+}

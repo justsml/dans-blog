@@ -101,7 +101,7 @@ type ScoredTranslationRecord = {
   };
 };
 
-const DEFAULT_MODEL = "openrouter/google/gemini-3.8-flash";
+const DEFAULT_MODEL = "openrouter/anthropic/claude-haiku-5.5";
 // Fixed seed so repeat runs over unchanged content reproduce. Providers treat
 // seed as best-effort, not a guarantee, but it removes the avoidable variance.
 const JUDGE_SEED = 20260913;

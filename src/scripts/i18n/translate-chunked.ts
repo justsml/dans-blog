@@ -66,7 +66,7 @@ import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
-import { cachedText, usageFromResult } from "./llm-telemetry.ts";
+import { cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
 import { isTranslationOlderThanSource } from "./corpus-inventory.ts";
 import {
   assertNoOutOfCreditMarker,
@@ -244,6 +244,7 @@ function addTelemetry(
   const cacheWriteTokens = entry.cacheWriteTokens ?? 0;
   const cost = estimateTokenCost(telemetry.model, entry.inputTokens, entry.outputTokens, cacheReadTokens, {
     providerCostUsd: entry.providerCostUsd,
+    cacheWriteTokens,
   });
   telemetry.chunks.push({ ...entry, cacheReadTokens, cacheWriteTokens, costUsd: cost.totalUsd });
   telemetry.totalInputTokens += entry.inputTokens;
@@ -518,6 +519,8 @@ async function translateChunk(
   outputTokens: number;
   cacheReadTokens: number;
   cacheWriteTokens: number;
+  providerCostUsd?: number;
+  providerUpstreamCostUsd?: number;
   durationMs: number;
 }> {
   const start = performance.now();
@@ -590,7 +593,8 @@ async function generateSummary(
   llmConfig: LlmConfig,
   isQuiz: boolean,
   promptTuning?: TranslationPromptTuning,
-): Promise<string> {
+): Promise<{ text: string; usage: TranslationTelemetry }> {
+  const start = performance.now();
   const model = createOpenRouterChatModel(llmConfig);
   assertNoOutOfCreditMarker();
   const result = await generateText({
@@ -607,7 +611,10 @@ async function generateSummary(
     timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
-  return result.text.trim();
+  return {
+    text: result.text.trim(),
+    usage: usageFromResult(result.usage, Math.round(performance.now() - start), result.providerMetadata),
+  };
 }
 
 async function translateQuiz(
@@ -668,6 +675,8 @@ async function translateQuiz(
       outputTokens: summary.telemetry.outputTokens,
       cacheReadTokens: summary.telemetry.cacheReadTokens,
       cacheWriteTokens: summary.telemetry.cacheWriteTokens,
+      providerCostUsd: summary.telemetry.providerCostUsd,
+      providerUpstreamCostUsd: summary.telemetry.providerUpstreamCostUsd,
       durationMs: summary.telemetry.durationMs,
     });
     reporter?.writeJson("quiz-summary", {
@@ -753,6 +762,8 @@ async function translateQuiz(
             outputTokens: t.outputTokens,
             cacheReadTokens: t.cacheReadTokens,
             cacheWriteTokens: t.cacheWriteTokens,
+            providerCostUsd: t.providerCostUsd,
+            providerUpstreamCostUsd: t.providerUpstreamCostUsd,
             durationMs: t.durationMs,
           });
 
@@ -879,6 +890,8 @@ async function translateProse(
   outputTokens: number;
   cacheReadTokens: number;
   cacheWriteTokens: number;
+  providerCostUsd?: number;
+  providerUpstreamCostUsd?: number;
   durationMs: number;
 }> {
   const start = performance.now();
@@ -1069,6 +1082,7 @@ async function main() {
   let translatedBody: string;
   let telemetry: Telemetry;
   let articleSummary: string;
+  const pendingUsage: Array<{ index: number; label: string } & TranslationTelemetry> = [];
 
   if (isQuiz) {
     console.log(`🎯 Quiz detected: ${slug}\n`);
@@ -1095,7 +1109,9 @@ async function main() {
     if (!skipSummary) {
       assertActiveRun();
       console.log("📝 Generating article summary...");
-      articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, false, promptTuning);
+      const summary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, false, promptTuning);
+      articleSummary = summary.text;
+      pendingUsage.push({ index: -5, label: "article-summary", ...summary.usage });
       assertActiveRun();
       console.log(`   Summary: ${articleSummary.slice(0, 120)}...\n`);
     } else {
@@ -1123,6 +1139,8 @@ async function main() {
     telemetry = result.telemetry;
   }
 
+  for (const entry of pendingUsage) addTelemetry(telemetry, entry);
+
   if (styleSheet?.telemetry != null) {
     // The run that wrote the sheet pays for it; runs reusing it add nothing.
     const t = styleSheet.telemetry;
@@ -1144,7 +1162,9 @@ async function main() {
 
   // Build frontmatter
   const frontmatter: Record<string, unknown> = { ...parsed.data };
-  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz, promptTuning, renderedStyleSheet);
+  const frontmatterUsage: TranslationTelemetry[] = [];
+  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz, promptTuning, renderedStyleSheet, frontmatterUsage);
+  frontmatterUsage.forEach((usage, i) => addTelemetry(telemetry, { index: -6 - i, label: "frontmatter", ...usage }));
   // Record which English source this was translated from, so a later source
   // edit makes the translation detectably stale.
   translatedFrontmatter[SOURCE_HASH_KEY] = hashPostSource(sourceRaw);
@@ -1234,7 +1254,7 @@ async function translateArticleChunks(
 
     console.log(`🔄 Translating chunk ${i + 1}/${chunks.length}...`);
 
-    const { text, inputTokens, outputTokens, cacheReadTokens, cacheWriteTokens, durationMs } = await translateChunk(
+    const { text, inputTokens, outputTokens, cacheReadTokens, cacheWriteTokens, providerCostUsd, providerUpstreamCostUsd, durationMs } = await translateChunk(
       chunk,
       locale,
       llmConfig,
@@ -1254,6 +1274,8 @@ async function translateArticleChunks(
       outputTokens,
       cacheReadTokens,
       cacheWriteTokens,
+      providerCostUsd,
+      providerUpstreamCostUsd,
       durationMs,
     });
 
@@ -1299,6 +1321,7 @@ async function translateFrontmatter(
   isQuiz: boolean,
   promptTuning?: TranslationPromptTuning,
   styleSheet?: string,
+  usageSink?: TranslationTelemetry[],
 ): Promise<Record<string, unknown>> {
   const result = omitInheritedTranslatedFrontmatter(normalizeFrontmatterAssetPaths(frontmatter));
 
@@ -1318,6 +1341,7 @@ async function translateFrontmatter(
 
     const model = createOpenRouterChatModel(llmConfig);
     assertNoOutOfCreditMarker();
+    const callStart = performance.now();
     const translation = await generateText({
       model,
       allowSystemInMessages: true,
@@ -1351,6 +1375,7 @@ async function translateFrontmatter(
       providerOptions: llmConfig.providerOptions,
     });
 
+    usageSink?.push(usageFromResult(translation.usage, Math.round(performance.now() - callStart), translation.providerMetadata));
     result[key] = translation.text.trim();
   }
 

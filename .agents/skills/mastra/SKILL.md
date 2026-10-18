@@ -156,7 +156,7 @@ When the user asks to use a model or provider, always run the script first to ve
 Example model strings:
 
 - `"openai/gpt-5.5"`
-- `"anthropic/claude-opus-4-7"`
+- `"anthropic/claude-opus-5-5"`
 - `"google/gemini-2.5-pro"`
 
 ## When you see errors
