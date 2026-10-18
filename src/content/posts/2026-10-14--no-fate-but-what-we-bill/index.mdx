@@ -9,6 +9,12 @@ draft: false
 tags: [ai-agents, security, threat-model, llm, agents, cloud, supply-chain]
 ---
 
+import capabilityCurves from "./capability-curves.svg?url";
+import whoPays from "./who-pays.svg?url";
+import swarmOdds from "./swarm-odds.svg?url";
+import defenseLayers from "./defense-layers.svg?url";
+
+
 "Listen, and understand. That terminator is out there. It can't be bargained
 with. It can't be reasoned with. It doesn't feel pity, or remorse, or fear. And
 it absolutely will not stop, ever, until you are dead."
@@ -73,7 +79,7 @@ that every safety control disappeared. The useful lesson is narrower: an
 attacker's framework can delegate substantial work to a commercial agent.
 
 <figure>
-  <img src="./capability-curves.svg" alt="Conceptual illustration of task capability and orchestration breadth, with hypothetical work budgets kept separate from observed campaign targets" />
+  <img src={capabilityCurves} alt="Conceptual illustration of task capability and orchestration breadth, with hypothetical work budgets kept separate from observed campaign targets" />
   <figcaption>Two dimensions to watch, not two measured growth curves. METR measures task difficulty in human time; campaign target counts do not measure simultaneous workers.</figcaption>
 </figure>
 
@@ -110,7 +116,7 @@ The mistake is expecting a price tag to enforce a security boundary. A thief
 doesn't need your discount code. They need your credentials.
 
 <figure>
-  <img src="./who-pays.svg" alt="Stolen cloud credentials route model charges to the victim; account permissions, quotas, and detection still constrain misuse" />
+  <img src={whoPays} alt="Stolen cloud credentials route model charges to the victim; account permissions, quotas, and detection still constrain misuse" />
   <figcaption>LLMjacking shifts the model bill. It does not remove authorization, quotas, or the attacker's other costs.</figcaption>
 </figure>
 
@@ -142,7 +148,7 @@ does not tell us the intrusion probability p, and orchestration alone does not
 guarantee more useful attempts. Measure both sides of that queue.
 
 <figure>
-  <img src="./swarm-odds.svg" alt="Illustrative probability curves for independent attempts with a fixed success probability, including 1 percent across 100 attempts giving about 63 percent" />
+  <img src={swarmOdds} alt="Illustrative probability curves for independent attempts with a fixed success probability, including 1 percent across 100 attempts giving about 63 percent" />
   <figcaption>Under the stated assumptions, repeated attempts raise aggregate success odds. Shared failure modes and defensive intervention can make real campaigns behave very differently.</figcaption>
 </figure>
 
@@ -183,7 +189,7 @@ future's not set. There's no fate but what we make." It's the defenders'
 line, and it converts directly into a defense architecture. Four layers:
 
 <figure>
-  <img src="./defense-layers.svg" alt="Four defense layers: scoped identity, reviewed agent inputs and tool permissions, edit and runtime monitoring, and containment before cleanup" />
+  <img src={defenseLayers} alt="Four defense layers: scoped identity, reviewed agent inputs and tool permissions, edit and runtime monitoring, and containment before cleanup" />
   <figcaption>Each layer reduces a different risk. Credential expiry does not remove poisoned memory, and reviewing memory does not replace runtime monitoring.</figcaption>
 </figure>
 
