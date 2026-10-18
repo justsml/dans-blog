@@ -355,7 +355,7 @@ function importsMatch(sourceImport: ImportSignature, targetImport: ImportSignatu
 }
 
 function stripRelativePrefix(moduleSpecifier: string) {
-  return moduleSpecifier.replace(/^(\.\.\/)+/, "");
+  return moduleSpecifier.replace(/^(?:\.\.?\/)+/, "");
 }
 
 function escapeRegExp(value: string) {
