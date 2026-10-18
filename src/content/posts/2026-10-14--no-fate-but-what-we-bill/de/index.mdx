@@ -13,8 +13,15 @@ tags:
   - agents
   - cloud
   - supply-chain
-sourceHash: 17bcd9b90da0
+modified: 2026-10-18
+sourceHash: 398caaa9e710
 ---
+
+import capabilityCurves from "../capability-curves.svg?url";
+import whoPays from "../who-pays.svg?url";
+import swarmOdds from "../swarm-odds.svg?url";
+import defenseLayers from "../defense-layers.svg?url";
+
 „Hör zu und begreife. Dieser Terminator ist da draußen. Man kann nicht mit ihm verhandeln. Man kann nicht mit ihm reden. Er fühlt weder Mitleid noch Reue noch Furcht. Und er wird nicht eher aufhören, niemals, bis du tot bist.“
 
 Kyle Reese klärt 1984 sein Publikum über die Gestalt der Bedrohung auf.
@@ -23,102 +30,109 @@ Die Zeile, die gut gealtert ist, ist nicht der Bodycount. Es ist: „wird nicht 
 
 Später hat das Franchise seinen eigenen Fehler korrigiert. Niemand fürchtet sich drei Filme lang vor einem einzelnen Roboter. Skynet ist der eigentliche Bösewicht: ein verteiltes System mit Rechenzentren, Fabriken und Zeitverschiebungsausrüstung. Der Roboter ist nur ein API-Aufruf.
 
-2026 sind beide Hälften eingetroffen, in der am wenigsten filmreifen Form, die man sich vorstellen kann: Agenten, die mehrstündige Aufgaben ohne menschliches Babysitting erledigen können – auf einer Kurve, die immer steiler wird. Orchestratoren, die Arbeit dutzendweise an Sub-Agenten auffächern. Und „wird nicht eher aufhören“ bedeutet heute: „wird nicht eher aufhören abzurechnen.“
+Bis 2026 waren die weniger filmreifen Varianten ernst zu nehmen: Agenten bearbeiten schwierigere Aufgaben, Software koordiniert Arbeit über mehrere Ziele hinweg, und gestohlener Cloud-Zugriff landet auf der Rechnung eines anderen. „Wird nicht eher aufhören“ hat inzwischen auch eine Lesart für die Finanzabteilung.
 
-Dieser Beitrag ist das Argument, das ich immer wieder Teams vorhalte, die die agentische Bedrohung für reinen Hype halten: **Es steht kein einzelner Durchbruch bevor. Stattdessen multiplizieren sich zwei ganz gewöhnliche, exponentiell wachsende Kurven: wie lange ein agent arbeiten kann, und wie viele Agenten ein orchestrator koordinieren kann. Keine von beiden muss Science-Fiction-Niveau erreichen, denn der Angreifer kauft Fähigkeiten nicht zum Listenpreis. Er stiehlt den Zugriff, und das Opfer bezahlt den Zähler.**
+Dieser Beitrag ist das Argument, das ich immer wieder Teams vorhalte, die die agentische Bedrohung für reinen Hype halten: **Ein gefährliches Betriebsmodell braucht keinen spektakulären Einzeldurchbruch. Leistungsfähigere Agenten, wiederholbare Orchestrierung und gestohlener Modellzugriff können sich gegenseitig verstärken. Der Angreifer muss nicht derjenige sein, der den Zähler bezahlt.** Das ist ein Bedrohungsmodell, kein gemessenes Gesetz exponentiellen Angriffswachstums.
 
 ## Erste Kurve: Ausdauer
 
-[METRs Arbeit zum Zeithorizont](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) misst die Dauer von Aufgaben, die Agenten mit einer bestimmten Erfolgsquote bewältigen können. Die Kurzfassung: Die Aufgabenlänge verdoppelt sich etwa alle sieben Monate – seit 2024 sogar eher alle vier Monate. Diese Zahlen haben breite Fehlerbalken, und der Benchmark stößt bereits an seine Messgrenzen. Lies den Verlauf der Kurve, nicht die Punktschätzungen.
+[METRs Zeithorizont-Studie vom März 2025](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) stellte fest: Die anhand menschlicher Bearbeitungszeit gemessene Dauer von Softwareaufgaben, die Agenten mit 50 % Zuverlässigkeit lösen konnten, verdoppelte sich etwa alle sieben Monate. Die Einheit zählt: **menschliche Bearbeitungszeit, nicht Stunden unbeaufsichtigter Agentenlaufzeit.** Ein Zweistundenhorizont bedeutet eine Aufgabe, für die ein menschlicher Experte etwa zwei Stunden braucht und bei deren Aufgabenverteilung dem Agenten in der Hälfte der Fälle Erfolg vorhergesagt wird.
 
-Der Verlauf zeigt: Mehrstündige autonome Arbeit ist keine Labordemo. Es ist die aktuelle Generation, und die nächste legt exponentiell nach. „Er wird nicht eher aufhören“ verlangte früher nach einem Tötungschassis und einer Lederjacke. Heute braucht es eine Retry-Schleife, eine Aufgabenwarteschlange und ein Budget. Der Ausdauer-Teil der Bedrohung ist bereits eingepreist – als compute.
+[METRs Messseite](https://metr.org/time-horizons/) erklärt die Grenzen: Es geht überwiegend um klar spezifizierte Softwareaufgaben; bei unübersichtlicherer Arbeit kann die Leistung schlechter sein. Schätzungen oberhalb von sechzehn Stunden sind mit dieser Testsuite unzuverlässig. Die Seite wurde zuletzt am 8. September 2026 aktualisiert und wird nicht mehr aktiv gepflegt. Sie belegt wachsende Aufgabenkompetenz, verspricht aber nicht, dass das nächste Modell zuverlässig einen Tag lang eure Incident Response übernimmt.
+
+Die betriebliche Sorge bleibt trotz dieser Unterscheidung bestehen. Eine Retry-Schleife kann einen fähigen Agenten immer wieder zur Arbeit auffordern. Ob er vorankommt, hängt von Aufgabe, Feedback, Berechtigungen und Budget ab. Die Lederjacke bleibt optional.
 
 ## Zweite Kurve: Breite
 
-Ausdauer allein ist nur ein sehr geduldiger Mitarbeiter. Die Multiplikation entsteht durch Orchestrierung.
+Ausdauer allein ist nur ein sehr geduldiger Mitarbeiter. Orchestrierung verteilt die Arbeit über eine Warteschlange.
 
-Im November 2025 legte Anthropic die [Unterbrechung von GTG-1002](https://www.anthropic.com/news/disrupting-GTG-1002) offen: eine Cyber-Spionagekampagne, bei der Claude Code als operativer orchestrator agierte – indem er Anweisungen zerlegte, Sub-Agenten koordinierte und etwa dreißig Ziele bearbeitete. Ein kommerzielles Coding-Produkt tat dies nicht, weil es zu einer Waffe manipuliert worden wäre, sondern weil jemand es darum bat und es inzwischen gut genug war, den Job zu erledigen.
+Im November 2025 veröffentlichte Anthropic einen Bericht über [die KI-orchestrierte Spionagekampagne GTG-1002](https://www.anthropic.com/news/disrupting-AI-espionage). Laut dieser Untersuchung bauten Angreifer ein Framework um Claude Code und versuchten, in etwa dreißig Ziele einzudringen. In wenigen Fällen gelang es. Sie nutzten Jailbreaks und tarnten bösartige Teilaufgaben als legitime Sicherheitsarbeit. Menschen wählten weiterhin Ziele und trafen wichtige Entscheidungen; das Modell erfand außerdem einige Ergebnisse.
 
-Zwei Details sind für das Bedrohungsmodell entscheidend. Erstens: Die Breite ist bereits Realität. Ein orchestrator, der Dutzende parallele Sub-Agenten steuert, ist gelebte Praxis, kein Paper. Zweitens: Die Kampagne war Spionage, kein sich selbst verbreitender Wurm – aber die Stoßrichtung ist unmissverständlich. Dreißig Ziele sind das Pilotprojekt.
+Das ist ein ernst zu nehmender Bericht über operativen Missbrauch. Er misst nicht dreißig gleichzeitige Sub-Agenten, belegt keinen selbstverbreitenden Wurm und zeigt auch nicht, dass sämtliche Schutzmaßnahmen verschwanden. Die nützliche Schlussfolgerung ist enger: Das Framework eines Angreifers kann erhebliche Arbeit an einen kommerziellen Agenten delegieren.
 
 <figure>
-  <img src="../capability-curves.svg" alt="Zwei konzeptionelle Kurven, die im Laufe der Zeit ansteigen: die Aufgabenlänge, die ein Agent bewältigen kann, und die Anzahl der Sub-Agenten, die ein Orchestrator koordinieren kann, wobei die Bedrohung dort entsteht, wo sich beide multiplizieren" />
-  <figcaption>Konzeptionell, nicht gemessen: Ausdauer (wie lange ein agent arbeitet) und Breite (wie viele Agenten ein orchestrator betreibt) wachsen unabhängig voneinander. Die Bedrohung liegt im Produkt aus beidem.</figcaption>
+  <img src={capabilityCurves} alt="Konzeptionelle Darstellung von Aufgabenkompetenz und Orchestrierungsbreite, die hypothetische Arbeitsbudgets von beobachteten Kampagnenzielen trennt" />
+  <figcaption>Zwei Dimensionen, die man beobachten sollte, keine zwei gemessenen Wachstumskurven. METR misst Aufgabenschwierigkeit in menschlicher Bearbeitungszeit; die Zahl der Kampagnenziele misst keine gleichzeitigen Worker.</figcaption>
 </figure>
 
-Fähigkeit skaliert als Dauer × Breite. Acht Stunden autonome Arbeit gegen ein einziges Ziel sind ein beeindruckender Benchmark. Acht Stunden gegen dreißig Ziele oder Hunderte sind ein Betriebsmodell. Sicherheitsüberprüfungen skalieren linear. Das Produkt dieser Kurven tut das nicht.
+Für die Kapazitätsplanung verbrauchen acht Worker, die eine Stunde laufen, acht Worker-Stunden. Diese Rechnung allein sagt nichts über erfolgreiche Einbrüche aus. Koordinierungsaufwand, korrelierte Fehler, Quoten und Automatisierung auf Verteidigerseite verändern das Ergebnis. Für ein Sicherheitsteam stellt sich die Frage, wie viel feindliche Arbeit seine Kontrollen abweisen können, bevor sie in einer menschlichen Warteschlange landet.
 
 ## Wer zahlt
 
-[Sysdig prägte den Begriff „LLMjacking“](https://sysdig.com/blog/llm-jacking/) für das, was als Nächstes passiert: Angreifer nutzen gestohlene Cloud-Zugangsdaten, um LLM-Workloads im Konto des Opfers auszuführen – und das Opfer bezahlt für jedes Token. Sysdigs Worst-Case-Schätzungen lagen bei rund 46.000 US-Dollar pro Tag – und kletterten später auf über 100.000 US-Dollar pro Tag.
+[Sysdigs LLMjacking-Bericht vom Mai 2024](https://www.sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack) beschrieb den Zugriff auf Modelldienste mit gestohlenen Cloud-Zugangsdaten auf Kosten des Opfers. Das modellierte Kostenrisiko überstieg 46.000 US-Dollar pro Tag; ein [Folgebericht vom September 2024](https://www.sysdig.com/blog/growing-dangers-of-llmjacking) beschrieb mögliche Kosten von über 100.000 US-Dollar pro Tag mit teureren Modellen. Das sind historische Kostenszenarien, keine typischen Schäden und kein Preisangebot für 2026.
 
-Jedes Capability-Gate in der KI-Branche basiert auf einer einzigen Annahme: Die Partei, die die Fähigkeit nutzt, ist auch die Partei, die dafür bezahlt. Preisstufen, Nutzungslimits, Listen freigegebener Nutzer, Missbrauchsdrosselung – all das verteidigt gegen einen *Kunden*, der Gegenwert für sein Geld will. LLMjacking kappt diese Verbindung. Für den Angreifer ist die Fähigkeit kostenlos. Der Zähler läuft auf der Kreditkarte eines Fremden, und die Leitplanken des Anbieters zielen auf das falsche Portemonnaie.
+Es gibt auch eine konkrete Verbindung zu Agentenwerkzeugen. [Im Juni 2026 beobachtete Sysdig](https://www.sysdig.com/blog/llmjacking-evolved-attackers-are-using-stolen-ai-compute-to-build-offensive-agentic-tools), wie ein Akteur einen offen erreichbaren Ollama-Server zur Entwicklung eines automatisierten offensiven Sicherheitswerkzeugs nutzte. Die beobachteten Ziele waren private Übungsumgebungen; die Forscher ließen den späteren Verwendungszweck ausdrücklich offen. Der Fall zeigt gestohlene Inferenzleistung zur Werkzeugentwicklung, keine bestätigte Kampagne gegen öffentliche Opfer.
 
-Genau deshalb halten Preis- und Zugangsschranken keinen einzigen Angreifer mit einem gestohlenen Key auf.
-Gates filtern Käufer. Gegen einen Untermieter haben sie keine Handhabe.
+Gestohlener Zugriff schwächt den Preis als Abschreckung: Das Opfer bekommt die Modellrechnung. Infrastruktur, Beschaffung der Zugangsdaten und Beaufsichtigung des Angriffs werden dadurch nicht kostenlos. Ebenso wenig umgeht das die Berechtigungen des Kontos, Modellzugriffsbeschränkungen oder Quoten. Diese Kontrollen begrenzen weiterhin, was die gestohlene Identität tun kann; Erkennung und Entzug des Zugriffs können den Lauf abbrechen.
+
+Der Fehler ist die Erwartung, ein Preisschild würde eine Sicherheitsgrenze durchsetzen. Ein Dieb braucht nicht deinen Rabattcode. Er braucht deine Zugangsdaten.
 
 <figure>
-  <img src="../who-pays.svg" alt="Ablaufdiagramm: Ein Angreifer mit gestohlenen Cloud-Zugangsdaten führt Modell-Workloads im Cloud-Konto des Opfers aus, sodass die Rechnung beim Opfer landet, während der Angreifer nichts bezahlt" />
-  <figcaption>Gestohlener Zugriff leitet die Kosten um. Die Capability-Gates belasten den Käufer – und beim LLMjacking ist der Käufer das Opfer.</figcaption>
+  <img src={whoPays} alt="Gestohlene Cloud-Zugangsdaten verlagern Modellkosten auf das Opfer; Kontoberechtigungen, Quoten und Erkennung begrenzen weiterhin den Missbrauch" />
+  <figcaption>LLMjacking verlagert die Modellrechnung. Es beseitigt weder Autorisierung noch Quoten oder die übrigen Kosten des Angreifers.</figcaption>
 </figure>
 
-## Der Schwarm muss nur ein einziges Mal recht haben
+## Der Schwarm muss nur einmal richtig liegen
 
-Verteidiger wiegen sich mit Fehlerraten pro Versuch in falscher Sicherheit: Die meisten Einbruchsversuche scheitern, die meisten verdächtigen PRs werden abgelehnt, den einen funktionierenden würden wir schon erwischen. Betrachtet man einzelne Versuche, stimmt das. In der Summe ist es falsch, denn Versuche sind billig.
+Verteidiger beruhigen sich mit den Fehlerquoten einzelner Versuche: Die meisten Einbruchsversuche scheitern, die meisten verdächtigen PRs werden abgelehnt, und den erfolgreichen würden wir schon erwischen. Pro Versuch stimmt das. In der Summe nicht, denn Versuche sind billig.
 
 Die Wahrscheinlichkeit, dass mindestens einer von n unabhängigen Versuchen gelingt, beträgt `1 − (1 − p)^n`:
 
 ```text
-p = 1% pro Versuch, n = 100:   1 − 0.99^100  ≈ 63%
+p = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%
 p = 0.5%, n = 100:             ≈ 39%
 p = 0.5%, n = 300:             ≈ 78%
 p = 0.1%, n = 1000:            ≈ 63%
 ```
 
-Unter den wirtschaftlichen Bedingungen eines Schwarms liegen die Kosten pro Versuch bei nahezu null – automatisierte Arbeit, ausgeführt auf gestohlenem Compute, von keinem Menschen gesichtet. Die Kosten des Verteidigers pro Versuch entsprechen einer realen Person, die eine Queue abarbeitet. Der Schwarm braucht keine enormen Fähigkeiten pro Versuch; er braucht einfach nur Versuche. METRs Kurve hebt p über die Zeit an. Orchestrierung skaliert n. Das ist wieder die Multiplikation, und sie potenziert sich standardmäßig zugunsten des Angreifers.
+Das sind Beispielwahrscheinlichkeiten, keine gemessenen Angriffserfolgsraten. Die Formel setzt unabhängige Versuche mit demselben festen p voraus. Denselben untauglichen Ansatz zu wiederholen kann korrelierte Fehlschläge produzieren; tausend Wiederholungen bringen dann möglicherweise kaum etwas. Erkennung, Sperren und wechselnde Ziele verändern die Chancen ebenfalls.
+
+Trotz dieser Grenzen zählt das Volumen. Automatisierung und gestohlene Inferenzleistung können die Grenzkosten des Angreifers senken, während auffällige Versuche teure Prüfungsarbeit auslösen können. Auch Verteidiger können Ablehnung und Triage automatisieren. METRs Benchmark liefert uns keine Einbruchswahrscheinlichkeit p, und Orchestrierung allein garantiert keine zusätzlichen brauchbaren Versuche. Messt beide Seiten dieser Warteschlange.
 
 <figure>
-  <img src="../swarm-odds.svg" alt="Diagramm von 1 − (1 − p)^n, das zeigt, dass viele billige Versuche mit geringer Wahrscheinlichkeit in der Summe hohe Gesamterfolgschancen ergeben, mit einigen markierten p- und n-Kombinationen" />
-  <figcaption>1 − (1 − p)^n: Einzeln unwahrscheinliche Versuche sind in Masse nicht mehr unwahrscheinlich. Erhöht man entweder p (Agenten-Fähigkeiten) oder n (Schwarm-Breite), bewegt sich der Schwarm in Richtung Gewissheit.</figcaption>
+  <img src={swarmOdds} alt="Beispielhafte Wahrscheinlichkeitskurven für unabhängige Versuche mit fester Erfolgswahrscheinlichkeit, darunter ein Prozent bei hundert Versuchen mit insgesamt etwa 63 Prozent" />
+  <figcaption>Unter den genannten Annahmen erhöhen wiederholte Versuche die gesamte Erfolgswahrscheinlichkeit. Gemeinsame Fehlerursachen und Eingriffe der Verteidiger können echte Kampagnen ganz anders verlaufen lassen.</figcaption>
 </figure>
 
-## Was Persistenz bedeutet, wenn die Malware aus Text besteht
+## Was Persistenz bedeutet, wenn die Malware Text ist
 
-Ein weiteres Puzzlestück des Bedrohungsmodells, und es ist das am wenigsten intuitive.
+Noch ein Teil des Bedrohungsmodells, und zwar der am wenigsten intuitive.
 
-Ein KI-Agent ist ein zustandsloser Interpreter. Er persistiert nicht so wie klassische Malware – er existiert, während er läuft, und verflüchtigt sich, sobald er stoppt. Persistenz bedeutet heute also etwas anderes: **zu kontrollieren, was ein legitimer zukünftiger Agent lesen und befolgen wird.** Instruktionsdateien, Agenten-Richtlinien, Memory-Stores, Retrieval-Korpora, Tool- und MCP-Konfigurationen. Das Implantat ist Text, platziert dort, wo die eigene Flotte des Unternehmens liest, und ausgeführt mit Zugangsdaten, die das Unternehmen selbst ausgestellt hat.
+Ein einzelner Modellaufruf braucht keinen persistenten Zustand, damit das umgebende Agentensystem einen hat. Dateien, Memory-Stores, Retrieval-Korpora, Warteschlangen und Tool-Konfigurationen können einen Lauf überdauern. Wer diese Eingaben beeinflussen kann, beeinflusst möglicherweise, was ein späterer legitimer Agent mit frischen Zugangsdaten tut.
 
-Daraus folgen drei Konsequenzen, keine davon hypothetisch:
+[Microsofts Forschung zu KI-Gedächtnis](https://www.microsoft.com/en-us/security/blog/2026/06/22/guarding-ai-memory/) beschreibt, wie manipulierte Erinnerungen Einfluss in spätere Sitzungen tragen können. Entscheidend ist die Vertrauensgrenze: Text, dem ein Agent begegnet, darf nicht automatisch zur Befugnis werden, seine Werkzeuge einzusetzen.
 
-- **Die Payload ist inert, bis die eigenen Agenten der Organisation sie ausführen.** Die Ausführung sieht wie normale Arbeit aus – dieselben Tools, dieselben Identitäten, dieselben APIs. Es gibt keinen Beacon, weil der organisationseigene Scheduler der Heartbeat ist.
-- **Replikation bedeutet, Text kopiert zu bekommen, nicht Code auszuführen.** Pull Requests, Memory-Einträge, geteilte Konfigurationen. Die eigene Automatisierung der Organisation – Dependency-Bots, Templates, Sync-Tools – dient als Transportschicht.
-- **Die Stolperdrähte sind die organisationseigenen Stolperdrähte.** Schedules, Drift-Detektoren, Auto-Remediation. Die bösartigste Variante: Das Aufräumen durch den Verteidiger wird zum Reaktivierungs-Trigger, weil das Löschen der Artefakte des Implantats genau der Drift ist, den der Remediation-Job beseitigen soll.
+Drei Fehlerszenarien solltet ihr im eigenen System testen. Das sind Szenarien eines Bedrohungsmodells, keine drei durch die obigen Berichte belegten Vorfälle:
 
-Ich bleibe hier bewusst auf der Flughöhe des Bedrohungsmodells – das ist das Profil des Problems, keine Anleitung, und die Details stehen ohnehin längst auf der Leseliste jedes Security-Teams.
+- **Schlummernde Anweisungen.** Ein bösartiger Eintrag kann liegen bleiben, bis ein legitimer Workflow ihn abruft. Die folgenden Tool-Aufrufe nutzen möglicherweise normale Identitäten. Prüft deshalb Verhalten und nicht nur, wer sich authentifiziert hat.
+- **Kopierte Anweisungen.** Templates, Sync-Jobs und gemeinsam genutztes Gedächtnis können manipulierten Text verbreiten, wenn ihre Prüfungen und Vertrauensgrenzen es zulassen. Kopierter Text garantiert nicht, dass ein anderer Agent gehorcht, schafft aber eine weitere Gelegenheit.
+- **Wiederhergestellte Anweisungen.** Versorgt eine verseuchte maßgebliche Quelle einen Reparaturjob, kann das Löschen seiner lokalen Ausgabe den Job dazu bringen, sie wiederherzustellen. Findet Quelle und Trigger, bevor ihr die Bereinigung für abgeschlossen erklärt.
+
+Das Implantat kann Text sein. Die Berechtigungen, die es gefährlich machen, bleiben gewöhnliche Infrastruktur.
 
 ## Kein Schicksal außer dem, was wir selbst bestimmen
 
 Sarah Connors Botschaft an die Maschinen, die immer wieder eintreffen: „Die Zukunft ist nicht vorbestimmt. Es gibt kein Schicksal außer dem, was wir selbst bestimmen.“ Das ist das Motto der Verteidiger, und es lässt sich direkt in eine Verteidigungsarchitektur übersetzen. Vier Schichten:
 
 <figure>
-  <img src="../defense-layers.svg" alt="Vierschichtiger Defense-Stack: Identität und kurzlebige Zugangsdaten, Agenten-Text wie Produktivcode behandeln, Edits statt Ausführungen erkennen und reagieren, indem Trigger vor Payloads widerrufen werden" />
-  <figcaption>Der Defense-Stack abgebildet auf die Bedrohung: Dauerhafte Zugriffsrechte, ungeprüfter Text, auf Ausführung fixiertes Alerting und eine falsche Cleanup-Reihenfolge bedeuten jeweils eine eigene Kurve voller Probleme.</figcaption>
+  <img src={defenseLayers} alt="Vier Verteidigungsschichten: begrenzte Identitätsrechte, geprüfte Agenteneingaben und Tool-Berechtigungen, Überwachung von Änderungen und Laufzeitverhalten sowie Eindämmung vor Bereinigung" />
+  <figcaption>Jede Schicht reduziert ein anderes Risiko. Abgelaufene Zugangsdaten entfernen kein vergiftetes Gedächtnis, und die Prüfung des Gedächtnisses ersetzt keine Laufzeitüberwachung.</figcaption>
 </figure>
 
-1. **Identität – dauerhafte Zugriffsrechte aushungern.** Ausschließlich kurzlebige Zugangsdaten, keine langlebigen nicht-menschlichen Keys, Repository-basiertes OIDC mit exaktem Subject-Matching und ein echtes Inventar nicht-menschlicher Identitäten. Replikationsautobahnen sind mit dauerhaften Zugriffsrechten gepflastert; keine dauerhaften Zugriffsrechte, keine Autobahn.
+1. **Identität – gestohlenen Zugriff begrenzen.** Bevorzugt kurzlebige Zugangsdaten mit eng gefassten Rechten. Beschränkt Föderationsvertrauen auf den vorgesehenen Aussteller, die Zielgruppe, das Repository und den Job oder die Umgebung; erfasst nicht-menschliche Identitäten. Kurze Laufzeiten verkleinern das Zeitfenster für die Wiederverwendung. Sie entfernen keine Implantate und verhindern nicht, dass ein kompromittierter Runner frische Zugangsdaten erhält. Beschränkt Modellzugriff und Aufrufquoten und schützt selbst gehostete Inferenz mit Authentifizierung und Netzwerkkontrollen.
 
-2. **Agenten-Text wie Produktivcode behandeln.** Instruktionsdateien, Memory-Schreibvorgänge, Prompt-Templates, Tool-Konfigurationen: versioniert, gereviewt, per Diff geprüft und mit Change-Alerts versehen. Die Frage im Review lautet nicht: „Ist dieser Code sicher?“ – sondern: „Wer hat diesen Satz geschrieben und warum gehorcht mein Agent ihm?“
+2. **Agenten-Text wie Produktivcode behandeln.** Versioniert und prüft Instruktionsdateien, Prompt-Templates und Tool-Konfigurationen. Dokumentiert die Herkunft und kontrolliert Schreibzugriffe auf Gedächtnis- und Retrieval-Speicher. Das Lesen nicht vertrauenswürdigen Textes darf ihm keine Autorität verleihen: Erzwingt minimale Rechte an der Tool-Grenze, begrenzt ausgehenden Zugriff und verlangt Freigaben für folgenreiche Aktionen. Ein Prompt, der den Agenten zur Vorsicht mahnt, ist keine solche Grenze.
 
-3. **Edits erkennen, nicht nur Ausführungen.** Ausführung sieht wie normale Arbeit aus. Die Edits passen zu keinem Arbeitsauftrag. Schlage Alarm bei der Erstellung und Änderung von Workflows, Webhooks, Event-Rules und Memory-Einträgen – und behandle Drift zwischen Deklaration und Laufzeit als Incident, nicht als Rauschen.
+3. **Änderungen und Ausführung erkennen.** Gleicht Änderungen an Workflows, Webhooks, Ereignisregeln und Gedächtnis mit genehmigten Arbeiten ab. Behaltet Cloud-Audit-Logs, Tool-Aktivitäten, ungewöhnlichen ausgehenden Datenverkehr und Modellnutzung im Blick. Untersucht unerklärte Abweichungen. Alarmiert bei Inferenz- und Kostenspitzen und haltet einen getesteten Weg bereit, weiteren Zugriff zu verweigern; eine Abrechnungswarnung allein ist keine sofortige Ausgabenobergrenze.
 
-4. **In der richtigen Reihenfolge reagieren.** Widerrufe Trigger, bevor du Payloads entfernst – das Aufräumen selbst ist ein Stolperdraht. Behandle jede Konfiguration und jedes Secret, das während des Kompromittierungszeitfensters gelesen wurde, als kompromittiert. Bereinige die Zeitdimension genauso wie den Raum: geplante Jobs, Übertragungen in Warteschlangen, schlummernde Orchestrierungen. Setze Memory-Stores und Korpora zurück, nicht nur Zugangsdaten.
+4. **Eindämmen, dann aufräumen.** Setzt kompromittierten Zugriff aus, widerruft aktive Sitzungen, soweit unterstützt, und stoppt oder isoliert betroffene Worker. Sichert Beweise, soweit die Eindämmung es erlaubt. Deaktiviert Reaktivierungspfade und prüft Warteschlangen, bevor ihr deren Payloads entfernt. Rotiert offengelegte Secrets, stellt geprüfte Konfigurationen wieder her und bereinigt manipuliertes Gedächtnis und Korpora. Prüft vor dem Neustart, dass die erneute Ausstellung von Zugangsdaten, unerwünschte Inferenz und Reaktivierung gestoppt sind. [Bestehende Rollensitzungen zu widerrufen](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_revoke-sessions.html) ist eine andere Aufgabe als der Austausch eines langlebigen Schlüssels.
 
-Nichts davon ist exotisch. Es ist stinklangweilig – und genau die passende Antwort auf eine Bedrohung, die über zwei langweilige Kurven auf uns zukommt. Die Version von 1984 brauchte eine Zeitmaschine und eine Fabrik voller Tötungsmaschinen. Die Version von 2026 braucht einen gestohlenen Key, eine Retry-Schleife und eine einzige Organisation, die nie geprüft hat, welche Dateien ihre Agenten eigentlich lesen.
+Nichts davon ist exotisch. Es ist stinklangweilig – und genau die passende Antwort auf eine Bedrohung aus vertrauten Bauteilen. Die Version von 1984 brauchte eine Zeitmaschine und eine Fabrik voller Tötungsmaschinen. Die Version von 2026 braucht einen gestohlenen Key, eine Retry-Schleife und eine einzige Organisation, die nie geprüft hat, welche Dateien ihre Agenten eigentlich lesen.
 
 Die Zukunft ist nicht vorbestimmt. Aber genau jetzt, auf dem Cloud-Account von irgendjemandem, lässt die Zukunft die Rechnung so oder so weiterlaufen.
 
-Kein Schicksal außer dem, was wir selbst bestimmen – und solange die Keys nicht rotiert sind: kein Schicksal außer dem, was wir abrechnen.
+Kein Schicksal außer dem, was wir selbst bestimmen – und solange Zugriff und Persistenz nicht eingedämmt sind: kein Schicksal außer dem, was wir abrechnen.
 
 ---
 
-*Quellen: Die Zeithorizont-Messungen von METR (mit den jeweils veröffentlichten Fehlergrenzen und Einschränkungen), Anthropics GTG-1002-Veröffentlichung vom November 2025 und Sysdigs Kostenschätzungen zu LLMjacking. Nichts davon ist ein funktionsfähiger Exploit; es geht hier einzig und allein um die Verteidigungsschichten.*
+*Quellen geprüft am 18. Oktober 2026. METR liefert Benchmark-Belege; Anthropic und Sysdig liefern Vorfallsberichte und Kostenszenarien; Microsoft liefert Forschung zur Sicherheit von KI-Gedächtnis. Das kombinierte Bedrohungsmodell und die Prioritäten der Verteidigung sind meine Interpretation; hypothetische Szenarien sind oben gekennzeichnet.*
