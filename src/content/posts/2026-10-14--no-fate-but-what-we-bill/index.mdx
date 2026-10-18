@@ -4,7 +4,8 @@ subTitle: "Agents keep working longer, swarms keep fanning wider, and stolen clo
 category: "Security"
 subCategory: "AI Agents"
 date: 2026-10-14
-draft: true
+modified: 2026-10-18
+draft: false
 tags: [ai-agents, security, threat-model, llm, agents, cloud, supply-chain]
 ---
 
@@ -22,83 +23,95 @@ Then the franchise fixed its own mistake. Nobody spends three movies dreading
 one robot. Skynet is the actual villain: a distributed system with cores,
 factories, and time-displacement gear. The robot is an API call.
 
-In 2026 both halves arrived, in the least cinematic forms imaginable. Agents
-that can carry multi-hour tasks without human babysitting, on a curve that
-keeps steepening. Orchestrators that fan work out to sub-agents by the
-dozen. And "absolutely will not stop" now reads as "absolutely will not stop
-billing."
+By 2026, the less cinematic versions were worth taking seriously: agents
+handling harder tasks, software coordinating work across targets, and stolen
+cloud access putting the bill on somebody else's account. "Absolutely will
+not stop" now has a finance department interpretation.
 
 This post is the argument I keep making to teams who've concluded the agentic
-threat is hype: **no single breakthrough is coming. Two ordinary, compounding
-curves are multiplying instead — how long one agent can work, and how many
-agents one orchestrator can coordinate. Neither needs to reach sci-fi levels,
-because the attacker doesn't buy capability at list price. They steal access,
-and the victim pays the meter.**
+threat is hype: **a dangerous operating model doesn't need one spectacular
+breakthrough. More capable agents, repeatable orchestration, and stolen model
+access can reinforce each other. The attacker may not be the one paying the
+meter.** That is a threat model, not a measured law of exponential attack growth.
 
 ## Curve one: endurance
 
-[METR's time-horizon work](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
-measures the length of tasks agents can complete at a given success rate.
-The short version: the task length has been doubling roughly every seven
-months — and closer to every four months since 2024. Those numbers carry wide
-error bars and the benchmark is already straining against its measurement
-limit. Read the shape of the curve, not the point estimates.
+[METR's March 2025 time-horizon study](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/)
+found roughly seven-month doubling in the human-baseline duration of software
+tasks that agents could complete with 50% reliability. The unit matters:
+**human task time, not hours an agent runs unattended.** A two-hour horizon
+means a task that takes a human expert about two hours, with the agent
+predicted to succeed half the time on that task distribution.
 
-The shape says: multi-hour autonomous work is not a lab demo. It's the current
-generation, and the next one keeps compounding. "It absolutely will not stop"
-used to require a murder chassis and a leather jacket. Now it requires a retry
-loop, a queue of tasks, and a budget. The endurance part of the threat is
-already priced in — as compute.
+[METR's measurement page](https://metr.org/time-horizons/) explains the limits:
+these are mostly well-specified software tasks, performance on messier work
+can be worse, and estimates above sixteen hours are unreliable with that
+suite. The page was last updated September 8, 2026 and is no longer actively
+maintained. It is evidence of increasing task capability, not a promise that
+the next model will reliably run your incident response for a day.
+
+The operational concern survives that distinction. A retry loop can keep
+asking a capable agent to work. Whether it makes progress depends on the task,
+feedback, permissions, and budget. The leather jacket remains optional.
 
 ## Curve two: breadth
 
-Endurance alone is one very patient employee. The multiplication comes from
-orchestration.
+Endurance alone is one very patient employee. Orchestration lets the work
+spread across a queue.
 
 In November 2025, Anthropic disclosed
-[disrupting GTG-1002](https://www.anthropic.com/news/disrupting-GTG-1002),
-a cyber-espionage campaign in which Claude Code acted as the operational
-orchestrator: decomposing instructions, coordinating sub-agents, and working
-across roughly thirty targets. A commercial coding product did this not
-because it was compromised into a weapon, but because someone asked it to do
-the job and it was now good enough to do the job.
+[an AI-orchestrated espionage campaign, GTG-1002](https://www.anthropic.com/news/disrupting-AI-espionage).
+According to its investigation, attackers built a framework around Claude
+Code and attempted infiltration of roughly thirty targets, succeeding in a
+small number of cases. They used jailbreaks and disguised malicious subtasks
+as legitimate security work. Humans still chose targets and made important
+decisions; the model also fabricated some results.
 
-Two details matter for the threat model. First, breadth shipped: one
-orchestrator holding dozens of concurrent sub-agents is deployed reality, not
-a paper. Second, the campaign was espionage, not a self-spreading worm — but
-the direction of travel is unmistakable. Thirty targets is the pilot program.
+That is a serious report of operational misuse. It is not a measurement of
+thirty simultaneous sub-agents, proof of a self-spreading worm, or evidence
+that every safety control disappeared. The useful lesson is narrower: an
+attacker's framework can delegate substantial work to a commercial agent.
 
 <figure>
-  <img src="./capability-curves.svg" alt="Two conceptual curves rising over time: task length one agent can complete, and number of sub-agents one orchestrator can coordinate, with the threat emerging where the two multiply" />
-  <figcaption>Conceptual, not measured: endurance (how long one agent works) and breadth (how many agents one orchestrator runs) compound independently. The threat lives in the product of the two.</figcaption>
+  <img src="./capability-curves.svg" alt="Conceptual illustration of task capability and orchestration breadth, with hypothetical work budgets kept separate from observed campaign targets" />
+  <figcaption>Two dimensions to watch, not two measured growth curves. METR measures task difficulty in human time; campaign target counts do not measure simultaneous workers.</figcaption>
 </figure>
 
-Capability scales as duration × breadth. Eight hours of autonomous work
-against one target is an impressive benchmark. Eight hours against thirty
-targets, or hundreds, is an operating model. Security review scales
-linearly. The product of those curves doesn't.
+For capacity planning, eight workers running for an hour consume eight
+worker-hours. That arithmetic says nothing by itself about successful
+intrusions. Coordination overhead, correlated mistakes, quotas, and defender
+automation all change the outcome. The question for a security team is how
+much hostile work its controls can reject before it lands in a human queue.
 
 ## Who pays
 
-[Sysdig coined "LLMjacking"](https://sysdig.com/blog/llm-jacking/) for what
-happens next: attackers use stolen cloud credentials to run LLM workloads
-inside the victim's account, and the victim pays for every token. Sysdig's
-worst-case estimates ran about $46k per day — later climbing past $100k per
-day.
+[Sysdig's May 2024 LLMjacking report](https://www.sysdig.com/blog/llmjacking-stolen-cloud-credentials-used-in-new-ai-attack)
+described stolen cloud credentials being used to access model services at the
+victim's expense. Its modeled exposure exceeded $46,000 per day; a
+[September 2024 follow-up](https://www.sysdig.com/blog/growing-dangers-of-llmjacking)
+described potential costs above $100,000 per day with more expensive models.
+Those are historical cost scenarios, not typical losses or a 2026 price quote.
 
-Every capability gate in the AI industry is built on one assumption: the
-party using the capability is the party paying for it. Price tiers, usage
-caps, approved-user lists, abuse throttling — all of it defends against a
-*customer* who wants value for money. LLMjacking severs that link. For the
-attacker the capability is free. The meter is running on someone else's card,
-and the provider's own guardrails point at the wrong wallet.
+There is a concrete bridge to agent tooling, too. In
+[June 2026, Sysdig observed](https://www.sysdig.com/blog/llmjacking-evolved-attackers-are-using-stolen-ai-compute-to-build-offensive-agentic-tools)
+an actor using an exposed Ollama server to develop an automated offensive
+security tool. The observed targets were private practice environments; the
+researchers explicitly left the tool's eventual intent unresolved. That case
+shows stolen inference supporting tool development, not a confirmed campaign
+against public victims.
 
-That's why price and access gates don't stop one bad actor with a stolen key.
-Gates filter buyers. They have no answer for a tenant.
+Stolen access weakens price as a deterrent: the victim receives the model
+charges. It does not make the attacker's infrastructure, credential acquisition,
+or supervision free. It also does not bypass the account's permissions,
+model access restrictions, or quotas. Those controls still limit what the
+stolen identity can do; detection and revocation can cut the run short.
+
+The mistake is expecting a price tag to enforce a security boundary. A thief
+doesn't need your discount code. They need your credentials.
 
 <figure>
-  <img src="./who-pays.svg" alt="Flow diagram: an attacker with stolen cloud credentials runs model workloads inside the victim's cloud account, so the invoice routes to the victim while the attacker pays nothing" />
-  <figcaption>Stolen access reroutes the charge. The capability gates charge the buyer — and in LLMjacking, the buyer is the victim.</figcaption>
+  <img src="./who-pays.svg" alt="Stolen cloud credentials route model charges to the victim; account permissions, quotas, and detection still constrain misuse" />
+  <figcaption>LLMjacking shifts the model bill. It does not remove authorization, quotas, or the attacker's other costs.</figcaption>
 </figure>
 
 ## The swarm only has to be right once
@@ -117,45 +130,51 @@ p = 0.5%, n = 300:             ≈ 78%
 p = 0.1%, n = 1000:            ≈ 63%
 ```
 
-At swarm economics the per-attempt cost is approximately zero — automated
-work, executed on stolen compute, triaged by no human. The defender's
-per-attempt cost is a person reading a queue. The swarm doesn't need
-capability per attempt; it needs attempts. METR's curve raises p over time.
-Orchestration raises n. That's the multiplication again, and it compounds in
-the attacker's favor by default.
+These are toy probabilities, not measured attack success rates. The formula
+assumes independent attempts with the same fixed p. Repeating the same broken
+approach can produce correlated failures; a thousand retries may add very
+little. Detection, lockouts, and changing targets also change the odds.
+
+Even with those limits, volume matters. Automation and stolen inference can
+reduce the attacker's marginal cost, while noisy attempts can create expensive
+review work. Defenders can automate rejection and triage too. METR's benchmark
+does not tell us the intrusion probability p, and orchestration alone does not
+guarantee more useful attempts. Measure both sides of that queue.
 
 <figure>
-  <img src="./swarm-odds.svg" alt="Chart of 1 − (1 − p)^n showing that many cheap low-probability attempts sum to high overall success odds, with a few labeled p-and-n combinations" />
-  <figcaption>1 − (1 − p)^n: individually unlikely attempts stop being unlikely in bulk. Raising either p (agent capability) or n (swarm breadth) moves the swarm toward certainty.</figcaption>
+  <img src="./swarm-odds.svg" alt="Illustrative probability curves for independent attempts with a fixed success probability, including 1 percent across 100 attempts giving about 63 percent" />
+  <figcaption>Under the stated assumptions, repeated attempts raise aggregate success odds. Shared failure modes and defensive intervention can make real campaigns behave very differently.</figcaption>
 </figure>
 
 ## What persistence means when the malware is text
 
 One more piece of the threat model, and it's the least intuitive.
 
-An AI agent is a stateless interpreter. It does not persist the way malware
-does — it exists while it runs and vanishes when it stops. So persistence
-means something different now: **controlling what a future legitimate agent
-will read and obey.** Instruction files, agent guidelines, memory stores,
-retrieval corpora, tool and MCP configs. The implant is text, planted where
-the org's own fleet reads, executed with credentials the org itself issued.
+An individual model call does not need persistent state for the surrounding
+agent system to have it. Files, memory stores, retrieval corpora, queues, and
+tool configs can outlive a run. An attacker who can influence those inputs
+may influence what a future legitimate agent does with fresh credentials.
 
-Three consequences follow, none of them hypothetical:
+[Microsoft's research on AI memory](https://www.microsoft.com/en-us/security/blog/2026/06/22/guarding-ai-memory/)
+describes how poisoned memories can carry influence into later sessions.
+The trust boundary is the important part: text that an agent encounters must
+not automatically become authority to use its tools.
 
-- **The payload is inert until the org's own agents run it.** Execution
-  looks like normal work — same tools, same identities, same APIs. There is
-  no beacon, because the org's own scheduler is the heartbeat.
-- **Replication means getting text copied, not code executed.** Pull
-  requests, memory entries, shared configs. The org's own automation —
-  dependency bots, templates, sync tooling — is the transport layer.
-- **The tripwires are the org's own tripwires.** Schedules, drift detectors,
-  auto-remediation. The nastiest shape: the defender's cleanup is the
-  re-activation trigger, because deleting the implant's artifacts is exactly
-  the drift the remediation job was hired to fix.
+Three failure modes are worth testing in your own system. These are threat
+model scenarios, not three incidents established by the reports above:
 
-I'm staying at threat-model altitude on purpose — this is the shape of the
-problem, not a recipe, and the details are already on every security team's
-reading list.
+- **Dormant instructions.** A malicious entry can sit until a legitimate
+  workflow retrieves it. The resulting tool calls may use normal identities,
+  so inspect behavior as well as who authenticated.
+- **Copied instructions.** Templates, sync jobs, and shared memory can spread
+  poisoned text if their review and trust boundaries permit it. Copying text
+  does not guarantee another agent will obey it, but it creates another chance.
+- **Restored instructions.** If a contaminated source of truth feeds a
+  remediation job, deleting its local output can cause the job to restore it.
+  Find that source and its trigger before declaring cleanup complete.
+
+The implant can be text. The permissions that make it dangerous are still
+ordinary infrastructure.
 
 ## No fate but what we make
 
@@ -164,45 +183,54 @@ future's not set. There's no fate but what we make." It's the defenders'
 line, and it converts directly into a defense architecture. Four layers:
 
 <figure>
-  <img src="./defense-layers.svg" alt="Four-layer defense stack: identity and short-lived credentials, treat agent text as production code, detect edits rather than executions, and respond by revoking triggers before payloads" />
-  <figcaption>The defense stack mapped to the threat: standing credentials, unreviewed text, execution-shaped alerting, and cleanup-ordered wrong are each one curve worth of trouble.</figcaption>
+  <img src="./defense-layers.svg" alt="Four defense layers: scoped identity, reviewed agent inputs and tool permissions, edit and runtime monitoring, and containment before cleanup" />
+  <figcaption>Each layer reduces a different risk. Credential expiry does not remove poisoned memory, and reviewing memory does not replace runtime monitoring.</figcaption>
 </figure>
 
-1. **Identity — starve the standing access.** Short-lived credentials only,
-   no long-lived non-human keys, per-repo OIDC with exact subject matching,
-   and a real inventory of non-human identities. Replication highways are
-   paved with standing access; no standing access, no highway.
+1. **Identity — shrink the stolen access.** Prefer short-lived, narrowly
+   scoped credentials. Restrict federation trust to the intended issuer,
+   audience, repository, and job or environment; inventory non-human identities.
+   Short lifetimes reduce replay windows. They do not remove implants or stop
+   a compromised runner from obtaining fresh credentials. Restrict model
+   access and invocation quotas, and keep self-hosted inference behind
+   authentication and network controls.
 
-2. **Treat agent text as production code.** Instruction files, memory
-   writes, prompt templates, tool configs: versioned, reviewed, diffed,
-   and change-alerted. The review question isn't "is this code safe" —
-   it's "who wrote this sentence, and why does my agent obey it."
+2. **Treat agent text as production code.** Version and review instruction
+   files, prompt templates, and tool configs. Record provenance and control
+   writes to memory and retrieval stores. Reading untrusted text must not grant
+   it authority: enforce least privilege at the tool boundary, constrain
+   outbound access, and require approval for consequential actions. A prompt
+   telling the agent to be careful is not that boundary.
 
-3. **Detect edits, not executions.** Execution looks like work. The edits
-   don't fit any work order. Alert on the creation and modification of
-   workflows, webhooks, event rules, and memory entries, and treat declared
-   vs. running drift as an incident, not noise.
+3. **Detect edits and execution.** Correlate workflow, webhook, event-rule,
+   and memory changes with approved work. Keep cloud audit logs, tool activity,
+   unusual outbound traffic, and model usage in view. Investigate unexplained
+   drift. Alert on inference and spending spikes, with a tested way to deny
+   further access; a billing alert alone is not an immediate spending cap.
 
-4. **Respond in the right order.** Revoke triggers before removing
-   payloads — cleanup is itself a tripwire. Treat any config or secret read
-   during the compromise window as tainted. Purge time as well as space:
-   scheduled jobs, queued sends, dormant orchestrations. Roll back memory
-   and corpora, not just credentials.
+4. **Contain, then clean up.** Suspend compromised access, revoke active
+   sessions where supported, and stop or isolate affected workers. Preserve
+   evidence as containment permits. Disable reactivation paths and reconcile
+   queues before removing their payloads. Rotate exposed secrets, restore
+   reviewed configurations, and repair poisoned memory and corpora. Verify that
+   new credential issuance, unwanted inference, and reactivation have stopped
+   before resuming. [Revoking existing role sessions](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_revoke-sessions.html)
+   is a separate concern from replacing a long-lived key.
 
 None of this is exotic. It's boring, and that's the match for a threat
-arriving as two boring curves. 1984's version needed a time machine and a
+built from familiar components. 1984's version needed a time machine and a
 factory of killing machines. 2026's version needs a stolen key, a retry
 loop, and one organization that never reviewed the files its agents read.
 
 The future isn't set. But right now, on somebody's cloud account, the
 future is running up a tab either way.
 
-No fate but what we make — and, until the keys are rotated, no fate but
+No fate but what we make — and, until the access and persistence are contained, no fate but
 what we bill.
 
 ---
 
-*Sources: METR's time-horizon measurements (with their own published error
-bars and limits), Anthropic's November 2025 GTG-1002 disclosure, and Sysdig's
-LLMjacking cost estimates. Nothing here is a working exploit; the defense
-layers are the whole point.*
+*Sources checked October 18, 2026. METR supplies benchmark evidence; Anthropic
+and Sysdig supply incident reports and cost scenarios; Microsoft supplies
+memory-security research. The combined threat model and defensive priorities
+are my interpretation, with hypothetical scenarios labeled above.*
