@@ -50,9 +50,6 @@ describe("omitInheritedTranslatedFrontmatter", () => {
       date: "2026-01-01",
       modified: "2026-02-01",
       draft: true,
-      unlisted: true,
-      hidden: true,
-      publish: false,
       popularity: 0.7,
       category: "AI",
     })).toEqual({

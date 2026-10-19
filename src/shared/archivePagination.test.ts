@@ -8,7 +8,6 @@ import {
   getArchivePageParam,
   getArchivePageUrlSuffix,
   getArchiveSortKey,
-  getListedArchivePosts,
   sortArchivePosts,
   type ArchivePageEntry,
   type ArchiveStaticPath,
@@ -28,27 +27,18 @@ describe("archive pagination", () => {
     expect(getArchivePageParam("3", descendingModified)).toBe("3-modified-desc");
   });
 
-  test("filters unlisted posts and sorts without mutating the caller array", () => {
+  test("sorts without mutating the caller array", () => {
     const posts = [
       post("newer", "2024-03-01", "2024-03-10"),
-      post("hidden-from-archive", "2024-01-01", "2024-01-01", true),
       post("older", "2024-01-01", "2024-02-01"),
     ];
 
-    expect(getListedArchivePosts(posts).map((item) => item.slug)).toEqual([
-      "newer",
-      "older",
-    ]);
     expect(
       sortArchivePosts(posts, { field: "date", direction: "asc" }).map(
         (item) => item.slug,
       ),
-    ).toEqual(["hidden-from-archive", "older", "newer"]);
-    expect(posts.map((item) => item.slug)).toEqual([
-      "newer",
-      "hidden-from-archive",
-      "older",
-    ]);
+    ).toEqual(["older", "newer"]);
+    expect(posts.map((item) => item.slug)).toEqual(["newer", "older"]);
   });
 
   test("decorates Astro paginate paths for every sort mode", () => {
@@ -56,7 +46,6 @@ describe("archive pagination", () => {
       post("middle", "2024-02-01", "2024-05-01"),
       post("newest", "2024-03-01", "2024-04-01"),
       post("oldest", "2024-01-01", "2024-06-01"),
-      post("unlisted", "2024-04-01", "2024-07-01", true),
     ];
 
     const pages = buildArchivePagePaths({
@@ -139,7 +128,6 @@ function post(
   slug: string,
   date: string,
   modified: string,
-  unlisted = false,
 ): ArticlePost {
   return {
     id: `${slug}/index`,
@@ -151,7 +139,6 @@ function post(
       modified,
       category: "Code",
       tags: [],
-      unlisted,
     },
   } as unknown as ArticlePost;
 }

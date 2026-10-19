@@ -31,6 +31,8 @@ export function usageFromResult(
       cacheReadTokens?: number;
       cacheWriteTokens?: number;
     };
+    outputTokenDetails?: { reasoningTokens?: number };
+    raw?: unknown;
   } | undefined,
   durationMs: number,
   providerMetadata?: unknown,
@@ -41,8 +43,17 @@ export function usageFromResult(
   const snakePromptTokensDetails = recordValue(openRouterUsage?.prompt_tokens_details);
   const completionTokensDetails = recordValue(openRouterUsage?.completionTokensDetails);
   const snakeCompletionTokensDetails = recordValue(openRouterUsage?.completion_tokens_details);
-  const providerCostUsd = numberValue(openRouterUsage?.cost);
+  // AI SDK 7 also exposes the raw OpenRouter usage block on `usage.raw`; use it when providerMetadata lacks it.
+  const rawUsage = recordValue(usage?.raw);
+  const providerUpstreamCostUsdRaw = numberValue(recordValue(openRouterUsage?.costDetails)?.upstreamInferenceCost)
+    ?? numberValue(recordValue(rawUsage?.cost_details)?.upstream_inference_cost);
+  const providerCostUsd = effectiveOpenRouterCost({
+    cost: numberValue(openRouterUsage?.cost) ?? numberValue(rawUsage?.cost),
+    upstreamCost: providerUpstreamCostUsdRaw,
+    isByok: rawUsage?.is_byok === true || openRouterUsage?.isByok === true,
+  });
   const providerUpstreamCostUsd = numberValue(recordValue(openRouterUsage?.costDetails)?.upstreamInferenceCost)
+    ?? numberValue(recordValue(rawUsage?.cost_details)?.upstream_inference_cost)
     ?? numberValue(recordValue(openRouterUsage?.cost_details)?.upstream_inference_cost);
   const inputTokens = usage?.inputTokens
     ?? numberValue(openRouterUsage?.promptTokens)
@@ -61,7 +72,8 @@ export function usageFromResult(
     ?? numberValue(promptTokensDetails?.cacheWriteTokens)
     ?? numberValue(snakePromptTokensDetails?.cache_write_tokens)
     ?? 0;
-  const reasoningTokens = numberValue(completionTokensDetails?.reasoningTokens)
+  const reasoningTokens = usage?.outputTokenDetails?.reasoningTokens
+    ?? numberValue(completionTokensDetails?.reasoningTokens)
     ?? numberValue(snakeCompletionTokensDetails?.reasoning_tokens)
     ?? 0;
 
@@ -84,6 +96,19 @@ export function usageFromResult(
     pricingSource: providerCostUsd == null ? undefined : "openrouter-usage-accounting",
     openRouterUsage,
   };
+}
+
+/**
+ * What a call actually cost. On BYOK routes OpenRouter reports `cost` as only its own
+ * fee (often 0) and puts the provider's charge in `cost_details.upstream_inference_cost`;
+ * on normal routes `cost` is already the full charge and upstream repeats it.
+ */
+export function effectiveOpenRouterCost(usage: { cost?: number; upstreamCost?: number; isByok?: boolean }) {
+  if (usage.isByok) {
+    if (usage.cost === undefined && usage.upstreamCost === undefined) return undefined;
+    return (usage.cost ?? 0) + (usage.upstreamCost ?? 0);
+  }
+  return usage.cost;
 }
 
 export function diagnosticsFromResult(result: {

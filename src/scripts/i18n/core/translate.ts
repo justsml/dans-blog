@@ -522,9 +522,10 @@ function addTelemetry(
   const cost = estimateTokenCost(
     totals.model,
     chunk.inputTokens,
-    chunk.outputTokens + chunk.reasoningTokens,
+    // AI SDK outputTokens already include reasoning tokens.
+    chunk.outputTokens,
     chunk.cacheReadTokens,
-    { providerCostUsd: chunk.providerCostUsd },
+    { providerCostUsd: chunk.providerCostUsd, cacheWriteTokens: chunk.cacheWriteTokens },
   );
   totals.totalInputTokens += chunk.inputTokens;
   totals.totalOutputTokens += chunk.outputTokens;

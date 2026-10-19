@@ -325,6 +325,7 @@ export function deriveJudgeConfidence(input: {
 export function isFrontierJudgeModel(model: string) {
   const normalized = model.toLowerCase().replace(/^llm:\/\/openrouter\//, "").replace(/^openrouter\//, "");
   return normalized.includes("gpt-5")
+    || normalized.includes("gpt-6")
     || normalized.includes("claude")
     || normalized.includes("sonnet")
     || normalized.includes("opus")

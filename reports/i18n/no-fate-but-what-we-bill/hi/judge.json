@@ -1,0 +1,73 @@
+{
+  "selectedCommit": "4c4d470af38cc7912056f484e8e3a1dd0da1a73a",
+  "selectedModel": "openrouter/openai/gpt-6.1-sol-polish",
+  "scores": {
+    "readability": 88,
+    "technicalAccuracy": 90,
+    "coherence": 88,
+    "relevance": 90,
+    "translationQuality": 89,
+    "mdxPreservation": 92,
+    "culturalAdaptation": 86,
+    "languagePurity": 88
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "काइल रीस, 1984 के दर्शकों को बता रहे थे कि खतरा कैसा दिखता है।",
+      "replacement": "काइल रीस, 1984 के दर्शकों को खतरे का स्वरूप समझाते हुए।",
+      "reason": "The English attribution frames Reese as briefing the audience on the threat's shape; the current Hindi wording drifts from that framing and reads awkwardly, so it should be aligned more closely with the source."
+    }
+  ],
+  "rationale": "gpt-6.1-sol-polish keeps the English structure intact: heading and figure counts match, the local ../ asset paths resolve correctly, code fence and table content are preserved, and the frontmatter is translated and localized. Its Hindi prose is the most natural and idiomatic of the candidates, with clear technical terminology and Dan's direct voice retained. The other candidates have clearer defects (deepseek drops the subTitle and leaves English prose mixed in; haiku leaves Latin-script fragments and English phrasing), so this candidate is the strongest choice. The one remaining medium-priority item is a minor attribution wording fix.",
+  "confidence": "medium",
+  "confidenceScore": 0.71,
+  "confidenceSignals": [
+    "low blocking-issue rate",
+    "single judge",
+    "frontier judge scored 88.9"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "hi",
+  "candidateCommits": [
+    "031a30c74c01636c7b1df48fca519e5fd0860dcc",
+    "41190e136adca42e58c0b40e4ea7ddac0de26211",
+    "43156368ef12bd6f82ff4725c16799a4bfc82603",
+    "0cf8bb55d1d94e48c4a107dccc0c850556f1f228",
+    "ad2e316a638cf864a7f6ee182805a751193148b8",
+    "8d9237921ebadb7732c94d6170426ac3ab773a9e",
+    "0b0a3fa03ac51ad1b73fcdfe6520c4c3e4133b28",
+    "4c4d470af38cc7912056f484e8e3a1dd0da1a73a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "काइल रीस, 1984 के दर्शकों को बता रहे थे कि खतरा कैसा दिखता है।",
+      "replacement": "काइल रीस, 1984 के दर्शकों को खतरे का स्वरूप समझाते हुए।",
+      "reason": "The English attribution frames Reese as briefing the audience on the threat's shape; the wording should match that framing more closely, and the current form reads a bit awkwardly.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "काइल रीस, 1984 के दर्शकों को बता रहे थे कि खतरा कैसा दिखता है।",
+      "replacement": "काइल रीस, 1984 के दर्शकों को खतरे का स्वरूप समझाते हुए।",
+      "reason": "The English attribution frames Reese as briefing the audience on the threat's shape; the current Hindi wording drifts from that framing and reads awkwardly, so it should be aligned more closely with the source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale hi --skip-global",
+    "output": ""
+  }
+}

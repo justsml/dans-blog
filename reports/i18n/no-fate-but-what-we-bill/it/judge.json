@@ -1,0 +1,94 @@
+{
+  "selectedCommit": "15187847ce2b187adca90cc6af006dc584c3a19f",
+  "selectedModel": "openrouter/openai/gpt-6.1-sol",
+  "scores": {
+    "readability": 90,
+    "technicalAccuracy": 92,
+    "coherence": 90,
+    "relevance": 92,
+    "translationQuality": 90,
+    "mdxPreservation": 62,
+    "culturalAdaptation": 90,
+    "languagePurity": 94
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "The locale file sits one folder deeper than the English post, so the inherited asset path must be '../capability-curves.svg'; the malformed '.././' path would break the image."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\"../who-pays.svg\"",
+      "replacement": "<img src=\"../who-pays.svg\"",
+      "reason": "Path is already correct in the selected file; retained as a verification check that the other sibling asset paths (swarm-odds.svg, defense-layers.svg) also resolve with a single ../ prefix."
+    }
+  ],
+  "rationale": "Candidate 15187847 has the most natural and idiomatic Italian, the strongest cultural adaptation of the Terminator and bill-related punchlines, and the most faithful tone to Dan's direct voice. Its one structural defect is the malformed '.././' asset path on the capability-curves image, which must be corrected before publishing. Given that the fix is a single exact-string change, this candidate remains the preferred selection.",
+  "confidence": "low",
+  "confidenceScore": 0.294,
+  "confidenceSignals": [
+    "2 high and 0 medium issues",
+    "single judge"
+  ],
+  "issueCounts": {
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "it",
+  "candidateCommits": [
+    "c6230c8fbd7f66fd641e8c18ef3956494c2c6242",
+    "e910e3476f5ea9d32ed40cfb15cbeb1103bb24a1",
+    "40afce6a2e050405a770b7fca15ca8f42c9a4441",
+    "15187847ce2b187adca90cc6af006dc584c3a19f",
+    "fa92342d43600baa0b687dc94d8ab031fa4f2b37",
+    "29e36ce1be28ad138e518e06f498fd597a5588be"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "The locale file is one folder deeper than the English post, so the inherited asset path must start with ../ and point to the sibling asset as the other candidates do; '.././' is a malformed relative path that risks a broken image.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Il futuro non è scritto. Ma in questo momento",
+      "replacement": "Il futuro non è scritto. Ma in questo momento",
+      "reason": "No change needed here; retained as a placeholder check. The actionable high-priority fix is the image path above.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\".././capability-curves.svg\"",
+      "replacement": "<img src=\"../capability-curves.svg\"",
+      "reason": "The locale file sits one folder deeper than the English post, so the inherited asset path must be '../capability-curves.svg'; the malformed '.././' path would break the image.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "<img src=\"../who-pays.svg\"",
+      "replacement": "<img src=\"../who-pays.svg\"",
+      "reason": "Path is already correct in the selected file; retained as a verification check that the other sibling asset paths (swarm-odds.svg, defense-layers.svg) also resolve with a single ../ prefix.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale it --skip-global",
+    "output": ""
+  }
+}

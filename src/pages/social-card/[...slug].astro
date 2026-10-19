@@ -2,7 +2,7 @@
 import type { ArticlePost } from '../../types';
 import { Image } from 'astro:assets';
 import { PostCollections } from '../../shared/postsCache';
-import { isListedPost, isRoutablePost } from '../../shared/editorialRules';
+import { isPublishedPost } from '../../shared/editorialRules';
 import { getTextDirection, type Locale } from '../../shared/i18n';
 import '../../styles/tokens.css';
 import '../../styles/social-card.css';
@@ -25,7 +25,7 @@ export function getStaticPaths() {
         } as ArticlePost,
       },
     },
-    ...PostCollections._allPosts.filter(isRoutablePost).map(post => ({
+    ...PostCollections._allPosts.filter(isPublishedPost).map(post => ({
       params: { slug: post.slug },
       props: { post },
     })),
@@ -33,7 +33,7 @@ export function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const recent = PostCollections._posts.filter(isListedPost).slice(0, 3);
+const recent = PostCollections._posts.filter(isPublishedPost).slice(0, 3);
 const quiz = post?.data.category === 'Quiz';
 const clean = (text = '') => text.replace(/<[^>]*>/g, '').replace(/`/g, '');
 const title = clean(post?.data.title);

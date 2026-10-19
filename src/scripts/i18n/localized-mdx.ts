@@ -11,9 +11,6 @@ const LOCALE_IMPORT_ROOTS = [
 export const INHERITED_TRANSLATED_FRONTMATTER_KEYS = [
   "date",
   "draft",
-  "unlisted",
-  "hidden",
-  "publish",
   "popularity",
 ] as const;
 

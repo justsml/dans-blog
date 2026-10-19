@@ -1,0 +1,63 @@
+{
+  "selectedCommit": "5490c757010317b7efad668e5adb28fef46bb5e5",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 92,
+    "technicalAccuracy": 93,
+    "coherence": 92,
+    "relevance": 93,
+    "translationQuality": 92,
+    "mdxPreservation": 95,
+    "culturalAdaptation": 90,
+    "languagePurity": 94
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "replacement": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "reason": "No change needed here; retained as a placeholder check. Candidate preserves structure, headings, Challenge-free layout, figure images with ../ paths, and sources footer."
+    }
+  ],
+  "rationale": "Gemini-3.8-flash keeps the German prose natural and Dan's direct voice, uses correct ../ relative asset paths for locale depth, preserves all figures, headings and the sources footer, and avoids English prose leakage. Claude-haiku leaves an English sentence untranslated in the who-pays section and mixes English terms in the orchestrator/agent bullets, and gemini-3.5-flash-lite has similar English leakage ('That's why price and access gates...' not present but 'orchestrator' and 'agent' left in prose). The current translation is close in quality but the selected candidate is marginally cleaner in language purity and consistency.",
+  "confidence": "high",
+  "confidenceScore": 0.797,
+  "confidenceSignals": [
+    "low blocking-issue rate",
+    "single judge",
+    "frontier judge scored 92.6"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "de",
+  "candidateCommits": [
+    "5490c757010317b7efad668e5adb28fef46bb5e5",
+    "2aade359128549e58cca2634b5d3d4c0de8dc99f",
+    "358ee6f97d2e9b3b3a239e83aef73f1d1c4077db",
+    "554eee888294a00493183a4bd93dbac16f53b68e",
+    "912269250157a3ee3dfdede560854180d2ceab65",
+    "f04184608b38add47a23873214622dd239463728",
+    "1bb2dd7ebfd5455e7b90bce854c91c7833e68177"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "replacement": "Die Zeile, die gut gealtert ist, ist nicht der Bodycount.",
+      "reason": "No change needed here; retained as a placeholder check. Candidate preserves structure, headings, Challenge-free layout, figure images with ../ paths, and sources footer.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale de --skip-global",
+    "output": ""
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "selectedCommit": "3be60a69a136b33fa73d3ab480c28aa00117fe73",
+  "selectedModel": "openrouter/google/gemini-3.8-flash",
+  "scores": {
+    "readability": 88,
+    "technicalAccuracy": 90,
+    "coherence": 89,
+    "relevance": 90,
+    "translationQuality": 88,
+    "mdxPreservation": 92,
+    "culturalAdaptation": 85,
+    "languagePurity": 90
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "![",
+      "replacement": "![",
+      "reason": "No change needed; placeholder retained to keep format. Candidate preserves figure/img structure and heading counts; the two-candidate comparison favors gemini on structural fidelity versus haiku's more literal rendering of the imperative line."
+    }
+  ],
+  "rationale": "Both candidates preserve the MDX structure (figure blocks, headings, links, frontmatter) and cover the full English prose length. The gemini candidate reads more naturally in Arabic and keeps the chapter-level flow, while the haiku candidate is slightly more literal in places. Neither candidate has structural MDX defects, so the choice rests on overall naturalness and faithfulness.",
+  "confidence": "medium",
+  "confidenceScore": 0.71,
+  "confidenceSignals": [
+    "low blocking-issue rate",
+    "single judge",
+    "frontier judge scored 89.0"
+  ],
+  "issueCounts": {
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "slug": "no-fate-but-what-we-bill",
+  "locale": "ar",
+  "candidateCommits": [
+    "3be60a69a136b33fa73d3ab480c28aa00117fe73",
+    "08ccbbd72ce1bb77a2646347ada9cbe3a727a854",
+    "f481052fead12d9c4c65007e5a44e58a3f7ef597",
+    "102649bfb3763b1c44fd6ed52927cf7cacded865",
+    "4022746c8c9fdcdea33bd8a75542c4fddbdad0f0",
+    "70f5171a5bde069aa39aa9d3da679d3b782555ef",
+    "6e097373f9f5a397999b82e9adb13f6cd38bd6c4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "![",
+      "replacement": "![",
+      "reason": "No change needed; placeholder retained to keep format. Candidate preserves figure/img structure and heading counts; the two-candidate comparison favors gemini on structural fidelity versus haiku's more literal rendering of the imperative line.",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match and replacement are identical; no MDX change needed."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug no-fate-but-what-we-bill --locale ar --skip-global",
+    "output": ""
+  }
+}

@@ -66,9 +66,7 @@ function getRelatedArticleSlugs(
     .filter((post) => (
       post.slug !== activeSlug &&
       !excludeSlugs.includes(post.slug) &&
-      !currentSlugs.includes(post.slug) &&
-      !post.data.draft &&
-      !post.data.hidden
+      !currentSlugs.includes(post.slug)
     ))
     .map((post) => {
       const matchingTags = post.data.tags?.filter((tag) => currentTags.includes(tag)).length ?? 0;
@@ -95,7 +93,7 @@ function addFallbackArticleSlugs(currentSlugs: string[], limit: number) {
     if (currentSlugs.length >= limit) break;
     if (!post || post.slug === currentSlug) continue;
     if (excludeSlugs.includes(post.slug) || currentSlugs.includes(post.slug)) continue;
-    if (post.data.draft || post.data.hidden) continue;
+    if (post.data.draft) continue;
     currentSlugs.push(post.slug);
   }
 

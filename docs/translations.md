@@ -203,7 +203,7 @@ bun run i18n:judge -- \
   --candidate-limit 3 \
   --model openrouter/google/gemini-3.8-flash \
   --second-model openrouter/deepseek/deepseek-v3.2 \
-  --escalate-model openrouter/anthropic/claude-sonnet-4.6 \
+  --escalate-model openrouter/anthropic/claude-sonnet-5.5 \
   --timeout-seconds 240
 ```
 
@@ -292,10 +292,10 @@ bun run i18n:judge -- \
   --locale es \
   --model openrouter/google/gemini-3.8-flash \
   --second-model openrouter/deepseek/deepseek-v3.2 \
-  --escalate-model openrouter/anthropic/claude-sonnet-4.6
+  --escalate-model openrouter/anthropic/claude-sonnet-5.5
 ```
 
-Escalation runs only when the second judge report appears to disagree and an `--escalate-model` is provided. Use a smarter judge such as `openrouter/anthropic/claude-sonnet-4.6` or `openrouter/google/gemini-3-pro-preview` only when the cheaper judges disagree, the judge output is structurally broken, it misses obvious translation problems, or it cannot compare candidates.
+Escalation runs only when the second judge report appears to disagree and an `--escalate-model` is provided. Use a smarter judge such as `openrouter/anthropic/claude-sonnet-5.5` or `openrouter/google/gemini-3-pro-preview` only when the cheaper judges disagree, the judge output is structurally broken, it misses obvious translation problems, or it cannot compare candidates.
 
 ## Git Provenance
 

@@ -18,9 +18,7 @@ const targetRelPath = relativeToRepo(targetPath);
 
 let contents = readFileSync(targetPath, "utf8");
 contents = contents
-  .replace(/^draft:\s*true\s*$/gm, "draft: false")
-  .replace(/^hidden:\s*true\s*$/gm, "hidden: false")
-  .replace(/^unlisted:\s*true\s*$/gm, "unlisted: false");
+  .replace(/^draft:\s*true\s*$/gm, "draft: false");
 
 writeFileSync(targetPath, contents, "utf8");
 runInherited("bun", ["run", "i18n:validate", "--slug", slug, "--locale", locale]);

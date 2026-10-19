@@ -9,13 +9,7 @@ import { fixSlugPrefix, getSlugFromId, parsePostId, slugify } from "./pathHelper
 import type { ArticlePost, QuizPost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
 import { isContentPreviewBuild, isPostRoutableInBuild } from "./contentPreview";
-import {
-  isFeedPost,
-  isListedPost,
-  isRoutablePost,
-  isVisiblePost,
-  shouldCountPostCategory,
-} from "./editorialRules.ts";
+import { isPublishedPost, shouldCountPostCategory } from "./editorialRules.ts";
 import {
   getLocalizedPostHref,
   getPostAlternates,
@@ -41,8 +35,7 @@ const _allPosts = buildLocalizedPosts(_rawPostsCollection)
   .reverse() as unknown as ArticlePost[];
 
 const _posts = _allPosts.filter((post) => post.locale === DEFAULT_LOCALE);
-const _visiblePosts = _posts.filter(isVisiblePost);
-const _feedPosts = _posts.filter(isFeedPost);
+const _publishedPosts = _posts.filter(isPublishedPost);
 
 export type PostFeedItem = {
   sourcePath: string;
@@ -101,7 +94,7 @@ export const PostCollections = {
   ),
 
   _slugs: _posts.map((post) => post.slug),
-  _quizPosts: _visiblePosts.filter((post) => post.data.category === "Quiz"),
+  _quizPosts: _publishedPosts.filter((post) => post.data.category === "Quiz"),
 
   _categories: _posts.reduce(
     (acc, post) => {
@@ -113,7 +106,7 @@ export const PostCollections = {
     {} as Record<string, number>,
   ),
 
-  _tags: _visiblePosts.reduce(
+  _tags: _publishedPosts.reduce(
     (acc, post) => {
       // const { tags, } = post.data;
       const {
@@ -147,7 +140,7 @@ export const PostCollections = {
   },
 
   getPosts() {
-    const posts = _visiblePosts;
+    const posts = _publishedPosts;
     return posts;
   },
 
@@ -208,7 +201,12 @@ export const PostCollections = {
   },
 
   getPostsForLocale(locale: Locale = DEFAULT_LOCALE) {
-    return _visiblePosts.map((post) => PostCollections.getPostForLocale(post, locale));
+    return _publishedPosts.map((post) => PostCollections.getPostForLocale(post, locale));
+  },
+
+  /** Home page posts; drafts are only built (and so only shown) in content previews. */
+  getHomePostsForLocale(locale: Locale = DEFAULT_LOCALE) {
+    return _posts.map((post) => PostCollections.getPostForLocale(post, locale));
   },
 
   getAllLocalizedPosts() {
@@ -248,7 +246,7 @@ export const PostCollections = {
   },
 
   getRedirectSourcePosts(posts: ArticlePost[] = _posts as ArticlePost[]) {
-    return posts.filter(isRoutablePost).map((post) => ({
+    return posts.filter(isPublishedPost).map((post) => ({
       slug: fixSlugPrefix(post.slug),
       data: {
         redirects: post.data.redirects,
@@ -257,7 +255,7 @@ export const PostCollections = {
   },
 
   getMissingTranslationRedirectSourcePosts() {
-    return _posts.filter(isRoutablePost).flatMap((post) => {
+    return _posts.filter(isPublishedPost).flatMap((post) => {
       const baseSlug = post.baseSlug ?? post.slug;
       return ACTIVE_LOCALES.flatMap((locale) => {
         const localizedSlug = getLocalizedPostSlug(baseSlug, locale);
@@ -274,7 +272,7 @@ export const PostCollections = {
   },
 
   getFeedPosts() {
-    return [openSourceJournalPost, ..._feedPosts];
+    return [openSourceJournalPost, ..._publishedPosts];
   },
 
   getFeedItems({ includeSubCategory = true } = {}): PostFeedItem[] {
@@ -316,9 +314,7 @@ export const PostCollections = {
   },
   getPostsByCategory(category: string, locale: Locale = DEFAULT_LOCALE) {
     return PostCollections.getPostsForLocale(locale).filter(
-      (post) =>
-        post.data.category === category &&
-        isListedPost(post),
+      (post) => post.data.category === category,
     );
   },
 

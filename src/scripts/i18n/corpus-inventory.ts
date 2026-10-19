@@ -12,8 +12,6 @@ export type SourcePost = {
   date?: string;
   directory: string;
   isDraft: boolean;
-  isHidden: boolean;
-  isUnlisted: boolean;
   path: string;
   popularity: number;
   postDir: string;
@@ -119,8 +117,6 @@ export function readSourcePost(directory: string, postDir: string): SourcePost {
     date: stringValue(data.date),
     directory,
     isDraft: data.draft === true,
-    isHidden: data.hidden === true,
-    isUnlisted: data.unlisted === true,
     path: sourcePath,
     popularity: numberValue(data.popularity) ?? 0,
     postDir,

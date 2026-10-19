@@ -39,7 +39,7 @@ interface CandidateRecord {
   };
 }
 
-const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
+const DEFAULT_JUDGE_MODEL = "openrouter/anthropic/claude-haiku-5.5";
 
 async function main() {
   const options = parseArgs();

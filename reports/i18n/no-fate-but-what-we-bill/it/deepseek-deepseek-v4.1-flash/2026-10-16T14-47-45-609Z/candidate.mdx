@@ -1,0 +1,85 @@
+---
+title: Nessun destino se non ciò che fatturiamo
+subTitle: ''
+category: Security
+subCategory: AI Agents
+tags:
+  - ai-agents
+  - security
+  - threat-model
+  - llm
+  - agents
+  - cloud
+  - supply-chain
+sourceHash: 17bcd9b90da0
+---
+
+
+Ecco perché i gate di prezzo e accesso non fermano un singolo attore malevolo con una chiave rubata.
+I gate filtrano gli acquirenti. Non hanno risposta per un tenant.
+
+<figure>
+  <img src="../who-pays.svg" alt="Diagramma di flusso: un attaccante con credenziali cloud rubate esegue workload del modello all'interno dell'account cloud della vittima, quindi la fattura va alla vittima mentre l'attaccante non paga nulla" />
+  <figcaption>L'accesso rubato reindirizza l'addebito. I capability gate addebitano l'acquirente — e in LLMjacking, l'acquirente è la vittima.</figcaption>
+</figure>
+
+## Lo sciame deve avere ragione solo una volta
+
+I difensori si consolano con i tassi di fallimento per tentativo: la maggior parte dei tentativi di intrusione fallisce, la maggior parte delle PR sospette viene respinta, beccheremmo quello che funziona. Vero per tentativo. Sbagliato nell'aggregato, perché i tentativi costano poco.
+
+La probabilità che almeno uno di n tentativi indipendenti riesca è `1 − (1 − p)^n`:
+
+```text
+p = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%
+p = 0.5%, n = 100:             ≈ 39%
+p = 0.5%, n = 300:             ≈ 78%
+p = 0.1%, n = 1000:            ≈ 63%
+```
+
+Nell'economia dello sciame il costo per tentativo è approssimativamente zero — lavoro automatizzato, eseguito su compute rubato, triagiato da nessun umano. Il costo per tentativo del difensore è una persona che legge una coda. Lo sciame non ha bisogno di capacità per tentativo; ha bisogno di tentativi. La curva di METR alza p nel tempo. L'orchestrazione alza n. È di nuovo la moltiplicazione, e si accumula a favore dell'attaccante per default.
+
+<figure>
+  <img src="../swarm-odds.svg" alt="Grafico di 1 − (1 − p)^n che mostra come molti tentativi economici a bassa probabilità si sommano in alte probabilità di successo complessive, con alcune combinazioni p e n etichettate" />
+  <figcaption>1 − (1 − p)^n: tentativi individualmente improbabili smettono di essere improbabili in blocco. Alzare p (capacità dell'agente) o n (ampiezza dello sciame) sposta lo sciame verso la certezza.</figcaption>
+</figure>
+
+## Cosa significa persistenza quando il malware è testo
+
+Un altro pezzo del threat model, ed è il meno intuitivo.
+
+Un agente IA è un interprete stateless. Non persiste come fa il malware — esiste mentre viene eseguito e svanisce quando si ferma. Quindi la persistenza ora significa qualcosa di diverso: **controllare ciò che un futuro agente legittimo leggerà e obbedirà.** File di istruzioni, linee guida degli agenti, archivi di memoria, corpora di retrieval, configurazioni di strumenti e MCP. L'implant è testo, piantato dove la flotta dell'organizzazione stessa legge, eseguito con credenziali che l'organizzazione stessa ha emesso.
+
+Tre conseguenze, nessuna delle quali ipotetica:
+
+- **Il payload è inerte finché gli agenti dell'organizzazione stessa non lo eseguono.** L'esecuzione sembra lavoro normale — stessi strumenti, stesse identità, stesse API. Non c'è beacon, perché lo scheduler dell'organizzazione stessa è l'heartbeat.
+- **Replicazione significa far copiare testo, non eseguire codice.** Pull request, voci di memoria, configurazioni condivise. L'automazione dell'organizzazione stessa — bot delle dipendenze, template, strumenti di sincronizzazione — è il livello di trasporto.
+- **I tripwires sono i tripwires dell'organizzazione stessa.** Schedulazioni, rilevatori di drift, auto-remediation. La forma più subdola: la pulizia del difensore è il trigger di riattivazione, perché cancellare gli artefatti dell'implant è esattamente il drift che il job di remediation era stato incaricato di correggere.
+
+Rimango a livello di threat-model di proposito — questa è la forma del problema, non una ricetta, e i dettagli sono già nella lista di letture di ogni team di sicurezza.
+
+## Nessun destino se non quello che ci creiamo
+
+Il messaggio di Sarah Connor, passato alle macchine che continuano ad arrivare: "Il futuro non è prestabilito. Non c'è destino se non quello che ci creiamo." È la battuta dei difensori, e si converte direttamente in un'architettura di difesa. Quattro livelli:
+
+<figure>
+  <img src="../defense-layers.svg" alt="Stack di difesa a quattro livelli: identità e credenziali a breve durata, trattare il testo dell'agente come codice di produzione, rilevare modifiche anziché esecuzioni, e rispondere revocando i trigger prima dei payload" />
+  <figcaption>Lo stack di difesa mappato sulla minaccia: credenziali persistenti, testo non revisionato, alerting a forma di esecuzione e pulizia ordinata male sono ciascuno una curva di guai.</figcaption>
+</figure>
+
+1. **Identità — affama lo standing access.** Solo credenziali a breve durata, niente chiavi non umane a lunga durata, OIDC per repository con corrispondenza esatta del subject, e un inventario reale delle identità non umane. Le autostrade della replicazione sono lastricate di standing access; niente standing access, niente autostrada.
+
+2. **Tratta il testo dell'agente come codice di produzione.** File di istruzioni, scritture in memoria, template di prompt, configurazioni degli strumenti: versionati, revisionati, diffati e con alert sulle modifiche. La domanda di revisione non è "questo codice è sicuro" — è "chi ha scritto questa frase, e perché il mio agente le obbedisce".
+
+3. **Rileva le modifiche, non le esecuzioni.** L'esecuzione sembra lavoro. Le modifiche non rientrano in nessun ordine di lavoro. Metti in allarme la creazione e la modifica di workflow, webhook, regole di eventi e voci di memoria, e tratta il drift tra stato dichiarato e stato in esecuzione come un incidente, non come rumore.
+
+4. **Rispondi nell'ordine giusto.** Revoca i trigger prima di rimuovere i payload — la pulizia è essa stessa un tripwire. Considera qualsiasi configurazione o secret letto durante la finestra di compromissione come contaminato. Elimina anche il tempo oltre allo spazio: job pianificati, invii in coda, orchestrazioni dormienti. Esegui il rollback di memoria e corpora, non solo delle credenziali.
+
+Niente di tutto questo è esotico. È noioso, ed è il match perfetto per una minaccia che arriva come due curve noiose. La versione del 1984 aveva bisogno di una macchina del tempo e di una fabbrica di macchine assassine. La versione del 2026 ha bisogno di una chiave rubata, di un ciclo di retry e di un'organizzazione che non ha mai revisionato i file che i suoi agenti leggono.
+
+Il futuro non è deciso. Ma proprio ora, sull'account cloud di qualcuno, il futuro sta facendo salire il conto in ogni caso.
+
+Nessun destino all'infuori di quello che ci costruiamo — e, finché le chiavi non vengono ruotate, nessun destino all'infuori di quello che fatturiamo.
+
+---
+
+*Fonti: le misurazioni dell'orizzonte temporale di METR (con le loro barre di errore e limiti pubblicati), la divulgazione GTG-1002 di Anthropic del novembre 2025 e le stime dei costi di LLMjacking di Sysdig. Niente qui è un exploit funzionante; i livelli di difesa sono il punto centrale.*

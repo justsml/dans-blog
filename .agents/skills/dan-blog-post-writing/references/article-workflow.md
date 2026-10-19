@@ -32,9 +32,6 @@ tags: [topic, specific-terms, audience]
 category: AI | Code | Security | Search | ...
 subCategory: Engineering | Security | Databases | Open Source | ...
 draft: true
-unlisted: true
-hidden: true
-publish: false
 popularity: 0.8
 social_image: ./desktop-social.webp
 cover_full_width: ./wide.webp
@@ -166,4 +163,4 @@ When revising a draft:
 2. Fix structure before wordsmithing.
 3. Add missing examples or comparisons where the reader would otherwise have to trust the claim.
 4. Keep existing frontmatter unless it conflicts with the new content or repo conventions.
-5. If a draft is marked `draft: true`, `hidden: true`, or `publish: false`, preserve those flags unless the user asks to publish.
+5. If a draft is marked `draft: true`, preserve that flag unless the user asks to publish.

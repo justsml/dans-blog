@@ -47,7 +47,7 @@ const readFeaturedPosts = (): FeaturedPost[] => {
       if (!existsSync(file)) return null;
 
       const { data } = matter(readFileSync(file, "utf8"));
-      if (data.draft === true || data.publish === false || data.hidden === true || data.unlisted === true) {
+      if (data.draft === true) {
         return null;
       }
 

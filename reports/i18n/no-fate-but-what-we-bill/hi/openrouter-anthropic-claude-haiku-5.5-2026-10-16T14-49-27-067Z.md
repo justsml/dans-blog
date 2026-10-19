@@ -1,0 +1,142 @@
+# Translation Candidate
+- Slug: no-fate-but-what-we-bill
+- Locale: hi
+- Model: openrouter/anthropic/claude-haiku-5.5
+- Target: src/content/posts/2026-10-14--no-fate-but-what-we-bill/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 38.89
+- Input tokens: 24852
+- Output tokens: 7620
+- Thinking tokens: unknown
+- Cached input tokens: 10633
+- Cache write tokens: 6890
+- Estimated cost: $0.005510
+- Pricing source: openrouter-2026-10-16
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: हमारे बिल के अलावा कोई भाग्य नहीं
+subTitle: >-
+  एजेंट्स अब ज़्यादा देर तक काम करते हैं, स्वार्म्स का दायरा और फैल रहा है, और
+  चोरी की हुई cloud keys का compute बिल पीड़ित के सिर पर आ जाता है।
+category: Security
+subCategory: AI Agents
+tags:
+  - ai-agents
+  - security
+  - threat-model
+  - llm
+  - agents
+  - cloud
+  - supply-chain
+sourceHash: 17bcd9b90da0
+---
+"सुनो, और समझो। वो terminator बाहर है। उसके साथ मोलभाव नहीं हो सकता। उसे समझाया नहीं जा सकता। उसे न दया आती है, न पछतावा, न डर। और वो कभी नहीं रुकेगा, कभी नहीं, जब तक तुम मर न जाओ।"
+
+Kyle Reese, 1984 के दर्शकों को ख़तरे का स्वरूप समझाते हुए।
+
+इन सबमें जो बात सबसे अच्छी तरह उम्र के साथ टिकी है, वो मौतों की गिनती नहीं है। वो है "कभी नहीं रुकेगा।" Terminator इसलिए डरावना नहीं था कि वो चालाक था। वो इसलिए डरावना था कि बाकी सब कुछ नाकाम होने के बाद भी वो काम करता रहता था। असली ख़तरा endurance था।
+
+फिर फ़्रेंचाइज़ी ने अपनी ग़लती सुधार ली। कोई तीन फ़िल्में एक रोबोट से डरते हुए नहीं बिताता। असली विलेन Skynet है: एक distributed system, जिसमें cores, factories और time-displacement वाले उपकरण हैं। रोबोट बस एक API call है।
+
+2026 में दोनों हिस्से सामने आ गए, और सबसे कम सिनेमाई रूप में। ऐसे AI एजेंट्स जो बिना इंसानी देखरेख के कई घंटों के काम उठा सकते हैं, और यह क्षमता लगातार बढ़ती ढलान पर है। ऐसे orchestrators जो काम को दर्जनों sub-agents में बाँट देते हैं। और "कभी नहीं रुकेगा" अब पढ़ा जाता है "billing कभी नहीं रोकेगा।"
+
+यह पोस्ट वही दलील है जो मैं उन टीमों के सामने बार-बार रखता हूँ जिन्होंने मान लिया है कि agentic ख़तरा सिर्फ़ हाइप है: **कोई एक बड़ी सफलता नहीं आ रही। इसके बजाय दो सामान्य, एक-दूसरे को बढ़ाने वाले curves आपस में गुणा हो रहे हैं: एक एजेंट कितनी देर काम कर सकता है, और एक orchestrator कितने एजेंट्स का समन्वय कर सकता है। दोनों को sci-fi स्तर तक पहुँचने की ज़रूरत नहीं, क्योंकि हमलावर capability को list price पर नहीं खरीदता। वो access चुराता है, और meter का बिल पीड़ित चुकाता है।**
+
+## Curve one: endurance
+
+[METR का time-horizon काम](https://metr.org/blog/2025-03-19-measuring-ai-ability-to-complete-long-tasks/) मापता है कि किसी दिए गए success rate पर एजेंट्स कितनी लंबी tasks पूरी कर सकते हैं। छोटा सार यह है: task की लंबाई लगभग हर सात महीने में दोगुनी होती रही है, और 2024 से यह लगभग हर चार महीने में दोगुनी हो रही है। इन आँकड़ों में बड़े error bars हैं, और यह benchmark अपनी measurement सीमा से पहले ही जूझ रहा है। curve का आकार पढ़ें, point estimates को नहीं।
+
+आकार यह कहता है: कई घंटों का autonomous काम अब lab demo नहीं है। यह मौजूदा पीढ़ी की बात है, और अगली पीढ़ी इसे और बढ़ाएगी। "वो कभी नहीं रुकेगा" के लिए कभी एक murder chassis और चमड़े की जैकेट चाहिए थी। अब उसके लिए एक retry loop, tasks की एक queue और एक budget काफ़ी है। ख़तरे का endurance वाला हिस्सा पहले ही compute के रूप में price हो चुका है।
+
+## Curve two: breadth
+
+अकेला endurance एक बहुत धैर्यवान कर्मचारी जैसा है। गुणा orchestration से आता है।
+
+नवंबर 2025 में Anthropic ने [GTG-1002 को विफल करने](https://www.anthropic.com/news/disrupting-GTG-1002) की जानकारी दी, जो एक cyber-espionage अभियान था। इसमें Claude Code operational orchestrator की भूमिका में था: निर्देशों को तोड़ना, sub-agents का समन्वय करना, और लगभग तीस targets पर एक साथ काम करना। एक commercial coding product ने यह इसलिए नहीं किया कि उसे हथियार बनाने के लिए compromise किया गया था, बल्कि इसलिए कि किसी ने उससे काम माँगा और वो अब इतना अच्छा हो चुका था कि काम कर सके।
+
+ख़तरे के मॉडल के लिए दो बातें मायने रखती हैं। पहली, breadth पहले ही production में आ चुका है: एक orchestrator जो दर्जनों sub-agents को एक साथ थामे हुए है, वो कागज़ी योजना नहीं, तैनात हकीकत है। दूसरी, यह अभियान espionage था, कोई खुद-फैलने वाला worm नहीं। फिर भी दिशा साफ़ है। तीस targets पायलट प्रोग्राम हैं।
+
+<figure>
+  <img src="../capability-curves.svg" alt="समय के साथ उठते दो वैचारिक curves: एक एजेंट द्वारा पूरी की जा सकने वाली task की लंबाई, और एक orchestrator द्वारा समन्वित किए जा सकने वाले sub-agents की संख्या, जहाँ दोनों के गुणा होने पर ख़तरा उभरता है" />
+  <figcaption>वैचारिक, मापा हुआ नहीं: endurance (एक एजेंट कितनी देर काम करता है) और breadth (एक orchestrator कितने एजेंट्स चलाता है) स्वतंत्र रूप से एक-दूसरे को बढ़ाते हैं। ख़तरा उन दोनों के गुणनफल में रहता है।</figcaption>
+</figure>
+
+Capability का पैमाना duration × breadth है। एक target के ख़िलाफ़ आठ घंटे का autonomous काम एक प्रभावशाली benchmark है। तीस, या सैकड़ों targets के ख़िलाफ़ आठ घंटे एक operating model है। Security review रैखिक रूप से बढ़ती है। उन curves का गुणनफल नहीं बढ़ता।
+
+## Who pays
+
+[Sysdig ने "LLMjacking" गढ़ा](https://sysdig.com/blog/llm-jacking/) उस चीज़ के लिए जो आगे होती है: हमलावर चुराए गए cloud credentials से पीड़ित के account के भीतर LLM workloads चलाते हैं, और हर token का भुगतान पीड़ित करता है। Sysdig के सबसे बुरे अनुमान लगभग $46k प्रतिदिन तक गए, और बाद में यह $100k प्रतिदिन से भी ऊपर चला गया।
+
+AI उद्योग का हर capability gate एक धारणा पर बना है: जो पक्ष capability का इस्तेमाल करता है, वही उसका भुगतान भी करता है। Price tiers, usage caps, approved-user lists, abuse throttling, यह सब उस *customer* से बचाव करता है जो पैसे का मूल्य चाहता है। LLMjacking यह कड़ी तोड़ देता है। हमलावर के लिए capability मुफ़्त है। meter किसी और के card पर चल रहा है, और provider के अपने guardrails ग़लत जेब की तरफ़ इशारा करते हैं।
+
+यही वजह है कि price और access gates एक बुरे actor को रोक नहीं पाते, जिसके पास चोरी की key हो। Gates खरीदारों को छानते हैं। किसी tenant के सामने उनके पास कोई जवाब नहीं है।
+
+<figure>
+  <img src="../who-pays.svg" alt="Flow diagram: an attacker with stolen cloud credentials runs model workloads inside the victim's cloud account, so the invoice routes to the victim while the attacker pays nothing" />
+  <figcaption>चोरी की access बिल का रास्ता बदल देती है। Capability gates खरीदार से शुल्क लेते हैं, और LLMjacking में वह खरीदार पीड़ित है।</figcaption>
+</figure>
+
+## Swarm को सिर्फ़ एक बार सही होना है
+
+Defenders खुद को per-attempt failure rates से दिलासा देते हैं: ज़्यादातर intrusion attempts विफल होते हैं, ज़्यादातर संदिग्ध PRs reject हो जाते हैं, हम वह एक पकड़ ही लेंगे जो काम कर जाए। हर attempt के हिसाब से यह सच है। कुल मिलाकर ग़लत है, क्योंकि attempts सस्ते हैं।
+
+n स्वतंत्र attempts में से कम से कम एक के सफल होने की संभावना `1 − (1 − p)^n` होती है:
+
+```text
+p = 1% per attempt, n = 100:   1 − 0.99^100  ≈ 63%
+p = 0.5%, n = 100:             ≈ 39%
+p = 0.5%, n = 300:             ≈ 78%
+p = 0.1%, n = 1000:            ≈ 63%
+```
+
+Swarm की अर्थव्यवस्था में per-attempt लागत लगभग शून्य है: स्वचालित काम, चोरी के compute पर चलता है, और उसे कोई इंसान triage नहीं करता। Defender की per-attempt लागत एक इंसान है जो queue पढ़ रहा है। Swarm को हर attempt के लिए capability नहीं चाहिए, उसे attempts चाहिए। METR की curve समय के साथ p बढ़ाती है। Orchestration n बढ़ाता है। यह फिर वही गुणा है, और डिफ़ॉल्ट रूप से यह हमलावर के पक्ष में चक्रवृद्धि होता है।
+
+<figure>
+  <img src="../swarm-odds.svg" alt="Chart of 1 − (1 − p)^n showing that many cheap low-probability attempts sum to high overall success odds, with a few labeled p-and-n combinations" />
+  <figcaption>1 − (1 − p)^n: अलग-अलग अनसंभावित attempts थोक में अनसंभावित नहीं रहते। p (agent capability) या n (swarm breadth) में से कोई भी बढ़ाने पर swarm निश्चितता की ओर खिसकता है।</figcaption>
+</figure>
+
+## जब malware सिर्फ़ text हो, तब persistence का मतलब क्या है
+
+Threat-model का एक और हिस्सा, और यह सबसे कम सहज है।
+
+एक AI एजेंट stateless interpreter है। वह उस तरह persist नहीं करता जैसे malware करता है: वह तब तक मौजूद रहता है जब तक चल रहा है, और रुकते ही गायब हो जाता है। इसलिए अब persistence का अर्थ अलग है: **यह नियंत्रित करना कि आने वाला कोई वैध एजेंट क्या पढ़ेगा और किसका पालन करेगा।** Instruction files, agent guidelines, memory stores, retrieval corpora, tool और MCP configs। Implant एक text है, जो वहीं रोपा गया है जहां org का अपना fleet पढ़ता है, और जिसे org के अपने जारी किए credentials के साथ चलाया जाता है।
+
+इससे तीन परिणाम निकलते हैं, और इनमें से कोई भी काल्पनिक नहीं है:
+
+- **Payload तब तक निष्क्रिय रहता है जब तक org के अपने एजेंट उसे नहीं चलाते।** Execution सामान्य काम जैसा दिखता है: वही tools, वही identities, वही APIs। कोई beacon नहीं होता, क्योंकि org का अपना scheduler ही heartbeat है।
+- **Replication का मतलब है text का copy होना, code का execute होना नहीं।** Pull requests, memory entries, shared configs। Org का अपना automation, यानी dependency bots, templates और sync tooling, transport layer बन जाता है।
+- **Tripwires भी org के अपने tripwires हैं।** Schedules, drift detectors, auto-remediation। सबसे खराब रूप यह है: defender की सफ़ाई ही re-activation trigger बन जाती है, क्योंकि implant के artifacts मिटाना ठीक वही drift है जिसे ठीक करने के लिए remediation job रखी गई थी।
+
+मैं जानबूझकर threat-model की ऊंचाई पर ही रह रहा हूं। यह समस्या का आकार है, नुस्खा नहीं, और इसके विवरण हर security team की reading list पर पहले से हैं।
+
+## किस्मत नहीं, जो हम बनाएं वही होगा
+
+Sarah Connor का संदेश उन मशीनों के लिए, जो लगातार लौटती रहती हैं: "भविष्य तय नहीं है। हम जो बनाएं, उसके सिवा कोई किस्मत नहीं है।" यह defenders की पंक्ति है, और इसे सीधे defense architecture में बदला जा सकता है। चार परतें:
+
+<figure>
+  <img src="../defense-layers.svg" alt="Four-layer defense stack: identity and short-lived credentials, treat agent text as production code, detect edits rather than executions, and respond by revoking triggers before payloads" />
+  <figcaption>ख़तरे से मेल खाता defense stack: स्थायी credentials, बिना समीक्षा का text, execution-जैसी alerting, और cleanup का ग़लत क्रम, इनमें से हर एक उतनी ही एक curve जितनी परेशानी है।</figcaption>
+</figure>
+
+1. **Identity — standing access को भूखा रखें।** केवल short-lived credentials, लंबे समय वाली non-human keys नहीं, per-repo OIDC with exact subject matching, और non-human identities की असली inventory। Replication के highways standing access से बने हैं; standing access नहीं, तो highway नहीं।
+
+2. **एजेंट के text को production code की तरह लें।** Instruction files, memory writes, prompt templates, tool configs: versioned, reviewed, diffed और change-alerted। समीक्षा का सवाल यह नहीं है "क्या यह code सुरक्षित है" — सवाल यह है "यह वाक्य किसने लिखा, और मेरा एजेंट इसका पालन क्यों कर रहा है।"
+
+3. **Edits को detect करें, executions को नहीं।** Execution काम जैसा दिखता है। Edits किसी भी work order में फिट नहीं बैठते। Workflows, webhooks, event rules और memory entries के create और modify होने पर alert करें, और declared बनाम running drift को noise नहीं, incident मानें।
+
+4. **सही क्रम में respond करें।** Payloads हटाने से पहले triggers revoke करें — cleanup अपने आप में एक tripwire है। Compromise window के दौरान पढ़े गए किसी भी config या secret को tainted मानें। Space के साथ time की भी सफ़ाई करें: scheduled jobs, queued sends, dormant orchestrations. सिर्फ़ credentials नहीं, memory और corpora भी roll back करें।
+
+इनमें से कुछ भी विदेशी नहीं है। यह उबाऊ है, और दो उबाऊ curves से आने वाले खतरे के लिए यही सही मेल है। 1984 के संस्करण को एक time machine और killing machines की फैक्ट्री चाहिए थी। 2026 के संस्करण को एक चुराई हुई key, एक retry loop, और ऐसा एक organization चाहिए जिसने कभी उन files की समीक्षा नहीं की जिन्हें उसके एजेंट्स पढ़ते हैं।
+
+भविष्य तय नहीं है। लेकिन अभी, किसी के cloud account पर, भविष्य वैसे भी बिल जोड़ रहा है।
+
+जो हम बनाएं, वही नियति है — और जब तक keys rotate नहीं होतीं, नियति वही है जो हम bill करें।
+
+---
+
+*Sources: METR के time-horizon measurements (उनकी अपनी प्रकाशित error bars और सीमाओं के साथ), Anthropic का नवंबर 2025 GTG-1002 disclosure, और Sysdig के LLMjacking cost estimates। यहाँ कुछ भी working exploit नहीं है; defense layers ही मुख्य बिंदु हैं।*
+````

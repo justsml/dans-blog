@@ -67,13 +67,12 @@ export function buildArchivePagePaths<TPost extends ArticlePost>({
   params = {},
   props = {},
 }: BuildArchivePagePathsOptions<TPost>): ArchivePagePath<TPost>[] {
-  const listedPosts = getListedArchivePosts(posts);
   const paginateOptions =
     Object.keys(params).length > 0 ? { pageSize, params } : { pageSize };
 
   return ARCHIVE_SORT_MODES.flatMap((sortMode) => {
     const pageData = paginate(
-      toStaticPaths(sortArchivePosts(listedPosts, sortMode)),
+      toStaticPaths(sortArchivePosts(posts, sortMode)),
       paginateOptions,
     );
 
@@ -84,10 +83,6 @@ export function buildArchivePagePaths<TPost extends ArticlePost>({
       }),
     );
   });
-}
-
-export function getListedArchivePosts<TPost extends ArticlePost>(posts: TPost[]): TPost[] {
-  return posts.filter((post) => !post.data.unlisted);
 }
 
 export function sortArchivePosts<TPost extends ArticlePost>(

@@ -89,7 +89,7 @@ import {
   type ActiveLocale,
 } from "../../shared/i18n.ts";
 import {
-  isVisiblePostData,
+  isPublishedPostData,
   type PostVisibilityData,
 } from "../../shared/postVisibility.ts";
 import {
@@ -117,7 +117,7 @@ const DEFAULT_MODELS = [
   "openrouter/openai/gpt-6.1-sol",
   "openrouter/google/gemini-3.5-flash-lite",
 ];
-const DEFAULT_JUDGE_MODEL = "openrouter/google/gemini-3.8-flash";
+const DEFAULT_JUDGE_MODEL = "openrouter/anthropic/claude-haiku-5.5";
 const TIMEOUT_MS = 90_000;
 const MIN_OUTPUT_TOKENS = 28_000;
 const MAX_OUTPUT_TOKENS = 48_000;
@@ -1348,8 +1348,7 @@ function loadPublishedPosts() {
       try {
         const source = readFileSync(sourcePath, "utf8");
         const { data } = matter(source);
-        if (!isVisiblePostData(data as PostVisibilityData)) return [];
-        if (data.unlisted === true) return [];
+        if (!isPublishedPostData(data as PostVisibilityData)) return [];
         const dateMs = parsePostDateMs(data, join(POSTS_DIR, e.name));
         if (!Number.isFinite(dateMs) || dateMs > Date.now()) return [];
         return [

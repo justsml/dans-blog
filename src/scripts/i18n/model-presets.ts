@@ -1,4 +1,14 @@
+/** Models run by default; the full catalog below stays addressable by --models shorthand. */
+export const DEFAULT_TRANSLATION_MODELS = [
+  "openrouter/openai/gpt-6.1-sol",
+  "openrouter/anthropic/claude-haiku-5.5",
+  "openrouter/z-ai/glm-5.3-flash",
+  "openrouter/deepseek/deepseek-v4.1-flash",
+  "openrouter/google/gemini-3.5-flash-lite",
+] as const;
+
 export const CHEAP_FAST_TRANSLATION_MODELS = [
+  "openrouter/anthropic/claude-haiku-5.5",
   "openrouter/openai/gpt-5.6-luna",
   "openrouter/openai/gpt-6.1-sol",
   "openrouter/z-ai/glm-5.3-flash",

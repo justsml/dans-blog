@@ -147,12 +147,13 @@ export function resolveLlmConfig(
 }
 
 export function supportsTemperature(modelId: string) {
-  return !/gpt-(?:5\.6|6(?:\.1)?)-/.test(modelId);
+  // OpenRouter lists no `temperature` parameter for these families.
+  return !/gpt-(?:5\.6|6(?:\.1)?)-|claude-(?:haiku|sonnet|opus)-5/.test(modelId);
 }
 
 function defaultTemperatureForModel(modelId: string) {
   const normalized = modelId.replace(/^openrouter\//, "");
-  if (normalized.includes("gpt-5.6") || normalized.includes("gpt-6")) return undefined;
+  if (normalized.includes("gpt-5.6") || normalized.includes("gpt-6") || /claude-(?:haiku|sonnet|opus)-5/.test(normalized)) return undefined;
   return normalized.includes("gpt-oss") ? 0.1 : 0.3;
 }
 

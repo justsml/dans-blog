@@ -1,3 +1,4 @@
+import { isHaikuModel } from "./model-policy.ts";
 import { withTranslationScoreTrace, publishTranslationScores } from "./langfuse-scores.ts";
 import {
   getPostPaths,
@@ -68,7 +69,7 @@ type JudgeOperationKind = "candidate-batch" | "final" | "fix-rescore" | "second"
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
-const judgeModel = optionalString(options, "model") ?? "openrouter/google/gemini-3.8-flash";
+const judgeModel = optionalString(options, "model") ?? "openrouter/anthropic/claude-haiku-5.5";
 const secondJudgeModel = optionalString(options, "second-model");
 const escalationJudgeModel = optionalString(options, "escalate-model");
 validateJudgeModels({ judgeModel, secondJudgeModel, escalationJudgeModel });
@@ -792,7 +793,7 @@ function deriveJudgeRunConfidence({
       && finalOverallScore != null
       && finalOverallScore >= 82,
     frontierScores: scoredOutputs
-      .filter((output) => /(?:gpt-5|claude|sonnet|opus|gemini-3-pro|grok-4)/i.test(output.model))
+      .filter((output) => /(?:gpt-5|gpt-6|claude|sonnet|opus|gemini-3-pro|grok-4)/i.test(output.model))
       .map((output) => output.overallScore),
   });
 }
@@ -1068,7 +1069,8 @@ function validateJudgeModels({
   const forbiddenCheapJudges = cheapJudgeModels.filter((model) =>
     model.includes("-fast") ||
     (model.startsWith("openrouter/openai/") && model !== "openrouter/openai/gpt-6.1-sol") ||
-    model.startsWith("openrouter/anthropic/"),
+    // All Haiku models are allowed explicitly; larger Anthropic models stay out.
+    (model.startsWith("openrouter/anthropic/") && !isHaikuModel(model)),
   );
   const forbiddenEscalation = escalationJudgeModel == null
     ? []
@@ -1079,7 +1081,7 @@ function validateJudgeModels({
 
   if (forbiddenCheapJudges.length > 0 || forbiddenEscalation.length > 0) {
     throw new Error([
-      "Judge models must use cheap non-GPT/non-Anthropic models, except GPT-6.1 Sol (low) is allowed and Anthropic is allowed only as the explicit escalation judge.",
+      "Judge models must use cheap non-GPT/non-Anthropic models, except GPT-6.1 Sol (low) and Claude Haiku models are allowed, and other Anthropic models are allowed only as the explicit escalation judge.",
       `Forbidden model(s): ${[...forbiddenCheapJudges, ...forbiddenEscalation].join(", ")}`,
     ].join(" "));
   }

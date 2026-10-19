@@ -102,17 +102,11 @@ const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "18";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
 const DEFAULT_CANDIDATE_MODELS = [
-  "openrouter/deepseek/deepseek-v3.2",
-  "openrouter/deepseek/deepseek-v4.1-flash",
-  "openrouter/google/gemini-3.8-flash",
-  "openrouter/google/gemini-3.5-flash-lite",
-  "openrouter/minimax/minimax-m2.5",
-  "openrouter/minimax/minimax-m2.7",
-  "openrouter/openai/gpt-5.6-luna",
   "openrouter/openai/gpt-6.1-sol",
-  "openrouter/qwen/qwen3-32b:nitro",
-  "openrouter/qwen/qwen3.8-max",
+  "openrouter/anthropic/claude-haiku-5.5",
   "openrouter/z-ai/glm-5.3-flash",
+  "openrouter/deepseek/deepseek-v4.1-flash",
+  "openrouter/google/gemini-3.5-flash-lite",
 ];
 const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
 const OUT_OF_CREDIT_SETTLE_MS = 60_000;
@@ -125,7 +119,6 @@ const fixedExpectedCandidates = explicitExpectedCandidates ?? 2;
 const selectedLocales = parseLocales();
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const shouldIncludeDrafts = options["include-drafts"] === true;
-const shouldIncludeHidden = options["include-hidden"] === true;
 const shouldIncompleteOnly = options["incomplete-only"] === true;
 const shouldOnlyModified = options["only-modified"] === true;
 const shouldMarkdown = options.markdown === true || options["no-tui"] === true;
@@ -618,7 +611,6 @@ function fitCell(value: string, width: number) {
 
 function collectRows(): ArticleRow[] {
   return collectSourcePosts()
-    .filter((post) => shouldIncludeHidden || !post.isHidden)
     .filter((post) => shouldIncludeDrafts || !post.isDraft)
     .filter((post) => selectedSlugs.size === 0 || selectedSlugs.has(post.slug) || selectedSlugs.has(post.directory))
     .filter((post) =>

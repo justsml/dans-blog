@@ -163,9 +163,8 @@ function findTokenCount(output: string, labels: string[]) {
 function estimateCost(model: string, tokens: RunTelemetry["tokens"], providerCostUsd?: number) {
   const inputTokens = tokens.input ?? 0;
   const outputTokens = tokens.output ?? 0;
-  const thinkingTokens = tokens.thinking ?? 0;
   const cachedTokens = tokens.cached ?? 0;
-  const cost = estimateTokenCost(model, inputTokens, outputTokens + thinkingTokens, cachedTokens, { providerCostUsd });
+  const cost = estimateTokenCost(model, inputTokens, outputTokens, cachedTokens, { providerCostUsd, cacheWriteTokens: tokens.cacheWrite });
 
   return cost.pricingSource === "unknown" ? undefined : cost.totalUsd;
 }
