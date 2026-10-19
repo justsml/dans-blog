@@ -2,76 +2,106 @@
   <title id="title">Golden set lifecycle</title>
   <desc id="desc">A workflow from incident capture through golden cases, CI eval runs, and blocked regressions.</desc>
   <defs>
-    <linearGradient id="accent" x1="100" y1="0" x2="1100" y2="0" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ff78bd"/>
-      <stop offset="0.45" stop-color="#26f4df"/>
-      <stop offset="1" stop-color="#cde978"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000000" flood-opacity="0.38"/>
-    </filter>
+    <marker id="headSlate" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M1 1L11 6L1 11z" fill="#314f5b"/>
+    </marker>
+    <marker id="headSage" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M1 1L11 6L1 11z" fill="#386243"/>
+    </marker>
+    <marker id="headVermilion" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M1 1L11 6L1 11z" fill="#a2392b"/>
+    </marker>
+    <clipPath id="clipFailure"><rect x="48" y="168" width="290" height="160" rx="12"/></clipPath>
+    <clipPath id="clipGolden"><rect x="278" y="388" width="320" height="160" rx="12"/></clipPath>
+    <clipPath id="clipCI"><rect x="538" y="168" width="280" height="160" rx="12"/></clipPath>
+    <clipPath id="clipShip"><rect x="878" y="168" width="274" height="160" rx="12"/></clipPath>
+    <clipPath id="clipReg"><rect x="878" y="388" width="274" height="160" rx="12"/></clipPath>
     <style>
-      .bg { fill: #050b10; }
-      .grid { stroke: rgba(242, 252, 252, 0.055); stroke-width: 1; }
-      .line { stroke: url(#accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-      .box { fill: rgba(9, 20, 27, 0.96); stroke: rgba(230, 255, 252, 0.14); stroke-width: 1.2; }
-      .hot { stroke: rgba(255, 120, 189, 0.42); }
-      .cool { stroke: rgba(38, 244, 223, 0.4); }
-      .green { stroke: rgba(205, 233, 120, 0.42); }
-      .title { fill: #ffffff; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 50px; font-weight: 800; letter-spacing: 0; }
-      .label { fill: #edf8f7; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 27px; font-weight: 760; letter-spacing: 0; }
-      .small { fill: rgba(237, 248, 247, 0.72); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 16px; letter-spacing: 0; }
-      .tag { fill: #061015; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 16px; font-weight: 700; letter-spacing: 0; }
-      .chipPink { fill: #ff78bd; }
-      .chipCyan { fill: #26f4df; }
-      .chipGreen { fill: #cde978; }
-      .arrow { fill: #26f4df; }
+      .sheet { fill: #f8f4ec; stroke: #cec7bb; stroke-width: 1.5; }
+      .footer { fill: #efe9dd; stroke: #d8d0c2; stroke-width: 1; }
+      .rule { fill: #96492f; }
+      .box { fill: #fffaf2; stroke: #cec7bb; stroke-width: 1.5; }
+      .flow { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .flowSlate { stroke: #314f5b; }
+      .flowSage { stroke: #386243; }
+      .flowVermilion { stroke: #a2392b; }
+      .title { fill: #262b2b; font-family: Georgia, 'Noto Serif', serif; font-size: 46px; font-weight: 400; letter-spacing: -.01em; }
+      .label { fill: #262b2b; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', sans-serif; font-size: 27px; font-weight: 700; letter-spacing: 0; }
+      .small { fill: #5e625c; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 16px; letter-spacing: 0; }
+      .note { fill: #6b6e66; }
+      .tag { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 15px; font-weight: 700; letter-spacing: .02em; }
+      .stripSlate { fill: #314f5b; }
+      .stripSage { fill: #386243; }
+      .stripVermilion { fill: #a2392b; }
+      .chipSlate, .chipSage, .chipVermilion { stroke-width: 1; }
+      .chipSlate { fill: #dfe7e8; stroke: #314f5b; }
+      .chipSage { fill: #e1eadb; stroke: #386243; }
+      .chipVermilion { fill: #f4ded6; stroke: #a2392b; }
+      .tagSlate { fill: #314f5b; }
+      .tagSage { fill: #386243; }
+      .tagVermilion { fill: #a2392b; }
     </style>
   </defs>
-  <rect class="bg" width="1200" height="675"/>
+  <rect class="sheet" x="0.75" y="0.75" width="1198.5" height="673.5" rx="12"/>
+  <text class="title" x="48" y="90">Build the Golden Set From Bad Days</text>
+  <rect class="rule" x="48" y="112" width="96" height="3"/>
+
+  <!-- flow connectors (drawn under cards) -->
+  <path class="flow flowSlate" d="M160 330C160 420 196 468 274 468" marker-end="url(#headSlate)"/>
+  <path class="flow flowSlate" d="M598 468C652 468 690 432 690 333" marker-end="url(#headSlate)"/>
+  <path class="flow flowSage" d="M818 248H873" marker-end="url(#headSage)"/>
+  <path class="flow flowVermilion" d="M760 330C760 420 796 468 873 468" marker-end="url(#headVermilion)"/>
+
+  <!-- Failure -->
   <g>
-    <path class="grid" d="M0 75.5H1200M0 150.5H1200M0 225.5H1200M0 300.5H1200M0 375.5H1200M0 450.5H1200M0 525.5H1200M0 600.5H1200"/>
-    <path class="grid" d="M75.5 0V675M150.5 0V675M225.5 0V675M300.5 0V675M375.5 0V675M450.5 0V675M525.5 0V675M600.5 0V675M675.5 0V675M750.5 0V675M825.5 0V675M900.5 0V675M975.5 0V675M1050.5 0V675M1125.5 0V675"/>
+    <rect class="box" x="48" y="168" width="290" height="160" rx="12"/>
+    <rect class="stripVermilion" x="48" y="168" width="290" height="6" clip-path="url(#clipFailure)"/>
+    <rect class="chipVermilion" x="76" y="198" width="92" height="28" rx="14"/>
+    <text class="tag tagVermilion" x="122" y="217" text-anchor="middle">incident</text>
+    <text class="label" x="76" y="268">Failure</text>
+    <text class="small" x="76" y="302">ticket, flag, screenshot</text>
   </g>
-  <text class="title" x="76" y="92">Build the Golden Set From Bad Days</text>
-  <path class="line" d="M210 314C318 222 438 226 542 314S756 410 858 314S1028 224 1092 314"/>
-  <g filter="url(#shadow)">
-    <rect class="box hot" x="72" y="190" width="270" height="170" rx="18"/>
-    <rect class="box" x="326" y="360" width="300" height="170" rx="18"/>
-    <rect class="box cool" x="614" y="190" width="270" height="170" rx="18"/>
-    <rect class="box" x="858" y="360" width="270" height="170" rx="18"/>
-    <rect class="box green" x="858" y="155" width="270" height="150" rx="18"/>
-  </g>
+
+  <!-- Golden case -->
   <g>
-    <rect class="chipPink" x="104" y="222" width="96" height="28" rx="14"/>
-    <text class="tag" x="120" y="242">incident</text>
-    <text class="label" x="104" y="292">Failure</text>
-    <text class="small" x="104" y="326">ticket, flag, screenshot</text>
+    <rect class="box" x="278" y="388" width="320" height="160" rx="12"/>
+    <rect class="stripSlate" x="278" y="388" width="320" height="6" clip-path="url(#clipGolden)"/>
+    <rect class="chipSlate" x="306" y="418" width="84" height="28" rx="14"/>
+    <text class="tag tagSlate" x="348" y="437" text-anchor="middle">capture</text>
+    <text class="label" x="306" y="488">Golden case</text>
+    <text class="small" x="306" y="522">input + context + expected</text>
   </g>
+
+  <!-- CI eval -->
   <g>
-    <rect class="chipCyan" x="358" y="392" width="96" height="28" rx="14"/>
-    <text class="tag" x="374" y="412">capture</text>
-    <text class="label" x="358" y="462">Golden case</text>
-    <text class="small" x="358" y="496">input + context + expected</text>
+    <rect class="box" x="538" y="168" width="280" height="160" rx="12"/>
+    <rect class="stripSlate" x="538" y="168" width="280" height="6" clip-path="url(#clipCI)"/>
+    <rect class="chipSlate" x="566" y="198" width="56" height="28" rx="14"/>
+    <text class="tag tagSlate" x="594" y="217" text-anchor="middle">run</text>
+    <text class="label" x="566" y="268">CI eval</text>
+    <text class="small" x="566" y="302">baseline vs candidate</text>
   </g>
+
+  <!-- Ship -->
   <g>
-    <rect class="chipCyan" x="646" y="222" width="72" height="28" rx="14"/>
-    <text class="tag" x="664" y="242">run</text>
-    <text class="label" x="646" y="292">CI eval</text>
-    <text class="small" x="646" y="326">baseline vs candidate</text>
+    <rect class="box" x="878" y="168" width="274" height="160" rx="12"/>
+    <rect class="stripSage" x="878" y="168" width="274" height="6" clip-path="url(#clipShip)"/>
+    <rect class="chipSage" x="906" y="198" width="62" height="28" rx="14"/>
+    <text class="tag tagSage" x="937" y="217" text-anchor="middle">ship</text>
+    <text class="label" x="906" y="268">No known</text>
+    <text class="label" x="906" y="302">breaks</text>
   </g>
+
+  <!-- Regression -->
   <g>
-    <rect class="chipPink" x="890" y="392" width="86" height="28" rx="14"/>
-    <text class="tag" x="906" y="412">block</text>
-    <text class="label" x="890" y="462">Regression</text>
-    <text class="small" x="890" y="496">specific, reproducible</text>
+    <rect class="box" x="878" y="388" width="274" height="160" rx="12"/>
+    <rect class="stripVermilion" x="878" y="388" width="274" height="6" clip-path="url(#clipReg)"/>
+    <rect class="chipVermilion" x="906" y="418" width="70" height="28" rx="14"/>
+    <text class="tag tagVermilion" x="941" y="437" text-anchor="middle">block</text>
+    <text class="label" x="906" y="488">Regression</text>
+    <text class="small" x="906" y="522">specific, reproducible</text>
   </g>
-  <g>
-    <rect class="chipGreen" x="890" y="184" width="96" height="28" rx="14"/>
-    <text class="tag" x="906" y="204">ship</text>
-    <text class="label" x="890" y="248">No known</text>
-    <text class="label" x="890" y="278">breaks</text>
-  </g>
-  <path class="arrow" d="M1116 311l-23-15v30z"/>
-  <text class="small" x="76" y="602">The point is not a perfect test suite. The point is remembering your own failures.</text>
+
+  <rect class="footer" x="48" y="578" width="1104" height="48" rx="8"/>
+  <text class="small note" x="72" y="608">The point is not a perfect test suite. The point is remembering your own failures.</text>
 </svg>
