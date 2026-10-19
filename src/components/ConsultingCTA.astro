@@ -11,6 +11,9 @@
  * Full-time variants link to PDF resume; contract variants link to Cal.com.
  */
 
+import { DEFAULT_LOCALE } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
+
 const CAL_LINK = "https://cal.com/dan-levy-net/30min?overlayCalendar=true";
 const RESUME_AI_LEADER = "/docs/Dan_Levy_AI_Engineering_Leader_2026.pdf";
 
@@ -133,6 +136,24 @@ const variants = variantKeys.map((k) => VARIANTS[k]);
 const cta = variants[0];
 const isResume = cta.linkType === "resume";
 
+// "Send Message" relays to Telegram via netlify/functions/telegram-message.mts.
+// Gate on the server-only secrets at build time; only this boolean reaches the HTML.
+const telegramEnabled = Boolean(
+  String(process.env.TELEGRAM_BOT_TOKEN || import.meta.env.TELEGRAM_BOT_TOKEN || "").trim() &&
+    String(process.env.TELEGRAM_CHAT_ID || import.meta.env.TELEGRAM_CHAT_ID || "").trim(),
+);
+const reCaptchaSiteKey = telegramEnabled
+  ? import.meta.env.SITE_RECAPTCHA_KEY ||
+    import.meta.env.PUBLIC_SITE_RECAPTCHA_KEY ||
+    import.meta.env.VITE_SITE_RECAPTCHA_KEY ||
+    import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ||
+    import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
+    import.meta.env.RECAPTCHA_SITE_KEY ||
+    process.env.SITE_RECAPTCHA_KEY ||
+    ""
+  : "";
+const messageCopy = getUiCopy(Astro.props.locale ?? DEFAULT_LOCALE).contact;
+
 const rotationData = variants.map((v) => ({
   kicker: v.kicker,
   headline: v.headline,
@@ -196,9 +217,106 @@ const rotationData = variants.map((v) => ({
           </svg>
           <span data-cta-secondary-label>{cta.secondaryCta ?? "Schedule a call"}</span>
         </a>
+      {telegramEnabled && (
+        <button
+          type="button"
+          class="cta-btn cta-btn-secondary cta-btn-message"
+          aria-haspopup="dialog"
+          aria-controls="cta-message-dialog"
+          data-cta-message-open
+        >
+          <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m22 2-7 20-4-9-9-4Z"/>
+            <path d="M22 2 11 13"/>
+          </svg>
+          <span>{messageCopy.submit}</span>
+        </button>
+      )}
     </div>
   </div>
 </aside>
+
+{telegramEnabled && (
+  <dialog
+    id="cta-message-dialog"
+    class="cta-message-dialog screenshot-hidden"
+    aria-labelledby="cta-message-title"
+    data-cta-message-dialog
+    data-pagefind-ignore="all"
+  >
+    <div class="cta-message-sheet">
+      <div class="cta-message-head">
+        <h2 id="cta-message-title">{messageCopy.messageTitle}</h2>
+        <button type="button" class="cta-message-x" aria-label={messageCopy.messageClose} data-cta-message-close>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M18 6 6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <p class="cta-message-intro">{messageCopy.messageIntro}</p>
+      <form
+        class="cta-message-form"
+        data-astro-reload
+        data-cta-message-form
+        data-state="idle"
+        data-msg-error={messageCopy.error}
+        data-msg-verify={messageCopy.messageVerify}
+        data-msg-sending={messageCopy.messageSending}
+      >
+        <div class="cta-message-fields" data-cta-message-fields>
+          <label class="cta-message-field">
+            <span>{messageCopy.name}</span>
+            <input name="name" type="text" maxlength="100" autocomplete="name" />
+          </label>
+          <label class="cta-message-field">
+            <span>{messageCopy.messageContact}</span>
+            <input
+              name="contact"
+              type="text"
+              required
+              maxlength="200"
+              autocomplete="email"
+              spellcheck="false"
+              placeholder={messageCopy.messageContactPlaceholder}
+            />
+          </label>
+          <label class="cta-message-field">
+            <span>{messageCopy.message}</span>
+            <textarea
+              name="message"
+              required
+              maxlength="2000"
+              rows="5"
+              placeholder={messageCopy.messagePlaceholder}
+            ></textarea>
+          </label>
+          <div class="cta-message-hp" aria-hidden="true">
+            <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          {reCaptchaSiteKey && (
+            <div class="cta-message-captcha" data-recaptcha-site-key={reCaptchaSiteKey}></div>
+          )}
+          <p class="cta-message-status" role="status" aria-live="polite" data-cta-message-status></p>
+          <div class="cta-message-actions">
+            <button type="submit" class="cta-btn cta-btn-primary" data-cta-message-submit>
+              {messageCopy.submit}
+            </button>
+          </div>
+        </div>
+        <div class="cta-message-success" data-cta-message-success hidden>
+          <p role="status">{messageCopy.thanks}</p>
+          <button type="button" class="cta-btn cta-btn-secondary" data-cta-message-close>
+            {messageCopy.messageClose}
+          </button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+)}
+
+<script>
+  import "../scripts/ctaMessage";
+</script>
 
 <script>
   (function () {
@@ -515,4 +633,37 @@ const rotationData = variants.map((v) => ({
   .article-list-cta__link,.article-list-cta:hover .article-list-cta__link { color:var(--paper-accent); }
   .article-list-cta__link::before,.article-list-cta__link::after { background:var(--paper-accent); }
   @media(prefers-reduced-motion:reduce) { .consulting-cta,.article-list-cta,.cta-btn { animation:none; transition:none; transform:none; } }
+
+  /* Send Message button + Telegram dialog */
+  button.cta-btn { font-family:inherit; line-height:inherit; cursor:pointer; }
+  .cta-btn:focus-visible,.cta-message-x:focus-visible { outline:2px solid var(--paper-blue); outline-offset:2px; }
+  .cta-message-dialog { width:min(34rem, calc(100vw - 1.5rem)); max-width:none; max-height:calc(100dvh - 1.5rem); margin:auto; padding:0; overflow:auto; background:var(--paper-sheet); color:var(--paper-ink); border:1px solid var(--paper-line); border-block-start:4px solid var(--paper-blue); border-radius:1px; box-shadow:var(--paper-shadow-raised, var(--paper-shadow)); }
+  .cta-message-dialog::backdrop { background:color-mix(in srgb, var(--paper-ink) 42%, transparent); }
+  .cta-message-sheet { padding:clamp(1.1rem, 4vw, 1.75rem); }
+  .cta-message-head { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; }
+  .cta-message-head h2 { margin:0; color:var(--paper-ink); font-family:var(--paper-serif, Georgia, serif); font-size:1.3rem; font-weight:700; line-height:1.25; letter-spacing:-0.01em; }
+  .cta-message-x { flex-shrink:0; display:inline-grid; place-items:center; width:2.25rem; height:2.25rem; margin:-0.4rem -0.5rem 0 0; padding:0; background:transparent; color:var(--paper-muted); border:1px solid transparent; border-radius:1px; cursor:pointer; }
+  .cta-message-x:hover { color:var(--paper-ink); border-color:var(--paper-line); background:var(--paper-desk); }
+  .cta-message-x svg { width:18px; height:18px; }
+  .cta-message-intro { margin:0.4rem 0 1.1rem; color:var(--paper-muted); font-size:0.875rem; line-height:1.5; }
+  .cta-message-fields { display:grid; gap:0.85rem; }
+  .cta-message-field { display:grid; gap:0.35rem; margin:0; }
+  .cta-message-field span { color:var(--paper-ink); font-size:0.8125rem; font-weight:600; }
+  .cta-message-field input,.cta-message-field textarea { width:100%; min-height:44px; margin:0; padding:0.65rem 0.75rem; background:var(--paper-raised); color:var(--paper-ink); border:1px solid var(--paper-line); border-radius:1px; font:inherit; font-size:0.9375rem; box-sizing:border-box; }
+  .cta-message-field textarea { min-height:7.5rem; resize:vertical; }
+  .cta-message-field input::placeholder,.cta-message-field textarea::placeholder { color:var(--paper-muted); opacity:0.8; }
+  .cta-message-field input:focus-visible,.cta-message-field textarea:focus-visible { outline:2px solid var(--paper-blue); outline-offset:1px; border-color:var(--paper-blue); }
+  .cta-message-hp { position:absolute; inline-size:1px; block-size:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; left:-9999px; }
+  .cta-message-captcha { min-height:78px; max-width:100%; overflow:hidden; }
+  .cta-message-status { margin:0; font-size:0.8125rem; line-height:1.4; color:var(--paper-muted); }
+  .cta-message-status:empty { display:none; }
+  .cta-message-form[data-state="error"] .cta-message-status { padding:0.6rem 0.75rem; color:var(--paper-error); background:var(--paper-desk); border-inline-start:3px solid var(--paper-error); }
+  .cta-message-actions { display:flex; justify-content:flex-end; }
+  .cta-message-form[data-state="sending"] [data-cta-message-submit] { opacity:0.65; cursor:progress; }
+  .cta-message-success { display:grid; gap:1rem; justify-items:start; }
+  .cta-message-fields[hidden],.cta-message-success[hidden] { display:none; }
+  .cta-message-success p { margin:0; padding:0.75rem 0.9rem; width:100%; box-sizing:border-box; color:var(--paper-success); background:var(--paper-desk); border-inline-start:3px solid var(--paper-success); }
+  @media (max-width: 480px) {
+    .cta-message-actions .cta-btn { width:100%; justify-content:center; }
+  }
 </style>

@@ -1,6 +1,6 @@
 // Chroma-wave lens over the page background: a few liquid ribbons that show the blurred hero image through
 // them, refracted and split into colour fringes (theme colours where there is no hero). It drifts for a moment
-// on arrival, settles into a near-still drift, and speeds up while the reader scrolls, following the scroll
+// on arrival, settles into a slow breathing drift, and speeds up while the reader scrolls, following the scroll
 // velocity. Hovering an article card previews that card's image, which the post's own hero then takes over
 // from across the page transition. Colour changes cross-fade in OKLCH.
 // Rendered at a third of CSS resolution: the ribbons are soft, so bilinear upscaling costs nothing visible.
@@ -14,10 +14,16 @@ const INTRO_SPEED = 0.5;
 const INTRO_DECAY_MS = 1400;
 const SETTLE_MS = 4500;
 const MAX_SCROLL_SPEED = 3;
-// At rest the ribbons keep drifting at 2.5% of their fastest scroll-driven speed: slow, but visibly alive.
-const IDLE_SPEED = MAX_SCROLL_SPEED * 0.025;
-// The idle drift is too slow to need 60fps; ~11fps keeps it smooth for a fraction of the work.
-const IDLE_FRAME_MS = 90;
+// At rest the ribbons drift at about 5% of their fastest scroll-driven speed, breathing between roughly half
+// and one and a half times that, while their strength swells and ebbs with them.
+const IDLE_SPEED = MAX_SCROLL_SPEED * 0.05;
+const IDLE_SWING = 0.55;
+const STRENGTH_SWING = 0.14;
+// The idle drift doesn't need 60fps; ~22fps keeps the breathing smooth for a fraction of the work.
+const IDLE_FRAME_MS = 45;
+// Incommensurate periods (seconds) never quite repeat, so the breathing reads as organic rather than a metronome.
+const BREATH_PERIODS = [7.3, 3.1, 11.9, 1.7];
+const BREATH_WEIGHTS = [0.45, 0.25, 0.2, 0.1];
 const FADE_MS = 1400;
 const CARDS = "a.article-card, a.footer-article-card";
 const CARD_IMAGE = ".article-card__media img, .footer-article-card__media img";
@@ -85,6 +91,14 @@ const hex = (value: string, fallback: RGB): RGB => {
 };
 
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+
+// A smooth wander in [-1, 1]: a few out-of-phase sines, phases randomised per page load.
+const breathPhases = BREATH_PERIODS.map(() => Math.random() * Math.PI * 2);
+const breath = (seconds: number, offset = 0) =>
+  BREATH_PERIODS.reduce(
+    (sum, period, i) => sum + BREATH_WEIGHTS[i] * Math.sin((seconds * Math.PI * 2) / period + breathPhases[i] + offset * (i + 1)),
+    0,
+  );
 
 const decoded = (src: string) => {
   const image = new Image();
@@ -194,6 +208,7 @@ export async function start() {
   let lastFrame = 0;
   let raf = 0;
   let idleTimer = 0;
+  let strength = 0.34;
 
   const fadeProgress = (now: number) => (reducedMotion.matches ? 1 : Math.min(1, (now - fadeStart) / FADE_MS));
 
@@ -201,6 +216,8 @@ export async function start() {
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.uniform1f(u.time, time);
     gl.uniform1f(u.mix, easeInOut(fadeProgress(now)));
+    const swell = reducedMotion.matches ? 0 : breath(now / 1000, 1.3);
+    gl.uniform1f(u.strength, strength * (1 + STRENGTH_SWING * swell));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   };
 
@@ -248,7 +265,7 @@ export async function start() {
     gl.bindTexture(gl.TEXTURE_2D, from.texture);
     fit();
     gl.uniform1f(u.peak, dark ? 0.9 : 0.75);
-    gl.uniform1f(u.strength, dark ? 0.42 : 0.34);
+    strength = dark ? 0.42 : 0.34;
     // The first paint has nothing to fade from; the canvas's own opacity fade covers it.
     fadeStart = painted ? now : -Infinity;
     painted = true;
@@ -287,10 +304,11 @@ export async function start() {
     const tau = Math.abs(target) > Math.abs(scrollSpeed) ? 0.15 : 0.6;
     scrollSpeed += (target - scrollSpeed) * (1 - Math.exp(-dt / tau));
     const elapsed = now - introStart;
-    const speed = IDLE_SPEED + INTRO_SPEED * Math.exp(-elapsed / INTRO_DECAY_MS) + scrollSpeed;
-    time += dt * speed;
+    const intro = INTRO_SPEED * Math.exp(-elapsed / INTRO_DECAY_MS);
+    const idleSpeed = IDLE_SPEED * (1 + IDLE_SWING * breath(now / 1000));
+    time += dt * (idleSpeed + intro + scrollSpeed);
     draw(now);
-    const idle = Math.abs(speed - IDLE_SPEED) < 0.005 && elapsed > SETTLE_MS && fadeProgress(now) >= 1;
+    const idle = Math.abs(intro + scrollSpeed) < 0.005 && elapsed > SETTLE_MS && fadeProgress(now) >= 1;
     if (idle) idleTimer = window.setTimeout(() => { idleTimer = 0; raf = requestAnimationFrame(frame); }, IDLE_FRAME_MS);
     else raf = requestAnimationFrame(frame);
   };

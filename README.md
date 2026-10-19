@@ -33,6 +33,19 @@ Candidate and judge AI SDK calls default to 240 second timeouts; use `--timeout-
 
 The matching Codex skill is `.agents/skills/article-i18n-translator/SKILL.md`.
 
+## Environment Variables
+
+Set these in `.env` for local builds and in Netlify (Site configuration > Environment variables) for deploys. None use the `PUBLIC_` prefix, and the secrets never reach client code.
+
+| Variable                | Used by                                    | Notes |
+| :---------------------- | :----------------------------------------- | :---- |
+| `SITE_RECAPTCHA_KEY`    | Contact page, consulting "Send Message"    | reCAPTCHA v2 site key (rendered into HTML; not secret). |
+| `SITE_RECAPTCHA_SECRET` | `netlify/functions/telegram-message.mts`   | Secret. When set, the function verifies reCAPTCHA tokens. |
+| `TELEGRAM_BOT_TOKEN`    | Build gate + `telegram-message` function   | Secret. Bot token from @BotFather. |
+| `TELEGRAM_CHAT_ID`      | Build gate + `telegram-message` function   | Chat (user/group) the bot posts to. |
+
+The consulting CTA renders its "Send Message" button only when both `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` are non-empty **at build time**, so production deploys (built locally with `bun run deploy`) need them in `.env`, and the Netlify function needs them in the Netlify environment at runtime. `netlify deploy --no-build` uploads `netlify/functions/` (configured in `netlify.toml`) alongside `dist/`.
+
 
 ## TODO
 

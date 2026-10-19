@@ -67,12 +67,14 @@
 :root[data-theme=dark] .hero-beam { opacity:.46; --beam-1:color-mix(in oklab,var(--hero-1,var(--paper-accent)) 70%,#fff); --beam-2:color-mix(in oklab,var(--hero-2,var(--paper-blue)) 70%,#fff); --beam-3:color-mix(in oklab,var(--hero-3,var(--paper-accent)) 70%,#fff); }
 :root:has(.scroll-lens.is-ready) .hero-beam { opacity:0; }
 .hero-beam-move { position:absolute; inset:0; }
-.hero-beam i { position:absolute; inset:-40% -60%; rotate:-14deg; will-change:transform; animation:beam-sway 70s ease-in-out infinite alternate;
+.hero-beam i { position:absolute; inset:-40% -60%; rotate:-14deg; will-change:transform, scale, opacity; animation:beam-sway 31s ease-in-out -4s infinite alternate, beam-breathe 7.3s ease-in-out -2s infinite alternate;
   background:linear-gradient(100deg, transparent 32%, color-mix(in oklab,var(--beam-1) 55%,transparent) 42%, color-mix(in oklab,var(--beam-2) 45%,transparent) 50%, color-mix(in oklab,var(--beam-3) 35%,transparent) 58%, transparent 68%); }
-.hero-beam i + i { opacity:.7; animation-duration:90s; animation-direction:alternate-reverse;
+.hero-beam i + i { opacity:.7; --breathe-lo:.45; --breathe-hi:.8; animation-duration:43s, 11.9s; animation-delay:-9s, -5s; animation-direction:alternate-reverse, alternate;
   background:linear-gradient(100deg, transparent 47%, rgb(255 90 120 / .18) 48.5%, rgb(255 210 120 / .16) 49.5%, rgb(120 220 160 / .14) 50.5%, rgb(90 170 255 / .18) 51.5%, transparent 53%); }
 @keyframes beam-in { from { opacity:0; } }
 @keyframes beam-sway { from { transform:translateX(-8%); } to { transform:translateX(8%); } }
+/* Out-of-step durations on the two layers keep the breathing from settling into a visible beat. */
+@keyframes beam-breathe { from { opacity:var(--breathe-lo,.7); scale:1; } to { opacity:var(--breathe-hi,1); scale:1.06; } }
 @keyframes beam-sweep { to { transform:translateX(-35vw); } }
 @supports (animation-timeline: scroll()) {
   /* The sweep moves the inner layer: moving the fixed, clipped box would drag its edge into view. */
@@ -81,3 +83,17 @@
 }
 @media (prefers-reduced-motion: reduce) { .hero-beam i, .hero-beam-move { animation:none; } }
 @media print { .hero-beam { display:none; } }
+/* Image zoom (src/scripts/imageZoom.ts): full-viewport, no touch-action override so pinch-zoom and pan stay native. */
+.post-page main.article img[data-zoomable] { cursor:zoom-in; }
+.post-page main.article img[data-zoomable]:focus-visible { outline:2px solid var(--paper-accent); outline-offset:3px; }
+.image-zoom { inline-size:100vw; block-size:100dvh; max-inline-size:none; max-block-size:none; margin:0; padding:0; border:0; background:transparent; overflow:auto; cursor:zoom-out; }
+.image-zoom::backdrop { background:color-mix(in srgb, var(--paper-desk) 97%, transparent); }
+.image-zoom img { inline-size:100%; block-size:100%; max-inline-size:none; max-block-size:none; object-fit:contain; display:block; margin:0; padding:max(.5rem, env(safe-area-inset-top)) max(.5rem, env(safe-area-inset-right)) max(.5rem, env(safe-area-inset-bottom)) max(.5rem, env(safe-area-inset-left)); box-sizing:border-box; }
+.image-zoom:focus, .image-zoom:focus-visible { outline:none; }
+:root:has(.image-zoom[open]) { overflow:hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .image-zoom[open], .image-zoom[open]::backdrop { animation:image-zoom-fade .18s ease-out; }
+  .image-zoom[open] img { animation:image-zoom-scale .18s ease-out; }
+}
+@keyframes image-zoom-fade { from { opacity:0; } }
+@keyframes image-zoom-scale { from { scale:.96; } }

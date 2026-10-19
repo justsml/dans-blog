@@ -6,3 +6,8 @@
   # so pushes and merges to main must not publish. Exit 0 skips a git-triggered build;
   # exit 1 builds. Deploy previews and branch deploys still build automatically.
   ignore = "if [ \"$CONTEXT\" = \"production\" ]; then echo 'Production deploys are manual; skipping.'; exit 0; fi; exit 1"
+
+[functions]
+  # `netlify deploy --no-build` bundles and uploads these alongside dist/.
+  # telegram-message.mts serves POST /api/telegram-message (see its `config.path`).
+  directory = "netlify/functions"

@@ -1,44 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1350" role="img" aria-labelledby="title desc">
   <title id="title">No fate but what we make</title>
-  <desc id="desc">Four defense layers reduce agentic risk: scoped identity and trust, reviewed instructions and constrained tools, edit and runtime monitoring, and containment followed by evidence-preserving recovery. Short-lived credentials do not remove persistent instructions.</desc>
+  <desc id="desc">Four defense layers: 1, identity with short-lived scoped credentials, reduces credential exposure; 2, reviewed agent text and least-privilege tools with approval gates, limits the blast radius; 3, detecting edits, tool calls and spend, improves detection; 4, containing then recovering by revoking access, preserving evidence and verifying, reduces reactivation risk. Boring, on purpose.</desc>
   <defs>
-    <style>text{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',sans-serif;fill:#262b2b}.title{font-family:Georgia,'Noto Serif',serif;font-size:40px;font-weight:400;letter-spacing:-.01em}.sub{font-size:17px;fill:#5e625c}.num{font-family:Georgia,'Noto Serif',serif;font-size:44px;font-weight:400}.head{font-size:16px;font-weight:700;letter-spacing:.06em}.line{font-size:13.5px;fill:#5e625c}.stops{font-size:12.5px;font-weight:700;letter-spacing:.06em;fill:#fffaf2}.stopsub{font-size:13px}.note{font-size:13.5px;fill:#6b6e66}.card{fill:#fffaf2;stroke:#cec7bb;stroke-width:1.25}</style>
+    <style>text{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',sans-serif;fill:#262b2b}.title{font-family:Georgia,'Noto Serif',serif;font-size:60px;font-weight:400;letter-spacing:-.01em}.kick{font-size:30px;font-weight:700;letter-spacing:.06em;fill:#5e625c}.head{font-size:30px;font-weight:700;letter-spacing:.06em}.b{font-size:33px}.bb{font-size:33px;font-weight:700}.l{font-size:30px;fill:#5e625c}.big{font-size:42px;font-weight:700}.num{font-family:Georgia,'Noto Serif',serif;font-size:64px;font-weight:400}.axis{font-size:30px;fill:#5e625c;font-variant-numeric:tabular-nums}.caps{font-weight:700;letter-spacing:.06em}.grid{stroke:#ddd6c8;stroke-width:1.5;stroke-dasharray:4 8}.halo{stroke:#f8f4ec;stroke-width:8;stroke-linejoin:round;paint-order:stroke}.dot{stroke:#f8f4ec;stroke-width:4}.card{fill:#fffaf2;stroke:#cec7bb;stroke-width:1.5}.inner{fill:#f8f4ec;stroke:#d8d0c2;stroke-width:1.5}.recess{fill:#efe9dd;stroke:#d8d0c2;stroke-width:1.5}</style>
   </defs>
-  <rect x=".75" y=".75" width="1598.5" height="898.5" rx="12" fill="#f8f4ec" stroke="#cec7bb" stroke-width="1.5"/>
-  <rect x="72" y="40" width="1456" height="3" fill="#96492f"/>
-  <text class="title" x="72" y="92">No fate but what we make</text><text class="sub" x="72" y="124">Four boring layers against familiar failure modes · reduce exposure, constrain damage, verify recovery</text>
-  <g transform="translate(72 170)">
-    <rect class="card" width="1456" height="126" rx="10"/><rect width="6" height="126" rx="3" fill="#314f5b"/>
-    <text class="num" x="30" y="80" style="fill:#314f5b">1</text>
-    <text class="head" x="92" y="44" style="fill:#314f5b">IDENTITY — limit access and trust</text>
-    <text class="line" x="92" y="70">Short-lived, scoped credentials · restrict OIDC trust to approved repos, branches and environments</text>
-    <text class="line" x="92" y="92">Inventory non-human identities · protect credential issuers · review who can change trust</text>
-    <g transform="translate(1030 30)"><rect width="396" height="66" rx="8" fill="#314f5b"/><text class="stops" x="18" y="27">REDUCES CREDENTIAL EXPOSURE</text><text class="stopsub" x="18" y="49" style="fill:#dfe7e8">short-lived keys do not erase implants</text></g>
-  </g>
-  <g transform="translate(72 312)">
-    <rect class="card" width="1456" height="126" rx="10"/><rect width="6" height="126" rx="3" fill="#386243"/>
-    <text class="num" x="30" y="80" style="fill:#386243">2</text>
-    <text class="head" x="92" y="44" style="fill:#386243">REVIEW AGENT TEXT — CONSTRAIN ITS TOOLS</text>
-    <text class="line" x="92" y="70">Version and review instructions, memory writes, prompt templates and tool configs</text>
-    <text class="line" x="92" y="92">Enforce least privilege, approval gates and egress limits outside the model</text>
-    <g transform="translate(1030 30)"><rect width="396" height="66" rx="8" fill="#386243"/><text class="stops" x="18" y="27">LIMITS THE BLAST RADIUS</text><text class="stopsub" x="18" y="49" style="fill:#e1eadb">review alone is not a security boundary</text></g>
-  </g>
-  <g transform="translate(72 454)">
-    <rect class="card" width="1456" height="126" rx="10"/><rect width="6" height="126" rx="3" fill="#7e581f"/>
-    <text class="num" x="30" y="80" style="fill:#7e581f">3</text>
-    <text class="head" x="92" y="44" style="fill:#7e581f">DETECT EDITS AND EXECUTION</text>
-    <text class="line" x="92" y="70">Correlate workflow, webhook and memory edits with approved changes and runtime activity</text>
-    <text class="line" x="92" y="92">Monitor tool calls, inference rates, egress and spend · triage drift · test the response</text>
-    <g transform="translate(1030 30)"><rect width="396" height="66" rx="8" fill="#7e581f"/><text class="stops" x="18" y="27">IMPROVES DETECTION</text><text class="stopsub" x="18" y="49" style="fill:#f0e4cc">usage alerts are not hard spending caps</text></g>
-  </g>
-  <g transform="translate(72 596)">
-    <rect class="card" width="1456" height="126" rx="10"/><rect width="6" height="126" rx="3" fill="#a2392b"/>
-    <text class="num" x="30" y="80" style="fill:#a2392b">4</text>
-    <text class="head" x="92" y="44" style="fill:#a2392b">CONTAIN — THEN RECOVER</text>
-    <text class="line" x="92" y="70">Contain active workers and identities · revoke sessions · preserve evidence · disable reactivation</text>
-    <text class="line" x="92" y="92">Check queues and triggers · clean memory · restore reviewed state · verify before resuming</text>
-    <g transform="translate(1030 30)"><rect width="396" height="66" rx="8" fill="#a2392b"/><text class="stops" x="18" y="27">REDUCES REACTIVATION RISK</text><text class="stopsub" x="18" y="49" style="fill:#f4ded6">rotation alone does not finish recovery</text></g>
-  </g>
-  <g transform="translate(72 756)"><rect width="1456" height="70" rx="10" fill="#efe9dd" stroke="#d8d0c2"/><text x="22" y="30" font-size="15" font-weight="700">None of this is exotic — boring, on purpose. Boring is the match for a threat built from familiar components.</text><text class="note" x="22" y="54">1984's version needed a time machine and a factory. 2026's needs a stolen key, a retry loop, and one org that never reviewed the files its agents read.</text></g>
-  <text class="note" x="72" y="858">No Fate But What We Bill · figure 4 · the defense stack</text>
+  <rect x="1" y="1" width="998" height="1348" rx="16" fill="#f8f4ec" stroke="#cec7bb" stroke-width="2"/>
+  <rect x="56" y="44" width="888" height="4" fill="#96492f"/>
+  <text class="title" x="56" y="124">No fate but what we make</text>
+  <rect class="card" x="56" y="176" width="888" height="232" rx="14"/>
+  <rect x="56" y="176" width="8" height="232" rx="4" fill="#314f5b"/>
+  <text class="num" x="90" y="256" style="fill:#314f5b">1</text>
+  <text class="head" x="160" y="234" style="fill:#314f5b">IDENTITY</text>
+  <text class="b" x="160" y="282">Short-lived, scoped credentials</text>
+  <rect x="160" y="312" width="756" height="66" rx="10" fill="#314f5b"/>
+  <text class="head" x="182" y="356" style="fill:#fffaf2">REDUCES CREDENTIAL EXPOSURE</text>
+  <rect class="card" x="56" y="430" width="888" height="232" rx="14"/>
+  <rect x="56" y="430" width="8" height="232" rx="4" fill="#386243"/>
+  <text class="num" x="90" y="510" style="fill:#386243">2</text>
+  <text class="head" x="160" y="488" style="fill:#386243">REVIEW TEXT · LIMIT TOOLS</text>
+  <text class="b" x="160" y="536">Least privilege, approval gates</text>
+  <rect x="160" y="566" width="756" height="66" rx="10" fill="#386243"/>
+  <text class="head" x="182" y="610" style="fill:#fffaf2">LIMITS THE BLAST RADIUS</text>
+  <rect class="card" x="56" y="684" width="888" height="232" rx="14"/>
+  <rect x="56" y="684" width="8" height="232" rx="4" fill="#7e581f"/>
+  <text class="num" x="90" y="764" style="fill:#7e581f">3</text>
+  <text class="head" x="160" y="742" style="fill:#7e581f">DETECT EDITS + EXECUTION</text>
+  <text class="b" x="160" y="790">Watch edits, tool calls, spend</text>
+  <rect x="160" y="820" width="756" height="66" rx="10" fill="#7e581f"/>
+  <text class="head" x="182" y="864" style="fill:#fffaf2">IMPROVES DETECTION</text>
+  <rect class="card" x="56" y="938" width="888" height="232" rx="14"/>
+  <rect x="56" y="938" width="8" height="232" rx="4" fill="#a2392b"/>
+  <text class="num" x="90" y="1018" style="fill:#a2392b">4</text>
+  <text class="head" x="160" y="996" style="fill:#a2392b">CONTAIN, THEN RECOVER</text>
+  <text class="b" x="160" y="1044">Revoke, preserve evidence, verify</text>
+  <rect x="160" y="1074" width="756" height="66" rx="10" fill="#a2392b"/>
+  <text class="head" x="182" y="1118" style="fill:#fffaf2">REDUCES REACTIVATION RISK</text>
+  <rect class="recess" x="56" y="1202" width="888" height="92" rx="12"/>
+  <text class="bb" x="500" y="1260" text-anchor="middle">Boring, on purpose.</text>
 </svg>

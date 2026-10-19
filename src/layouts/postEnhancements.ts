@@ -1,8 +1,11 @@
+import { installImageZoom, markZoomableImages } from "../scripts/imageZoom";
+
 let lifecycleInstalled = false;
 
 export function installPostEnhancementLifecycle() {
   if (lifecycleInstalled || typeof document === "undefined") return;
   lifecycleInstalled = true;
+  installImageZoom();
 
   window.__checkForEmptyShareCounts = checkForEmptyShareCounts;
   window.__superHackFix_patchOptionsListWithActualHeight =
@@ -22,7 +25,7 @@ export function installPostEnhancementLifecycle() {
 export function bootPostEnhancements() {
   ensureArticleExternalLinksOpenInNewWindow();
   checkForEmptyShareCounts();
-
+  markZoomableImages();
 }
 
 export function ensureArticleExternalLinksOpenInNewWindow() {

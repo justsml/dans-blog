@@ -93,6 +93,14 @@ type UiCopy = {
     thanks: string;
     error: string;
     submit: string;
+    /** Consulting CTA "Send Message" dialog (Telegram relay). */
+    messageTitle: string;
+    messageIntro: string;
+    messageContact: string;
+    messageContactPlaceholder: string;
+    messageVerify: string;
+    messageSending: string;
+    messageClose: string;
   };
   challenges: {
     title: string;
@@ -215,6 +223,13 @@ const en = {
     thanks: "Thanks for reaching out!",
     error: "There was an error sending your message. Please check the form and try again.",
     submit: "Send Message",
+    messageTitle: "Send Dan a message",
+    messageIntro: "Goes straight to Dan on Telegram. Include a way to reach you.",
+    messageContact: "Email or Telegram handle",
+    messageContactPlaceholder: "you@example.com or @handle",
+    messageVerify: "Please complete the verification check.",
+    messageSending: "Sending...",
+    messageClose: "Close",
   },
   challenges: {
     title: "Tech Challenges & Quizzes - DanLevy.net",

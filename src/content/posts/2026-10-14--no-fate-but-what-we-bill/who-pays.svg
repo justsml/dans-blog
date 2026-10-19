@@ -1,70 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1396" role="img" aria-labelledby="title desc">
   <title id="title">Who pays</title>
-  <desc id="desc">Flow diagram showing an attacker using stolen cloud credentials to run model workloads inside the victim's cloud account, so the invoice routes to the victim while the attacker shifts model charges to the victim; operating costs and access controls still matter.</desc>
+  <desc id="desc">Vertical flow: an attacker with stolen cloud credentials uses the victim's cloud account, which runs the permitted models, and the charges are billed to the victim. Sysdig's 2024 worst-case scenarios put that at about $46k to over $100k per day. Scoped permissions, usage quotas, abuse detection, and credential revocation still matter.</desc>
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7a7c74"/></marker>
-    <marker id="arrowVerm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#a2392b"/></marker>
-    <style>text{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',sans-serif;fill:#262b2b}.title{font-family:Georgia,'Noto Serif',serif;font-size:40px;font-weight:400;letter-spacing:-.01em}.sub{font-size:17px;fill:#5e625c}.head{font-size:15px;font-weight:700;letter-spacing:.06em}.line{font-size:13.5px;fill:#5e625c}.small{font-size:12.5px;fill:#5e625c}.big{font-size:22px;font-weight:700}.note{font-size:13.5px;fill:#6b6e66}.flow{stroke:#7a7c74;stroke-width:2;fill:none}.card{fill:#fffaf2;stroke:#cec7bb;stroke-width:1.25}.inner{fill:#f8f4ec;stroke:#d8d0c2;stroke-width:1}.recess{fill:#efe9dd;stroke:#d8d0c2;stroke-width:1}</style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7a7c74"/></marker>
+    <marker id="arrowVerm" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#a2392b"/></marker>
+    <style>text{font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',sans-serif;fill:#262b2b}.title{font-family:Georgia,'Noto Serif',serif;font-size:60px;font-weight:400;letter-spacing:-.01em}.kick{font-size:30px;font-weight:700;letter-spacing:.06em;fill:#5e625c}.head{font-size:30px;font-weight:700;letter-spacing:.06em}.b{font-size:33px}.bb{font-size:33px;font-weight:700}.l{font-size:30px;fill:#5e625c}.big{font-size:42px;font-weight:700}.num{font-family:Georgia,'Noto Serif',serif;font-size:64px;font-weight:400}.axis{font-size:30px;fill:#5e625c;font-variant-numeric:tabular-nums}.caps{font-weight:700;letter-spacing:.06em}.grid{stroke:#ddd6c8;stroke-width:1.5;stroke-dasharray:4 8}.halo{stroke:#f8f4ec;stroke-width:8;stroke-linejoin:round;paint-order:stroke}.dot{stroke:#f8f4ec;stroke-width:4}.card{fill:#fffaf2;stroke:#cec7bb;stroke-width:1.5}.inner{fill:#f8f4ec;stroke:#d8d0c2;stroke-width:1.5}.recess{fill:#efe9dd;stroke:#d8d0c2;stroke-width:1.5}</style>
   </defs>
-  <rect x=".75" y=".75" width="1598.5" height="898.5" rx="12" fill="#f8f4ec" stroke="#cec7bb" stroke-width="1.5"/>
-  <rect x="72" y="40" width="1456" height="3" fill="#96492f"/>
-  <text class="title" x="72" y="92">Who pays</text><text class="sub" x="72" y="124">LLMjacking · stolen cloud credentials shift model charges to the victim · historical Sysdig cost scenarios</text>
-  <g transform="translate(72 170)">
-    <rect class="card" width="300" height="180" rx="10"/><rect width="300" height="4" rx="2" fill="#a2392b"/>
-    <text class="head" x="20" y="36" style="fill:#a2392b">ATTACKER</text>
-    <text class="big" x="20" y="72">Shifts model charges</text>
-    <text class="line" x="20" y="102">Stolen cloud credentials.</text>
-    <text class="line" x="20" y="124">Credential acquisition and</text>
-    <text class="line" x="20" y="146">operating costs remain.</text>
-  </g>
-  <line class="flow" x1="372" y1="260" x2="452" y2="260" marker-end="url(#arrow)"/>
-  <text class="line" x="380" y="248">uses</text>
-  <g transform="translate(460 170)">
-    <rect class="card" width="380" height="180" rx="10"/><rect width="380" height="4" rx="2" fill="#314f5b"/>
-    <text class="head" x="20" y="36" style="fill:#314f5b">VICTIM'S CLOUD ACCOUNT</text>
-    <text class="big" x="20" y="72">Meter running</text>
-    <text class="line" x="20" y="102">Requests use the stolen principal’s</text>
-    <text class="line" x="20" y="124">model permissions, subject to</text>
-    <text class="line" x="20" y="146">quotas and provider controls.</text>
-  </g>
-  <line class="flow" x1="840" y1="260" x2="920" y2="260" marker-end="url(#arrow)"/>
-  <text class="line" x="848" y="248">runs</text>
-  <g transform="translate(928 170)">
-    <rect class="card" width="280" height="180" rx="10"/><rect width="280" height="4" rx="2" fill="#386243"/>
-    <text class="head" x="20" y="36" style="fill:#386243">CAPABILITY</text>
-    <text class="big" x="20" y="72">Permitted models</text>
-    <text class="line" x="20" y="102">Model usage is billed to</text>
-    <text class="line" x="20" y="124">the compromised account,</text>
-    <text class="line" x="20" y="146">not the attacker’s account.</text>
-  </g>
-  <g transform="translate(1292 170)">
-    <rect class="recess" width="216" height="180" rx="10"/>
-    <text class="head" x="18" y="34">CONTROLS REMAIN</text>
-    <text class="line" x="18" y="62">Scoped permissions</text>
-    <text class="line" x="18" y="84">Usage quotas</text>
-    <text class="line" x="18" y="106">Abuse detection</text>
-    <text class="line" x="18" y="128">Credential revocation</text>
-    <text class="line" x="18" y="164" style="fill:#262b2b" font-weight="700">Limit access and exposure</text>
-  </g>
-  <line class="flow" x1="1208" y1="260" x2="1284" y2="260" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
-  <text class="small" x="1248" y="232" text-anchor="middle">bounded</text><text class="small" x="1248" y="248" text-anchor="middle">access</text>
-  <line class="flow" x1="650" y1="350" x2="650" y2="446" marker-end="url(#arrowVerm)" stroke="#a2392b"/>
-  <text class="line" x="666" y="404" style="fill:#a2392b" font-weight="700">bills</text>
-  <g transform="translate(72 456)">
-    <rect class="card" width="1156" height="200" rx="10"/><rect width="1156" height="4" rx="2" fill="#a2392b"/>
-    <text class="head" x="24" y="40" style="fill:#a2392b">THE VICTIM'S LEDGER</text>
-    <g transform="translate(24 70)"><rect class="inner" width="540" height="100" rx="8"/><text class="line" x="22" y="26">Attacker’s model charges</text><text class="big" x="22" y="56">Shifted to victim</text><text class="line" x="22" y="82">Not zero total cost: access, infrastructure, operators</text></g>
-    <g transform="translate(592 70)"><rect width="540" height="100" rx="8" fill="#f4ded6" stroke="#d39a8d"/><text class="line" x="22" y="26" style="fill:#262b2b">Historical worst-case exposure</text><text class="big" x="22" y="56" style="fill:#a2392b">~$46k → $100k+ / day</text><text class="line" x="22" y="82" style="fill:#262b2b">Sysdig’s 2024 scenarios — not a 2026 price quote</text></g>
-  </g>
-  <g transform="translate(1292 456)">
-    <rect class="recess" width="216" height="200" rx="10"/>
-    <text class="head" x="18" y="36">NET RESULT</text>
-    <text class="line" x="18" y="66">The billing account</text>
-    <text class="line" x="18" y="88">absorbs model charges.</text>
-    <text class="line" x="18" y="110">Stolen access routes</text>
-    <text class="line" x="18" y="132">the charge to the</text>
-    <text class="line" x="18" y="154">victim's wallet.</text>
-  </g>
-  <g transform="translate(72 700)"><rect class="recess" width="1436" height="80" rx="10"/><text x="22" y="34" font-size="15" font-weight="700">Stolen access weakens price as a deterrent. Permissions, quotas and detection still matter.</text><text class="note" x="22" y="58">Watch inference usage and billing anomalies; restrict model permissions and revoke compromised access.</text></g>
-  <text class="note" x="72" y="842">No Fate But What We Bill · figure 2 · stolen access, victim's invoice</text>
+  <rect x="1" y="1" width="998" height="1394" rx="16" fill="#f8f4ec" stroke="#cec7bb" stroke-width="2"/>
+  <rect x="56" y="44" width="888" height="4" fill="#96492f"/>
+  <text class="title" x="56" y="124">Who pays</text>
+  <text class="kick" x="56" y="178">LLMJACKING</text>
+  <rect class="card" x="56" y="220" width="888" height="150" rx="14"/>
+  <rect x="56" y="220" width="888" height="6" rx="3" fill="#a2392b"/>
+  <text class="head" x="88" y="278" style="fill:#a2392b">ATTACKER</text>
+  <text class="big" x="88" y="336">Stolen cloud credentials</text>
+  <line x1="176" y1="370" x2="176" y2="450" stroke="#7a7c74" stroke-width="4" marker-end="url(#arrow)"/>
+  <text class="b" x="204" y="423" style="fill:#5e625c">uses</text>
+  <rect class="card" x="56" y="454" width="888" height="150" rx="14"/>
+  <rect x="56" y="454" width="888" height="6" rx="3" fill="#314f5b"/>
+  <text class="head" x="88" y="512" style="fill:#314f5b">VICTIM'S CLOUD ACCOUNT</text>
+  <text class="big" x="88" y="570">Meter running</text>
+  <line x1="176" y1="604" x2="176" y2="684" stroke="#7a7c74" stroke-width="4" marker-end="url(#arrow)"/>
+  <text class="b" x="204" y="657" style="fill:#5e625c">runs</text>
+  <rect class="card" x="56" y="688" width="888" height="150" rx="14"/>
+  <rect x="56" y="688" width="888" height="6" rx="3" fill="#386243"/>
+  <text class="head" x="88" y="746" style="fill:#386243">CAPABILITY</text>
+  <text class="big" x="88" y="804">Permitted models</text>
+  <line x1="176" y1="838" x2="176" y2="918" stroke="#a2392b" stroke-width="4" marker-end="url(#arrowVerm)"/>
+  <text class="bb" x="204" y="891" style="fill:#a2392b">bills</text>
+  <rect x="56" y="922" width="888" height="190" rx="14" fill="#f4ded6" stroke="#d39a8d" stroke-width="1.5"/>
+  <rect x="56" y="922" width="888" height="6" rx="3" fill="#a2392b"/>
+  <text class="head" x="88" y="980" style="fill:#a2392b">THE VICTIM'S BILL</text>
+  <text class="big" x="88" y="1042" style="fill:#a2392b">~$46k → $100k+ / day</text>
+  <text class="l" x="88" y="1086" style="fill:#262b2b">Sysdig's 2024 worst-case scenarios</text>
+  <rect class="recess" x="56" y="1144" width="888" height="196" rx="14"/>
+  <text class="head" x="88" y="1200">CONTROLS STILL MATTER</text>
+  <circle cx="96" cy="1245" r="7" fill="#314f5b"/>
+  <text class="b" x="116" y="1256">Scoped permissions</text>
+  <circle cx="536" cy="1245" r="7" fill="#314f5b"/>
+  <text class="b" x="556" y="1256">Usage quotas</text>
+  <circle cx="96" cy="1295" r="7" fill="#314f5b"/>
+  <text class="b" x="116" y="1306">Abuse detection</text>
+  <circle cx="536" cy="1295" r="7" fill="#314f5b"/>
+  <text class="b" x="556" y="1306">Credential revocation</text>
 </svg>
