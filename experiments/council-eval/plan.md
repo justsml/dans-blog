@@ -1,7 +1,7 @@
 # Council vs. Upgrade
 
 Decision record for the eval behind the "Personas, Priorities, Profiles" article.
-Hypothesis owner: Dan. Status: **harness built, dataset in progress, no paid runs yet.**
+Hypothesis owner: Dan. Status: **pilot-01 done; the dataset is at ceiling and must get harder before the full run.**
 
 ## Target behavior and release decision
 
@@ -132,11 +132,13 @@ The persona text itself is never tuned.
 | Candidate | Change | Development result | Held-out result | Cost and latency | Decision |
 | --- | --- | --- | --- | --- | --- |
 | mock dry run | Pipeline check, no model calls | run → score → analyze completes on 2 cases, 8 arms | n/a | $0 | Pipeline accepted 2026-11-16 |
+| pilot-01 | All 20 cases, 1 seed, 6 arms (+P0), both providers | **Ceiling.** Review recall is 100% for every arm and provider (spot-checked: matches are real). Plan hidden-test pass rate is 94–100% for every arm, and P0 (no plan) gets 91–94%. Every primary CI is [0, 0] or touches 0. Only signal: council precision is lower (Claude 53% vs 59% for F1; Codex 76% vs 85%). Canary 0. Judge agreement 96–99% (κ undefined with no variance) | n/a (pilot) | $34 total: $26.44 generation, $3.90 implementer, $4.03 judges | **Dataset cannot discriminate; rebuild harder before the full run.** Paired-diff SD is ~0, so it says nothing about power |
 
 ## Open failures and next actions
 
 | Failure cluster | Evidence | Likely cause | Next discriminating test | Owner |
 | --- | --- | --- | --- | --- |
+| **Ceiling (pilot-01)** | Every arm finds every seeded defect; even no-plan P0 passes 91%+ of plan tests | Cases are small (84–174 lines) and defects are locally visible; mid-tier models already saturate them | Harder cases: bigger repos, defects that need cross-file reasoning, decoys, real bug-introducing commits; and/or add a small tier (Haiku 5.5 / a small Codex model) as the 'mid' arm. Gate: M1 recall ≤ 70% on dev before the full run | Dan |
 | Dataset size | 20 verified cases (13 review incl. 2 clean, 7 plan); target 72 | Pilot-sized only | Build the rest after the pilot sets the variance | Dan / agents |
 | Author confounded with difficulty | Codex review cases ≈ 87 src lines / 40-line diffs; Claude's ≈ 146 / 85 | Authors read the size range differently | Pilot: if Codex cases hit ceiling for every arm, rebuild them at Claude's size; otherwise the `author` slice cannot separate self-preference from difficulty | Dan |
 | Author is a subject (Claude frontier) | Opus 5.5 authored r20x/p20x and is the Claude frontier arm | Fable excluded by Dan | Compare Claude `F1 − M1` on Codex-authored vs Claude-authored cases; a gap only on its own cases points to self-preference | Dan |
