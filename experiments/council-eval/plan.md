@@ -1,0 +1,178 @@
+# Council vs. Upgrade
+
+Decision record for the eval behind the "Personas, Priorities, Profiles" article.
+Hypothesis owner: Dan. Status: **harness built, dataset in progress, no paid runs yet.**
+
+## Target behavior and release decision
+
+**Question.** For planning and code-review work done by coding agents (Claude Code
+and Codex CLI), does running a mid-tier model as a council of *priority-diverse*
+personas beat upgrading to the frontier model, and if it does, is the persona
+content what earns the gain, or just the extra samples?
+
+**Decisions this evidence supports.**
+
+1. Article claim: whether we can say "personas beat the upgrade", "extra samples beat
+   the upgrade", "the upgrade wins", or "no detectable difference". All four
+   outcomes are publishable. The design must be able to produce each one.
+2. Practice: whether Council of Dans should stay the default for planning and review
+   loops in my own work, and at which tier.
+
+**What would change my mind.** If `M3same` (three identical samples plus the same
+synthesizer) matches `M3council`, the personas are decoration and the article says
+so. If `F1` beats `M3council` at equal or lower cost, the upgrade wins.
+
+## Arms
+
+Every arm runs per provider. `M` = mid tier, `F` = frontier tier. Effort is pinned
+to `high` for every call in every arm. Models: `config/models.json`.
+
+| Arm | Calls | What it controls for |
+| --- | --- | --- |
+| `M1` | 1 mid | Baseline |
+| `F1` | 1 frontier | **"Just upgrade the model"** |
+| `M1R` | 1 mid + 1 mid self-refine | The verification/filter pass the synthesizer adds |
+| `M3same` | 3 mid, identical prompt + synth | More samples, no personas |
+| `M3style` | 3 mid, style-only placebo personas + synth | Role-play and prompt length without priorities |
+| `M3council` | 3 mid, Council of Dans priorities + synth | **Treatment** |
+| `F3council` | 3 frontier council + synth | Does it stack? (secondary) |
+| `X3council` | Council split across Claude and Codex mid models | Model diversity vs priority diversity (exploratory) |
+| `P0` (plan only) | no plan, implementer works from the task alone | Is planning worth anything here? |
+
+Shared rules that keep arms comparable:
+
+- **Output budget is capped.** Every arm's *final* answer obeys the same cap: at
+  most `K = 8` findings for review and at most 900 words for a plan. A council
+  cannot buy recall by emitting more findings.
+- **The synthesizer is identical** across `M3same`, `M3style`, `M3council`, and
+  `F3council`, and runs on the same tier as its members. `M1R` gets the same
+  verify-and-filter instruction applied to its own single draft.
+- **Persona text is frozen** from `council-of-dans/SKILL.md`
+  (sha256 `d7282084e97dbb4b2614fa472b79f33dd7c6fb9ff9edb64c3ac2adebbe9ca0e3`),
+  copied into `prompts/personas.json`. Placebo personas match its length and
+  structure but only describe writing style, which is exactly what the skill says a
+  persona is *not*.
+- **Persona selection is fixed before data exists.** Review council: Detail
+  Detective, Doomsayer, Security Paranoid. Plan council: Architect, Ruthless
+  Minimalist, Doomsayer (the skill's own picking rule).
+- **Agents are isolated from my setup.** Claude runs with `--bare` when an API key
+  is present, otherwise with setting sources, slash commands, skills, and MCP
+  disabled. Codex runs with `--ignore-user-config --ignore-rules --ephemeral`. Both
+  get read-only tools for review and planning. Each run records a contamination
+  canary (any mention of "council", "persona", or my skill names in an
+  uninstructed arm's transcript is flagged).
+
+## Evaluation contract
+
+| Claim or risk | Dataset slice | Metric or gate | Scorer | Threshold | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| H1: council beats the upgrade | review/all, plan/all | Primary metric, `M3council − F1` | see rows below | 95% CI of paired diff > 0 (superiority) **and** cost ratio ≤ 1.25 | pending |
+| H2a: personas beat sample count | review/all, plan/all | `M3council − M3same` | same | 95% CI > 0 | pending |
+| H2b: priorities beat role-play | review/all, plan/all | `M3council − M3style` | same | 95% CI > 0 | pending |
+| H3: council stacks on frontier | review/all | `F3council − F1` | same | CI > 0 (secondary) | pending |
+| H4: gains follow persona priorities | review by defect class | Per-class recall delta, aligned vs unaligned classes | judge match | Aligned delta > unaligned delta | pending |
+| Review recall | review/seeded | Seeded defects matched / seeded defects, severity-weighted | judge match, validated against my labels | primary metric | pending |
+| Review precision | review/clean controls + seeded | High-severity findings judged invalid per case | judge label | reported, gate: no arm wins H1 while doubling false alarms | pending |
+| Plan quality | plan/all | Hidden acceptance tests passing after a **fixed** implementer executes the plan | deterministic `bun test` | primary metric | pending |
+| Plan requirement coverage | plan/all | Hidden requirements the plan mentions | judge | secondary, diagnoses H1 failures | pending |
+| Cost | all | List-price USD from token counts, per case | deterministic | reported per arm, Pareto plot | pending |
+| Latency | all | Wall clock per case (council members run in parallel) | deterministic | reported | pending |
+| Scorer validity | 60 sampled judge decisions | Cohen's κ vs my labels | human | κ ≥ 0.75 before any headline number | pending |
+
+Aligned defect classes for H4 (review council): `edge-case`, `state`, `failure-mode`,
+`security`. Unaligned: `performance`, `cost`. Unaligned classes are the built-in
+negative control: if the council's gain is just "more eyes", it shows up everywhere.
+
+### Primary analysis (pre-registered)
+
+- Unit: case. Each (case, arm) runs `r = 3` seeds; a case score is the mean of its seeds.
+- Paired difference per case; 95% CI from a 10,000-resample case-level bootstrap.
+  Wilcoxon signed-rank as a robustness check.
+- Holm correction across the three primary contrasts (H1, H2a, H2b) per task family.
+- Missing data: a crashed, refused, or schema-invalid final answer scores 0 for that
+  seed. Refusals are counted and reported, not excluded.
+- Providers are analyzed separately first. A pooled result is reported only if the
+  two providers agree in sign.
+- Cost is reported from list prices in `config/models.json`, never from subscription
+  plans, so the cost axis means the same thing for both vendors.
+
+### Power
+
+Pilot target: 8 review + 4 plan cases, 1 seed, to estimate the SD of paired
+differences. Planning assumption before the pilot: SD ≈ 0.25 on recall, so ~50 cases
+detect a 0.10 difference at 80% power. Full run: 48 review cases (40 seeded, 8 clean)
+and 24 plan cases. The pilot's SD replaces this assumption before the full run.
+
+## Dataset
+
+New, never-published TypeScript mini-repos (Bun, zero dependencies), so nothing is
+in pre-training data.
+
+- **Review cases:** a realistic PR diff against a small repo. Each seeded case has
+  1–3 defects. Each defect ships with a hidden test that **fails on the PR head and
+  passes after that defect's fix**. `bun run verify` enforces this; a case that fails
+  verification is excluded. Clean controls are PRs with no seeded defects whose
+  hidden tests all pass.
+- **Plan cases:** a feature request plus a repo with discoverable constraints
+  (ADRs, invariants in comments, existing callers). Hidden acceptance tests encode
+  those constraints. Verification: the reference solution passes every hidden test,
+  and the untouched repo fails at least one.
+- **Authorship is a slice.** Cases are authored by Claude and by Codex agents and
+  tagged with the author. If a provider does better on its own cases, that shows up
+  in the `author` slice instead of contaminating the headline.
+- **Defect taxonomy** is fixed independently of the personas: edge-case, state,
+  failure-mode, security, performance, cost, plus `data-migration` where it fits.
+
+**Split.** Cases are assigned to `dev` (25%) or `heldout` (75%) by a hash of the case
+id. Any change to prompts, the synthesizer, K, or the judge is made on `dev` only.
+The persona text itself is never tuned.
+
+## Experiments
+
+| Candidate | Change | Development result | Held-out result | Cost and latency | Decision |
+| --- | --- | --- | --- | --- | --- |
+| mock dry run | Pipeline check, no model calls | run → score → analyze completes on 2 cases, 8 arms | n/a | $0 | Pipeline accepted 2026-11-16 |
+
+## Open failures and next actions
+
+| Failure cluster | Evidence | Likely cause | Next discriminating test | Owner |
+| --- | --- | --- | --- | --- |
+| Dataset size | 20 verified cases (13 review incl. 2 clean, 7 plan); target 72 | Pilot-sized only | Build the rest after the pilot sets the variance | Dan / agents |
+| Author confounded with difficulty | Codex review cases ≈ 87 src lines / 40-line diffs; Claude's ≈ 146 / 85 | Authors read the size range differently | Pilot: if Codex cases hit ceiling for every arm, rebuild them at Claude's size; otherwise the `author` slice cannot separate self-preference from difficulty | Dan |
+| Author is a subject (Claude frontier) | Opus 5.5 authored r20x/p20x and is the Claude frontier arm | Fable excluded by Dan | Compare Claude `F1 − M1` on Codex-authored vs Claude-authored cases; a gap only on its own cases points to self-preference | Dan |
+| Claude isolation without API key | `--bare` needs `ANTHROPIC_API_KEY` | OAuth path loads user settings | Use API key for the real run, or accept canary-checked fallback | Dan |
+
+## Future arm: review loop to a fixed point (v2, not pre-registered)
+
+Motivated by one anecdote, [DocSlurp/doppler#51](https://github.com/DocSlurp/doppler/pull/51):
+"review, fix every Medium+, repeat until a round finds none" took 9 rounds, and 8 of them found a High.
+Family: implementation tasks scored by hidden tests. Arms: `M-council-loop`, `M1-loop`
+(the same reviewer prompt with no personas), and `F1-loop`, all capped at N rounds. Metrics: hidden-test pass rate,
+rounds to stop, cost, and rounds that hit the cap. Risk: the stopping rule trusts reviewer severity, so
+report the severity distribution per arm.
+
+## Threats to validity
+
+- **Construct.** Small repos are not monorepos. Seeded bugs are cleaner than real
+  ones. Mitigation: add a slice of real bug-introducing commits from OSS history in v2.
+- **Judge bias.** A Claude judge may favor Claude's phrasing. Mitigation: findings are
+  normalized and anonymized; recall only asks "does any finding identify defect X";
+  two judges from different vendors, agreement reported; κ check against my labels.
+- **Teaching to the test.** Defect classes that overlap persona priorities favor the
+  council. Mitigation: taxonomy fixed independently, unaligned classes as negative
+  control (H4), per-class results reported.
+- **Compute.** Councils spend more tokens. Mitigation: `M3same` and `M1R` controls,
+  capped final output, cost reported for every arm and compared on a Pareto plot.
+- **Drift.** CLI and model versions change. Every run records CLI versions, model ids,
+  prompt digests, and case digests in `runs/<run-id>/manifest.json`.
+
+## Decisions
+
+| Date | Decision | Evidence | Revisit when |
+| --- | --- | --- | --- |
+| 2026-11-16 | Use output caps and an identical synthesizer to separate personas from sample count | Design review | Pilot shows synth dominates scores |
+| 2026-11-16 | Case authors are not subjects (gpt-6.1-sol, claude-opus-5-5) and are not told the hypothesis | Avoid self-preference and teaching-to-the-test | Author slice shows a gap |
+| 2026-11-16 | Workspaces outside the repo, clean CLI homes; judges run in an empty dir | User setup includes the council skill and a global AGENTS.md | `probe` reports a leak |
+| 2026-11-17 | Claude frontier is Opus 5.5, not Fable 5.2 (Dan: don't use Fable). Opus 5.5 also authored the r20x/p20x cases, so Claude `F1`/`F3council` on those cases have author = subject. Mitigation: report H1 for Claude on Codex-authored cases as a robustness slice | Dan's instruction | Claude cases re-authored by a non-subject model |
+| 2026-11-16 | Mid/frontier tiers: Claude Sonnet 5.5 / Opus 5.5 (was Fable 5.2); Codex gpt-6.1-terra / gpt-6-astra | Current model lists. Sol rejected as Codex mid tier: it authored the Codex cases, so using it would make an author a subject | Cases are re-authored by a non-subject model |
+| 2026-11-16 | OpenAI list prices filled: Terra $1 / $5 (cached $0.05), Astra $10 / $50 (cached $1) per 1M | OpenAI pricing page, Standard table | OpenAI changes prices |

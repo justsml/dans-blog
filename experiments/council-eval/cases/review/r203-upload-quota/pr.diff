@@ -1,0 +1,112 @@
+diff --git a/src/files.ts b/src/files.ts
+index 03b833a..b5198c0 100644
+--- a/src/files.ts
++++ b/src/files.ts
+@@ -3,15 +3,33 @@ import type { FileIndex, FileMeta } from "./file-index";
+ 
+ export class FileError extends Error {}
+ 
++export class QuotaExceededError extends FileError {
++  constructor(
++    readonly usedBytes: number,
++    readonly quotaBytes: number,
++  ) {
++    super(`storage quota of ${quotaBytes} bytes exceeded (${usedBytes} bytes used)`);
++  }
++}
++
+ export const MAX_FILE_BYTES = 100 * 1024 * 1024;
++export const DEFAULT_QUOTA_BYTES = 5 * 1024 * 1024 * 1024;
+ const VALID_NAME = /^[\w. -]{1,200}$/;
+ 
+ export interface FileServiceOptions {
+   clock?: () => number;
++  /** Per-user storage limit. Plans with more storage pass their own value. */
++  quotaBytes?: number;
++}
++
++export interface StorageSummary {
++  usedBytes: number;
++  quotaBytes: number;
+ }
+ 
+ export class FileService {
+   private clock: () => number;
++  private quotaBytes: number;
+ 
+   constructor(
+     private blobs: BlobStore,
+@@ -19,6 +37,7 @@ export class FileService {
+     opts: FileServiceOptions = {},
+   ) {
+     this.clock = opts.clock ?? Date.now;
++    this.quotaBytes = opts.quotaBytes ?? DEFAULT_QUOTA_BYTES;
+   }
+ 
+   private keyFor(ownerId: string, name: string): string {
+@@ -32,6 +51,9 @@ export class FileService {
+     if (data.byteLength === 0) throw new FileError("file is empty");
+     if (data.byteLength > MAX_FILE_BYTES) throw new FileError("file is larger than 100 MB");
+ 
++    const used = await this.usedBytes(ownerId);
++    if (used + data.byteLength > this.quotaBytes) throw new QuotaExceededError(used, this.quotaBytes);
++
+     await this.blobs.put(key, data, contentType);
+     const meta: FileMeta = { key, ownerId, name, size: data.byteLength, contentType, uploadedAt: this.clock() };
+     this.index.set(meta);
+@@ -53,6 +75,22 @@ export class FileService {
+     this.index.delete(key);
+   }
+ 
++  async storage(ownerId: string): Promise<StorageSummary> {
++    return { usedBytes: await this.usedBytes(ownerId), quotaBytes: this.quotaBytes };
++  }
++
++  /** Measured from the bucket itself, so the number matches what we are billed for. */
++  private async usedBytes(ownerId: string): Promise<number> {
++    let total = 0;
++    let next: string | undefined;
++    do {
++      const page = await this.blobs.list(`users/${ownerId}/`, next);
++      for (const key of page.keys) total += (await this.blobs.head(key))?.size ?? 0;
++      next = page.next;
++    } while (next);
++    return total;
++  }
++
+   list(ownerId: string): FileMeta[] {
+     return this.index.forOwner(ownerId).sort((a, b) => a.name.localeCompare(b.name));
+   }
+diff --git a/test/files.test.ts b/test/files.test.ts
+index 7a215f7..626cf22 100644
+--- a/test/files.test.ts
++++ b/test/files.test.ts
+@@ -1,5 +1,5 @@
+ import { expect, test } from "bun:test";
+-import { FileError, FileIndex, FileService, MemoryBlobStore } from "../src";
++import { FileError, FileIndex, FileService, MemoryBlobStore, QuotaExceededError } from "../src";
+ 
+ const bytes = (n: number) => new Uint8Array(n).fill(7);
+ const service = () => new FileService(new MemoryBlobStore(), new FileIndex(), { clock: () => 1_000 });
+@@ -33,3 +33,21 @@ test("remove deletes blob and metadata", async () => {
+   expect(svc.list("u1")).toEqual([]);
+   await expect(svc.download("u1", "a.txt")).rejects.toThrow(FileError);
+ });
++
++test("uploads past the quota are rejected", async () => {
++  const svc = new FileService(new MemoryBlobStore(), new FileIndex(), { quotaBytes: 100 });
++  await svc.upload("u1", "a.bin", bytes(60), "application/octet-stream");
++  const err = await svc.upload("u1", "b.bin", bytes(50), "application/octet-stream").catch((e) => e);
++  expect(err).toBeInstanceOf(QuotaExceededError);
++  expect(err.usedBytes).toBe(60);
++  expect(svc.list("u1").map((f) => f.name)).toEqual(["a.bin"]);
++});
++
++test("quota is per user and freed by deletes", async () => {
++  const svc = new FileService(new MemoryBlobStore(), new FileIndex(), { quotaBytes: 100 });
++  await svc.upload("u1", "a.bin", bytes(80), "application/octet-stream");
++  await svc.upload("u2", "a.bin", bytes(80), "application/octet-stream");
++  await svc.remove("u1", "a.bin");
++  await svc.upload("u1", "b.bin", bytes(90), "application/octet-stream");
++  expect(await svc.storage("u1")).toEqual({ usedBytes: 90, quotaBytes: 100 });
++});

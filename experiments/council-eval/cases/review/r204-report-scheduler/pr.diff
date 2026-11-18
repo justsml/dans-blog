@@ -1,0 +1,184 @@
+diff --git a/src/repo.ts b/src/repo.ts
+index b71aaf2..a44788a 100644
+--- a/src/repo.ts
++++ b/src/repo.ts
+@@ -5,7 +5,8 @@ export interface ScheduleRecord {
+   id: string;
+   owner_email: string;
+   report_id: string;
+-  hour_utc: number;
++  hour: number;
++  time_zone: string;
+   last_run_at: number | null;
+   created_at: number;
+ }
+@@ -15,7 +16,8 @@ export function toRecord(s: Schedule): ScheduleRecord {
+     id: s.id,
+     owner_email: s.ownerEmail,
+     report_id: s.reportId,
+-    hour_utc: s.hourUtc,
++    hour: s.hour,
++    time_zone: s.timeZone,
+     last_run_at: s.lastRunAt ?? null,
+     created_at: s.createdAt,
+   };
+@@ -26,7 +28,8 @@ export function fromRecord(r: ScheduleRecord): Schedule {
+     id: r.id,
+     ownerEmail: r.owner_email,
+     reportId: r.report_id,
+-    hourUtc: r.hour_utc,
++    hour: r.hour,
++    timeZone: r.time_zone ?? "UTC",
+     lastRunAt: r.last_run_at ?? undefined,
+     createdAt: r.created_at,
+   };
+diff --git a/src/runner.ts b/src/runner.ts
+index 8f87242..0c37054 100644
+--- a/src/runner.ts
++++ b/src/runner.ts
+@@ -1,5 +1,5 @@
+ import type { ScheduleRepo } from "./repo";
+-import { type Schedule, nextRunAt, validateSchedule } from "./schedules";
++import { type Schedule, localDate, nextRunAt, validateSchedule } from "./schedules";
+ 
+ export interface ReportEmail {
+   to: string;
+@@ -49,5 +49,5 @@ export async function runDue(repo: ScheduleRepo, mailer: Mailer, now: number): P
+ }
+ 
+ function subjectFor(s: Schedule, due: number): string {
+-  return `Report ${s.reportId} for ${new Date(due).toISOString().slice(0, 10)}`;
++  return `Report ${s.reportId} for ${localDate(s, due)}`;
+ }
+diff --git a/src/schedules.ts b/src/schedules.ts
+index 6281bd0..9134cb6 100644
+--- a/src/schedules.ts
++++ b/src/schedules.ts
+@@ -5,8 +5,10 @@ export interface Schedule {
+   id: string;
+   ownerEmail: string;
+   reportId: string;
+-  /** Hour of the day (0-23, UTC) the report is sent. */
+-  hourUtc: number;
++  /** Hour of the day (0-23) the report is sent, on the owner's wall clock. */
++  hour: number;
++  /** IANA zone the hour is in, e.g. "Europe/Berlin". */
++  timeZone: string;
+   /** Epoch ms of the last successful send. */
+   lastRunAt?: number;
+   createdAt: number;
+@@ -14,18 +16,62 @@ export interface Schedule {
+ 
+ export class ScheduleError extends Error {}
+ 
++export function isTimeZone(zone: string): boolean {
++  try {
++    new Intl.DateTimeFormat("en-US", { timeZone: zone });
++    return true;
++  } catch {
++    return false;
++  }
++}
++
+ export function validateSchedule(s: Schedule) {
+-  if (!Number.isInteger(s.hourUtc) || s.hourUtc < 0 || s.hourUtc > 23) {
++  if (!Number.isInteger(s.hour) || s.hour < 0 || s.hour > 23) {
+     throw new ScheduleError("hour must be a whole number from 0 to 23");
+   }
++  if (!isTimeZone(s.timeZone)) throw new ScheduleError(`unknown time zone ${s.timeZone}`);
+   if (!/^[^@\s]+@[^@\s]+$/.test(s.ownerEmail)) throw new ScheduleError("owner email is invalid");
+   if (!s.reportId) throw new ScheduleError("report is required");
+ }
+ 
++const formatters = new Map<string, Intl.DateTimeFormat>();
++
++function formatter(timeZone: string): Intl.DateTimeFormat {
++  let f = formatters.get(timeZone);
++  if (!f) {
++    f = new Intl.DateTimeFormat("en-US", {
++      timeZone,
++      hourCycle: "h23",
++      year: "numeric",
++      month: "numeric",
++      day: "numeric",
++      hour: "numeric",
++      minute: "numeric",
++      second: "numeric",
++    });
++    formatters.set(timeZone, f);
++  }
++  return f;
++}
++
++/** Milliseconds to add to a UTC instant to get the wall-clock time in `timeZone`. */
++export function zoneOffset(timeZone: string, at: number): number {
++  const parts: Record<string, number> = {};
++  for (const p of formatter(timeZone).formatToParts(new Date(at))) parts[p.type] = Number(p.value);
++  const wall = Date.UTC(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second);
++  return wall - (at - (at % 1000));
++}
++
++/** Calendar date (YYYY-MM-DD) of an instant in the schedule's zone. */
++export function localDate(s: Schedule, at: number): string {
++  return new Date(at + zoneOffset(s.timeZone, at)).toISOString().slice(0, 10);
++}
++
+ /** The first send time strictly after `after` (epoch ms). */
+ export function nextRunAt(s: Schedule, after: number): number {
+-  const d = new Date(after);
+-  let run = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), s.hourUtc);
++  const offset = zoneOffset(s.timeZone, after);
++  const wall = new Date(after + offset);
++  let run = Date.UTC(wall.getUTCFullYear(), wall.getUTCMonth(), wall.getUTCDate(), s.hour) - offset;
+   if (run <= after) run += DAY_MS;
+   return run;
+ }
+diff --git a/test/scheduler.test.ts b/test/scheduler.test.ts
+index 8220f55..368b3cf 100644
+--- a/test/scheduler.test.ts
++++ b/test/scheduler.test.ts
+@@ -13,7 +13,7 @@ const at = (iso: string) => Date.parse(iso);
+ test("a daily report goes out once at its hour", async () => {
+   const repo = new ScheduleRepo();
+   const mailer = new FakeMailer();
+-  createSchedule(repo, { ownerEmail: "ops@example.com", reportId: "rev", hourUtc: 9 }, at("2027-01-10T12:00:00Z"));
++  createSchedule(repo, { ownerEmail: "ops@example.com", reportId: "rev", hour: 9, timeZone: "UTC" }, at("2027-01-10T12:00:00Z"));
+ 
+   expect((await runDue(repo, mailer, at("2027-01-11T08:59:00Z"))).sent).toEqual([]);
+   expect((await runDue(repo, mailer, at("2027-01-11T09:00:00Z"))).sent).toHaveLength(1);
+@@ -29,12 +29,33 @@ test("a failed send is retried on the next tick", async () => {
+       if (fail) throw new Error("smtp down");
+     },
+   };
+-  createSchedule(repo, { ownerEmail: "ops@example.com", reportId: "rev", hourUtc: 9 }, at("2027-01-10T12:00:00Z"));
++  createSchedule(repo, { ownerEmail: "ops@example.com", reportId: "rev", hour: 9, timeZone: "UTC" }, at("2027-01-10T12:00:00Z"));
+   expect((await runDue(repo, mailer, at("2027-01-11T09:00:00Z"))).failed).toHaveLength(1);
+   fail = false;
+   expect((await runDue(repo, mailer, at("2027-01-11T09:01:00Z"))).sent).toHaveLength(1);
+ });
+ 
+ test("rejects an hour outside the day", () => {
+-  expect(() => createSchedule(new ScheduleRepo(), { ownerEmail: "a@b.c", reportId: "r", hourUtc: 24 }, 0)).toThrow(ScheduleError);
++  expect(() => createSchedule(new ScheduleRepo(), { ownerEmail: "a@b.c", reportId: "r", hour: 24, timeZone: "UTC" }, 0)).toThrow(ScheduleError);
++});
++
++test("the hour is on the owner's clock", async () => {
++  const repo = new ScheduleRepo();
++  const mailer = new FakeMailer();
++  createSchedule(repo, { ownerEmail: "ops@example.com", reportId: "rev", hour: 9, timeZone: "Asia/Tokyo" }, at("2027-01-10T12:00:00Z"));
++
++  expect((await runDue(repo, mailer, at("2027-01-10T23:59:00Z"))).sent).toEqual([]);
++  expect((await runDue(repo, mailer, at("2027-01-11T00:00:00Z"))).sent).toHaveLength(1);
++  expect(mailer.sent[0].subject).toBe("Report rev for 2027-01-11");
++});
++
++test("time zone round-trips through the table", () => {
++  const repo = new ScheduleRepo();
++  const s = createSchedule(repo, { ownerEmail: "a@b.c", reportId: "r", hour: 7, timeZone: "Europe/Berlin" }, 0);
++  expect(repo.records()[0]).toMatchObject({ hour: 7, time_zone: "Europe/Berlin" });
++  expect(repo.get(s.id)).toEqual(s);
++});
++
++test("rejects unknown zones", () => {
++  expect(() => createSchedule(new ScheduleRepo(), { ownerEmail: "a@b.c", reportId: "r", hour: 7, timeZone: "Mars/Olympus" }, 0)).toThrow(ScheduleError);
+ });

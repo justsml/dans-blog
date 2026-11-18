@@ -1,0 +1,32 @@
+{
+  "id": "r105-webhook-delivery",
+  "family": "review",
+  "author": "codex",
+  "description": "Batch outgoing events by destination with a configurable maximum of 100 events per request. Delivery reports include accepted and failed event counts; independent destinations can still progress after transport errors.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "failure-mode",
+      "severity": "high",
+      "file": "src/service.ts",
+      "lines": [
+        29,
+        29
+      ],
+      "mechanism": "The batch path acknowledges every submitted event, ignoring the Transport contract that only returned IDs were accepted. Partial acceptance silently drops the remaining events from the outbox.",
+      "test": "d1.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "cost",
+      "severity": "medium",
+      "file": "src/transport.ts",
+      "lines": [
+        3,
+        4
+      ],
+      "mechanism": "Each batch is submitted twice before its acceptance is processed, doubling metered transport requests and producing duplicate webhook deliveries.",
+      "test": "d2.test.ts"
+    }
+  ]
+}

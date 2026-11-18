@@ -1,0 +1,44 @@
+{
+  "id": "r001-partial-refunds",
+  "family": "review",
+  "author": "claude",
+  "description": "Support wants to refund single items instead of whole orders. This adds `refundPartial()`, which refunds a given number of cents and moves the order to a new `partially_refunded` status until the full amount has been refunded. Tests cover the happy path and input validation.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "security",
+      "severity": "critical",
+      "file": "src/refunds.ts",
+      "lines": [
+        24,
+        25
+      ],
+      "mechanism": "refundPartial looks the order up by id without checking order.userId === userId, so any user can refund any other user's order (refundOrder enforces ownership; the new path skips it).",
+      "test": "d1-ownership.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "edge-case",
+      "severity": "high",
+      "file": "src/refunds.ts",
+      "lines": [
+        32,
+        34
+      ],
+      "mechanism": "The cap compares each refund to totalCents instead of the remaining balance (totalCents - refundedCents), so repeated partial refunds can exceed the order total.",
+      "test": "d2-cumulative-cap.test.ts"
+    },
+    {
+      "id": "d3",
+      "class": "state",
+      "severity": "medium",
+      "file": "src/refunds.ts",
+      "lines": [
+        8,
+        8
+      ],
+      "mechanism": "The PR adds a partially_refunded status, but refundOrder still only accepts status 'paid', so an order can never be fully refunded after a partial refund.",
+      "test": "d3-full-after-partial.test.ts"
+    }
+  ]
+}

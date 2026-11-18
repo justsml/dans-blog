@@ -1,0 +1,93 @@
+diff --git a/src/reset-store.ts b/src/reset-store.ts
+index 10a2e1f..82af39e 100644
+--- a/src/reset-store.ts
++++ b/src/reset-store.ts
+@@ -3,6 +3,8 @@ export interface ResetRecord {
+   userId: string;
+   createdAt: number;
+   expiresAt: number;
++  /** Set once the link has been used, or when a newer reset made it obsolete. */
++  usedAt?: number;
+ }
+ 
+ /** `password_resets` table. Keyed by token hash; plaintext tokens are never stored. */
+@@ -18,6 +20,26 @@ export class ResetStore {
+     return row && { ...row };
+   }
+ 
++  /**
++   * Claims a link for use. Returns false if it does not exist, has expired, or was
++   * already claimed. Check and write happen together (in Postgres, one
++   * `UPDATE ... WHERE used_at IS NULL AND expires_at > $now`), so of two concurrent
++   * claims exactly one wins.
++   */
++  claim(tokenHash: string, now: number): boolean {
++    const row = this.rows.get(tokenHash);
++    if (!row || row.usedAt !== undefined || row.expiresAt <= now) return false;
++    row.usedAt = now;
++    return true;
++  }
++
++  /** Retires every unused link the user still has outstanding. */
++  retireAll(userId: string, now: number) {
++    for (const row of this.rows.values()) {
++      if (row.userId === userId && row.usedAt === undefined) row.usedAt = now;
++    }
++  }
++
+   forUser(userId: string): ResetRecord[] {
+     return [...this.rows.values()].filter((r) => r.userId === userId).map((r) => ({ ...r }));
+   }
+diff --git a/src/reset.ts b/src/reset.ts
+index ad242d0..e5fda1f 100644
+--- a/src/reset.ts
++++ b/src/reset.ts
+@@ -30,12 +30,21 @@ export async function requestReset(deps: ResetDeps, email: string, now = Date.no
+   await deps.mailer.sendResetLink(user.email, `${deps.baseUrl}/reset?token=${token}`);
+ }
+ 
++/**
++ * Each link works once. Using it also retires any other links the user requested, so
++ * an older email sitting in an inbox cannot be used to change the password again.
++ */
+ export async function resetPassword(deps: ResetDeps, token: string, newPassword: string, now = Date.now()): Promise<void> {
+-  const record = deps.resets.find(hashToken(token));
+-  if (!record || record.expiresAt <= now) throw new ResetError(INVALID_LINK);
++  const tokenHash = hashToken(token);
++  const record = deps.resets.find(tokenHash);
++  if (!record || record.usedAt !== undefined || record.expiresAt <= now) throw new ResetError(INVALID_LINK);
+   checkPassword(newPassword);
+ 
+   const passwordHash = await deps.hasher.hash(newPassword);
++  // Claim after the slow hash, not before: a rejected or abandoned attempt leaves the
++  // link usable, and the claim itself is what stops two submissions both succeeding.
++  if (!deps.resets.claim(tokenHash, now)) throw new ResetError(INVALID_LINK);
+   deps.users.setPasswordHash(record.userId, passwordHash);
+   deps.users.revokeSessions(record.userId);
++  deps.resets.retireAll(record.userId, now);
+ }
+diff --git a/test/reset.test.ts b/test/reset.test.ts
+index 571904e..02f5cfa 100644
+--- a/test/reset.test.ts
++++ b/test/reset.test.ts
+@@ -50,3 +50,20 @@ test("only the token hash is stored", async () => {
+   expect(deps.resets.find(token)).toBeUndefined();
+   expect(JSON.stringify(deps.resets.forUser("u1"))).not.toContain(token);
+ });
++
++test("a link only works once", async () => {
++  const { deps, users, links, tokenFrom } = setup();
++  await requestReset(deps, "ada@example.com", 0);
++  const token = tokenFrom(links[0]);
++  await resetPassword(deps, token, "correct horse battery", 1_000);
++  await expect(resetPassword(deps, token, "another long passphrase", 2_000)).rejects.toThrow(ResetError);
++  expect(users.get("u1")?.passwordHash).toBe("hashed:correct horse battery");
++});
++
++test("using one link retires the user's older links", async () => {
++  const { deps, links, tokenFrom } = setup();
++  await requestReset(deps, "ada@example.com", 0);
++  await requestReset(deps, "ada@example.com", 60_000);
++  await resetPassword(deps, tokenFrom(links[1]), "correct horse battery", 120_000);
++  await expect(resetPassword(deps, tokenFrom(links[0]), "another long passphrase", 180_000)).rejects.toThrow(ResetError);
++});

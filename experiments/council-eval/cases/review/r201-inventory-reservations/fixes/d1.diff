@@ -1,0 +1,13 @@
+diff --git i/src/reservations.ts w/src/reservations.ts
+index c724998..7ac9f11 100644
+--- i/src/reservations.ts
++++ w/src/reservations.ts
+@@ -88,7 +88,7 @@ export class ReservationService {
+     const now = this.clock();
+     const expired: Reservation[] = [];
+     for (const r of this.reservations.values()) {
+-      if (r.expiresAt > now) continue;
++      if (r.status !== "held" || r.expiresAt > now) continue;
+       this.inventory.unhold(r.sku, r.qty);
+       r.status = "expired";
+       expired.push(r);

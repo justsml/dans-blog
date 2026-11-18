@@ -1,0 +1,20 @@
+diff --git a/src/service.ts b/src/service.ts
+index 91f3247..6abefe7 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -23,13 +23,13 @@ export class RateLimiter {
+   }
+   check(tenant: string, now: number): Decision {
+     const policy = this.policyFor(tenant);
+-    let row = this.store.read("gateway");
++    let row = this.store.read(tenant);
+     if (!row || row.resetsAt <= now) {
+       row = { used: 0, resetsAt: now + policy.windowMs };
+     }
+     const allowed = row.used < policy.requests;
+     if (allowed) row.used++;
+-    this.store.write("gateway", row);
++    this.store.write(tenant, row);
+     return {
+       allowed,
+       remaining: Math.max(0, policy.requests - row.used),

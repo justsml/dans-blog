@@ -1,0 +1,30 @@
+diff --git a/src/service.ts b/src/service.ts
+index 897484d..55bbcfb 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -1,8 +1,10 @@
+ import { PreferenceStore, defaults, type Channel, type Notification, type Sender } from "./store";
+ export class PreferenceError extends Error {}
+ export function canDeliver(store: PreferenceStore, companyId: string, userId: string, channel: Channel, category: "marketing" | "security"): boolean {
++  validateChannel(channel);
++  if (category === "security") return true;
+   const saved = store.read(companyId, userId);
+-  return typeof saved === "boolean" ? saved : defaults[channel];
++  return typeof saved === "boolean" ? saved : (saved ?? defaults)[channel];
+ }
+ export function setEnabled(store: PreferenceStore, company: string, user: string, enabled: boolean): void {
+   store.write(company, user, enabled);
+@@ -25,3 +27,13 @@ export function validateChannel(channel: string): asserts channel is Channel {
+     throw new PreferenceError("unknown channel");
+   }
+ }
++
++export function setPreference(store: PreferenceStore, companyId: string, userId: string, channel: Channel, enabled: boolean): void {
++  validateChannel(channel);
++  if (typeof enabled !== "boolean") throw new PreferenceError("enabled must be boolean");
++  const saved = store.read(companyId, userId);
++  const current = typeof saved === "boolean"
++    ? { email: saved, sms: saved, push: saved }
++    : { ...(saved ?? defaults) };
++  store.write(companyId, userId, { ...current, [channel]: enabled });
++}

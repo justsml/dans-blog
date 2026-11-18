@@ -1,0 +1,14 @@
+{
+  "name": "council-eval",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "bun src/verify.ts",
+    "probe": "bun src/probe.ts",
+    "run": "bun src/run.ts",
+    "score": "bun src/score.ts",
+    "analyze": "bun src/analyze.ts",
+    "dry": "bun src/run.ts --family review --mock --run-id dry && bun src/run.ts --family plan --mock --run-id dry && bun src/score.ts --run-id dry --mock && bun src/analyze.ts --run-id dry --split all",
+    "typecheck": "bunx tsc --noEmit --strict --module esnext --moduleResolution bundler --target es2022 --types bun-types --resolveJsonModule --skipLibCheck src/*.ts"
+  }
+}

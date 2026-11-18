@@ -1,0 +1,43 @@
+{
+  "id": "p103-notification-prefs",
+  "family": "plan",
+  "author": "codex",
+  "task": "Add per-channel notification settings. Export `setPreference(store: PreferenceStore, companyId: string, userId: string, channel: Channel, enabled: boolean): void` from `src/service.ts`; update the existing `canDeliver` and dispatch path to consume settings. Keep using the exported `PreferenceError` for invalid input. Channel is the existing email/sms/push union.",
+  "requirements": [
+    {
+      "id": "R1",
+      "kind": "new",
+      "text": "An individual setting preserves the other channel defaults.",
+      "clue": "docs/preferences.md; src/store.ts defaults",
+      "test": "r1.test.ts"
+    },
+    {
+      "id": "R2",
+      "kind": "new",
+      "text": "Legacy boolean opt-outs migrate without enabling unrelated channels.",
+      "clue": "src/store.ts importLegacy; docs/preferences.md persisted v1 rows",
+      "test": "r2.test.ts"
+    },
+    {
+      "id": "R3",
+      "kind": "new",
+      "text": "Settings for one company cannot affect the same user in another company.",
+      "clue": "docs/preferences.md identities; src/store.ts composite key",
+      "test": "r3.test.ts"
+    },
+    {
+      "id": "R4",
+      "kind": "new",
+      "text": "Security notifications bypass stored marketing opt-outs through dispatch.",
+      "clue": "docs/preferences.md identity service contract",
+      "test": "r4.test.ts"
+    },
+    {
+      "id": "R5",
+      "kind": "preserve",
+      "text": "Bulk marketing opt-out and preview formatting remain compatible.",
+      "clue": "docs/preferences.md setEnabled and previewBody contracts",
+      "test": "r5.test.ts"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+diff --git c/src/checkout.ts i/src/checkout.ts
+index 841dd0d..68e56e9 100644
+--- c/src/checkout.ts
++++ i/src/checkout.ts
+@@ -1,9 +1,9 @@
+ import { catalog } from "./catalog";
+-import type { OrderLine } from "./packaging";
++import { type OrderLine, parcelFor } from "./packaging";
++import { quoteShipping } from "./shipping";
+ 
+ /** Orders at or above this subtotal ship free. Marketing promises this sitewide. */
+ export const FREE_SHIPPING_THRESHOLD_CENTS = 10_000;
+-export const FLAT_SHIPPING_CENTS = 799;
+ 
+ export interface CheckoutTotal {
+   subtotalCents: number;
+@@ -15,8 +15,9 @@ export function subtotal(lines: OrderLine[]): number {
+   return lines.reduce((sum, l) => sum + catalog[l.sku].priceCents * l.qty, 0);
+ }
+ 
+-export function checkoutTotal(lines: OrderLine[]): CheckoutTotal {
++export function checkoutTotal(lines: OrderLine[], destinationZip: string): CheckoutTotal {
+   const subtotalCents = subtotal(lines);
+-  const shippingCents = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : FLAT_SHIPPING_CENTS;
++  const shippingCents =
++    subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : quoteShipping(parcelFor(lines), destinationZip).amountCents;
+   return { subtotalCents, shippingCents, totalCents: subtotalCents + shippingCents };
+ }
+diff --git c/src/shipping.ts i/src/shipping.ts
+new file mode 100644
+index 0000000..47df835
+--- /dev/null
++++ i/src/shipping.ts
+@@ -0,0 +1,51 @@
++import rates from "../data/rates.json";
++import zones from "../data/zones.json";
++import type { Parcel } from "./packaging";
++
++export class ShippingError extends Error {}
++
++export interface Quote {
++  zone: number;
++  billableGrams: number;
++  amountCents: number;
++}
++
++const HALF_KG_GRAMS = 500;
++const MAX_ACTUAL_GRAMS = 30_000;
++const MAX_SIDE_CM = 150;
++/** cm³ per kg of dimensional weight (carrier rate card). */
++const DIM_DIVISOR = 5_000;
++
++/** Most specific prefix first, so Hawaii's "967" beats the regional "9". */
++const zoneChart = [...zones].sort((a, b) => b.prefix.length - a.prefix.length);
++
++export function zoneFor(zip: string): number {
++  const z = zip.trim();
++  if (!/^\d{5}(-\d{4})?$/.test(z)) throw new ShippingError(`invalid ZIP code ${zip}`);
++  const entry = zoneChart.find((e) => z.startsWith(e.prefix));
++  if (!entry) throw new ShippingError(`no shipping zone for ${zip}`);
++  return entry.zone;
++}
++
++/** Greater of actual and dimensional weight, rounded up to the next 0.5 kg. */
++export function billableGrams(p: Parcel): number {
++  const dimensionalGrams = (p.lengthCm * p.widthCm * p.heightCm * 1_000) / DIM_DIVISOR;
++  const grams = Math.max(p.weightGrams, dimensionalGrams);
++  return Math.max(1, Math.ceil(grams / HALF_KG_GRAMS)) * HALF_KG_GRAMS;
++}
++
++export function quoteShipping(parcel: Parcel, destinationZip: string): Quote {
++  if (parcel.weightGrams > MAX_ACTUAL_GRAMS) throw new ShippingError("parcel is over the carrier's 30 kg limit");
++  if (Math.max(parcel.lengthCm, parcel.widthCm, parcel.heightCm) > MAX_SIDE_CM) {
++    throw new ShippingError("parcel has a side over the carrier's 150 cm limit");
++  }
++  const zone = zoneFor(destinationZip);
++  const rate = (rates.zones as Record<string, { baseCents: number; perHalfKgCents: number }>)[String(zone)];
++  if (!rate) throw new ShippingError(`no rate for zone ${zone}`);
++
++  const billable = billableGrams(parcel);
++  const transportCents = rate.baseCents + rate.perHalfKgCents * (billable / HALF_KG_GRAMS - 1);
++  // ADR 0003: round the surcharge to the nearest cent, halves up.
++  const fuelCents = Math.round((transportCents * rates.fuelSurchargePercent) / 100);
++  return { zone, billableGrams: billable, amountCents: transportCents + fuelCents };
++}
+diff --git c/test/checkout.test.ts i/test/checkout.test.ts
+index 3159704..d839ed2 100644
+--- c/test/checkout.test.ts
++++ i/test/checkout.test.ts
+@@ -7,7 +7,7 @@ test("subtotal sums lines", () => {
+ });
+ 
+ test("orders over the threshold ship free", () => {
+-  const t = checkoutTotal([{ sku: "GRINDER", qty: 1 }]);
++  const t = checkoutTotal([{ sku: "GRINDER", qty: 1 }], "96813");
+   expect(t).toEqual({ subtotalCents: 12_900, shippingCents: 0, totalCents: 12_900 });
+ });
+ 
+@@ -15,3 +15,8 @@ test("parcels use the smallest box that fits and include its weight", () => {
+   expect(parcelFor([{ sku: "FILTERS", qty: 2 }])).toEqual({ weightGrams: 510, lengthCm: 25, widthCm: 20, heightCm: 10 });
+   expect(parcelFor([{ sku: "KETTLE", qty: 1 }, { sku: "BEANS", qty: 1 }])).toMatchObject({ lengthCm: 35, weightGrams: 2_470 });
+ });
++
++test("orders under the threshold pay the carrier quote", () => {
++  const t = checkoutTotal([{ sku: "FILTERS", qty: 2 }], "43215");
++  expect(t).toEqual({ subtotalCents: 1_300, shippingCents: 613, totalCents: 1_913 });
++});

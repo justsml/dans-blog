@@ -1,0 +1,51 @@
+diff --git i/src/cart.ts w/src/cart.ts
+index b61702b..8f8aa25 100644
+--- i/src/cart.ts
++++ w/src/cart.ts
+@@ -1,3 +1,4 @@
++import codes from "../data/codes.json";
+ import { catalog } from "./catalog";
+ 
+ export interface CartLine {
+@@ -5,8 +6,34 @@ export interface CartLine {
+   qty: number;
+ }
+ 
++export interface Discount {
++  code: string;
++  kind: "percent" | "fixed";
++  value: number;
++}
++
+ export interface Cart {
+   lines: CartLine[];
++  discount?: Discount;
++}
++
++export class DiscountError extends Error {}
++
++/** Applies a promotional code. Replaces any code already on the cart. */
++export function applyDiscount(cart: Cart, code: string, now: Date = new Date()): Cart {
++  const entry = codes.find((c) => c.code.toUpperCase() === code.trim().toUpperCase());
++  if (!entry) throw new DiscountError(`unknown code ${code}`);
++  if (now.getTime() >= Date.parse(entry.expiresAt)) throw new DiscountError(`code ${entry.code} has expired`);
++  return { ...cart, discount: { code: entry.code, kind: entry.kind as Discount["kind"], value: entry.value } };
++}
++
++/** Cents taken off the subtotal. Fractions round down (ADR 0002). */
++export function discountCents(cart: Cart): number {
++  const sub = subtotal(cart);
++  const d = cart.discount;
++  if (!d) return 0;
++  const off = d.kind === "percent" ? Math.floor((sub * d.value) / 100) : d.value;
++  return Math.min(off, sub);
+ }
+ 
+ export const emptyCart = (): Cart => ({ lines: [] });
+@@ -28,5 +55,5 @@ export function subtotal(cart: Cart): number {
+  * which rejects negative amounts.
+  */
+ export function cartTotal(cart: Cart): number {
+-  return subtotal(cart);
++  return subtotal(cart) - discountCents(cart);
+ }

@@ -1,0 +1,68 @@
+diff --git a/src/service.ts b/src/service.ts
+index f6d063c..91f3247 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -1,4 +1,4 @@
+-import { WindowStore, defaultPolicy } from "./store";
++import { WindowStore, defaultPolicy, type Policy, validatePolicy } from "./store";
+ export interface Decision {
+   allowed: boolean;
+   remaining: number;
+@@ -6,15 +6,30 @@ export interface Decision {
+ }
+ export class RateLimiter {
+   constructor(private store = new WindowStore()) {}
++  private policies = new Map<string, Policy>();
++  setPolicy(tenant: string, policy: Policy): void {
++    validatePolicy(policy);
++    this.policies.set(tenant, { ...policy });
++  }
++  clearPolicy(tenant: string): void {
++    this.policies.delete(tenant);
++  }
++  policyFor(tenant: string): Policy {
++    const override = this.policies.get(tenant);
++    return {
++      requests: override?.requests || defaultPolicy.requests,
++      windowMs: override?.windowMs ?? defaultPolicy.windowMs,
++    };
++  }
+   check(tenant: string, now: number): Decision {
+-    const policy = defaultPolicy;
+-    let row = this.store.read(tenant);
++    const policy = this.policyFor(tenant);
++    let row = this.store.read("gateway");
+     if (!row || row.resetsAt <= now) {
+       row = { used: 0, resetsAt: now + policy.windowMs };
+     }
+     const allowed = row.used < policy.requests;
+     if (allowed) row.used++;
+-    this.store.write(tenant, row);
++    this.store.write("gateway", row);
+     return {
+       allowed,
+       remaining: Math.max(0, policy.requests - row.used),
+diff --git a/test/contracts.test.ts b/test/contracts.test.ts
+new file mode 100644
+index 0000000..c8a51fe
+--- /dev/null
++++ b/test/contracts.test.ts
+@@ -0,0 +1,8 @@
++import {expect, test} from "bun:test";
++import {RateLimiter} from "../src/service";
++test("policy validation rejects invalid quotas and durations", () => {
++  const limiter = new RateLimiter();
++  expect(() => limiter.setPolicy("a", {requests: -1, windowMs: 100})).toThrow();
++  expect(() => limiter.setPolicy("a", {requests: 1, windowMs: 0})).toThrow();
++  expect(limiter.policyFor("a").requests).toBe(100);
++});
+diff --git a/test/policies.test.ts b/test/policies.test.ts
+new file mode 100644
+index 0000000..a5359f5
+--- /dev/null
++++ b/test/policies.test.ts
+@@ -0,0 +1,4 @@
++import {expect,test} from "bun:test";
++import * as api from "../src/service";
++test("custom policy and reset",()=>{const l=new api.RateLimiter();l.setPolicy("a",{requests:2,windowMs:100});expect(l.check("a",0).remaining).toBe(1);expect(l.check("a",100).remaining).toBe(1);});
++test("policy removal restores defaults",()=>{const l=new api.RateLimiter();l.setPolicy("a",{requests:2,windowMs:100});l.clearPolicy("a");expect(l.policyFor("a").requests).toBe(100);});

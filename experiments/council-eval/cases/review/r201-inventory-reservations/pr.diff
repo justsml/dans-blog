@@ -1,0 +1,173 @@
+diff --git a/src/checkout.ts b/src/checkout.ts
+index 57e5041..b34898e 100644
+--- a/src/checkout.ts
++++ b/src/checkout.ts
+@@ -7,9 +7,11 @@ export interface OrderLine {
+ 
+ /**
+  * Called when the customer submits payment. Converts every open hold on the cart into
+- * a sale and returns the lines to charge for.
++ * a sale and returns the lines to charge for. Lines whose hold has run out are dropped
++ * so we never charge for stock another cart may already have taken.
+  */
+ export function completeCheckout(service: ReservationService, cartId: string): OrderLine[] {
++  service.releaseExpired();
+   const holds = service.forCart(cartId);
+   if (!holds.length) throw new ReservationError(`cart ${cartId} has nothing reserved`);
+   for (const r of holds) service.commit(r.id);
+diff --git a/src/index.ts b/src/index.ts
+index 150b208..f6df63f 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,3 +1,4 @@
+ export * from "./inventory";
+ export * from "./reservations";
+ export * from "./checkout";
++export * from "./sweeper";
+diff --git a/src/reservations.ts b/src/reservations.ts
+index ab12655..c724998 100644
+--- a/src/reservations.ts
++++ b/src/reservations.ts
+@@ -1,6 +1,6 @@
+ import type { Inventory } from "./inventory";
+ 
+-export type ReservationStatus = "held" | "committed" | "released";
++export type ReservationStatus = "held" | "committed" | "released" | "expired";
+ 
+ export interface Reservation {
+   id: string;
+@@ -9,14 +9,19 @@ export interface Reservation {
+   qty: number;
+   status: ReservationStatus;
+   createdAt: number;
++  expiresAt: number;
+ }
+ 
+ export class ReservationError extends Error {}
+ 
+ export interface ReservationOptions {
+   clock?: () => number;
++  /** How long a hold lasts if the shopper never checks out. */
++  ttlMs?: number;
+ }
+ 
++export const DEFAULT_HOLD_TTL_MS = 15 * 60_000;
++
+ /**
+  * Holds stock for a cart between "add to cart" and payment. Records stay in the map
+  * after they are committed or released so order support can see what a cart held.
+@@ -25,24 +30,28 @@ export class ReservationService {
+   private reservations = new Map<string, Reservation>();
+   private nextId = 1;
+   private clock: () => number;
++  private ttlMs: number;
+ 
+   constructor(
+     private inventory: Inventory,
+     opts: ReservationOptions = {},
+   ) {
+     this.clock = opts.clock ?? Date.now;
++    this.ttlMs = opts.ttlMs ?? DEFAULT_HOLD_TTL_MS;
+   }
+ 
+   reserve(cartId: string, sku: string, qty: number): Reservation {
+     if (!Number.isInteger(qty) || qty <= 0) throw new ReservationError("quantity must be a positive integer");
+     this.inventory.hold(sku, qty);
++    const now = this.clock();
+     const r: Reservation = {
+       id: `res_${this.nextId++}`,
+       cartId,
+       sku,
+       qty,
+       status: "held",
+-      createdAt: this.clock(),
++      createdAt: now,
++      expiresAt: now + this.ttlMs,
+     };
+     this.reservations.set(r.id, r);
+     return r;
+@@ -71,6 +80,22 @@ export class ReservationService {
+     r.status = "committed";
+   }
+ 
++  /**
++   * Gives stock held by abandoned carts back to the shelf. Runs on a timer from the
++   * sweeper and once more right before checkout. Returns the holds it expired.
++   */
++  releaseExpired(): Reservation[] {
++    const now = this.clock();
++    const expired: Reservation[] = [];
++    for (const r of this.reservations.values()) {
++      if (r.expiresAt > now) continue;
++      this.inventory.unhold(r.sku, r.qty);
++      r.status = "expired";
++      expired.push(r);
++    }
++    return expired;
++  }
++
+   private mustBeHeld(id: string): Reservation {
+     const r = this.reservations.get(id);
+     if (!r) throw new ReservationError(`no reservation ${id}`);
+diff --git a/src/sweeper.ts b/src/sweeper.ts
+new file mode 100644
+index 0000000..7c23265
+--- /dev/null
++++ b/src/sweeper.ts
+@@ -0,0 +1,15 @@
++import type { ReservationService } from "./reservations";
++
++export interface SweeperOptions {
++  intervalMs?: number;
++  onExpired?: (count: number) => void;
++}
++
++/** Periodically returns abandoned holds to stock. Returns a function that stops it. */
++export function startSweeper(service: ReservationService, opts: SweeperOptions = {}): () => void {
++  const timer = setInterval(() => {
++    const expired = service.releaseExpired();
++    if (expired.length) opts.onExpired?.(expired.length);
++  }, opts.intervalMs ?? 60_000);
++  return () => clearInterval(timer);
++}
+diff --git a/test/reservations.test.ts b/test/reservations.test.ts
+index f6f4efb..46ec4f2 100644
+--- a/test/reservations.test.ts
++++ b/test/reservations.test.ts
+@@ -30,3 +30,36 @@ test("checkout sells the held units", () => {
+   expect(inv.held("LAMP")).toBe(0);
+   expect(() => completeCheckout(svc, "c1")).toThrow();
+ });
++
++test("holds expire after the ttl and the stock comes back", () => {
++  let now = 1_000;
++  const inv = new Inventory();
++  inv.receive("LAMP", 5);
++  const svc = new ReservationService(inv, { clock: () => now, ttlMs: 60_000 });
++  const r = svc.reserve("c1", "LAMP", 4);
++  expect(r.expiresAt).toBe(61_000);
++
++  now = 30_000;
++  expect(svc.releaseExpired()).toEqual([]);
++  expect(inv.available("LAMP")).toBe(1);
++
++  now = 61_000;
++  expect(svc.releaseExpired().map((x) => x.id)).toEqual([r.id]);
++  expect(svc.get(r.id)?.status).toBe("expired");
++  expect(inv.available("LAMP")).toBe(5);
++});
++
++test("checkout drops lines whose hold ran out", () => {
++  let now = 0;
++  const inv = new Inventory();
++  inv.receive("LAMP", 5);
++  inv.receive("SHADE", 5);
++  const svc = new ReservationService(inv, { clock: () => now, ttlMs: 60_000 });
++  svc.reserve("c1", "LAMP", 1);
++  now = 50_000;
++  svc.reserve("c1", "SHADE", 2);
++  now = 70_000;
++  expect(completeCheckout(svc, "c1")).toEqual([{ sku: "SHADE", qty: 2 }]);
++  expect(inv.onHand("LAMP")).toBe(5);
++  expect(inv.onHand("SHADE")).toBe(3);
++});

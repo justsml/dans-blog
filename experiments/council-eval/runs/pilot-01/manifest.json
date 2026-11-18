@@ -1,0 +1,181 @@
+{
+  "runId": "pilot-01",
+  "createdAt": "2026-11-18T00:34:54.711Z",
+  "batches": [
+    {
+      "at": "2026-11-18T00:34:54.711Z",
+      "family": "review",
+      "providers": [
+        "claude",
+        "codex"
+      ],
+      "arms": [
+        "M1",
+        "F1",
+        "M1R",
+        "M3same",
+        "M3style",
+        "M3council"
+      ],
+      "seeds": 1,
+      "cases": [
+        {
+          "id": "r001-partial-refunds",
+          "split": "heldout",
+          "digest": "7e6550f566132f4a92ab3ff1a3dfbd7716512fb788213329dd29e1c0e87ea8aa",
+          "author": "claude"
+        },
+        {
+          "id": "r101-rate-limiter",
+          "split": "heldout",
+          "digest": "932c26da99ce5daa4f1c3b200a832c3ca606485cd8194014636df1c741440046",
+          "author": "codex"
+        },
+        {
+          "id": "r102-job-retries",
+          "split": "heldout",
+          "digest": "e0a2c130a7deef860ebff9c51ddc6b9b052cdc5f57f4578b1097279606fbad82",
+          "author": "codex"
+        },
+        {
+          "id": "r103-csv-user-import",
+          "split": "heldout",
+          "digest": "02c228a3a1c849f237c6754a3829533f03a1b2bc871e0792dbbed2208974663a",
+          "author": "codex"
+        },
+        {
+          "id": "r104-feature-flags",
+          "split": "heldout",
+          "digest": "aac8d071e2f229572b9ddd6bef7938bf384ba454e6e89361175c71b7493deb6c",
+          "author": "codex"
+        },
+        {
+          "id": "r105-webhook-delivery",
+          "split": "heldout",
+          "digest": "0d4a187dae04644bed05ee3816a20f050759433390298a596def04c8fdfe9b13",
+          "author": "codex"
+        },
+        {
+          "id": "r106-session-refresh",
+          "split": "dev",
+          "digest": "1ad1526ce206733a7e7a554b594fb1993ee13789eb199208050e5c1857d0a5a4",
+          "author": "codex"
+        },
+        {
+          "id": "r201-inventory-reservations",
+          "split": "heldout",
+          "digest": "9d3ba28a86694b53aa2f4f8ef81d8726a47d49d99743d050998010109fdd2f65",
+          "author": "claude"
+        },
+        {
+          "id": "r202-cursor-pagination",
+          "split": "heldout",
+          "digest": "5f5fe2ad0afacda7c45273f12055a493f1d64b8e9f947f39e14120c8f20ef53b",
+          "author": "claude"
+        },
+        {
+          "id": "r203-upload-quota",
+          "split": "heldout",
+          "digest": "520bb87e82391bfab64777a9c7e920c9377e6a23599ed24b147ecb9704423187",
+          "author": "claude"
+        },
+        {
+          "id": "r204-report-scheduler",
+          "split": "heldout",
+          "digest": "83ed6f0ae4555b8e873b732acd6a390563886b73f5706825b77282d91f203eb4",
+          "author": "claude"
+        },
+        {
+          "id": "r205-tenant-settings-cache",
+          "split": "dev",
+          "digest": "c62f7c18e327b44faf11fa8285a00d28e7cd64f021ebc5fc0169500bcf5f3c2f",
+          "author": "claude"
+        },
+        {
+          "id": "r206-password-reset",
+          "split": "heldout",
+          "digest": "17a203a0543104b25fdf93de1785b3fb2f96559b56a185ef69166af9862f2b52",
+          "author": "claude"
+        }
+      ],
+      "promptsDigest": "29c90b8d254fc4be690ed64af253fa0519e40ec3c44a3160e9194771d88486ea",
+      "config": {
+        "$comment": "List prices in USD per 1M tokens, standard tier. Claude prices from the Anthropic pricing table cached 2026-11-03. OpenAI prices from developers.openai.com/api/docs/pricing (Standard table) looked up 2026-11-16; Codex sessions stay under 272K input, so long-context rates do not apply.",
+        "effort": "high",
+        "providers": {
+          "claude": {
+            "mid": {
+              "model": "claude-sonnet-5-5",
+              "input": 2,
+              "output": 10,
+              "cacheRead": 0.1
+            },
+            "frontier": {
+              "model": "claude-opus-5-5",
+              "input": 4,
+              "output": 20,
+              "cacheRead": 0.2
+            }
+          },
+          "codex": {
+            "mid": {
+              "model": "gpt-6.1-terra",
+              "input": 1,
+              "output": 5,
+              "cacheRead": 0.05
+            },
+            "frontier": {
+              "model": "gpt-6-astra",
+              "input": 10,
+              "output": 50,
+              "cacheRead": 1
+            }
+          }
+        },
+        "judge": {
+          "provider": "claude",
+          "model": "claude-sonnet-5-5",
+          "effort": "medium"
+        },
+        "secondJudge": {
+          "provider": "codex",
+          "model": "gpt-6.1-terra",
+          "effort": "medium"
+        },
+        "implementer": {
+          "provider": "claude",
+          "model": "claude-sonnet-5-5",
+          "effort": "medium"
+        },
+        "limits": {
+          "reviewMaxFindings": 8,
+          "planMaxWords": 900,
+          "callTimeoutSec": 900
+        },
+        "extraPrices": {
+          "$comment": "Helper models the CLIs call on their own (e.g. Claude Code side calls).",
+          "claude-haiku-5-5": {
+            "input": 0.1,
+            "output": 0.5,
+            "cacheRead": null
+          },
+          "claude-opus-5-5": {
+            "input": 4,
+            "output": 20,
+            "cacheRead": 0.2
+          }
+        }
+      },
+      "versions": {
+        "claude": "2.1.326 (Claude Code)",
+        "codex": "codex-cli 0.169.1",
+        "bun": "1.4.2"
+      },
+      "isolation": {
+        "claude": "CLAUDE_CONFIG_DIR=~/.cache/council-eval/claude-home + setting-sources=user, clean HOME, auto memory off",
+        "codex": "CODEX_HOME=~/.cache/council-eval/codex-home + --ignore-user-config --ignore-rules, clean HOME; stock .system skills remain",
+        "workspaces": "/home/dan/tmp/agents/council-eval-ws"
+      }
+    }
+  ]
+}

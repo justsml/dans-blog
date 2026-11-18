@@ -1,0 +1,12 @@
+diff --git a/src/service.ts b/src/service.ts
+index cbd2adf..79568cb 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -42,7 +42,6 @@ export function importUsers(users: Users, company: string, csv: string, mode: "s
+ function updateImportedUser(users: Users, user: import("./users").User, row: ImportRow): void {
+   const patch = {
+     name: row.name,
+-    role: "member" as const,
+   };
+   users.update(user, patch);
+ }

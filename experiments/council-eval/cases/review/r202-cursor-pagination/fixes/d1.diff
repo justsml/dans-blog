@@ -1,0 +1,57 @@
+diff --git i/src/db.ts w/src/db.ts
+index 18462bd..898dc86 100644
+--- i/src/db.ts
++++ w/src/db.ts
+@@ -13,8 +13,8 @@ export interface OrderRow {
+ export interface OrderQuery {
+   accountId: string;
+   status?: OrderStatus;
+-  /** Only rows created strictly before this time (keyset pagination). */
+-  createdBefore?: number;
++  /** Only rows that sort after this (createdAt, id) position (keyset pagination). */
++  before?: { createdAt: number; id: string };
+   offset?: number;
+   limit: number;
+ }
+@@ -36,13 +36,13 @@ export class OrderDb {
+   query(q: OrderQuery): OrderRow[] {
+     const matching = this.rows
+       .filter((r) => r.accountId === q.accountId && (!q.status || r.status === q.status))
+-      .filter((r) => q.createdBefore === undefined || r.createdAt < q.createdBefore)
++      .filter((r) => q.before === undefined || byNewest(r, { ...r, ...q.before }) > 0)
+       .sort(byNewest);
+     const start = q.offset ?? 0;
+     return matching.slice(start, start + q.limit);
+   }
+ 
+-  count(q: Omit<OrderQuery, "offset" | "limit" | "createdBefore">): number {
++  count(q: Omit<OrderQuery, "offset" | "limit" | "before">): number {
+     return this.rows.filter((r) => r.accountId === q.accountId && (!q.status || r.status === q.status)).length;
+   }
+ }
+diff --git i/src/orders-api.ts w/src/orders-api.ts
+index 493bff7..1e9d55d 100644
+--- i/src/orders-api.ts
++++ w/src/orders-api.ts
+@@ -45,6 +45,7 @@ interface Scope {
+ 
+ interface Position {
+   createdAt: number;
++  id: string;
+ }
+ 
+ interface Cursor {
+@@ -65,11 +66,11 @@ function decodeCursor(raw: string): Cursor {
+ }
+ 
+ function positionOf(row: OrderRow): Position {
+-  return { createdAt: row.createdAt };
++  return { createdAt: row.createdAt, id: row.id };
+ }
+ 
+ function fetchPage(db: OrderDb, scope: Scope, after: Position | undefined, limit: number): OrderRow[] {
+-  return db.query({ ...scope, createdBefore: after?.createdAt, limit });
++  return db.query({ ...scope, before: after, limit });
+ }
+ 
+ /**

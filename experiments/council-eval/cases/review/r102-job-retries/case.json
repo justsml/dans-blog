@@ -1,0 +1,32 @@
+{
+  "id": "r102-job-retries",
+  "family": "review",
+  "author": "codex",
+  "description": "Retry transient job failures using capped exponential backoff. Type errors remain terminal. Drain returns the number of jobs executed in this polling interval.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "state",
+      "severity": "high",
+      "file": "src/service.ts",
+      "lines": [
+        22,
+        22
+      ],
+      "mechanism": "The worker reads a queued job instead of claiming it before awaiting the handler. Concurrent pollers execute the same job twice, violating Queue.claim’s ownership contract.",
+      "test": "d1.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "cost",
+      "severity": "high",
+      "file": "src/service.ts",
+      "lines": [
+        29,
+        29
+      ],
+      "mechanism": "Transient failures neither advance the attempt count nor honor maxAttempts. A permanently failing paid handler is invoked indefinitely instead of exhausting the configured budget.",
+      "test": "d2.test.ts"
+    }
+  ]
+}

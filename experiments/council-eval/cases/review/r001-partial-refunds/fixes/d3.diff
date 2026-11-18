@@ -1,0 +1,13 @@
+diff --git i/src/refunds.ts w/src/refunds.ts
+index ae78625..5b444b1 100644
+--- i/src/refunds.ts
++++ w/src/refunds.ts
+@@ -5,7 +5,7 @@ export class RefundError extends Error {}
+ function ownedPaidOrder(store: Store, userId: string, orderId: string) {
+   const order = store.getOrder(orderId);
+   if (!order || order.userId !== userId) throw new RefundError("order not found");
+-  if (order.status !== "paid") throw new RefundError(`cannot refund a ${order.status} order`);
++  if (order.status !== "paid" && order.status !== "partially_refunded") throw new RefundError(`cannot refund a ${order.status} order`);
+   return order;
+ }
+ 

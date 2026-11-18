@@ -1,0 +1,13 @@
+diff --git a/src/service.ts b/src/service.ts
+index 5365964..13c9dad 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -26,7 +26,7 @@ export async function run(queue: Queue, id: string, handler: Handler, now = Date
+     job.status = "done";
+   } catch (error) {
+     job.error = String(error);
+-    if (retryable(error)) {
++    if (retryable(error) && job.attempts < job.maxAttempts) {
+       job.availableAt = now + retryDelay(job.attempts);
+       job.status = "queued";
+     } else {

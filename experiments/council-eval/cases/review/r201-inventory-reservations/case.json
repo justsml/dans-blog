@@ -1,0 +1,17 @@
+{
+  "id": "r201-inventory-reservations",
+  "family": "review",
+  "author": "claude",
+  "description": "Carts that are abandoned keep their stock held forever, so popular items show as sold out while nobody is buying them. This gives every reservation an `expiresAt` (15 minutes by default, configurable via `ttlMs`), adds `releaseExpired()` to return expired holds to stock, a small `startSweeper()` that runs it on an interval, and calls it at the start of checkout so a cart cannot buy stock whose hold already lapsed. Tests cover expiry timing and checkout dropping a lapsed line.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "state",
+      "severity": "high",
+      "file": "src/reservations.ts",
+      "lines": [90, 94],
+      "mechanism": "releaseExpired selects reservations by expiresAt alone and never checks status, but committed, released, and already-expired records stay in the map (by design, for order support). Every sweep therefore unholds them again, driving `held` negative and making `available` exceed real stock, so the storefront oversells; since checkout also sweeps, every checkout after the TTL compounds it.",
+      "test": "d1-sweep-sold-holds.test.ts"
+    }
+  ]
+}

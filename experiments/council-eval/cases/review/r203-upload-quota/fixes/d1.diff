@@ -1,0 +1,23 @@
+diff --git i/src/files.ts w/src/files.ts
+index b5198c0..80a8d68 100644
+--- i/src/files.ts
++++ w/src/files.ts
+@@ -79,16 +79,9 @@ export class FileService {
+     return { usedBytes: await this.usedBytes(ownerId), quotaBytes: this.quotaBytes };
+   }
+ 
+-  /** Measured from the bucket itself, so the number matches what we are billed for. */
++  /** Summed from the file index, which is written alongside every blob. */
+   private async usedBytes(ownerId: string): Promise<number> {
+-    let total = 0;
+-    let next: string | undefined;
+-    do {
+-      const page = await this.blobs.list(`users/${ownerId}/`, next);
+-      for (const key of page.keys) total += (await this.blobs.head(key))?.size ?? 0;
+-      next = page.next;
+-    } while (next);
+-    return total;
++    return this.index.forOwner(ownerId).reduce((sum, f) => sum + f.size, 0);
+   }
+ 
+   list(ownerId: string): FileMeta[] {

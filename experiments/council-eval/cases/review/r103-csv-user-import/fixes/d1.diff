@@ -1,0 +1,13 @@
+diff --git a/src/service.ts b/src/service.ts
+index cbd2adf..10ddb65 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -22,7 +22,7 @@ export function importUsers(users: Users, company: string, csv: string, mode: "s
+   let skipped = 0;
+   for (const row of rows) {
+     const existing = mode === "update"
+-      ? users.findByEmail(row.email)
++      ? users.find(company, row.email)
+       : users.find(company, row.email);
+     if (existing && mode === "update") {
+       updateImportedUser(users, existing, row);

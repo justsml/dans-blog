@@ -1,0 +1,94 @@
+diff --git a/src/settings.ts b/src/settings.ts
+index 2599dff..2ed3dca 100644
+--- a/src/settings.ts
++++ b/src/settings.ts
+@@ -31,16 +31,54 @@ export function withDefaults(raw: RawSettings): TenantSettings {
+   };
+ }
+ 
+-export class SettingsService {
+-  constructor(private source: SettingsSource) {}
++/**
++ * How long a tenant's settings are served from memory. Other app instances pick up an
++ * update within this window; the instance that made the update sees it immediately.
++ */
++export const SETTINGS_TTL_MS = 30_000;
+ 
+-  async get(tenantId: string): Promise<TenantSettings> {
+-    const raw = await this.source.fetch(tenantId);
+-    if (!raw) throw new UnknownTenantError(`unknown tenant ${tenantId}`);
+-    return withDefaults(raw);
++export interface SettingsServiceOptions {
++  ttlMs?: number;
++  clock?: () => number;
++}
++
++interface CacheEntry {
++  value: Promise<TenantSettings>;
++  expiresAt: number;
++}
++
++export class SettingsService {
++  private cache = new Map<string, CacheEntry>();
++  private ttlMs: number;
++  private clock: () => number;
++
++  constructor(
++    private source: SettingsSource,
++    opts: SettingsServiceOptions = {},
++  ) {
++    this.ttlMs = opts.ttlMs ?? SETTINGS_TTL_MS;
++    this.clock = opts.clock ?? Date.now;
++  }
++
++  /** Every request calls this. Concurrent misses for a tenant share one fetch. */
++  get(tenantId: string): Promise<TenantSettings> {
++    const now = this.clock();
++    const hit = this.cache.get(tenantId);
++    if (hit && hit.expiresAt > now) return hit.value;
++
++    const value = this.load(tenantId);
++    this.cache.set(tenantId, { value, expiresAt: now + this.ttlMs });
++    return value;
+   }
+ 
+   async update(tenantId: string, patch: Omit<RawSettings, "tenantId">): Promise<void> {
+     await this.source.update(tenantId, patch);
++    this.cache.delete(tenantId);
++  }
++
++  private async load(tenantId: string): Promise<TenantSettings> {
++    const raw = await this.source.fetch(tenantId);
++    if (!raw) throw new UnknownTenantError(`unknown tenant ${tenantId}`);
++    return withDefaults(raw);
+   }
+ }
+diff --git a/test/settings.test.ts b/test/settings.test.ts
+index 50e7635..6319044 100644
+--- a/test/settings.test.ts
++++ b/test/settings.test.ts
+@@ -38,3 +38,24 @@ test("updates are visible on the next read", async () => {
+   await svc.update("globex", { rateLimitPerMinute: 60 });
+   expect((await svc.get("globex")).rateLimitPerMinute).toBe(60);
+ });
++
++test("settings are fetched once per tenant within the ttl", async () => {
++  let now = 0;
++  const src = source();
++  const svc = new SettingsService(src, { ttlMs: 30_000, clock: () => now });
++  await Promise.all([svc.get("acme"), svc.get("acme"), svc.get("globex")]);
++  now = 29_999;
++  await svc.get("acme");
++  expect(src.fetches).toBe(2);
++  now = 30_000;
++  await svc.get("acme");
++  expect(src.fetches).toBe(3);
++});
++
++test("an update is visible immediately on the instance that made it", async () => {
++  const src = source();
++  const svc = new SettingsService(src, { clock: () => 0 });
++  expect((await svc.get("globex")).currency).toBe("EUR");
++  await svc.update("globex", { currency: "GBP" });
++  expect((await svc.get("globex")).currency).toBe("GBP");
++});

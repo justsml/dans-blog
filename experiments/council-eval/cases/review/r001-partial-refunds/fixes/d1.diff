@@ -1,0 +1,13 @@
+diff --git i/src/refunds.ts w/src/refunds.ts
+index ae78625..5645cab 100644
+--- i/src/refunds.ts
++++ w/src/refunds.ts
+@@ -22,7 +22,7 @@ export function refundOrder(store: Store, userId: string, orderId: string, now =
+ /** Refund part of an order, for example one item out of several. */
+ export function refundPartial(store: Store, userId: string, orderId: string, amountCents: number, now = Date.now()) {
+   const order = store.getOrder(orderId);
+-  if (!order) throw new RefundError("order not found");
++  if (!order || order.userId !== userId) throw new RefundError("order not found");
+   if (order.status !== "paid" && order.status !== "partially_refunded") {
+     throw new RefundError(`cannot refund a ${order.status} order`);
+   }

@@ -1,0 +1,35 @@
+{
+  "id": "r202-cursor-pagination",
+  "family": "review",
+  "author": "claude",
+  "description": "Offset pagination on `GET /api/orders` skips and repeats rows when new orders arrive while a merchant scrolls, and deep offsets are slow on large accounts. This switches the endpoint to opaque keyset cursors: each page returns `nextCursor`, the client passes it back as `?cursor=`, and the DB layer gains a `createdBefore` filter. The cursor also carries the status filter from the first request so later pages stay consistent if the client drops the query string. `offset` is removed from the public params. Tests cover walking all pages, keeping the filter, and rejecting a malformed cursor.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "edge-case",
+      "severity": "high",
+      "file": "src/orders-api.ts",
+      "lines": [67, 73],
+      "mechanism": "The cursor position records only createdAt and the query uses a strict createdAt < filter, but createdAt is whole seconds and the DB orders ties by id. When a page boundary falls inside a group of orders created in the same second, the rest of that group is never returned.",
+      "test": "d1-same-second.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "security",
+      "severity": "critical",
+      "file": "src/orders-api.ts",
+      "lines": [84, 84],
+      "mechanism": "When a cursor is present, the query scope (including accountId) is taken from the client-supplied cursor instead of the session's accountId. The cursor is unsigned base64 JSON, so any merchant can edit it, or replay one from another account, to list another account's orders.",
+      "test": "d2-cursor-account.test.ts"
+    },
+    {
+      "id": "d3",
+      "class": "performance",
+      "severity": "medium",
+      "file": "src/orders-api.ts",
+      "lines": [95, 101],
+      "mechanism": "The rewrite replaced the single batched `customers.getMany` per page with one `customers.get` per order. Each call is an HTTP round trip to the CRM, so a 100-row page now makes 100 requests instead of one.",
+      "test": "d3-customer-lookups.test.ts"
+    }
+  ]
+}

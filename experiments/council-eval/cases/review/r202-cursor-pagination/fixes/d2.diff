@@ -1,0 +1,13 @@
+diff --git i/src/orders-api.ts w/src/orders-api.ts
+index 493bff7..9e0b009 100644
+--- i/src/orders-api.ts
++++ w/src/orders-api.ts
+@@ -81,7 +81,7 @@ export async function listOrders(deps: Deps, accountId: string, params: ListPara
+   const cursor = params.cursor ? decodeCursor(params.cursor) : undefined;
+   // Later pages reuse the filters from the first request, so a client that drops the
+   // query string while scrolling still sees one consistent list.
+-  const scope: Scope = cursor?.scope ?? { accountId, status: params.status };
++  const scope: Scope = cursor ? { ...cursor.scope, accountId } : { accountId, status: params.status };
+ 
+   const rows = fetchPage(deps.db, scope, cursor?.after, limit + 1);
+   const page = rows.slice(0, limit);

@@ -1,0 +1,29 @@
+diff --git a/src/service.ts b/src/service.ts
+index 32db705..5702704 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -27,3 +27,24 @@ export function actionCounts(entries: AuditSummary[]): Record<string, number> {
+   }
+   return counts;
+ }
++
++export async function exportAudit(reader: AuditReader, companyId: string, from: string, to: string): Promise<string> {
++  const start = Date.parse(from);
++  const end = Date.parse(to);
++  if (!Number.isFinite(start) || !Number.isFinite(end) || start >= end) {
++    throw new ExportError("invalid export range");
++  }
++  const lines: string[] = [];
++  let cursor: string | undefined;
++  do {
++    const page = await reader.page(companyId, cursor);
++    for (const entry of page.entries) {
++      const at = Date.parse(entry.at);
++      if (entry.companyId === companyId && at >= start && at < end) {
++        lines.push(JSON.stringify(summarize(entry)));
++      }
++    }
++    cursor = page.next;
++  } while (cursor !== undefined);
++  return lines.length ? lines.join("\n") + "\n" : "";
++}

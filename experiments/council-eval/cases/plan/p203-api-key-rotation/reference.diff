@@ -1,0 +1,58 @@
+diff --git c/src/keys.ts i/src/keys.ts
+index a0bf1d1..6fc0a82 100644
+--- c/src/keys.ts
++++ i/src/keys.ts
+@@ -1,6 +1,6 @@
+ import { createHash, randomInt } from "node:crypto";
+ import type { AuditLog } from "./audit";
+-import { MAX_KEYS_PER_ACCOUNT } from "./config";
++import { KEY_ROTATION_OVERLAP_MS, MAX_KEYS_PER_ACCOUNT } from "./config";
+ 
+ export type KeyEnv = "live" | "test";
+ 
+@@ -120,3 +120,19 @@ export function revokeKey(store: KeyStore, audit: AuditLog, accountId: string, k
+   store.update(keyId, { revokedAt: now });
+   audit.record({ type: "key.revoked", accountId, keyId, at: now });
+ }
++
++/**
++ * Issues a replacement key in the same environment. The old key keeps working for
++ * KEY_ROTATION_OVERLAP_MS so the customer can roll the new one out, then stops.
++ */
++export function rotateKey(store: KeyStore, audit: AuditLog, accountId: string, keyId: string, now = Date.now()): CreatedKey {
++  const old = store.get(keyId);
++  if (!old || old.accountId !== accountId) throw new KeyError("key not found");
++  if (!isActive(old, now)) throw new KeyError("only an active key can be rotated");
++
++  const created = createKey(store, audit, accountId, old.env, now);
++  const overlapEnds = now + KEY_ROTATION_OVERLAP_MS;
++  store.update(keyId, { expiresAt: Math.min(old.expiresAt ?? overlapEnds, overlapEnds) });
++  audit.record({ type: "key.rotated", accountId, keyId, at: now, detail: { replacedBy: created.id } });
++  return created;
++}
+diff --git c/test/keys.test.ts i/test/keys.test.ts
+index ebacc1f..daf23c1 100644
+--- c/test/keys.test.ts
++++ i/test/keys.test.ts
+@@ -1,6 +1,6 @@
+ import { expect, test } from "bun:test";
+ import { AuditLog } from "../src/audit";
+-import { AuthError, KeyError, KeyStore, authenticate, createKey, revokeKey } from "../src/keys";
++import { AuthError, KeyError, KeyStore, authenticate, createKey, revokeKey, rotateKey } from "../src/keys";
+ 
+ test("a created key authenticates as its account and environment", () => {
+   const store = new KeyStore();
+@@ -26,3 +26,13 @@ test("short-lived keys expire", () => {
+   expect(authenticate(store, key.secret, 999).keyId).toBe(key.id);
+   expect(() => authenticate(store, key.secret, 1_000)).toThrow(AuthError);
+ });
++
++test("after rotation both keys work until the old one runs out", () => {
++  const store = new KeyStore();
++  const audit = new AuditLog();
++  const old = createKey(store, audit, "acct_1", "live", 0);
++  const fresh = rotateKey(store, audit, "acct_1", old.id, 1_000);
++  expect(fresh.id).not.toBe(old.id);
++  expect(authenticate(store, fresh.secret, 1_001).keyId).toBe(fresh.id);
++  expect(authenticate(store, old.secret, 1_001).keyId).toBe(old.id);
++});

@@ -1,0 +1,19 @@
+diff --git a/src/service.ts b/src/service.ts
+index 3b634a7..0a9a6f2 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -7,11 +7,9 @@ export class FlagService {
+   }
+   async snapshot(keys: string[], subject: string): Promise<Record<string, boolean>> {
+     if (keys.length > 100) throw new Error("too many flags");
+-    const result: Record<string, boolean> = {};
+-    for (const key of keys) {
+-      result[key] = await this.enabled(key, subject);
+-    }
+-    return result;
++    const flags = await this.repo.getMany(keys);
++    const byKey = new Map(flags.map(flag => [flag.key, flag]));
++    return Object.fromEntries(keys.map(key => [key, evaluate(byKey.get(key), subject)]));
+   }
+ }
+ export interface ClientContext {
