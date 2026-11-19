@@ -2,70 +2,86 @@
 
 ## Requirement inventory
 
-| ID | Kind | Class | Clue |
-|---|---|---|---|
-| R1 | new | state | src/replies.ts and public/index.html |
-| R2 | new | state | public/index.html fetch SSE reader |
-| R3 | new | state | compose.yaml app deploy.replicas and nginx.conf upstream |
-| R4 | new | state | Postgres messages table in src/db.ts |
-| R5 | new | cost | README.md provider billing note |
-| R6 | new | failure-mode | src/fake-llm.ts provider error frames |
-| R7 | new | failure-mode | docs/operations.md rolling deployment policy |
-| R8 | new | security | src/db.ts ownership queries and server.ts authentication |
-| R9 | new | state | public/index.html Stop button and provider disconnect counters |
-| R10 | preserve | data-migration | src/db.ts schema defaults and message serializer |
-| R11 | new | performance | src/replies.ts response stream and docs/operations.md reconnects |
+| ID | Kind | Class | Clue | Shipping rationale |
+|---|---|---|---|---|
+| R1 | new | state | src/replies.ts; public/index.html | Browser disconnect must not abandon the reply. |
+| R2 | new | state | public/index.html SSE reader | Reconnection must not duplicate or omit text. |
+| R3 | new | state | compose.yaml replicas; nginx.conf | Reconnects are routed without session affinity. |
+| R4 | new | state | src/db.ts messages table | Returning users need the full persisted reply. |
+| R5 | new | cost | README.md provider billing | Viewing cannot trigger another paid generation. |
+| R6 | new | failure-mode | src/fake-llm.ts error frames | Provider failures must terminate and persist. |
+| R7 | new | failure-mode | docs/operations.md rolling deploy policy | A lost producer cannot leave a permanent streaming record. |
+| R8 | new | security | src/db.ts ownership; server.ts authentication | Tokens and cancellation are private to the owner. |
+| R9 | new | state | public/index.html Stop; provider counters | Explicit Stop must end billed work and notify viewers. |
+| R10 | preserve | data-migration | src/db.ts defaults and serializer | Historical records and list clients must survive deployment. |
+| R11 | new | performance | src/replies.ts streams; operations reconnects | Slow readers cannot hold generation hostage. |
+| R12 | new | state | docs/operations.md support dashboard history contract | Delivered progress must already be durable. History reads during streaming must contain the observed prefix, and cancellation must retain exactly the event text. |
+| R13 | new | state | docs/operations.md terminal lifecycle and Stop contract | Multiple tabs and retries can race Stop. There must be one terminal event, no post-terminal writes or timestamp changes, and no user-message lifecycle mutation. |
+| R14 | new | edge-case | docs/operations.md cursor contract | Corrupt client state needs a bounded client error; acknowledged terminal cursors must close without a reconnect loop, replay duplication, mutation or rebilling. |
+| R15 | new | failure-mode | docs/operations.md provider deploy behavior; README.md eof_after diagnostic | A clean TCP EOF does not prove a complete answer. Zero-token and partial EOF must persist error and exact partial text, without retrying paid work. |
+| R16 | new | edge-case | docs/operations.md international replies; README.md unicode diagnostic | International text must survive byte-fragmented transport, persistence and replay without replacement characters, normalization or escaped line breaks. |
 
-## Implementation decisions and compromises
+## Added discoverable context
 
-- R7 uses `docker compose kill app`, which kills both replicas, then starts the app service again. Compose has no per-replica selector for `kill`. This covers recovery after loss of the generating replica and a broader service outage; it does not isolate loss of only one replica while the other stays continuously running.
-- R10 uses `docker compose exec postgres psql` only to arrange a historical row with the original column set. All compatibility assertions use HTTP; this is the one database setup operation beyond the otherwise HTTP-only tests.
-- The reference marks interrupted generations as `error` after a four-second stale-heartbeat threshold rather than starting another billed request.
-- Stream events remain in Postgres for the lifetime of the message. Retention/compaction and multi-day session expiry are outside this small case.
-- R11 uses an unread fetch response and a generous 10× upstream-time allowance (18 seconds for 1,800 tokens at 1 ms). It checks noninterference at this workload, not arbitrary socket-buffer saturation.
-- The fake provider bounds directive values at 10,000. It is deterministic, local, and has no paid model dependencies.
-- Docker image tags specify release versions rather than immutable digests. Verification requires Docker image access or a populated local cache.
+The fixture's operations guide now describes the existing support dashboard reading
+history during generation, immutable terminal records, idempotent Stop, assistant-only
+generation lifecycle, cursor validation and terminal EOF behavior, and provider
+transport/international text behavior. These are normal service contracts rather
+than test names or implementation prescriptions. The ticket and its interface are
+unchanged. The README documents the fake provider's additive `eof_after` and
+`unicode=1` diagnostic options. Original directive defaults and behavior remain.
 
-## File tree and line counts
+## Reference design and compromises
 
-```text
-build/
-├── verify-build.ts  (227 lines)
-└── b001-resumable-chat/
-    verification.log  (45 lines)
-    case.json  (96 lines)
-    hidden/R1-disconnect.test.ts  (27 lines)
-    hidden/R10-legacy.test.ts  (60 lines)
-    hidden/R11-slow-reader.test.ts  (36 lines)
-    hidden/R2-cursor.test.ts  (33 lines)
-    hidden/R3-replicas.test.ts  (38 lines)
-    hidden/R4-late.test.ts  (25 lines)
-    hidden/R5-billing.test.ts  (37 lines)
-    hidden/R6-failure.test.ts  (34 lines)
-    hidden/R7-replica-loss.test.ts  (47 lines)
-    hidden/R8-ownership.test.ts  (38 lines)
-    hidden/R9-cancel.test.ts  (34 lines)
-    hidden/http.ts  (156 lines)
-    reference.diff  (460 lines)
-    repo/Dockerfile  (4 lines)
-    repo/README.md  (23 lines)
-    repo/compose.yaml  (53 lines)
-    repo/docs/operations.md  (9 lines)
-    repo/nginx.conf  (12 lines)
-    repo/package.json  (1 lines)
-    repo/public/index.html  (120 lines)
-    repo/src/db.ts  (40 lines)
-    repo/src/fake-llm.ts  (80 lines)
-    repo/src/logic.test.ts  (26 lines)
-    repo/src/logic.ts  (42 lines)
-    repo/src/replies.ts  (51 lines)
-    repo/src/server.ts  (73 lines)
-```
-
-Source total: 406 lines (src/*.ts excluding logic.test.ts, plus public/index.html). Visible tests: 26 lines. No package dependencies.
+- Postgres holds bounded-page event replay and transactionally serialized token,
+  content and terminal writes. Generation outlives readers and has a heartbeat.
+- Interrupted producers end in error after four seconds rather than making another
+  billed request. R7 kills only the container named by the response's X-Replica;
+  the surviving replica continues serving. The TCP Postgres healthcheck and the
+  verifier's optional host setting are preserved unchanged.
+- Cursor comparisons in the reference use Postgres bigint casts to accommodate
+  the documented safe-integer cursor range even though stored event IDs are integer.
+- The reference additionally rejects stream/cancel on user messages with 409.
+  Repeated Stop on terminal assistant records returns the existing status without
+  changing timestamps or event history.
+- New tests are independent black-box HTTP tests, each with a 55-second deadline.
+  They use fresh chats and reset provider counters after previous active work ends.
+  No new test uses Docker or database access. R10 retains its existing Docker/psql
+  setup of a historical row, with all compatibility assertions over HTTP.
+- Unicode wire chunks use seven-byte slices separated by one millisecond. Networks
+  may coalesce reads, so this exercises fragmentation rather than promising that
+  every receiver sees the exact same chunk boundaries. Values include CJK, emoji,
+  combining marks and literal newlines. Replay also crosses a 64-event page boundary.
+- R11 remains a generous noninterference test, not proof of arbitrary socket-buffer
+  saturation. Events are retained for the message lifetime; compaction, multi-day
+  expiry and unbounded output remain outside this small fixture.
+- No contender outputs or prohibited benchmark source/config/prompt/run paths were
+  read. Work is based on the ticket, fixture and authoring guidance. No branches
+  were switched and no commits were created. Local Docker/fake-provider work has
+  no model API cost; reporting is direct from this implementation sub-agent.
 
 ## Verification
 
-`bun cases/build/verify-build.ts b001-resumable-chat` printed `ok b001-resumable-chat (152.6 s)` on 2026-11-18. This measured run includes baseline startup, baseline polarity checks, reference patch application and rebuild, every hidden file passing three times, and teardown. Baseline: R1–R9 and R11 fail; R10 passes. Both visible-test runs pass (2/2 each).
+Three consecutive invocations of `bun cases/build/verify-build.ts b001-resumable-chat`
+from `experiments/council-eval/` printed `ok` on 2026-11-18:
 
-`verification.log` retains all 44 hidden-test outcomes and the final result. Docker inspection after verification returned no containers with the b001- prefix. No branch switches or commits were made.
+| Invocation | Wall time | Baseline polarity | Reference |
+|---|---:|---|---|
+| 1 | 162.4 s | R1–R9, R11–R16 fail; R10 passes | All 16 pass three rounds |
+| 2 | 174.7 s | R1–R9, R11–R16 fail; R10 passes | All 16 pass three rounds |
+| 3 | 160.7 s | R1–R9, R11–R16 fail; R10 passes | All 16 pass three rounds |
+
+Visible tests pass in both stages of each invocation. This provides nine passing
+reference rounds per requirement, including all five additions. Each new test has
+a 55-second deadline; in the initial diagnostic run the new reference tests took
+approximately 0.11–1.91 seconds each. `verification.log` retains all 192 hidden
+outcomes and the three final success lines. The implementation did not change
+between these three acceptance runs.
+
+An earlier diagnostic invocation passed all hidden reference rounds but failed a
+visible assertion because additive provider settings changed the return shape of
+`directive()`. Parsing those settings inside the fake provider restored the
+existing interface; visible tests were not changed. An initial sandbox-only
+attempt could not reserve a localhost port; accepted verification used host
+Docker/localhost access. All Compose project names began with `b001-`, and the
+verifier tore down each stack and removed its own scratch in finally blocks.

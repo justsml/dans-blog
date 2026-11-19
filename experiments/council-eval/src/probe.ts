@@ -32,7 +32,7 @@ const schema = {
 
 const out: any[] = [];
 for (const provider of providers)
-  for (const tier of ["mid", "frontier"] as const) {
+  for (const tier of ["small", "mid", "frontier"] as const) {
     const model = cfg.providers[provider][tier].model;
     const r = await callAgent({
       provider, model, effort: "low", cwd: ws, schema, mode: "read",

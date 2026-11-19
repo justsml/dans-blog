@@ -91,6 +91,46 @@
       "text": "An unread response does not delay generation or other viewers beyond a generous upstream-time bound.",
       "test": "R11-slow-reader.test.ts",
       "clue": "src/replies.ts response stream and docs/operations.md reconnects"
+    },
+    {
+      "id": "R12",
+      "kind": "new",
+      "class": "state",
+      "text": "History reads include every already-delivered token during generation, and cancellation retains exactly the committed stream prefix.",
+      "test": "R12-durable-prefix.test.ts",
+      "clue": "docs/operations.md support dashboard history contract"
+    },
+    {
+      "id": "R13",
+      "kind": "new",
+      "class": "state",
+      "text": "Concurrent Stop requests converge to one terminal event; terminal content/status/timestamps never change, and user messages cannot be cancelled.",
+      "test": "R13-terminal-stability.test.ts",
+      "clue": "docs/operations.md lifecycle and Stop contract"
+    },
+    {
+      "id": "R14",
+      "kind": "new",
+      "class": "edge-case",
+      "text": "Invalid cursors return 400, query precedence is unconditional, and terminal cursors at or beyond the tail close empty without additional billing.",
+      "test": "R14-cursor-boundaries.test.ts",
+      "clue": "docs/operations.md reconnect cursor contract"
+    },
+    {
+      "id": "R15",
+      "kind": "new",
+      "class": "failure-mode",
+      "text": "Clean provider EOF without a completion sentinel persists error and the exact partial content for live and late readers without retrying.",
+      "test": "R15-truncated-provider.test.ts",
+      "clue": "docs/operations.md provider deploy behavior; README.md eof_after diagnostic"
+    },
+    {
+      "id": "R16",
+      "kind": "new",
+      "class": "edge-case",
+      "text": "Fragmented multilingual provider output is preserved byte-for-byte in storage and all cursor replays.",
+      "test": "R16-unicode-replay.test.ts",
+      "clue": "docs/operations.md international replies; README.md unicode diagnostic"
     }
   ]
 }

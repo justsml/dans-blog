@@ -1,5 +1,5 @@
 {
-  "$comment": "List prices in USD per 1M tokens, standard tier. Claude prices from the Anthropic pricing table cached 2026-11-03. OpenAI prices from developers.openai.com/api/docs/pricing (Standard table) looked up 2026-11-16; Codex sessions stay under 272K input, so long-context rates do not apply.",
+  "$comment": "List prices in USD per 1M tokens, standard tier. Claude prices from the Anthropic pricing table cached 2026-11-03. OpenAI prices from developers.openai.com/api/docs/pricing (Standard table) looked up 2026-11-16; Codex sessions stay under 272K input, so long-context rates do not apply. Small tier (2026-11-18): Haiku 5.5 from the Anthropic table above; gpt-6-luna from developers.openai.com/docs/models/gpt-6-luna.",
   "effort": "high",
   "providers": {
     "claude": {
@@ -14,6 +14,12 @@
         "input": 4,
         "output": 20,
         "cacheRead": 0.2
+      },
+      "small": {
+        "model": "claude-haiku-5-5",
+        "input": 0.1,
+        "output": 0.5,
+        "cacheRead": null
       }
     },
     "codex": {
@@ -28,6 +34,12 @@
         "input": 10,
         "output": 50,
         "cacheRead": 1
+      },
+      "small": {
+        "model": "gpt-6-luna",
+        "input": 0.1,
+        "output": 0.5,
+        "cacheRead": 0.01
       }
     }
   },
@@ -67,6 +79,6 @@
   "build": {
     "maxRounds": 3,
     "implementTimeoutSec": 2400,
-    "$comment": "Loop arms: review → fix Medium+ → repeat, at most maxRounds reviews."
+    "$comment": "Loop arms: review \u2192 fix Medium+ \u2192 repeat, at most maxRounds reviews."
   }
 }

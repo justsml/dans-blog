@@ -21,3 +21,8 @@ token count, milliseconds per token, and a failure boundary. Omit fail_after
 for success. Tokens are `t0 `, `t1 `, and so on, including trailing spaces.
 GET /__stats and POST /__reset on port 8099 inspect provider usage.
 Every provider request is billed, including cancelled and failed requests.
+
+Provider diagnostics also accept eof_after=N to simulate a transport ending
+without a completion sentinel, and unicode=1 for multilingual tokens
+(`段0 🌍 é\n`, `段1 🌍 é\n`, ...), delivered in fragmented byte chunks.
+These options compose with tokens, delay and fail_after; existing defaults remain.

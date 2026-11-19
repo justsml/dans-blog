@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { join, dirname, basename } from "node:path";
 import { homedir } from "node:os";
-import { symlinkSync, lstatSync } from "node:fs";
+import { symlinkSync, lstatSync, cpSync, rmSync } from "node:fs";
 import { type CallResult, type Provider, type Usage, config, sh, sha256 } from "./lib";
 
 export interface CallSpec {
@@ -21,6 +21,19 @@ export interface CallSpec {
   env?: Record<string, string>;
   /** Overrides limits.callTimeoutSec, for long implementation sessions. */
   timeoutSec?: number;
+  /**
+   * Named clean home. Each variant gets its own CLI home and $HOME, so a skill installed
+   * for one arm is invisible to every other arm.
+   */
+  variant?: string;
+  /** Skill directories to install into this variant's home (brrr family: the council skill). */
+  skills?: string[];
+  /** Claude tool allowlist override. */
+  tools?: string[];
+  /** Claude: keep the full event transcript (stream-json) instead of only the final result. */
+  transcript?: boolean;
+  /** Claude: allow slash commands, so a user-invoked skill can be called. */
+  slashCommands?: boolean;
   /** Mock provider only: deterministic seed and a callback that fabricates output. */
   mock?: () => unknown;
 }
@@ -50,8 +63,8 @@ export function listCost(model: string, u: Usage): number | null {
  * CLAUDE.md. Only the login is shared, by symlink, so nothing secret is copied.
  * The user's own setup includes the council skill under test, so this is not optional.
  */
-function isolatedHome(kind: "claude" | "codex"): string {
-  const dir = join(homedir(), ".cache/council-eval", `${kind}-home`);
+function isolatedHome(kind: "claude" | "codex", variant?: string, skills: string[] = []): string {
+  const dir = join(homedir(), ".cache/council-eval", variant ? `${kind}-home-${variant}` : `${kind}-home`);
   mkdirSync(dir, { recursive: true });
   const cred = kind === "claude" ? ".credentials.json" : "auth.json";
   const src = kind === "claude" ? join(homedir(), ".claude", cred) : join(homedir(), ".codex", cred);
@@ -63,7 +76,17 @@ function isolatedHome(kind: "claude" | "codex"): string {
   } catch {}
   if (!present && existsSync(src)) symlinkSync(src, dst);
   if (kind === "codex" && !existsSync(join(dir, "config.toml"))) writeFileSync(join(dir, "config.toml"), "# isolated eval home\n");
+  installSkills(join(dir, "skills"), skills);
   return dir;
+}
+
+function installSkills(skillsDir: string, skills: string[]) {
+  for (const src of skills) {
+    const dst = join(skillsDir, basename(src));
+    rmSync(dst, { recursive: true, force: true });
+    mkdirSync(skillsDir, { recursive: true });
+    cpSync(src, dst, { recursive: true });
+  }
 }
 
 /**
@@ -83,9 +106,11 @@ function bin(name: "claude" | "codex"): string {
   return (bins[name] = p || Bun.which(name) || name);
 }
 
-function cleanHomeEnv(): Record<string, string> {
-  const home = join(homedir(), ".cache/council-eval", "home");
+function cleanHomeEnv(variant?: string, skills: string[] = []): Record<string, string> {
+  const home = join(homedir(), ".cache/council-eval", variant ? `home-${variant}` : "home");
   mkdirSync(join(home, ".config"), { recursive: true });
+  // Codex also discovers skills under ~/.agents/skills.
+  installSkills(join(home, ".agents", "skills"), skills);
   return { HOME: home, XDG_CONFIG_HOME: join(home, ".config") };
 }
 
@@ -122,8 +147,8 @@ async function callClaude(spec: CallSpec) {
   const timeoutMs = (spec.timeoutSec ?? config().limits.callTimeoutSec) * 1000;
   const isolation = process.env.ANTHROPIC_API_KEY
     ? ["--bare"]
-    : ["--setting-sources", "user", "--disable-slash-commands", "--strict-mcp-config"]; // plus CLAUDE_CONFIG_DIR below
-  const tools = spec.mode === "write" ? ["Read", "Grep", "Glob", "Edit", "Write", "Bash"] : ["Read", "Grep", "Glob"];
+    : ["--setting-sources", "user", ...(spec.slashCommands ? [] : ["--disable-slash-commands"]), "--strict-mcp-config"]; // plus CLAUDE_CONFIG_DIR below
+  const tools = spec.tools ?? (spec.mode === "write" ? ["Read", "Grep", "Glob", "Edit", "Write", "Bash"] : ["Read", "Grep", "Glob"]);
   const args = [
     bin("claude"),
     "-p",
@@ -133,7 +158,8 @@ async function callClaude(spec: CallSpec) {
     "--effort",
     spec.effort,
     "--output-format",
-    "json",
+    spec.transcript ? "stream-json" : "json",
+    ...(spec.transcript ? ["--verbose"] : []),
     "--no-session-persistence",
     ...isolation,
     "--tools",
@@ -143,14 +169,17 @@ async function callClaude(spec: CallSpec) {
   ];
   if (spec.schema) args.push("--json-schema", JSON.stringify(spec.schema));
   const env: Record<string, string> = process.env.ANTHROPIC_API_KEY
-    ? cleanHomeEnv()
-    : { ...cleanHomeEnv(), CLAUDE_CONFIG_DIR: isolatedHome("claude"), CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" };
+    ? cleanHomeEnv(spec.variant)
+    : { ...cleanHomeEnv(spec.variant), CLAUDE_CONFIG_DIR: isolatedHome("claude", spec.variant, spec.skills), CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" };
   Object.assign(env, spec.env ?? {});
   const res = await sh(args, { cwd: spec.cwd, timeoutMs, env });
   writeFileSync(`${spec.logPath}.stdout.json`, res.stdout);
   if (res.stderr) writeFileSync(`${spec.logPath}.stderr.txt`, res.stderr);
   if (res.timedOut) throw new Error(`timeout after ${timeoutMs}ms`);
-  const out = JSON.parse(res.stdout);
+  // stream-json: one event per line; the final "result" event has the same shape as json output.
+  const out = spec.transcript
+    ? JSON.parse(res.stdout.trim().split("\n").reverse().find((l) => l.includes('"type":"result"')) ?? "{}")
+    : JSON.parse(res.stdout);
   const usage = zero();
   // modelUsage covers helper calls Claude Code makes on other models; price each by its own model.
   let cost = 0;
@@ -224,7 +253,7 @@ async function callCodex(spec: CallSpec) {
     args.push("--output-schema", schemaPath);
   }
   args.push(spec.prompt);
-  const res = await sh(args, { cwd: spec.cwd, timeoutMs, env: { ...cleanHomeEnv(), CODEX_HOME: isolatedHome("codex"), ...(spec.env ?? {}) } });
+  const res = await sh(args, { cwd: spec.cwd, timeoutMs, env: { ...cleanHomeEnv(spec.variant, spec.skills), CODEX_HOME: isolatedHome("codex", spec.variant, spec.skills), ...(spec.env ?? {}) } });
   writeFileSync(`${spec.logPath}.events.jsonl`, res.stdout);
   if (res.stderr) writeFileSync(`${spec.logPath}.stderr.txt`, res.stderr);
   if (res.timedOut) throw new Error(`timeout after ${timeoutMs}ms`);

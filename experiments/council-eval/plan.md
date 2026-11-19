@@ -133,6 +133,7 @@ The persona text itself is never tuned.
 | --- | --- | --- | --- | --- | --- |
 | mock dry run | Pipeline check, no model calls | run → score → analyze completes on 2 cases, 8 arms | n/a | $0 | Pipeline accepted 2026-11-16 |
 | pilot-01 | All 20 cases, 1 seed, 6 arms (+P0), both providers | **Ceiling.** Review recall is 100% for every arm and provider (spot-checked: matches are real). Plan hidden-test pass rate is 94–100% for every arm, and P0 (no plan) gets 91–94%. Every primary CI is [0, 0] or touches 0. Only signal: council precision is lower (Claude 53% vs 59% for F1; Codex 76% vs 85%). Canary 0. Judge agreement 96–99% (κ undefined with no variance) | n/a (pilot) | $34 total: $26.44 generation, $3.90 implementer, $4.03 judges | **Dataset cannot discriminate; rebuild harder before the full run.** Paired-diff SD is ~0, so it says nothing about power |
+| build-smoke + build-calib | b001, Claude `BM3loopCouncil` ×1; `BM1` ×1 on each provider | **Ceiling again.** A single Sonnet pass scores 11/11 ($0.38, 4 min). A single Terra pass scores 10/11 (misses R7, replica loss; $0.11). The council loop also scores 11/11 ($3.59, 30 min, 3 rounds, never stopped clean). Its reviews found real production issues the hidden suite does not test: unbounded detached generation, a write per token, NUL/split-surrogate tokens breaking Postgres writes, and mixed old/new replicas during a rolling deploy | n/a | $4.08 | Suite does not discriminate at mid tier. Do **not** add tests from the council's findings (teaching to the test). Next: a blind hardening pass by the case author, and/or a smaller tier |
 
 ## Open failures and next actions
 
@@ -183,6 +184,14 @@ Loop rules:
 
 Review council: Detail Detective, Doomsayer, Battle-scarred Operator. This follows the skill's
 picking rule, which assigns the Operator "for anything on-call"; long-lived streams across rolling deploys qualify.
+
+**Revision 2026-11-18 (deviation, recorded before any primary build data).** Calibration
+showed the mid tier at ceiling: a single Sonnet pass scored 11/11 and a single Terra pass 10/11. Two changes followed, both chosen by Dan:
+
+1. **Small tier as the treatment.** Claude Haiku 5.5 and gpt-6-luna, both $0.10 / $0.50 per 1M. Arms: `BS1`, `BS1loop`, `BS3loopSame`, `BS3loopCouncil`, plus `BM1` and `BF1` as references. New primary contrasts: `BS3loopCouncil − BF1` (cheap council loop vs. the upgrade), `BS3loopCouncil − BS3loopSame`, `BS3loopCouncil − BS1loop`. The mid-tier loop arms remain available as secondary.
+2. **Blind hardening of the hidden suite** by the same case author (gpt-6.1-sol). It is forbidden to read any run output. The council's smoke-run findings are **not** a source for tests, because that would be teaching to the test.
+
+The cost of this deviation: the earlier mid-tier primary contrasts are no longer the headline. The smoke and calibration runs are excluded from all analysis, because the case changed after them.
 
 **Spend.** Frontier models appear only in `BF1`, a single pass. There is no Fable anywhere; Claude frontier is Opus 5.5. `src/build.ts` enforces a hard list-price cap (`--max-usd`, default $60), runs seed by seed, and starts the frontier arms last.
 

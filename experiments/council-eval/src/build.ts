@@ -21,6 +21,10 @@ type Reviewers = "self" | "same3" | "council3";
 interface BuildArm { id: string; tier: Tier; loop?: Reviewers }
 
 export const BUILD_ARMS: Record<string, BuildArm> = {
+  BS1: { id: "BS1", tier: "small" },
+  BS1loop: { id: "BS1loop", tier: "small", loop: "self" },
+  BS3loopSame: { id: "BS3loopSame", tier: "small", loop: "same3" },
+  BS3loopCouncil: { id: "BS3loopCouncil", tier: "small", loop: "council3" },
   BM1: { id: "BM1", tier: "mid" },
   BF1: { id: "BF1", tier: "frontier" },
   BM1loop: { id: "BM1loop", tier: "mid", loop: "self" },
@@ -28,19 +32,25 @@ export const BUILD_ARMS: Record<string, BuildArm> = {
   BM3loopCouncil: { id: "BM3loopCouncil", tier: "mid", loop: "council3" },
   BF1loop: { id: "BF1loop", tier: "frontier", loop: "self" },
 };
+// Revised 2026-11-18 after build-calib showed the mid tier at ceiling, before any primary data:
+// the treatment is a small-model council loop against the single-pass upgrade.
 export const BUILD_PRIMARY: [string, string][] = [
-  ["BM3loopCouncil", "BF1"],
-  ["BM3loopCouncil", "BM3loopSame"],
-  ["BM3loopCouncil", "BM1loop"],
+  ["BS3loopCouncil", "BF1"],
+  ["BS3loopCouncil", "BS3loopSame"],
+  ["BS3loopCouncil", "BS1loop"],
 ];
 /** Run by default. BF1loop exists but is opt-in: frontier loops are the expensive corner. */
-export const BUILD_DEFAULT_ARMS = ["BM1", "BF1", "BM1loop", "BM3loopSame", "BM3loopCouncil"];
+export const BUILD_DEFAULT_ARMS = ["BS1", "BS1loop", "BS3loopSame", "BS3loopCouncil", "BM1", "BF1"];
 export const BUILD_SECONDARY: [string, string][] = [
+  ["BS3loopCouncil", "BM1"],
+  ["BS1loop", "BS1"],
+  ["BM3loopCouncil", "BF1"],
   ["BF1loop", "BF1"],
   ["BM1loop", "BM1"],
   ["BF1", "BM1"],
 ];
 
+const TIER_ORDER = { small: 0, mid: 1, frontier: 2 } as const;
 const BLOCKING = new Set(["critical", "high", "medium"]);
 
 if (import.meta.main) {
@@ -76,7 +86,7 @@ if (import.meta.main) {
   const jobs: Promise<void>[] = [];
   // Seed-major, frontier arms last in each seed: a budget stop leaves complete low-cost
   // seeds rather than a few expensive runs.
-  const ordered = [...armIds].sort((a, b) => Number(BUILD_ARMS[a].tier === "frontier") - Number(BUILD_ARMS[b].tier === "frontier"));
+  const ordered = [...armIds].sort((a, b) => TIER_ORDER[BUILD_ARMS[a].tier] - TIER_ORDER[BUILD_ARMS[b].tier]);
   for (let s = 1; s <= seeds; s++)
     for (const caseId of caseIds)
       for (const armId of ordered)

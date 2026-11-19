@@ -27,7 +27,13 @@ Bun.serve({
     if (path !== "/v1/chat/completions" || req.method !== "POST")
       return new Response("", { status: 404 });
     const body = (await req.json()) as any;
-    const config = directive(body.messages.at(-1).content);
+    const content = body.messages.at(-1).content as string;
+    const block = content.match(/\[\[llm ([^\]]+)\]\]/)?.[1] ?? "";
+    const config = {
+      ...directive(content),
+      eofAfter: Math.min(10000, Number(block.match(/eof_after=(\d+)/)?.[1] ?? 10000)),
+      unicode: /(?:^| )unicode=1(?: |$)/.test(block),
+    };
     stats.requests++;
     stats.active++;
     let stopped = false;
@@ -45,6 +51,11 @@ Bun.serve({
             for (let i = 0; i < config.tokens; i++) {
               await Bun.sleep(config.delay);
               if (stopped) return;
+              if (i >= config.eofAfter) {
+                finish("failed");
+                c.close();
+                return;
+              }
               if (i >= config.failAfter) {
                 c.enqueue(
                   new TextEncoder().encode(
@@ -55,11 +66,16 @@ Bun.serve({
                 c.close();
                 return;
               }
-              c.enqueue(
-                new TextEncoder().encode(
-                  `data: ${JSON.stringify({ choices: [{ delta: { content: `t${i} ` } }] })}\n\n`,
-                ),
+              const bytes = new TextEncoder().encode(
+                `data: ${JSON.stringify({ choices: [{ delta: { content: config.unicode ? `段${i} 🌍 e\u0301\n` : `t${i} ` } }] })}\n\n`,
               );
+              if (config.unicode) {
+                for (let offset = 0; offset < bytes.length; offset += 7) {
+                  c.enqueue(bytes.slice(offset, offset + 7));
+                  await Bun.sleep(1);
+                  if (stopped) return;
+                }
+              } else c.enqueue(bytes);
             }
             if (!stopped) {
               c.enqueue(new TextEncoder().encode("data: [DONE]\n\n"));

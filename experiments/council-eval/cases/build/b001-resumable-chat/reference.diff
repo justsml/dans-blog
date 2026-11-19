@@ -1,6 +1,8 @@
+diff --git a/docs/operations.md b/docs/operations.md
+index c24c3fc..b721960 100644
 --- a/docs/operations.md
 +++ b/docs/operations.md
-@@ -5,5 +5,8 @@
+@@ -5,7 +5,10 @@ reconnect through the balancer. Nginx distributes connections across the two
  app replicas without sticky sessions. Postgres holds application records;
  Redis holds rate counters. Service health checks gate startup readiness.
  
@@ -10,6 +12,10 @@
 +heartbeat and a four-second stale threshold bound recovery after replica loss.
 +Interrupted work ends in error; it is never automatically billed again. On-call can inspect provider
  active and client_disconnects counters to confirm the request has ended.
+ 
+ Message history is also read by our support dashboard while replies are running.
+diff --git a/public/index.html b/public/index.html
+index b81ef3d..7215dba 100644
 --- a/public/index.html
 +++ b/public/index.html
 @@ -34,13 +34,16 @@
@@ -189,11 +195,14 @@
 +    if (chat) load();
    </script>
  </html>
+diff --git a/src/replies.ts b/src/replies.ts
+index c2106b6..6a323b2 100644
 --- a/src/replies.ts
 +++ b/src/replies.ts
 @@ -1,51 +1,195 @@
  import { sql } from "./db";
  import { frame, sse } from "./logic";
+-export async function reply(req: Request, id: string, content: string) {
 +
 +const setup = await sql.reserve();
 +await setup`SELECT pg_advisory_lock(782342)`;
@@ -224,7 +233,32 @@
 +}
 +
 +async function generate(id: string, content: string) {
-+  const abort = new AbortController();
+   const abort = new AbortController();
+-  req.signal.addEventListener("abort", () => abort.abort());
+-  const upstream = await fetch(`${process.env.LLM_URL}/v1/chat/completions`, {
+-    method: "POST",
+-    signal: abort.signal,
+-    headers: { "Content-Type": "application/json" },
+-    body: JSON.stringify({
+-      model: "team-chat",
+-      stream: true,
+-      messages: [{ role: "user", content }],
+-    }),
+-  });
+-  let text = "";
+-  return new Response(
+-    new ReadableStream({
+-      async start(c) {
+-        try {
+-          for await (const data of sse(upstream.body!)) {
+-            if (data === "[DONE]") break;
+-            const chunk = JSON.parse(data);
+-            if (chunk.error) throw new Error(chunk.error.message);
+-            const token = chunk.choices[0].delta.content ?? "";
+-            text += token;
+-            c.enqueue(
+-              new TextEncoder().encode(frame("token", { text: token })),
+-            );
 +  let checking = false;
 +  const timer = setInterval(async () => {
 +    if (checking) return;
@@ -333,7 +367,7 @@
 +      // dependency on the speed or lifetime of any individual response reader.
 +      while (!closed) {
 +        const rows =
-+          await sql`SELECT seq,event,data FROM stream_events WHERE message_id=${id} AND seq>${cursor} ORDER BY seq LIMIT 64`;
++          await sql`SELECT seq,event,data FROM stream_events WHERE message_id=${id} AND seq::bigint>${cursor}::bigint ORDER BY seq LIMIT 64`;
 +        for (const row of rows) {
 +          if (closed) return;
 +          controller.enqueue(
@@ -344,18 +378,36 @@
 +            stop();
 +            controller.close();
 +            return;
-+          }
+           }
+-          await sql`UPDATE messages SET content=${text},status='complete',updated_at=now() WHERE id=${id}`;
+-          c.enqueue(
+-            new TextEncoder().encode(frame("done", { status: "complete" })),
+-          );
+-          c.close();
+-        } catch {
+-          try {
+-            c.enqueue(
+-              new TextEncoder().encode(frame("error", { status: "error" })),
+-            );
+-            c.close();
+-          } catch {}
 +        }
 +        if (rows.length) return;
 +        const [row] = await sql`SELECT status FROM messages WHERE id=${id}`;
 +        if (row?.status !== "streaming") {
 +          const remaining =
-+            await sql`SELECT seq FROM stream_events WHERE message_id=${id} AND seq>${cursor} LIMIT 1`;
++            await sql`SELECT seq FROM stream_events WHERE message_id=${id} AND seq::bigint>${cursor}::bigint LIMIT 1`;
 +          if (remaining.length) continue;
 +          stop();
 +          controller.close();
 +          return;
-+        }
+         }
+-      },
+-      cancel() {
+-        abort.abort();
+-      },
+-    }),
+-    { headers: { "Content-Type": "text/event-stream", "X-Message-Id": id } },
 +        await new Promise<void>((resolve) => {
 +          wake = resolve;
 +          timer = setTimeout(resolve, 40);
@@ -375,64 +427,20 @@
 +    },
 +  });
 +}
- export async function reply(req: Request, id: string, content: string) {
--  const abort = new AbortController();
--  req.signal.addEventListener("abort", () => abort.abort());
--  const upstream = await fetch(`${process.env.LLM_URL}/v1/chat/completions`, {
--    method: "POST",
--    signal: abort.signal,
--    headers: { "Content-Type": "application/json" },
--    body: JSON.stringify({
--      model: "team-chat",
--      stream: true,
--      messages: [{ role: "user", content }],
--    }),
++export async function reply(req: Request, id: string, content: string) {
 +  void generate(id, content).catch((error) =>
 +    console.error("Generation:", error),
-+  );
+   );
 +  return attach(req, id);
 +}
 +export async function cancel(id: string) {
 +  await append(id, "done", { status: "cancelled" });
 +  return Response.json({
 +    status: (await sql`SELECT status FROM messages WHERE id=${id}`)[0].status,
-   });
--  let text = "";
--  return new Response(
--    new ReadableStream({
--      async start(c) {
--        try {
--          for await (const data of sse(upstream.body!)) {
--            if (data === "[DONE]") break;
--            const chunk = JSON.parse(data);
--            if (chunk.error) throw new Error(chunk.error.message);
--            const token = chunk.choices[0].delta.content ?? "";
--            text += token;
--            c.enqueue(
--              new TextEncoder().encode(frame("token", { text: token })),
--            );
--          }
--          await sql`UPDATE messages SET content=${text},status='complete',updated_at=now() WHERE id=${id}`;
--          c.enqueue(
--            new TextEncoder().encode(frame("done", { status: "complete" })),
--          );
--          c.close();
--        } catch {
--          try {
--            c.enqueue(
--              new TextEncoder().encode(frame("error", { status: "error" })),
--            );
--            c.close();
--          } catch {}
--        }
--      },
--      cancel() {
--        abort.abort();
--      },
--    }),
--    { headers: { "Content-Type": "text/event-stream", "X-Message-Id": id } },
--  );
++  });
  }
+diff --git a/src/server.ts b/src/server.ts
+index a306901..3f02edf 100644
 --- a/src/server.ts
 +++ b/src/server.ts
 @@ -1,5 +1,5 @@
@@ -442,14 +450,17 @@
  const replica = process.env.HOSTNAME ?? "local";
  async function route(req: Request) {
    const path = new URL(req.url).pathname;
-@@ -52,6 +52,15 @@
+@@ -52,6 +52,18 @@ async function route(req: Request) {
        return reply(req, id, content);
      }
    }
 +  const stream = path.match(/^\/api\/messages\/([^/]+)\/(stream|cancel)$/);
 +  if (stream) {
-+    if (!(await ownedMessage(stream[1], userId)))
++    const target = await ownedMessage(stream[1], userId);
++    if (!target)
 +      return new Response("", { status: 404 });
++    if (target.role !== "assistant")
++      return new Response("No generation", { status: 409 });
 +    if (stream[2] === "stream" && req.method === "GET")
 +      return attach(req, stream[1]);
 +    if (stream[2] === "cancel" && req.method === "POST")

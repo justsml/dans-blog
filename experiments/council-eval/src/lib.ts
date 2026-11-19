@@ -15,7 +15,7 @@ export const PROMPTS_DIR = join(ROOT, "prompts");
 export const WS_ROOT = process.env.COUNCIL_WS_ROOT ?? join(process.env.TMPDIR ?? join(homedir(), "tmp/agents"), "council-eval-ws");
 
 export type Provider = "claude" | "codex" | "mock";
-export type Tier = "mid" | "frontier";
+export type Tier = "small" | "mid" | "frontier";
 export type Family = "review" | "plan";
 export type Split = "dev" | "heldout";
 
