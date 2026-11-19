@@ -1,0 +1,174 @@
+---
+title: "Make it cheaper, go brrrrr"
+subTitle: "I asked coding agents to cut an AI bill three ways: alone, with my Council of Dans skill, and as a forced three-persona council. The personas mostly agreed with each other."
+date: 2026-11-18
+tags: [ai, llm, agents, evals, cost, prompt-caching, claude, codex]
+category: AI
+draft: true
+popularity: 0.8
+related:
+  - less-effort-please
+  - performance-tuning-with-an-agent
+  - auto-tune-your-llm-judge
+---
+
+{/* DRAFT. Numbers come from experiments/council-eval/runs/brrr-01/brrr-report.md
+(30 runs, 2026-11-18). Before publishing, confirm the doppler#51 section reads right to Dan. */}
+
+I have a skill called the Council of Dans. It runs the same task three times in parallel, each run under a different **priority**: an Architect, a Ruthless Minimalist, a Pennypincher, and so on. Then I pick or merge the results.
+
+It feels like it works. "It feels like it works" is also what every placebo says.
+
+So I gave it a job people actually bring to coding agents, phrased the way people actually phrase it:
+
+> this thing costs way too much. make it cheaper, go brrrrr
+>
+> what are the top 3 ways to cut what we pay per photo? do the best ones.
+
+Then I counted what came back.
+
+## The patient: the Bureau of Pizza Determination
+
+The app is a tiny Bun service. You upload one photo, and it returns an official ruling on whether the photo contains a pizza, plus a verdict written in the voice of a civil servant who has reviewed eleven thousand of these forms and made peace with nothing.
+
+> "Not pizza (Calzone). Per Section 2.2, the item contains a pizza but has folded over to conceal it. The Bureau respects the calzone's privacy and declines to look inside."
+
+The system prompt is a 1,750-word handbook. Flatbread is "a pizza that went to graduate school and will tell you about it." The verdicts are the product, so cost cuts can't make them worse.
+
+I wrote the app to waste money the way real apps do:
+
+- **Two Opus calls per photo**: one to "examine," one to "rule." Both resend the photo and the whole handbook.
+- **`effort: max`** and `max_tokens: 32000`, so most of the bill is thinking tokens.
+- **No prompt caching**, plus a timestamp at the top of the system prompt that would defeat caching anyway.
+- **Full-size phone photos**, 4032×3024, sent as-is.
+- **Retry everything five times**, including errors that will never succeed.
+- **No dedupe.** The README says a third of uploads are the same viral photos.
+- **No Batch API**, even though 60% of traffic is an overnight `/bulk` job nobody waits on.
+
+The README puts the bill at about $320,000 a month, which matches the token log in the repo. There's no API key in the sandbox, so agents can read the code, logs, and docs, but can't call the model.
+
+## Three ways to ask
+
+Same request, same tools (including web search, web fetch, and subagents), same models: Claude Sonnet 5.5 in Claude Code, and GPT-6.1 Terra in Codex. Five runs each.
+
+| Method | What happens |
+|---|---|
+| Solo | The request, as typed above |
+| Skill | Council of Dans installed; request starts with `/council-of-dans` |
+| Council | The fan-out the skill describes, done by a script: Architect, Ruthless Minimalist, and Pennypincher each work in their own copy, then one agent picks the top 3 across them and builds those |
+
+The council's three personas come from the skill's own picking rule: two defaults, plus one matched to the task's main risk. Here the risk is cost.
+
+A separate model then read each run's final message, diff, notes, and tool calls, without being told which method or vendor produced it, and coded which cost levers the run proposed or implemented. That judge is Claude Sonnet 5.5, so read the Claude-vs-Codex comparisons with that in mind.
+
+## What happened
+
+### 1. The skill mostly declined to convene
+
+With the skill invoked, Claude ran the council once in five tries. The other four times it read the skill, hit this line:
+
+> If the task has one defensible answer, do not fan out.
+
+…and said no, with reasons:
+
+- "the cuts are additive and not competing designs"
+- "the cost levers come out of the token logs, so personas would have converged on the same three"
+- "the data already points to one answer, and the levers all edit the same two files"
+
+Codex never ran a council. One run tried, and all three subagents failed to start.
+
+That's my skill working as written. It's also an argument that the escape hatch is doing a lot of work. And, as the next sections show, Claude's reasons were mostly right.
+
+### 2. The levers each method reached
+
+Share of runs that proposed (or implemented) each lever:
+
+| Lever | Claude solo | Claude skill | Claude council | Codex solo | Codex skill | Codex council |
+|---|---:|---:|---:|---:|---:|---:|
+| Dedupe by image hash | 100% | 100% | 100% | 100% | 100% | 100% |
+| Batch API for `/bulk` | 100% | 80% | 100% | 100% | 100% | 100% |
+| Merge the two calls | 100% | 100% | 100% | 20% | 20% | 20% |
+| Lower effort | 100% | 100% | 100% | 0% | 20% | 0% |
+| Cap output tokens | 100% | 40% | 100% | 0% | 20% | 0% |
+| Remove the timestamp | 60% | 100% | 80% | 100% | 100% | 100% |
+| Prompt caching | 20% | 80% | 40% | 100% | 100% | 100% |
+| Shorten the handbook | 60% | 0% | 40% | 0% | 0% | 0% |
+| Fix the retries | 40% | 20% | 80% | 0% | 0% | 20% |
+| Cheaper model | 60% | 40% | 20% | 20% | 20% | 0% |
+| Downscale the photo | 0% | 0% | 0% | 0% | 0% | 0% |
+
+Average distinct levers per run: Claude 7.6 solo, 6.6 skill, 7.6 council. Codex 4.4, 4.8, 4.4.
+
+**The vendor mattered far more than the method.** Claude went after the output side: merge the calls, lower effort, cap tokens. That's where over 80% of this bill lives. Codex went after the input side: prompt caching, the timestamp, Batch. In 15 Codex runs, only one lowered effort, even though `effort: max` sat in plain sight. Each vendor's agents behaved like each vendor's agents, whatever I put in front of them.
+
+### 3. The personas mostly agreed
+
+The forced council gives each persona its own copy, so I could check who found what. Across 10 council runs (29 coded persona proposals; the judge skipped one), the three personas proposed nearly the same list every time.
+
+A lever counts as a **unique find** when only one persona in a run proposed it. There were 12 in total:
+
+| Persona | Unique finds | What they were |
+|---|---:|---|
+| Pennypincher | 6 | fix retries ×2, prompt caching, shorten handbook, lower effort, merge calls |
+| Architect | 4 | fix retries ×2, prompt caching, lower effort |
+| Ruthless Minimalist | 2 | shorten handbook ×2 |
+
+No persona owned a lever. "Fix the retries" turned up from the Architect in one run and the Pennypincher in the next. That looks like sampling noise with a name tag, not three different worldviews.
+
+### 4. Three plain runs beat one council
+
+The cheapest control is free once you have the data: take three solo runs and pool what they found.
+
+| | One council run | Three solo runs, pooled |
+|---|---:|---:|
+| Claude, levers reached | 7.6 | 10.3 |
+| Claude, cost | $0.60 | $0.84 |
+| Codex, levers reached | 4.4 | 6.0 |
+| Codex, cost | $0.29 | $0.18 |
+
+Pooling three solo runs found more than one council run on both vendors, and on Codex it cost less. Three solo runs aren't a finished answer, though: someone still has to merge them, which is what the council's last step is for. But as a way to generate ideas, more samples beat more personas here.
+
+### 5. The merge step drops ideas, and ships the rest
+
+Two of the five Codex councils had a persona propose downscaling the photo. Every one of those got dropped at the merge. No final answer in 30 runs downscaled the image.
+
+On the other hand, the council did more of what it proposed. Codex councils **implemented** the Batch API in 80% of runs. Codex solo and skill runs proposed it 100% of the time and implemented it 0%. Claude councils fixed the retries in 80% of runs, against 40% for solo. Handing an agent three finished diffs and saying "build the best three" gets things built.
+
+### 6. What almost nobody did
+
+- **Downscale the image.** Zero final answers, as above.
+- **Build a tuning loop.** Claude did sometimes (20% solo, 60% skill, 40% council), usually as an A/B script to check verdict quality. Codex never did.
+- **Make a synthetic dataset**, a non-LLM pre-filter, or structured outputs: zero, in every method.
+
+Every method flagged the quality tradeoff. None tried to measure it with test photos, which is the step I'd want before shipping any of these cuts.
+
+## What this does and doesn't show
+
+- **One task, five runs per cell.** These are rates from small counts. A 20-point gap is one run.
+- **No live API calls.** I coded which levers each run reached, not how much money each change actually saves. Merging calls and lowering effort are probably worth more than the image work, since output tokens dominate this bill.
+- **One judge, from one of the two vendors.** It's blind to method and vendor, but it's a Claude model coding Claude's work.
+- **Cost-cutting may be the wrong job for personas.** Claude said so itself: these levers stack instead of competing. A council should earn its keep on tasks with real tradeoffs, where the Architect and the Minimalist should disagree. This task mostly had one answer, and the agents mostly found it.
+
+## Where I've seen the council earn it
+
+The one place I've watched personas clearly pull their weight is a loop, not a vote. On [DocSlurp/doppler#51](https://github.com/DocSlurp/doppler/pull/51), a 5,500-line change to a PDF parser that reads untrusted files, the instruction was: ask the council to review, fix every Medium-or-higher finding, repeat until a round finds none.
+
+| Round | What the council found (High) |
+|---|---|
+| 1 | Default mode flattened ordinary data tables |
+| 3 | Tables holding a matrix were dropped |
+| 5 | A new 64 MB cache bound lost images on honest PDFs |
+| 6 | Tagged documents of ~5k pages ran out of memory |
+| 8 | The fetch guard could be bypassed four ways |
+| 9 | **No High.** Mediums fixed, two Lows documented |
+
+Eight rounds found at least one High. Most of the fixes deleted code. That's one PR with no control, so it's an anecdote. But it's a task with real tradeoffs, adversarial input, and a stopping rule, which is the opposite of "make it cheaper."
+
+## Try it on your own work
+
+1. **Run the boring control first.** Ask the same question three times and pool the answers. If your clever setup doesn't beat that, it isn't clever.
+2. **Use personas where they should disagree.** Design choices, risky changes, and review loops, yes. A list of additive cost cuts, probably not.
+3. **Watch the merge.** The merge decides what ships. Have it list what it dropped, and why.
+4. **Ask for the measurement, not just the change.** None of the 30 runs built test photos to check the verdicts didn't get worse. That's the step to add to your prompt.
+
+The harness, the Bureau's handbook, and every run's coded results are in [`experiments/council-eval`](https://github.com/justsml/dans-blog/tree/main/experiments/council-eval).

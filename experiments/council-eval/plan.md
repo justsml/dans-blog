@@ -1,7 +1,7 @@
 # Council vs. Upgrade
 
 Decision record for the eval behind the "Personas, Priorities, Profiles" article.
-Hypothesis owner: Dan. Status: **pilot-01 done (review/plan at ceiling). Build family designed; case b001 being authored.**
+Hypothesis owner: Dan. Status: **Article now reports brrr-01 (pizza cost task). The review, plan, and build families are parked: all three hit ceiling at the mid tier.**
 
 ## Target behavior and release decision
 
@@ -133,6 +133,7 @@ The persona text itself is never tuned.
 | --- | --- | --- | --- | --- | --- |
 | mock dry run | Pipeline check, no model calls | run → score → analyze completes on 2 cases, 8 arms | n/a | $0 | Pipeline accepted 2026-11-16 |
 | pilot-01 | All 20 cases, 1 seed, 6 arms (+P0), both providers | **Ceiling.** Review recall is 100% for every arm and provider (spot-checked: matches are real). Plan hidden-test pass rate is 94–100% for every arm, and P0 (no plan) gets 91–94%. Every primary CI is [0, 0] or touches 0. Only signal: council precision is lower (Claude 53% vs 59% for F1; Codex 76% vs 85%). Canary 0. Judge agreement 96–99% (κ undefined with no variance) | n/a (pilot) | $34 total: $26.44 generation, $3.90 implementer, $4.03 judges | **Dataset cannot discriminate; rebuild harder before the full run.** Paired-diff SD is ~0, so it says nothing about power |
+| brrr-01 | "make it cheaper, go brrrrr" on pizza-or-not; solo / skill / forced council (Architect, Ruthless Minimalist, Pennypincher); Sonnet 5.5 + Terra; 5 runs per cell; blind Sonnet judge | Skill: Claude fanned out 1 in 5 runs (4 times it cited the skill's "one defensible answer" clause); Codex 0 in 5 (one attempt crashed). Levers per run: Claude 7.6 / 6.6 / 7.6, Codex 4.4 / 4.8 / 4.4. Three pooled solo runs reached 10.3 (Claude) and 6.0 (Codex), more than one council run. Personas overlapped: 12 unique finds in 29 proposals, and no persona owned a lever. The merge dropped photo downscaling (proposed in 2 of 5 Codex councils, shipped 0 times). The council implemented more of what it proposed (Codex Batch API 80% vs 0%). Vendor > method | n/a | $4.73 runs + ~$1 judging | Reported in the article as a case study; savings not measured live (no API key) |
 | build-smoke + build-calib | b001, Claude `BM3loopCouncil` ×1; `BM1` ×1 on each provider | **Ceiling again.** A single Sonnet pass scores 11/11 ($0.38, 4 min). A single Terra pass scores 10/11 (misses R7, replica loss; $0.11). The council loop also scores 11/11 ($3.59, 30 min, 3 rounds, never stopped clean). Its reviews found real production issues the hidden suite does not test: unbounded detached generation, a write per token, NUL/split-surrogate tokens breaking Postgres writes, and mixed old/new replicas during a rolling deploy | n/a | $4.08 | Suite does not discriminate at mid tier. Do **not** add tests from the council's findings (teaching to the test). Next: a blind hardening pass by the case author, and/or a smaller tier |
 
 ## Open failures and next actions
