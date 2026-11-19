@@ -229,3 +229,18 @@ The cost of this deviation: the earlier mid-tier primary contrasts are no longer
 | 2026-11-17 | Claude frontier is Opus 5.5, not Fable 5.2 (Dan: don't use Fable). Opus 5.5 also authored the r20x/p20x cases, so Claude `F1`/`F3council` on those cases have author = subject. Mitigation: report H1 for Claude on Codex-authored cases as a robustness slice | Dan's instruction | Claude cases re-authored by a non-subject model |
 | 2026-11-16 | Mid/frontier tiers: Claude Sonnet 5.5 / Opus 5.5 (was Fable 5.2); Codex gpt-6.1-terra / gpt-6-astra | Current model lists. Sol rejected as Codex mid tier: it authored the Codex cases, so using it would make an author a subject | Cases are re-authored by a non-subject model |
 | 2026-11-16 | OpenAI list prices filled: Terra $1 / $5 (cached $0.05), Astra $10 / $50 (cached $1) per 1M | OpenAI pricing page, Standard table | OpenAI changes prices |
+
+## Skill improvement loop (2026-11-19)
+
+Goal: show that narrow, orthogonal priorities that each read primary sources combine into better results than generic personas, and make the council-of-dans skill do that by default.
+
+**Baseline (free, from brrr-01 transcripts, `bun src/lookups.ts --run-id brrr-01`):** personas looked something up in Claude 0/15 runs, Codex 13/15. The brrr report's `checked_docs` only covered the merge agent and hid this.
+
+**Variants** (`prompts/briefs/`, run with `bun src/brrr.ts --arms council,council-v1,council-v2`; persona stage only for v1/v2):
+- v0-current: today's persona brief.
+- v1-grounded: v0 plus "open primary sources first" and a REQUIRED `## Sources` section (URL, fact taken, what it changed).
+- v2-focused: v1 plus a lead step that gives each persona a narrow focus and where to look it up, so the three overlap less.
+
+**Metrics:** per persona: lookup rate and count (deterministic, `src/lookups.ts`); source quality and Sources-section compliance (blind judge); distinct valid levers the three reach together, and unique finds per persona; cost. Control: three pooled v0 runs, same spend.
+
+**Rules:** tune on pizza-or-not only; confirm once on a second case; no frontier tier; install a variant into `~/.agents/skills/council-of-dans` only after it beats v0 on dev and holds on the second case.

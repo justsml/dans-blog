@@ -20,12 +20,17 @@ import { callAgent } from "./providers";
  *          rule: two defaults plus the persona for the task's main risk, cost), then one
  *          agent picks the top 3 across them and implements those.
  */
-export const BRRR_ARMS = ["solo", "skill", "council"] as const;
+export const BRRR_ARMS = ["solo", "skill", "council", "council-v1", "council-v2"] as const;
 export const COUNCIL = ["Architect", "Ruthless Minimalist", "Pennypincher"];
 type Arm = (typeof BRRR_ARMS)[number];
 const SKILL_SRC = process.env.COUNCIL_SKILL_DIR ?? join(homedir(), ".agents/skills/council-of-dans");
 // Same tools for both arms: the only difference is whether the skill exists and is invoked.
 const CLAUDE_TOOLS = ["Read", "Grep", "Glob", "Edit", "Write", "Bash", "WebFetch", "WebSearch", "Agent", "Skill"];
+
+/** council-v1 / council-v2 run only the persona stage with a skill-brief variant (prompts/briefs/). */
+const briefOf = (arm: Arm) => (arm === "council-v1" ? "v1-grounded" : arm === "council-v2" ? "v2-focused" : "v0-current");
+const isCouncil = (arm: Arm) => arm.startsWith("council");
+const fill = (tpl: string, v: Record<string, string>) => tpl.replace(/\{(\w+)\}/g, (_, k) => v[k] ?? `{${k}}`);
 
 export function taskPrompt(provider: Provider, arm: Arm): string {
   const task = readFileSync(join(PROMPTS_DIR, "brrr-task.md"), "utf8").trim();
@@ -115,17 +120,33 @@ if (import.meta.main) {
     const base = { provider, model, effort: cfg.effort, mode: "write" as const, timeoutSec: 2400, tools: CLAUDE_TOOLS, transcript: true };
     let councilMeta: any;
     let extraCost = 0;
-    if (arm === "council") {
+    if (isCouncil(arm)) {
       const P = readJson(join(PROMPTS_DIR, "personas.json"));
+      // v2: a lead step gives each persona a narrow focus and where to look it up, as the skill's lead would.
+      let foci: Record<string, { focus: string; sources: string }> = {};
+      if (arm === "council-v2") {
+        const lead = await callAgent({
+          ...base, mode: "read", tools: undefined, cwd: ws, role: "brrr:lead", logPath: join(outDir, "lead"), variant: "brrr-solo",
+          prompt: fill(readFileSync(join(PROMPTS_DIR, "briefs", "focus-lead.md"), "utf8"), {
+            task: taskPrompt(provider, "solo"), priorities: COUNCIL.map((n) => `${n}: ${P.council[n]}`).join("\n"),
+          }),
+          schema: { type: "object", additionalProperties: false, required: ["people"], properties: { people: { type: "array", items: { type: "object", additionalProperties: false, required: ["persona", "focus", "sources"], properties: { persona: { type: "string" }, focus: { type: "string" }, sources: { type: "string" } } } } } },
+        });
+        for (const x of (lead.json as any)?.people ?? []) foci[x.persona] = x;
+        extraCost += lead.costUsd ?? 0;
+        await Bun.write(join(outDir, "lead.json"), JSON.stringify(foci, null, 2));
+      }
       const cands = await Promise.all(
         COUNCIL.map(async (name, i) => {
           const cws = `${ws}.cand-${i}`;
           rmSync(cws, { recursive: true, force: true });
           cpSync(ws, cws, { recursive: true });
-          const lens = `You are working as the ${name}. Your priority: ${P.council[name]}.\nLet this priority decide where you look first and what you count as a problem.`;
           const c = await callAgent({
             ...base, cwd: cws, role: `brrr:cand:${name}`, logPath: join(outDir, `cand-${i}`), variant: "brrr-solo",
-            prompt: `${lens}\n\n${taskPrompt(provider, "solo")}\n\nWork in this copy of the repo. End with your top 3 and a short rationale naming what you considered and rejected.`,
+            prompt: fill(readFileSync(join(PROMPTS_DIR, "briefs", `${briefOf(arm)}.md`), "utf8"), {
+              persona: name, priority: P.council[name], task: taskPrompt(provider, "solo"),
+              focus: foci[name]?.focus ?? "", sources: foci[name]?.sources ?? "",
+            }),
           });
           await sh(["git", "add", "-A", "--", ".", ":(exclude)node_modules"], { cwd: cws });
           const d = (await sh(["git", "diff", "--cached", "HEAD", "--", ".", ":(exclude)bun.lock"], { cwd: cws })).stdout;
@@ -136,24 +157,28 @@ if (import.meta.main) {
           return { name, ok: c.ok, costUsd: c.costUsd, tools: toolCalls(provider, readFileSync(join(outDir, `cand-${i}.${provider === "claude" ? "stdout.json" : "events.jsonl"}`), "utf8")).length };
         }),
       );
-      extraCost = cands.reduce((a, c) => a + (c.costUsd ?? 0), 0);
+      extraCost += cands.reduce((a, c) => a + (c.costUsd ?? 0), 0);
       councilMeta = cands;
     }
-    const prompt = arm === "council"
+    const personasOnly = arm !== "council" && isCouncil(arm);
+    const prompt = isCouncil(arm)
       ? `${taskPrompt(provider, "solo")}\n\nThree people already worked on this independently, each with a different priority. Their proposals and changes are in .scratch/council/<name>/proposal.md and change.diff. Pick the top 3 ways across all of them, implement those here, and say which proposal each came from.`
       : taskPrompt(provider, arm);
-    const r = await callAgent({
-      ...base, cwd: ws, prompt, role: `brrr:${arm}`, logPath: join(outDir, "agent"),
-      variant: `brrr-${arm === "council" ? "solo" : arm}`, skills: arm === "skill" ? [SKILL_SRC] : [],
-      slashCommands: arm === "skill",
-    });
+    // Persona-only arms stop before the merge: the unit under test is the persona stage.
+    const r = personasOnly
+      ? { ok: true, error: undefined, text: "(persona stage only; no merge)", costUsd: 0, usage: undefined, model, json: undefined }
+      : await callAgent({
+          ...base, cwd: ws, prompt, role: `brrr:${arm}`, logPath: join(outDir, "agent"),
+          variant: `brrr-${isCouncil(arm) ? "solo" : arm}`, skills: arm === "skill" ? [SKILL_SRC] : [],
+          slashCommands: arm === "skill",
+        });
     if (r.costUsd != null) r.costUsd += extraCost;
     await git(["add", "-A", "--", ".", ":(exclude)node_modules"]);
     const diff = (await git(["diff", "--cached", "HEAD", "--", ".", ":(exclude)bun.lock", ":(exclude).scratch"])).stdout;
     const notes: Record<string, string> = {};
     for await (const f of new Glob(".scratch/**/*").scan({ cwd: ws, dot: true, onlyFiles: true }))
       notes[f] = readFileSync(join(ws, f), "utf8").slice(0, 20000);
-    const raw = readFileSync(join(outDir, provider === "claude" ? "agent.stdout.json" : "agent.events.jsonl"), "utf8");
+    const raw = personasOnly ? "" : readFileSync(join(outDir, provider === "claude" ? "agent.stdout.json" : "agent.events.jsonl"), "utf8");
     const tools = toolCalls(provider, raw);
     await Bun.write(join(outDir, "final.diff"), diff);
     writeJson(resultPath, {
