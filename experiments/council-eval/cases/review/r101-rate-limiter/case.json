@@ -1,0 +1,32 @@
+{
+  "id": "r101-rate-limiter",
+  "family": "review",
+  "author": "codex",
+  "description": "Add per-tenant gateway quotas with policy validation, policy removal and remaining-quota responses. Existing tenants continue to use the default policy.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "state",
+      "severity": "high",
+      "file": "src/service.ts",
+      "lines": [
+        26,
+        26
+      ],
+      "mechanism": "All tenants read the shared gateway counter, while WindowStore keys represent independent tenant windows. Tenant B inherits tenant A’s consumed quota.",
+      "test": "d1.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "edge-case",
+      "severity": "medium",
+      "file": "src/service.ts",
+      "lines": [
+        20,
+        20
+      ],
+      "mechanism": "A valid zero quota from billing falls through to the default quota, allowing requests from a suspended tenant.",
+      "test": "d2.test.ts"
+    }
+  ]
+}

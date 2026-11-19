@@ -1,0 +1,13 @@
+diff --git i/src/request-context.ts w/src/request-context.ts
+index a0fcb54..d95b3df 100644
+--- i/src/request-context.ts
++++ w/src/request-context.ts
+@@ -20,7 +20,7 @@ export interface RequestContext {
+  * own overrides on top (the language picker, and feature previews for staff).
+  */
+ export async function buildContext(service: SettingsService, tenantId: string, req: IncomingRequest): Promise<RequestContext> {
+-  const settings = await service.get(tenantId);
++  const settings = structuredClone(await service.get(tenantId));
+ 
+   const locale = req.headers.get("x-locale");
+   if (locale && SUPPORTED_LOCALES.includes(locale)) settings.locale = locale;

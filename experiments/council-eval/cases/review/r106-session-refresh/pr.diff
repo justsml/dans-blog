@@ -1,0 +1,55 @@
+diff --git a/src/service.ts b/src/service.ts
+index cf1ace5..1b3f8a5 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -24,3 +24,25 @@ export function sessionView(store: SessionStore, token: string, now: number) {
+     createdAt: session.createdAt,
+   };
+ }
++
++export interface RefreshResult {
++  userId: string;
++  expiresAt: number;
++}
++export function refresh(store: SessionStore, token: string, now: number, idleMs: number): RefreshResult {
++  if (!Number.isFinite(idleMs) || idleMs <= 0) {
++    throw new SessionError("idle duration must be positive");
++  }
++  const session = store.update(token, current => {
++    assertActive(current, now);
++    current.expiresAt = Math.min(
++      current.absoluteExpiresAt,
++      Math.max(current.expiresAt, now + idleMs),
++    );
++  });
++  assertActive(session, now);
++  return {
++    userId: session.userId,
++    expiresAt: session.expiresAt,
++  };
++}
+diff --git a/test/contracts.test.ts b/test/contracts.test.ts
+new file mode 100644
+index 0000000..c763d46
+--- /dev/null
++++ b/test/contracts.test.ts
+@@ -0,0 +1,10 @@
++import {expect, test} from "bun:test";
++import {refresh, SessionError} from "../src/service";
++import {SessionStore} from "../src/sessions";
++test("refresh rejects expired and unknown tokens", () => {
++  const store = new SessionStore();
++  store.create("t", "u", 0, 100, 1000);
++  expect(() => refresh(store, "t", 100, 100)).toThrow(SessionError);
++  expect(() => refresh(store, "missing", 50, 100)).toThrow(SessionError);
++  expect(store.get("t")?.expiresAt).toBe(100);
++});
+diff --git a/test/refresh.test.ts b/test/refresh.test.ts
+new file mode 100644
+index 0000000..94f318b
+--- /dev/null
++++ b/test/refresh.test.ts
+@@ -0,0 +1,3 @@
++import {expect,test} from "bun:test";
++import * as api from "../src/service";
++import {SessionStore} from "../src/sessions";test("slides idle deadline",()=>{const s=new SessionStore();s.create("t","u",0,100,500);expect(api.refresh(s,"t",50,100).expiresAt).toBe(150);});

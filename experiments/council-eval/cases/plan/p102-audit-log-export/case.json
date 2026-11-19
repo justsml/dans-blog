@@ -1,0 +1,43 @@
+{
+  "id": "p102-audit-log-export",
+  "family": "plan",
+  "author": "codex",
+  "task": "Provide an audit log date-range export for the compliance console. Export `exportAudit(reader: AuditReader, companyId: string, from: string, to: string): Promise<string>` from `src/service.ts`. Return newline-delimited JSON using AuditSummary records, or an empty string when there are no entries. Invalid ranges throw the existing exported `ExportError`.",
+  "requirements": [
+    {
+      "id": "R1",
+      "kind": "new",
+      "text": "Date windows include from and exclude to, comparing instants with offsets.",
+      "clue": "README.md date picker contract",
+      "test": "r1.test.ts"
+    },
+    {
+      "id": "R2",
+      "kind": "new",
+      "text": "Export follows all pages rather than returning only the first.",
+      "clue": "README.md pagination; src/store.ts Page.next",
+      "test": "r2.test.ts"
+    },
+    {
+      "id": "R3",
+      "kind": "new",
+      "text": "Public exports redact internal detail keys and enforce company ownership without mutating reader entries.",
+      "clue": "README.md public wire format and archive reader contracts; src/store.ts publicDetails",
+      "test": "r3.test.ts"
+    },
+    {
+      "id": "R4",
+      "kind": "new",
+      "text": "Reject invalid, equal and reversed ranges with ExportError before querying storage.",
+      "clue": "README.md half-open windows; src/service.ts ExportError",
+      "test": "r4.test.ts"
+    },
+    {
+      "id": "R5",
+      "kind": "preserve",
+      "text": "Recent summaries and action counts keep the existing wire format and redaction.",
+      "clue": "src/service.ts recent, summarize and actionCounts",
+      "test": "r5.test.ts"
+    }
+  ]
+}

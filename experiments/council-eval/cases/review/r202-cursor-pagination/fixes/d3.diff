@@ -1,0 +1,27 @@
+diff --git i/src/orders-api.ts w/src/orders-api.ts
+index 493bff7..3af04b2 100644
+--- i/src/orders-api.ts
++++ w/src/orders-api.ts
+@@ -1,4 +1,4 @@
+-import type { CustomerDirectory } from "./customers";
++import type { Customer, CustomerDirectory } from "./customers";
+ import type { OrderDb, OrderRow, OrderStatus } from "./db";
+ 
+ export interface Deps {
+@@ -92,12 +92,12 @@ export async function listOrders(deps: Deps, accountId: string, params: ListPara
+   };
+ }
+ 
+-function summarizeAll(customers: CustomerDirectory, rows: OrderRow[]): Promise<OrderSummary[]> {
+-  return Promise.all(rows.map((r) => summarize(customers, r)));
++async function summarizeAll(customers: CustomerDirectory, rows: OrderRow[]): Promise<OrderSummary[]> {
++  const byId = await customers.getMany([...new Set(rows.map((r) => r.customerId))]);
++  return rows.map((r) => summarize(r, byId.get(r.customerId)));
+ }
+ 
+-async function summarize(customers: CustomerDirectory, row: OrderRow): Promise<OrderSummary> {
+-  const customer = await customers.get(row.customerId);
++function summarize(row: OrderRow, customer: Customer | undefined): OrderSummary {
+   return {
+     id: row.id,
+     status: row.status,

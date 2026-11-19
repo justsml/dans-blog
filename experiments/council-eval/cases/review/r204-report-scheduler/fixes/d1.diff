@@ -1,0 +1,24 @@
+diff --git i/src/schedules.ts w/src/schedules.ts
+index 9134cb6..a8f7e48 100644
+--- i/src/schedules.ts
++++ w/src/schedules.ts
+@@ -69,9 +69,14 @@ export function localDate(s: Schedule, at: number): string {
+ 
+ /** The first send time strictly after `after` (epoch ms). */
+ export function nextRunAt(s: Schedule, after: number): number {
+-  const offset = zoneOffset(s.timeZone, after);
+-  const wall = new Date(after + offset);
+-  let run = Date.UTC(wall.getUTCFullYear(), wall.getUTCMonth(), wall.getUTCDate(), s.hour) - offset;
+-  if (run <= after) run += DAY_MS;
+-  return run;
++  const wall = new Date(after + zoneOffset(s.timeZone, after));
++  const day = Date.UTC(wall.getUTCFullYear(), wall.getUTCMonth(), wall.getUTCDate());
++  const run = wallToUtc(s.timeZone, day + s.hour * HOUR_MS);
++  return run > after ? run : wallToUtc(s.timeZone, day + DAY_MS + s.hour * HOUR_MS);
++}
++
++/** The instant at which the zone's clock reads `wall` (wall-clock ms, written as UTC). */
++function wallToUtc(timeZone: string, wall: number): number {
++  const guess = wall - zoneOffset(timeZone, wall);
++  return wall - zoneOffset(timeZone, guess);
+ }

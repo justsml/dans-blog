@@ -1,0 +1,13 @@
+diff --git a/src/service.ts b/src/service.ts
+index 3b634a7..b6c82e7 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -30,7 +30,7 @@ export function evaluate(flag: Flag | undefined, subject: string): boolean {
+   if (flag.percent === undefined) return true;
+   if (!subject) return false;
+   const assigned = bucket(subject, flag.salt ?? flag.key);
+-  return assigned <= flag.percent * 100;
++  return assigned < flag.percent * 100;
+ }
+ 
+ export function rolloutSummary(flag: Flag): string {

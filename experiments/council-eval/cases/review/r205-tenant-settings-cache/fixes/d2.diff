@@ -1,0 +1,17 @@
+diff --git i/src/settings.ts w/src/settings.ts
+index 2ed3dca..63c00ce 100644
+--- i/src/settings.ts
++++ w/src/settings.ts
+@@ -67,7 +67,11 @@ export class SettingsService {
+     if (hit && hit.expiresAt > now) return hit.value;
+ 
+     const value = this.load(tenantId);
+-    this.cache.set(tenantId, { value, expiresAt: now + this.ttlMs });
++    const entry = { value, expiresAt: now + this.ttlMs };
++    this.cache.set(tenantId, entry);
++    value.catch(() => {
++      if (this.cache.get(tenantId) === entry) this.cache.delete(tenantId);
++    });
+     return value;
+   }
+ 

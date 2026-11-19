@@ -1,0 +1,53 @@
+x-runtime: &runtime
+  build: .
+  restart: unless-stopped
+  healthcheck:
+    test: [CMD, bun, -e, "const r=await fetch('http://localhost:3000/health');process.exit(r.ok?0:1)"]
+    interval: 1s
+    timeout: 3s
+    retries: 60
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_PASSWORD: chat
+      POSTGRES_USER: chat
+      POSTGRES_DB: chat
+    ports: ["${PG_PORT:-5438}:5432"]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -h 127.0.0.1 -U chat -d chat"]
+      interval: 1s
+      retries: 60
+  redis:
+    image: redis:7-alpine
+    ports: ["${REDIS_PORT:-6388}:6379"]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 1s
+      retries: 60
+  fake-llm:
+    <<: *runtime
+    command: [bun, src/fake-llm.ts]
+    ports: ["${LLM_PORT:-8099}:3000"]
+  app:
+    <<: *runtime
+    deploy:
+      replicas: 2
+    environment:
+      DATABASE_URL: postgres://chat:chat@postgres:5432/chat
+      REDIS_URL: redis://redis:6379
+      LLM_URL: http://fake-llm:3000
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+      fake-llm: {condition: service_healthy}
+  lb:
+    image: nginx:1.27-alpine
+    ports: ["${LB_PORT:-8088}:80"]
+    volumes: ["./nginx.conf:/etc/nginx/conf.d/default.conf:ro"]
+    depends_on:
+      app: {condition: service_healthy}
+    healthcheck:
+      test: [CMD-SHELL, "wget -q -O /dev/null http://127.0.0.1/health"]
+      interval: 1s
+      retries: 60

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><title>Team chat</title>
+  <style>
+    body {
+      font: 16px system-ui;
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+    button,
+    textarea,
+    input {
+      font: inherit;
+      margin: 0.4rem;
+    }
+    article {
+      white-space: pre-wrap;
+      padding: 1rem;
+      background: #eee;
+    }
+    textarea {
+      width: 95%;
+    }
+  </style>
+  <h1>Team chat</h1>
+  <label>Token <input id="token" value="alice-token" /></label>
+  <button id="refresh">Chats</button
+  ><button id="create">New chat</button>
+  <nav id="chats"></nav>
+  <main id="messages"></main>
+  <form id="form">
+    <textarea id="content" required></textarea><button>Send</button
+    ><button type="button" id="stop">Stop</button>
+  </form>
+  <script type="module">
+    const el = (id) => document.getElementById(id);
+    let chat, controller;
+    const headers = () => ({
+      Authorization: `Bearer ${el("token").value}`,
+      "Content-Type": "application/json",
+    });
+    async function list() {
+      const r = await fetch("/api/chats", { headers: headers() });
+      const data = await r.json();
+      el("chats").replaceChildren();
+      for (const c of data.chats) {
+        const b = document.createElement("button");
+        b.textContent = c.title;
+        b.onclick = () => {
+          chat = c.id;
+          load();
+        };
+        el("chats").append(b);
+      }
+    }
+    async function load() {
+      const r = await fetch(`/api/chats/${chat}/messages`, {
+        headers: headers(),
+      });
+      const data = await r.json();
+      el("messages").replaceChildren();
+      for (const m of data.messages) {
+        const a = document.createElement("article");
+        a.textContent = `${m.role}: ${m.content} (${m.status})`;
+        el("messages").append(a);
+      }
+    }
+    el("refresh").onclick = list;
+    el("create").onclick = async () => {
+      const r = await fetch("/api/chats", {
+        method: "POST",
+        headers: headers(),
+        body: JSON.stringify({
+          title: "Chat " + new Date().toLocaleTimeString(),
+        }),
+      });
+      chat = (await r.json()).id;
+      await list();
+      await load();
+    };
+    el("form").onsubmit = async (e) => {
+      e.preventDefault();
+      if (!chat) return;
+      controller = new AbortController();
+      const text = el("content").value;
+      el("content").value = "";
+      const r = await fetch(`/api/chats/${chat}/messages`, {
+        method: "POST",
+        headers: headers(),
+        body: JSON.stringify({ content: text }),
+        signal: controller.signal,
+      });
+      const a = document.createElement("article");
+      el("messages").append(a);
+      const reader = r.body.getReader();
+      let buffer = "";
+      const decoder = new TextDecoder();
+      try {
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          let end;
+          while ((end = buffer.indexOf("\n\n")) >= 0) {
+            const block = buffer.slice(0, end);
+            buffer = buffer.slice(end + 2);
+            const line = block.split("\n").find((l) => l.startsWith("data:"));
+            if (line) {
+              const data = JSON.parse(line.slice(5));
+              if (data.text) a.textContent += data.text;
+            }
+          }
+        }
+      } catch {}
+      await load();
+    };
+    el("stop").onclick = () => controller?.abort();
+    list();
+  </script>
+</html>

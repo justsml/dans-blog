@@ -1,0 +1,59 @@
+diff --git a/src/refunds.ts b/src/refunds.ts
+index 9449b72..ae78625 100644
+--- a/src/refunds.ts
++++ b/src/refunds.ts
+@@ -18,3 +18,22 @@ export function refundOrder(store: Store, userId: string, orderId: string, now =
+   store.refunds.push({ orderId, amountCents, at: now });
+   return { orderId, amountCents };
+ }
++
++/** Refund part of an order, for example one item out of several. */
++export function refundPartial(store: Store, userId: string, orderId: string, amountCents: number, now = Date.now()) {
++  const order = store.getOrder(orderId);
++  if (!order) throw new RefundError("order not found");
++  if (order.status !== "paid" && order.status !== "partially_refunded") {
++    throw new RefundError(`cannot refund a ${order.status} order`);
++  }
++  if (!Number.isInteger(amountCents) || amountCents <= 0) {
++    throw new RefundError("amount must be a positive whole number of cents");
++  }
++  if (amountCents > order.totalCents) {
++    throw new RefundError("refund exceeds order total");
++  }
++  order.refundedCents += amountCents;
++  order.status = order.refundedCents === order.totalCents ? "refunded" : "partially_refunded";
++  store.refunds.push({ orderId, amountCents, at: now });
++  return { orderId, amountCents, remainingCents: order.totalCents - order.refundedCents };
++}
+diff --git a/test/refunds.test.ts b/test/refunds.test.ts
+index d73dbc6..353cf4d 100644
+--- a/test/refunds.test.ts
++++ b/test/refunds.test.ts
+@@ -1,5 +1,5 @@
+ import { expect, test } from "bun:test";
+-import { RefundError, Store, refundOrder } from "../src";
++import { RefundError, Store, refundOrder, refundPartial } from "../src";
+ 
+ const paid = () => {
+   const s = new Store();
+@@ -16,3 +16,20 @@ test("full refund marks the order refunded", () => {
+ test("another user cannot refund the order", () => {
+   expect(() => refundOrder(paid(), "mallory", "o1")).toThrow(RefundError);
+ });
++
++test("partial refund keeps the order open", () => {
++  const s = paid();
++  expect(refundPartial(s, "alice", "o1", 2_500)).toEqual({ orderId: "o1", amountCents: 2_500, remainingCents: 7_500 });
++  expect(s.getOrder("o1")?.status).toBe("partially_refunded");
++});
++
++test("partial refunds that add up to the total close the order", () => {
++  const s = paid();
++  refundPartial(s, "alice", "o1", 4_000);
++  refundPartial(s, "alice", "o1", 6_000);
++  expect(s.getOrder("o1")?.status).toBe("refunded");
++});
++
++test("partial refund rejects fractional cents", () => {
++  expect(() => refundPartial(paid(), "alice", "o1", 10.5)).toThrow(RefundError);
++});

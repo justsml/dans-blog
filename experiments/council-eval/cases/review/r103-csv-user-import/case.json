@@ -1,0 +1,32 @@
+{
+  "id": "r103-csv-user-import",
+  "family": "review",
+  "author": "codex",
+  "description": "Add update-existing mode to the email/name CSV importer, retaining skip as the default. Return created, updated and skipped counts and provide a summary for the admin console.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "security",
+      "severity": "critical",
+      "file": "src/service.ts",
+      "lines": [
+        25,
+        25
+      ],
+      "mechanism": "Update mode selects globally by email even though Users.find scopes identities by company. An import can overwrite a user belonging to another company.",
+      "test": "d1.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "data-migration",
+      "severity": "high",
+      "file": "src/service.ts",
+      "lines": [
+        45,
+        46
+      ],
+      "mechanism": "The update patch initializes the persisted role to member although the CSV only owns email and name. Existing administrators lose authorization after a profile import.",
+      "test": "d2.test.ts"
+    }
+  ]
+}

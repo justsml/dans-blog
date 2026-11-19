@@ -1,0 +1,14 @@
+{
+  "id": "p203-api-key-rotation",
+  "family": "plan",
+  "author": "claude",
+  "task": "Enterprise customers want to rotate API keys without downtime. Today they have to create a second key, deploy it, and revoke the first by hand, and many never revoke. Add key rotation with an overlap window: rotating a key issues a new key immediately, and the old key keeps working for a while so the customer can deploy the new one.\n\nInterface (the dashboard and the public `POST /v1/keys/:id/rotate` endpoint both call this):\n- `src/keys.ts` exports `rotateKey(store: KeyStore, audit: AuditLog, accountId: string, keyId: string, now?: number): CreatedKey`, returning the new key's id and its secret (shown to the customer once, like `createKey`).\n- `accountId` is the caller's authenticated account.\n- Throw the existing `KeyError` when the key cannot be rotated.\n- `authenticate` must accept the old key during the overlap window and reject it afterwards.",
+  "requirements": [
+    { "id": "R1", "kind": "new", "text": "The overlap is KEY_ROTATION_OVERLAP_MS (24 hours) from the moment of rotation: the old key works at +24h-1ms and fails at +24h; the new key does not expire.", "test": "r1-overlap-window.test.ts", "clue": "src/config.ts KEY_ROTATION_OVERLAP_MS" },
+    { "id": "R2", "kind": "new", "text": "The new key is in the same environment as the old one (rotating an sk_test_ key yields an sk_test_ key).", "test": "r2-same-environment.test.ts", "clue": "docs/adr/0002-api-key-storage.md: a key never changes environment" },
+    { "id": "R3", "kind": "new", "text": "Rotation records a `key.rotated` audit event for the account, and the audit trail never contains the new secret.", "test": "r3-audit.test.ts", "clue": "README.md audit note; AuditEventType already includes key.rotated; ADR 0002 on where the key may appear" },
+    { "id": "R4", "kind": "new", "text": "Only the owning account can rotate a key: another account gets KeyError, no key is created for it, and the victim's key does not start expiring.", "test": "r4-ownership.test.ts", "clue": "revokeKey ownership check and doc comment in src/keys.ts" },
+    { "id": "R5", "kind": "new", "text": "A revoked key cannot be rotated (KeyError, no new key, no audit event), since revocation is permanent.", "test": "r5-revoked.test.ts", "clue": "revokeKey doc comment: immediate and permanent; isActive in src/keys.ts" },
+    { "id": "R6", "kind": "preserve", "text": "createKey, authenticate, revokeKey, short-lived keys, the per-account key limit, and hash-only storage behave as before.", "test": "r6-preserve.test.ts", "clue": "src/keys.ts, test/keys.test.ts" }
+  ]
+}

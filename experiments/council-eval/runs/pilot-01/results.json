@@ -1,0 +1,866 @@
+{
+  "runId": "pilot-01",
+  "split": "all",
+  "groups": [
+    {
+      "family": "review",
+      "provider": "claude",
+      "arms": {
+        "F1": {
+          "primary": 1,
+          "cost": 0.0850017076923077,
+          "latencyS": 28.52769230769231,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.5884615384615386,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M3council": {
+          "primary": 1,
+          "cost": 0.1526622923076923,
+          "latencyS": 38.65330769230769,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.5342490842490842,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M1": {
+          "primary": 1,
+          "cost": 0.031745315384615384,
+          "latencyS": 16.311230769230768,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.5819444444444445,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M3same": {
+          "primary": 1,
+          "cost": 0.13259126153846157,
+          "latencyS": 33.660384615384615,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.5637362637362637,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M3style": {
+          "primary": 1,
+          "cost": 0.14382415384615388,
+          "latencyS": 35.98907692307692,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.5463369963369963,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M1R": {
+          "primary": 1,
+          "cost": 0.06968013846153845,
+          "latencyS": 34.35192307692308,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.5615384615384615,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        }
+      },
+      "contrasts": {
+        "primary": [
+          {
+            "a": "M3council",
+            "b": "F1",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.7959908859749603,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3same",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.1513752153523977,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3style",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.0614510026667177,
+            "pHolm": 1
+          }
+        ],
+        "secondary": [
+          {
+            "a": "M3council",
+            "b": "M1R",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 2.190901104365023
+          },
+          {
+            "a": "F1",
+            "b": "M1",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 2.677614213702276
+          }
+        ]
+      },
+      "byClass": {
+        "cost": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        },
+        "data-migration": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        },
+        "edge-case": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        },
+        "failure-mode": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        },
+        "performance": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        },
+        "security": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        },
+        "state": {
+          "F1": 1,
+          "M3council": 1,
+          "M1": 1,
+          "M3same": 1,
+          "M3style": 1,
+          "M1R": 1
+        }
+      },
+      "h4_vs_F1": {
+        "aligned": 0,
+        "unaligned": 0
+      },
+      "h4_vs_M3same": {
+        "aligned": 0,
+        "unaligned": 0
+      },
+      "judgeAgreement": {
+        "n": 138,
+        "agree": 0.9855072463768116,
+        "kappa": 0
+      }
+    },
+    {
+      "family": "review",
+      "provider": "codex",
+      "arms": {
+        "M1": {
+          "primary": 1,
+          "cost": 0.01596446153846154,
+          "latencyS": 21.469153846153844,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.8333333333333333,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M3council": {
+          "primary": 1,
+          "cost": 0.05985790769230769,
+          "latencyS": 48.38476923076923,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.7564102564102563,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "F1": {
+          "primary": 1,
+          "cost": 0.35561230769230767,
+          "latencyS": 35.06292307692308,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.8461538461538461,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M3style": {
+          "primary": 1,
+          "cost": 0.04893584615384615,
+          "latencyS": 51.48392307692307,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.8974358974358976,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M3same": {
+          "primary": 1,
+          "cost": 0.05264723076923077,
+          "latencyS": 52.760615384615384,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.8012820512820512,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        },
+        "M1R": {
+          "primary": 1,
+          "cost": 0.025698123076923075,
+          "latencyS": 48.31130769230769,
+          "failures": 0,
+          "n": 13,
+          "cases": 13,
+          "recall": 1,
+          "precision": 0.8012820512820512,
+          "falseAlarms": 0,
+          "cleanFalseAlarms": 0
+        }
+      },
+      "contrasts": {
+        "primary": [
+          {
+            "a": "M3council",
+            "b": "F1",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 0.1683234983646841,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3same",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.1369621311077798,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3style",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.2231914311673369,
+            "pHolm": 1
+          }
+        ],
+        "secondary": [
+          {
+            "a": "M3council",
+            "b": "M1R",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 2.3292715780499984
+          },
+          {
+            "a": "F1",
+            "b": "M1",
+            "n": 11,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 22.27524597904962
+          }
+        ]
+      },
+      "byClass": {
+        "cost": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        },
+        "data-migration": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        },
+        "edge-case": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        },
+        "failure-mode": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        },
+        "performance": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        },
+        "security": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        },
+        "state": {
+          "M1": 1,
+          "M3council": 1,
+          "F1": 1,
+          "M3style": 1,
+          "M3same": 1,
+          "M1R": 1
+        }
+      },
+      "h4_vs_F1": {
+        "aligned": 0,
+        "unaligned": 0
+      },
+      "h4_vs_M3same": {
+        "aligned": 0,
+        "unaligned": 0
+      },
+      "judgeAgreement": {
+        "n": 138,
+        "agree": 0.9565217391304348,
+        "kappa": 0
+      }
+    },
+    {
+      "family": "plan",
+      "provider": "claude",
+      "arms": {
+        "M3same": {
+          "primary": 0.9714285714285714,
+          "cost": 0.2642984,
+          "latencyS": 70.61285714285714,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9476190476190476,
+          "implCost": 0.03771417142857143
+        },
+        "F1": {
+          "primary": 0.9714285714285714,
+          "cost": 0.12899818571428573,
+          "latencyS": 48.562428571428576,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9714285714285714,
+          "implCost": 0.036673899999999995
+        },
+        "P0": {
+          "primary": 0.9428571428571428,
+          "cost": 0,
+          "latencyS": 0,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": null,
+          "implCost": 0.029404028571428573
+        },
+        "M1": {
+          "primary": 0.9714285714285714,
+          "cost": 0.06205385714285715,
+          "latencyS": 36.382,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9714285714285714,
+          "implCost": 0.035311357142857144
+        },
+        "M1R": {
+          "primary": 0.9714285714285714,
+          "cost": 0.13753308571428574,
+          "latencyS": 74.52571428571427,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9714285714285714,
+          "implCost": 0.0358057
+        },
+        "M3style": {
+          "primary": 0.9428571428571428,
+          "cost": 0.25699357142857143,
+          "latencyS": 69.23228571428571,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9428571428571428,
+          "implCost": 0.03871491428571428
+        },
+        "M3council": {
+          "primary": 0.9714285714285714,
+          "cost": 0.2765168714285714,
+          "latencyS": 79.48457142857144,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9714285714285714,
+          "implCost": 0.037446099999999996
+        }
+      },
+      "contrasts": {
+        "primary": [
+          {
+            "a": "M3council",
+            "b": "F1",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 2.1435717866685384,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3same",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.046229835021973,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3style",
+            "n": 7,
+            "diff": 0.028571428571428564,
+            "sdDiff": 0.07559289460184544,
+            "ci": [
+              0,
+              0.0857142857142857
+            ],
+            "pBoot": 0.6738,
+            "wilcoxon": {
+              "n": 1,
+              "p": null
+            },
+            "costRatio": 1.0759680481168232,
+            "pHolm": 1
+          }
+        ],
+        "secondary": [
+          {
+            "a": "M3council",
+            "b": "M1R",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 2.010548007357398
+          },
+          {
+            "a": "F1",
+            "b": "M1",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 2.0788101119534415
+          },
+          {
+            "a": "M1",
+            "b": "P0",
+            "n": 7,
+            "diff": 0.028571428571428564,
+            "sdDiff": 0.07559289460184544,
+            "ci": [
+              0,
+              0.0857142857142857
+            ],
+            "pBoot": 0.6908,
+            "wilcoxon": {
+              "n": 1,
+              "p": null
+            },
+            "costRatio": null
+          }
+        ]
+      }
+    },
+    {
+      "family": "plan",
+      "provider": "codex",
+      "arms": {
+        "P0": {
+          "primary": 0.9142857142857144,
+          "cost": 0,
+          "latencyS": 0,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": null,
+          "implCost": 0.02844667142857143
+        },
+        "M3style": {
+          "primary": 0.9761904761904762,
+          "cost": 0.05854634285714285,
+          "latencyS": 87.39099999999999,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9761904761904762,
+          "implCost": 0.04930628571428571
+        },
+        "M1R": {
+          "primary": 0.9761904761904762,
+          "cost": 0.02852154285714286,
+          "latencyS": 68.58542857142857,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9761904761904762,
+          "implCost": 0.04450932857142857
+        },
+        "M1": {
+          "primary": 0.9761904761904762,
+          "cost": 0.01495577142857143,
+          "latencyS": 35.032428571428575,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9761904761904762,
+          "implCost": 0.046435300000000006
+        },
+        "M3council": {
+          "primary": 0.9761904761904762,
+          "cost": 0.05287514285714286,
+          "latencyS": 90.0497142857143,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9476190476190476,
+          "implCost": 0.048290657142857144
+        },
+        "F1": {
+          "primary": 1,
+          "cost": 0.2639728571428572,
+          "latencyS": 62.67671428571429,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 1,
+          "implCost": 0.041704757142857145
+        },
+        "M3same": {
+          "primary": 0.9761904761904762,
+          "cost": 0.05134934285714286,
+          "latencyS": 80.98571428571428,
+          "failures": 0,
+          "n": 7,
+          "cases": 7,
+          "coverage": 0.9476190476190476,
+          "implCost": 0.04678268571428572
+        }
+      },
+      "contrasts": {
+        "primary": [
+          {
+            "a": "M3council",
+            "b": "F1",
+            "n": 7,
+            "diff": -0.023809523809523805,
+            "sdDiff": 0.0629940788348712,
+            "ci": [
+              -0.07142857142857141,
+              0
+            ],
+            "pBoot": 0.6722,
+            "wilcoxon": {
+              "n": 1,
+              "p": null
+            },
+            "costRatio": 0.200305226186675,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3same",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.0297141095699096,
+            "pHolm": 1
+          },
+          {
+            "a": "M3council",
+            "b": "M3style",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 0.90313314678189,
+            "pHolm": 1
+          }
+        ],
+        "secondary": [
+          {
+            "a": "M3council",
+            "b": "M1R",
+            "n": 7,
+            "diff": 0,
+            "sdDiff": 0,
+            "ci": [
+              0,
+              0
+            ],
+            "pBoot": 1,
+            "wilcoxon": {
+              "n": 0,
+              "p": null
+            },
+            "costRatio": 1.8538668515227585
+          },
+          {
+            "a": "F1",
+            "b": "M1",
+            "n": 7,
+            "diff": 0.023809523809523805,
+            "sdDiff": 0.0629940788348712,
+            "ci": [
+              0,
+              0.07142857142857141
+            ],
+            "pBoot": 0.6722,
+            "wilcoxon": {
+              "n": 1,
+              "p": null
+            },
+            "costRatio": 17.650233450249498
+          },
+          {
+            "a": "M1",
+            "b": "P0",
+            "n": 7,
+            "diff": 0.06190476190476191,
+            "sdDiff": 0.18300837000548223,
+            "ci": [
+              -0.04761904761904761,
+              0.19999999999999998
+            ],
+            "pBoot": 0.3254,
+            "wilcoxon": {
+              "n": 3,
+              "p": null
+            },
+            "costRatio": null
+          }
+        ]
+      }
+    }
+  ]
+}

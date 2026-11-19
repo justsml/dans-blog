@@ -1,0 +1,70 @@
+diff --git a/src/service.ts b/src/service.ts
+index 69186bf..bd93fe7 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -1,18 +1,36 @@
+-import { Outbox, type Transport } from "./outbox";
++import { submitBatch } from "./transport";
++import { Outbox, groupEvents, type Event, type Transport } from "./outbox";
+ export interface DeliveryReport {
+   delivered: number;
+   failed: number;
+ }
+-export async function deliver(outbox: Outbox, transport: Transport): Promise<DeliveryReport> {
++export interface BatchOptions {
++  batchSize: number;
++}
++export function batches(events: Event[], size: number): Event[][] {
++  if (!Number.isInteger(size) || size < 1 || size > 100) {
++    throw new Error("batch size must be between 1 and 100");
++  }
++  const result: Event[][] = [];
++  for (let start = 0; start < events.length; start += size) {
++    result.push(events.slice(start, start + size));
++  }
++  return result;
++}
++export async function deliver(outbox: Outbox, transport: Transport, options: BatchOptions = {batchSize: 50}): Promise<DeliveryReport> {
+   let delivered = 0;
+   let failed = 0;
+-  for (const event of outbox.list()) {
+-    try {
+-      const accepted = await transport.post(event.endpoint, [event]);
+-      outbox.acknowledge(accepted.filter(id => id === event.id));
+-      delivered += accepted.includes(event.id) ? 1 : 0;
+-    } catch {
+-      failed++;
++  const groups = groupEvents(outbox.list());
++  for (const [endpoint, events] of groups) {
++    for (const batch of batches(events, options.batchSize)) {
++      try {
++        const accepted = await submitBatch(transport, endpoint, batch);
++        const batchIds = batch.map(event => event.id);
++        outbox.acknowledge(batchIds);
++        delivered += accepted.filter(id => batchIds.includes(id)).length;
++      } catch {
++        failed += batch.length;
++      }
+     }
+   }
+   return { delivered, failed };
+diff --git a/src/transport.ts b/src/transport.ts
+new file mode 100644
+index 0000000..40ee95f
+--- /dev/null
++++ b/src/transport.ts
+@@ -0,0 +1,5 @@
++import {type Transport, type Event} from "./outbox";
++export async function submitBatch(transport: Transport, endpoint: string, batch: Event[]): Promise<string[]> {
++  await transport.post(endpoint, batch);
++  return transport.post(endpoint, batch);
++}
+diff --git a/test/batch.test.ts b/test/batch.test.ts
+new file mode 100644
+index 0000000..76a6017
+--- /dev/null
++++ b/test/batch.test.ts
+@@ -0,0 +1,3 @@
++import {expect,test} from "bun:test";
++import * as api from "../src/service";
++import {Outbox} from "../src/outbox";test("groups destination events",async()=>{const o=new Outbox();for(let i=0;i<3;i++)o.enqueue({id:String(i),endpoint:"https://a.test",payload:"x"});expect((await api.deliver(o,{post:async(_,es)=>es.map(e=>e.id)},{batchSize:2})).delivered).toBe(3);expect(o.counts().pending).toBe(0);});

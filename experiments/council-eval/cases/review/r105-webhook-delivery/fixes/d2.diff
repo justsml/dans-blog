@@ -1,0 +1,10 @@
+diff --git a/src/transport.ts b/src/transport.ts
+index 40ee95f..8e02754 100644
+--- a/src/transport.ts
++++ b/src/transport.ts
+@@ -1,5 +1,4 @@
+ import {type Transport, type Event} from "./outbox";
+ export async function submitBatch(transport: Transport, endpoint: string, batch: Event[]): Promise<string[]> {
+-  await transport.post(endpoint, batch);
+   return transport.post(endpoint, batch);
+ }

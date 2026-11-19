@@ -1,0 +1,22 @@
+diff --git i/src/repo.ts w/src/repo.ts
+index a44788a..05c415f 100644
+--- i/src/repo.ts
++++ w/src/repo.ts
+@@ -7,6 +7,8 @@ export interface ScheduleRecord {
+   report_id: string;
+   hour: number;
+   time_zone: string;
++  /** Rows written before time zones existed carry the hour here instead, in UTC. */
++  hour_utc?: number;
+   last_run_at: number | null;
+   created_at: number;
+ }
+@@ -28,7 +30,7 @@ export function fromRecord(r: ScheduleRecord): Schedule {
+     id: r.id,
+     ownerEmail: r.owner_email,
+     reportId: r.report_id,
+-    hour: r.hour,
++    hour: r.hour ?? r.hour_utc,
+     timeZone: r.time_zone ?? "UTC",
+     lastRunAt: r.last_run_at ?? undefined,
+     createdAt: r.created_at,

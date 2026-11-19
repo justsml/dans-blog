@@ -1,0 +1,13 @@
+diff --git i/src/refunds.ts w/src/refunds.ts
+index ae78625..a917f61 100644
+--- i/src/refunds.ts
++++ w/src/refunds.ts
+@@ -29,7 +29,7 @@ export function refundPartial(store: Store, userId: string, orderId: string, amo
+   if (!Number.isInteger(amountCents) || amountCents <= 0) {
+     throw new RefundError("amount must be a positive whole number of cents");
+   }
+-  if (amountCents > order.totalCents) {
++  if (amountCents > order.totalCents - order.refundedCents) {
+     throw new RefundError("refund exceeds order total");
+   }
+   order.refundedCents += amountCents;

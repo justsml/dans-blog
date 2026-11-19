@@ -1,0 +1,8 @@
+{
+  "id": "r206-password-reset",
+  "family": "review",
+  "author": "claude",
+  "description": "A pentest found that password reset links keep working until they expire, even after they have been used, so anyone who later gets into the user's inbox (or a forwarded email) can reset the password again within the 30 minute window. This makes each link single-use: the store records `usedAt`, a new `claim()` marks a link used with a single conditional write so two concurrent submissions cannot both succeed, and a successful reset also retires any other outstanding links for that user. The claim happens after password validation and hashing so a rejected attempt does not burn the link. Tests cover reuse and older links being retired.",
+  "defects": [],
+  "passingTests": ["p1-concurrent-use.test.ts", "p2-failed-attempt-keeps-link.test.ts", "p3-scope.test.ts"]
+}

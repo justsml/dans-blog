@@ -1,0 +1,13 @@
+diff --git a/src/service.ts b/src/service.ts
+index bd93fe7..c8883e9 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -26,7 +26,7 @@ export async function deliver(outbox: Outbox, transport: Transport, options: Bat
+       try {
+         const accepted = await submitBatch(transport, endpoint, batch);
+         const batchIds = batch.map(event => event.id);
+-        outbox.acknowledge(batchIds);
++        outbox.acknowledge(accepted.filter(id => batchIds.includes(id)));
+         delivered += accepted.filter(id => batchIds.includes(id)).length;
+       } catch {
+         failed += batch.length;

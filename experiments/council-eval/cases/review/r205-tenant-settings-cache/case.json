@@ -1,0 +1,26 @@
+{
+  "id": "r205-tenant-settings-cache",
+  "family": "review",
+  "author": "claude",
+  "description": "Every request fetches tenant settings from the config service, which is now our largest source of p99 latency and of load on that service. This adds a per-instance in-memory cache to `SettingsService` with a 30 second TTL. Concurrent misses for the same tenant share one in-flight fetch, and `update()` drops the entry so the instance that made a change sees it right away; other instances converge within the TTL, which is acceptable for settings. Tests cover hit/miss counting, expiry, and read-after-update.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "state",
+      "severity": "high",
+      "file": "src/settings.ts",
+      "lines": [64, 72],
+      "mechanism": "The cache hands every caller the same TenantSettings object, but buildContext in request-context.ts mutates it in place to apply per-request overrides (x-locale, staff feature previews). Once cached, one user's language choice or a staff member's preview features leak into every other request for that tenant until the entry expires.",
+      "test": "d1-request-overrides.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "failure-mode",
+      "severity": "medium",
+      "file": "src/settings.ts",
+      "lines": [69, 71],
+      "mechanism": "The promise is cached before it settles and is never evicted on rejection, so a single transient config-service error (timeout, 503) is replayed to every request for that tenant for the full 30 second TTL instead of being retried.",
+      "test": "d2-transient-failure.test.ts"
+    }
+  ]
+}

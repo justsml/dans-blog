@@ -1,0 +1,14 @@
+{
+  "id": "p202-subscription-proration",
+  "family": "plan",
+  "author": "claude",
+  "task": "Customers can only change plans by canceling and re-subscribing, which loses their billing history. Add mid-period plan changes with proration.\n\nInterface (the account settings page and the admin tool both call this):\n- New module `src/proration.ts` exporting `changePlan(sub: Subscription, newPlanId: string, at: Date): PlanChange` and `class PlanChangeError extends Error` for changes that are not allowed.\n- `interface PlanChange { subscription: Subscription; prorationCents: number }`. `subscription` is the updated subscription (do not mutate the input). `prorationCents` is the price difference between the old and new plan for the time left in the current period: positive means we charge the customer that amount now, negative means the customer is owed that amount.\n- Both upgrades and downgrades are allowed at any time during the period.\n\nThe payments team will call `prorationCents` through to the card processor for upgrades; you do not need to build that part.",
+  "requirements": [
+    { "id": "R1", "kind": "new", "text": "Prorated amounts round in the customer's favour: charges round down to the cent, credits round up (starter→team with a third of the period left is +2666; team→starter is -2667).", "test": "r1-rounding.test.ts", "clue": "docs/adr/0004-proration-rounding.md" },
+    { "id": "R2", "kind": "new", "text": "Changing to a plan in a different currency than the subscription is rejected; the subscription is unchanged.", "test": "r2-currency.test.ts", "clue": "README.md currency paragraph; currency field in data/plans.json" },
+    { "id": "R3", "kind": "new", "text": "Canceled subscriptions are read-only: changePlan throws for them.", "test": "r3-canceled.test.ts", "clue": "src/subscription.ts assertMutable doc comment" },
+    { "id": "R4", "kind": "new", "text": "A plan change during a trial changes the plan but prorates nothing (0), since trials are never invoiced.", "test": "r4-trial.test.ts", "clue": "docs/adr/0001-billing-periods.md trial paragraph" },
+    { "id": "R5", "kind": "new", "text": "A downgrade's credit is added to subscription.creditCents (on top of existing credit) so renewalInvoice takes it off upcoming invoices.", "test": "r5-credit-balance.test.ts", "clue": "src/subscription.ts creditCents doc comment; src/invoices.ts renewalInvoice" },
+    { "id": "R6", "kind": "preserve", "text": "Renewal periods and renewal invoices for subscriptions that never change plan are unchanged.", "test": "r6-renewals-unchanged.test.ts", "clue": "src/subscription.ts renew, src/invoices.ts renewalInvoice" }
+  ]
+}

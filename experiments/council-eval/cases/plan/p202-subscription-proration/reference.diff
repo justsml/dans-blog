@@ -1,0 +1,80 @@
+diff --git c/src/proration.ts i/src/proration.ts
+new file mode 100644
+index 0000000..ff8595e
+--- /dev/null
++++ i/src/proration.ts
+@@ -0,0 +1,51 @@
++import { UnknownPlanError, getPlan } from "./plans";
++import { type Subscription, SubscriptionError, assertMutable } from "./subscription";
++
++export class PlanChangeError extends Error {}
++
++export interface PlanChange {
++  subscription: Subscription;
++  /** Positive: charged now. Negative: credited to the customer. */
++  prorationCents: number;
++}
++
++/**
++ * Switches plans mid-period. The customer pays (or is credited) the price difference
++ * for the time left in the current period; the period itself does not move (ADR 0001).
++ */
++export function changePlan(sub: Subscription, newPlanId: string, at: Date): PlanChange {
++  try {
++    assertMutable(sub);
++  } catch (e) {
++    if (e instanceof SubscriptionError) throw new PlanChangeError(e.message);
++    throw e;
++  }
++  let to;
++  try {
++    to = getPlan(newPlanId);
++  } catch (e) {
++    if (e instanceof UnknownPlanError) throw new PlanChangeError(e.message);
++    throw e;
++  }
++  const from = getPlan(sub.planId);
++  if (to.id === from.id) throw new PlanChangeError(`already on ${to.id}`);
++  if (to.currency !== sub.currency) {
++    throw new PlanChangeError(`cannot move a ${sub.currency} subscription to a ${to.currency} plan`);
++  }
++  const now = at.getTime();
++  if (now < sub.currentPeriodStart || now >= sub.currentPeriodEnd) {
++    throw new PlanChangeError("change time is outside the current period");
++  }
++
++  const changed: Subscription = { ...sub, planId: to.id };
++  // Trials are not invoiced (ADR 0001), so there is nothing to prorate.
++  if (sub.status === "trialing") return { subscription: changed, prorationCents: 0 };
++
++  const remaining = sub.currentPeriodEnd - now;
++  const length = sub.currentPeriodEnd - sub.currentPeriodStart;
++  // ADR 0004: round in the customer's favour. Flooring the signed amount rounds a
++  // charge down and a credit up.
++  const prorationCents = Math.floor(((to.priceCents - from.priceCents) * remaining) / length);
++  if (prorationCents < 0) changed.creditCents = sub.creditCents - prorationCents;
++  return { subscription: changed, prorationCents };
++}
+diff --git c/test/billing.test.ts i/test/billing.test.ts
+index aeb75f0..39ba18b 100644
+--- c/test/billing.test.ts
++++ i/test/billing.test.ts
+@@ -1,5 +1,6 @@
+ import { expect, test } from "bun:test";
+ import { renewalInvoice } from "../src/invoices";
++import { changePlan } from "../src/proration";
+ import { SubscriptionError, addMonths, cancel, renew, startSubscription } from "../src/subscription";
+ 
+ const jan31 = Date.UTC(2027, 0, 31, 9, 30);
+@@ -29,3 +30,11 @@ test("canceled subscriptions cannot renew", () => {
+   const sub = cancel(startSubscription({ id: "s1", customerId: "c1", planId: "pro", at: jan31 }));
+   expect(() => renew(sub)).toThrow(SubscriptionError);
+ });
++
++test("upgrading halfway through a period charges half the difference", () => {
++  const sub = startSubscription({ id: "s1", customerId: "c1", planId: "starter", at: Date.UTC(2027, 3, 1) });
++  const change = changePlan(sub, "pro", new Date(Date.UTC(2027, 3, 16)));
++  expect(change.prorationCents).toBe(1_500);
++  expect(change.subscription.planId).toBe("pro");
++  expect(change.subscription.currentPeriodEnd).toBe(sub.currentPeriodEnd);
++});

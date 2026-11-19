@@ -1,0 +1,27 @@
+diff --git a/src/service.ts b/src/service.ts
+index cb992b2..7fcb998 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -24,3 +24,22 @@ export function companyBalance(store: InvoiceStore, company: string): number {
+     .filter(invoice => invoice.status === "issued")
+     .reduce((sum, invoice) => sum + amountDue(invoice), 0);
+ }
++
++export async function issueInvoice(store: InvoiceStore, companyId: string, invoiceId: string): Promise<Invoice> {
++  return store.withCompany(companyId, async () => {
++    const invoice = store.get(invoiceId);
++    if (!invoice || invoice.companyId !== companyId) throw new InvoiceError("invoice not found");
++    if (invoice.status === "void") throw new InvoiceError("invoice voided");
++    if (invoice.status === "issued") return invoice;
++    const highest = store.list(companyId).reduce(
++      (max, row) => Math.max(max, row.number ?? 0), 0,
++    );
++    const issued: Invoice = {
++      ...invoice,
++      number: highest + 1,
++      status: "issued",
++    };
++    await store.save(issued);
++    return issued;
++  });
++}

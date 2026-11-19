@@ -1,0 +1,61 @@
+diff --git a/src/service.ts b/src/service.ts
+index 71acb53..cbd2adf 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -13,18 +13,44 @@ export function parseCsv(csv: string): ImportRow[] {
+ export interface ImportResult {
+   created: number;
+   skipped: number;
++  updated: number;
+ }
+-export function importUsers(users: Users, company: string, csv: string): ImportResult {
++export function importUsers(users: Users, company: string, csv: string, mode: "skip" | "update" = "skip"): ImportResult {
+   const rows = parseCsv(csv);
++  let updated = 0;
+   let created = 0;
+   let skipped = 0;
+   for (const row of rows) {
+-    if (users.find(company, row.email)) {
++    const existing = mode === "update"
++      ? users.findByEmail(row.email)
++      : users.find(company, row.email);
++    if (existing && mode === "update") {
++      updateImportedUser(users, existing, row);
++      updated++;
++      continue;
++    }
++    if (existing) {
+       skipped++;
+       continue;
+     }
+     users.insert(company, row.email, row.name);
+     created++;
+   }
+-  return { created, skipped };
++  return { created, skipped, updated };
++}
++
++function updateImportedUser(users: Users, user: import("./users").User, row: ImportRow): void {
++  const patch = {
++    name: row.name,
++    role: "member" as const,
++  };
++  users.update(user, patch);
++}
++
++export function summarize(result: ImportResult): string {
++  return [
++    result.created + " created",
++    result.updated + " updated",
++    result.skipped + " skipped",
++  ].join(", ");
+ }
+diff --git a/test/update.test.ts b/test/update.test.ts
+new file mode 100644
+index 0000000..54cfda7
+--- /dev/null
++++ b/test/update.test.ts
+@@ -0,0 +1,3 @@
++import {expect,test} from "bun:test";
++import * as api from "../src/service";
++import {Users} from "../src/users";test("updates a matching name",()=>{const u=new Users();u.insert("a","a@x.test","Old");expect(api.importUsers(u,"a","email,name\na@x.test,New","update").updated).toBe(1);expect(u.list("a")[0].name).toBe("New");});

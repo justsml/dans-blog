@@ -1,0 +1,68 @@
+diff --git a/src/service.ts b/src/service.ts
+index 7c93a35..5365964 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -4,15 +4,34 @@ export interface RunResult {
+   ran: boolean;
+   status?: string;
+ }
++export interface RetryPolicy {
++  baseMs: number;
++  capMs: number;
++}
++export const retryPolicy: RetryPolicy = { baseMs: 1000, capMs: 60_000 };
++export function retryDelay(attempt: number, policy = retryPolicy): number {
++  if (attempt < 1) throw new Error("attempt must be positive");
++  return Math.min(policy.capMs, policy.baseMs * 2 ** (attempt - 1));
++}
++export function retryable(error: unknown): boolean {
++  return !(error instanceof TypeError);
++}
+ export async function run(queue: Queue, id: string, handler: Handler, now = Date.now()): Promise<RunResult> {
+-  const job = queue.claim(id, now);
++  const job = queue.get(id);
++  if (!job || job.status !== "queued" || job.availableAt > now) return { ran: false };
+   if (!job) return { ran: false };
++  job.attempts++;
+   try {
+     await handler(job.payload);
+     job.status = "done";
+   } catch (error) {
+     job.error = String(error);
+-    job.status = "failed";
++    if (retryable(error)) {
++      job.availableAt = now + retryDelay(job.attempts);
++      job.status = "queued";
++    } else {
++      job.status = "failed";
++    }
+   }
+   return { ran: true, status: job.status };
+ }
+diff --git a/test/contracts.test.ts b/test/contracts.test.ts
+new file mode 100644
+index 0000000..1c37da8
+--- /dev/null
++++ b/test/contracts.test.ts
+@@ -0,0 +1,10 @@
++import {expect, test} from "bun:test";
++import {run} from "../src/service";
++import {Queue} from "../src/queue";
++test("type errors are terminal without another scheduled attempt", async () => {
++  const queue = new Queue();
++  queue.enqueue("j", "payload");
++  await run(queue, "j", async () => { throw new TypeError("invalid payload"); }, 0);
++  expect(queue.get("j")?.status).toBe("failed");
++  expect(queue.ready(100000)).toEqual([]);
++});
+diff --git a/test/retries.test.ts b/test/retries.test.ts
+new file mode 100644
+index 0000000..3681607
+--- /dev/null
++++ b/test/retries.test.ts
+@@ -0,0 +1,5 @@
++import {expect,test} from "bun:test";
++import * as api from "../src/service";
++import {Queue} from "../src/queue";
++test("transient errors schedule backoff",async()=>{const q=new Queue();q.enqueue("j","x");await api.run(q,"j",async()=>{throw Error("offline")},0);expect(q.get("j")?.availableAt).toBe(1000);});
++test("delay caps at policy limit",()=>{expect(api.retryDelay(20)).toBe(60000);});

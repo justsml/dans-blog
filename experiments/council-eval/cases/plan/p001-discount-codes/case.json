@@ -1,0 +1,13 @@
+{
+  "id": "p001-discount-codes",
+  "family": "plan",
+  "author": "claude",
+  "task": "Marketing wants promotional codes at checkout. Add discount codes to the cart.\n\nInterface (other teams are already coding against this):\n- `src/cart.ts` exports `applyDiscount(cart: Cart, code: string, now?: Date): Cart`, which returns a new cart with the code applied, and `class DiscountError extends Error`, thrown for a code that cannot be used.\n- `cartTotal(cart)` returns the amount to charge after the discount.\n- Codes come from `data/codes.json`. A code is either a percentage off the subtotal or a fixed number of cents off.\n\nA cart holds at most one code; applying a second replaces the first.",
+  "requirements": [
+    { "id": "R1", "kind": "new", "text": "Percentage discounts are rounded down to the cent: 15% off 999 cents takes off 149, total 850.", "test": "r1-rounding.test.ts", "clue": "docs/adr/0002-money.md" },
+    { "id": "R2", "kind": "new", "text": "A fixed discount larger than the subtotal brings the total to 0, never below.", "test": "r2-no-negative.test.ts", "clue": "src/cart.ts cartTotal doc comment: payment provider rejects negative amounts" },
+    { "id": "R3", "kind": "new", "text": "Code lookup ignores case: 'spring15' applies SPRING15.", "test": "r3-case.test.ts", "clue": "README.md data/codes.json note" },
+    { "id": "R4", "kind": "new", "text": "An expired code (now >= expiresAt) throws DiscountError.", "test": "r4-expiry.test.ts", "clue": "data/codes.json expiresAt field" },
+    { "id": "R5", "kind": "preserve", "text": "Carts without a code total exactly as before, and checkoutRequest keeps working unchanged.", "test": "r5-preserve.test.ts", "clue": "src/checkout.ts" }
+  ]
+}

@@ -1,0 +1,55 @@
+diff --git a/src/service.ts b/src/service.ts
+index b6017c0..3b634a7 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -1,15 +1,17 @@
+-import { type FlagRepository } from "./flags";
++import { bucket, type Flag, type FlagRepository } from "./flags";
+ export class FlagService {
+   constructor(private repo: FlagRepository) {}
+   async enabled(key: string, subject: string): Promise<boolean> {
+     const flag = await this.repo.get(key);
+-    return flag?.enabled ?? false;
++    return evaluate(flag, subject);
+   }
+   async snapshot(keys: string[], subject: string): Promise<Record<string, boolean>> {
+     if (keys.length > 100) throw new Error("too many flags");
+-    const flags = await this.repo.getMany(keys);
+-    const byKey = new Map(flags.map(flag => [flag.key, flag]));
+-    return Object.fromEntries(keys.map(key => [key, byKey.get(key)?.enabled ?? false]));
++    const result: Record<string, boolean> = {};
++    for (const key of keys) {
++      result[key] = await this.enabled(key, subject);
++    }
++    return result;
+   }
+ }
+ export interface ClientContext {
+@@ -22,3 +24,17 @@ export async function clientConfiguration(service: FlagService, context: ClientC
+     flags: await service.snapshot(context.requestedKeys, context.subject),
+   };
+ }
++
++export function evaluate(flag: Flag | undefined, subject: string): boolean {
++  if (!flag || !flag.enabled) return false;
++  if (flag.percent === undefined) return true;
++  if (!subject) return false;
++  const assigned = bucket(subject, flag.salt ?? flag.key);
++  return assigned <= flag.percent * 100;
++}
++
++export function rolloutSummary(flag: Flag): string {
++  if (!flag.enabled) return "disabled";
++  if (flag.percent === undefined) return "everyone";
++  return flag.percent + "% of subjects";
++}
+diff --git a/test/rollout.test.ts b/test/rollout.test.ts
+new file mode 100644
+index 0000000..56515e0
+--- /dev/null
++++ b/test/rollout.test.ts
+@@ -0,0 +1,4 @@
++import {expect,test} from "bun:test";
++import * as api from "../src/service";
++import {MemoryFlags} from "../src/flags";test("full rollout includes signed in subjects",async()=>{const s=new api.FlagService(new MemoryFlags([{key:"a",enabled:true,percent:100}]));expect(await s.snapshot(["a","missing"],"u")).toEqual({a:true,missing:false});});
++test("disabled rollout excludes subjects",()=>{expect(api.evaluate({key:"a",enabled:false,percent:50},"u")).toBe(false);});

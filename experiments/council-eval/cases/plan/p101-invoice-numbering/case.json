@@ -1,0 +1,43 @@
+{
+  "id": "p101-invoice-numbering",
+  "family": "plan",
+  "author": "codex",
+  "task": "Add sequential invoice issuance per company. Export `issueInvoice(store: InvoiceStore, companyId: string, invoiceId: string): Promise<Invoice>` from `src/service.ts`, assigning a number and returning the issued invoice. Use the existing exported `InvoiceError` for invalid issuance requests; storage errors may propagate.",
+  "requirements": [
+    {
+      "id": "R1",
+      "kind": "new",
+      "text": "Allocate after all existing company numbers, including void records; companies have independent sequences.",
+      "clue": "docs/issuance.md; src/store.ts Invoice.number",
+      "test": "r1.test.ts"
+    },
+    {
+      "id": "R2",
+      "kind": "new",
+      "text": "Concurrent issuance is unique and repeated issuance is idempotent.",
+      "clue": "src/store.ts withCompany; docs/issuance.md",
+      "test": "r2.test.ts"
+    },
+    {
+      "id": "R3",
+      "kind": "new",
+      "text": "A failed save leaves the invoice draft and does not consume a number.",
+      "clue": "docs/issuance.md; src/store.ts failNextSave",
+      "test": "r3.test.ts"
+    },
+    {
+      "id": "R4",
+      "kind": "new",
+      "text": "Reject foreign and void invoices with InvoiceError without changing them.",
+      "clue": "docs/issuance.md",
+      "test": "r4.test.ts"
+    },
+    {
+      "id": "R5",
+      "kind": "preserve",
+      "text": "Draft validation, amount calculations and labels retain their existing behavior.",
+      "clue": "src/service.ts createDraft, amountDue, invoiceLabel",
+      "test": "r5.test.ts"
+    }
+  ]
+}

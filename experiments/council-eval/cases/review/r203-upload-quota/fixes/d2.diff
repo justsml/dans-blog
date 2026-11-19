@@ -1,0 +1,14 @@
+diff --git i/src/files.ts w/src/files.ts
+index b5198c0..14b3e00 100644
+--- i/src/files.ts
++++ w/src/files.ts
+@@ -52,7 +52,8 @@ export class FileService {
+     if (data.byteLength > MAX_FILE_BYTES) throw new FileError("file is larger than 100 MB");
+ 
+     const used = await this.usedBytes(ownerId);
+-    if (used + data.byteLength > this.quotaBytes) throw new QuotaExceededError(used, this.quotaBytes);
++    const replaced = this.index.get(key)?.size ?? 0;
++    if (used - replaced + data.byteLength > this.quotaBytes) throw new QuotaExceededError(used, this.quotaBytes);
+ 
+     await this.blobs.put(key, data, contentType);
+     const meta: FileMeta = { key, ownerId, name, size: data.byteLength, contentType, uploadedAt: this.clock() };

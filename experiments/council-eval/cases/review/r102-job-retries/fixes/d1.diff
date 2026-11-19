@@ -1,0 +1,12 @@
+diff --git a/src/service.ts b/src/service.ts
+index 5365964..6257517 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -20,6 +20,7 @@ export async function run(queue: Queue, id: string, handler: Handler, now = Date
+   const job = queue.get(id);
+   if (!job || job.status !== "queued" || job.availableAt > now) return { ran: false };
+   if (!job) return { ran: false };
++  job.status = "running";
+   job.attempts++;
+   try {
+     await handler(job.payload);

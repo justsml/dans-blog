@@ -1,0 +1,191 @@
+diff --git a/src/db.ts b/src/db.ts
+index 77d2f14..18462bd 100644
+--- a/src/db.ts
++++ b/src/db.ts
+@@ -13,6 +13,8 @@ export interface OrderRow {
+ export interface OrderQuery {
+   accountId: string;
+   status?: OrderStatus;
++  /** Only rows created strictly before this time (keyset pagination). */
++  createdBefore?: number;
+   offset?: number;
+   limit: number;
+ }
+@@ -34,12 +36,13 @@ export class OrderDb {
+   query(q: OrderQuery): OrderRow[] {
+     const matching = this.rows
+       .filter((r) => r.accountId === q.accountId && (!q.status || r.status === q.status))
++      .filter((r) => q.createdBefore === undefined || r.createdAt < q.createdBefore)
+       .sort(byNewest);
+     const start = q.offset ?? 0;
+     return matching.slice(start, start + q.limit);
+   }
+ 
+-  count(q: Omit<OrderQuery, "offset" | "limit">): number {
++  count(q: Omit<OrderQuery, "offset" | "limit" | "createdBefore">): number {
+     return this.rows.filter((r) => r.accountId === q.accountId && (!q.status || r.status === q.status)).length;
+   }
+ }
+diff --git a/src/handler.ts b/src/handler.ts
+index 2707b4b..28a2c90 100644
+--- a/src/handler.ts
++++ b/src/handler.ts
+@@ -17,8 +17,8 @@ function parseParams(url: URL): ListParams {
+   }
+   const limit = url.searchParams.get("limit");
+   if (limit) params.limit = Number(limit);
+-  const offset = url.searchParams.get("offset");
+-  if (offset) params.offset = Number(offset);
++  const cursor = url.searchParams.get("cursor");
++  if (cursor) params.cursor = cursor;
+   return params;
+ }
+ 
+diff --git a/src/orders-api.ts b/src/orders-api.ts
+index a565268..493bff7 100644
+--- a/src/orders-api.ts
++++ b/src/orders-api.ts
+@@ -9,7 +9,8 @@ export interface Deps {
+ export interface ListParams {
+   status?: OrderStatus;
+   limit?: number;
+-  offset?: number;
++  /** Opaque value from a previous page's `nextCursor`. */
++  cursor?: string;
+ }
+ 
+ export interface OrderSummary {
+@@ -22,7 +23,7 @@ export interface OrderSummary {
+ 
+ export interface OrderPage {
+   items: OrderSummary[];
+-  nextOffset: number | null;
++  nextCursor: string | null;
+ }
+ 
+ export class ListError extends Error {}
+@@ -37,30 +38,71 @@ function pageSize(limit = DEFAULT_PAGE_SIZE): number {
+   return limit;
+ }
+ 
++interface Scope {
++  accountId: string;
++  status?: OrderStatus;
++}
++
++interface Position {
++  createdAt: number;
++}
++
++interface Cursor {
++  scope: Scope;
++  after: Position;
++}
++
++function encodeCursor(cursor: Cursor): string {
++  return Buffer.from(JSON.stringify(cursor)).toString("base64url");
++}
++
++function decodeCursor(raw: string): Cursor {
++  try {
++    const cursor = JSON.parse(Buffer.from(raw, "base64url").toString("utf8"));
++    if (typeof cursor?.scope?.accountId === "string" && typeof cursor?.after?.createdAt === "number") return cursor;
++  } catch {}
++  throw new ListError("invalid cursor");
++}
++
++function positionOf(row: OrderRow): Position {
++  return { createdAt: row.createdAt };
++}
++
++function fetchPage(db: OrderDb, scope: Scope, after: Position | undefined, limit: number): OrderRow[] {
++  return db.query({ ...scope, createdBefore: after?.createdAt, limit });
++}
++
+ /**
+  * Orders for the signed-in merchant, newest first. `accountId` always comes from the
+  * session, never from anything the client sends.
+  */
+ export async function listOrders(deps: Deps, accountId: string, params: ListParams = {}): Promise<OrderPage> {
+   const limit = pageSize(params.limit);
+-  const offset = params.offset ?? 0;
+-  if (!Number.isInteger(offset) || offset < 0) throw new ListError("offset must be a non-negative integer");
++  const cursor = params.cursor ? decodeCursor(params.cursor) : undefined;
++  // Later pages reuse the filters from the first request, so a client that drops the
++  // query string while scrolling still sees one consistent list.
++  const scope: Scope = cursor?.scope ?? { accountId, status: params.status };
+ 
+-  const rows = deps.db.query({ accountId, status: params.status, offset, limit: limit + 1 });
++  const rows = fetchPage(deps.db, scope, cursor?.after, limit + 1);
+   const page = rows.slice(0, limit);
++  const last = page[page.length - 1];
+   return {
+-    items: await summarize(deps.customers, page),
+-    nextOffset: rows.length > limit ? offset + limit : null,
++    items: await summarizeAll(deps.customers, page),
++    nextCursor: rows.length > limit ? encodeCursor({ scope, after: positionOf(last) }) : null,
+   };
+ }
+ 
+-async function summarize(customers: CustomerDirectory, rows: OrderRow[]): Promise<OrderSummary[]> {
+-  const byId = await customers.getMany([...new Set(rows.map((r) => r.customerId))]);
+-  return rows.map((r) => ({
+-    id: r.id,
+-    status: r.status,
+-    totalCents: r.totalCents,
+-    createdAt: r.createdAt,
+-    customerName: byId.get(r.customerId)?.name ?? "Unknown customer",
+-  }));
++function summarizeAll(customers: CustomerDirectory, rows: OrderRow[]): Promise<OrderSummary[]> {
++  return Promise.all(rows.map((r) => summarize(customers, r)));
++}
++
++async function summarize(customers: CustomerDirectory, row: OrderRow): Promise<OrderSummary> {
++  const customer = await customers.get(row.customerId);
++  return {
++    id: row.id,
++    status: row.status,
++    totalCents: row.totalCents,
++    createdAt: row.createdAt,
++    customerName: customer?.name ?? "Unknown customer",
++  };
+ }
+diff --git a/test/orders-api.test.ts b/test/orders-api.test.ts
+index 205d7fa..39a5e98 100644
+--- a/test/orders-api.test.ts
++++ b/test/orders-api.test.ts
+@@ -40,15 +40,28 @@ test("handler maps bad input to 400", async () => {
+   expect(res.status).toBe(400);
+ });
+ 
+-test("offset pages walk the whole list", async () => {
++test("cursor pages walk the whole list", async () => {
+   const deps = fixture(7);
+   const seen: string[] = [];
+-  let offset: number | null = 0;
+-  while (offset !== null) {
+-    const page = await listOrders(deps, "acct_1", { limit: 3, offset });
++  let cursor: string | undefined;
++  do {
++    const page = await listOrders(deps, "acct_1", { limit: 3, cursor });
+     seen.push(...page.items.map((o) => o.id));
+-    offset = page.nextOffset;
+-  }
++    cursor = page.nextCursor ?? undefined;
++  } while (cursor);
+   expect(seen).toHaveLength(7);
+   expect(new Set(seen).size).toBe(7);
+ });
++
++test("later pages keep the status filter from the first request", async () => {
++  const deps = fixture(12);
++  const first = await listOrders(deps, "acct_1", { status: "refunded", limit: 2 });
++  const second = await listOrders(deps, "acct_1", { cursor: first.nextCursor! });
++  expect([...first.items, ...second.items].map((o) => o.status)).toEqual(["refunded", "refunded", "refunded"]);
++  expect(second.nextCursor).toBeNull();
++});
++
++test("garbage cursors are a 400", async () => {
++  const res = await handleListOrders(fixture(1), { userId: "u", accountId: "acct_1" }, new URL("http://x/api/orders?cursor=nope"));
++  expect(res.status).toBe(400);
++});

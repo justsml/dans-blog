@@ -1,0 +1,32 @@
+{
+  "id": "r104-feature-flags",
+  "family": "review",
+  "author": "codex",
+  "description": "Introduce deterministic percentage rollouts with stable subject buckets and rollout summaries. Client snapshots evaluate the same rollout rules as individual flag checks.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "performance",
+      "severity": "medium",
+      "file": "src/service.ts",
+      "lines": [
+        10,
+        14
+      ],
+      "mechanism": "Snapshot replaces the repository’s bounded bulk query with a serial read per flag. A 100-flag client request produces 100 remote round trips instead of one.",
+      "test": "d1.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "edge-case",
+      "severity": "low",
+      "file": "src/service.ts",
+      "lines": [
+        33,
+        33
+      ],
+      "mechanism": "The shared bucket algorithm returns values starting at zero. Inclusive comparison enables bucket zero at a zero-percent rollout and admits an extra bucket at other boundaries.",
+      "test": "d2.test.ts"
+    }
+  ]
+}

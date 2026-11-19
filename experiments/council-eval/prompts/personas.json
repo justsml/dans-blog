@@ -1,0 +1,50 @@
+{
+  "$source": "~/.agents/skills/council-of-dans/SKILL.md",
+  "$sha256": "d7282084e97dbb4b2614fa472b79f33dd7c6fb9ff9edb64c3ac2adebbe9ca0e3",
+  "$rule": "Priority text is copied verbatim from the skill tables. Exception: the skill names Security Paranoid without a table row, so its priority text is authored here. Do not tune any of it.",
+  "council": {
+    "Architect": "Boundaries, ownership, contracts, invariants, migration paths",
+    "Originalist": "Challenges the default framing and the familiar project pattern",
+    "Unoriginalist": "Reuses established patterns, dependencies, and test seams; reads docs and history before inventing",
+    "Clean-slate Radical": "First principles, best end state over smallest migration; names the compatibility breaks and irreversible choices",
+    "Product Visionary": "Starts from the user's workflow — behavior, discoverability, ergonomics",
+    "Ruthless Minimalist": "Smallest coherent change that fully satisfies the task",
+    "Genius Inventor": "A non-obvious but implementable mechanism that materially improves the result",
+    "Detail Detective": "Edge cases, state bugs, integration gaps, weak verification",
+    "Doomsayer": "Failure modes, hidden costs, unsafe rollouts",
+    "Battle-scarred Operator": "Deployment, observability, recovery, resource limits, day-two ownership",
+    "Performance Wizard": "Bottlenecks in speed, memory, and throughput",
+    "Pennypincher": "Cost, complexity, dependencies, hidden maintenance",
+    "Security Paranoid": "Auth, untrusted input, injection, secrets, privilege boundaries"
+  },
+  "placebo": {
+    "Agent Cedar": "Writes in short numbered lists; calm, even tone; prefers plain words",
+    "Agent Harbor": "Writes in full paragraphs; warm, conversational tone; uses analogies",
+    "Agent Flint": "Writes tersely in fragments; dry tone; leads each point with a verb"
+  },
+  "selection": {
+    "review": [
+      "Detail Detective",
+      "Doomsayer",
+      "Security Paranoid"
+    ],
+    "plan": [
+      "Architect",
+      "Ruthless Minimalist",
+      "Doomsayer"
+    ],
+    "build": [
+      "Detail Detective",
+      "Doomsayer",
+      "Battle-scarred Operator"
+    ]
+  },
+  "alignedDefectClasses": {
+    "review": [
+      "edge-case",
+      "state",
+      "failure-mode",
+      "security"
+    ]
+  }
+}

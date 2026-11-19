@@ -1,0 +1,14 @@
+{
+  "id": "p201-shipping-rates",
+  "family": "plan",
+  "author": "claude",
+  "task": "We charge a flat $7.99 for shipping, which loses money on heavy and remote orders and overcharges small local ones. Replace it with the carrier's real rate.\n\nInterface (the label-buying service will call `quoteShipping` directly):\n- New module `src/shipping.ts` exporting `quoteShipping(parcel: Parcel, destinationZip: string): Quote`, where `Parcel` is the existing type from `src/packaging.ts` and `interface Quote { zone: number; billableGrams: number; amountCents: number }`.\n- `amountCents` is what the carrier will charge us for the parcel, which is what we pass on to the customer.\n- Export `class ShippingError extends Error`, thrown when a parcel cannot be quoted (bad or unknown ZIP, or a parcel the carrier will not accept).\n- `checkoutTotal(lines, destinationZip)` in `src/checkout.ts` takes the destination ZIP as a new second argument and charges the quote for `parcelFor(lines)` instead of the flat fee.\n\nZones and prices come from `data/zones.json` and `data/rates.json`.",
+  "requirements": [
+    { "id": "R1", "kind": "new", "text": "Billable weight is the greater of actual weight and dimensional weight (L×W×H cm / 5000 kg): a 2 kg parcel of 40×30×20 cm bills as 5 kg.", "test": "r1-dimensional.test.ts", "clue": "docs/carrier-rate-card.md, Billable weight" },
+    { "id": "R2", "kind": "new", "text": "Billable weight rounds up to the next 0.5 kg: 1001 g bills as 1500 g.", "test": "r2-round-up.test.ts", "clue": "docs/carrier-rate-card.md, Billable weight" },
+    { "id": "R3", "kind": "new", "text": "The longest matching ZIP prefix decides the zone, so Hawaii (967), Alaska (995) and Puerto Rico (006) get zone 8 rather than their one-digit regional zone, regardless of entry order in zones.json.", "test": "r3-zone-prefix.test.ts", "clue": "README.md data/zones.json note; overlapping prefixes in data/zones.json" },
+    { "id": "R4", "kind": "new", "text": "The amount includes the fuel surcharge from rates.json, rounded to the nearest cent with halves up (570 cents + 7.5% = 613).", "test": "r4-fuel-surcharge.test.ts", "clue": "docs/carrier-rate-card.md, Price; docs/adr/0003-money-rounding.md" },
+    { "id": "R5", "kind": "new", "text": "Parcels over 30 kg actual weight or with any side over 150 cm throw ShippingError; parcels exactly at the limits are accepted.", "test": "r5-carrier-limits.test.ts", "clue": "docs/carrier-rate-card.md, Limits" },
+    { "id": "R6", "kind": "preserve", "text": "Orders at or above FREE_SHIPPING_THRESHOLD_CENTS still ship free to every destination.", "test": "r6-free-shipping.test.ts", "clue": "src/checkout.ts FREE_SHIPPING_THRESHOLD_CENTS comment" }
+  ]
+}

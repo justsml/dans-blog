@@ -1,0 +1,26 @@
+{
+  "id": "r203-upload-quota",
+  "family": "review",
+  "author": "claude",
+  "description": "Free accounts can currently store unlimited data. This adds a per-user storage quota (5 GiB default, overridable per plan through `quotaBytes`). `upload()` rejects files that would take the user over their quota with a `QuotaExceededError` carrying the used and allowed bytes, and a new `storage()` method returns usage for the settings page. Usage is measured from the bucket so it matches what we are billed for. The check is a soft limit: two simultaneous uploads can overshoot slightly, which product has signed off on. Tests cover rejection, per-user isolation, and space freed by deletes.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "cost",
+      "severity": "medium",
+      "file": "src/files.ts",
+      "lines": [83, 92],
+      "mechanism": "usedBytes lists the user's whole prefix and then issues a billed `head` per object, on every upload. A user with N files pays N+1 storage requests per upload, even though FileIndex already has every file's size and is written alongside each blob.",
+      "test": "d1-billed-requests.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "edge-case",
+      "severity": "medium",
+      "file": "src/files.ts",
+      "lines": [54, 55],
+      "mechanism": "Uploading an existing name replaces the file, but the check adds the new size to usage that still includes the file being replaced. A user near quota cannot overwrite a file with a slightly larger version even though usage after the write would be under quota.",
+      "test": "d2-replace-within-quota.test.ts"
+    }
+  ]
+}

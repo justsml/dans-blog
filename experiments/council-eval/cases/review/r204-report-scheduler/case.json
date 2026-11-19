@@ -1,0 +1,26 @@
+{
+  "id": "r204-report-scheduler",
+  "family": "review",
+  "author": "claude",
+  "description": "Customers outside UTC keep asking why their morning report arrives in the middle of the night. Schedules now store an hour on the owner's wall clock plus an IANA `timeZone` instead of `hourUtc`. `nextRunAt` converts the local hour to UTC with `Intl`, validation rejects unknown zones, the email subject uses the local date, and the table gets `hour` and `time_zone` columns (missing zones default to UTC). Tests cover a Tokyo schedule, round-tripping through the table, and zone validation.",
+  "defects": [
+    {
+      "id": "d1",
+      "class": "edge-case",
+      "severity": "medium",
+      "file": "src/schedules.ts",
+      "lines": [71, 77],
+      "mechanism": "nextRunAt computes the zone offset once, at `after`, then reuses it for the target day and rolls over by adding a fixed 24 hours. When a DST change falls between the last run and the next one, the report goes out an hour early or late (9am instead of 8am in New York on the spring-forward day).",
+      "test": "d1-dst.test.ts"
+    },
+    {
+      "id": "d2",
+      "class": "data-migration",
+      "severity": "high",
+      "file": "src/repo.ts",
+      "lines": [31, 32],
+      "mechanism": "fromRecord reads the new `hour` column, but every existing row only has `hour_utc`, so hour is undefined and nextRunAt returns NaN. In runDue `NaN > now` is false, so every pre-existing schedule counts as due and its report is emailed on every one-minute cron tick.",
+      "test": "d2-existing-rows.test.ts"
+    }
+  ]
+}

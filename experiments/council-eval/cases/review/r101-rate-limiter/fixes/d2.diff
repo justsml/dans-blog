@@ -1,0 +1,13 @@
+diff --git a/src/service.ts b/src/service.ts
+index 91f3247..cf404c6 100644
+--- a/src/service.ts
++++ b/src/service.ts
+@@ -17,7 +17,7 @@ export class RateLimiter {
+   policyFor(tenant: string): Policy {
+     const override = this.policies.get(tenant);
+     return {
+-      requests: override?.requests || defaultPolicy.requests,
++      requests: override?.requests ?? defaultPolicy.requests,
+       windowMs: override?.windowMs ?? defaultPolicy.windowMs,
+     };
+   }
