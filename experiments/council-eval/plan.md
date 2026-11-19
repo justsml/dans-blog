@@ -244,3 +244,20 @@ Goal: show that narrow, orthogonal priorities that each read primary sources com
 **Metrics:** per persona: lookup rate and count (deterministic, `src/lookups.ts`); source quality and Sources-section compliance (blind judge); distinct valid levers the three reach together, and unique finds per persona; cost. Control: three pooled v0 runs, same spend.
 
 **Rules:** tune on pizza-or-not only; confirm once on a second case; no frontier tier; install a variant into `~/.agents/skills/council-of-dans` only after it beats v0 on dev and holds on the second case.
+
+### Round 1 results (loop-01, 5 seeds x 2 vendors x 3 variants; persona stage only; Sonnet 5.5 and Terra)
+
+Report: `runs/loop-01/persona-report.md`. Cost: Claude v0 $0.50/seed, v1 $1.4, v2 $1.2; Codex $0.19, $0.24, $0.27.
+
+| | Claude v0 | v1 | v2 | Codex v0 | v1 | v2 |
+|---|---:|---:|---:|---:|---:|---:|
+| Personas that looked something up | 0% | 100% | 100% | 87% | 100% | 100% |
+| Unverified claims / persona | 4.5 | 2.2 | 2.3 | 0.6 | 0.5 | 0.9 |
+| Pairwise overlap | 0.7 | 0.7 | 0.1 | 0.9 | 1.0 | 0.1 |
+| Levers reached by all three | 8.6 | 8.6 | 9.4 | 5.0 | 4.2 | 7.2 |
+
+- Grounding (v1) fixes lookups and halves unsourced claims on Claude, but does not widen coverage: overlap stays high. It costs Claude ~3x.
+- Focus (v2) is what makes the three combine: overlap 0.7-0.9 to 0.1. Control: random sets of 3/6/9 v0 personas reach 4.9/5.5/5.8 on Codex and 8.6/9.0/9.0 on Claude, so v2's Codex gain (7.2) is not just more samples; the Claude gain (9.4) is small.
+- Threats: unique finds are inflated by design (the lead assigns territories); the lead step sees the repo and may partly decompose the answer; one task; one Claude judge; levers coded, not savings measured.
+- Candidate skill text: `skills/council-of-dans-v2/SKILL.md` (Focus section, sources before proposing, REQUIRED Sources section, detail personas read specs). Not installed.
+- Next: invoke the candidate skill itself (not the harness brief) on dev and on a second case; install only if it holds.
