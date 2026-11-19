@@ -1,7 +1,7 @@
 # Council vs. Upgrade
 
 Decision record for the eval behind the "Personas, Priorities, Profiles" article.
-Hypothesis owner: Dan. Status: **pilot-01 done; the dataset is at ceiling and must get harder before the full run.**
+Hypothesis owner: Dan. Status: **pilot-01 done (review/plan at ceiling). Build family designed; case b001 being authored.**
 
 ## Target behavior and release decision
 
@@ -144,14 +144,55 @@ The persona text itself is never tuned.
 | Author is a subject (Claude frontier) | Opus 5.5 authored r20x/p20x and is the Claude frontier arm | Fable excluded by Dan | Compare Claude `F1 − M1` on Codex-authored vs Claude-authored cases; a gap only on its own cases points to self-preference | Dan |
 | Claude isolation without API key | `--bare` needs `ANTHROPIC_API_KEY` | OAuth path loads user settings | Use API key for the real run, or accept canary-checked fallback | Dan |
 
-## Future arm: review loop to a fixed point (v2, not pre-registered)
+## Build family: implement in a loop (pre-registered 2026-11-18, before any build data)
 
-Motivated by one anecdote, [DocSlurp/doppler#51](https://github.com/DocSlurp/doppler/pull/51):
-"review, fix every Medium+, repeat until a round finds none" took 9 rounds, and 8 of them found a High.
-Family: implementation tasks scored by hidden tests. Arms: `M-council-loop`, `M1-loop`
-(the same reviewer prompt with no personas), and `F1-loop`, all capped at N rounds. Metrics: hidden-test pass rate,
-rounds to stop, cost, and rounds that hit the cap. Risk: the stopping rule trusts reviewer severity, so
-report the severity distribution per arm.
+Motivated by pilot-01's ceiling and by one anecdote, [DocSlurp/doppler#51](https://github.com/DocSlurp/doppler/pull/51).
+In that PR, "review, fix every Medium+, repeat until a round finds none" took 9 rounds, and 8 of them found a High.
+
+**Task.** `b001-resumable-chat`: "closing the browser must not stop the reply" in a small
+LLM chat app (Bun, Postgres, Redis, fake paid LLM, 2 app replicas behind a round-robin
+nginx, compose). The agent works on the real stack. Eleven hidden black-box tests
+(R1–R11) cover:
+- resume without gaps or duplicates
+- cross-replica resume
+- exactly-once upstream calls
+- upstream failure
+- replica killed mid-reply
+- auth on attach and cancel
+- explicit cancel still stops upstream
+- old rows still readable
+- slow readers
+
+The ticket states the interface only. The rest has to be found by reading the repo. The case author is gpt-6.1-sol (not a subject), and it was never told about personas or the hypothesis.
+
+**Arms** (per provider, effort `high`, at most 3 review rounds):
+
+| Arm | Implement | Then |
+|---|---|---|
+| `BM1` | mid | nothing |
+| `BF1` | frontier | nothing (**the upgrade**) |
+| `BM1loop` | mid | loop: 1 mid reviewer, no persona |
+| `BM3loopSame` | mid | loop: 3 identical mid reviewers + synth |
+| `BM3loopCouncil` | mid | loop: 3 council critics + synth (**treatment**) |
+| `BF1loop` | frontier | loop: 1 frontier reviewer (opt-in only, not run by default: cost) |
+
+Loop rules:
+- Each round, the reviewer(s) read the full change (read-only).
+- A fresh implementer session on the same tier fixes every Medium+ finding.
+- The loop stops when a round finds no Medium+ finding, or at the cap.
+
+Review council: Detail Detective, Doomsayer, Battle-scarred Operator. This follows the skill's
+picking rule, which assigns the Operator "for anything on-call"; long-lived streams across rolling deploys qualify.
+
+**Spend.** Frontier models appear only in `BF1`, a single pass. There is no Fable anywhere; Claude frontier is Opus 5.5. `src/build.ts` enforces a hard list-price cap (`--max-usd`, default $60), runs seed by seed, and starts the frontier arms last.
+
+**Primary contrasts:** `BM3loopCouncil − BF1`, `BM3loopCouncil − BM3loopSame`, `BM3loopCouncil − BM1loop`.
+
+**Metric.** Hidden-test pass rate of the final tree, plus per-requirement pass counts. Also reported: rounds used, whether the loop stopped clean, cost, and wall time.
+
+**Honest scope.** There is one task, so n = seeds (3 per arm per provider). The result is a case study, not a population claim. CIs resample runs within each arm.
+
+**Isolation.** Agents and scoring use the eval's own Docker-in-Docker daemon (`src/dind.ts`), never the host daemon. Each run has its own compose project and port block.
 
 ## Threats to validity
 

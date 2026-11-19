@@ -1,0 +1,460 @@
+--- a/docs/operations.md
++++ b/docs/operations.md
+@@ -5,5 +5,8 @@
+ app replicas without sticky sessions. Postgres holds application records;
+ Redis holds rate counters. Service health checks gate startup readiness.
+ 
+-The Stop button closes the current request. On-call can inspect provider
++The Stop button explicitly cancels generation. Stream events are retained with
++the message in Postgres. Reader connections do not own generation. A 200 ms
++heartbeat and a four-second stale threshold bound recovery after replica loss.
++Interrupted work ends in error; it is never automatically billed again. On-call can inspect provider
+ active and client_disconnects counters to confirm the request has ended.
+--- a/public/index.html
++++ b/public/index.html
+@@ -34,13 +34,16 @@
+   </form>
+   <script type="module">
+     const el = (id) => document.getElementById(id);
+-    let chat, controller;
++    let chat = localStorage.getItem("chat"),
++      active;
++    const viewers = new Map();
+     const headers = () => ({
+       Authorization: `Bearer ${el("token").value}`,
+       "Content-Type": "application/json",
+     });
+     async function list() {
+       const r = await fetch("/api/chats", { headers: headers() });
++      if (!r.ok) return;
+       const data = await r.json();
+       el("chats").replaceChildren();
+       for (const c of data.chats) {
+@@ -48,21 +51,96 @@
+         b.textContent = c.title;
+         b.onclick = () => {
+           chat = c.id;
++          localStorage.setItem("chat", chat);
+           load();
+         };
+         el("chats").append(b);
+       }
+     }
++    function stopViewing() {
++      for (const v of viewers.values()) v.abort();
++      viewers.clear();
++    }
++    async function watch(id, response, node, cursor = 0) {
++      if (viewers.has(id)) return;
++      const controller = new AbortController();
++      viewers.set(id, controller);
++      active = id;
++      try {
++        while (!controller.signal.aborted) {
++          try {
++            const r =
++              response ??
++              (await fetch(`/api/messages/${id}/stream?after=${cursor}`, {
++                headers: headers(),
++                signal: controller.signal,
++              }));
++            response = null;
++            if (!r.ok) {
++              if (r.status < 500) return;
++              throw Error("Reconnect");
++            }
++            const reader = r.body.getReader();
++            controller.signal.addEventListener("abort", () => reader.cancel(), {
++              once: true,
++            });
++            let buffer = "";
++            const decoder = new TextDecoder();
++            while (!controller.signal.aborted) {
++              const { value, done } = await reader.read();
++              if (done) break;
++              buffer += decoder.decode(value, { stream: true });
++              let end;
++              while ((end = buffer.indexOf("\n\n")) >= 0) {
++                const block = buffer.slice(0, end);
++                buffer = buffer.slice(end + 2);
++                const lines = block.split("\n");
++                const seq = Number(
++                  lines.find((l) => l.startsWith("id:"))?.slice(3),
++                );
++                if (!seq || seq <= cursor) continue;
++                cursor = seq;
++                const event = lines
++                  .find((l) => l.startsWith("event:"))
++                  ?.slice(6)
++                  .trim();
++                const data = JSON.parse(
++                  lines.find((l) => l.startsWith("data:")).slice(5),
++                );
++                if (event === "token") node.textContent += data.text;
++                if (event === "done" || event === "error") {
++                  await reader.cancel();
++                  node.textContent += ` (${data.status})`;
++                  return;
++                }
++              }
++            }
++          } catch {
++            if (controller.signal.aborted) return;
++          }
++          await new Promise((r) => setTimeout(r, 400));
++        }
++      } finally {
++        viewers.delete(id);
++        if (active === id) active = undefined;
++      }
++    }
+     async function load() {
++      stopViewing();
++      const selected = chat;
+       const r = await fetch(`/api/chats/${chat}/messages`, {
+         headers: headers(),
+       });
++      if (!r.ok || selected !== chat) return;
+       const data = await r.json();
+       el("messages").replaceChildren();
+       for (const m of data.messages) {
+         const a = document.createElement("article");
+-        a.textContent = `${m.role}: ${m.content} (${m.status})`;
+         el("messages").append(a);
++        if (m.role === "assistant" && m.status === "streaming") {
++          a.textContent = "assistant: ";
++          watch(m.id, null, a);
++        } else a.textContent = `${m.role}: ${m.content} (${m.status})`;
+       }
+     }
+     el("refresh").onclick = list;
+@@ -75,46 +153,36 @@
+         }),
+       });
+       chat = (await r.json()).id;
++      localStorage.setItem("chat", chat);
+       await list();
+       await load();
+     };
+     el("form").onsubmit = async (e) => {
+       e.preventDefault();
+       if (!chat) return;
+-      controller = new AbortController();
+       const text = el("content").value;
+       el("content").value = "";
++      const user = document.createElement("article");
++      user.textContent = `user: ${text}`;
++      el("messages").append(user);
+       const r = await fetch(`/api/chats/${chat}/messages`, {
+         method: "POST",
+         headers: headers(),
+         body: JSON.stringify({ content: text }),
+-        signal: controller.signal,
+       });
++      if (!r.ok) return;
+       const a = document.createElement("article");
++      a.textContent = "assistant: ";
+       el("messages").append(a);
+-      const reader = r.body.getReader();
+-      let buffer = "";
+-      const decoder = new TextDecoder();
+-      try {
+-        while (true) {
+-          const { value, done } = await reader.read();
+-          if (done) break;
+-          buffer += decoder.decode(value, { stream: true });
+-          let end;
+-          while ((end = buffer.indexOf("\n\n")) >= 0) {
+-            const block = buffer.slice(0, end);
+-            buffer = buffer.slice(end + 2);
+-            const line = block.split("\n").find((l) => l.startsWith("data:"));
+-            if (line) {
+-              const data = JSON.parse(line.slice(5));
+-              if (data.text) a.textContent += data.text;
+-            }
+-          }
+-        }
+-      } catch {}
+-      await load();
++      watch(r.headers.get("X-Message-Id"), r, a);
+     };
+-    el("stop").onclick = () => controller?.abort();
++    el("stop").onclick = () =>
++      active &&
++      fetch(`/api/messages/${active}/cancel`, {
++        method: "POST",
++        headers: headers(),
++      });
+     list();
++    if (chat) load();
+   </script>
+ </html>
+--- a/src/replies.ts
++++ b/src/replies.ts
+@@ -1,51 +1,195 @@
+ import { sql } from "./db";
+ import { frame, sse } from "./logic";
++
++const setup = await sql.reserve();
++await setup`SELECT pg_advisory_lock(782342)`;
++try {
++  await setup`ALTER TABLE messages ADD COLUMN IF NOT EXISTS heartbeat timestamptz DEFAULT now()`;
++  await setup`CREATE TABLE IF NOT EXISTS stream_events (
++    message_id text NOT NULL REFERENCES messages(id), seq integer NOT NULL,
++    event text NOT NULL, data jsonb NOT NULL, PRIMARY KEY(message_id,seq))`;
++} finally {
++  await setup`SELECT pg_advisory_unlock(782342)`;
++  setup.release();
++}
++
++// A row lock serializes token writes, terminal transitions and cancellation.
++async function append(id: string, event: string, data: any, token = "") {
++  return sql.begin(async (tx) => {
++    const [row] =
++      await tx`SELECT status FROM messages WHERE id=${id} FOR UPDATE`;
++    if (row?.status !== "streaming") return false;
++    const [next] =
++      await tx`SELECT COALESCE(MAX(seq),0)+1 AS n FROM stream_events WHERE message_id=${id}`;
++    await tx`INSERT INTO stream_events VALUES (${id},${next.n},${event},${data}::jsonb)`;
++    const status =
++      event === "done" || event === "error" ? data.status : "streaming";
++    await tx`UPDATE messages SET content=content || ${token},status=${status},updated_at=now(),heartbeat=now() WHERE id=${id}`;
++    return true;
++  });
++}
++
++async function generate(id: string, content: string) {
++  const abort = new AbortController();
++  let checking = false;
++  const timer = setInterval(async () => {
++    if (checking) return;
++    checking = true;
++    try {
++      const rows =
++        await sql`UPDATE messages SET heartbeat=now() WHERE id=${id} AND status='streaming' RETURNING id`;
++      if (!rows.length) abort.abort();
++    } catch {
++      abort.abort();
++    } finally {
++      checking = false;
++    }
++  }, 200);
++  try {
++    await append(id, "message", { messageId: id });
++    const upstream = await fetch(`${process.env.LLM_URL}/v1/chat/completions`, {
++      method: "POST",
++      signal: abort.signal,
++      headers: { "Content-Type": "application/json" },
++      body: JSON.stringify({
++        model: "team-chat",
++        stream: true,
++        messages: [{ role: "user", content }],
++      }),
++    });
++    if (!upstream.ok || !upstream.body)
++      throw new Error("Provider rejected request");
++    let completed = false;
++    for await (const data of sse(upstream.body)) {
++      if (data === "[DONE]") {
++        completed = true;
++        break;
++      }
++      const chunk = JSON.parse(data);
++      if (chunk.error) throw new Error("Provider interrupted");
++      const text = chunk.choices?.[0]?.delta?.content;
++      if (
++        typeof text === "string" &&
++        !(await append(id, "token", { text }, text))
++      ) {
++        abort.abort();
++        return;
++      }
++    }
++    if (!completed) throw new Error("Provider stream ended early");
++    await append(id, "done", { status: "complete" });
++  } catch {
++    await append(id, "error", {
++      status: "error",
++      message: "Generation interrupted",
++    });
++  } finally {
++    clearInterval(timer);
++    abort.abort();
++  }
++}
++
++// A rolling deployment may remove a producer without a graceful shutdown.
++let sweeping = false;
++const sweep = setInterval(async () => {
++  if (sweeping) return;
++  sweeping = true;
++  try {
++    const stale =
++      await sql`SELECT id FROM messages WHERE status='streaming' AND heartbeat < now()-interval '4 seconds'`;
++    for (const row of stale) {
++      await sql.begin(async (tx) => {
++        const [current] =
++          await tx`SELECT id FROM messages WHERE id=${row.id} AND status='streaming' AND heartbeat < now()-interval '4 seconds' FOR UPDATE`;
++        if (!current) return;
++        const [next] =
++          await tx`SELECT COALESCE(MAX(seq),0)+1 AS n FROM stream_events WHERE message_id=${row.id}`;
++        await tx`INSERT INTO stream_events VALUES (${row.id},${next.n},'error','{"status":"error","message":"Generation interrupted"}'::jsonb)`;
++        await tx`UPDATE messages SET status='error',updated_at=now() WHERE id=${row.id}`;
++      });
++    }
++  } catch (error) {
++    console.error("Stream recovery:", error);
++  } finally {
++    sweeping = false;
++  }
++}, 500);
++sweep.unref();
++
++export async function attach(req: Request, id: string) {
++  const raw =
++    new URL(req.url).searchParams.get("after") ??
++    req.headers.get("Last-Event-ID") ??
++    "0";
++  if (!/^\d+$/.test(raw) || !Number.isSafeInteger(Number(raw)))
++    return new Response("Invalid cursor", { status: 400 });
++  let cursor = Number(raw);
++  let closed = false;
++  let wake: (() => void) | undefined;
++  let timer: ReturnType<typeof setTimeout> | undefined;
++  const stop = () => {
++    closed = true;
++    clearTimeout(timer);
++    wake?.();
++  };
++  req.signal.addEventListener("abort", stop, { once: true });
++  const stream = new ReadableStream<Uint8Array>({
++    async pull(controller) {
++      // Fetch bounded pages only when this viewer is ready. Production has no
++      // dependency on the speed or lifetime of any individual response reader.
++      while (!closed) {
++        const rows =
++          await sql`SELECT seq,event,data FROM stream_events WHERE message_id=${id} AND seq>${cursor} ORDER BY seq LIMIT 64`;
++        for (const row of rows) {
++          if (closed) return;
++          controller.enqueue(
++            new TextEncoder().encode(frame(row.event, row.data, row.seq)),
++          );
++          cursor = row.seq;
++          if (row.event === "done" || row.event === "error") {
++            stop();
++            controller.close();
++            return;
++          }
++        }
++        if (rows.length) return;
++        const [row] = await sql`SELECT status FROM messages WHERE id=${id}`;
++        if (row?.status !== "streaming") {
++          const remaining =
++            await sql`SELECT seq FROM stream_events WHERE message_id=${id} AND seq>${cursor} LIMIT 1`;
++          if (remaining.length) continue;
++          stop();
++          controller.close();
++          return;
++        }
++        await new Promise<void>((resolve) => {
++          wake = resolve;
++          timer = setTimeout(resolve, 40);
++        });
++      }
++    },
++    cancel() {
++      stop();
++      req.signal.removeEventListener("abort", stop);
++    },
++  });
++  return new Response(stream, {
++    headers: {
++      "Content-Type": "text/event-stream",
++      "Cache-Control": "no-cache",
++      "X-Message-Id": id,
++    },
++  });
++}
+ export async function reply(req: Request, id: string, content: string) {
+-  const abort = new AbortController();
+-  req.signal.addEventListener("abort", () => abort.abort());
+-  const upstream = await fetch(`${process.env.LLM_URL}/v1/chat/completions`, {
+-    method: "POST",
+-    signal: abort.signal,
+-    headers: { "Content-Type": "application/json" },
+-    body: JSON.stringify({
+-      model: "team-chat",
+-      stream: true,
+-      messages: [{ role: "user", content }],
+-    }),
++  void generate(id, content).catch((error) =>
++    console.error("Generation:", error),
++  );
++  return attach(req, id);
++}
++export async function cancel(id: string) {
++  await append(id, "done", { status: "cancelled" });
++  return Response.json({
++    status: (await sql`SELECT status FROM messages WHERE id=${id}`)[0].status,
+   });
+-  let text = "";
+-  return new Response(
+-    new ReadableStream({
+-      async start(c) {
+-        try {
+-          for await (const data of sse(upstream.body!)) {
+-            if (data === "[DONE]") break;
+-            const chunk = JSON.parse(data);
+-            if (chunk.error) throw new Error(chunk.error.message);
+-            const token = chunk.choices[0].delta.content ?? "";
+-            text += token;
+-            c.enqueue(
+-              new TextEncoder().encode(frame("token", { text: token })),
+-            );
+-          }
+-          await sql`UPDATE messages SET content=${text},status='complete',updated_at=now() WHERE id=${id}`;
+-          c.enqueue(
+-            new TextEncoder().encode(frame("done", { status: "complete" })),
+-          );
+-          c.close();
+-        } catch {
+-          try {
+-            c.enqueue(
+-              new TextEncoder().encode(frame("error", { status: "error" })),
+-            );
+-            c.close();
+-          } catch {}
+-        }
+-      },
+-      cancel() {
+-        abort.abort();
+-      },
+-    }),
+-    { headers: { "Content-Type": "text/event-stream", "X-Message-Id": id } },
+-  );
+ }
+--- a/src/server.ts
++++ b/src/server.ts
+@@ -1,5 +1,5 @@
+ import { sql, redis, user, ownedChat, ownedMessage, message } from "./db";
+-import { reply } from "./replies";
++import { reply, attach, cancel } from "./replies";
+ const replica = process.env.HOSTNAME ?? "local";
+ async function route(req: Request) {
+   const path = new URL(req.url).pathname;
+@@ -52,6 +52,15 @@
+       return reply(req, id, content);
+     }
+   }
++  const stream = path.match(/^\/api\/messages\/([^/]+)\/(stream|cancel)$/);
++  if (stream) {
++    if (!(await ownedMessage(stream[1], userId)))
++      return new Response("", { status: 404 });
++    if (stream[2] === "stream" && req.method === "GET")
++      return attach(req, stream[1]);
++    if (stream[2] === "cancel" && req.method === "POST")
++      return cancel(stream[1]);
++  }
+   return new Response("Not found", { status: 404 });
+ }
+ Bun.serve({

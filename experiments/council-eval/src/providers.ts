@@ -17,6 +17,10 @@ export interface CallSpec {
   /** Path prefix for transcript files. */
   logPath: string;
   role: string;
+  /** Extra environment for the agent's shell (build family: Docker host and stack ports). */
+  env?: Record<string, string>;
+  /** Overrides limits.callTimeoutSec, for long implementation sessions. */
+  timeoutSec?: number;
   /** Mock provider only: deterministic seed and a callback that fabricates output. */
   mock?: () => unknown;
 }
@@ -115,7 +119,7 @@ export async function callAgent(spec: CallSpec): Promise<CallResult> {
 }
 
 async function callClaude(spec: CallSpec) {
-  const timeoutMs = config().limits.callTimeoutSec * 1000;
+  const timeoutMs = (spec.timeoutSec ?? config().limits.callTimeoutSec) * 1000;
   const isolation = process.env.ANTHROPIC_API_KEY
     ? ["--bare"]
     : ["--setting-sources", "user", "--disable-slash-commands", "--strict-mcp-config"]; // plus CLAUDE_CONFIG_DIR below
@@ -141,6 +145,7 @@ async function callClaude(spec: CallSpec) {
   const env: Record<string, string> = process.env.ANTHROPIC_API_KEY
     ? cleanHomeEnv()
     : { ...cleanHomeEnv(), CLAUDE_CONFIG_DIR: isolatedHome("claude"), CLAUDE_CODE_DISABLE_AUTO_MEMORY: "1" };
+  Object.assign(env, spec.env ?? {});
   const res = await sh(args, { cwd: spec.cwd, timeoutMs, env });
   writeFileSync(`${spec.logPath}.stdout.json`, res.stdout);
   if (res.stderr) writeFileSync(`${spec.logPath}.stderr.txt`, res.stderr);
@@ -190,7 +195,7 @@ async function callClaude(spec: CallSpec) {
 }
 
 async function callCodex(spec: CallSpec) {
-  const timeoutMs = config().limits.callTimeoutSec * 1000;
+  const timeoutMs = (spec.timeoutSec ?? config().limits.callTimeoutSec) * 1000;
   const lastMsg = `${spec.logPath}.last.txt`;
   const args = [
     bin("codex"),
@@ -202,6 +207,8 @@ async function callCodex(spec: CallSpec) {
     `model_reasoning_effort="${spec.effort}"`,
     "-s",
     spec.mode === "write" ? "workspace-write" : "read-only",
+    // Build tasks run docker compose and curl their own stack; Claude's Bash has network too.
+    ...(spec.mode === "write" ? ["-c", "sandbox_workspace_write.network_access=true"] : []),
     "--skip-git-repo-check",
     "--ephemeral",
     "--ignore-user-config",
@@ -217,7 +224,7 @@ async function callCodex(spec: CallSpec) {
     args.push("--output-schema", schemaPath);
   }
   args.push(spec.prompt);
-  const res = await sh(args, { cwd: spec.cwd, timeoutMs, env: { ...cleanHomeEnv(), CODEX_HOME: isolatedHome("codex") } });
+  const res = await sh(args, { cwd: spec.cwd, timeoutMs, env: { ...cleanHomeEnv(), CODEX_HOME: isolatedHome("codex"), ...(spec.env ?? {}) } });
   writeFileSync(`${spec.logPath}.events.jsonl`, res.stdout);
   if (res.stderr) writeFileSync(`${spec.logPath}.stderr.txt`, res.stderr);
   if (res.timedOut) throw new Error(`timeout after ${timeoutMs}ms`);

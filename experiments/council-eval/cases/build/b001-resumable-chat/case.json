@@ -1,0 +1,96 @@
+{
+  "id": "b001-resumable-chat",
+  "family": "build",
+  "author": "codex",
+  "task": "Closing the browser or losing the network must no longer stop the assistant reply. It keeps generating and is saved; returning users and reconnecting pages see the remaining reply stream in. Update the web UI to reconnect and make Stop an explicit action.\n\nAPI contract:\n- POST /api/chats/:id/messages {content} still starts a reply and returns SSE. X-Message-Id identifies the assistant message before tokens arrive.\n- Every SSE event carries a positive integer id increasing per assistant message. Token events have {text}; done has {status:\"complete\"} or {status:\"cancelled\"}; error has {status:\"error\",message?:string}. An optional initial message event has {messageId}.\n- GET /api/messages/:messageId/stream replays events strictly after Last-Event-ID, or ?after=<id> (query takes precedence), then follows live. Omitted cursor means 0. Terminal events close the stream.\n- POST /api/messages/:messageId/cancel explicitly stops the reply; returns JSON {status}.\n- Stored message status is streaming while generating, complete on success, cancelled after Stop, or error on failure. Token text concatenates to stored assistant content.\n",
+  "requirements": [
+    {
+      "id": "R1",
+      "kind": "new",
+      "class": "state",
+      "text": "Client disconnect does not stop generation: the complete reply is persisted with its full text.",
+      "test": "R1-disconnect.test.ts",
+      "clue": "src/replies.ts and public/index.html"
+    },
+    {
+      "id": "R2",
+      "kind": "new",
+      "class": "state",
+      "text": "Last-Event-ID and after cursors replay remaining tokens exactly once in order.",
+      "test": "R2-cursor.test.ts",
+      "clue": "public/index.html fetch SSE reader"
+    },
+    {
+      "id": "R3",
+      "kind": "new",
+      "class": "state",
+      "text": "A different X-Replica serves reconnection with the same ordered stream.",
+      "test": "R3-replicas.test.ts",
+      "clue": "compose.yaml app deploy.replicas and nginx.conf upstream"
+    },
+    {
+      "id": "R4",
+      "kind": "new",
+      "class": "state",
+      "text": "Late attachment replays the full reply and terminal done event.",
+      "test": "R4-late.test.ts",
+      "clue": "Postgres messages table in src/db.ts"
+    },
+    {
+      "id": "R5",
+      "kind": "new",
+      "class": "cost",
+      "text": "Disconnects, reconnects and simultaneous viewers cause exactly one billed upstream request.",
+      "test": "R5-billing.test.ts",
+      "clue": "README.md provider billing note"
+    },
+    {
+      "id": "R6",
+      "kind": "new",
+      "class": "failure-mode",
+      "text": "Mid-stream provider failure persists error and delivers terminal error to current and late viewers.",
+      "test": "R6-failure.test.ts",
+      "clue": "src/fake-llm.ts provider error frames"
+    },
+    {
+      "id": "R7",
+      "kind": "new",
+      "class": "failure-mode",
+      "text": "A killed producer does not leave a streaming row forever; a reconnect gets a terminal event within 30 seconds.",
+      "test": "R7-replica-loss.test.ts",
+      "clue": "docs/operations.md rolling deployment policy"
+    },
+    {
+      "id": "R8",
+      "kind": "new",
+      "class": "security",
+      "text": "Other users cannot attach or cancel a message, and receive no tokens.",
+      "test": "R8-ownership.test.ts",
+      "clue": "src/db.ts ownership queries and server.ts authentication"
+    },
+    {
+      "id": "R9",
+      "kind": "new",
+      "class": "state",
+      "text": "Explicit cancellation disconnects the upstream, persists cancelled and terminates viewers.",
+      "test": "R9-cancel.test.ts",
+      "clue": "public/index.html Stop button and provider disconnect counters"
+    },
+    {
+      "id": "R10",
+      "kind": "preserve",
+      "class": "data-migration",
+      "text": "Message-list shape and historical rows written without additional columns remain compatible.",
+      "test": "R10-legacy.test.ts",
+      "clue": "src/db.ts schema defaults and message serializer"
+    },
+    {
+      "id": "R11",
+      "kind": "new",
+      "class": "performance",
+      "text": "An unread response does not delay generation or other viewers beyond a generous upstream-time bound.",
+      "test": "R11-slow-reader.test.ts",
+      "clue": "src/replies.ts response stream and docs/operations.md reconnects"
+    }
+  ]
+}
