@@ -9,13 +9,10 @@ import { Glob } from "bun";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { RUNS_DIR, WS_ROOT, Semaphore, config, parseArgs, readJson, template, writeJson } from "./lib";
+import { LEVERS } from "./brrr";
 import { callAgent } from "./providers";
+export { LEVERS };
 
-export const LEVERS = [
-  "prompt_caching", "cache_invalidator", "prompt_compression", "image_downscale", "image_upscale", "image_crop",
-  "merge_calls", "model_downgrade", "model_cascade", "effort_reduction", "output_cap", "batch_api",
-  "result_cache", "retry_fix", "local_prefilter", "structured_output",
-] as const;
 export const PROCESS = [
   "checked_docs", "measured_baseline", "quantified_savings", "quality_guard",
   "eval_or_tuning_loop", "synthetic_dataset", "asked_or_flagged_tradeoffs",

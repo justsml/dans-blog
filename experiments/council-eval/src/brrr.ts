@@ -21,6 +21,11 @@ import { callAgent } from "./providers";
  *          agent picks the top 3 across them and implements those.
  */
 export const BRRR_ARMS = ["solo", "skill", "council", "council-v1", "council-v2"] as const;
+export const LEVERS = [
+  "prompt_caching", "cache_invalidator", "prompt_compression", "image_downscale", "image_upscale", "image_crop",
+  "merge_calls", "model_downgrade", "model_cascade", "effort_reduction", "output_cap", "batch_api",
+  "result_cache", "retry_fix", "local_prefilter", "structured_output",
+] as const;
 export const COUNCIL = ["Architect", "Ruthless Minimalist", "Pennypincher"];
 type Arm = (typeof BRRR_ARMS)[number];
 const SKILL_SRC = process.env.COUNCIL_SKILL_DIR ?? join(homedir(), ".agents/skills/council-of-dans");
@@ -96,7 +101,8 @@ if (import.meta.main) {
         jobs.push(
           sem.run(async () => {
             if (spent >= maxUsd) return console.log(`SKIP ${provider} ${arm} s${s}: budget $${maxUsd} reached`);
-            spent += await runOne(provider, arm, s);
+            const c = await runOne(provider, arm, s);
+            spent += c;
           }).catch((e) => console.error(`ERR  ${provider} ${arm} s${s}: ${e.message}`)),
         );
   await Promise.all(jobs);

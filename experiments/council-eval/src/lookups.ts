@@ -37,17 +37,18 @@ export function lookups(provider: "claude" | "codex", raw: string): Lookup[] {
 
 if (import.meta.main) {
   const runId = String(parseArgs(process.argv.slice(2))["run-id"]);
-  const rows: { provider: string; persona: string; n: number; any: boolean }[] = [];
-  for await (const f of new Glob("brrr/*/*/council/s*/cand-*.{stdout.json,events.jsonl}").scan(join(RUNS_DIR, runId))) {
-    const [, , provider, , , file] = f.split("/");
-    const i = Number(file.match(/cand-(\d)/)![1]);
+  const rows: { provider: string; arm: string; persona: string; n: number }[] = [];
+  // brrr/<case>/<provider>/<arm>/s<N>/cand-<i>.<transcript>
+  for await (const f of new Glob("brrr/*/*/council*/s*/cand-*.{stdout.json,events.jsonl}").scan(join(RUNS_DIR, runId))) {
+    const [, , provider, arm, , file] = f.split("/");
     const n = lookups(provider as any, readFileSync(join(RUNS_DIR, runId, f), "utf8")).length;
-    rows.push({ provider, persona: COUNCIL[i], n, any: n > 0 });
+    rows.push({ provider, arm, persona: COUNCIL[Number(file.match(/cand-(\d)/)![1])], n });
   }
-  console.log("| Provider | Persona | Runs | Looked something up | Lookups / run |\n|---|---|---:|---:|---:|");
+  console.log("| Provider | Arm | Persona | Runs | Looked something up | Lookups / run |\n|---|---|---|---:|---:|---:|");
   for (const provider of ["claude", "codex"])
-    for (const persona of COUNCIL) {
-      const X = rows.filter((r) => r.provider === provider && r.persona === persona);
-      console.log(`| ${provider} | ${persona} | ${X.length} | ${X.filter((r) => r.any).length}/${X.length} | ${(X.reduce((a, r) => a + r.n, 0) / (X.length || 1)).toFixed(1)} |`);
-    }
+    for (const arm of [...new Set(rows.map((r) => r.arm))].sort())
+      for (const persona of COUNCIL) {
+        const X = rows.filter((r) => r.provider === provider && r.arm === arm && r.persona === persona);
+        if (X.length) console.log(`| ${provider} | ${arm} | ${persona} | ${X.length} | ${X.filter((r) => r.n > 0).length}/${X.length} | ${(X.reduce((a, r) => a + r.n, 0) / X.length).toFixed(1)} |`);
+      }
 }
